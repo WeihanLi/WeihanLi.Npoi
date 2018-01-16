@@ -1,17 +1,52 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.IO;
-using System.Linq;
-using System.Reflection;
 using JetBrains.Annotations;
 using NPOI.SS.UserModel;
 using WeihanLi.Extensions;
-using WeihanLi.Npoi.Attributes;
 
 namespace WeihanLi.Npoi
 {
-    public static class NpoiExtension
+    public static class NpoiExtensions
     {
+        #region PublicExtensions
+
+        /// <summary>
+        /// Sheet2EntityList
+        /// </summary>
+        /// <typeparam name="TEntity">EntityType</typeparam>
+        /// <param name="sheet">excel sheet</param>
+        /// <returns>entity list</returns>
+        public static List<TEntity> ToEntityList<TEntity>([NotNull] this ISheet sheet) where TEntity : new()
+        {
+            return new NpoiHelper<TEntity>().SheetToEntityList(sheet);
+        }
+
+        /// <summary>
+        /// import entityList to sheet
+        /// </summary>
+        /// <typeparam name="TEntity">EntityType</typeparam>
+        /// <param name="sheet">sheet</param>
+        /// <param name="list">entityList</param>
+        public static void ImportData<TEntity>(this ISheet sheet, IReadOnlyList<TEntity> list)
+            where TEntity : new()
+        {
+            new NpoiHelper<TEntity>().EntityListToSheet(sheet, list);
+        }
+
+        /// <summary>
+        /// import datatable to sheet
+        /// </summary>
+        /// <typeparam name="TEntity">EntityType</typeparam>
+        /// <param name="sheet">sheet</param>
+        /// <param name="dataTable">dataTable</param>
+        public static void ImportData<TEntity>(ISheet sheet, DataTable dataTable)
+            where TEntity : new()
+        {
+            new NpoiHelper<TEntity>().DataTableToSheet(sheet, dataTable);
+        }
+
         /// <summary>
         /// SetCellValue
         /// </summary>
@@ -22,34 +57,31 @@ namespace WeihanLi.Npoi
         {
             if (null == value)
             {
+                cell.SetCellType(CellType.String);
                 cell.SetCellValue("");
                 return;
             }
-            var type = value.GetType();
+            var type = value.GetType().Unwrap();
             if (type == typeof(DateTime))
             {
-                cell.SetCellValue((DateTime)value);
+                cell.SetCellType(CellType.String);
+                cell.SetCellValue(((DateTime)value).ToStandardTimeString());
             }
-            else if (type == typeof(double) ||
+            else if (
+                type == typeof(double) ||
                 type == typeof(int) ||
                 type == typeof(long) ||
                 type == typeof(float) ||
-                type == typeof(decimal) ||
-                type == typeof(double?) ||
-                type == typeof(int?) ||
-                type == typeof(long?) ||
-                type == typeof(float?) ||
-                type == typeof(decimal?) ||
-                type == typeof(DateTime?)
+                type == typeof(decimal)
             )
             {
                 cell.SetCellType(CellType.Numeric);
-                cell.SetCellValue((double)value);
+                cell.SetCellValue(Convert.ToDouble(value));
             }
             else if (type == typeof(bool))
             {
                 cell.SetCellType(CellType.Boolean);
-                cell.SetCellValue((bool)value);
+                cell.SetCellValue(Convert.ToBoolean(value));
             }
             else
             {
@@ -76,10 +108,17 @@ namespace WeihanLi.Npoi
                     return cell.NumericCellValue.To(propertyType);
 
                 case CellType.String:
-                    return cell.StringCellValue;
+                    if (propertyType == typeof(string))
+                    {
+                        return cell.StringCellValue;
+                    }
+                    return cell.StringCellValue.To(propertyType);
 
                 case CellType.Boolean:
                     return cell.BooleanCellValue;
+
+                case CellType.Error: //ERROR:
+                    return cell.ErrorCellValue;
 
                 default:
                     return cell.ToString().To(propertyType);
@@ -94,21 +133,6 @@ namespace WeihanLi.Npoi
             }
         }
 
-        #region Mapping
-
-        internal static PropertyInfo GetPropertyInfo([NotNull]this IDictionary<PropertyInfo, ColumnAttribute> mappingDictionary, int index) => mappingDictionary.Keys.ToArray()[index];
-
-        internal static PropertyInfo GetPropertyInfo([NotNull]this IDictionary<PropertyInfo, ColumnAttribute> mappingDictionary, [NotNull]string propertyName) => mappingDictionary.Keys.FirstOrDefault(k => k.Name.EqualsIgnoreCase(propertyName));
-
-        internal static ColumnAttribute GetColumnAttribute([NotNull]this IDictionary<PropertyInfo, ColumnAttribute> mappingDictionary, int index) => mappingDictionary.Values.ToArray()[index];
-
-        internal static ColumnAttribute GetColumnAttributeByPropertyName(
-            [NotNull] this IDictionary<PropertyInfo, ColumnAttribute> mappingDictionary, [NotNull] string propertyName)
-            => mappingDictionary.Keys.Any(_ => _.Name.EqualsIgnoreCase(propertyName)) ?
-            mappingDictionary[mappingDictionary.Keys.First(_ => _.Name.EqualsIgnoreCase(propertyName))] : null;
-
-        internal static ColumnAttribute GetColumnAttribute([NotNull]this IDictionary<PropertyInfo, ColumnAttribute> mappingDictionary, [NotNull]string columnTitle) => mappingDictionary.Values.FirstOrDefault(k => k.Title.EqualsIgnoreCase(columnTitle));
-
-        #endregion Mapping
+        #endregion PublicExtensions
     }
 }

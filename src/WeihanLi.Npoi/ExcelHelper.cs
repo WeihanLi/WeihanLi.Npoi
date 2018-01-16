@@ -12,6 +12,9 @@ using WeihanLi.Npoi.Attributes;
 
 namespace WeihanLi.Npoi
 {
+    /// <summary>
+    /// ExcelHelper
+    /// </summary>
     public static class ExcelHelper
     {
         /// <summary>
@@ -44,7 +47,7 @@ namespace WeihanLi.Npoi
         /// </summary>
         /// <param name="excelPath">excel路径</param>
         /// <returns>workbook</returns>
-        private static IWorkbook LoadExcel(string excelPath)
+        public static IWorkbook LoadExcel(string excelPath)
         {
             if (!ValidateExcelFilePath(excelPath, out var msg))
                 throw new ArgumentException(msg);
@@ -84,8 +87,7 @@ namespace WeihanLi.Npoi
             {
                 throw new ArgumentOutOfRangeException(nameof(sheetIndex), string.Format(Resource.IndexOutOfRange, nameof(sheetIndex), workbook.NumberOfSheets));
             }
-            var helper = new NpoiHelper<TEntity>();
-            return helper.SheetToEntityList(workbook.GetSheetAt(sheetIndex));
+            return workbook.GetSheetAt(sheetIndex).ToEntityList<TEntity>();
         }
 
         /// <summary>
@@ -153,8 +155,7 @@ namespace WeihanLi.Npoi
                     workbook.CreateSheet();
                 }
             }
-            var helper = new NpoiHelper<TEntity>();
-            helper.DataTableToSheet(workbook.GetSheetAt(sheetIndex), dataTable);
+            new NpoiHelper<TEntity>().DataTableToSheet(workbook.GetSheetAt(sheetIndex), dataTable);
         }
 
         public static void ImportData<TEntity>(IReadOnlyList<TEntity> list, IWorkbook workbook, int sheetIndex = 0)
@@ -164,8 +165,7 @@ namespace WeihanLi.Npoi
             {
                 workbook.CreateSheet();
             }
-            var helper = new NpoiHelper<TEntity>();
-            helper.EntityListToSheet(workbook.GetSheetAt(sheetIndex), list);
+            new NpoiHelper<TEntity>().EntityListToSheet(workbook.GetSheetAt(sheetIndex), list);
         }
     }
 }

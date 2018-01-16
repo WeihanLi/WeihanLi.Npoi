@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Reflection;
@@ -11,11 +12,17 @@ namespace WeihanLi.Npoi
 {
     internal class NpoiHelper<TEntity> where TEntity : new()
     {
-        private readonly IDictionary<PropertyInfo, ColumnAttribute> _propertyColumnDictionary = new Dictionary<PropertyInfo, ColumnAttribute>(32);
+        private IDictionary<PropertyInfo, ColumnAttribute> _propertyColumnDictionary;
 
-        internal NpoiHelper()
+        public NpoiHelper()
         {
-            var type = typeof(TEntity);
+            _propertyColumnDictionary = TypeCache.TypeMapCacheDictory.GetOrAdd(typeof(TEntity),
+                GetMapping);
+        }
+
+        private IDictionary<PropertyInfo, ColumnAttribute> GetMapping(Type type)
+        {
+            var dic = new Dictionary<PropertyInfo, ColumnAttribute>();
             var propertyInfos = type.GetProperties(BindingFlags.Public | BindingFlags.Instance).ToList();
             // TODO: Adjust column index
             foreach (var propertyInfo in propertyInfos)
@@ -23,9 +30,10 @@ namespace WeihanLi.Npoi
                 var attribute = propertyInfo.GetCustomAttribute<ColumnAttribute>();
                 if (null != attribute)
                 {
-                    _propertyColumnDictionary.Add(propertyInfo, attribute);
+                    dic.Add(propertyInfo, attribute);
                 }
             }
+            return dic;
         }
 
         public List<TEntity> SheetToEntityList([NotNull]ISheet sheet)
@@ -37,7 +45,7 @@ namespace WeihanLi.Npoi
                 var row = (IRow)rowEnumerator.Current;
                 if (row.RowNum == 0) //读取Header
                 {
-                    for (int i = 0; i < row.Cells.Count; i++)
+                    for (var i = 0; i < row.Cells.Count; i++)
                     {
                         var col = _propertyColumnDictionary.GetColumnAttribute(row.Cells[i].StringCellValue);
                         if (null != col)
@@ -49,7 +57,7 @@ namespace WeihanLi.Npoi
                 else
                 {
                     var entity = new TEntity();
-                    for (int i = 0; i < _propertyColumnDictionary.Keys.Count; i++)
+                    for (var i = 0; i < _propertyColumnDictionary.Keys.Count; i++)
                     {
                         _propertyColumnDictionary.GetPropertyInfo(i).SetValue(entity,
                             row.Cells[_propertyColumnDictionary.GetColumnAttribute(i).Index]
