@@ -4,6 +4,7 @@ using System.Data;
 using System.IO;
 using System.Reflection;
 using JetBrains.Annotations;
+using NPOI.HPSF;
 using NPOI.HSSF.UserModel;
 using NPOI.SS.UserModel;
 using NPOI.XSSF.UserModel;
@@ -67,10 +68,77 @@ namespace WeihanLi.Npoi
         {
             if (!ValidateExcelFilePath(excelPath, out var msg, true))
                 throw new ArgumentException(msg);
+            var excelSetting = new ExcelAttribute();
+            if (Path.GetExtension(excelPath).EqualsIgnoreCase(".xlsx"))
+            {
+                var workbook = new XSSFWorkbook();
+                var props = workbook.GetProperties();
+                props.CoreProperties.Creator = excelSetting.Author;
+                props.CoreProperties.Created = DateTime.Now;
+                props.CoreProperties.Title = excelSetting.Title;
+                props.CoreProperties.Subject = excelSetting.Subject;
+                props.CoreProperties.Description = excelSetting.Description;
+                // Set ExtendedProperties
+                // https://svn.apache.org/repos/asf/poi/trunk/src/examples/src/org/apache/poi/xssf/usermodel/examples/WorkbookProperties.java
+                props.ExtendedProperties.GetUnderlyingProperties().Application = ExcelConstants.ApplicationName;
 
-            return Path.GetExtension(excelPath).EqualsIgnoreCase(".xlsx")
-                ? new XSSFWorkbook() :
-                (IWorkbook)new HSSFWorkbook();
+                return workbook;
+            }
+            else
+            {
+                var workbook = new HSSFWorkbook();
+                var si = PropertySetFactory.CreateSummaryInformation();
+                si.Title = excelSetting.Title;
+                si.Subject = excelSetting.Subject;
+                si.Author = excelSetting.Author;
+                si.CreateDateTime = DateTime.Now;
+                si.Comments = excelSetting.Description;
+                si.ApplicationName = ExcelConstants.ApplicationName;
+                workbook.SummaryInformation = si;
+                return workbook;
+            }
+        }
+
+        /// <summary>
+        /// 为导出准备 workbook
+        /// </summary>
+        /// <param name="excelPath">excelPath</param>
+        /// <returns></returns>
+        public static IWorkbook PrepareWorkbook<TEntity>(string excelPath)
+        {
+            if (!ValidateExcelFilePath(excelPath, out var msg, true))
+                throw new ArgumentException(msg);
+            var excelSetting = typeof(TEntity).GetCustomAttribute<ExcelAttribute>() ?? new ExcelAttribute();
+            if (Path.GetExtension(excelPath).EqualsIgnoreCase(".xlsx"))
+            {
+                var workbook = new XSSFWorkbook();
+                var props = workbook.GetProperties();
+                props.CoreProperties.Creator = excelSetting.Author;
+                props.CoreProperties.Created = DateTime.Now;
+                props.CoreProperties.Title = excelSetting.Title;
+                props.CoreProperties.Subject = excelSetting.Subject;
+                props.CoreProperties.Description = excelSetting.Description;
+                props.ExtendedProperties.GetUnderlyingProperties().Application = ExcelConstants.ApplicationName;
+                return workbook;
+            }
+            else
+            {
+                var workbook = new HSSFWorkbook();
+                ////create a entry of DocumentSummaryInformation
+                var dsi = PropertySetFactory.CreateDocumentSummaryInformation();
+                dsi.Company = ExcelConstants.ApplicationName;
+                workbook.DocumentSummaryInformation = dsi;
+                ////create a entry of SummaryInformation
+                var si = PropertySetFactory.CreateSummaryInformation();
+                si.Title = excelSetting.Title;
+                si.Subject = excelSetting.Subject;
+                si.Author = excelSetting.Author;
+                si.CreateDateTime = DateTime.Now;
+                si.Comments = excelSetting.Description;
+                si.ApplicationName = ExcelConstants.ApplicationName;
+                workbook.SummaryInformation = si;
+                return workbook;
+            }
         }
 
         /// <summary>
@@ -110,7 +178,7 @@ namespace WeihanLi.Npoi
         public static int ExportToExcel<TEntity>(string excelPath, IReadOnlyList<TEntity> entityList) where TEntity : new()
         {
             // prepare workbook
-            var workbook = PrepareWorkbook(excelPath);
+            var workbook = PrepareWorkbook<TEntity>(excelPath);
             // import data
             ImportData(entityList, workbook);
             // save to file
@@ -129,7 +197,7 @@ namespace WeihanLi.Npoi
             where TEntity : new()
         {
             // prepare workbook
-            var workbook = PrepareWorkbook(excelPath);
+            var workbook = PrepareWorkbook<TEntity>(excelPath);
             // import data
             ImportData<TEntity>(dataTable, workbook);
             // save to file

@@ -6,9 +6,9 @@ using WeihanLi.Npoi.Attributes;
 
 namespace WeihanLi.Npoi
 {
-    public class TypeCache
+    internal class TypeCache
     {
-        public static ConcurrentDictionary<Type, IDictionary<PropertyInfo, ColumnAttribute>> TypeMapCacheDictory =
+        internal static ConcurrentDictionary<Type, IDictionary<PropertyInfo, ColumnAttribute>> TypeMapCacheDictory =
             new ConcurrentDictionary<Type, IDictionary<PropertyInfo, ColumnAttribute>>();
     }
 }

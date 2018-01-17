@@ -7,7 +7,7 @@ using WeihanLi.Npoi.Attributes;
 
 namespace WeihanLi.Npoi
 {
-    public static class InternalExtensions
+    internal static class InternalExtensions
     {
         #region Mapping
 

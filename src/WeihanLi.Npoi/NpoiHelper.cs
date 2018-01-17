@@ -14,7 +14,7 @@ namespace WeihanLi.Npoi
     {
         private IDictionary<PropertyInfo, ColumnAttribute> _propertyColumnDictionary;
 
-        public NpoiHelper()
+        internal NpoiHelper()
         {
             _propertyColumnDictionary = TypeCache.TypeMapCacheDictory.GetOrAdd(typeof(TEntity),
                 GetMapping);
@@ -91,7 +91,7 @@ namespace WeihanLi.Npoi
                 var row = sheet.CreateRow(i + 1);
                 for (var j = 0; j < dataTable.Columns.Count; j++)
                 {
-                    row.CreateCell(_propertyColumnDictionary.GetColumnAttributeByPropertyName(dataTable.Columns[j].ColumnName).Index).SetCellValue(dataTable.Rows[i][j], dataTable.Columns[j].DataType);
+                    row.CreateCell(_propertyColumnDictionary.GetColumnAttributeByPropertyName(dataTable.Columns[j].ColumnName).Index).SetCellValue(dataTable.Rows[i][j]);
                 }
             }
 
@@ -124,7 +124,7 @@ namespace WeihanLi.Npoi
                 for (var j = 0; j < _propertyColumnDictionary.Keys.Count; j++)
                 {
                     var property = _propertyColumnDictionary.GetPropertyInfo(j);
-                    row.CreateCell(_propertyColumnDictionary.GetColumnAttribute(j).Index).SetCellValue(property.GetValue(entityList[i]), property.PropertyType);
+                    row.CreateCell(_propertyColumnDictionary.GetColumnAttribute(j).Index).SetCellValue(property.GetValue(entityList[i]));
                 }
             }
 

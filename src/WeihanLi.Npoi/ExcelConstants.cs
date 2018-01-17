@@ -11,5 +11,10 @@
         /// 开始有数据的RowIndex
         /// </summary>
         internal const int StartRowIndex = 1;
+
+        /// <summary>
+        /// ApplicationName
+        /// </summary>
+        internal const string ApplicationName = "WeihanLi.Npoi";
     }
 }

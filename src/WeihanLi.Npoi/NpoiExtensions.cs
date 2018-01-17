@@ -52,8 +52,7 @@ namespace WeihanLi.Npoi
         /// </summary>
         /// <param name="cell">ICell</param>
         /// <param name="value">value</param>
-        /// <param name="valueType">valueType</param>
-        public static void SetCellValue([NotNull]this ICell cell, object value, Type valueType)
+        public static void SetCellValue([NotNull]this ICell cell, object value)
         {
             if (null == value)
             {

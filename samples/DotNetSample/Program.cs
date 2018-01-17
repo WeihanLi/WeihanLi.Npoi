@@ -21,8 +21,8 @@ namespace DotNetSample
             // 找不到文件
             //var aaa = ExcelHelper.ToEntityList<TestEntity>("");
             var entityList1 = conn.Select<TestEntity2>("select * from Bills");
-            var result2 = ExcelHelper.ExportToExcel(ConfigurationHelper.MapPath("test1.xlsx"), entityList1);
-            entityList1 = ExcelHelper.ToEntityList<TestEntity2>(ConfigurationHelper.MapPath("test1.xlsx"));
+            var result2 = ExcelHelper.ExportToExcel(ConfigurationHelper.MapPath("test1.xls"), entityList1);
+            entityList1 = ExcelHelper.ToEntityList<TestEntity2>(ConfigurationHelper.MapPath("test1.xls"));
             Console.ReadLine();
         }
     }

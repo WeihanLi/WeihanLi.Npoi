@@ -10,5 +10,19 @@ namespace WeihanLi.Npoi.Attributes
     public sealed class ExcelAttribute : Attribute
     {
         public string Author { get; set; }
+
+        public string Title { get; set; }
+
+        public string Description { get; set; }
+
+        public string Subject { get; set; }
+
+        public ExcelAttribute()
+        {
+            Author = "WeihanLi";
+            Title = "WeihanLi.Npoi Generated";
+            Description = "WeihanLi.Npoi Generated";
+            Subject = "WeihanLi.Npoi Generated";
+        }
     }
 }
