@@ -10,8 +10,6 @@ namespace WeihanLi.Npoi
 {
     public static class NpoiExtensions
     {
-        #region PublicExtensions
-
         /// <summary>
         /// Sheet2EntityList
         /// </summary>
@@ -124,6 +122,9 @@ namespace WeihanLi.Npoi
             }
         }
 
+        public static T GetCellValue<T>([NotNull] this ICell cell)
+            => cell.ToString().To<T>();
+
         public static void WriteToFile([NotNull] this IWorkbook workbook, string filePath)
         {
             using (var fileStream = File.Create(filePath))
@@ -131,7 +132,5 @@ namespace WeihanLi.Npoi
                 workbook.Write(fileStream);
             }
         }
-
-        #endregion PublicExtensions
     }
 }
