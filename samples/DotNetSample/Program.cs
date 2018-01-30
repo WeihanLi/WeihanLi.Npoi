@@ -15,7 +15,9 @@ namespace DotNetSample
         {
             var conn = new SqlConnection(testDbConnString);
             var entityList = conn.Select<TestEntity>("select * from Users");
-            var dataTable = entityList.ToDataTable();
+            entityList[0].Amount = 0;
+            entityList[0].PasswordHash = "";
+            //var dataTable = entityList.ToDataTable();
             var result = ExcelHelper.ExportToExcel(ConfigurationHelper.MapPath("test.xlsx"), entityList);
             var result1 = ExcelHelper.ToEntityList<TestEntity>(ConfigurationHelper.MapPath("test.xlsx"));
             // 找不到文件

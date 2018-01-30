@@ -151,11 +151,7 @@ namespace WeihanLi.Npoi
         public static List<TEntity> ToEntityList<TEntity>([NotNull]string excelPath, int sheetIndex = 0) where TEntity : new()
         {
             var workbook = LoadExcel(excelPath);
-            if (sheetIndex >= workbook.NumberOfSheets)
-            {
-                throw new ArgumentOutOfRangeException(nameof(sheetIndex), string.Format(Resource.IndexOutOfRange, nameof(sheetIndex), workbook.NumberOfSheets));
-            }
-            return workbook.GetSheetAt(sheetIndex).ToEntityList<TEntity>();
+            return workbook.ToEntityList<TEntity>(sheetIndex);
         }
 
         /// <summary>

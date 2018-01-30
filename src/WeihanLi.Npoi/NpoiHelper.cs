@@ -24,15 +24,16 @@ namespace WeihanLi.Npoi
         {
             var dic = new Dictionary<PropertyInfo, ColumnAttribute>();
             var propertyInfos = type.GetProperties(BindingFlags.Public | BindingFlags.Instance).ToList();
-            // TODO: Adjust column index
             foreach (var propertyInfo in propertyInfos)
             {
-                var attribute = propertyInfo.GetCustomAttribute<ColumnAttribute>();
-                if (null != attribute)
+                if (propertyInfo.GetCustomAttribute<IgnoreAttribute>() == null)
                 {
-                    dic.Add(propertyInfo, attribute);
+                    continue;
                 }
+                var attribute = propertyInfo.GetCustomAttribute<ColumnAttribute>() ?? new ColumnAttribute(propertyInfo.Name);
+                dic.Add(propertyInfo, attribute);
             }
+            // TODO: Adjust column index, used when export excel
             return dic;
         }
 
@@ -59,9 +60,10 @@ namespace WeihanLi.Npoi
                     var entity = new TEntity();
                     for (var i = 0; i < _propertyColumnDictionary.Keys.Count; i++)
                     {
-                        _propertyColumnDictionary.GetPropertyInfo(i).SetValue(entity,
+                        var propertyInfo = _propertyColumnDictionary.GetPropertyInfo(i);
+                        propertyInfo.SetValue(entity,
                             row.Cells[_propertyColumnDictionary.GetColumnAttribute(i).Index]
-                                .GetCellValue(_propertyColumnDictionary.GetPropertyInfo(i).PropertyType));
+                                .GetCellValue(propertyInfo.PropertyType));
                     }
 
                     entities.Add(entity);

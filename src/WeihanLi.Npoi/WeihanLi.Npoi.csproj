@@ -14,13 +14,13 @@
         <FileVersion>1.0.0.0</FileVersion>
         <Version>1.0.0-beta-1</Version>
         <Description>NpoiExtensions for .net45 and .netstandard2.0</Description>
-        <PackageReleaseNotes>init commit</PackageReleaseNotes>
+        <PackageReleaseNotes>add extension for workbook,fix bug when get cell value</PackageReleaseNotes>
         <Copyright>Copyright 2018 WeihanLi</Copyright>
     </PropertyGroup>
 
     <ItemGroup>
         <PackageReference Include="JetBrains.Annotations" Version="11.1.0" PrivateAssets="All" />
-        <PackageReference Include="WeihanLi.Common" Version="1.0.7.2" />
+        <PackageReference Include="WeihanLi.Common" Version="1.0.7.3" />
     </ItemGroup>
 
     <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">

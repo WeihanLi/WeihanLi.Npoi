@@ -17,7 +17,7 @@ namespace WeihanLi.Npoi
         /// <param name="workbook">excel workbook</param>
         /// <param name="sheetIndex">sheetIndex</param>
         /// <returns>entity list</returns>
-        public static List<TEntity> ToEntityList<TEntity>([NotNull] this IWorkbook workbook, int sheetIndex) where TEntity : new()
+        public static List<TEntity> ToEntityList<TEntity>([NotNull] this IWorkbook workbook, int sheetIndex = 0) where TEntity : new()
         {
             if (workbook.NumberOfSheets <= sheetIndex)
             {
@@ -75,13 +75,13 @@ namespace WeihanLi.Npoi
                 cell.SetCellValue("");
                 return;
             }
-            var type = value.GetType().Unwrap();
-            if (type == typeof(DateTime))
+            if (value is DateTime time)
             {
                 cell.SetCellType(CellType.String);
-                cell.SetCellValue(((DateTime)value).ToStandardTimeString());
+                cell.SetCellValue(time.ToStandardTimeString());
             }
-            else if (
+            var type = value.GetType().Unwrap();
+            if (
                 type == typeof(double) ||
                 type == typeof(int) ||
                 type == typeof(long) ||
@@ -112,6 +112,10 @@ namespace WeihanLi.Npoi
         /// <returns>cellValue</returns>
         public static object GetCellValue([NotNull]this ICell cell, Type propertyType)
         {
+            if (string.IsNullOrEmpty(cell.ToString()))
+            {
+                return propertyType.GetDefaultValue();
+            }
             switch (cell.CellType)
             {
                 case CellType.Numeric:
@@ -119,23 +123,28 @@ namespace WeihanLi.Npoi
                     {
                         return cell.DateCellValue;
                     }
-                    return cell.NumericCellValue.ToString().To(propertyType);
+                    if (propertyType == typeof(double))
+                    {
+                        return cell.NumericCellValue;
+                    }
+                    return cell.NumericCellValue.ToString().ToOrDefault(propertyType);
 
                 case CellType.String:
                     if (propertyType == typeof(string))
                     {
                         return cell.StringCellValue;
                     }
-                    return cell.StringCellValue.To(propertyType);
+                    return cell.StringCellValue.ToOrDefault(propertyType);
 
                 case CellType.Boolean:
-                    return cell.BooleanCellValue;
-
-                case CellType.Error: //ERROR:
-                    return cell.ErrorCellValue;
+                    if (propertyType == typeof(bool))
+                    {
+                        return cell.BooleanCellValue;
+                    }
+                    return cell.BooleanCellValue.ToString().ToOrDefault(propertyType);
 
                 default:
-                    return cell.ToString().To(propertyType);
+                    return cell.ToString().ToOrDefault(propertyType);
             }
         }
 
@@ -146,7 +155,7 @@ namespace WeihanLi.Npoi
         /// <param name="cell">cell</param>
         /// <returns></returns>
         public static T GetCellValue<T>([NotNull] this ICell cell)
-            => cell.ToString().To<T>();
+            => cell.ToString().ToOrDefault<T>();
 
         /// <summary>
         /// Write workbook to excel file
