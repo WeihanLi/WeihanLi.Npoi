@@ -7,6 +7,8 @@ namespace WeihanLi.Npoi.Attributes
     {
         public string SheetName { get; }
 
+        public int StartRowIndex { get; set; } = 1;
+
         public SheetAttribute(string sheetName) => SheetName = sheetName;
     }
 }

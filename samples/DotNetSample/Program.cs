@@ -35,16 +35,16 @@ namespace DotNetSample
         [Column("用户名", Index = 0)]
         public string Username { get; set; }
 
-        /// <summary>
-        /// 密码
-        /// </summary>
         [Column("密码", Index = 1)]
         public string PasswordHash { get; set; }
 
-        [Column("微信id", Index = 4)]
+        [Column("可用余额", Index = 2)]
+        public decimal Amount { get; set; } = 1000M;
+
+        [Column("微信id", Index = 3)]
         public string WechatOpenId { get; set; }
 
-        [Column("是否启用", Index = 3)]
+        [Column("是否启用", Index = 4)]
         public bool IsActive { get; set; }
     }
 

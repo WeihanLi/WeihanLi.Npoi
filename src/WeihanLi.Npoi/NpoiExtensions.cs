@@ -11,6 +11,23 @@ namespace WeihanLi.Npoi
     public static class NpoiExtensions
     {
         /// <summary>
+        /// Workbook2EntityList
+        /// </summary>
+        /// <typeparam name="TEntity">EntityType</typeparam>
+        /// <param name="workbook">excel workbook</param>
+        /// <param name="sheetIndex">sheetIndex</param>
+        /// <returns>entity list</returns>
+        public static List<TEntity> ToEntityList<TEntity>([NotNull] this IWorkbook workbook, int sheetIndex) where TEntity : new()
+        {
+            if (workbook.NumberOfSheets <= sheetIndex)
+            {
+                throw new ArgumentOutOfRangeException(nameof(sheetIndex), string.Format(Resource.IndexOutOfRange, nameof(sheetIndex), workbook.NumberOfSheets));
+            }
+            var sheet = workbook.GetSheetAt(sheetIndex);
+            return new NpoiHelper<TEntity>().SheetToEntityList(sheet);
+        }
+
+        /// <summary>
         /// Sheet2EntityList
         /// </summary>
         /// <typeparam name="TEntity">EntityType</typeparam>
@@ -102,7 +119,7 @@ namespace WeihanLi.Npoi
                     {
                         return cell.DateCellValue;
                     }
-                    return cell.NumericCellValue.To(propertyType);
+                    return cell.NumericCellValue.ToString().To(propertyType);
 
                 case CellType.String:
                     if (propertyType == typeof(string))
@@ -122,9 +139,20 @@ namespace WeihanLi.Npoi
             }
         }
 
+        /// <summary>
+        /// GetCellValue
+        /// </summary>
+        /// <typeparam name="T">Type</typeparam>
+        /// <param name="cell">cell</param>
+        /// <returns></returns>
         public static T GetCellValue<T>([NotNull] this ICell cell)
             => cell.ToString().To<T>();
 
+        /// <summary>
+        /// Write workbook to excel file
+        /// </summary>
+        /// <param name="workbook">workbook</param>
+        /// <param name="filePath">file path</param>
         public static void WriteToFile([NotNull] this IWorkbook workbook, string filePath)
         {
             using (var fileStream = File.Create(filePath))
