@@ -12,10 +12,14 @@ namespace WeihanLi.Npoi
 {
     internal class NpoiHelper<TEntity> where TEntity : new()
     {
-        private IDictionary<PropertyInfo, ColumnAttribute> _propertyColumnDictionary;
+        private readonly IDictionary<PropertyInfo, ColumnAttribute> _propertyColumnDictionary;
+        private readonly SheetAttribute _sheetSetting;
 
         internal NpoiHelper()
         {
+            _sheetSetting = typeof(TEntity).GetCustomAttribute<SheetAttribute>() ??
+                             new SheetAttribute("");
+
             _propertyColumnDictionary = TypeCache.TypeMapCacheDictory.GetOrAdd(typeof(TEntity),
                 GetMapping);
         }
@@ -33,7 +37,7 @@ namespace WeihanLi.Npoi
                 var attribute = propertyInfo.GetCustomAttribute<ColumnAttribute>() ?? new ColumnAttribute(propertyInfo.Name);
                 dic.Add(propertyInfo, attribute);
             }
-            // TODO: Adjust column index, used when export excel
+            // TODO:Adjust column index
             return dic;
         }
 
@@ -44,7 +48,7 @@ namespace WeihanLi.Npoi
             while (rowEnumerator.MoveNext())
             {
                 var row = (IRow)rowEnumerator.Current;
-                if (row.RowNum == 0) //读取Header
+                if (row.RowNum == _sheetSetting.HeaderRowIndex) //读取Header
                 {
                     for (var i = 0; i < row.Cells.Count; i++)
                     {
@@ -55,7 +59,7 @@ namespace WeihanLi.Npoi
                         }
                     }
                 }
-                else
+                else if (row.RowNum >= _sheetSetting.StartRowIndex)
                 {
                     var entity = new TEntity();
                     for (var i = 0; i < _propertyColumnDictionary.Keys.Count; i++)
@@ -88,9 +92,9 @@ namespace WeihanLi.Npoi
                 }
             }
 
-            for (var i = 0; i < dataTable.Rows.Count; i++)
+            for (int i = 0, k = _sheetSetting.StartRowIndex; i < dataTable.Rows.Count; i++)
             {
-                var row = sheet.CreateRow(i + 1);
+                var row = sheet.CreateRow(k++);
                 for (var j = 0; j < dataTable.Columns.Count; j++)
                 {
                     row.CreateCell(_propertyColumnDictionary.GetColumnAttributeByPropertyName(dataTable.Columns[j].ColumnName).Index).SetCellValue(dataTable.Rows[i][j]);
@@ -113,16 +117,16 @@ namespace WeihanLi.Npoi
                 return sheet;
             }
 
-            var headerRow = sheet.CreateRow(0);
-
+            var headerRow = sheet.CreateRow(_sheetSetting.HeaderRowIndex);
+            // TODO:Adjust column index to avoid conflict index
             for (var i = 0; i < _propertyColumnDictionary.Keys.Count; i++)
             {
                 headerRow.CreateCell(_propertyColumnDictionary.GetColumnAttribute(i).Index).SetCellValue(_propertyColumnDictionary.GetColumnAttribute(i).Title);
             }
 
-            for (var i = 0; i < entityList.Count; i++)
+            for (int i = 0, k = _sheetSetting.StartRowIndex; i < entityList.Count; i++)
             {
-                var row = sheet.CreateRow(i + 1);
+                var row = sheet.CreateRow(k++);
                 for (var j = 0; j < _propertyColumnDictionary.Keys.Count; j++)
                 {
                     var property = _propertyColumnDictionary.GetPropertyInfo(j);

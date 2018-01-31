@@ -143,6 +143,9 @@ namespace WeihanLi.Npoi
                     }
                     return cell.BooleanCellValue.ToString().ToOrDefault(propertyType);
 
+                case CellType.Blank:
+                    return propertyType.GetDefaultValue();
+
                 default:
                     return cell.ToString().ToOrDefault(propertyType);
             }
