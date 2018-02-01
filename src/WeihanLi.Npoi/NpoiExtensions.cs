@@ -33,10 +33,7 @@ namespace WeihanLi.Npoi
         /// <typeparam name="TEntity">EntityType</typeparam>
         /// <param name="sheet">excel sheet</param>
         /// <returns>entity list</returns>
-        public static List<TEntity> ToEntityList<TEntity>([NotNull]this ISheet sheet) where TEntity : new()
-        {
-            return new NpoiHelper<TEntity>().SheetToEntityList(sheet);
-        }
+        public static List<TEntity> ToEntityList<TEntity>([NotNull]this ISheet sheet) where TEntity : new() => new NpoiHelper<TEntity>().SheetToEntityList(sheet);
 
         /// <summary>
         /// import entityList to workbook first sheet
@@ -45,7 +42,7 @@ namespace WeihanLi.Npoi
         /// <param name="workbook">workbook</param>
         /// <param name="list">entityList</param>
         /// <param name="sheetIndex">sheetIndex</param>
-        public static void ImportData<TEntity>([NotNull]this IWorkbook workbook, IReadOnlyList<TEntity> list, int sheetIndex = 0) where TEntity : new()
+        public static int ImportData<TEntity>([NotNull]this IWorkbook workbook, IReadOnlyList<TEntity> list, int sheetIndex = 0) where TEntity : new()
         {
             if (sheetIndex >= ExcelConstants.MaxSheetNum)
             {
@@ -56,8 +53,8 @@ namespace WeihanLi.Npoi
             {
                 workbook.CreateSheet();
             }
-            var sheet = workbook.GetSheetAt(sheetIndex);
-            new NpoiHelper<TEntity>().EntityListToSheet(sheet, list);
+            new NpoiHelper<TEntity>().EntityListToSheet(workbook.GetSheetAt(sheetIndex), list);
+            return 1;
         }
 
         /// <summary>
@@ -66,11 +63,8 @@ namespace WeihanLi.Npoi
         /// <typeparam name="TEntity">EntityType</typeparam>
         /// <param name="sheet">sheet</param>
         /// <param name="list">entityList</param>
-        public static void ImportData<TEntity>([NotNull]this ISheet sheet, IReadOnlyList<TEntity> list)
-            where TEntity : new()
-        {
-            new NpoiHelper<TEntity>().EntityListToSheet(sheet, list);
-        }
+        public static ISheet ImportData<TEntity>([NotNull]this ISheet sheet, IReadOnlyList<TEntity> list)
+            where TEntity : new() => new NpoiHelper<TEntity>().EntityListToSheet(sheet, list);
 
         /// <summary>
         /// import datatable to workbook first sheet
@@ -79,19 +73,18 @@ namespace WeihanLi.Npoi
         /// <param name="workbook">workbook</param>
         /// <param name="dataTable">dataTable</param>
         /// <param name="sheetIndex">sheetIndex</param>
-        public static void ImportData<TEntity>([NotNull]this IWorkbook workbook, DataTable dataTable, int sheetIndex = 0) where TEntity : new()
+        public static int ImportData<TEntity>([NotNull]this IWorkbook workbook, DataTable dataTable, int sheetIndex = 0) where TEntity : new()
         {
             if (sheetIndex >= ExcelConstants.MaxSheetNum)
             {
                 throw new ArgumentException(string.Format(Resource.IndexOutOfRange, nameof(sheetIndex), ExcelConstants.MaxSheetNum), nameof(sheetIndex));
             }
-
             while (workbook.NumberOfSheets <= sheetIndex)
             {
                 workbook.CreateSheet();
             }
-            var sheet = workbook.GetSheetAt(sheetIndex);
-            new NpoiHelper<TEntity>().DataTableToSheet(sheet, dataTable);
+            new NpoiHelper<TEntity>().DataTableToSheet(workbook.GetSheetAt(sheetIndex), dataTable);
+            return 1;
         }
 
         /// <summary>
@@ -100,11 +93,8 @@ namespace WeihanLi.Npoi
         /// <typeparam name="TEntity">EntityType</typeparam>
         /// <param name="sheet">sheet</param>
         /// <param name="dataTable">dataTable</param>
-        public static void ImportData<TEntity>([NotNull]this ISheet sheet, DataTable dataTable)
-            where TEntity : new()
-        {
-            new NpoiHelper<TEntity>().DataTableToSheet(sheet, dataTable);
-        }
+        public static ISheet ImportData<TEntity>([NotNull]this ISheet sheet, DataTable dataTable)
+            where TEntity : new() => new NpoiHelper<TEntity>().DataTableToSheet(sheet, dataTable);
 
         /// <summary>
         /// EntityList2ExcelFile
@@ -112,12 +102,13 @@ namespace WeihanLi.Npoi
         /// <typeparam name="TEntity">EntityType</typeparam>
         /// <param name="entityList">entityList</param>
         /// <param name="excelPath">excelPath</param>
-        public static void ToExcelFile<TEntity>([NotNull] this IReadOnlyList<TEntity> entityList, string excelPath)
+        public static int ToExcelFile<TEntity>([NotNull] this IReadOnlyList<TEntity> entityList, string excelPath)
             where TEntity : new()
         {
             var workbook = ExcelHelper.PrepareWorkbook(excelPath);
             workbook.ImportData(entityList);
             workbook.WriteToFile(excelPath);
+            return 1;
         }
 
         /// <summary>
@@ -215,8 +206,7 @@ namespace WeihanLi.Npoi
         /// <typeparam name="T">Type</typeparam>
         /// <param name="cell">cell</param>
         /// <returns></returns>
-        public static T GetCellValue<T>([NotNull] this ICell cell)
-            => cell.ToString().ToOrDefault<T>();
+        public static T GetCellValue<T>([NotNull] this ICell cell) => cell.ToString().ToOrDefault<T>();
 
         /// <summary>
         /// Write workbook to excel file
