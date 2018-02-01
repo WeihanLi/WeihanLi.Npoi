@@ -39,16 +39,34 @@ namespace WeihanLi.Npoi
         }
 
         /// <summary>
+        /// import entityList to workbook first sheet
+        /// </summary>
+        /// <typeparam name="TEntity">TEntity</typeparam>
+        /// <param name="workbook">workbook</param>
+        /// <param name="list">entityList</param>
+        /// <param name="sheetIndex">sheetIndex</param>
+        public static void ImportData<TEntity>([NotNull] this IWorkbook workbook, IReadOnlyList<TEntity> list, int sheetIndex = 0) where TEntity : new() => workbook.GetSheetAt(sheetIndex).ImportData(list);
+
+        /// <summary>
         /// import entityList to sheet
         /// </summary>
         /// <typeparam name="TEntity">EntityType</typeparam>
         /// <param name="sheet">sheet</param>
         /// <param name="list">entityList</param>
-        public static void ImportData<TEntity>(this ISheet sheet, IReadOnlyList<TEntity> list)
+        public static void ImportData<TEntity>([NotNull] this ISheet sheet, IReadOnlyList<TEntity> list)
             where TEntity : new()
         {
             new NpoiHelper<TEntity>().EntityListToSheet(sheet, list);
         }
+
+        /// <summary>
+        /// import datatable to workbook first sheet
+        /// </summary>
+        /// <typeparam name="TEntity">TEntity</typeparam>
+        /// <param name="workbook">workbook</param>
+        /// <param name="dataTable">dataTable</param>
+        /// <param name="sheetIndex">sheetIndex</param>
+        public static void ImportData<TEntity>([NotNull] this IWorkbook workbook, DataTable dataTable, int sheetIndex = 0) where TEntity : new() => workbook.GetSheetAt(sheetIndex).ImportData<TEntity>(dataTable);
 
         /// <summary>
         /// import datatable to sheet
@@ -56,7 +74,7 @@ namespace WeihanLi.Npoi
         /// <typeparam name="TEntity">EntityType</typeparam>
         /// <param name="sheet">sheet</param>
         /// <param name="dataTable">dataTable</param>
-        public static void ImportData<TEntity>(ISheet sheet, DataTable dataTable)
+        public static void ImportData<TEntity>([NotNull] this ISheet sheet, DataTable dataTable)
             where TEntity : new()
         {
             new NpoiHelper<TEntity>().DataTableToSheet(sheet, dataTable);
