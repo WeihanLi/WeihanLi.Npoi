@@ -30,7 +30,7 @@ namespace WeihanLi.Npoi
             var propertyInfos = type.GetProperties(BindingFlags.Public | BindingFlags.Instance).ToList();
             foreach (var propertyInfo in propertyInfos)
             {
-                if (propertyInfo.GetCustomAttribute<IgnoreAttribute>() == null)
+                if (propertyInfo.GetCustomAttribute<IgnoreAttribute>() != null)
                 {
                     continue;
                 }
@@ -52,7 +52,7 @@ namespace WeihanLi.Npoi
                 {
                     for (var i = 0; i < row.Cells.Count; i++)
                     {
-                        var col = _propertyColumnDictionary.GetColumnAttribute(row.Cells[i].StringCellValue);
+                        var col = _propertyColumnDictionary.GetColumnAttribute(row.Cells[i].StringCellValue.Trim());
                         if (null != col)
                         {
                             col.Index = i;

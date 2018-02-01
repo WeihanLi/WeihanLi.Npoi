@@ -1,7 +1,6 @@
 ﻿using System;
-using System.Data.SqlClient;
-using WeihanLi.Common.Helpers;
-using WeihanLi.Extensions;
+using System.IO;
+using System.Linq;
 using WeihanLi.Npoi;
 using WeihanLi.Npoi.Attributes;
 
@@ -9,22 +8,40 @@ namespace DotNetSample
 {
     internal class Program
     {
-        private static string testDbConnString = "server=.;uid=liweihan;pwd=Admin888;database=AccountingApp";
+        private const string testDbConnString = "server=.;uid=liweihan;pwd=Admin888;database=AccountingApp";
+        private const string FilePath = @"C:\Users\liweihan.TUHU\Desktop\temp\tempFiles\\所有单店.xlsx";
 
         private static void Main(string[] args)
         {
-            var conn = new SqlConnection(testDbConnString);
-            var entityList = conn.Select<TestEntity>("select * from Users");
-            entityList[0].Amount = 0;
-            entityList[0].PasswordHash = "";
-            //var dataTable = entityList.ToDataTable();
-            var result = ExcelHelper.ExportToExcel(ConfigurationHelper.MapPath("test.xlsx"), entityList);
-            var result1 = ExcelHelper.ToEntityList<TestEntity>(ConfigurationHelper.MapPath("test.xlsx"));
-            // 找不到文件
-            //var aaa = ExcelHelper.ToEntityList<TestEntity>("");
-            var entityList1 = conn.Select<TestEntity2>("select * from Bills");
-            var result2 = ExcelHelper.ExportToExcel(ConfigurationHelper.MapPath("test1.xls"), entityList1);
-            entityList1 = ExcelHelper.ToEntityList<TestEntity2>(ConfigurationHelper.MapPath("test1.xls"));
+            //var conn = new SqlConnection(testDbConnString);
+            //var entityList = conn.Select<TestEntity>("select * from Users");
+            //entityList[0].Amount = 0;
+            //entityList[0].PasswordHash = "";
+            ////var dataTable = entityList.ToDataTable();
+            //var result = ExcelHelper.ExportToExcel(ConfigurationHelper.MapPath("test.xlsx"), entityList);
+            //var result1 = ExcelHelper.ToEntityList<TestEntity>(ConfigurationHelper.MapPath("test.xlsx"));
+            //// 找不到文件
+            ////var aaa = ExcelHelper.ToEntityList<TestEntity>("");
+            //var entityList1 = conn.Select<TestEntity2>("select * from Bills");
+            //var result2 = ExcelHelper.ExportToExcel(ConfigurationHelper.MapPath("test1.xls"), entityList1);
+            //entityList1 = ExcelHelper.ToEntityList<TestEntity2>(ConfigurationHelper.MapPath("test1.xls"));
+            //
+
+            var entityList = ExcelHelper.ToEntityList<Model>(FilePath).Where(_ => !string.IsNullOrWhiteSpace(_.HotelId)).ToArray();
+            if (entityList.Length > 0)
+            {
+                var dir = Path.GetDirectoryName(FilePath);
+                foreach (var group in entityList.GroupBy(e => new
+                {
+                    HotelId = e.HotelId.Trim(),
+                    HotelName = e.HotelName.Trim()
+                }))
+                {
+                    var path = $"{dir}\\{group.Key.HotelName}.xlsx";
+                    group.ToArray().ToExcelFile(path);
+                }
+                Console.WriteLine("Success");
+            }
             Console.ReadLine();
         }
     }
