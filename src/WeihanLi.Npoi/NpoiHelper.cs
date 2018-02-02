@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Linq;
 using System.Reflection;
 using JetBrains.Annotations;
 using NPOI.SS.UserModel;
-using WeihanLi.Extensions;
 using WeihanLi.Npoi.Attributes;
 
 namespace WeihanLi.Npoi
@@ -27,17 +25,25 @@ namespace WeihanLi.Npoi
         private IDictionary<PropertyInfo, ColumnAttribute> GetMapping(Type type)
         {
             var dic = new Dictionary<PropertyInfo, ColumnAttribute>();
-            var propertyInfos = type.GetProperties(BindingFlags.Public | BindingFlags.Instance).ToList();
+            var propertyInfos = type.GetProperties(BindingFlags.Public | BindingFlags.Instance);
+            var colIndexList = new List<int>(propertyInfos.Length);
             foreach (var propertyInfo in propertyInfos)
             {
                 if (propertyInfo.GetCustomAttribute<IgnoreAttribute>() != null)
                 {
                     continue;
                 }
-                var attribute = propertyInfo.GetCustomAttribute<ColumnAttribute>() ?? new ColumnAttribute(propertyInfo.Name);
-                dic.Add(propertyInfo, attribute);
+                var column = propertyInfo.GetCustomAttribute<ColumnAttribute>() ?? new ColumnAttribute(propertyInfo.Name);
+
+                // Adjust column index to avoid conflict index
+                while (colIndexList.Contains(column.Index))
+                {
+                    column.Index++;
+                }
+                colIndexList.Add(column.Index);
+
+                dic.Add(propertyInfo, column);
             }
-            // TODO:Adjust column index
             return dic;
         }
 
@@ -118,7 +124,6 @@ namespace WeihanLi.Npoi
             }
 
             var headerRow = sheet.CreateRow(_sheetSetting.HeaderRowIndex);
-            // TODO:Adjust column index to avoid conflict index
             for (var i = 0; i < _propertyColumnDictionary.Keys.Count; i++)
             {
                 headerRow.CreateCell(_propertyColumnDictionary.GetColumnAttribute(i).Index).SetCellValue(_propertyColumnDictionary.GetColumnAttribute(i).Title);
