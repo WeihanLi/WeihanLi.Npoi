@@ -9,7 +9,7 @@ namespace DotNetSample
     internal class Program
     {
         private const string testDbConnString = "server=.;uid=liweihan;pwd=Admin888;database=AccountingApp";
-        private const string FilePath = @"C:\Users\liweihan.TUHU\Desktop\temp\tempFiles\\所有单店.xlsx";
+        private const string FilePath = @"C:\Users\liweihan.TUHU\Desktop\temp\tempFiles\\AllStores.xlsx";
 
         private static void Main(string[] args)
         {
@@ -36,7 +36,7 @@ namespace DotNetSample
                     HotelName = e.HotelName.Trim()
                 }))
                 {
-                    var path = $"{dir}\\{group.Key.HotelName}-1月对账单.xlsx";
+                    var path = $"{dir}\\sub\\{group.Key.HotelName}-1月对账单.xlsx";
                     group.ToArray().ToExcelFile(path);
                 }
                 Console.WriteLine("Success");
