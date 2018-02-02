@@ -20,10 +20,10 @@ namespace DotNetSample
         [Column(nameof(房型名称), Index = 4)]
         public string 房型名称 { get; set; }
 
-        [Column(nameof(入住日期), Index = 5)]
+        [Column(nameof(入住日期), Index = 5, Formatter = "yyyy/M/d")]
         public DateTime 入住日期 { get; set; }
 
-        [Column(nameof(离店日期), Index = 6)]
+        [Column(nameof(离店日期), Index = 6, Formatter = "yyyy/M/d")]
         public DateTime 离店日期 { get; set; }
 
         [Column(nameof(间夜), Index = 7)]

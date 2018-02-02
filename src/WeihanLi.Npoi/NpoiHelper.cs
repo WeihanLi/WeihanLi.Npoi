@@ -33,7 +33,12 @@ namespace WeihanLi.Npoi
                 {
                     continue;
                 }
-                var column = propertyInfo.GetCustomAttribute<ColumnAttribute>() ?? new ColumnAttribute(propertyInfo.Name);
+                var column = propertyInfo.GetCustomAttribute<ColumnAttribute>() ?? new ColumnAttribute();
+
+                if (string.IsNullOrWhiteSpace(column.Title))
+                {
+                    column.Title = propertyInfo.Name;
+                }
 
                 // Adjust column index to avoid conflict index
                 while (colIndexList.Contains(column.Index))
@@ -103,7 +108,8 @@ namespace WeihanLi.Npoi
                 var row = sheet.CreateRow(k++);
                 for (var j = 0; j < dataTable.Columns.Count; j++)
                 {
-                    row.CreateCell(_propertyColumnDictionary.GetColumnAttributeByPropertyName(dataTable.Columns[j].ColumnName).Index).SetCellValue(dataTable.Rows[i][j]);
+                    var col = _propertyColumnDictionary.GetColumnAttributeByPropertyName(dataTable.Columns[j].ColumnName);
+                    row.CreateCell(col.Index).SetCellValue(dataTable.Rows[i][j], col.Formatter);
                 }
             }
 
@@ -126,7 +132,8 @@ namespace WeihanLi.Npoi
             var headerRow = sheet.CreateRow(_sheetSetting.HeaderRowIndex);
             for (var i = 0; i < _propertyColumnDictionary.Keys.Count; i++)
             {
-                headerRow.CreateCell(_propertyColumnDictionary.GetColumnAttribute(i).Index).SetCellValue(_propertyColumnDictionary.GetColumnAttribute(i).Title);
+                var col = _propertyColumnDictionary.GetColumnAttribute(i);
+                headerRow.CreateCell(col.Index).SetCellValue(col.Title);
             }
 
             for (int i = 0, k = _sheetSetting.StartRowIndex; i < entityList.Count; i++)
@@ -135,7 +142,8 @@ namespace WeihanLi.Npoi
                 for (var j = 0; j < _propertyColumnDictionary.Keys.Count; j++)
                 {
                     var property = _propertyColumnDictionary.GetPropertyInfo(j);
-                    row.CreateCell(_propertyColumnDictionary.GetColumnAttribute(j).Index).SetCellValue(property.GetValue(entityList[i]));
+                    var col = _propertyColumnDictionary.GetColumnAttribute(j);
+                    row.CreateCell(col.Index).SetCellValue(property.GetValue(entityList[i]), col.Formatter);
                 }
             }
 

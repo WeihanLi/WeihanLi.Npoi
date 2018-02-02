@@ -116,18 +116,18 @@ namespace WeihanLi.Npoi
         /// </summary>
         /// <param name="cell">ICell</param>
         /// <param name="value">value</param>
-        public static void SetCellValue([NotNull]this ICell cell, object value)
+        /// <param name="formatter">formatter</param>
+        public static void SetCellValue([NotNull]this ICell cell, object value, string formatter = null)
         {
             if (null == value)
             {
-                cell.SetCellType(CellType.String);
-                cell.SetCellValue("");
+                cell.SetCellType(CellType.Blank);
                 return;
             }
             if (value is DateTime time)
             {
                 cell.SetCellType(CellType.String);
-                cell.SetCellValue(time.ToStandardTimeString());
+                cell.SetCellValue(string.IsNullOrWhiteSpace(formatter) ? time.ToStandardTimeString() : time.ToString(formatter));
             }
             var type = value.GetType().Unwrap();
             if (

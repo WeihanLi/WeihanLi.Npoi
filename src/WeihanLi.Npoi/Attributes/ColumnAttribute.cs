@@ -13,7 +13,16 @@ namespace WeihanLi.Npoi.Attributes
         /// <summary>
         /// ColumnTitle
         /// </summary>
-        public string Title { get; }
+        public string Title { get; set; }
+
+        /// <summary>
+        /// Formatter
+        /// </summary>
+        public string Formatter { get; set; }
+
+        public ColumnAttribute()
+        {
+        }
 
         public ColumnAttribute(string title) => Title = title;
     }
