@@ -1,4 +1,8 @@
-# WeihanLi.Npoi [![Build Status](https://travis-ci.org/WeihanLi/WeihanLi.Npoi.svg?branch=master)](https://travis-ci.org/WeihanLi/WeihanLi.Npoi)
+# WeihanLi.Npoi [![WeihanLi.Common](https://img.shields.io/nuget/v/WeihanLi.Npoi.svg)](https://www.nuget.org/packages/WeihanLi.Npoi/)
+
+## Build
+
+[![Build Status](https://travis-ci.org/WeihanLi/WeihanLi.Npoi.svg?branch=master)](https://travis-ci.org/WeihanLi/WeihanLi.Npoi)
 
 ## Intro
 
