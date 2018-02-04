@@ -128,8 +128,9 @@ namespace WeihanLi.Npoi
             {
                 cell.SetCellType(CellType.String);
                 cell.SetCellValue(string.IsNullOrWhiteSpace(formatter) ? time.ToStandardTimeString() : time.ToString(formatter));
+                return;
             }
-            var type = value.GetType().Unwrap();
+            var type = value.GetType();
             if (
                 type == typeof(double) ||
                 type == typeof(int) ||
