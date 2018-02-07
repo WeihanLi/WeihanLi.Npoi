@@ -1,13 +1,10 @@
-﻿using System;
-
-namespace WeihanLi.Npoi.Attributes
+﻿namespace WeihanLi.Npoi.Settings
 {
     /// <summary>
-    /// Excel 信息
+    /// Excel 设置
     /// SummaryInfo
     /// </summary>
-    [AttributeUsage(AttributeTargets.Class)]
-    public sealed class ExcelAttribute : Attribute
+    public sealed class ExcelSetting
     {
         public string Author { get; set; }
 
@@ -17,7 +14,7 @@ namespace WeihanLi.Npoi.Attributes
 
         public string Subject { get; set; }
 
-        public ExcelAttribute()
+        public ExcelSetting()
         {
             Author = "WeihanLi";
             Title = "WeihanLi.Npoi Generated";

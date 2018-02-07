@@ -29,7 +29,7 @@ namespace WeihanLi.Npoi
             var colIndexList = new List<int>(propertyInfos.Length);
             foreach (var propertyInfo in propertyInfos)
             {
-                if (propertyInfo.GetCustomAttribute<IgnoreAttribute>() != null)
+                if (propertyInfo.IsDefined(typeof(IgnoreAttribute)))
                 {
                     continue;
                 }

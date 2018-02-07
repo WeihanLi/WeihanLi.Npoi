@@ -102,12 +102,85 @@ namespace WeihanLi.Npoi
         /// <typeparam name="TEntity">EntityType</typeparam>
         /// <param name="entityList">entityList</param>
         /// <param name="excelPath">excelPath</param>
-        public static int ToExcelFile<TEntity>([NotNull] this IReadOnlyList<TEntity> entityList, string excelPath)
+        public static int ToExcelFile<TEntity>([NotNull] this IReadOnlyList<TEntity> entityList, [NotNull]string excelPath)
             where TEntity : new()
         {
             var workbook = ExcelHelper.PrepareWorkbook(excelPath);
             workbook.ImportData(entityList);
             workbook.WriteToFile(excelPath);
+            return 1;
+        }
+
+        /// <summary>
+        /// EntityList2ExcelStream
+        /// </summary>
+        /// <typeparam name="TEntity">EntityType</typeparam>
+        /// <param name="entityList">entityList</param>
+        /// <param name="stream">要写入</param>
+        public static int ToExcelStream<TEntity>([NotNull] this IReadOnlyList<TEntity> entityList, [NotNull]Stream stream)
+            where TEntity : new()
+        {
+            var workbook = ExcelHelper.PrepareWorkbook();
+            workbook.ImportData(entityList);
+            workbook.Write(stream);
+            return 1;
+        }
+
+        /// <summary>
+        /// 将DataTable内容导出到Excel
+        /// </summary>
+        /// <param name="dataTable">dataTable</param>
+        /// <param name="excelPath">excelPath</param>
+        /// <returns></returns>
+        public static int ToExcelFile([NotNull] this DataTable dataTable, [NotNull] string excelPath)
+        {
+            var workbook = ExcelHelper.PrepareWorkbook(excelPath);
+            var sheet = workbook.CreateSheet();
+            var headerRow = sheet.CreateRow(0);
+            for (var i = 0; i < dataTable.Columns.Count; i++)
+            {
+                headerRow.CreateCell(i, CellType.String).SetCellValue(dataTable.Columns[i].ColumnName);
+            }
+
+            for (var i = 1; i <= dataTable.Rows.Count; i++)
+            {
+                var row = sheet.CreateRow(i);
+                for (var j = 0; j < dataTable.Columns.Count; j++)
+                {
+                    row.CreateCell(j, CellType.String).SetCellValue(dataTable.Rows[i - 1][j]);
+                }
+            }
+
+            workbook.WriteToFile(excelPath);
+            return 1;
+        }
+
+        /// <summary>
+        /// DataTable2ExcelStream
+        /// </summary>
+        /// <param name="dataTable">datatable</param>
+        /// <param name="stream">stream</param>
+        /// <returns></returns>
+        public static int ToExcelStream([NotNull] this DataTable dataTable, [NotNull] Stream stream)
+        {
+            var workbook = ExcelHelper.PrepareWorkbook();
+            var sheet = workbook.CreateSheet();
+            var headerRow = sheet.CreateRow(0);
+            for (var i = 0; i < dataTable.Columns.Count; i++)
+            {
+                headerRow.CreateCell(i, CellType.String).SetCellValue(dataTable.Columns[i].ColumnName);
+            }
+
+            for (var i = 1; i <= dataTable.Rows.Count; i++)
+            {
+                var row = sheet.CreateRow(i);
+                for (var j = 0; j < dataTable.Columns.Count; j++)
+                {
+                    row.CreateCell(j, CellType.String).SetCellValue(dataTable.Rows[i][j]);
+                }
+            }
+
+            workbook.Write(stream);
             return 1;
         }
 
@@ -127,7 +200,9 @@ namespace WeihanLi.Npoi
             if (value is DateTime time)
             {
                 cell.SetCellType(CellType.String);
-                cell.SetCellValue(string.IsNullOrWhiteSpace(formatter) ? time.ToStandardTimeString() : time.ToString(formatter));
+                cell.SetCellValue(string.IsNullOrWhiteSpace(formatter) ?
+                    (time.Date == time ? time.ToStandardDateString() : time.ToStandardTimeString())
+                    : time.ToString(formatter));
                 return;
             }
             var type = value.GetType();
@@ -171,12 +246,20 @@ namespace WeihanLi.Npoi
                 case CellType.Numeric:
                     if (DateUtil.IsCellDateFormatted(cell))
                     {
-                        return cell.DateCellValue;
+                        if (propertyType == typeof(DateTime))
+                        {
+                            return cell.DateCellValue;
+                        }
+                        return cell.DateCellValue == cell.DateCellValue.Date
+                            ? cell.DateCellValue.ToStandardDateString().ToOrDefault(propertyType)
+                            : cell.DateCellValue.ToStandardTimeString().ToOrDefault(propertyType);
                     }
                     if (propertyType == typeof(double))
                     {
                         return cell.NumericCellValue;
                     }
+                    // ReSharper disable once SpecifyACultureInStringConversionExplicitly
+                    // HACK:直接 ToOrDefault() 时，double 转换为 decimal 转换后还是 double
                     return cell.NumericCellValue.ToString().ToOrDefault(propertyType);
 
                 case CellType.String:
@@ -207,7 +290,14 @@ namespace WeihanLi.Npoi
         /// <typeparam name="T">Type</typeparam>
         /// <param name="cell">cell</param>
         /// <returns></returns>
-        public static T GetCellValue<T>([NotNull] this ICell cell) => cell.ToString().ToOrDefault<T>();
+        public static T GetCellValue<T>([NotNull] this ICell cell)
+        {
+            if (cell.CellType == CellType.Numeric && DateUtil.IsCellDateFormatted(cell))
+            {
+                return cell.DateCellValue.Date == cell.DateCellValue ? cell.DateCellValue.ToStandardDateString().ToOrDefault<T>() : cell.DateCellValue.ToStandardTimeString().ToOrDefault<T>();
+            }
+            return cell.ToString().ToOrDefault<T>();
+        }
 
         /// <summary>
         /// Write workbook to excel file

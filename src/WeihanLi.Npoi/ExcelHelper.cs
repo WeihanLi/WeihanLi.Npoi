@@ -2,14 +2,13 @@
 using System.Collections.Generic;
 using System.Data;
 using System.IO;
-using System.Reflection;
 using JetBrains.Annotations;
 using NPOI.HPSF;
 using NPOI.HSSF.UserModel;
 using NPOI.SS.UserModel;
 using NPOI.XSSF.UserModel;
 using WeihanLi.Extensions;
-using WeihanLi.Npoi.Attributes;
+using WeihanLi.Npoi.Settings;
 
 namespace WeihanLi.Npoi
 {
@@ -48,7 +47,7 @@ namespace WeihanLi.Npoi
         /// </summary>
         /// <param name="excelPath">excel路径</param>
         /// <returns>workbook</returns>
-        public static IWorkbook LoadExcel(string excelPath)
+        public static IWorkbook LoadExcel([NotNull]string excelPath)
         {
             if (!ValidateExcelFilePath(excelPath, out var msg))
                 throw new ArgumentException(msg);
@@ -64,52 +63,48 @@ namespace WeihanLi.Npoi
         /// </summary>
         /// <param name="excelPath">excelPath</param>
         /// <returns></returns>
-        public static IWorkbook PrepareWorkbook(string excelPath)
-        {
-            if (!ValidateExcelFilePath(excelPath, out var msg, true))
-                throw new ArgumentException(msg);
-            var excelSetting = new ExcelAttribute();
-            if (Path.GetExtension(excelPath).EqualsIgnoreCase(".xlsx"))
-            {
-                var workbook = new XSSFWorkbook();
-                var props = workbook.GetProperties();
-                props.CoreProperties.Creator = excelSetting.Author;
-                props.CoreProperties.Created = DateTime.Now;
-                props.CoreProperties.Title = excelSetting.Title;
-                props.CoreProperties.Subject = excelSetting.Subject;
-                props.CoreProperties.Description = excelSetting.Description;
-                // Set ExtendedProperties
-                // https://svn.apache.org/repos/asf/poi/trunk/src/examples/src/org/apache/poi/xssf/usermodel/examples/WorkbookProperties.java
-                props.ExtendedProperties.GetUnderlyingProperties().Application = ExcelConstants.ApplicationName;
-
-                return workbook;
-            }
-            else
-            {
-                var workbook = new HSSFWorkbook();
-                var si = PropertySetFactory.CreateSummaryInformation();
-                si.Title = excelSetting.Title;
-                si.Subject = excelSetting.Subject;
-                si.Author = excelSetting.Author;
-                si.CreateDateTime = DateTime.Now;
-                si.Comments = excelSetting.Description;
-                si.ApplicationName = ExcelConstants.ApplicationName;
-                workbook.SummaryInformation = si;
-                return workbook;
-            }
-        }
+        public static IWorkbook PrepareWorkbook([NotNull] string excelPath) => PrepareWorkbook(excelPath, null);
 
         /// <summary>
         /// 为导出准备 workbook
         /// </summary>
         /// <param name="excelPath">excelPath</param>
+        /// <param name="excelSetting">excelSetting</param>
         /// <returns></returns>
-        public static IWorkbook PrepareWorkbook<TEntity>(string excelPath)
+        public static IWorkbook PrepareWorkbook(string excelPath, ExcelSetting excelSetting)
         {
             if (!ValidateExcelFilePath(excelPath, out var msg, true))
                 throw new ArgumentException(msg);
-            var excelSetting = typeof(TEntity).GetCustomAttribute<ExcelAttribute>() ?? new ExcelAttribute();
-            if (Path.GetExtension(excelPath).EqualsIgnoreCase(".xlsx"))
+            return PrepareWorkbook(Path.GetExtension(excelPath).EqualsIgnoreCase(".xlsx"), excelSetting);
+        }
+
+        /// <summary>
+        /// 获取一个 Excel Workbook（xlsx格式）
+        /// </summary>
+        /// <returns></returns>
+        public static IWorkbook PrepareWorkbook() => PrepareWorkbook(true);
+
+        /// <summary>
+        /// 获取一个Excel workbook
+        /// </summary>
+        /// <param name="isXlsx">是否是 Xlsx 格式</param>
+        /// <returns></returns>
+        public static IWorkbook PrepareWorkbook(bool isXlsx) =>
+            PrepareWorkbook(isXlsx, null);
+
+        /// <summary>
+        /// 获取一个Excel workbook
+        /// </summary>
+        /// <param name="isXlsx">是否是 Xlsx 格式</param>
+        /// <param name="excelSetting">excelSettings</param>
+        /// <returns></returns>
+        public static IWorkbook PrepareWorkbook(bool isXlsx, ExcelSetting excelSetting)
+        {
+            if (null == excelSetting)
+            {
+                excelSetting = new ExcelSetting();
+            }
+            if (isXlsx)
             {
                 var workbook = new XSSFWorkbook();
                 var props = workbook.GetProperties();
@@ -163,5 +158,51 @@ namespace WeihanLi.Npoi
         /// <returns>DataTable</returns>
         public static DataTable ToDataTable<TEntity>(string excelPath, int sheetIndex = 0) where TEntity : new()
             => ToEntityList<TEntity>(excelPath, sheetIndex).ToDataTable();
+
+        /// <summary>
+        /// 读取Excel内容到DataTable中
+        /// </summary>
+        /// <param name="excelPath">excelPath</param>
+        /// <param name="sheetIndex">sheetIndex，默认是0</param>
+        /// <param name="headerRowIndex">列首行 headerRowIndex</param>
+        /// <returns>DataTable</returns>
+        public static DataTable ToDataTable(string excelPath, int sheetIndex = 0, int headerRowIndex = 0)
+        {
+            var workbook = LoadExcel(excelPath);
+            var dataTable = new DataTable();
+            if (workbook.NumberOfSheets <= sheetIndex)
+            {
+                throw new ArgumentOutOfRangeException(nameof(sheetIndex), string.Format(Resource.IndexOutOfRange, nameof(sheetIndex), workbook.NumberOfSheets));
+            }
+            var sheet = workbook.GetSheetAt(sheetIndex);
+            var rowEnumerator = sheet.GetRowEnumerator();
+            while (rowEnumerator.MoveNext())
+            {
+                var row = (IRow)rowEnumerator.Current;
+                if (row.RowNum < headerRowIndex)
+                {
+                    continue;
+                }
+
+                if (row.RowNum == headerRowIndex)
+                {
+                    foreach (var cell in row.Cells)
+                    {
+                        dataTable.Columns.Add(cell.StringCellValue.Trim());
+                    }
+                }
+                else
+                {
+                    var dataRow = dataTable.NewRow();
+                    for (var i = 0; i < row.Cells.Count; i++)
+                    {
+                        dataRow[i] = row.Cells[i].GetCellValue(typeof(string));
+                    }
+
+                    dataTable.Rows.Add(dataRow);
+                }
+            }
+            return dataTable;
+        }
     }
 }

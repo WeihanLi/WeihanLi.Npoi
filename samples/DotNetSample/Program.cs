@@ -1,19 +1,20 @@
 ﻿using System;
-using System.IO;
-using System.Linq;
+using System.Data.SqlClient;
+using WeihanLi.Extensions;
 using WeihanLi.Npoi;
 using WeihanLi.Npoi.Attributes;
 
+// ReSharper disable LocalizableElement
+
 namespace DotNetSample
 {
-    internal class Program
+    public class Program
     {
-        private const string testDbConnString = "server=.;uid=liweihan;pwd=Admin888;database=AccountingApp";
         private const string FilePath = @"C:\Users\liweihan.TUHU\Desktop\temp\tempFiles\\AllStores.xlsx";
 
-        private static void Main(string[] args)
+        public static void Main(string[] args)
         {
-            //var conn = new SqlConnection(testDbConnString);
+            //var conn = new SqlConnection("server=.;uid=liweihan;pwd=Admin888;database=AccountingApp");
             //var entityList = conn.Select<TestEntity>("select * from Users");
             //entityList[0].Amount = 0;
             //entityList[0].PasswordHash = "";
@@ -26,20 +27,30 @@ namespace DotNetSample
             //var result2 = entityList1.ToExcelFile(ConfigurationHelper.MapPath("test1.xls"));
             //entityList1 = ExcelHelper.ToEntityList<TestEntity2>(ConfigurationHelper.MapPath("test1.xls"));
 
-            var entityList = ExcelHelper.ToEntityList<Model>(FilePath).Where(_ => !string.IsNullOrWhiteSpace(_.HotelId)).ToArray();
-            if (entityList.Length > 0)
+            //var entityList2 = ExcelHelper.ToEntityList<Model>(FilePath).Where(_ => !string.IsNullOrWhiteSpace(_.HotelId)).ToArray();
+            //if (entityList2.Length > 0)
+            //{
+            //    var dir = Path.GetDirectoryName(FilePath);
+            //    foreach (var group in entityList2.GroupBy(e => new
+            //    {
+            //        HotelId = e.HotelId.Trim(),
+            //        HotelName = e.HotelName.Trim()
+            //    }))
+            //    {
+            //        var path = $"{dir}\\sub\\{group.Key.HotelName}-1月对账单.xlsx";
+            //        group.ToArray().ToExcelFile(path);
+            //    }
+            //    Console.WriteLine("Success");
+            //}
+
+            var table = ExcelHelper.ToDataTable(FilePath);
+            //Console.WriteLine(table.Rows.Count);
+
+            //Console.WriteLine(table.ToExcelFile(FilePath.Replace("AllStores", "AllStores1")));
+
+            using (var connection = new SqlConnection("server=.;uid=liweihan;pwd=Admin888;database=TestDb"))
             {
-                var dir = Path.GetDirectoryName(FilePath);
-                foreach (var group in entityList.GroupBy(e => new
-                {
-                    HotelId = e.HotelId.Trim(),
-                    HotelName = e.HotelName.Trim()
-                }))
-                {
-                    var path = $"{dir}\\sub\\{group.Key.HotelName}-1月对账单.xlsx";
-                    group.ToArray().ToExcelFile(path);
-                }
-                Console.WriteLine("Success");
+                Console.WriteLine($"导入结果：{connection.BulkCopy(table, "testBulkCopy")}");
             }
             Console.ReadLine();
         }
