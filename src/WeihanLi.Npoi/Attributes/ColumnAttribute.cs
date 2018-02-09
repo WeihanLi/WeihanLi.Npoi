@@ -1,29 +1,42 @@
 ﻿using System;
+using WeihanLi.Npoi.Settings;
 
 namespace WeihanLi.Npoi.Attributes
 {
     [AttributeUsage(AttributeTargets.Property)]
     public sealed class ColumnAttribute : Attribute
     {
+        internal PropertySetting PropertySetting { get; }
+
         /// <summary>
         /// ColumnIndex
         /// </summary>
-        public int Index { get; set; }
+        public int Index { get => PropertySetting.ColumnIndex; set => PropertySetting.ColumnIndex = value; }
 
         /// <summary>
         /// ColumnTitle
         /// </summary>
-        public string Title { get; set; }
+        public string Title { get => PropertySetting.ColumnTitle; set => PropertySetting.ColumnTitle = value; }
 
         /// <summary>
         /// Formatter
         /// </summary>
-        public string Formatter { get; set; }
+        public string Formatter { get => PropertySetting.ColumnFormatter; set => PropertySetting.ColumnFormatter = value; }
 
-        public ColumnAttribute()
+        /// <summary>
+        /// IsIgnored
+        /// </summary>
+        public bool IsIgnored
         {
+            get => PropertySetting.IsIgnored;
+            set => PropertySetting.IsIgnored = value;
         }
 
-        public ColumnAttribute(string title) => Title = title;
+        public ColumnAttribute() => PropertySetting = new PropertySetting();
+
+        public ColumnAttribute(string title) => PropertySetting = new PropertySetting
+        {
+            ColumnTitle = title
+        };
     }
 }

@@ -1,16 +1,21 @@
 ﻿using System;
+using WeihanLi.Npoi.Settings;
 
 namespace WeihanLi.Npoi.Attributes
 {
     [AttributeUsage(AttributeTargets.Class)]
     public sealed class SheetAttribute : Attribute
     {
-        public string SheetName { get; }
+        public int SheetIndex { get => SheetSetting.SheetIndex; set => SheetSetting.SheetIndex = value; }
 
-        public int StartRowIndex { get; set; } = 1;
+        public string SheetName { get => SheetSetting.SheetName; set => SheetSetting.SheetName = value; }
 
-        public int HeaderRowIndex => StartRowIndex - 1;
+        public int StartRowIndex { get => SheetSetting.StartRowIndex; set => SheetSetting.StartRowIndex = value; }
 
-        public SheetAttribute(string sheetName) => SheetName = sheetName;
+        public int HeaderRowIndex => SheetSetting.HeaderRowIndex;
+
+        internal SheetSetting SheetSetting { get; }
+
+        public SheetAttribute() => SheetSetting = new SheetSetting();
     }
 }

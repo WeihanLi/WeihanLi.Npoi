@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Data.SqlClient;
-using WeihanLi.Extensions;
 using WeihanLi.Npoi;
 using WeihanLi.Npoi.Attributes;
 
@@ -43,15 +41,32 @@ namespace DotNetSample
             //    Console.WriteLine("Success");
             //}
 
-            var table = ExcelHelper.ToDataTable(FilePath);
-            //Console.WriteLine(table.Rows.Count);
+            //var table = ExcelHelper.ToDataTable(FilePath);
+            ////Console.WriteLine(table.Rows.Count);
 
-            //Console.WriteLine(table.ToExcelFile(FilePath.Replace("AllStores", "AllStores1")));
+            ////Console.WriteLine(table.ToExcelFile(FilePath.Replace("AllStores", "AllStores1")));
 
-            using (var connection = new SqlConnection("server=.;uid=liweihan;pwd=Admin888;database=TestDb"))
-            {
-                Console.WriteLine($"导入结果：{connection.BulkCopy(table, "testBulkCopy")}");
-            }
+            //using (var connection = new SqlConnection("server=.;uid=liweihan;pwd=Admin888;database=TestDb"))
+            //{
+            //    Console.WriteLine($"导入结果：{connection.BulkCopy(table, "testBulkCopy")}");
+            //}
+
+            var setting = ExcelHelper.SettingFor<TestEntity>();
+            // ExcelSetting
+            setting.ExcelSetting
+                .HasAuthor("WeihanLi")
+                .HasTitle("WeihanLi.Npoi")
+                .HasDescription("")
+                .HasSubject("");
+
+            setting.Property(_ => _.Amount)
+                .HasColumnTitle("可用余额")
+                .HasColumnIndex(2);
+
+            setting.Property(_ => _.Username)
+                .HasColumnTitle("用户名")
+                .HasColumnIndex(0);
+
             Console.ReadLine();
         }
     }

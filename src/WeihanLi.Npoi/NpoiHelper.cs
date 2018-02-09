@@ -1,30 +1,41 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 using System.Reflection;
 using JetBrains.Annotations;
 using NPOI.SS.UserModel;
 using WeihanLi.Npoi.Attributes;
+using WeihanLi.Npoi.Configurations;
+using WeihanLi.Npoi.Settings;
 
 namespace WeihanLi.Npoi
 {
     internal class NpoiHelper<TEntity> where TEntity : new()
     {
-        private readonly IDictionary<PropertyInfo, ColumnAttribute> _propertyColumnDictionary;
-        private readonly SheetAttribute _sheetSetting;
+        private readonly IDictionary<PropertyInfo, PropertySetting> _propertyColumnDictionary;
+        private readonly SheetSetting _sheetSetting;
 
         internal NpoiHelper()
         {
-            _sheetSetting = typeof(TEntity).GetCustomAttribute<SheetAttribute>() ??
-                             new SheetAttribute("");
+            _sheetSetting = (typeof(TEntity).GetCustomAttribute<SheetAttribute>() ??
+                             new SheetAttribute()).SheetSetting;
 
-            _propertyColumnDictionary = TypeCache.TypeMapCacheDictory.GetOrAdd(typeof(TEntity),
+            _propertyColumnDictionary = TypeCache.TypePropertySettingDictionary.GetOrAdd(typeof(TEntity),
                 GetMapping);
         }
 
-        private IDictionary<PropertyInfo, ColumnAttribute> GetMapping(Type type)
+        internal NpoiHelper(ExcelConfiguration<TEntity> excelConfiguration)
         {
-            var dic = new Dictionary<PropertyInfo, ColumnAttribute>();
+            _sheetSetting = (excelConfiguration.SheetSettings[0] as SheetConfiguration)?.SheetSetting;
+            _propertyColumnDictionary = excelConfiguration.PropertyConfigurationDictionary.Select(_ =>
+                new KeyValuePair<PropertyInfo, PropertySetting>(_.Key,
+                    (_.Value as PropertyConfiguration)?.PropertySetting)).ToDictionary(_ => _.Key, _ => _.Value);
+        }
+
+        private IDictionary<PropertyInfo, PropertySetting> GetMapping(Type type)
+        {
+            var dic = new Dictionary<PropertyInfo, PropertySetting>();
             var propertyInfos = type.GetProperties(BindingFlags.Public | BindingFlags.Instance);
             var colIndexList = new List<int>(propertyInfos.Length);
             foreach (var propertyInfo in propertyInfos)
@@ -34,7 +45,10 @@ namespace WeihanLi.Npoi
                     continue;
                 }
                 var column = propertyInfo.GetCustomAttribute<ColumnAttribute>() ?? new ColumnAttribute();
-
+                if (column.IsIgnored)
+                {
+                    continue;
+                }
                 if (string.IsNullOrWhiteSpace(column.Title))
                 {
                     column.Title = propertyInfo.Name;
@@ -47,7 +61,7 @@ namespace WeihanLi.Npoi
                 }
                 colIndexList.Add(column.Index);
 
-                dic.Add(propertyInfo, column);
+                dic.Add(propertyInfo, column.PropertySetting);
             }
             return dic;
         }
@@ -63,10 +77,10 @@ namespace WeihanLi.Npoi
                 {
                     for (var i = 0; i < row.Cells.Count; i++)
                     {
-                        var col = _propertyColumnDictionary.GetColumnAttribute(row.Cells[i].StringCellValue.Trim());
+                        var col = _propertyColumnDictionary.GetPropertySetting(row.Cells[i].StringCellValue.Trim());
                         if (null != col)
                         {
-                            col.Index = i;
+                            col.ColumnIndex = i;
                         }
                     }
                 }
@@ -77,7 +91,7 @@ namespace WeihanLi.Npoi
                     {
                         var propertyInfo = _propertyColumnDictionary.GetPropertyInfo(i);
                         propertyInfo.SetValue(entity,
-                            row.Cells[_propertyColumnDictionary.GetColumnAttribute(i).Index]
+                            row.Cells[_propertyColumnDictionary.GetPropertySetting(i).ColumnIndex]
                                 .GetCellValue(propertyInfo.PropertyType));
                     }
 
@@ -96,10 +110,10 @@ namespace WeihanLi.Npoi
             var headerRow = sheet.CreateRow(0);
             for (var i = 0; i < dataTable.Columns.Count; i++)
             {
-                var col = _propertyColumnDictionary.GetColumnAttributeByPropertyName(dataTable.Columns[i].ColumnName);
+                var col = _propertyColumnDictionary.GetPropertySettingByPropertyName(dataTable.Columns[i].ColumnName);
                 if (null != col)
                 {
-                    headerRow.CreateCell(col.Index).SetCellValue(col.Title);
+                    headerRow.CreateCell(col.ColumnIndex).SetCellValue(col.ColumnTitle);
                 }
             }
 
@@ -108,8 +122,8 @@ namespace WeihanLi.Npoi
                 var row = sheet.CreateRow(k++);
                 for (var j = 0; j < dataTable.Columns.Count; j++)
                 {
-                    var col = _propertyColumnDictionary.GetColumnAttributeByPropertyName(dataTable.Columns[j].ColumnName);
-                    row.CreateCell(col.Index).SetCellValue(dataTable.Rows[i][j], col.Formatter);
+                    var col = _propertyColumnDictionary.GetPropertySettingByPropertyName(dataTable.Columns[j].ColumnName);
+                    row.CreateCell(col.ColumnIndex).SetCellValue(dataTable.Rows[i][j], col.ColumnFormatter);
                 }
             }
 
@@ -132,8 +146,8 @@ namespace WeihanLi.Npoi
             var headerRow = sheet.CreateRow(_sheetSetting.HeaderRowIndex);
             for (var i = 0; i < _propertyColumnDictionary.Keys.Count; i++)
             {
-                var col = _propertyColumnDictionary.GetColumnAttribute(i);
-                headerRow.CreateCell(col.Index).SetCellValue(col.Title);
+                var col = _propertyColumnDictionary.GetPropertySetting(i);
+                headerRow.CreateCell(col.ColumnIndex).SetCellValue(col.ColumnTitle);
             }
 
             for (int i = 0, k = _sheetSetting.StartRowIndex; i < entityList.Count; i++)
@@ -142,8 +156,8 @@ namespace WeihanLi.Npoi
                 for (var j = 0; j < _propertyColumnDictionary.Keys.Count; j++)
                 {
                     var property = _propertyColumnDictionary.GetPropertyInfo(j);
-                    var col = _propertyColumnDictionary.GetColumnAttribute(j);
-                    row.CreateCell(col.Index).SetCellValue(property.GetValue(entityList[i]), col.Formatter);
+                    var col = _propertyColumnDictionary.GetPropertySetting(j);
+                    row.CreateCell(col.ColumnIndex).SetCellValue(property.GetValue(entityList[i]), col.ColumnFormatter);
                 }
             }
 

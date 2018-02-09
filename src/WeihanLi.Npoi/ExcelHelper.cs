@@ -8,6 +8,7 @@ using NPOI.HSSF.UserModel;
 using NPOI.SS.UserModel;
 using NPOI.XSSF.UserModel;
 using WeihanLi.Extensions;
+using WeihanLi.Npoi.Configurations;
 using WeihanLi.Npoi.Settings;
 
 namespace WeihanLi.Npoi
@@ -204,5 +205,30 @@ namespace WeihanLi.Npoi
             }
             return dataTable;
         }
+
+        #region FluentAPI
+
+        /// <summary>
+        /// FluentAPI
+        /// </summary>
+        /// <typeparam name="TEntity">TEntity</typeparam>
+        /// <returns></returns>
+        public static ExcelConfiguration<TEntity> SettingFor<TEntity>()
+        {
+            return new ExcelConfiguration<TEntity>();
+        }
+
+        /// <summary>
+        /// FluentAPI
+        /// </summary>
+        /// <typeparam name="TEntity">TEntity</typeparam>
+        /// <param name="setting">ExcelSetting</param>
+        /// <returns></returns>
+        public static ExcelConfiguration<TEntity> SettingFor<TEntity>(ExcelSetting setting)
+        {
+            return new ExcelConfiguration<TEntity>(setting);
+        }
+
+        #endregion FluentAPI
     }
 }

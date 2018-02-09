@@ -5,6 +5,7 @@ namespace WeihanLi.Npoi.Attributes
     /// <summary>
     /// 忽略字段
     /// </summary>
+    [Obsolete("Please Use ColumnAttribute IsIgnored")]
     [AttributeUsage(AttributeTargets.Property)]
     public class IgnoreAttribute : Attribute
     {
