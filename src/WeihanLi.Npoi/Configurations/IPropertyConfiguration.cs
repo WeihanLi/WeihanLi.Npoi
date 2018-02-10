@@ -25,5 +25,11 @@
         /// <param name="formatter">formatter</param>
         /// <returns></returns>
         IPropertyConfiguration HasColumnFormatter(string formatter);
+
+        /// <summary>
+        /// Ignored
+        /// </summary>
+        /// <returns></returns>
+        IPropertyConfiguration Ignored();
     }
 }

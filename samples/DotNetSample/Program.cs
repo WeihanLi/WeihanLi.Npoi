@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Data.SqlClient;
+using WeihanLi.Common.Helpers;
+using WeihanLi.Extensions;
 using WeihanLi.Npoi;
 using WeihanLi.Npoi.Attributes;
 
@@ -12,18 +15,18 @@ namespace DotNetSample
 
         public static void Main(string[] args)
         {
-            //var conn = new SqlConnection("server=.;uid=liweihan;pwd=Admin888;database=AccountingApp");
-            //var entityList = conn.Select<TestEntity>("select * from Users");
-            //entityList[0].Amount = 0;
-            //entityList[0].PasswordHash = "";
-            ////var dataTable = entityList.ToDataTable();
-            //var result = entityList.ToExcelFile(ConfigurationHelper.MapPath("test.xlsx"));
-            //var result1 = ExcelHelper.ToEntityList<TestEntity>(ConfigurationHelper.MapPath("test.xlsx"));
-            //// 找不到文件
-            ////var aaa = ExcelHelper.ToEntityList<TestEntity>("");
-            //var entityList1 = conn.Select<TestEntity2>("select * from Bills");
-            //var result2 = entityList1.ToExcelFile(ConfigurationHelper.MapPath("test1.xls"));
-            //entityList1 = ExcelHelper.ToEntityList<TestEntity2>(ConfigurationHelper.MapPath("test1.xls"));
+            var conn = new SqlConnection("server=.;uid=liweihan;pwd=Admin888;database=AccountingApp");
+            var entityList = conn.Select<TestEntity>("select * from Users");
+            entityList[0].Amount = 0;
+            entityList[0].PasswordHash = "";
+            //var dataTable = entityList.ToDataTable();
+            var result = entityList.ToExcelFile(ConfigurationHelper.MapPath("test.xlsx"));
+            var result1 = ExcelHelper.ToEntityList<TestEntity>(ConfigurationHelper.MapPath("test.xlsx"));
+            // 找不到文件
+            //var aaa = ExcelHelper.ToEntityList<TestEntity>("");
+            var entityList1 = conn.Select<TestEntity2>("select * from Bills");
+            var result2 = entityList1.ToExcelFile(ConfigurationHelper.MapPath("test1.xls"));
+            entityList1 = ExcelHelper.ToEntityList<TestEntity2>(ConfigurationHelper.MapPath("test1.xls"));
 
             //var entityList2 = ExcelHelper.ToEntityList<Model>(FilePath).Where(_ => !string.IsNullOrWhiteSpace(_.HotelId)).ToArray();
             //if (entityList2.Length > 0)
@@ -67,6 +70,14 @@ namespace DotNetSample
                 .HasColumnTitle("用户名")
                 .HasColumnIndex(0);
 
+            setting.Property(_ => _.PasswordHash)
+                .Ignored();
+
+            var entities = ExcelHelper.ToEntityList<TestEntity>(ConfigurationHelper.MapPath("test.xlsx"));
+            entities = conn.Select<TestEntity>("select * from Users");
+            entities.ToExcelFile(ConfigurationHelper.MapPath("test_1.xlsx"));
+            Console.WriteLine();
+
             Console.ReadLine();
         }
     }
@@ -76,19 +87,19 @@ namespace DotNetSample
         /// <summary>
         /// 用户名
         /// </summary>
-        [Column("用户名", Index = 0)]
+        [Column("用户名")]
         public string Username { get; set; }
 
-        [Column("密码", Index = 1)]
+        [Column("密码")]
         public string PasswordHash { get; set; }
 
-        [Column("可用余额", Index = 2)]
+        [Column("可用余额")]
         public decimal Amount { get; set; } = 1000M;
 
-        [Column("微信id", Index = 3)]
+        [Column("微信id")]
         public string WechatOpenId { get; set; }
 
-        [Column("是否启用", Index = 4)]
+        [Column("是否启用")]
         public bool IsActive { get; set; }
     }
 

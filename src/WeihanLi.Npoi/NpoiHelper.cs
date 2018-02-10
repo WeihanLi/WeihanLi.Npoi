@@ -18,52 +18,49 @@ namespace WeihanLi.Npoi
 
         internal NpoiHelper()
         {
-            _sheetSetting = (typeof(TEntity).GetCustomAttribute<SheetAttribute>() ??
-                             new SheetAttribute()).SheetSetting;
-
-            _propertyColumnDictionary = TypeCache.TypePropertySettingDictionary.GetOrAdd(typeof(TEntity),
+            var excelConfiguration = (ExcelConfiguration<TEntity>)TypeCache.TypeExcelConfigurationDictionary.GetOrAdd(typeof(TEntity),
                 GetMapping);
+
+            _sheetSetting = ((SheetConfiguration)excelConfiguration.SheetConfigurations[0]).SheetSetting;
+
+            //AutoAdjustIndex
+            var colIndexList = new List<int>();
+            foreach (var item in excelConfiguration.PropertyConfigurationDictionary.Values.Cast<PropertyConfiguration>().Where(_ => !_.PropertySetting.IsIgnored))
+            {
+                while (colIndexList.Contains(item.PropertySetting.ColumnIndex))
+                {
+                    item.PropertySetting.ColumnIndex++;
+                }
+                colIndexList.Add(item.PropertySetting.ColumnIndex);
+            }
+
+            _propertyColumnDictionary = excelConfiguration.PropertyConfigurationDictionary.Where(_ => !((PropertyConfiguration)_.Value).PropertySetting.IsIgnored).ToDictionary(_ => _.Key, _ => ((PropertyConfiguration)_.Value).PropertySetting);
         }
 
-        internal NpoiHelper(ExcelConfiguration<TEntity> excelConfiguration)
+        private IExcelConfiguration GetMapping(Type type)
         {
-            _sheetSetting = (excelConfiguration.SheetSettings[0] as SheetConfiguration)?.SheetSetting;
-            _propertyColumnDictionary = excelConfiguration.PropertyConfigurationDictionary.Select(_ =>
-                new KeyValuePair<PropertyInfo, PropertySetting>(_.Key,
-                    (_.Value as PropertyConfiguration)?.PropertySetting)).ToDictionary(_ => _.Key, _ => _.Value);
-        }
-
-        private IDictionary<PropertyInfo, PropertySetting> GetMapping(Type type)
-        {
-            var dic = new Dictionary<PropertyInfo, PropertySetting>();
+            var excelConfiguration = new ExcelConfiguration<TEntity>();
+            excelConfiguration.SheetConfigurations = new ISheetConfiguration[]
+            {
+                new SheetConfiguration(typeof(TEntity).GetCustomAttribute<SheetAttribute>()?.SheetSetting)
+            };
+            var dic = new Dictionary<PropertyInfo, IPropertyConfiguration>();
             var propertyInfos = type.GetProperties(BindingFlags.Public | BindingFlags.Instance);
-            var colIndexList = new List<int>(propertyInfos.Length);
             foreach (var propertyInfo in propertyInfos)
             {
-                if (propertyInfo.IsDefined(typeof(IgnoreAttribute)))
-                {
-                    continue;
-                }
                 var column = propertyInfo.GetCustomAttribute<ColumnAttribute>() ?? new ColumnAttribute();
-                if (column.IsIgnored)
+                if (propertyInfo.IsDefined(typeof(IgnoreAttribute)) && !column.IsIgnored)
                 {
-                    continue;
+                    column.IsIgnored = true;
                 }
                 if (string.IsNullOrWhiteSpace(column.Title))
                 {
                     column.Title = propertyInfo.Name;
                 }
-
-                // Adjust column index to avoid conflict index
-                while (colIndexList.Contains(column.Index))
-                {
-                    column.Index++;
-                }
-                colIndexList.Add(column.Index);
-
-                dic.Add(propertyInfo, column.PropertySetting);
+                dic.Add(propertyInfo, new PropertyConfiguration(column.PropertySetting));
             }
-            return dic;
+            excelConfiguration.PropertyConfigurationDictionary = dic;
+            return excelConfiguration;
         }
 
         public List<TEntity> SheetToEntityList([NotNull]ISheet sheet)

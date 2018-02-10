@@ -36,6 +36,63 @@ namespace WeihanLi.Npoi
         public static List<TEntity> ToEntityList<TEntity>([NotNull]this ISheet sheet) where TEntity : new() => new NpoiHelper<TEntity>().SheetToEntityList(sheet);
 
         /// <summary>
+        /// Workbook2ToDataTable
+        /// </summary>
+        /// <typeparam name="TEntity">EntityType</typeparam>
+        /// <param name="workbook">excel workbook</param>
+        /// <param name="sheetIndex">sheetIndex</param>
+        /// <returns>DataTable</returns>
+        public static DataTable ToDataTable([NotNull]this IWorkbook workbook, int sheetIndex = 0, int headerRowIndex = 0)
+        {
+            if (workbook.NumberOfSheets <= sheetIndex)
+            {
+                throw new ArgumentOutOfRangeException(nameof(sheetIndex), string.Format(Resource.IndexOutOfRange, nameof(sheetIndex), workbook.NumberOfSheets));
+            }
+            return workbook.GetSheetAt(sheetIndex).ToDataTable(headerRowIndex);
+        }
+
+        /// <summary>
+        /// Sheet2DataTable
+        /// </summary>
+        /// <param name="sheet">excel sheet</param>
+        /// <returns>DataTable</returns>
+        public static DataTable ToDataTable([NotNull]this ISheet sheet, int headerRowIndex = 0)
+        {
+            if (sheet.PhysicalNumberOfRows <= headerRowIndex)
+            {
+                throw new ArgumentOutOfRangeException(nameof(headerRowIndex), string.Format(Resource.IndexOutOfRange, nameof(headerRowIndex), sheet.PhysicalNumberOfRows));
+            }
+            var dataTable = new DataTable(); var rowEnumerator = sheet.GetRowEnumerator();
+            while (rowEnumerator.MoveNext())
+            {
+                var row = (IRow)rowEnumerator.Current;
+                if (row.RowNum < headerRowIndex)
+                {
+                    continue;
+                }
+
+                if (row.RowNum == headerRowIndex)
+                {
+                    foreach (var cell in row.Cells)
+                    {
+                        dataTable.Columns.Add(cell.StringCellValue.Trim());
+                    }
+                }
+                else
+                {
+                    var dataRow = dataTable.NewRow();
+                    for (var i = 0; i < row.Cells.Count; i++)
+                    {
+                        dataRow[i] = row.Cells[i].GetCellValue(typeof(string));
+                    }
+
+                    dataTable.Rows.Add(dataRow);
+                }
+            }
+            return dataTable;
+        }
+
+        /// <summary>
         /// import entityList to workbook first sheet
         /// </summary>
         /// <typeparam name="TEntity">TEntity</typeparam>

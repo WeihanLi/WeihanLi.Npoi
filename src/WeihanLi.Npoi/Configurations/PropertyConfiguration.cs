@@ -4,10 +4,9 @@ namespace WeihanLi.Npoi.Configurations
 {
     internal class PropertyConfiguration : IPropertyConfiguration
     {
-        internal PropertyConfiguration()
-        {
-            PropertySetting = new PropertySetting();
-        }
+        internal PropertyConfiguration() => PropertySetting = new PropertySetting();
+
+        internal PropertyConfiguration(PropertySetting propertySetting) => PropertySetting = propertySetting;
 
         internal PropertySetting PropertySetting { get; }
 
@@ -26,6 +25,12 @@ namespace WeihanLi.Npoi.Configurations
         public IPropertyConfiguration HasColumnFormatter(string formatter)
         {
             PropertySetting.ColumnFormatter = formatter;
+            return this;
+        }
+
+        public IPropertyConfiguration Ignored()
+        {
+            PropertySetting.IsIgnored = true;
             return this;
         }
     }

@@ -9,6 +9,9 @@ namespace WeihanLi.Npoi.Configurations
         public SheetConfiguration()
             => SheetSetting = new SheetSetting();
 
+        public SheetConfiguration(SheetSetting sheetSetting)
+            => SheetSetting = sheetSetting ?? new SheetSetting();
+
         public ISheetConfiguration HasSheetIndex(int index)
         {
             SheetSetting.SheetIndex = index;

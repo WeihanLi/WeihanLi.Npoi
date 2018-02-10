@@ -22,7 +22,7 @@
     <DefineConstants>Release</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="WeihanLi.Common" Version="1.0.7.5" />
+    <PackageReference Include="WeihanLi.Common" Version="1.0.7.6" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\WeihanLi.Npoi\WeihanLi.Npoi.csproj">

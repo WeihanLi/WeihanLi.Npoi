@@ -72,7 +72,7 @@ namespace WeihanLi.Npoi
         /// <param name="excelPath">excelPath</param>
         /// <param name="excelSetting">excelSetting</param>
         /// <returns></returns>
-        public static IWorkbook PrepareWorkbook(string excelPath, ExcelSetting excelSetting)
+        public static IWorkbook PrepareWorkbook([NotNull] string excelPath, ExcelSetting excelSetting)
         {
             if (!ValidateExcelFilePath(excelPath, out var msg, true))
                 throw new ArgumentException(msg);
@@ -175,60 +175,17 @@ namespace WeihanLi.Npoi
             {
                 throw new ArgumentOutOfRangeException(nameof(sheetIndex), string.Format(Resource.IndexOutOfRange, nameof(sheetIndex), workbook.NumberOfSheets));
             }
-            var sheet = workbook.GetSheetAt(sheetIndex);
-            var rowEnumerator = sheet.GetRowEnumerator();
-            while (rowEnumerator.MoveNext())
-            {
-                var row = (IRow)rowEnumerator.Current;
-                if (row.RowNum < headerRowIndex)
-                {
-                    continue;
-                }
-
-                if (row.RowNum == headerRowIndex)
-                {
-                    foreach (var cell in row.Cells)
-                    {
-                        dataTable.Columns.Add(cell.StringCellValue.Trim());
-                    }
-                }
-                else
-                {
-                    var dataRow = dataTable.NewRow();
-                    for (var i = 0; i < row.Cells.Count; i++)
-                    {
-                        dataRow[i] = row.Cells[i].GetCellValue(typeof(string));
-                    }
-
-                    dataTable.Rows.Add(dataRow);
-                }
-            }
-            return dataTable;
-        }
-
-        #region FluentAPI
-
-        /// <summary>
-        /// FluentAPI
-        /// </summary>
-        /// <typeparam name="TEntity">TEntity</typeparam>
-        /// <returns></returns>
-        public static ExcelConfiguration<TEntity> SettingFor<TEntity>()
-        {
-            return new ExcelConfiguration<TEntity>();
+            return workbook.GetSheetAt(sheetIndex).ToDataTable();
         }
 
         /// <summary>
-        /// FluentAPI
+        /// SettingFor
         /// </summary>
         /// <typeparam name="TEntity">TEntity</typeparam>
-        /// <param name="setting">ExcelSetting</param>
         /// <returns></returns>
-        public static ExcelConfiguration<TEntity> SettingFor<TEntity>(ExcelSetting setting)
+        public static IExcelConfiguration<TEntity> SettingFor<TEntity>()
         {
-            return new ExcelConfiguration<TEntity>(setting);
+            return (TypeCache.TypeExcelConfigurationDictionary.GetOrAdd(typeof(TEntity), new ExcelConfiguration<TEntity>())) as IExcelConfiguration<TEntity>;
         }
-
-        #endregion FluentAPI
     }
 }

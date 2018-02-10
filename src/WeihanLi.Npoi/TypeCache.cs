@@ -1,17 +1,11 @@
 ﻿using System;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Reflection;
-using WeihanLi.Npoi.Attributes;
-using WeihanLi.Npoi.Settings;
+using WeihanLi.Npoi.Configurations;
 
 namespace WeihanLi.Npoi
 {
     internal class TypeCache
     {
-        internal static ConcurrentDictionary<Type, IDictionary<PropertyInfo, ColumnAttribute>> TypeMapCacheDictionary =
-            new ConcurrentDictionary<Type, IDictionary<PropertyInfo, ColumnAttribute>>();
-
-        internal static ConcurrentDictionary<Type, IDictionary<PropertyInfo, PropertySetting>> TypePropertySettingDictionary = new ConcurrentDictionary<Type, IDictionary<PropertyInfo, PropertySetting>>();
+        internal static ConcurrentDictionary<Type, IExcelConfiguration> TypeExcelConfigurationDictionary = new ConcurrentDictionary<Type, IExcelConfiguration>();
     }
 }

@@ -5,21 +5,21 @@
         /// <summary>
         /// SheetIndex
         /// </summary>
-        public int SheetIndex { get; internal set; }
+        internal int SheetIndex { get; set; } = 0;
 
         /// <summary>
         /// SheetName
         /// </summary>
-        public string SheetName { get; internal set; }
+        internal string SheetName { get; set; }
 
         /// <summary>
         /// StartRowIndex
         /// </summary>
-        public int StartRowIndex { get; internal set; } = 1;
+        internal int StartRowIndex { get; set; } = 1;
 
         /// <summary>
         /// HeaderRowIndex
         /// </summary>
-        public int HeaderRowIndex => StartRowIndex - 1;
+        internal int HeaderRowIndex => StartRowIndex - 1;
     }
 }
