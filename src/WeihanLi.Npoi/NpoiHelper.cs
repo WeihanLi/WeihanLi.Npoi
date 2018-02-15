@@ -49,10 +49,6 @@ namespace WeihanLi.Npoi
             foreach (var propertyInfo in propertyInfos)
             {
                 var column = propertyInfo.GetCustomAttribute<ColumnAttribute>() ?? new ColumnAttribute();
-                if (propertyInfo.IsDefined(typeof(IgnoreAttribute)) && !column.IsIgnored)
-                {
-                    column.IsIgnored = true;
-                }
                 if (string.IsNullOrWhiteSpace(column.Title))
                 {
                     column.Title = propertyInfo.Name;
