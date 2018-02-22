@@ -163,7 +163,8 @@ namespace WeihanLi.Npoi
         public static int ToExcelFile<TEntity>([NotNull] this IReadOnlyList<TEntity> entityList, [NotNull]string excelPath)
             where TEntity : new()
         {
-            var workbook = ExcelHelper.PrepareWorkbook(excelPath);
+            TypeCache.TypeExcelConfigurationDictionary.TryGetValue(typeof(TEntity), out var configuration);
+            var workbook = ExcelHelper.PrepareWorkbook(excelPath, configuration?.ExcelSetting);
             workbook.ImportData(entityList);
             workbook.WriteToFile(excelPath);
             return 1;
@@ -178,7 +179,8 @@ namespace WeihanLi.Npoi
         public static int ToExcelStream<TEntity>([NotNull] this IReadOnlyList<TEntity> entityList, [NotNull]Stream stream)
             where TEntity : new()
         {
-            var workbook = ExcelHelper.PrepareWorkbook();
+            TypeCache.TypeExcelConfigurationDictionary.TryGetValue(typeof(TEntity), out var configuration);
+            var workbook = ExcelHelper.PrepareWorkbook(true, configuration?.ExcelSetting);
             workbook.ImportData(entityList);
             workbook.Write(stream);
             return 1;

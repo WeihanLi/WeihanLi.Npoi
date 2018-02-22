@@ -10,12 +10,12 @@
         <RepositoryUrl>https://github.com/WeihanLi/WeihanLi.Npoi</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
         <PackageTags>npoi excel</PackageTags>
-        <AssemblyVersion>1.0.3.1</AssemblyVersion>
+        <AssemblyVersion>1.0.3.2</AssemblyVersion>
         <FileVersion>1.0.0.0</FileVersion>
-        <Version>1.0.3.1</Version>
+        <Version>1.0.3.2</Version>
         <Description>NpoiExtensions for .net45 and .netstandard2.0</Description>
         <PackageReleaseNotes>
-            add FluentApi Support
+            add excel setting for exported excel
         </PackageReleaseNotes>
         <Copyright>Copyright 2018 WeihanLi</Copyright>
     </PropertyGroup>

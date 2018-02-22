@@ -89,7 +89,7 @@ namespace DotNetSample
         [Column("用户名")]
         public string Username { get; set; }
 
-        [Column("密码")]
+        [Column("密码", IsIgnored = true)]
         public string PasswordHash { get; set; }
 
         [Column("可用余额")]
