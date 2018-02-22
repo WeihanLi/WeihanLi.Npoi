@@ -38,9 +38,9 @@ namespace WeihanLi.Npoi
         /// <summary>
         /// Workbook2ToDataTable
         /// </summary>
-        /// <typeparam name="TEntity">EntityType</typeparam>
         /// <param name="workbook">excel workbook</param>
         /// <param name="sheetIndex">sheetIndex</param>
+        /// <param name="headerRowIndex">headerRowIndex</param>
         /// <returns>DataTable</returns>
         public static DataTable ToDataTable([NotNull]this IWorkbook workbook, int sheetIndex = 0, int headerRowIndex = 0)
         {
@@ -55,6 +55,7 @@ namespace WeihanLi.Npoi
         /// Sheet2DataTable
         /// </summary>
         /// <param name="sheet">excel sheet</param>
+        /// <param name="headerRowIndex">headerRowIndex</param>
         /// <returns>DataTable</returns>
         public static DataTable ToDataTable([NotNull]this ISheet sheet, int headerRowIndex = 0)
         {

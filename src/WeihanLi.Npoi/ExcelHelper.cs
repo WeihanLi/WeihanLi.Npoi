@@ -170,7 +170,6 @@ namespace WeihanLi.Npoi
         public static DataTable ToDataTable(string excelPath, int sheetIndex = 0, int headerRowIndex = 0)
         {
             var workbook = LoadExcel(excelPath);
-            var dataTable = new DataTable();
             if (workbook.NumberOfSheets <= sheetIndex)
             {
                 throw new ArgumentOutOfRangeException(nameof(sheetIndex), string.Format(Resource.IndexOutOfRange, nameof(sheetIndex), workbook.NumberOfSheets));
@@ -183,9 +182,6 @@ namespace WeihanLi.Npoi
         /// </summary>
         /// <typeparam name="TEntity">TEntity</typeparam>
         /// <returns></returns>
-        public static IExcelConfiguration<TEntity> SettingFor<TEntity>()
-        {
-            return (TypeCache.TypeExcelConfigurationDictionary.GetOrAdd(typeof(TEntity), new ExcelConfiguration<TEntity>())) as IExcelConfiguration<TEntity>;
-        }
+        public static IExcelConfiguration<TEntity> SettingFor<TEntity>() => TypeCache.TypeExcelConfigurationDictionary.GetOrAdd(typeof(TEntity), new ExcelConfiguration<TEntity>()) as IExcelConfiguration<TEntity>;
     }
 }
