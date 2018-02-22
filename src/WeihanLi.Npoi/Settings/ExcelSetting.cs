@@ -21,33 +21,5 @@
             Description = "WeihanLi.Npoi Generated";
             Subject = "WeihanLi.Npoi Generated";
         }
-
-        #region FluentAPI
-
-        public ExcelSetting HasAuthor(string author)
-        {
-            Author = author;
-            return this;
-        }
-
-        public ExcelSetting HasTitle(string title)
-        {
-            Title = title;
-            return this;
-        }
-
-        public ExcelSetting HasDescription(string description)
-        {
-            Description = description;
-            return this;
-        }
-
-        public ExcelSetting HasSubject(string subject)
-        {
-            Subject = subject;
-            return this;
-        }
-
-        #endregion FluentAPI
     }
 }

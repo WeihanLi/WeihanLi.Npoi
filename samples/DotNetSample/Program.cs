@@ -56,8 +56,7 @@ namespace DotNetSample
 
             var setting = ExcelHelper.SettingFor<TestEntity>();
             // ExcelSetting
-            setting.ExcelSetting
-                .HasAuthor("WeihanLi")
+            setting.HasAuthor("WeihanLi")
                 .HasTitle("WeihanLi.Npoi")
                 .HasDescription("")
                 .HasSubject("");

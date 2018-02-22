@@ -18,5 +18,17 @@ namespace WeihanLi.Npoi.Configurations
     public interface IExcelConfiguration<TEntity> : IExcelConfiguration
     {
         IPropertyConfiguration Property<TProperty>(Expression<Func<TEntity, TProperty>> propertyExpression);
+
+        #region ExcelSettings FluentAPI
+
+        IExcelConfiguration<TEntity> HasAuthor(string author);
+
+        IExcelConfiguration<TEntity> HasTitle(string title);
+
+        IExcelConfiguration<TEntity> HasDescription(string description);
+
+        IExcelConfiguration<TEntity> HasSubject(string subject);
+
+        #endregion ExcelSettings FluentAPI
     }
 }

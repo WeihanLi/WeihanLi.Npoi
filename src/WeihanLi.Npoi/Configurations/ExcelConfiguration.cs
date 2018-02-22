@@ -6,7 +6,7 @@ using WeihanLi.Npoi.Settings;
 
 namespace WeihanLi.Npoi.Configurations
 {
-    public class ExcelConfiguration<TEntity> : IExcelConfiguration<TEntity>
+    internal class ExcelConfiguration<TEntity> : IExcelConfiguration<TEntity>
     {
         /// <summary>
         /// PropertyConfigurationDictionary
@@ -47,6 +47,34 @@ namespace WeihanLi.Npoi.Configurations
 
             return pc;
         }
+
+        #region ExcelSettings FluentAPI
+
+        public IExcelConfiguration<TEntity> HasAuthor(string author)
+        {
+            ExcelSetting.Author = author;
+            return this;
+        }
+
+        public IExcelConfiguration<TEntity> HasTitle(string title)
+        {
+            ExcelSetting.Title = title;
+            return this;
+        }
+
+        public IExcelConfiguration<TEntity> HasDescription(string description)
+        {
+            ExcelSetting.Description = description;
+            return this;
+        }
+
+        public IExcelConfiguration<TEntity> HasSubject(string subject)
+        {
+            ExcelSetting.Subject = subject;
+            return this;
+        }
+
+        #endregion ExcelSettings FluentAPI
 
         private PropertyInfo GetPropertyInfo<TProperty>(Expression<Func<TEntity, TProperty>> propertyExpression)
         {
