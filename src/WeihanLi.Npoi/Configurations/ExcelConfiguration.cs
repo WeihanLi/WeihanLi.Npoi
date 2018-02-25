@@ -76,7 +76,7 @@ namespace WeihanLi.Npoi.Configurations
 
         #endregion ExcelSettings FluentAPI
 
-        private PropertyInfo GetPropertyInfo<TProperty>(Expression<Func<TEntity, TProperty>> propertyExpression)
+        private static PropertyInfo GetPropertyInfo<TProperty>(Expression<Func<TEntity, TProperty>> propertyExpression)
         {
             if (propertyExpression.NodeType != ExpressionType.Lambda)
             {
@@ -93,7 +93,7 @@ namespace WeihanLi.Npoi.Configurations
             return memberExpression.Member.DeclaringType.GetProperty(memberExpression.Member.Name);
         }
 
-        private MemberExpression ExtractMemberExpression(Expression expression)
+        private static MemberExpression ExtractMemberExpression(Expression expression)
         {
             if (expression.NodeType == ExpressionType.MemberAccess)
             {
