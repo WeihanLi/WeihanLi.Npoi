@@ -17,7 +17,16 @@ namespace WeihanLi.Npoi
         /// <param name="workbook">excel workbook</param>
         /// <param name="sheetIndex">sheetIndex</param>
         /// <returns>entity list</returns>
-        public static List<TEntity> ToEntityList<TEntity>([NotNull]this IWorkbook workbook, int sheetIndex = 0) where TEntity : new()
+        public static List<TEntity> ToEntityList<TEntity>([NotNull]this IWorkbook workbook) where TEntity : new() => workbook.ToEntityList<TEntity>(0);
+
+        /// <summary>
+        /// Workbook2EntityList
+        /// </summary>
+        /// <typeparam name="TEntity">EntityType</typeparam>
+        /// <param name="workbook">excel workbook</param>
+        /// <param name="sheetIndex">sheetIndex</param>
+        /// <returns>entity list</returns>
+        public static List<TEntity> ToEntityList<TEntity>([NotNull]this IWorkbook workbook, int sheetIndex) where TEntity : new()
         {
             if (workbook.NumberOfSheets <= sheetIndex)
             {
@@ -39,10 +48,17 @@ namespace WeihanLi.Npoi
         /// Workbook2ToDataTable
         /// </summary>
         /// <param name="workbook">excel workbook</param>
+        /// <returns>DataTable</returns>
+        public static DataTable ToDataTable([NotNull]this IWorkbook workbook) => workbook.ToDataTable(0, 0);
+
+        /// <summary>
+        /// Workbook2ToDataTable
+        /// </summary>
+        /// <param name="workbook">excel workbook</param>
         /// <param name="sheetIndex">sheetIndex</param>
         /// <param name="headerRowIndex">headerRowIndex</param>
         /// <returns>DataTable</returns>
-        public static DataTable ToDataTable([NotNull]this IWorkbook workbook, int sheetIndex = 0, int headerRowIndex = 0)
+        public static DataTable ToDataTable([NotNull]this IWorkbook workbook, int sheetIndex, int headerRowIndex)
         {
             if (workbook.NumberOfSheets <= sheetIndex)
             {
@@ -57,7 +73,15 @@ namespace WeihanLi.Npoi
         /// <param name="sheet">excel sheet</param>
         /// <param name="headerRowIndex">headerRowIndex</param>
         /// <returns>DataTable</returns>
-        public static DataTable ToDataTable([NotNull]this ISheet sheet, int headerRowIndex = 0)
+        public static DataTable ToDataTable([NotNull]this ISheet sheet) => sheet.ToDataTable(0);
+
+        /// <summary>
+        /// Sheet2DataTable
+        /// </summary>
+        /// <param name="sheet">excel sheet</param>
+        /// <param name="headerRowIndex">headerRowIndex</param>
+        /// <returns>DataTable</returns>
+        public static DataTable ToDataTable([NotNull]this ISheet sheet, int headerRowIndex)
         {
             if (sheet.PhysicalNumberOfRows <= headerRowIndex)
             {
@@ -99,8 +123,16 @@ namespace WeihanLi.Npoi
         /// <typeparam name="TEntity">TEntity</typeparam>
         /// <param name="workbook">workbook</param>
         /// <param name="list">entityList</param>
+        public static int ImportData<TEntity>([NotNull]this IWorkbook workbook, IReadOnlyList<TEntity> list) where TEntity : new() => workbook.ImportData(list, 0);
+
+        /// <summary>
+        /// import entityList to workbook sheet
+        /// </summary>
+        /// <typeparam name="TEntity">TEntity</typeparam>
+        /// <param name="workbook">workbook</param>
+        /// <param name="list">entityList</param>
         /// <param name="sheetIndex">sheetIndex</param>
-        public static int ImportData<TEntity>([NotNull]this IWorkbook workbook, IReadOnlyList<TEntity> list, int sheetIndex = 0) where TEntity : new()
+        public static int ImportData<TEntity>([NotNull]this IWorkbook workbook, IReadOnlyList<TEntity> list, int sheetIndex) where TEntity : new()
         {
             if (sheetIndex >= ExcelConstants.MaxSheetNum)
             {
@@ -130,8 +162,16 @@ namespace WeihanLi.Npoi
         /// <typeparam name="TEntity">TEntity</typeparam>
         /// <param name="workbook">workbook</param>
         /// <param name="dataTable">dataTable</param>
+        public static int ImportData<TEntity>([NotNull]this IWorkbook workbook, DataTable dataTable) where TEntity : new() => workbook.ImportData<TEntity>(dataTable, 0);
+
+        /// <summary>
+        /// import datatable to workbook first sheet
+        /// </summary>
+        /// <typeparam name="TEntity">TEntity</typeparam>
+        /// <param name="workbook">workbook</param>
+        /// <param name="dataTable">dataTable</param>
         /// <param name="sheetIndex">sheetIndex</param>
-        public static int ImportData<TEntity>([NotNull]this IWorkbook workbook, DataTable dataTable, int sheetIndex = 0) where TEntity : new()
+        public static int ImportData<TEntity>([NotNull]this IWorkbook workbook, DataTable dataTable, int sheetIndex) where TEntity : new()
         {
             if (sheetIndex >= ExcelConstants.MaxSheetNum)
             {
@@ -175,7 +215,7 @@ namespace WeihanLi.Npoi
         /// </summary>
         /// <typeparam name="TEntity">EntityType</typeparam>
         /// <param name="entityList">entityList</param>
-        /// <param name="stream">要写入</param>
+        /// <param name="stream">stream where to write</param>
         public static int ToExcelStream<TEntity>([NotNull] this IReadOnlyList<TEntity> entityList, [NotNull]Stream stream)
             where TEntity : new()
         {
@@ -249,8 +289,15 @@ namespace WeihanLi.Npoi
         /// </summary>
         /// <param name="cell">ICell</param>
         /// <param name="value">value</param>
+        public static void SetCellValue([NotNull]this ICell cell, object value) => cell.SetCellValue(value, null);
+
+        /// <summary>
+        /// SetCellValue
+        /// </summary>
+        /// <param name="cell">ICell</param>
+        /// <param name="value">value</param>
         /// <param name="formatter">formatter</param>
-        public static void SetCellValue([NotNull]this ICell cell, object value, string formatter = null)
+        public static void SetCellValue([NotNull]this ICell cell, object value, string formatter)
         {
             if (null == value)
             {
@@ -263,29 +310,38 @@ namespace WeihanLi.Npoi
                 cell.SetCellValue(string.IsNullOrWhiteSpace(formatter) ?
                     (time.Date == time ? time.ToStandardDateString() : time.ToStandardTimeString())
                     : time.ToString(formatter));
-                return;
-            }
-            var type = value.GetType();
-            if (
-                type == typeof(double) ||
-                type == typeof(int) ||
-                type == typeof(long) ||
-                type == typeof(float) ||
-                type == typeof(decimal)
-            )
-            {
-                cell.SetCellType(CellType.Numeric);
-                cell.SetCellValue(Convert.ToDouble(value));
-            }
-            else if (type == typeof(bool))
-            {
-                cell.SetCellType(CellType.Boolean);
-                cell.SetCellValue(Convert.ToBoolean(value));
             }
             else
             {
-                cell.SetCellType(CellType.String);
-                cell.SetCellValue(value.ToString());
+                var type = value.GetType();
+                if (
+                    type == typeof(double) ||
+                    type == typeof(int) ||
+                    type == typeof(long) ||
+                    type == typeof(float) ||
+                    type == typeof(decimal)
+                )
+                {
+                    cell.SetCellType(CellType.Numeric);
+                    cell.SetCellValue(Convert.ToDouble(value));
+                }
+                else if (type == typeof(bool))
+                {
+                    cell.SetCellType(CellType.Boolean);
+                    cell.SetCellValue(Convert.ToBoolean(value));
+                }
+                else
+                {
+                    cell.SetCellType(CellType.String);
+                    cell.SetCellValue(value.ToString());
+                }
+            }
+
+            if (formatter.IsNotNullOrWhiteSpace())
+            {
+                var style = cell.Row.Sheet.Workbook.CreateCellStyle();
+                style.DataFormat = cell.Row.Sheet.Workbook.CreateDataFormat().GetFormat(formatter);
+                cell.CellStyle = style;
             }
         }
 
@@ -369,6 +425,19 @@ namespace WeihanLi.Npoi
             using (var fileStream = File.Create(filePath))
             {
                 workbook.Write(fileStream);
+            }
+        }
+
+        /// <summary>
+        /// ToExcelBytes
+        /// </summary>
+        /// <param name="entityList">workbook</param>
+        public static byte[] ToExcelBytes([NotNull] this IWorkbook workbook)
+        {
+            using (var ms = new MemoryStream())
+            {
+                workbook.Write(ms);
+                return ms.ToArray();
             }
         }
     }

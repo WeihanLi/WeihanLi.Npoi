@@ -5,7 +5,7 @@
         /// <summary>
         /// SheetIndex
         /// </summary>
-        internal int SheetIndex { get; set; } = 0;
+        internal int SheetIndex { get; set; }
 
         /// <summary>
         /// SheetName
