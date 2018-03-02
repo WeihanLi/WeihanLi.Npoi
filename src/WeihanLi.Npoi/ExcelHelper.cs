@@ -51,7 +51,9 @@ namespace WeihanLi.Npoi
         public static IWorkbook LoadExcel([NotNull]string excelPath)
         {
             if (!ValidateExcelFilePath(excelPath, out var msg))
+            {
                 throw new ArgumentException(msg);
+            }
 
             using (var stream = File.OpenRead(excelPath))
             {
@@ -75,7 +77,9 @@ namespace WeihanLi.Npoi
         public static IWorkbook PrepareWorkbook([NotNull] string excelPath, ExcelSetting excelSetting)
         {
             if (!ValidateExcelFilePath(excelPath, out var msg, true))
+            {
                 throw new ArgumentException(msg);
+            }
             return PrepareWorkbook(Path.GetExtension(excelPath).EqualsIgnoreCase(".xlsx"), excelSetting);
         }
 
@@ -101,19 +105,17 @@ namespace WeihanLi.Npoi
         /// <returns></returns>
         public static IWorkbook PrepareWorkbook(bool isXlsx, ExcelSetting excelSetting)
         {
-            if (null == excelSetting)
-            {
-                excelSetting = new ExcelSetting();
-            }
+            var _excelSetting = excelSetting ?? new ExcelSetting();
+
             if (isXlsx)
             {
                 var workbook = new XSSFWorkbook();
                 var props = workbook.GetProperties();
-                props.CoreProperties.Creator = excelSetting.Author;
+                props.CoreProperties.Creator = _excelSetting.Author;
                 props.CoreProperties.Created = DateTime.Now;
-                props.CoreProperties.Title = excelSetting.Title;
-                props.CoreProperties.Subject = excelSetting.Subject;
-                props.CoreProperties.Description = excelSetting.Description;
+                props.CoreProperties.Title = _excelSetting.Title;
+                props.CoreProperties.Subject = _excelSetting.Subject;
+                props.CoreProperties.Description = _excelSetting.Description;
                 props.ExtendedProperties.GetUnderlyingProperties().Application = ExcelConstants.ApplicationName;
                 return workbook;
             }
@@ -126,11 +128,11 @@ namespace WeihanLi.Npoi
                 workbook.DocumentSummaryInformation = dsi;
                 ////create a entry of SummaryInformation
                 var si = PropertySetFactory.CreateSummaryInformation();
-                si.Title = excelSetting.Title;
-                si.Subject = excelSetting.Subject;
-                si.Author = excelSetting.Author;
+                si.Title = _excelSetting.Title;
+                si.Subject = _excelSetting.Subject;
+                si.Author = _excelSetting.Author;
                 si.CreateDateTime = DateTime.Now;
-                si.Comments = excelSetting.Description;
+                si.Comments = _excelSetting.Description;
                 si.ApplicationName = ExcelConstants.ApplicationName;
                 workbook.SummaryInformation = si;
                 return workbook;
@@ -138,27 +140,51 @@ namespace WeihanLi.Npoi
         }
 
         /// <summary>
+        /// 读取Excel的第一个sheet的内容到一个List中
+        /// </summary>
+        /// <typeparam name="TEntity">EntityType</typeparam>
+        /// <param name="excelPath">excelPath</param>
+        /// <returns>List</returns>
+        public static List<TEntity> ToEntityList<TEntity>([NotNull]string excelPath) where TEntity : new() => ToEntityList<TEntity>(excelPath, 0);
+
+        /// <summary>
         /// 读取Excel内容到一个List中
         /// </summary>
         /// <typeparam name="TEntity">EntityType</typeparam>
         /// <param name="excelPath">excelPath</param>
-        /// <param name="sheetIndex">sheetIndex，默认是0</param>
+        /// <param name="sheetIndex">sheetIndex</param>
         /// <returns>List</returns>
-        public static List<TEntity> ToEntityList<TEntity>([NotNull]string excelPath, int sheetIndex = 0) where TEntity : new()
+        public static List<TEntity> ToEntityList<TEntity>([NotNull]string excelPath, int sheetIndex) where TEntity : new()
         {
             var workbook = LoadExcel(excelPath);
             return workbook.ToEntityList<TEntity>(sheetIndex);
         }
 
         /// <summary>
+        /// 读取Excel的第一个Sheet中的内容到DataTable中
+        /// </summary>
+        /// <typeparam name="TEntity">EntityType</typeparam>
+        /// <param name="excelPath">excelPath</param>
+        /// <param name="sheetIndex">sheetIndex</param>
+        /// <returns>DataTable</returns>
+        public static DataTable ToDataTable<TEntity>(string excelPath) where TEntity : new() => ToDataTable<TEntity>(excelPath, 0);
+
+        /// <summary>
         /// 读取Excel内容到DataTable中
         /// </summary>
         /// <typeparam name="TEntity">EntityType</typeparam>
         /// <param name="excelPath">excelPath</param>
-        /// <param name="sheetIndex">sheetIndex，默认是0</param>
+        /// <param name="sheetIndex">sheetIndex</param>
         /// <returns>DataTable</returns>
-        public static DataTable ToDataTable<TEntity>(string excelPath, int sheetIndex = 0) where TEntity : new()
+        public static DataTable ToDataTable<TEntity>(string excelPath, int sheetIndex) where TEntity : new()
             => ToEntityList<TEntity>(excelPath, sheetIndex).ToDataTable();
+
+        /// <summary>
+        /// 读取Excel第一个Sheet中的内容到DataTable中
+        /// </summary>
+        /// <param name="excelPath">excelPath</param>
+        /// <returns>DataTable</returns>
+        public static DataTable ToDataTable(string excelPath) => ToDataTable(excelPath, 0, 0);
 
         /// <summary>
         /// 读取Excel内容到DataTable中
@@ -167,7 +193,7 @@ namespace WeihanLi.Npoi
         /// <param name="sheetIndex">sheetIndex，默认是0</param>
         /// <param name="headerRowIndex">列首行 headerRowIndex</param>
         /// <returns>DataTable</returns>
-        public static DataTable ToDataTable(string excelPath, int sheetIndex = 0, int headerRowIndex = 0)
+        public static DataTable ToDataTable(string excelPath, int sheetIndex, int headerRowIndex)
         {
             var workbook = LoadExcel(excelPath);
             if (workbook.NumberOfSheets <= sheetIndex)

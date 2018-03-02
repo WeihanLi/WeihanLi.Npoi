@@ -4,8 +4,8 @@ using WeihanLi.Npoi.Configurations;
 
 namespace WeihanLi.Npoi
 {
-    internal class TypeCache
+    internal static class TypeCache
     {
-        internal static ConcurrentDictionary<Type, IExcelConfiguration> TypeExcelConfigurationDictionary = new ConcurrentDictionary<Type, IExcelConfiguration>();
+        internal static readonly ConcurrentDictionary<Type, IExcelConfiguration> TypeExcelConfigurationDictionary = new ConcurrentDictionary<Type, IExcelConfiguration>();
     }
 }

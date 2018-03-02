@@ -69,6 +69,10 @@ namespace DotNetSample
                 .HasColumnTitle("用户名")
                 .HasColumnIndex(0);
 
+            setting.Property(_ => _.CreateTime)
+                .HasColumnTitle("创建时间")
+                .HasColumnFormatter("yyyy-MM-dd HH:mm:ss");
+
             setting.Property(_ => _.PasswordHash)
                 .Ignored();
 
@@ -100,6 +104,8 @@ namespace DotNetSample
 
         [Column("是否启用")]
         public bool IsActive { get; set; }
+
+        public DateTime CreateTime { get; set; } = DateTime.Now;
     }
 
     internal class TestEntity2
@@ -116,7 +122,7 @@ namespace DotNetSample
         [Column("创建人")]
         public string CreatedBy { get; set; }
 
-        [Column("创建时间")]
+        [Column("创建时间", Formatter = "yyyy-MM-dd HH:mm:ss")]
         public DateTime CreatedTime { get; set; }
     }
 }

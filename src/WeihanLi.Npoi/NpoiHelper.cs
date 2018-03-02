@@ -37,7 +37,7 @@ namespace WeihanLi.Npoi
             _propertyColumnDictionary = excelConfiguration.PropertyConfigurationDictionary.Where(_ => !((PropertyConfiguration)_.Value).PropertySetting.IsIgnored).ToDictionary(_ => _.Key, _ => ((PropertyConfiguration)_.Value).PropertySetting);
         }
 
-        private IExcelConfiguration GetMapping(Type type)
+        private static IExcelConfiguration GetMapping(Type type)
         {
             var excelConfiguration = new ExcelConfiguration<TEntity>();
             excelConfiguration.SheetConfigurations = new ISheetConfiguration[]
