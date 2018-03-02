@@ -3,8 +3,11 @@
         <TargetFrameworks>netstandard2.0;net45</TargetFrameworks>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <Title>WeihanLi.Npoi</Title>
+        <PackageId>WeihanLi.Npoi</PackageId>
         <Authors>WeihanLi</Authors>
         <Company>WeihanLi</Company>
+        <Product>WeihanLi.Npoi</Product>
+        <PackageIconUrl>https://avatars3.githubusercontent.com/u/7604648</PackageIconUrl>
         <PackageLicenseUrl>https://github.com/WeihanLi/WeihanLi.Npoi/blob/master/LICENSE</PackageLicenseUrl>
         <PackageProjectUrl>https://github.com/WeihanLi/WeihanLi.Npoi</PackageProjectUrl>
         <RepositoryUrl>https://github.com/WeihanLi/WeihanLi.Npoi</RepositoryUrl>
