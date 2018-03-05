@@ -51,6 +51,18 @@ namespace WeihanLi.Npoi
         /// <returns>DataTable</returns>
         public static DataTable ToDataTable([NotNull]this IWorkbook workbook) => workbook.ToDataTable(0, 0);
 
+        public static DataSet ToDataSet([NotNull] this IWorkbook workbook) => workbook.ToDataSet(0);
+
+        public static DataSet ToDataSet([NotNull] this IWorkbook workbook, int headerRowIndex)
+        {
+            var ds = new DataSet();
+            for (var i = 0; i < workbook.NumberOfSheets; i++)
+            {
+                ds.Tables.Add(workbook.GetSheetAt(i).ToDataTable(headerRowIndex));
+            }
+            return ds;
+        }
+
         /// <summary>
         /// Workbook2ToDataTable
         /// </summary>
@@ -71,7 +83,6 @@ namespace WeihanLi.Npoi
         /// Sheet2DataTable
         /// </summary>
         /// <param name="sheet">excel sheet</param>
-        /// <param name="headerRowIndex">headerRowIndex</param>
         /// <returns>DataTable</returns>
         public static DataTable ToDataTable([NotNull]this ISheet sheet) => sheet.ToDataTable(0);
 
@@ -87,7 +98,8 @@ namespace WeihanLi.Npoi
             {
                 throw new ArgumentOutOfRangeException(nameof(headerRowIndex), string.Format(Resource.IndexOutOfRange, nameof(headerRowIndex), sheet.PhysicalNumberOfRows));
             }
-            var dataTable = new DataTable(); var rowEnumerator = sheet.GetRowEnumerator();
+            var dataTable = new DataTable(sheet.SheetName);
+            var rowEnumerator = sheet.GetRowEnumerator();
             while (rowEnumerator.MoveNext())
             {
                 var row = (IRow)rowEnumerator.Current;

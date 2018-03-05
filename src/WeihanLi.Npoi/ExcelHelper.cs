@@ -204,6 +204,21 @@ namespace WeihanLi.Npoi
         }
 
         /// <summary>
+        /// 读取 Excel 内容到 DataSet
+        /// </summary>
+        /// <param name="excelPath">excelPath</param>
+        /// <returns></returns>
+        public static DataSet ToDataSet(string excelPath) => ToDataSet(excelPath, 0);
+
+        /// <summary>
+        /// 读取 Excel 内容到 DataSet
+        /// </summary>
+        /// <param name="excelPath">excelPath</param>
+        /// <param name="headerRowIndex">headerRowIndex</param>
+        /// <returns></returns>
+        public static DataSet ToDataSet(string excelPath, int headerRowIndex) => LoadExcel(excelPath).ToDataSet(headerRowIndex);
+
+        /// <summary>
         /// SettingFor
         /// </summary>
         /// <typeparam name="TEntity">TEntity</typeparam>
