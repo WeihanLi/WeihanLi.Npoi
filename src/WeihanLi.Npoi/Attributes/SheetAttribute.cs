@@ -3,7 +3,7 @@ using WeihanLi.Npoi.Settings;
 
 namespace WeihanLi.Npoi.Attributes
 {
-    [AttributeUsage(AttributeTargets.Class)]
+    [AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
     public sealed class SheetAttribute : Attribute
     {
         public int SheetIndex { get => SheetSetting.SheetIndex; set => SheetSetting.SheetIndex = value; }

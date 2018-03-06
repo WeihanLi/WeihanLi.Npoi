@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reflection;
 using JetBrains.Annotations;
 using NPOI.SS.UserModel;
+using NPOI.SS.Util;
 using WeihanLi.Npoi.Attributes;
 using WeihanLi.Npoi.Configurations;
 using WeihanLi.Npoi.Settings;
@@ -15,17 +16,18 @@ namespace WeihanLi.Npoi
     {
         private readonly IDictionary<PropertyInfo, PropertySetting> _propertyColumnDictionary;
         private readonly SheetSetting _sheetSetting;
+        private readonly ExcelConfiguration<TEntity> _excelConfiguration;
 
         internal NpoiHelper()
         {
-            var excelConfiguration = (ExcelConfiguration<TEntity>)TypeCache.TypeExcelConfigurationDictionary.GetOrAdd(typeof(TEntity),
+            _excelConfiguration = (ExcelConfiguration<TEntity>)InternalCache.TypeExcelConfigurationDictionary.GetOrAdd(typeof(TEntity),
                 GetMapping);
 
-            _sheetSetting = ((SheetConfiguration)excelConfiguration.SheetConfigurations[0]).SheetSetting;
+            _sheetSetting = ((SheetConfiguration)_excelConfiguration.SheetConfigurations[0]).SheetSetting;
 
             //AutoAdjustIndex
             var colIndexList = new List<int>();
-            foreach (var item in excelConfiguration.PropertyConfigurationDictionary.Values.Cast<PropertyConfiguration>().Where(_ => !_.PropertySetting.IsIgnored))
+            foreach (var item in _excelConfiguration.PropertyConfigurationDictionary.Values.Cast<PropertyConfiguration>().Where(_ => !_.PropertySetting.IsIgnored))
             {
                 while (colIndexList.Contains(item.PropertySetting.ColumnIndex))
                 {
@@ -34,16 +36,25 @@ namespace WeihanLi.Npoi
                 colIndexList.Add(item.PropertySetting.ColumnIndex);
             }
 
-            _propertyColumnDictionary = excelConfiguration.PropertyConfigurationDictionary.Where(_ => !((PropertyConfiguration)_.Value).PropertySetting.IsIgnored).ToDictionary(_ => _.Key, _ => ((PropertyConfiguration)_.Value).PropertySetting);
+            _propertyColumnDictionary = _excelConfiguration.PropertyConfigurationDictionary.Where(_ => !((PropertyConfiguration)_.Value).PropertySetting.IsIgnored).ToDictionary(_ => _.Key, _ => ((PropertyConfiguration)_.Value).PropertySetting);
         }
 
         private static IExcelConfiguration GetMapping(Type type)
         {
-            var excelConfiguration = new ExcelConfiguration<TEntity>();
-            excelConfiguration.SheetConfigurations = new ISheetConfiguration[]
+            var excelConfiguration = new ExcelConfiguration<TEntity>
             {
-                new SheetConfiguration(typeof(TEntity).GetCustomAttribute<SheetAttribute>()?.SheetSetting)
+                SheetConfigurations = new ISheetConfiguration[]
+                {
+                    new SheetConfiguration(type.GetCustomAttribute<SheetAttribute>()?.SheetSetting)
+                },
+                FilterSetting =
+                    type.GetCustomAttribute<FilterAttribute>()?.FilterSeting,
+                FreezeSettings =
+                    (type.GetCustomAttributes<FreezeAttribute>()?.Select(_ => _.FreezeSetting) ??
+                     Enumerable.Empty<FreezeSetting>()).ToList()
             };
+
+            // propertyInfos
             var dic = new Dictionary<PropertyInfo, IPropertyConfiguration>();
             var propertyInfos = type.GetProperties(BindingFlags.Public | BindingFlags.Instance);
             foreach (var propertyInfo in propertyInfos)
@@ -56,6 +67,7 @@ namespace WeihanLi.Npoi
                 dic.Add(propertyInfo, new PropertyConfiguration(column.PropertySetting));
             }
             excelConfiguration.PropertyConfigurationDictionary = dic;
+
             return excelConfiguration;
         }
 
@@ -65,7 +77,11 @@ namespace WeihanLi.Npoi
             var rowEnumerator = sheet.GetRowEnumerator();
             while (rowEnumerator.MoveNext())
             {
-                var row = (IRow)rowEnumerator.Current;
+                if (!(rowEnumerator.Current is IRow row))
+                {
+                    continue;
+                }
+
                 if (row.RowNum == _sheetSetting.HeaderRowIndex) //读取Header
                 {
                     for (var i = 0; i < row.Cells.Count; i++)
@@ -120,12 +136,22 @@ namespace WeihanLi.Npoi
                 }
             }
 
-            // autosize
-            for (var i = 0; i < _propertyColumnDictionary.Keys.Count; i++)
+            // autosizecolumn
+            for (var i = 0; i < _propertyColumnDictionary.Values.Max(_ => _.ColumnIndex); i++)
             {
-                // 自动调整单元格的宽度
                 sheet.AutoSizeColumn(i);
             }
+
+            foreach (var freezeSetting in _excelConfiguration.FreezeSettings)
+            {
+                sheet.CreateFreezePane(freezeSetting.ColSplit, freezeSetting.RowSplit, freezeSetting.LeftMostColumn, freezeSetting.TopRow);
+            }
+
+            if (_excelConfiguration.FilterSetting != null)
+            {
+                sheet.SetAutoFilter(new CellRangeAddress(_sheetSetting.HeaderRowIndex, dataTable.Rows.Count + _sheetSetting.HeaderRowIndex, _excelConfiguration.FilterSetting.FirstColumn, _excelConfiguration.FilterSetting.LastColumn ?? _propertyColumnDictionary.Values.Max(_ => _.ColumnIndex)));
+            }
+
             return sheet;
         }
 
@@ -154,12 +180,22 @@ namespace WeihanLi.Npoi
                 }
             }
 
-            // autosize
-            for (var i = 0; i < _propertyColumnDictionary.Keys.Count; i++)
+            // AutoSizeColumn
+            for (var i = 0; i < _propertyColumnDictionary.Values.Max(_ => _.ColumnIndex); i++)
             {
-                // 自动调整单元格的宽度
                 sheet.AutoSizeColumn(i);
             }
+
+            foreach (var freezeSetting in _excelConfiguration.FreezeSettings)
+            {
+                sheet.CreateFreezePane(freezeSetting.ColSplit, freezeSetting.RowSplit, freezeSetting.LeftMostColumn, freezeSetting.TopRow);
+            }
+
+            if (_excelConfiguration.FilterSetting != null)
+            {
+                sheet.SetAutoFilter(new CellRangeAddress(_sheetSetting.HeaderRowIndex, entityList.Count + _sheetSetting.HeaderRowIndex, _excelConfiguration.FilterSetting.FirstColumn, _excelConfiguration.FilterSetting.LastColumn ?? _propertyColumnDictionary.Values.Max(_ => _.ColumnIndex)));
+            }
+
             return sheet;
         }
     }

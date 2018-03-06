@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Globalization;
 using System.IO;
 using JetBrains.Annotations;
 using NPOI.SS.UserModel;
@@ -15,7 +16,6 @@ namespace WeihanLi.Npoi
         /// </summary>
         /// <typeparam name="TEntity">EntityType</typeparam>
         /// <param name="workbook">excel workbook</param>
-        /// <param name="sheetIndex">sheetIndex</param>
         /// <returns>entity list</returns>
         public static List<TEntity> ToEntityList<TEntity>([NotNull]this IWorkbook workbook) where TEntity : new() => workbook.ToEntityList<TEntity>(0);
 
@@ -102,7 +102,11 @@ namespace WeihanLi.Npoi
             var rowEnumerator = sheet.GetRowEnumerator();
             while (rowEnumerator.MoveNext())
             {
-                var row = (IRow)rowEnumerator.Current;
+                if (!(rowEnumerator.Current is IRow row))
+                {
+                    continue;
+                }
+
                 if (row.RowNum < headerRowIndex)
                 {
                     continue;
@@ -174,7 +178,7 @@ namespace WeihanLi.Npoi
         /// <typeparam name="TEntity">TEntity</typeparam>
         /// <param name="workbook">workbook</param>
         /// <param name="dataTable">dataTable</param>
-        public static int ImportData<TEntity>([NotNull]this IWorkbook workbook, DataTable dataTable) where TEntity : new() => workbook.ImportData<TEntity>(dataTable, 0);
+        public static int ImportData<TEntity>([NotNull]this IWorkbook workbook, [NotNull]DataTable dataTable) where TEntity : new() => workbook.ImportData<TEntity>(dataTable, 0);
 
         /// <summary>
         /// import datatable to workbook first sheet
@@ -183,7 +187,7 @@ namespace WeihanLi.Npoi
         /// <param name="workbook">workbook</param>
         /// <param name="dataTable">dataTable</param>
         /// <param name="sheetIndex">sheetIndex</param>
-        public static int ImportData<TEntity>([NotNull]this IWorkbook workbook, DataTable dataTable, int sheetIndex) where TEntity : new()
+        public static int ImportData<TEntity>([NotNull]this IWorkbook workbook, [NotNull]DataTable dataTable, int sheetIndex) where TEntity : new()
         {
             if (sheetIndex >= ExcelConstants.MaxSheetNum)
             {
@@ -215,7 +219,7 @@ namespace WeihanLi.Npoi
         public static int ToExcelFile<TEntity>([NotNull] this IReadOnlyList<TEntity> entityList, [NotNull]string excelPath)
             where TEntity : new()
         {
-            TypeCache.TypeExcelConfigurationDictionary.TryGetValue(typeof(TEntity), out var configuration);
+            InternalCache.TypeExcelConfigurationDictionary.TryGetValue(typeof(TEntity), out var configuration);
             var workbook = ExcelHelper.PrepareWorkbook(excelPath, configuration?.ExcelSetting);
             workbook.ImportData(entityList);
             workbook.WriteToFile(excelPath);
@@ -231,7 +235,7 @@ namespace WeihanLi.Npoi
         public static int ToExcelStream<TEntity>([NotNull] this IReadOnlyList<TEntity> entityList, [NotNull]Stream stream)
             where TEntity : new()
         {
-            TypeCache.TypeExcelConfigurationDictionary.TryGetValue(typeof(TEntity), out var configuration);
+            InternalCache.TypeExcelConfigurationDictionary.TryGetValue(typeof(TEntity), out var configuration);
             var workbook = ExcelHelper.PrepareWorkbook(true, configuration?.ExcelSetting);
             workbook.ImportData(entityList);
             workbook.Write(stream);
@@ -340,21 +344,26 @@ namespace WeihanLi.Npoi
                 else if (type == typeof(bool))
                 {
                     cell.SetCellType(CellType.Boolean);
-                    cell.SetCellValue(Convert.ToBoolean(value));
+                    cell.SetCellValue((bool)value);
                 }
                 else
                 {
                     cell.SetCellType(CellType.String);
-                    cell.SetCellValue(value.ToString());
+                    cell.SetCellValue(value is IFormattable val && formatter.IsNotNullOrWhiteSpace() ? val.ToString(formatter, CultureInfo.CurrentCulture) : value.ToString());
                 }
             }
 
-            if (formatter.IsNotNullOrWhiteSpace())
-            {
-                var style = cell.Row.Sheet.Workbook.CreateCellStyle();
-                style.DataFormat = cell.Row.Sheet.Workbook.CreateDataFormat().GetFormat(formatter);
-                cell.CellStyle = style;
-            }
+            //try
+            //{
+            //    if (formatter.IsNotNullOrWhiteSpace())
+            //    {
+            //        cell.CellStyle.DataFormat = cell.Row.Sheet.Workbook.CreateDataFormat().GetFormat(formatter);
+            //    }
+            //}
+            //catch (Exception ex)
+            //{
+            //    System.Diagnostics.Debug.WriteLine(ex.ToString());
+            //}
         }
 
         /// <summary>
@@ -378,15 +387,16 @@ namespace WeihanLi.Npoi
                         {
                             return cell.DateCellValue;
                         }
-                        return cell.DateCellValue == cell.DateCellValue.Date
-                            ? cell.DateCellValue.ToStandardDateString().ToOrDefault(propertyType)
-                            : cell.DateCellValue.ToStandardTimeString().ToOrDefault(propertyType);
+                        return DateTime.Parse(cell.DateCellValue == cell.DateCellValue.Date
+                            ? cell.DateCellValue.ToStandardDateString()
+                            : cell.DateCellValue.ToStandardTimeString());
                     }
                     if (propertyType == typeof(double))
                     {
                         return cell.NumericCellValue;
                     }
                     // ReSharper disable once SpecifyACultureInStringConversionExplicitly
+                    // System.ComponentModel.TypeDescriptor.GetConverter(typeof(decimal)).CanConvertFrom(typeof(double)) :: false
                     // HACK:直接 ToOrDefault() 时，double 转换为 decimal 转换后还是 double
                     return cell.NumericCellValue.ToString().ToOrDefault(propertyType);
 
@@ -443,7 +453,7 @@ namespace WeihanLi.Npoi
         /// <summary>
         /// ToExcelBytes
         /// </summary>
-        /// <param name="entityList">workbook</param>
+        /// <param name="workbook">workbook</param>
         public static byte[] ToExcelBytes([NotNull] this IWorkbook workbook)
         {
             using (var ms = new MemoryStream())

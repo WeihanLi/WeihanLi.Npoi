@@ -21,12 +21,12 @@ namespace DotNetSample
             entityList[0].PasswordHash = "";
             //var dataTable = entityList.ToDataTable();
             var result = entityList.ToExcelFile(ConfigurationHelper.MapPath("test.xlsx"));
-            var result1 = ExcelHelper.ToEntityList<TestEntity>(ConfigurationHelper.MapPath("test.xlsx"));
-            // 找不到文件
-            //var aaa = ExcelHelper.ToEntityList<TestEntity>("");
-            var entityList1 = conn.Select<TestEntity2>("select * from Bills");
-            var result2 = entityList1.ToExcelFile(ConfigurationHelper.MapPath("test1.xls"));
-            entityList1 = ExcelHelper.ToEntityList<TestEntity2>(ConfigurationHelper.MapPath("test1.xls"));
+            //var result1 = ExcelHelper.ToEntityList<TestEntity>(ConfigurationHelper.MapPath("test.xlsx"));
+            //// 找不到文件
+            ////var aaa = ExcelHelper.ToEntityList<TestEntity>("");
+            //var entityList1 = conn.Select<TestEntity2>("select * from Bills");
+            //var result2 = entityList1.ToExcelFile(ConfigurationHelper.MapPath("test1.xls"));
+            //entityList1 = ExcelHelper.ToEntityList<TestEntity2>(ConfigurationHelper.MapPath("test1.xls"));
 
             //var entityList2 = ExcelHelper.ToEntityList<Model>(FilePath).Where(_ => !string.IsNullOrWhiteSpace(_.HotelId)).ToArray();
             //if (entityList2.Length > 0)
@@ -61,6 +61,9 @@ namespace DotNetSample
                 .HasDescription("")
                 .HasSubject("");
 
+            setting.HasFilter(0, 1)
+                .HasFreezePane(0, 1);
+
             setting.Property(_ => _.Amount)
                 .HasColumnTitle("可用余额")
                 .HasColumnIndex(2);
@@ -77,16 +80,20 @@ namespace DotNetSample
                 .Ignored();
 
             var entities = ExcelHelper.ToEntityList<TestEntity>(ConfigurationHelper.MapPath("test.xlsx"));
+            Console.WriteLine(entities.Count);
             entities = conn.Select<TestEntity>("select * from Users");
             entities.ToExcelFile(ConfigurationHelper.MapPath("test_1.xlsx"));
-            Console.WriteLine();
+            Console.WriteLine("Success");
 
             Console.ReadLine();
         }
     }
 
+    [Freeze(0, 1)]
     internal class TestEntity
     {
+        public int PKID { get; set; }
+
         /// <summary>
         /// 用户名
         /// </summary>

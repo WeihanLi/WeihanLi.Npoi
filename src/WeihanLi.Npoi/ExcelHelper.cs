@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Data;
 using System.IO;
-using JetBrains.Annotations;
 using NPOI.HPSF;
 using NPOI.HSSF.UserModel;
 using NPOI.SS.UserModel;
@@ -48,7 +47,7 @@ namespace WeihanLi.Npoi
         /// </summary>
         /// <param name="excelPath">excel路径</param>
         /// <returns>workbook</returns>
-        public static IWorkbook LoadExcel([NotNull]string excelPath)
+        public static IWorkbook LoadExcel(string excelPath)
         {
             if (!ValidateExcelFilePath(excelPath, out var msg))
             {
@@ -66,7 +65,7 @@ namespace WeihanLi.Npoi
         /// </summary>
         /// <param name="excelPath">excelPath</param>
         /// <returns></returns>
-        public static IWorkbook PrepareWorkbook([NotNull] string excelPath) => PrepareWorkbook(excelPath, null);
+        public static IWorkbook PrepareWorkbook(string excelPath) => PrepareWorkbook(excelPath, null);
 
         /// <summary>
         /// 为导出准备 workbook
@@ -74,7 +73,7 @@ namespace WeihanLi.Npoi
         /// <param name="excelPath">excelPath</param>
         /// <param name="excelSetting">excelSetting</param>
         /// <returns></returns>
-        public static IWorkbook PrepareWorkbook([NotNull] string excelPath, ExcelSetting excelSetting)
+        public static IWorkbook PrepareWorkbook(string excelPath, ExcelSetting excelSetting)
         {
             if (!ValidateExcelFilePath(excelPath, out var msg, true))
             {
@@ -105,17 +104,17 @@ namespace WeihanLi.Npoi
         /// <returns></returns>
         public static IWorkbook PrepareWorkbook(bool isXlsx, ExcelSetting excelSetting)
         {
-            var _excelSetting = excelSetting ?? new ExcelSetting();
+            var setting = excelSetting ?? new ExcelSetting();
 
             if (isXlsx)
             {
                 var workbook = new XSSFWorkbook();
                 var props = workbook.GetProperties();
-                props.CoreProperties.Creator = _excelSetting.Author;
+                props.CoreProperties.Creator = setting.Author;
                 props.CoreProperties.Created = DateTime.Now;
-                props.CoreProperties.Title = _excelSetting.Title;
-                props.CoreProperties.Subject = _excelSetting.Subject;
-                props.CoreProperties.Description = _excelSetting.Description;
+                props.CoreProperties.Title = setting.Title;
+                props.CoreProperties.Subject = setting.Subject;
+                props.CoreProperties.Description = setting.Description;
                 props.ExtendedProperties.GetUnderlyingProperties().Application = ExcelConstants.ApplicationName;
                 return workbook;
             }
@@ -128,11 +127,11 @@ namespace WeihanLi.Npoi
                 workbook.DocumentSummaryInformation = dsi;
                 ////create a entry of SummaryInformation
                 var si = PropertySetFactory.CreateSummaryInformation();
-                si.Title = _excelSetting.Title;
-                si.Subject = _excelSetting.Subject;
-                si.Author = _excelSetting.Author;
+                si.Title = setting.Title;
+                si.Subject = setting.Subject;
+                si.Author = setting.Author;
                 si.CreateDateTime = DateTime.Now;
-                si.Comments = _excelSetting.Description;
+                si.Comments = setting.Description;
                 si.ApplicationName = ExcelConstants.ApplicationName;
                 workbook.SummaryInformation = si;
                 return workbook;
@@ -145,7 +144,7 @@ namespace WeihanLi.Npoi
         /// <typeparam name="TEntity">EntityType</typeparam>
         /// <param name="excelPath">excelPath</param>
         /// <returns>List</returns>
-        public static List<TEntity> ToEntityList<TEntity>([NotNull]string excelPath) where TEntity : new() => ToEntityList<TEntity>(excelPath, 0);
+        public static List<TEntity> ToEntityList<TEntity>(string excelPath) where TEntity : new() => ToEntityList<TEntity>(excelPath, 0);
 
         /// <summary>
         /// 读取Excel内容到一个List中
@@ -154,7 +153,7 @@ namespace WeihanLi.Npoi
         /// <param name="excelPath">excelPath</param>
         /// <param name="sheetIndex">sheetIndex</param>
         /// <returns>List</returns>
-        public static List<TEntity> ToEntityList<TEntity>([NotNull]string excelPath, int sheetIndex) where TEntity : new()
+        public static List<TEntity> ToEntityList<TEntity>(string excelPath, int sheetIndex) where TEntity : new()
         {
             var workbook = LoadExcel(excelPath);
             return workbook.ToEntityList<TEntity>(sheetIndex);
@@ -165,7 +164,6 @@ namespace WeihanLi.Npoi
         /// </summary>
         /// <typeparam name="TEntity">EntityType</typeparam>
         /// <param name="excelPath">excelPath</param>
-        /// <param name="sheetIndex">sheetIndex</param>
         /// <returns>DataTable</returns>
         public static DataTable ToDataTable<TEntity>(string excelPath) where TEntity : new() => ToDataTable<TEntity>(excelPath, 0);
 
@@ -223,6 +221,6 @@ namespace WeihanLi.Npoi
         /// </summary>
         /// <typeparam name="TEntity">TEntity</typeparam>
         /// <returns></returns>
-        public static IExcelConfiguration<TEntity> SettingFor<TEntity>() => TypeCache.TypeExcelConfigurationDictionary.GetOrAdd(typeof(TEntity), new ExcelConfiguration<TEntity>()) as IExcelConfiguration<TEntity>;
+        public static IExcelConfiguration<TEntity> SettingFor<TEntity>() => InternalCache.TypeExcelConfigurationDictionary.GetOrAdd(typeof(TEntity), new ExcelConfiguration<TEntity>()) as IExcelConfiguration<TEntity>;
     }
 }
