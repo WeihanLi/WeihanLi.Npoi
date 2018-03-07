@@ -4,7 +4,7 @@
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <Title>WeihanLi.Npoi</Title>
         <PackageId>WeihanLi.Npoi</PackageId>
-        <Version>1.0.4-beta</Version>
+        <Version>1.0.4-beta-2</Version>
         <Authors>WeihanLi</Authors>
         <Company>WeihanLi</Company>
         <Product>WeihanLi.Npoi</Product>
@@ -17,6 +17,8 @@
         <Description>NpoiExtensions for .net45 and .netstandard2.0</Description>
         <PackageReleaseNotes>
             add support for freeze and filter
+            add Company,Category for ExcelSetting
+            add extensions for DataSet
         </PackageReleaseNotes>
         <Copyright>Copyright 2018 WeihanLi</Copyright>
     </PropertyGroup>

@@ -38,31 +38,63 @@ namespace WeihanLi.Npoi.Configurations
 
         #region ExcelSettings FluentAPI
 
-        public IExcelConfiguration<TEntity> HasAuthor(string author)
+        public IExcelConfiguration HasAuthor(string author)
         {
             ExcelSetting.Author = author;
             return this;
         }
 
-        public IExcelConfiguration<TEntity> HasTitle(string title)
+        public IExcelConfiguration HasTitle(string title)
         {
             ExcelSetting.Title = title;
             return this;
         }
 
-        public IExcelConfiguration<TEntity> HasDescription(string description)
+        public IExcelConfiguration HasDescription(string description)
         {
             ExcelSetting.Description = description;
             return this;
         }
 
-        public IExcelConfiguration<TEntity> HasSubject(string subject)
+        public IExcelConfiguration HasSubject(string subject)
         {
             ExcelSetting.Subject = subject;
             return this;
         }
 
+        public IExcelConfiguration HasCompany(string company)
+        {
+            ExcelSetting.Company = company;
+            return this;
+        }
+
+        public IExcelConfiguration HasCategory(string category)
+        {
+            ExcelSetting.Category = category;
+            return this;
+        }
+
         #endregion ExcelSettings FluentAPI
+
+        public IExcelConfiguration HasFreezePane(int colSplit, int rowSplit)
+        {
+            FreezeSettings.Add(new FreezeSetting(colSplit, rowSplit));
+            return this;
+        }
+
+        public IExcelConfiguration HasFreezePane(int colSplit, int rowSplit, int leftmostColumn, int topRow)
+        {
+            FreezeSettings.Add(new FreezeSetting(colSplit, rowSplit, leftmostColumn, topRow));
+            return this;
+        }
+
+        public IExcelConfiguration HasFilter(int firstColumn) => HasFilter(firstColumn, null);
+
+        public IExcelConfiguration HasFilter(int firstColumn, int? lastColumn)
+        {
+            FilterSetting = new FilterSetting(firstColumn, lastColumn);
+            return this;
+        }
 
         #region Property
 
@@ -104,7 +136,7 @@ namespace WeihanLi.Npoi.Configurations
         {
             if (expression.NodeType == ExpressionType.MemberAccess)
             {
-                return ((MemberExpression)expression);
+                return (MemberExpression)expression;
             }
 
             if (expression.NodeType == ExpressionType.Convert)
@@ -117,33 +149,5 @@ namespace WeihanLi.Npoi.Configurations
         }
 
         #endregion Property
-
-        public IExcelConfiguration HasFreezePane(int colSplit, int rowSplit)
-        {
-            FreezeSettings.Add(new FreezeSetting(colSplit, rowSplit));
-            return this;
-        }
-
-        /// <summary>
-        /// 设置冻结区域
-        /// </summary>
-        /// <param name="colSplit">colSplit</param>
-        /// <param name="rowSplit">rowSplit</param>
-        /// <param name="leftmostColumn">leftmostColumn</param>
-        /// <param name="topRow">topRow</param>
-        /// <returns></returns>
-        public IExcelConfiguration HasFreezePane(int colSplit, int rowSplit, int leftmostColumn, int topRow)
-        {
-            FreezeSettings.Add(new FreezeSetting(colSplit, rowSplit, leftmostColumn, topRow));
-            return this;
-        }
-
-        public IExcelConfiguration HasFilter(int firstColumn) => HasFilter(firstColumn, null);
-
-        public IExcelConfiguration HasFilter(int firstColumn, int? lastColumn)
-        {
-            FilterSetting = new FilterSetting(firstColumn, lastColumn);
-            return this;
-        }
     }
 }

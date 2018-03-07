@@ -16,11 +16,11 @@ namespace DotNetSample
         public static void Main(string[] args)
         {
             var conn = new SqlConnection("server=.;uid=liweihan;pwd=Admin888;database=AccountingApp");
-            var entityList = conn.Select<TestEntity>("select * from Users");
-            entityList[0].Amount = 0;
-            entityList[0].PasswordHash = "";
-            //var dataTable = entityList.ToDataTable();
-            var result = entityList.ToExcelFile(ConfigurationHelper.MapPath("test.xlsx"));
+            //var entityList = conn.Select<TestEntity>("select * from Users");
+            //entityList[0].Amount = 0;
+            //entityList[0].PasswordHash = "";
+            ////var dataTable = entityList.ToDataTable();
+            //var result = entityList.ToExcelFile(ConfigurationHelper.MapPath("test.xlsx"));
             //var result1 = ExcelHelper.ToEntityList<TestEntity>(ConfigurationHelper.MapPath("test.xlsx"));
             //// 找不到文件
             ////var aaa = ExcelHelper.ToEntityList<TestEntity>("");
@@ -57,12 +57,12 @@ namespace DotNetSample
             var setting = ExcelHelper.SettingFor<TestEntity>();
             // ExcelSetting
             setting.HasAuthor("WeihanLi")
-                .HasTitle("WeihanLi.Npoi")
+                .HasTitle("WeihanLi.Npoi test")
                 .HasDescription("")
                 .HasSubject("");
 
             setting.HasFilter(0, 1)
-                .HasFreezePane(0, 1);
+                .HasFreezePane(0, 1, 2, 1);
 
             setting.Property(_ => _.Amount)
                 .HasColumnTitle("可用余额")

@@ -112,9 +112,12 @@ namespace WeihanLi.Npoi
                 var props = workbook.GetProperties();
                 props.CoreProperties.Creator = setting.Author;
                 props.CoreProperties.Created = DateTime.Now;
+                props.CoreProperties.Modified = DateTime.Now;
                 props.CoreProperties.Title = setting.Title;
                 props.CoreProperties.Subject = setting.Subject;
+                props.CoreProperties.Category = setting.Category;
                 props.CoreProperties.Description = setting.Description;
+                props.ExtendedProperties.GetUnderlyingProperties().Company = setting.Company;
                 props.ExtendedProperties.GetUnderlyingProperties().Application = ExcelConstants.ApplicationName;
                 return workbook;
             }
@@ -123,7 +126,8 @@ namespace WeihanLi.Npoi
                 var workbook = new HSSFWorkbook();
                 ////create a entry of DocumentSummaryInformation
                 var dsi = PropertySetFactory.CreateDocumentSummaryInformation();
-                dsi.Company = ExcelConstants.ApplicationName;
+                dsi.Company = setting.Company;
+                dsi.Category = setting.Category;
                 workbook.DocumentSummaryInformation = dsi;
                 ////create a entry of SummaryInformation
                 var si = PropertySetFactory.CreateSummaryInformation();
@@ -221,6 +225,6 @@ namespace WeihanLi.Npoi
         /// </summary>
         /// <typeparam name="TEntity">TEntity</typeparam>
         /// <returns></returns>
-        public static IExcelConfiguration<TEntity> SettingFor<TEntity>() => InternalCache.TypeExcelConfigurationDictionary.GetOrAdd(typeof(TEntity), new ExcelConfiguration<TEntity>()) as IExcelConfiguration<TEntity>;
+        public static IExcelConfiguration<TEntity> SettingFor<TEntity>() => InternalCache.TypeExcelConfigurationDictionary.GetOrAdd(typeof(TEntity), t => InternalHelper.GetExcelConfigurationMapping<TEntity>()) as IExcelConfiguration<TEntity>;
     }
 }

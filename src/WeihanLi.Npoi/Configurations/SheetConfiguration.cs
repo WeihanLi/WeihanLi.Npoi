@@ -6,8 +6,7 @@ namespace WeihanLi.Npoi.Configurations
     {
         internal SheetSetting SheetSetting { get; }
 
-        public SheetConfiguration()
-            => SheetSetting = new SheetSetting();
+        public SheetConfiguration() : this(null) { }
 
         public SheetConfiguration(SheetSetting sheetSetting)
             => SheetSetting = sheetSetting ?? new SheetSetting();

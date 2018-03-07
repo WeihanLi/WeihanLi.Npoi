@@ -44,22 +44,56 @@ namespace WeihanLi.Npoi.Configurations
         /// <param name="lastColumn">lastCol Index of last column (inclusive), must be equal to or larger than {@code firstCol}</param>
         /// <returns></returns>
         IExcelConfiguration HasFilter(int firstColumn, int? lastColumn);
+
+        #region ExcelSettings FluentAPI
+
+        /// <summary>
+        /// set excel Author
+        /// </summary>
+        /// <param name="author">author</param>
+        /// <returns></returns>
+        IExcelConfiguration HasAuthor(string author);
+
+        /// <summary>
+        /// set excel title
+        /// </summary>
+        /// <param name="title">title</param>
+        /// <returns></returns>
+        IExcelConfiguration HasTitle(string title);
+
+        /// <summary>
+        /// set excel description
+        /// </summary>
+        /// <param name="description">description</param>
+        /// <returns></returns>
+        IExcelConfiguration HasDescription(string description);
+
+        /// <summary>
+        /// set excel subject
+        /// </summary>
+        /// <param name="subject">subject</param>
+        /// <returns></returns>
+        IExcelConfiguration HasSubject(string subject);
+
+        /// <summary>
+        /// set excel company
+        /// </summary>
+        /// <param name="company">company</param>
+        /// <returns></returns>
+        IExcelConfiguration HasCompany(string company);
+
+        /// <summary>
+        /// set excel category
+        /// </summary>
+        /// <param name="category">category</param>
+        /// <returns></returns>
+        IExcelConfiguration HasCategory(string category);
+
+        #endregion ExcelSettings FluentAPI
     }
 
     public interface IExcelConfiguration<TEntity> : IExcelConfiguration
     {
         IPropertyConfiguration Property<TProperty>(Expression<Func<TEntity, TProperty>> propertyExpression);
-
-        #region ExcelSettings FluentAPI
-
-        IExcelConfiguration<TEntity> HasAuthor(string author);
-
-        IExcelConfiguration<TEntity> HasTitle(string title);
-
-        IExcelConfiguration<TEntity> HasDescription(string description);
-
-        IExcelConfiguration<TEntity> HasSubject(string subject);
-
-        #endregion ExcelSettings FluentAPI
     }
 }

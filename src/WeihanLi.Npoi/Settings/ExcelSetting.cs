@@ -1,25 +1,39 @@
 ﻿namespace WeihanLi.Npoi.Settings
 {
     /// <summary>
-    /// Excel 设置
-    /// SummaryInfo
+    /// Excel Settings
+    /// Excel文档熟悉
     /// </summary>
     public sealed class ExcelSetting
     {
-        public string Author { get; set; }
+        /// <summary>
+        /// Author
+        /// </summary>
+        public string Author { get; set; } = "WeihanLi";
 
-        public string Title { get; set; }
+        /// <summary>
+        /// Company
+        /// </summary>
+        public string Company { get; set; } = "WeihanLi";
 
-        public string Description { get; set; }
+        /// <summary>
+        /// Title
+        /// </summary>
+        public string Title { get; set; } = "WeihanLi.Npoi Generated";
 
-        public string Subject { get; set; }
+        /// <summary>
+        /// Description
+        /// </summary>
+        public string Description { get; set; } = "WeihanLi.Npoi Generated";
 
-        public ExcelSetting()
-        {
-            Author = "WeihanLi";
-            Title = "WeihanLi.Npoi Generated";
-            Description = "WeihanLi.Npoi Generated";
-            Subject = "WeihanLi.Npoi Generated";
-        }
+        /// <summary>
+        /// Subject
+        /// </summary>
+        public string Subject { get; set; } = "WeihanLi.Npoi Generated";
+
+        /// <summary>
+        /// Category
+        /// </summary>
+        public string Category { get; set; } = "WeihanLi.Npoi";
     }
 }

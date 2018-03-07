@@ -10,7 +10,7 @@
         /// <summary>
         /// SheetName
         /// </summary>
-        internal string SheetName { get; set; }
+        internal string SheetName { get; set; } = "Sheet0";
 
         /// <summary>
         /// StartRowIndex

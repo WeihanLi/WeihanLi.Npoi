@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Reflection;
 using JetBrains.Annotations;
 using NPOI.SS.UserModel;
 using NPOI.SS.Util;
-using WeihanLi.Npoi.Attributes;
 using WeihanLi.Npoi.Configurations;
 using WeihanLi.Npoi.Settings;
 
@@ -21,12 +19,13 @@ namespace WeihanLi.Npoi
         internal NpoiHelper()
         {
             _excelConfiguration = (ExcelConfiguration<TEntity>)InternalCache.TypeExcelConfigurationDictionary.GetOrAdd(typeof(TEntity),
-                GetMapping);
+                t => InternalHelper.GetExcelConfigurationMapping<TEntity>());
 
+            // TODO:multi sheets configuration
             _sheetSetting = ((SheetConfiguration)_excelConfiguration.SheetConfigurations[0]).SheetSetting;
 
             //AutoAdjustIndex
-            var colIndexList = new List<int>();
+            var colIndexList = new List<int>(_excelConfiguration.PropertyConfigurationDictionary.Count);
             foreach (var item in _excelConfiguration.PropertyConfigurationDictionary.Values.Cast<PropertyConfiguration>().Where(_ => !_.PropertySetting.IsIgnored))
             {
                 while (colIndexList.Contains(item.PropertySetting.ColumnIndex))
@@ -37,38 +36,6 @@ namespace WeihanLi.Npoi
             }
 
             _propertyColumnDictionary = _excelConfiguration.PropertyConfigurationDictionary.Where(_ => !((PropertyConfiguration)_.Value).PropertySetting.IsIgnored).ToDictionary(_ => _.Key, _ => ((PropertyConfiguration)_.Value).PropertySetting);
-        }
-
-        private static IExcelConfiguration GetMapping(Type type)
-        {
-            var excelConfiguration = new ExcelConfiguration<TEntity>
-            {
-                SheetConfigurations = new ISheetConfiguration[]
-                {
-                    new SheetConfiguration(type.GetCustomAttribute<SheetAttribute>()?.SheetSetting)
-                },
-                FilterSetting =
-                    type.GetCustomAttribute<FilterAttribute>()?.FilterSeting,
-                FreezeSettings =
-                    (type.GetCustomAttributes<FreezeAttribute>()?.Select(_ => _.FreezeSetting) ??
-                     Enumerable.Empty<FreezeSetting>()).ToList()
-            };
-
-            // propertyInfos
-            var dic = new Dictionary<PropertyInfo, IPropertyConfiguration>();
-            var propertyInfos = type.GetProperties(BindingFlags.Public | BindingFlags.Instance);
-            foreach (var propertyInfo in propertyInfos)
-            {
-                var column = propertyInfo.GetCustomAttribute<ColumnAttribute>() ?? new ColumnAttribute();
-                if (string.IsNullOrWhiteSpace(column.Title))
-                {
-                    column.Title = propertyInfo.Name;
-                }
-                dic.Add(propertyInfo, new PropertyConfiguration(column.PropertySetting));
-            }
-            excelConfiguration.PropertyConfigurationDictionary = dic;
-
-            return excelConfiguration;
         }
 
         public List<TEntity> SheetToEntityList([NotNull]ISheet sheet)
