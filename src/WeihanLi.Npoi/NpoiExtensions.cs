@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using JetBrains.Annotations;
 using NPOI.SS.UserModel;
 using WeihanLi.Extensions;
@@ -139,7 +140,7 @@ namespace WeihanLi.Npoi
         /// <typeparam name="TEntity">TEntity</typeparam>
         /// <param name="workbook">workbook</param>
         /// <param name="list">entityList</param>
-        public static int ImportData<TEntity>([NotNull]this IWorkbook workbook, IReadOnlyList<TEntity> list) where TEntity : new() => workbook.ImportData(list, 0);
+        public static int ImportData<TEntity>([NotNull]this IWorkbook workbook, IEnumerable<TEntity> list) where TEntity : new() => workbook.ImportData(list, 0);
 
         /// <summary>
         /// import entityList to workbook sheet
@@ -148,7 +149,7 @@ namespace WeihanLi.Npoi
         /// <param name="workbook">workbook</param>
         /// <param name="list">entityList</param>
         /// <param name="sheetIndex">sheetIndex</param>
-        public static int ImportData<TEntity>([NotNull]this IWorkbook workbook, IReadOnlyList<TEntity> list, int sheetIndex) where TEntity : new()
+        public static int ImportData<TEntity>([NotNull]this IWorkbook workbook, IEnumerable<TEntity> list, int sheetIndex) where TEntity : new()
         {
             if (sheetIndex >= ExcelConstants.MaxSheetNum)
             {
@@ -159,7 +160,7 @@ namespace WeihanLi.Npoi
             {
                 workbook.CreateSheet();
             }
-            new NpoiHelper<TEntity>().EntityListToSheet(workbook.GetSheetAt(sheetIndex), list);
+            new NpoiHelper<TEntity>().EntityListToSheet(workbook.GetSheetAt(sheetIndex), list.ToArray());
             return 1;
         }
 
@@ -169,8 +170,8 @@ namespace WeihanLi.Npoi
         /// <typeparam name="TEntity">EntityType</typeparam>
         /// <param name="sheet">sheet</param>
         /// <param name="list">entityList</param>
-        public static ISheet ImportData<TEntity>([NotNull]this ISheet sheet, IReadOnlyList<TEntity> list)
-            where TEntity : new() => new NpoiHelper<TEntity>().EntityListToSheet(sheet, list);
+        public static ISheet ImportData<TEntity>([NotNull]this ISheet sheet, IEnumerable<TEntity> list)
+            where TEntity : new() => new NpoiHelper<TEntity>().EntityListToSheet(sheet, list.ToArray());
 
         /// <summary>
         /// import datatable to workbook first sheet
@@ -216,12 +217,12 @@ namespace WeihanLi.Npoi
         /// <typeparam name="TEntity">EntityType</typeparam>
         /// <param name="entityList">entityList</param>
         /// <param name="excelPath">excelPath</param>
-        public static int ToExcelFile<TEntity>([NotNull] this IReadOnlyList<TEntity> entityList, [NotNull]string excelPath)
+        public static int ToExcelFile<TEntity>([NotNull] this IEnumerable<TEntity> entityList, [NotNull]string excelPath)
             where TEntity : new()
         {
             InternalCache.TypeExcelConfigurationDictionary.TryGetValue(typeof(TEntity), out var configuration);
             var workbook = ExcelHelper.PrepareWorkbook(excelPath, configuration?.ExcelSetting);
-            workbook.ImportData(entityList);
+            workbook.ImportData(entityList.ToArray());
             workbook.WriteToFile(excelPath);
             return 1;
         }
@@ -232,12 +233,12 @@ namespace WeihanLi.Npoi
         /// <typeparam name="TEntity">EntityType</typeparam>
         /// <param name="entityList">entityList</param>
         /// <param name="stream">stream where to write</param>
-        public static int ToExcelStream<TEntity>([NotNull] this IReadOnlyList<TEntity> entityList, [NotNull]Stream stream)
+        public static int ToExcelStream<TEntity>([NotNull] this IEnumerable<TEntity> entityList, [NotNull]Stream stream)
             where TEntity : new()
         {
             InternalCache.TypeExcelConfigurationDictionary.TryGetValue(typeof(TEntity), out var configuration);
             var workbook = ExcelHelper.PrepareWorkbook(true, configuration?.ExcelSetting);
-            workbook.ImportData(entityList);
+            workbook.ImportData(entityList.ToArray());
             workbook.Write(stream);
             return 1;
         }

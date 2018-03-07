@@ -40,7 +40,7 @@ namespace WeihanLi.Npoi
 
         public List<TEntity> SheetToEntityList([NotNull]ISheet sheet)
         {
-            var entities = new List<TEntity>();
+            var entities = new List<TEntity>(sheet.PhysicalNumberOfRows);
             var rowEnumerator = sheet.GetRowEnumerator();
             while (rowEnumerator.MoveNext())
             {
