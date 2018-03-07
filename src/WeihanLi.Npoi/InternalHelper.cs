@@ -6,7 +6,7 @@ using WeihanLi.Npoi.Configurations;
 
 namespace WeihanLi.Npoi
 {
-    internal class InternalHelper
+    internal static class InternalHelper
     {
         /// <summary>
         /// GetExcelConfigurationMapping
