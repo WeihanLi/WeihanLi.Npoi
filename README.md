@@ -6,7 +6,9 @@
 
 ## Intro
 
-Npoi 扩展,适用于.netframework4.5及以上和netstandard2.0, .netframework基于NPOI, .netstandard基于 DotNetCore.NPOI
+Npoi 扩展,适用于.netframework4.5及以上和netstandard2.0, .netframework基于[NPOI](https://www.nuget.org/packages/NPOI/), .netstandard基于 [DotNetCore.NPOI](https://www.nuget.org/packages/DotNetCore.NPOI/)
+
+NpoiExtensions for target framework net4.5 or netstandard2.0,for net45 basedon [NPOI](https://www.nuget.org/packages/NPOI/),for .netstandard basedon [DotNetCore.NPOI](https://www.nuget.org/packages/DotNetCore.NPOI/)
 
 ## Use
 
@@ -52,7 +54,6 @@ dotnet add package WeihanLi.Npoi
         [Column("创建时间")]
         public DateTime CreatedTime { get; set; }
     }
-
 
     internal class TestEntity1
     {
