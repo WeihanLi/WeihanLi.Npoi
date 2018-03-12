@@ -9,6 +9,11 @@ namespace WeihanLi.Npoi.Configurations
     internal class ExcelConfiguration<TEntity> : IExcelConfiguration<TEntity>
     {
         /// <summary>
+        /// EntityType
+        /// </summary>
+        private readonly Type _entityType = typeof(TEntity);
+
+        /// <summary>
         /// PropertyConfigurationDictionary
         /// </summary>
         public IDictionary<PropertyInfo, PropertyConfiguration> PropertyConfigurationDictionary { get; internal set; }
@@ -115,10 +120,10 @@ namespace WeihanLi.Npoi.Configurations
         public IPropertyConfiguration Property<TProperty>(Expression<Func<TEntity, TProperty>> propertyExpression)
         {
             var propertyInfo = GetPropertyInfo(propertyExpression);
-            return PropertyConfigurationDictionary[propertyInfo];
+            return PropertyConfigurationDictionary[_entityType.GetProperty(propertyInfo.Name)];
         }
 
-        private static PropertyInfo GetPropertyInfo<TProperty>(Expression<Func<TEntity, TProperty>> propertyExpression)
+        private static MemberInfo GetPropertyInfo<TProperty>(Expression<Func<TEntity, TProperty>> propertyExpression)
         {
             if (propertyExpression.NodeType != ExpressionType.Lambda)
             {
@@ -132,7 +137,7 @@ namespace WeihanLi.Npoi.Configurations
             {
                 throw new ArgumentException($"{nameof(propertyExpression)} must be lambda expression", nameof(propertyExpression));
             }
-            return memberExpression.Member.DeclaringType.GetProperty(memberExpression.Member.Name);
+            return memberExpression.Member;
         }
 
         private static MemberExpression ExtractMemberExpression(Expression expression)

@@ -30,7 +30,7 @@ namespace WeihanLi.Npoi
 
             // propertyInfos
             var dic = new Dictionary<PropertyInfo, PropertyConfiguration>();
-            var propertyInfos = type.GetProperties(BindingFlags.Public | BindingFlags.Instance);
+            var propertyInfos = type.GetProperties();
             foreach (var propertyInfo in propertyInfos)
             {
                 var column = propertyInfo.GetCustomAttribute<ColumnAttribute>() ?? new ColumnAttribute();

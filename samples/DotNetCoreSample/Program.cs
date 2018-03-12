@@ -58,14 +58,18 @@ namespace DotNetCoreSample
                 .HasColumnIndex(4)
                 .HasColumnTitle("创建人");
 
-            setting.Property(_ => _.UpdatedBy)
-                .Ignored();
-            setting.Property(_ => _.UpdatedTime)
-                .Ignored();
+            setting.Property(_ => _.UpdatedBy).Ignored();
+            setting.Property(_ => _.UpdatedTime).Ignored();
+            setting.Property(_ => _.PKID).Ignored();
         }
     }
 
-    internal class TestEntity
+    internal abstract class BaseEntity
+    {
+        public int PKID { get; set; }
+    }
+
+    internal class TestEntity : BaseEntity
     {
         public Guid SettingId { get; set; }
 
