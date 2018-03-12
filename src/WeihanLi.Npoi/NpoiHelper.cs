@@ -26,7 +26,7 @@ namespace WeihanLi.Npoi
 
             //AutoAdjustIndex
             var colIndexList = new List<int>(_excelConfiguration.PropertyConfigurationDictionary.Count);
-            foreach (var item in _excelConfiguration.PropertyConfigurationDictionary.Values.Cast<PropertyConfiguration>().Where(_ => !_.PropertySetting.IsIgnored))
+            foreach (var item in _excelConfiguration.PropertyConfigurationDictionary.Values.Where(_ => !_.PropertySetting.IsIgnored))
             {
                 while (colIndexList.Contains(item.PropertySetting.ColumnIndex))
                 {
@@ -35,7 +35,7 @@ namespace WeihanLi.Npoi
                 colIndexList.Add(item.PropertySetting.ColumnIndex);
             }
 
-            _propertyColumnDictionary = _excelConfiguration.PropertyConfigurationDictionary.Where(_ => !((PropertyConfiguration)_.Value).PropertySetting.IsIgnored).ToDictionary(_ => _.Key, _ => ((PropertyConfiguration)_.Value).PropertySetting);
+            _propertyColumnDictionary = _excelConfiguration.PropertyConfigurationDictionary.Where(_ => !_.Value.PropertySetting.IsIgnored).ToDictionary(_ => _.Key, _ => _.Value.PropertySetting);
         }
 
         public List<TEntity> SheetToEntityList([NotNull]ISheet sheet)

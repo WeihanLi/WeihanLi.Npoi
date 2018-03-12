@@ -1,4 +1,5 @@
-﻿using WeihanLi.Npoi.Settings;
+﻿using WeihanLi.Extensions;
+using WeihanLi.Npoi.Settings;
 
 namespace WeihanLi.Npoi.Configurations
 {
@@ -12,19 +13,28 @@ namespace WeihanLi.Npoi.Configurations
 
         public IPropertyConfiguration HasColumnIndex(int index)
         {
-            PropertySetting.ColumnIndex = index;
+            if (index < 0)
+            {
+                PropertySetting.ColumnIndex = index;
+            }
             return this;
         }
 
         public IPropertyConfiguration HasColumnTitle(string title)
         {
-            PropertySetting.ColumnTitle = title;
+            if (title.IsNotNullOrWhiteSpace())
+            {
+                PropertySetting.ColumnTitle = title;
+            }
             return this;
         }
 
         public IPropertyConfiguration HasColumnFormatter(string formatter)
         {
-            PropertySetting.ColumnFormatter = formatter;
+            if (formatter.IsNotNullOrWhiteSpace())
+            {
+                PropertySetting.ColumnFormatter = formatter;
+            }
             return this;
         }
 

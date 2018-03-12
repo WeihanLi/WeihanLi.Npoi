@@ -7,6 +7,7 @@ using System.Linq;
 using JetBrains.Annotations;
 using NPOI.SS.UserModel;
 using WeihanLi.Extensions;
+using WeihanLi.Npoi.Configurations;
 
 namespace WeihanLi.Npoi
 {
@@ -155,10 +156,17 @@ namespace WeihanLi.Npoi
             {
                 throw new ArgumentException(string.Format(Resource.IndexOutOfRange, nameof(sheetIndex), ExcelConstants.MaxSheetNum), nameof(sheetIndex));
             }
-
+            InternalCache.TypeExcelConfigurationDictionary.TryGetValue(typeof(TEntity), out var configuration);
             while (workbook.NumberOfSheets <= sheetIndex)
             {
-                workbook.CreateSheet();
+                if (configuration?.SheetConfigurations == null || configuration.SheetConfigurations.Count <= sheetIndex)
+                {
+                    workbook.CreateSheet();
+                }
+                else
+                {
+                    workbook.CreateSheet((configuration.SheetConfigurations[sheetIndex] as SheetConfiguration)?.SheetSetting.SheetName ?? $"Sheet{sheetIndex}");
+                }
             }
             new NpoiHelper<TEntity>().EntityListToSheet(workbook.GetSheetAt(sheetIndex), list.ToArray());
             return 1;
@@ -194,9 +202,17 @@ namespace WeihanLi.Npoi
             {
                 throw new ArgumentException(string.Format(Resource.IndexOutOfRange, nameof(sheetIndex), ExcelConstants.MaxSheetNum), nameof(sheetIndex));
             }
+            InternalCache.TypeExcelConfigurationDictionary.TryGetValue(typeof(TEntity), out var configuration);
             while (workbook.NumberOfSheets <= sheetIndex)
             {
-                workbook.CreateSheet();
+                if (configuration?.SheetConfigurations == null || configuration.SheetConfigurations.Count <= sheetIndex)
+                {
+                    workbook.CreateSheet();
+                }
+                else
+                {
+                    workbook.CreateSheet((configuration.SheetConfigurations[sheetIndex] as SheetConfiguration)?.SheetSetting.SheetName ?? $"Sheet{sheetIndex}");
+                }
             }
             new NpoiHelper<TEntity>().DataTableToSheet(workbook.GetSheetAt(sheetIndex), dataTable);
             return 1;
@@ -252,7 +268,7 @@ namespace WeihanLi.Npoi
         public static int ToExcelFile([NotNull] this DataTable dataTable, [NotNull] string excelPath)
         {
             var workbook = ExcelHelper.PrepareWorkbook(excelPath);
-            var sheet = workbook.CreateSheet();
+            var sheet = workbook.CreateSheet(string.IsNullOrWhiteSpace(dataTable.TableName) ? "Sheet0" : dataTable.TableName);
             var headerRow = sheet.CreateRow(0);
             for (var i = 0; i < dataTable.Columns.Count; i++)
             {
@@ -281,7 +297,7 @@ namespace WeihanLi.Npoi
         public static int ToExcelStream([NotNull] this DataTable dataTable, [NotNull] Stream stream)
         {
             var workbook = ExcelHelper.PrepareWorkbook();
-            var sheet = workbook.CreateSheet();
+            var sheet = workbook.CreateSheet(string.IsNullOrWhiteSpace(dataTable.TableName) ? "Sheet0" : dataTable.TableName);
             var headerRow = sheet.CreateRow(0);
             for (var i = 0; i < dataTable.Columns.Count; i++)
             {

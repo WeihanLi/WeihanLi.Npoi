@@ -11,7 +11,7 @@ namespace WeihanLi.Npoi.Configurations
         /// <summary>
         /// PropertyConfigurationDictionary
         /// </summary>
-        public IDictionary<PropertyInfo, IPropertyConfiguration> PropertyConfigurationDictionary { get; internal set; }
+        public IDictionary<PropertyInfo, PropertyConfiguration> PropertyConfigurationDictionary { get; internal set; }
 
         public ExcelSetting ExcelSetting { get; }
 
@@ -19,7 +19,7 @@ namespace WeihanLi.Npoi.Configurations
 
         internal FilterSetting FilterSetting { get; set; }
 
-        internal IList<ISheetConfiguration> SheetConfigurations { get; set; }
+        public IList<ISheetConfiguration> SheetConfigurations { get; internal set; }
 
         public ExcelConfiguration() : this(null)
         {
@@ -27,7 +27,7 @@ namespace WeihanLi.Npoi.Configurations
 
         public ExcelConfiguration(ExcelSetting setting)
         {
-            PropertyConfigurationDictionary = new Dictionary<PropertyInfo, IPropertyConfiguration>();
+            PropertyConfigurationDictionary = new Dictionary<PropertyInfo, PropertyConfiguration>();
             ExcelSetting = setting ?? new ExcelSetting();
             SheetConfigurations = new List<ISheetConfiguration>(ExcelConstants.MaxSheetNum / 16)
             {
@@ -76,6 +76,8 @@ namespace WeihanLi.Npoi.Configurations
 
         #endregion ExcelSettings FluentAPI
 
+        #region FreezePane
+
         public IExcelConfiguration HasFreezePane(int colSplit, int rowSplit)
         {
             FreezeSettings.Add(new FreezeSetting(colSplit, rowSplit));
@@ -88,6 +90,10 @@ namespace WeihanLi.Npoi.Configurations
             return this;
         }
 
+        #endregion FreezePane
+
+        #region Filter
+
         public IExcelConfiguration HasFilter(int firstColumn) => HasFilter(firstColumn, null);
 
         public IExcelConfiguration HasFilter(int firstColumn, int? lastColumn)
@@ -95,6 +101,8 @@ namespace WeihanLi.Npoi.Configurations
             FilterSetting = new FilterSetting(firstColumn, lastColumn);
             return this;
         }
+
+        #endregion Filter
 
         #region Property
 
@@ -106,13 +114,8 @@ namespace WeihanLi.Npoi.Configurations
         /// <typeparam name="TProperty">The type of parameter.</typeparam>
         public IPropertyConfiguration Property<TProperty>(Expression<Func<TEntity, TProperty>> propertyExpression)
         {
-            var pc = new PropertyConfiguration();
-
             var propertyInfo = GetPropertyInfo(propertyExpression);
-
-            PropertyConfigurationDictionary[propertyInfo] = pc;
-
-            return pc;
+            return PropertyConfigurationDictionary[propertyInfo];
         }
 
         private static PropertyInfo GetPropertyInfo<TProperty>(Expression<Func<TEntity, TProperty>> propertyExpression)

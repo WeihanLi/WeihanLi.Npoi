@@ -29,7 +29,7 @@ namespace WeihanLi.Npoi
             };
 
             // propertyInfos
-            var dic = new Dictionary<PropertyInfo, IPropertyConfiguration>();
+            var dic = new Dictionary<PropertyInfo, PropertyConfiguration>();
             var propertyInfos = type.GetProperties(BindingFlags.Public | BindingFlags.Instance);
             foreach (var propertyInfo in propertyInfos)
             {
@@ -41,7 +41,6 @@ namespace WeihanLi.Npoi
                 dic.Add(propertyInfo, new PropertyConfiguration(column.PropertySetting));
             }
             excelConfiguration.PropertyConfigurationDictionary = dic;
-
             return excelConfiguration;
         }
     }

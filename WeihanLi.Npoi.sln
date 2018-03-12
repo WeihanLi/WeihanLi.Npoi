@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.27130.2020
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WeihanLi.Npoi", "src\WeihanLi.Npoi\WeihanLi.Npoi.csproj", "{A9B0E744-C24A-40FF-9C46-52A6478CC961}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetSample", "samples\DotNetSample\DotNetSample.csproj", "{8C4CE778-182E-4E56-A94C-EDB99156BF7D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotNetSample", "samples\DotNetSample\DotNetSample.csproj", "{8C4CE778-182E-4E56-A94C-EDB99156BF7D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{CA8788BB-993C-4811-9D0A-B9DEF3E2204A}"
 EndProject
@@ -16,6 +16,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.editorconfig = .editorconfig
 		README.md = README.md
 	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotNetCoreSample", "samples\DotNetCoreSample\DotNetCoreSample.csproj", "{DB939302-3526-4490-A455-659FA8687734}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -31,6 +33,10 @@ Global
 		{8C4CE778-182E-4E56-A94C-EDB99156BF7D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8C4CE778-182E-4E56-A94C-EDB99156BF7D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8C4CE778-182E-4E56-A94C-EDB99156BF7D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DB939302-3526-4490-A455-659FA8687734}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DB939302-3526-4490-A455-659FA8687734}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DB939302-3526-4490-A455-659FA8687734}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DB939302-3526-4490-A455-659FA8687734}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -38,6 +44,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{A9B0E744-C24A-40FF-9C46-52A6478CC961} = {CA8788BB-993C-4811-9D0A-B9DEF3E2204A}
 		{8C4CE778-182E-4E56-A94C-EDB99156BF7D} = {EE176CBD-591E-4E87-AD6A-A544B5BDBB67}
+		{DB939302-3526-4490-A455-659FA8687734} = {EE176CBD-591E-4E87-AD6A-A544B5BDBB67}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {609AFF4A-50CC-4E6B-8EC4-D8CEE304D14E}
