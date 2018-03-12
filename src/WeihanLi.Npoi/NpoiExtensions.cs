@@ -159,13 +159,13 @@ namespace WeihanLi.Npoi
             InternalCache.TypeExcelConfigurationDictionary.TryGetValue(typeof(TEntity), out var configuration);
             while (workbook.NumberOfSheets <= sheetIndex)
             {
-                if (configuration?.SheetConfigurations == null || configuration.SheetConfigurations.Count <= sheetIndex)
+                if (configuration != null && configuration is ExcelConfiguration<TEntity> excelConf && excelConf.SheetSettings.Any(_ => _.SheetIndex == sheetIndex))
                 {
-                    workbook.CreateSheet();
+                    workbook.CreateSheet(excelConf.SheetSettings.First(_ => _.SheetIndex == sheetIndex).SheetName);
                 }
                 else
                 {
-                    workbook.CreateSheet((configuration.SheetConfigurations[sheetIndex] as SheetConfiguration)?.SheetSetting.SheetName ?? $"Sheet{sheetIndex}");
+                    workbook.CreateSheet();
                 }
             }
             new NpoiHelper<TEntity>().EntityListToSheet(workbook.GetSheetAt(sheetIndex), list.ToArray());
@@ -205,13 +205,13 @@ namespace WeihanLi.Npoi
             InternalCache.TypeExcelConfigurationDictionary.TryGetValue(typeof(TEntity), out var configuration);
             while (workbook.NumberOfSheets <= sheetIndex)
             {
-                if (configuration?.SheetConfigurations == null || configuration.SheetConfigurations.Count <= sheetIndex)
+                if (configuration != null && configuration is ExcelConfiguration<TEntity> excelConf && excelConf.SheetSettings.Any(_ => _.SheetIndex == sheetIndex))
                 {
-                    workbook.CreateSheet();
+                    workbook.CreateSheet(excelConf.SheetSettings.First(_ => _.SheetIndex == sheetIndex).SheetName);
                 }
                 else
                 {
-                    workbook.CreateSheet((configuration.SheetConfigurations[sheetIndex] as SheetConfiguration)?.SheetSetting.SheetName ?? $"Sheet{sheetIndex}");
+                    workbook.CreateSheet();
                 }
             }
             new NpoiHelper<TEntity>().DataTableToSheet(workbook.GetSheetAt(sheetIndex), dataTable);

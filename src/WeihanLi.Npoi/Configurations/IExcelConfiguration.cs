@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq.Expressions;
 using WeihanLi.Npoi.Settings;
 
@@ -9,7 +8,9 @@ namespace WeihanLi.Npoi.Configurations
     {
         ExcelSetting ExcelSetting { get; }
 
-        IList<ISheetConfiguration> SheetConfigurations { get; }
+        IExcelConfiguration HasSheetConfiguration(int sheetIndex, string sheetName);
+
+        IExcelConfiguration HasSheetConfiguration(int sheetIndex, string sheetName, int startRowIndex);
 
         /// <summary>
         /// 设置冻结区域

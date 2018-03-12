@@ -3,6 +3,7 @@ using System.Linq;
 using System.Reflection;
 using WeihanLi.Npoi.Attributes;
 using WeihanLi.Npoi.Configurations;
+using WeihanLi.Npoi.Settings;
 
 namespace WeihanLi.Npoi
 {
@@ -18,9 +19,9 @@ namespace WeihanLi.Npoi
             var type = typeof(TEntity);
             var excelConfiguration = new ExcelConfiguration<TEntity>
             {
-                SheetConfigurations = new ISheetConfiguration[]
+                SheetSettings = new[]
                 {
-                    new SheetConfiguration(type.GetCustomAttribute<SheetAttribute>()?.SheetSetting)
+                    type.GetCustomAttribute<SheetAttribute>()?.SheetSetting?? new SheetSetting()
                 },
                 FilterSetting =
                     type.GetCustomAttribute<FilterAttribute>()?.FilterSeting,

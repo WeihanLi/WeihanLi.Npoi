@@ -21,8 +21,8 @@ namespace WeihanLi.Npoi
             _excelConfiguration = (ExcelConfiguration<TEntity>)InternalCache.TypeExcelConfigurationDictionary.GetOrAdd(typeof(TEntity),
                 t => InternalHelper.GetExcelConfigurationMapping<TEntity>());
 
-            // TODO:multi sheets configuration
-            _sheetSetting = ((SheetConfiguration)_excelConfiguration.SheetConfigurations[0]).SheetSetting;
+            // TODO:support multi sheets configuration
+            _sheetSetting = _excelConfiguration.SheetSettings[0];
 
             //AutoAdjustIndex
             var colIndexList = new List<int>(_excelConfiguration.PropertyConfigurationDictionary.Count);

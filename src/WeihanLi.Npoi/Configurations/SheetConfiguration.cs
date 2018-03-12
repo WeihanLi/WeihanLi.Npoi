@@ -1,4 +1,5 @@
-﻿using WeihanLi.Npoi.Settings;
+﻿using WeihanLi.Extensions;
+using WeihanLi.Npoi.Settings;
 
 namespace WeihanLi.Npoi.Configurations
 {
@@ -6,20 +7,28 @@ namespace WeihanLi.Npoi.Configurations
     {
         internal SheetSetting SheetSetting { get; }
 
-        public SheetConfiguration() : this(null) { }
+        public SheetConfiguration() : this(null)
+        {
+        }
 
         public SheetConfiguration(SheetSetting sheetSetting)
             => SheetSetting = sheetSetting ?? new SheetSetting();
 
         public ISheetConfiguration HasSheetIndex(int index)
         {
-            SheetSetting.SheetIndex = index;
+            if (index >= 0)
+            {
+                SheetSetting.SheetIndex = index;
+            }
             return this;
         }
 
         public ISheetConfiguration HasSheetName(string sheetName)
         {
-            SheetSetting.SheetName = sheetName;
+            if (sheetName.IsNotNullOrWhiteSpace())
+            {
+                SheetSetting.SheetName = sheetName;
+            }
             return this;
         }
 

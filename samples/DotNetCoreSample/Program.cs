@@ -32,6 +32,8 @@ namespace DotNetCoreSample
                 .HasDescription("")
                 .HasSubject("");
 
+            setting.HasSheetConfiguration(0, "系统设置列表");
+
             setting.HasFilter(0, 1)
                 .HasFreezePane(0, 1, 2, 1);
             setting.Property(_ => _.SettingId)

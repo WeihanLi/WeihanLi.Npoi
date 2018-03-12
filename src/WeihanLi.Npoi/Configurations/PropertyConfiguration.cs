@@ -13,7 +13,7 @@ namespace WeihanLi.Npoi.Configurations
 
         public IPropertyConfiguration HasColumnIndex(int index)
         {
-            if (index < 0)
+            if (index >= 0)
             {
                 PropertySetting.ColumnIndex = index;
             }

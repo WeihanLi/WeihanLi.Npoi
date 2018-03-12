@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using WeihanLi.Npoi.Settings;
@@ -24,7 +25,7 @@ namespace WeihanLi.Npoi.Configurations
 
         internal FilterSetting FilterSetting { get; set; }
 
-        public IList<ISheetConfiguration> SheetConfigurations { get; internal set; }
+        internal IList<SheetSetting> SheetSettings { get; set; }
 
         public ExcelConfiguration() : this(null)
         {
@@ -34,9 +35,9 @@ namespace WeihanLi.Npoi.Configurations
         {
             PropertyConfigurationDictionary = new Dictionary<PropertyInfo, PropertyConfiguration>();
             ExcelSetting = setting ?? new ExcelSetting();
-            SheetConfigurations = new List<ISheetConfiguration>(ExcelConstants.MaxSheetNum / 16)
+            SheetSettings = new List<SheetSetting>(ExcelConstants.MaxSheetNum / 16)
             {
-                new SheetConfiguration()
+                new SheetSetting()
             };
             FreezeSettings = new List<FreezeSetting>();
         }
@@ -157,5 +158,35 @@ namespace WeihanLi.Npoi.Configurations
         }
 
         #endregion Property
+
+        #region Sheet
+
+        public IExcelConfiguration HasSheetConfiguration(int sheetIndex, string sheetName) =>
+            HasSheetConfiguration(sheetIndex, sheetName, 1);
+
+        public IExcelConfiguration HasSheetConfiguration(int sheetIndex, string sheetName, int startRowIndex)
+        {
+            var sheetSetting =
+                SheetSettings.FirstOrDefault(_ => _.SheetIndex == sheetIndex);
+
+            if (sheetSetting == null)
+            {
+                SheetSettings.Add(new SheetSetting
+                {
+                    SheetIndex = sheetIndex,
+                    SheetName = sheetName,
+                    StartRowIndex = startRowIndex
+                });
+            }
+            else
+            {
+                sheetSetting.SheetName = sheetName;
+                sheetSetting.StartRowIndex = startRowIndex;
+            }
+
+            return this;
+        }
+
+        #endregion Sheet
     }
 }
