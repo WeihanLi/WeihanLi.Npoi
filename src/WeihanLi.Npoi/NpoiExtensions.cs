@@ -260,6 +260,20 @@ namespace WeihanLi.Npoi
         }
 
         /// <summary>
+        /// EntityList2ExcelBytes
+        /// </summary>
+        /// <typeparam name="TEntity">EntityType</typeparam>
+        /// <param name="entityList">entityList</param>
+        public static byte[] ToExcelBytes<TEntity>([NotNull] this IEnumerable<TEntity> entityList)
+            where TEntity : new()
+        {
+            InternalCache.TypeExcelConfigurationDictionary.TryGetValue(typeof(TEntity), out var configuration);
+            var workbook = ExcelHelper.PrepareWorkbook(true, configuration?.ExcelSetting);
+            workbook.ImportData(entityList.ToArray());
+            return workbook.ToExcelBytes();
+        }
+
+        /// <summary>
         /// 将DataTable内容导出到Excel
         /// </summary>
         /// <param name="dataTable">dataTable</param>
@@ -315,6 +329,32 @@ namespace WeihanLi.Npoi
 
             workbook.Write(stream);
             return 1;
+        }
+
+        /// <summary>
+        /// DataTable2ExcelBytes
+        /// </summary>
+        /// <param name="dataTable">dataTable</param>
+        public static byte[] ToExcelBytes([NotNull] this DataTable dataTable)
+        {
+            var workbook = ExcelHelper.PrepareWorkbook();
+            var sheet = workbook.CreateSheet(string.IsNullOrWhiteSpace(dataTable.TableName) ? "Sheet0" : dataTable.TableName);
+            var headerRow = sheet.CreateRow(0);
+            for (var i = 0; i < dataTable.Columns.Count; i++)
+            {
+                headerRow.CreateCell(i, CellType.String).SetCellValue(dataTable.Columns[i].ColumnName);
+            }
+
+            for (var i = 1; i <= dataTable.Rows.Count; i++)
+            {
+                var row = sheet.CreateRow(i);
+                for (var j = 0; j < dataTable.Columns.Count; j++)
+                {
+                    row.CreateCell(j, CellType.String).SetCellValue(dataTable.Rows[i][j]);
+                }
+            }
+
+            return workbook.ToExcelBytes();
         }
 
         /// <summary>
