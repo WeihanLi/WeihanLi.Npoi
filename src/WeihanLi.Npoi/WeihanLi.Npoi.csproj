@@ -18,6 +18,8 @@
         <PackageReleaseNotes>
 
             fix FluentApi bug
+            add SheetConfiguration support,add custom sheet Name support
+            add ToExcelBytes extension methods
         </PackageReleaseNotes>
         <Copyright>Copyright 2018 WeihanLi</Copyright>
     </PropertyGroup>
