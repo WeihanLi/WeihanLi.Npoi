@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Reflection;
 using JetBrains.Annotations;
+using NPOI.SS.UserModel;
 using WeihanLi.Extensions;
 using WeihanLi.Npoi.Settings;
 
@@ -9,20 +10,6 @@ namespace WeihanLi.Npoi
 {
     internal static class InternalExtensions
     {
-        #region Mapping
-
-        internal static PropertyInfo GetPropertyInfo([NotNull]this IDictionary<PropertyInfo, PropertySetting> mappingDictionary, int index) => mappingDictionary.Keys.ToArray()[index];
-
-        internal static PropertySetting GetPropertySetting([NotNull]this IDictionary<PropertyInfo, PropertySetting> mappingDictionary, int index) => mappingDictionary.Values.ToArray()[index];
-
-        /// <summary>
-        /// 根据属性名称获取属性信息
-        /// </summary>
-        /// <param name="mappingDictionary">mappingDictionary</param>
-        /// <param name="propertyName">属性名称</param>
-        /// <returns></returns>
-        internal static PropertyInfo GetPropertyInfo([NotNull]this IDictionary<PropertyInfo, PropertySetting> mappingDictionary, [NotNull]string propertyName) => mappingDictionary.Keys.FirstOrDefault(k => k.Name.EqualsIgnoreCase(propertyName));
-
         /// <summary>
         /// 根据属性名称获取列信息
         /// </summary>
@@ -41,6 +28,6 @@ namespace WeihanLi.Npoi
         /// <returns></returns>
         internal static PropertySetting GetPropertySetting([NotNull]this IDictionary<PropertyInfo, PropertySetting> mappingDictionary, [NotNull]string columnTitle) => mappingDictionary.Values.FirstOrDefault(k => k.ColumnTitle.EqualsIgnoreCase(columnTitle));
 
-        #endregion Mapping
+        internal static NpoiRowEnumerable GetRowEnumerable([NotNull]this ISheet sheet) => new NpoiRowEnumerable(sheet);
     }
 }

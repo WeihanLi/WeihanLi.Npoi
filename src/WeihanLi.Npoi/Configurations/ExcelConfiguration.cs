@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
+using WeihanLi.Extensions;
 using WeihanLi.Npoi.Settings;
 
 namespace WeihanLi.Npoi.Configurations
@@ -118,44 +119,7 @@ namespace WeihanLi.Npoi.Configurations
         /// <returns>The <see cref="IPropertyConfiguration"/>.</returns>
         /// <param name="propertyExpression">The property expression.</param>
         /// <typeparam name="TProperty">The type of parameter.</typeparam>
-        public IPropertyConfiguration Property<TProperty>(Expression<Func<TEntity, TProperty>> propertyExpression)
-        {
-            var propertyInfo = GetPropertyInfo(propertyExpression);
-            return PropertyConfigurationDictionary[_entityType.GetProperty(propertyInfo.Name)];
-        }
-
-        private static MemberInfo GetPropertyInfo<TProperty>(Expression<Func<TEntity, TProperty>> propertyExpression)
-        {
-            if (propertyExpression.NodeType != ExpressionType.Lambda)
-            {
-                throw new ArgumentException($"{nameof(propertyExpression)} must be lambda expression", nameof(propertyExpression));
-            }
-
-            var lambda = (LambdaExpression)propertyExpression;
-
-            var memberExpression = ExtractMemberExpression(lambda.Body);
-            if (memberExpression == null)
-            {
-                throw new ArgumentException($"{nameof(propertyExpression)} must be lambda expression", nameof(propertyExpression));
-            }
-            return memberExpression.Member;
-        }
-
-        private static MemberExpression ExtractMemberExpression(Expression expression)
-        {
-            if (expression.NodeType == ExpressionType.MemberAccess)
-            {
-                return (MemberExpression)expression;
-            }
-
-            if (expression.NodeType == ExpressionType.Convert)
-            {
-                var operand = ((UnaryExpression)expression).Operand;
-                return ExtractMemberExpression(operand);
-            }
-
-            return null;
-        }
+        public IPropertyConfiguration Property<TProperty>(Expression<Func<TEntity, TProperty>> propertyExpression) => PropertyConfigurationDictionary[_entityType.GetProperty(propertyExpression.GetMemberInfo().Name)];
 
         #endregion Property
 

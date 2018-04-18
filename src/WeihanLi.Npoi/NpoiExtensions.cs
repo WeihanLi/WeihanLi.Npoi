@@ -4,6 +4,7 @@ using System.Data;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using JetBrains.Annotations;
 using NPOI.SS.UserModel;
 using WeihanLi.Extensions;
@@ -35,7 +36,7 @@ namespace WeihanLi.Npoi
                 throw new ArgumentOutOfRangeException(nameof(sheetIndex), string.Format(Resource.IndexOutOfRange, nameof(sheetIndex), workbook.NumberOfSheets));
             }
             var sheet = workbook.GetSheetAt(sheetIndex);
-            return new NpoiHelper<TEntity>().SheetToEntityList(sheet);
+            return new NpoiHelper<TEntity>().SheetToEntityList(sheet, sheetIndex);
         }
 
         /// <summary>
@@ -44,7 +45,60 @@ namespace WeihanLi.Npoi
         /// <typeparam name="TEntity">EntityType</typeparam>
         /// <param name="sheet">excel sheet</param>
         /// <returns>entity list</returns>
-        public static List<TEntity> ToEntityList<TEntity>([NotNull]this ISheet sheet) where TEntity : new() => new NpoiHelper<TEntity>().SheetToEntityList(sheet);
+        public static List<TEntity> ToEntityList<TEntity>([NotNull] this ISheet sheet) where TEntity : new() =>
+            sheet.ToEntityList<TEntity>(0);
+
+        /// <summary>
+        /// Sheet2EntityList
+        /// </summary>
+        /// <typeparam name="TEntity">EntityType</typeparam>
+        /// <param name="sheet">excel sheet</param>
+        /// <param name="sheetIndex">sheetIndex</param>
+        /// <returns>entity list</returns>
+        public static List<TEntity> ToEntityList<TEntity>([NotNull]this ISheet sheet, int sheetIndex) where TEntity : new() => new NpoiHelper<TEntity>().SheetToEntityList(sheet, sheetIndex);
+
+        /// <summary>
+        /// Workbook2EntityList
+        /// </summary>
+        /// <typeparam name="TEntity">EntityType</typeparam>
+        /// <param name="workbook">excel workbook</param>
+        /// <returns>entity list</returns>
+        public static Task<List<TEntity>> ToEntityListAsync<TEntity>([NotNull]this IWorkbook workbook) where TEntity : new() => workbook.ToEntityListAsync<TEntity>(0);
+
+        /// <summary>
+        /// Workbook2EntityList
+        /// </summary>
+        /// <typeparam name="TEntity">EntityType</typeparam>
+        /// <param name="workbook">excel workbook</param>
+        /// <param name="sheetIndex">sheetIndex</param>
+        /// <returns>entity list</returns>
+        public static Task<List<TEntity>> ToEntityListAsync<TEntity>([NotNull]this IWorkbook workbook, int sheetIndex) where TEntity : new()
+        {
+            if (workbook.NumberOfSheets <= sheetIndex)
+            {
+                throw new ArgumentOutOfRangeException(nameof(sheetIndex), string.Format(Resource.IndexOutOfRange, nameof(sheetIndex), workbook.NumberOfSheets));
+            }
+            var sheet = workbook.GetSheetAt(sheetIndex);
+            return new NpoiHelper<TEntity>().SheetToEntityListAsync(sheet, sheetIndex);
+        }
+
+        /// <summary>
+        /// Sheet2EntityListAsync
+        /// </summary>
+        /// <typeparam name="TEntity">EntityType</typeparam>
+        /// <param name="sheet">excel sheet</param>
+        /// <returns>entity list</returns>
+        public static Task<List<TEntity>> ToEntityListAsync<TEntity>([NotNull] this ISheet sheet) where TEntity : new() =>
+            sheet.ToEntityListAsync<TEntity>(0);
+
+        /// <summary>
+        /// Sheet2EntityList
+        /// </summary>
+        /// <typeparam name="TEntity">EntityType</typeparam>
+        /// <param name="sheet">excel sheet</param>
+        /// <param name="sheetIndex">sheetIndex</param>
+        /// <returns>entity list</returns>
+        public static Task<List<TEntity>> ToEntityListAsync<TEntity>([NotNull]this ISheet sheet, int sheetIndex) where TEntity : new() => new NpoiHelper<TEntity>().SheetToEntityListAsync(sheet, sheetIndex);
 
         /// <summary>
         /// Workbook2ToDataTable
@@ -53,8 +107,19 @@ namespace WeihanLi.Npoi
         /// <returns>DataTable</returns>
         public static DataTable ToDataTable([NotNull]this IWorkbook workbook) => workbook.ToDataTable(0, 0);
 
+        /// <summary>
+        /// Workbook2ToDataSet
+        /// </summary>
+        /// <param name="workbook">excel workbook</param>
+        /// <returns>DataSet</returns>
         public static DataSet ToDataSet([NotNull] this IWorkbook workbook) => workbook.ToDataSet(0);
 
+        /// <summary>
+        /// Workbook2ToDataSet
+        /// </summary>
+        /// <param name="workbook">excel workbook</param>
+        /// <param name="headerRowIndex">headerRowIndex</param>
+        /// <returns>DataSet</returns>
         public static DataSet ToDataSet([NotNull] this IWorkbook workbook, int headerRowIndex)
         {
             var ds = new DataSet();
@@ -168,7 +233,7 @@ namespace WeihanLi.Npoi
                     workbook.CreateSheet();
                 }
             }
-            new NpoiHelper<TEntity>().EntityListToSheet(workbook.GetSheetAt(sheetIndex), list.ToArray());
+            new NpoiHelper<TEntity>().EntityListToSheet(workbook.GetSheetAt(sheetIndex), list.ToArray(), sheetIndex);
             return 1;
         }
 
@@ -178,8 +243,18 @@ namespace WeihanLi.Npoi
         /// <typeparam name="TEntity">EntityType</typeparam>
         /// <param name="sheet">sheet</param>
         /// <param name="list">entityList</param>
-        public static ISheet ImportData<TEntity>([NotNull]this ISheet sheet, IEnumerable<TEntity> list)
-            where TEntity : new() => new NpoiHelper<TEntity>().EntityListToSheet(sheet, list.ToArray());
+        public static ISheet ImportData<TEntity>([NotNull] this ISheet sheet, IEnumerable<TEntity> list)
+            where TEntity : new() => sheet.ImportData(list, 0);
+
+        /// <summary>
+        /// import entityList to sheet
+        /// </summary>
+        /// <typeparam name="TEntity">EntityType</typeparam>
+        /// <param name="sheet">sheet</param>
+        /// <param name="list">entityList</param>
+        /// <param name="sheetIndex">sheetIndex</param>
+        public static ISheet ImportData<TEntity>([NotNull]this ISheet sheet, IEnumerable<TEntity> list, int sheetIndex)
+            where TEntity : new() => new NpoiHelper<TEntity>().EntityListToSheet(sheet, list.ToArray(), sheetIndex);
 
         /// <summary>
         /// import datatable to workbook first sheet
@@ -214,7 +289,7 @@ namespace WeihanLi.Npoi
                     workbook.CreateSheet();
                 }
             }
-            new NpoiHelper<TEntity>().DataTableToSheet(workbook.GetSheetAt(sheetIndex), dataTable);
+            new NpoiHelper<TEntity>().DataTableToSheet(workbook.GetSheetAt(sheetIndex), dataTable, sheetIndex);
             return 1;
         }
 
@@ -224,8 +299,130 @@ namespace WeihanLi.Npoi
         /// <typeparam name="TEntity">EntityType</typeparam>
         /// <param name="sheet">sheet</param>
         /// <param name="dataTable">dataTable</param>
-        public static ISheet ImportData<TEntity>([NotNull]this ISheet sheet, DataTable dataTable)
-            where TEntity : new() => new NpoiHelper<TEntity>().DataTableToSheet(sheet, dataTable);
+        public static ISheet ImportData<TEntity>([NotNull] this ISheet sheet, DataTable dataTable) where TEntity : new() =>
+            sheet.ImportData<TEntity>(dataTable, 0);
+
+        /// <summary>
+        /// import datatable to sheet
+        /// </summary>
+        /// <typeparam name="TEntity">EntityType</typeparam>
+        /// <param name="sheet">sheet</param>
+        /// <param name="dataTable">dataTable</param>
+        /// <param name="sheetIndex">sheetIndex</param>
+        public static ISheet ImportData<TEntity>([NotNull]this ISheet sheet, DataTable dataTable, int sheetIndex)
+            where TEntity : new() => new NpoiHelper<TEntity>().DataTableToSheet(sheet, dataTable, sheetIndex);
+
+        /// <summary>
+        /// import entityList to workbook first sheet
+        /// </summary>
+        /// <typeparam name="TEntity">TEntity</typeparam>
+        /// <param name="workbook">workbook</param>
+        /// <param name="list">entityList</param>
+        public static Task<int> ImportDataAsync<TEntity>([NotNull]this IWorkbook workbook, IEnumerable<TEntity> list) where TEntity : new() => workbook.ImportDataAsync(list, 0);
+
+        /// <summary>
+        /// import entityList to workbook sheet
+        /// </summary>
+        /// <typeparam name="TEntity">TEntity</typeparam>
+        /// <param name="workbook">workbook</param>
+        /// <param name="list">entityList</param>
+        /// <param name="sheetIndex">sheetIndex</param>
+        public static async Task<int> ImportDataAsync<TEntity>([NotNull]this IWorkbook workbook, IEnumerable<TEntity> list, int sheetIndex) where TEntity : new()
+        {
+            if (sheetIndex >= ExcelConstants.MaxSheetNum)
+            {
+                throw new ArgumentException(string.Format(Resource.IndexOutOfRange, nameof(sheetIndex), ExcelConstants.MaxSheetNum), nameof(sheetIndex));
+            }
+            InternalCache.TypeExcelConfigurationDictionary.TryGetValue(typeof(TEntity), out var configuration);
+            while (workbook.NumberOfSheets <= sheetIndex)
+            {
+                if (configuration != null && configuration is ExcelConfiguration<TEntity> excelConf && excelConf.SheetSettings.Any(_ => _.SheetIndex == sheetIndex))
+                {
+                    workbook.CreateSheet(excelConf.SheetSettings.First(_ => _.SheetIndex == sheetIndex).SheetName);
+                }
+                else
+                {
+                    workbook.CreateSheet();
+                }
+            }
+            await new NpoiHelper<TEntity>().EntityListToSheetAsync(workbook.GetSheetAt(sheetIndex), list.ToArray(), sheetIndex);
+            return 1;
+        }
+
+        /// <summary>
+        /// import entityList to sheet
+        /// </summary>
+        /// <typeparam name="TEntity">EntityType</typeparam>
+        /// <param name="sheet">sheet</param>
+        /// <param name="list">entityList</param>
+        public static Task<ISheet> ImportDataAsync<TEntity>([NotNull] this ISheet sheet, IEnumerable<TEntity> list)
+            where TEntity : new() => sheet.ImportDataAsync(list, 0);
+
+        /// <summary>
+        /// import entityList to sheet
+        /// </summary>
+        /// <typeparam name="TEntity">EntityType</typeparam>
+        /// <param name="sheet">sheet</param>
+        /// <param name="list">entityList</param>
+        /// <param name="sheetIndex">sheetIndex</param>
+        public static Task<ISheet> ImportDataAsync<TEntity>([NotNull]this ISheet sheet, IEnumerable<TEntity> list, int sheetIndex)
+            where TEntity : new() => new NpoiHelper<TEntity>().EntityListToSheetAsync(sheet, list.ToArray(), sheetIndex);
+
+        /// <summary>
+        /// import datatable to workbook first sheet
+        /// </summary>
+        /// <typeparam name="TEntity">TEntity</typeparam>
+        /// <param name="workbook">workbook</param>
+        /// <param name="dataTable">dataTable</param>
+        public static Task<int> ImportDataAsync<TEntity>([NotNull]this IWorkbook workbook, [NotNull]DataTable dataTable) where TEntity : new() => workbook.ImportDataAsync<TEntity>(dataTable, 0);
+
+        /// <summary>
+        /// import datatable to workbook first sheet
+        /// </summary>
+        /// <typeparam name="TEntity">TEntity</typeparam>
+        /// <param name="workbook">workbook</param>
+        /// <param name="dataTable">dataTable</param>
+        /// <param name="sheetIndex">sheetIndex</param>
+        public static async Task<int> ImportDataAsync<TEntity>([NotNull]this IWorkbook workbook, [NotNull]DataTable dataTable, int sheetIndex) where TEntity : new()
+        {
+            if (sheetIndex >= ExcelConstants.MaxSheetNum)
+            {
+                throw new ArgumentException(string.Format(Resource.IndexOutOfRange, nameof(sheetIndex), ExcelConstants.MaxSheetNum), nameof(sheetIndex));
+            }
+            InternalCache.TypeExcelConfigurationDictionary.TryGetValue(typeof(TEntity), out var configuration);
+            while (workbook.NumberOfSheets <= sheetIndex)
+            {
+                if (configuration != null && configuration is ExcelConfiguration<TEntity> excelConf && excelConf.SheetSettings.Any(_ => _.SheetIndex == sheetIndex))
+                {
+                    workbook.CreateSheet(excelConf.SheetSettings.First(_ => _.SheetIndex == sheetIndex).SheetName);
+                }
+                else
+                {
+                    workbook.CreateSheet();
+                }
+            }
+            await new NpoiHelper<TEntity>().DataTableToSheetAsync(workbook.GetSheetAt(sheetIndex), dataTable, sheetIndex);
+            return 1;
+        }
+
+        /// <summary>
+        /// import datatable to sheet
+        /// </summary>
+        /// <typeparam name="TEntity">EntityType</typeparam>
+        /// <param name="sheet">sheet</param>
+        /// <param name="dataTable">dataTable</param>
+        public static Task<ISheet> ImportDataAsync<TEntity>([NotNull] this ISheet sheet, DataTable dataTable) where TEntity : new() =>
+            sheet.ImportDataAsync<TEntity>(dataTable, 0);
+
+        /// <summary>
+        /// import datatable to sheet
+        /// </summary>
+        /// <typeparam name="TEntity">EntityType</typeparam>
+        /// <param name="sheet">sheet</param>
+        /// <param name="dataTable">dataTable</param>
+        /// <param name="sheetIndex">sheetIndex</param>
+        public static Task<ISheet> ImportDataAsync<TEntity>([NotNull]this ISheet sheet, DataTable dataTable, int sheetIndex)
+            where TEntity : new() => new NpoiHelper<TEntity>().DataTableToSheetAsync(sheet, dataTable, sheetIndex);
 
         /// <summary>
         /// EntityList2ExcelFile
@@ -270,6 +467,52 @@ namespace WeihanLi.Npoi
             InternalCache.TypeExcelConfigurationDictionary.TryGetValue(typeof(TEntity), out var configuration);
             var workbook = ExcelHelper.PrepareWorkbook(true, configuration?.ExcelSetting);
             workbook.ImportData(entityList.ToArray());
+            return workbook.ToExcelBytes();
+        }
+
+        /// <summary>
+        /// EntityList2ExcelFile
+        /// </summary>
+        /// <typeparam name="TEntity">EntityType</typeparam>
+        /// <param name="entityList">entityList</param>
+        /// <param name="excelPath">excelPath</param>
+        public static async Task<int> ToExcelFileAsync<TEntity>([NotNull] this IEnumerable<TEntity> entityList, [NotNull]string excelPath)
+            where TEntity : new()
+        {
+            InternalCache.TypeExcelConfigurationDictionary.TryGetValue(typeof(TEntity), out var configuration);
+            var workbook = ExcelHelper.PrepareWorkbook(excelPath, configuration?.ExcelSetting);
+            await workbook.ImportDataAsync(entityList.ToArray());
+            workbook.WriteToFile(excelPath);
+            return 1;
+        }
+
+        /// <summary>
+        /// EntityList2ExcelStream
+        /// </summary>
+        /// <typeparam name="TEntity">EntityType</typeparam>
+        /// <param name="entityList">entityList</param>
+        /// <param name="stream">stream where to write</param>
+        public static async Task<int> ToExcelStreamAsync<TEntity>([NotNull] this IEnumerable<TEntity> entityList, [NotNull]Stream stream)
+            where TEntity : new()
+        {
+            InternalCache.TypeExcelConfigurationDictionary.TryGetValue(typeof(TEntity), out var configuration);
+            var workbook = ExcelHelper.PrepareWorkbook(true, configuration?.ExcelSetting);
+            await workbook.ImportDataAsync(entityList.ToArray());
+            workbook.Write(stream);
+            return 1;
+        }
+
+        /// <summary>
+        /// EntityList2ExcelBytes
+        /// </summary>
+        /// <typeparam name="TEntity">EntityType</typeparam>
+        /// <param name="entityList">entityList</param>
+        public static async Task<byte[]> ToExcelBytesAsync<TEntity>([NotNull] this IEnumerable<TEntity> entityList)
+            where TEntity : new()
+        {
+            InternalCache.TypeExcelConfigurationDictionary.TryGetValue(typeof(TEntity), out var configuration);
+            var workbook = ExcelHelper.PrepareWorkbook(true, configuration?.ExcelSetting);
+            await workbook.ImportDataAsync(entityList.ToArray());
             return workbook.ToExcelBytes();
         }
 
@@ -409,18 +652,6 @@ namespace WeihanLi.Npoi
                     cell.SetCellValue(value is IFormattable val && formatter.IsNotNullOrWhiteSpace() ? val.ToString(formatter, CultureInfo.CurrentCulture) : value.ToString());
                 }
             }
-
-            //try
-            //{
-            //    if (formatter.IsNotNullOrWhiteSpace())
-            //    {
-            //        cell.CellStyle.DataFormat = cell.Row.Sheet.Workbook.CreateDataFormat().GetFormat(formatter);
-            //    }
-            //}
-            //catch (Exception ex)
-            //{
-            //    System.Diagnostics.Debug.WriteLine(ex.ToString());
-            //}
         }
 
         /// <summary>

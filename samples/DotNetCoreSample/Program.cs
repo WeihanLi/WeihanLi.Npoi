@@ -1,6 +1,5 @@
 ﻿using System;
-using System.Data.SqlClient;
-using WeihanLi.Common.Helpers;
+using System.Linq;
 using WeihanLi.Extensions;
 using WeihanLi.Npoi;
 
@@ -11,15 +10,32 @@ namespace DotNetCoreSample
     {
         public static void Main(string[] args)
         {
-            FluentSettingsForExcel();
+            //FluentSettingsForExcel();
 
-            using (var conn = new SqlConnection("server=.;uid=liweihan;pwd=Admin888;database=Reservation"))
+            //using (var conn = new SqlConnection("server=.;uid=liweihan;pwd=Admin888;database=Reservation"))
+            //{
+            //    var list = conn.Select<TestEntity>(@"SELECT * FROM [Reservation].[dbo].[tabSystemSettings]");
+            //    list.ToExcelFile(ApplicationHelper.MapPath("test.xlsx"));
+            //    list.ToExcelFileAsync(ApplicationHelper.MapPath("testAsync.xlsx")).Wait();
+            //}
+
+            //Console.WriteLine("Success!");
+
+            var mapping = ExcelHelper.ToEntityList<ProductPriceMapping>(@"C:\Users\liweihan.TUHU\Desktop\temp\tempFiles\mapping.xlsx");
+            var mappingTemp = ExcelHelper.ToEntityList<ProductPriceMapping>(@"C:\Users\liweihan.TUHU\Desktop\temp\tempFiles\mapping_temp.xlsx");
+
+            Console.WriteLine($"-----normal({mapping.Count}【{mapping.Select(_ => _.Pid).Distinct().Count()}】)----");
+            foreach (var shop in mapping.GroupBy(_ => _.ShopCode).OrderBy(_ => _.Key))
             {
-                var list = conn.Select<TestEntity>(@"SELECT * FROM [Reservation].[dbo].[tabSystemSettings]");
-                list.ToExcelFile(ConfigurationHelper.MapPath("test.xlsx"));
+                Console.WriteLine($"{shop.Key}---{shop.Count()}---distinct pid count:{shop.Select(_ => _.Pid).Distinct().Count()}");
             }
 
-            Console.WriteLine("Success!");
+            Console.WriteLine($"-----temp({mappingTemp.Count}【{mappingTemp.Select(_ => _.Pid).Distinct().Count()}】)----");
+            foreach (var shop in mappingTemp.GroupBy(_ => _.ShopCode).OrderBy(_ => _.Key))
+            {
+                Console.WriteLine($"{shop.Key}---{shop.Count()}---distinct pid count:{shop.Select(_ => _.Pid).Distinct().Count()}");
+            }
+
             Console.ReadLine();
         }
 
