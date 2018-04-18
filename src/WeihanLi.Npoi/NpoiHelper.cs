@@ -1,9 +1,7 @@
-﻿using System.Collections.Concurrent;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Reflection;
-using System.Threading.Tasks;
 using JetBrains.Annotations;
 using NPOI.SS.UserModel;
 using NPOI.SS.Util;
@@ -84,46 +82,6 @@ namespace WeihanLi.Npoi
             return entities;
         }
 
-        public async Task<List<TEntity>> SheetToEntityListAsync([NotNull]ISheet sheet, int sheetIndex)
-        {
-            var entities = new ConcurrentBag<TEntity>();
-            var sheetSetting = sheetIndex >= 0 && sheetIndex < _sheetSettings.Count ? _sheetSettings[sheetIndex] : _sheetSettings[0];
-
-            await Task.WhenAll(sheet.GetRowEnumerable().Select(row => Task.Run(() =>
-            {
-                if (row.RowNum == sheetSetting.HeaderRowIndex) //读取Header
-                {
-                    for (var i = 0; i < row.Cells.Count; i++)
-                    {
-                        var col = _propertyColumnDictionary.GetPropertySetting(row.Cells[i].StringCellValue.Trim());
-                        if (null != col)
-                        {
-                            col.ColumnIndex = i;
-                        }
-                    }
-                }
-                else if (row.RowNum >= sheetSetting.StartRowIndex)
-                {
-                    var entity = new TEntity();
-
-                    foreach (var key in _propertyColumnDictionary.Keys)
-                    {
-                        var colIndex = _propertyColumnDictionary[key].ColumnIndex;
-                        if (colIndex < row.Cells.Count)
-                        {
-                            key.SetValue(entity,
-                                row.Cells[colIndex]
-                                    .GetCellValue(key.PropertyType));
-                        }
-                    }
-
-                    entities.Add(entity);
-                }
-            }))).ConfigureAwait(false);
-
-            return entities.ToList();
-        }
-
         public ISheet DataTableToSheet([NotNull]ISheet sheet, DataTable dataTable, int sheetIndex)
         {
             if (null == dataTable || dataTable.Rows.Count == 0 || dataTable.Columns.Count == 0 || _propertyColumnDictionary.Keys.Count == 0)
@@ -171,53 +129,6 @@ namespace WeihanLi.Npoi
             return sheet;
         }
 
-        public async Task<ISheet> DataTableToSheetAsync([NotNull]ISheet sheet, DataTable dataTable, int sheetIndex)
-        {
-            if (null == dataTable || dataTable.Rows.Count == 0 || dataTable.Columns.Count == 0 || _propertyColumnDictionary.Keys.Count == 0)
-            {
-                return sheet;
-            }
-            var headerRow = sheet.CreateRow(0);
-            for (var i = 0; i < dataTable.Columns.Count; i++)
-            {
-                var col = _propertyColumnDictionary.GetPropertySettingByPropertyName(dataTable.Columns[i].ColumnName);
-                if (null != col)
-                {
-                    headerRow.CreateCell(col.ColumnIndex).SetCellValue(col.ColumnTitle);
-                }
-            }
-
-            var sheetSetting = sheetIndex >= 0 && sheetIndex < _sheetSettings.Count ? _sheetSettings[sheetIndex] : _sheetSettings[0];
-
-            await Task.Run(() => Parallel.For(0, dataTable.Rows.Count, i =>
-            {
-                var row = sheet.CreateRow(sheetSetting.StartRowIndex + i);
-                for (var j = 0; j < dataTable.Columns.Count; j++)
-                {
-                    var col = _propertyColumnDictionary.GetPropertySettingByPropertyName(dataTable.Columns[j].ColumnName);
-                    row.CreateCell(col.ColumnIndex).SetCellValue(dataTable.Rows[i][j], col.ColumnFormatter);
-                }
-            })).ConfigureAwait(false);
-
-            // autosizecolumn
-            foreach (var setting in _propertyColumnDictionary.Values)
-            {
-                sheet.AutoSizeColumn(setting.ColumnIndex);
-            }
-
-            foreach (var freezeSetting in _excelConfiguration.FreezeSettings)
-            {
-                sheet.CreateFreezePane(freezeSetting.ColSplit, freezeSetting.RowSplit, freezeSetting.LeftMostColumn, freezeSetting.TopRow);
-            }
-
-            if (_excelConfiguration.FilterSetting != null)
-            {
-                sheet.SetAutoFilter(new CellRangeAddress(sheetSetting.HeaderRowIndex, dataTable.Rows.Count + sheetSetting.HeaderRowIndex, _excelConfiguration.FilterSetting.FirstColumn, _excelConfiguration.FilterSetting.LastColumn ?? _propertyColumnDictionary.Values.Max(_ => _.ColumnIndex)));
-            }
-
-            return sheet;
-        }
-
         public ISheet EntityListToSheet([NotNull]ISheet sheet, IReadOnlyList<TEntity> entityList, int sheetIndex)
         {
             if (null == entityList || entityList.Count == 0 || _propertyColumnDictionary.Keys.Count == 0)
@@ -240,50 +151,6 @@ namespace WeihanLi.Npoi
                     row.CreateCell(_propertyColumnDictionary[key].ColumnIndex).SetCellValue(key.GetValue(entityList[i]), _propertyColumnDictionary[key].ColumnFormatter);
                 }
             }
-
-            // AutoSizeColumn
-            foreach (var setting in _propertyColumnDictionary.Values)
-            {
-                sheet.AutoSizeColumn(setting.ColumnIndex);
-            }
-
-            foreach (var freezeSetting in _excelConfiguration.FreezeSettings)
-            {
-                sheet.CreateFreezePane(freezeSetting.ColSplit, freezeSetting.RowSplit, freezeSetting.LeftMostColumn, freezeSetting.TopRow);
-            }
-
-            if (_excelConfiguration.FilterSetting != null)
-            {
-                sheet.SetAutoFilter(new CellRangeAddress(sheetSetting.HeaderRowIndex, entityList.Count + sheetSetting.HeaderRowIndex, _excelConfiguration.FilterSetting.FirstColumn, _excelConfiguration.FilterSetting.LastColumn ?? _propertyColumnDictionary.Values.Max(_ => _.ColumnIndex)));
-            }
-
-            return sheet;
-        }
-
-        public async Task<ISheet> EntityListToSheetAsync([NotNull] ISheet sheet, IReadOnlyList<TEntity> entityList,
-            int sheetIndex)
-        {
-            if (null == entityList || entityList.Count == 0 || _propertyColumnDictionary.Keys.Count == 0)
-            {
-                return sheet;
-            }
-            var sheetSetting = sheetIndex >= 0 && sheetIndex < _sheetSettings.Count ? _sheetSettings[sheetIndex] : _sheetSettings[0];
-
-            var headerRow = sheet.CreateRow(sheetSetting.HeaderRowIndex);
-            foreach (var key in _propertyColumnDictionary.Keys)
-            {
-                headerRow.CreateCell(_propertyColumnDictionary[key].ColumnIndex).SetCellValue(_propertyColumnDictionary[key].ColumnTitle);
-            }
-
-            await Task.WhenAll(entityList.Select((item, index) => Task.Run(() =>
-            {
-                var row = sheet.CreateRow(sheetSetting.StartRowIndex + index);
-                foreach (var key in _propertyColumnDictionary.Keys)
-                {
-                    row.CreateCell(_propertyColumnDictionary[key].ColumnIndex)
-                        .SetCellValue(key.GetValue(item), _propertyColumnDictionary[key].ColumnFormatter);
-                }
-            }))).ConfigureAwait(false);
 
             // AutoSizeColumn
             foreach (var setting in _propertyColumnDictionary.Values)
