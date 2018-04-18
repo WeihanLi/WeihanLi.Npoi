@@ -16,8 +16,7 @@
         <PackageTags>npoi excel</PackageTags>
         <Description>NpoiExtensions for .net45 and .netstandard2.0</Description>
         <PackageReleaseNotes>
-
-            add async operation support
+          optimize code
         </PackageReleaseNotes>
         <Copyright>Copyright 2018 WeihanLi</Copyright>
     </PropertyGroup>
