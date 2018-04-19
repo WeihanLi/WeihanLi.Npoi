@@ -34,7 +34,7 @@ namespace WeihanLi.Npoi
 
             // propertyInfos
             var dic = new Dictionary<PropertyInfo, PropertyConfiguration>();
-            var propertyInfos = type.GetProperties();
+            var propertyInfos = Common.CacheUtil.TypePropertyCache.GetOrAdd(type, t => t.GetProperties());
             foreach (var propertyInfo in propertyInfos)
             {
                 var column = propertyInfo.GetCustomAttribute<ColumnAttribute>() ?? new ColumnAttribute();

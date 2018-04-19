@@ -41,15 +41,10 @@ namespace WeihanLi.Npoi
         public List<TEntity> SheetToEntityList([NotNull]ISheet sheet, int sheetIndex)
         {
             var entities = new List<TEntity>(sheet.PhysicalNumberOfRows);
-            var rowEnumerator = sheet.GetRowEnumerator();
             var sheetSetting = sheetIndex >= 0 && sheetIndex < _sheetSettings.Count ? _sheetSettings[sheetIndex] : _sheetSettings[0];
-            while (rowEnumerator.MoveNext())
-            {
-                if (!(rowEnumerator.Current is IRow row))
-                {
-                    continue;
-                }
 
+            foreach (var row in sheet.GetRowEnumerable())
+            {
                 if (row.RowNum == sheetSetting.HeaderRowIndex) //读取Header
                 {
                     for (var i = 0; i < row.Cells.Count; i++)
@@ -75,7 +70,6 @@ namespace WeihanLi.Npoi
                                     .GetCellValue(key.PropertyType));
                         }
                     }
-
                     entities.Add(entity);
                 }
             }
