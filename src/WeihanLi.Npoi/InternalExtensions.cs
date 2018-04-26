@@ -2,7 +2,6 @@
 using System.Linq;
 using System.Reflection;
 using JetBrains.Annotations;
-using NPOI.SS.UserModel;
 using WeihanLi.Extensions;
 using WeihanLi.Npoi.Settings;
 
@@ -27,7 +26,5 @@ namespace WeihanLi.Npoi
         /// <param name="columnTitle">列名称</param>
         /// <returns></returns>
         internal static PropertySetting GetPropertySetting([NotNull]this IDictionary<PropertyInfo, PropertySetting> mappingDictionary, [NotNull]string columnTitle) => mappingDictionary.Values.FirstOrDefault(k => k.ColumnTitle.EqualsIgnoreCase(columnTitle));
-
-        internal static NpoiRowEnumerable GetRowEnumerable([NotNull]this ISheet sheet) => new NpoiRowEnumerable(sheet);
     }
 }

@@ -43,7 +43,7 @@ namespace WeihanLi.Npoi
             var entities = new List<TEntity>(sheet.PhysicalNumberOfRows);
             var sheetSetting = sheetIndex >= 0 && sheetIndex < _sheetSettings.Count ? _sheetSettings[sheetIndex] : _sheetSettings[0];
 
-            foreach (var row in sheet.GetRowEnumerable())
+            foreach (var row in sheet.GetRowCollection())
             {
                 if (row.RowNum == sheetSetting.HeaderRowIndex) //读取Header
                 {
