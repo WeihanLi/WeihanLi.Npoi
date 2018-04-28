@@ -73,66 +73,66 @@ dotnet add package WeihanLi.Npoi
 
 1. Get a workbook
 
-``` csharp
-// load excel workbook from file
-var workbook = LoadExcel(string excelPath);
+    ``` csharp
+    // load excel workbook from file
+    var workbook = LoadExcel(string excelPath);
 
-// prepare a workbook accounting to excelPath
-var workbook = PrepareWorkbook(string excelPath);
+    // prepare a workbook accounting to excelPath
+    var workbook = PrepareWorkbook(string excelPath);
 
-// prepare a workbook accounting to excelPath and custom excel settings
-var workbook = PrepareWorkbook(string excelPath, ExcelSetting excelSetting);
+    // prepare a workbook accounting to excelPath and custom excel settings
+    var workbook = PrepareWorkbook(string excelPath, ExcelSetting excelSetting);
 
-// prepare a workbook whether *.xlsx file
-var workbook = PrepareWorkbook(bool isXlsx);
+    // prepare a workbook whether *.xlsx file
+    var workbook = PrepareWorkbook(bool isXlsx);
 
-// prepare a workbook whether *.xlsx file and custom excel setting
-var workbook = PrepareWorkbook(bool isXlsx, ExcelSetting excelSetting);
-```
+    // prepare a workbook whether *.xlsx file and custom excel setting
+    var workbook = PrepareWorkbook(bool isXlsx, ExcelSetting excelSetting);
+    ```
 
 1. Rich extensions
 
-``` csharp
+    ``` csharp
 
-List<TEntity> ToEntityList<TEntity>([NotNull]this IWorkbook workbook)
+    List<TEntity> ToEntityList<TEntity>([NotNull]this IWorkbook workbook)
 
-DataTable ToDataTable([NotNull]this IWorkbook workbook)
+    DataTable ToDataTable([NotNull]this IWorkbook workbook)
 
-ISheet ImportData<TEntity>([NotNull] this ISheet sheet, DataTable dataTable)
+    ISheet ImportData<TEntity>([NotNull] this ISheet sheet, DataTable dataTable)
 
-int ImportData<TEntity>([NotNull] this IWorkbook workbook, IEnumerable<TEntity> list,
-            int sheetIndex)
+    int ImportData<TEntity>([NotNull] this IWorkbook workbook, IEnumerable<TEntity> list,
+                int sheetIndex)
 
-int ImportData<TEntity>([NotNull] this ISheet sheet, IEnumerable<TEntity> list)
+    int ImportData<TEntity>([NotNull] this ISheet sheet, IEnumerable<TEntity> list)
 
-int ImportData<TEntity>([NotNull] this IWorkbook workbook, [NotNull] DataTable dataTable,
-            int sheetIndex)
+    int ImportData<TEntity>([NotNull] this IWorkbook workbook, [NotNull] DataTable dataTable,
+                int sheetIndex)
 
-ToExcelFile<TEntity>([NotNull] this IEnumerable<TEntity> entityList,
-            [NotNull] string excelPath)
+    ToExcelFile<TEntity>([NotNull] this IEnumerable<TEntity> entityList,
+                [NotNull] string excelPath)
 
-int ToExcelStream<TEntity>([NotNull] this IEnumerable<TEntity> entityList,
-            [NotNull] Stream stream)
+    int ToExcelStream<TEntity>([NotNull] this IEnumerable<TEntity> entityList,
+                [NotNull] Stream stream)
 
-byte[] ToExcelBytes<TEntity>([NotNull] this IEnumerable<TEntity> entityList)
+    byte[] ToExcelBytes<TEntity>([NotNull] this IEnumerable<TEntity> entityList)
 
-int ToExcelFile([NotNull] this DataTable dataTable, [NotNull] string excelPath)
+    int ToExcelFile([NotNull] this DataTable dataTable, [NotNull] string excelPath)
 
-int ToExcelStream([NotNull] this DataTable dataTable, [NotNull] Stream stream)
+    int ToExcelStream([NotNull] this DataTable dataTable, [NotNull] Stream stream)
 
-byte[] ToExcelBytes([NotNull] this DataTable dataTable)
+    byte[] ToExcelBytes([NotNull] this DataTable dataTable)
 
-byte[] ToExcelBytes([NotNull] this IWorkbook workbook)
+    byte[] ToExcelBytes([NotNull] this IWorkbook workbook)
 
-int WriteToFile([NotNull] this IWorkbook workbook, string filePath)
+    int WriteToFile([NotNull] this IWorkbook workbook, string filePath)
 
-object GetCellValue([NotNull] this ICell cell, Type propertyType)
+    object GetCellValue([NotNull] this ICell cell, Type propertyType)
 
-T GetCellValue<T>([NotNull] this ICell cell)
+    T GetCellValue<T>([NotNull] this ICell cell)
 
-SetCellValue([NotNull] this ICell cell, object value)
+    SetCellValue([NotNull] this ICell cell, object value)
 
-```
+    ```
 
 ### Define Custom Mapping and settings
 
