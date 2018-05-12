@@ -294,32 +294,52 @@ namespace WeihanLi.Npoi
         }
 
         /// <summary>
-        ///     EntityList2ExcelStream
+        ///     EntityList2ExcelStream，默认使用 Xlsx
         /// </summary>
         /// <typeparam name="TEntity">EntityType</typeparam>
         /// <param name="entityList">entityList</param>
         /// <param name="stream">stream where to write</param>
         public static int ToExcelStream<TEntity>([NotNull] this IEnumerable<TEntity> entityList,
             [NotNull] Stream stream)
+            where TEntity : new() => ToExcelStream(entityList, stream, ExcelFormat.Xlsx);
+
+        /// <summary>
+        ///     EntityList2ExcelStream
+        /// </summary>
+        /// <typeparam name="TEntity">EntityType</typeparam>
+        /// <param name="entityList">entityList</param>
+        /// <param name="stream">stream where to write</param>
+        /// <param name="excelFormat">excelFormat</param>
+        public static int ToExcelStream<TEntity>([NotNull] this IEnumerable<TEntity> entityList,
+            [NotNull] Stream stream, ExcelFormat excelFormat)
             where TEntity : new()
         {
             InternalCache.TypeExcelConfigurationDictionary.TryGetValue(typeof(TEntity), out var configuration);
-            var workbook = ExcelHelper.PrepareWorkbook(true, configuration?.ExcelSetting);
+            var workbook = ExcelHelper.PrepareWorkbook(excelFormat, configuration?.ExcelSetting);
             workbook.ImportData(entityList.ToArray());
             workbook.Write(stream);
             return 1;
         }
 
         /// <summary>
+        ///     EntityList2ExcelBytes，默认使用 xlsx 格式
+        /// </summary>
+        /// <typeparam name="TEntity">EntityType</typeparam>
+        /// <param name="entityList">entityList</param>
+        public static byte[] ToExcelBytes<TEntity>([NotNull] this IEnumerable<TEntity> entityList) where TEntity : new() =>
+            ToExcelBytes(entityList, ExcelFormat.Xlsx);
+
+        /// <summary>
         ///     EntityList2ExcelBytes
         /// </summary>
         /// <typeparam name="TEntity">EntityType</typeparam>
         /// <param name="entityList">entityList</param>
-        public static byte[] ToExcelBytes<TEntity>([NotNull] this IEnumerable<TEntity> entityList)
+        /// <param name="excelFormat">excelFormat</param>
+        public static byte[] ToExcelBytes<TEntity>([NotNull] this IEnumerable<TEntity> entityList, ExcelFormat excelFormat)
             where TEntity : new()
         {
             InternalCache.TypeExcelConfigurationDictionary.TryGetValue(typeof(TEntity), out var configuration);
-            var workbook = ExcelHelper.PrepareWorkbook(true, configuration?.ExcelSetting);
+            var workbook = ExcelHelper.PrepareWorkbook(excelFormat, configuration?.ExcelSetting);
             workbook.ImportData(entityList.ToArray());
             return workbook.ToExcelBytes();
         }
@@ -362,9 +382,19 @@ namespace WeihanLi.Npoi
         /// <param name="dataTable">datatable</param>
         /// <param name="stream">stream</param>
         /// <returns></returns>
-        public static int ToExcelStream([NotNull] this DataTable dataTable, [NotNull] Stream stream)
+        public static int ToExcelStream([NotNull] this DataTable dataTable, [NotNull] Stream stream) =>
+            ToExcelStream(dataTable, stream, ExcelFormat.Xlsx);
+
+        /// <summary>
+        ///     DataTable2ExcelStream
+        /// </summary>
+        /// <param name="dataTable">datatable</param>
+        /// <param name="stream">stream</param>
+        /// <param name="excelFormat">excelFormat</param>
+        /// <returns></returns>
+        public static int ToExcelStream([NotNull] this DataTable dataTable, [NotNull] Stream stream, ExcelFormat excelFormat)
         {
-            var workbook = ExcelHelper.PrepareWorkbook();
+            var workbook = ExcelHelper.PrepareWorkbook(excelFormat);
             var sheet = workbook.CreateSheet(
                 string.IsNullOrWhiteSpace(dataTable.TableName)
                 ? "Sheet0"
@@ -389,10 +419,18 @@ namespace WeihanLi.Npoi
         }
 
         /// <summary>
+        ///     DataTable2ExcelBytes,默认使用 xlxs 格式
+        /// </summary>
+        /// <param name="dataTable">dataTable</param>
+        public static byte[] ToExcelBytes([NotNull] this DataTable dataTable) =>
+            ToExcelBytes(dataTable, ExcelFormat.Xlsx);
+
+        /// <summary>
         ///     DataTable2ExcelBytes
         /// </summary>
         /// <param name="dataTable">dataTable</param>
-        public static byte[] ToExcelBytes([NotNull] this DataTable dataTable)
+        /// <param name="excelFormat">excel格式</param>
+        public static byte[] ToExcelBytes([NotNull] this DataTable dataTable, ExcelFormat excelFormat)
         {
             var workbook = ExcelHelper.PrepareWorkbook();
             var sheet = workbook.CreateSheet(

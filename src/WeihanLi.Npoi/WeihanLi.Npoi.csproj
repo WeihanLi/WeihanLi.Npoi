@@ -1,10 +1,10 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0;net45</TargetFrameworks>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Title>WeihanLi.Npoi</Title>
     <PackageId>WeihanLi.Npoi</PackageId>
-    <Version>1.0.4.3</Version>
+    <Version>1.0.5</Version>
     <Authors>WeihanLi</Authors>
     <Company>WeihanLi</Company>
     <Product>WeihanLi.Npoi</Product>
@@ -16,8 +16,7 @@
     <PackageTags>npoi excel</PackageTags>
     <Description>NpoiExtensions for .net45 and .netstandard2.0</Description>
     <PackageReleaseNotes>
-      代码优化
-      增加扩展
+      导出到流或导出为字节数组支持设置excel格式
     </PackageReleaseNotes>
     <Copyright>Copyright 2018 WeihanLi</Copyright>
   </PropertyGroup>

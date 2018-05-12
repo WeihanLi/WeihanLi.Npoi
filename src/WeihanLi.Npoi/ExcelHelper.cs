@@ -83,10 +83,27 @@ namespace WeihanLi.Npoi
         }
 
         /// <summary>
+        /// 为导出准备 workbook
+        /// </summary>
+        /// <param name="excelFormat">excelFormat</param>
+        /// <param name="excelSetting">excelSetting</param>
+        /// <returns></returns>
+        public static IWorkbook PrepareWorkbook(ExcelFormat excelFormat, ExcelSetting excelSetting)
+        {
+            return PrepareWorkbook(excelFormat == ExcelFormat.Xlsx, excelSetting);
+        }
+
+        /// <summary>
         /// 获取一个 Excel Workbook（xlsx格式）
         /// </summary>
         /// <returns></returns>
         public static IWorkbook PrepareWorkbook() => PrepareWorkbook(true);
+
+        /// <summary>
+        /// 获取一个 Excel Workbook（xlsx格式）
+        /// </summary>
+        /// <returns></returns>
+        public static IWorkbook PrepareWorkbook(ExcelFormat excelFormat) => PrepareWorkbook(excelFormat == ExcelFormat.Xlsx);
 
         /// <summary>
         /// 获取一个Excel workbook
