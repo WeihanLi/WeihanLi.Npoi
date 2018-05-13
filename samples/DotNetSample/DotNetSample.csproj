@@ -4,26 +4,7 @@
     <RootNamespace>DotNetSample</RootNamespace>
     <AssemblyName>DotNetSample</AssemblyName>
     <TargetFramework>net462</TargetFramework>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)' == 'Release'">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>Release</DefineConstants>
-  </PropertyGroup>
-  <ItemGroup>
-    <PackageReference Include="WeihanLi.Common" Version="1.0.7.6" />
-  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\WeihanLi.Npoi\WeihanLi.Npoi.csproj">
     </ProjectReference>

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Data.SqlClient;
+using System.Linq;
 using WeihanLi.Common.Helpers;
 using WeihanLi.Extensions;
 using WeihanLi.Npoi;
@@ -79,10 +80,10 @@ namespace DotNetSample
             setting.Property(_ => _.PasswordHash)
                 .Ignored();
 
-            var entities = ExcelHelper.ToEntityList<TestEntity>(ConfigurationHelper.MapPath("test.xlsx"));
+            var entities = ExcelHelper.ToEntityList<TestEntity>(ApplicationHelper.MapPath("test.xlsx"));
             Console.WriteLine(entities.Count);
-            entities = conn.Select<TestEntity>("select * from Users");
-            entities.ToExcelFile(ConfigurationHelper.MapPath("test_1.xlsx"));
+            entities = conn.Select<TestEntity>("select * from Users").ToList();
+            entities.ToExcelFile(ApplicationHelper.MapPath("test_1.xlsx"));
             Console.WriteLine("Success");
 
             Console.ReadLine();

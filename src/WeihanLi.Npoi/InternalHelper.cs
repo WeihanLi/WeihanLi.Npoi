@@ -3,6 +3,7 @@ using System.Linq;
 using System.Reflection;
 using WeihanLi.Npoi.Attributes;
 using WeihanLi.Npoi.Configurations;
+using WeihanLi.Npoi.Settings;
 
 namespace WeihanLi.Npoi
 {
@@ -18,9 +19,9 @@ namespace WeihanLi.Npoi
             var type = typeof(TEntity);
             var excelConfiguration = new ExcelConfiguration<TEntity>
             {
-                SheetConfigurations = new ISheetConfiguration[]
+                SheetSettings = new[]
                 {
-                    new SheetConfiguration(type.GetCustomAttribute<SheetAttribute>()?.SheetSetting)
+                    type.GetCustomAttribute<SheetAttribute>()?.SheetSetting?? new SheetSetting()
                 },
                 FilterSetting =
                     type.GetCustomAttribute<FilterAttribute>()?.FilterSeting,
@@ -29,8 +30,8 @@ namespace WeihanLi.Npoi
             };
 
             // propertyInfos
-            var dic = new Dictionary<PropertyInfo, IPropertyConfiguration>();
-            var propertyInfos = type.GetProperties(BindingFlags.Public | BindingFlags.Instance);
+            var dic = new Dictionary<PropertyInfo, PropertyConfiguration>();
+            var propertyInfos = Common.CacheUtil.TypePropertyCache.GetOrAdd(type, t => t.GetProperties());
             foreach (var propertyInfo in propertyInfos)
             {
                 var column = propertyInfo.GetCustomAttribute<ColumnAttribute>() ?? new ColumnAttribute();
@@ -41,7 +42,6 @@ namespace WeihanLi.Npoi
                 dic.Add(propertyInfo, new PropertyConfiguration(column.PropertySetting));
             }
             excelConfiguration.PropertyConfigurationDictionary = dic;
-
             return excelConfiguration;
         }
     }

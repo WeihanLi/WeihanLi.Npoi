@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
+using WeihanLi.Extensions;
 using WeihanLi.Npoi.Settings;
 
 namespace WeihanLi.Npoi.Configurations
@@ -9,9 +11,14 @@ namespace WeihanLi.Npoi.Configurations
     internal class ExcelConfiguration<TEntity> : IExcelConfiguration<TEntity>
     {
         /// <summary>
+        /// EntityType
+        /// </summary>
+        private readonly Type _entityType = typeof(TEntity);
+
+        /// <summary>
         /// PropertyConfigurationDictionary
         /// </summary>
-        public IDictionary<PropertyInfo, IPropertyConfiguration> PropertyConfigurationDictionary { get; internal set; }
+        public IDictionary<PropertyInfo, PropertyConfiguration> PropertyConfigurationDictionary { get; internal set; }
 
         public ExcelSetting ExcelSetting { get; }
 
@@ -19,7 +26,7 @@ namespace WeihanLi.Npoi.Configurations
 
         internal FilterSetting FilterSetting { get; set; }
 
-        internal IList<ISheetConfiguration> SheetConfigurations { get; set; }
+        internal IList<SheetSetting> SheetSettings { get; set; }
 
         public ExcelConfiguration() : this(null)
         {
@@ -27,11 +34,11 @@ namespace WeihanLi.Npoi.Configurations
 
         public ExcelConfiguration(ExcelSetting setting)
         {
-            PropertyConfigurationDictionary = new Dictionary<PropertyInfo, IPropertyConfiguration>();
+            PropertyConfigurationDictionary = new Dictionary<PropertyInfo, PropertyConfiguration>();
             ExcelSetting = setting ?? new ExcelSetting();
-            SheetConfigurations = new List<ISheetConfiguration>(ExcelConstants.MaxSheetNum / 16)
+            SheetSettings = new List<SheetSetting>(ExcelConstants.MaxSheetNum / 16)
             {
-                new SheetConfiguration()
+                new SheetSetting()
             };
             FreezeSettings = new List<FreezeSetting>();
         }
@@ -76,6 +83,8 @@ namespace WeihanLi.Npoi.Configurations
 
         #endregion ExcelSettings FluentAPI
 
+        #region FreezePane
+
         public IExcelConfiguration HasFreezePane(int colSplit, int rowSplit)
         {
             FreezeSettings.Add(new FreezeSetting(colSplit, rowSplit));
@@ -88,6 +97,10 @@ namespace WeihanLi.Npoi.Configurations
             return this;
         }
 
+        #endregion FreezePane
+
+        #region Filter
+
         public IExcelConfiguration HasFilter(int firstColumn) => HasFilter(firstColumn, null);
 
         public IExcelConfiguration HasFilter(int firstColumn, int? lastColumn)
@@ -95,6 +108,8 @@ namespace WeihanLi.Npoi.Configurations
             FilterSetting = new FilterSetting(firstColumn, lastColumn);
             return this;
         }
+
+        #endregion Filter
 
         #region Property
 
@@ -104,50 +119,38 @@ namespace WeihanLi.Npoi.Configurations
         /// <returns>The <see cref="IPropertyConfiguration"/>.</returns>
         /// <param name="propertyExpression">The property expression.</param>
         /// <typeparam name="TProperty">The type of parameter.</typeparam>
-        public IPropertyConfiguration Property<TProperty>(Expression<Func<TEntity, TProperty>> propertyExpression)
-        {
-            var pc = new PropertyConfiguration();
-
-            var propertyInfo = GetPropertyInfo(propertyExpression);
-
-            PropertyConfigurationDictionary[propertyInfo] = pc;
-
-            return pc;
-        }
-
-        private static PropertyInfo GetPropertyInfo<TProperty>(Expression<Func<TEntity, TProperty>> propertyExpression)
-        {
-            if (propertyExpression.NodeType != ExpressionType.Lambda)
-            {
-                throw new ArgumentException($"{nameof(propertyExpression)} must be lambda expression", nameof(propertyExpression));
-            }
-
-            var lambda = (LambdaExpression)propertyExpression;
-
-            var memberExpression = ExtractMemberExpression(lambda.Body);
-            if (memberExpression == null)
-            {
-                throw new ArgumentException($"{nameof(propertyExpression)} must be lambda expression", nameof(propertyExpression));
-            }
-            return memberExpression.Member.DeclaringType.GetProperty(memberExpression.Member.Name);
-        }
-
-        private static MemberExpression ExtractMemberExpression(Expression expression)
-        {
-            if (expression.NodeType == ExpressionType.MemberAccess)
-            {
-                return (MemberExpression)expression;
-            }
-
-            if (expression.NodeType == ExpressionType.Convert)
-            {
-                var operand = ((UnaryExpression)expression).Operand;
-                return ExtractMemberExpression(operand);
-            }
-
-            return null;
-        }
+        public IPropertyConfiguration Property<TProperty>(Expression<Func<TEntity, TProperty>> propertyExpression) => PropertyConfigurationDictionary[_entityType.GetProperty(propertyExpression.GetMemberInfo().Name)];
 
         #endregion Property
+
+        #region Sheet
+
+        public IExcelConfiguration HasSheetConfiguration(int sheetIndex, string sheetName) =>
+            HasSheetConfiguration(sheetIndex, sheetName, 1);
+
+        public IExcelConfiguration HasSheetConfiguration(int sheetIndex, string sheetName, int startRowIndex)
+        {
+            var sheetSetting =
+                SheetSettings.FirstOrDefault(_ => _.SheetIndex == sheetIndex);
+
+            if (sheetSetting == null)
+            {
+                SheetSettings.Add(new SheetSetting
+                {
+                    SheetIndex = sheetIndex,
+                    SheetName = sheetName,
+                    StartRowIndex = startRowIndex
+                });
+            }
+            else
+            {
+                sheetSetting.SheetName = sheetName;
+                sheetSetting.StartRowIndex = startRowIndex;
+            }
+
+            return this;
+        }
+
+        #endregion Sheet
     }
 }

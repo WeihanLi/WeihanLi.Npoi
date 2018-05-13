@@ -2,7 +2,7 @@
 {
     /// <summary>
     /// Excel Settings
-    /// Excel文档熟悉
+    /// Excel文档属性设置
     /// </summary>
     public sealed class ExcelSetting
     {

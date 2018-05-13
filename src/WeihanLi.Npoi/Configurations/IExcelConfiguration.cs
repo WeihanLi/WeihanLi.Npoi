@@ -1,16 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq.Expressions;
-using System.Reflection;
 using WeihanLi.Npoi.Settings;
 
 namespace WeihanLi.Npoi.Configurations
 {
     public interface IExcelConfiguration
     {
-        IDictionary<PropertyInfo, IPropertyConfiguration> PropertyConfigurationDictionary { get; }
-
         ExcelSetting ExcelSetting { get; }
+
+        IExcelConfiguration HasSheetConfiguration(int sheetIndex, string sheetName);
+
+        IExcelConfiguration HasSheetConfiguration(int sheetIndex, string sheetName, int startRowIndex);
 
         /// <summary>
         /// 设置冻结区域
