@@ -1,5 +1,12 @@
-﻿// ReSharper disable LocalizableElement
+﻿using System;
+using System.Data.SqlClient;
+using System.Linq;
+using WeihanLi.Common.Helpers;
+using WeihanLi.Extensions;
+using WeihanLi.Npoi;
+using WeihanLi.Npoi.Attributes;
 
+// ReSharper disable LocalizableElement
 namespace DotNetSample
 {
     public class Program
@@ -90,19 +97,19 @@ namespace DotNetSample
         /// <summary>
         /// 用户名
         /// </summary>
-        [Column("用户名")]
+        [Column("Username")]
         public string Username { get; set; }
 
-        [Column("密码", IsIgnored = true)]
+        [Column("PasswordHash", IsIgnored = true)]
         public string PasswordHash { get; set; }
 
-        [Column("可用余额")]
+        [Column("Amount")]
         public decimal Amount { get; set; } = 1000M;
 
-        [Column("微信id")]
+        [Column("WechatOpenId")]
         public string WechatOpenId { get; set; }
 
-        [Column("是否启用")]
+        [Column("IsActive")]
         public bool IsActive { get; set; }
 
         public DateTime CreateTime { get; set; } = DateTime.Now;
