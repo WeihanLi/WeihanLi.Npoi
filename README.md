@@ -147,40 +147,37 @@ dotnet add package WeihanLi.Npoi
     ``` csharp
     public class TestEntity
     {
-        [Column("PKID")]
+        [Column("Id")]
         public int PKID { get; set; }
 
-        [Column("账单标题")]
+        [Column("Bill Title")]
         public string BillTitle { get; set; }
 
-        [Column("账单详情")]
+        [Column("Bill Details")]
         public string BillDetails { get; set; }
 
-        [Column("创建人")]
+        [Column("CreatedBy")]
         public string CreatedBy { get; set; }
 
-        [Column("创建时间")]
+        [Column("CreatedTime")]
         public DateTime CreatedTime { get; set; }
     }
 
-    internal class TestEntity1
+    public class TestEntity1
     {
-        /// <summary>
-        /// 用户名
-        /// </summary>
-        [Column("用户名")]
+        [Column("Username")]
         public string Username { get; set; }
 
         [Column(IsIgnored = true)]
         public string PasswordHash { get; set; }
 
-        [Column("可用余额")]
+        [Column("Amount")]
         public decimal Amount { get; set; } = 1000M;
 
-        [Column("微信id")]
+        [Column("WechatOpenId")]
         public string WechatOpenId { get; set; }
 
-        [Column("是否启用")]
+        [Column("IsActive")]
         public bool IsActive { get; set; }
     }
     ```
@@ -199,7 +196,7 @@ dotnet add package WeihanLi.Npoi
         .HasDescription("")
         .HasSubject("");
 
-    setting.HasSheetConfiguration(0, "系统设置列表");
+    setting.HasSheetConfiguration(0, "System Settings");
 
     setting.HasFilter(0, 1)
         .HasFreezePane(0, 1, 2, 1);
@@ -207,25 +204,25 @@ dotnet add package WeihanLi.Npoi
         .HasColumnIndex(0);
 
     setting.Property(_ => _.SettingName)
-        .HasColumnTitle("设置名称")
+        .HasColumnTitle("SettingName")
         .HasColumnIndex(1);
 
     setting.Property(_ => _.DisplayName)
-        .HasColumnTitle("设置显示名称")
+        .HasColumnTitle("DisplayName")
         .HasColumnIndex(2);
 
     setting.Property(_ => _.SettingValue)
-        .HasColumnTitle("设置值")
+        .HasColumnTitle("SettingValue")
         .HasColumnIndex(3);
 
     setting.Property(_ => _.CreatedTime)
-        .HasColumnTitle("创建时间")
+        .HasColumnTitle("CreatedTime")
         .HasColumnIndex(5)
         .HasColumnFormatter("yyyy-MM-dd HH:mm:ss");
 
     setting.Property(_ => _.CreatedBy)
         .HasColumnIndex(4)
-        .HasColumnTitle("创建人");
+        .HasColumnTitle("CreatedBy");
 
     setting.Property(_ => _.UpdatedBy).Ignored();
     setting.Property(_ => _.UpdatedTime).Ignored();

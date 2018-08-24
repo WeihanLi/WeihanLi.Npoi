@@ -1,12 +1,4 @@
-﻿using System;
-using System.Data.SqlClient;
-using System.Linq;
-using WeihanLi.Common.Helpers;
-using WeihanLi.Extensions;
-using WeihanLi.Npoi;
-using WeihanLi.Npoi.Attributes;
-
-// ReSharper disable LocalizableElement
+﻿// ReSharper disable LocalizableElement
 
 namespace DotNetSample
 {
@@ -66,15 +58,15 @@ namespace DotNetSample
                 .HasFreezePane(0, 1, 2, 1);
 
             setting.Property(_ => _.Amount)
-                .HasColumnTitle("可用余额")
+                .HasColumnTitle("Amount")
                 .HasColumnIndex(2);
 
             setting.Property(_ => _.Username)
-                .HasColumnTitle("用户名")
+                .HasColumnTitle("Username")
                 .HasColumnIndex(0);
 
             setting.Property(_ => _.CreateTime)
-                .HasColumnTitle("创建时间")
+                .HasColumnTitle("CreateTime")
                 .HasColumnFormatter("yyyy-MM-dd HH:mm:ss");
 
             setting.Property(_ => _.PasswordHash)
@@ -118,19 +110,19 @@ namespace DotNetSample
 
     internal class TestEntity2
     {
-        [Column("PKID")]
+        [Column("ID")]
         public int PKID { get; set; }
 
-        [Column("账单标题")]
+        [Column("BillTitle")]
         public string BillTitle { get; set; }
 
-        [Column("账单详情")]
+        [Column("BillDetails")]
         public string BillDetails { get; set; }
 
-        [Column("创建人")]
+        [Column("CreatedBy")]
         public string CreatedBy { get; set; }
 
-        [Column("创建时间", Formatter = "yyyy-MM-dd HH:mm:ss")]
+        [Column("CreatedTime", Formatter = "yyyy-MM-dd HH:mm:ss")]
         public DateTime CreatedTime { get; set; }
     }
 }
