@@ -22,9 +22,9 @@ namespace DotNetCoreSample
 
             Console.WriteLine("Success!");
 
-            //var mapping = ExcelHelper.ToEntityList<ProductPriceMapping>(@"C:\Users\liweihan.TUHU\Desktop\temp\tempFiles\mapping.xlsx");
+            //var mapping = ExcelHelper.ToEntityList<ProductPriceMapping>(@"C:\Users\liweihan\Desktop\temp\tempFiles\mapping.xlsx");
 
-            //var mappingTemp = ExcelHelper.ToEntityList<ProductPriceMapping>(@"C:\Users\liweihan.TUHU\Desktop\temp\tempFiles\mapping_temp.xlsx");
+            //var mappingTemp = ExcelHelper.ToEntityList<ProductPriceMapping>(@"C:\Users\liweihan\Desktop\temp\tempFiles\mapping_temp.xlsx");
 
             //Console.WriteLine($"-----normal({mapping.Count}【{mapping.Select(_ => _.Pid).Distinct().Count()}】)----");
             //foreach (var shop in mapping.GroupBy(_ => _.ShopCode).OrderBy(_ => _.Key))
@@ -50,7 +50,7 @@ namespace DotNetCoreSample
                 .HasDescription("")
                 .HasSubject("");
 
-            setting.HasSheetConfiguration(0, "系统设置列表");
+            setting.HasSheetConfiguration(0, "SystemSettingsList");
 
             setting.HasFilter(0, 1)
                 .HasFreezePane(0, 1, 2, 1);
@@ -58,25 +58,25 @@ namespace DotNetCoreSample
                 .HasColumnIndex(0);
 
             setting.Property(_ => _.SettingName)
-                .HasColumnTitle("设置名称")
+                .HasColumnTitle("SettingName")
                 .HasColumnIndex(1);
 
             setting.Property(_ => _.DisplayName)
-                .HasColumnTitle("设置显示名称")
+                .HasColumnTitle("DisplayName")
                 .HasColumnIndex(2);
 
             setting.Property(_ => _.SettingValue)
-                .HasColumnTitle("设置值")
+                .HasColumnTitle("SettingValue")
                 .HasColumnIndex(3);
 
             setting.Property(_ => _.CreatedTime)
-                .HasColumnTitle("创建时间")
+                .HasColumnTitle("CreatedTime")
                 .HasColumnIndex(5)
                 .HasColumnFormatter("yyyy-MM-dd HH:mm:ss");
 
             setting.Property(_ => _.CreatedBy)
                 .HasColumnIndex(4)
-                .HasColumnTitle("创建人");
+                .HasColumnTitle("CreatedBy");
 
             setting.Property(_ => _.UpdatedBy).Ignored();
             setting.Property(_ => _.UpdatedTime).Ignored();
