@@ -294,7 +294,7 @@ namespace WeihanLi.Npoi
         }
 
         /// <summary>
-        ///     EntityList2ExcelStream，默认使用 Xlsx
+        ///     EntityList2ExcelStream(*.xlsx)
         /// </summary>
         /// <typeparam name="TEntity">EntityType</typeparam>
         /// <param name="entityList">entityList</param>
@@ -322,7 +322,7 @@ namespace WeihanLi.Npoi
         }
 
         /// <summary>
-        ///     EntityList2ExcelBytes，默认使用 xlsx 格式
+        ///     EntityList2ExcelBytes(*.xlsx by default)
         /// </summary>
         /// <typeparam name="TEntity">EntityType</typeparam>
         /// <param name="entityList">entityList</param>
@@ -345,7 +345,7 @@ namespace WeihanLi.Npoi
         }
 
         /// <summary>
-        ///     将DataTable内容导出到Excel
+        ///     export DataTable to excel file
         /// </summary>
         /// <param name="dataTable">dataTable</param>
         /// <param name="excelPath">excelPath</param>
@@ -419,7 +419,7 @@ namespace WeihanLi.Npoi
         }
 
         /// <summary>
-        ///     DataTable2ExcelBytes,默认使用 xlxs 格式
+        ///     DataTable2ExcelBytes(*.xlsx by default)
         /// </summary>
         /// <param name="dataTable">dataTable</param>
         public static byte[] ToExcelBytes([NotNull] this DataTable dataTable) =>
