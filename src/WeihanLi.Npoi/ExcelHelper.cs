@@ -18,12 +18,12 @@ namespace WeihanLi.Npoi
     public static class ExcelHelper
     {
         /// <summary>
-        /// 验证excel文件路径是否可用
+        /// Validate is a excel path valid 
         /// </summary>
-        /// <param name="excelPath">路径</param>
-        /// <param name="msg">错误信息</param>
-        /// <param name="isExport">是否是导出操作，导出不需要验证是否存在</param>
-        /// <returns>是否可用</returns>
+        /// <param name="excelPath">excel path</param>
+        /// <param name="msg">error message</param>
+        /// <param name="isExport">is export operation</param>
+        /// <returns>is valid excel path</returns>
         private static bool ValidateExcelFilePath(string excelPath, out string msg, bool isExport = false)
         {
             if (isExport || File.Exists(excelPath))
@@ -43,9 +43,9 @@ namespace WeihanLi.Npoi
         }
 
         /// <summary>
-        /// 根据excel路径加载excel
+        /// load excel from filepath
         /// </summary>
-        /// <param name="excelPath">excel路径</param>
+        /// <param name="excelPath">excel file path</param>
         /// <returns>workbook</returns>
         public static IWorkbook LoadExcel(string excelPath)
         {
@@ -61,14 +61,14 @@ namespace WeihanLi.Npoi
         }
 
         /// <summary>
-        /// 为导出准备 workbook
+        /// prepare a workbook for export
         /// </summary>
         /// <param name="excelPath">excelPath</param>
         /// <returns></returns>
         public static IWorkbook PrepareWorkbook(string excelPath) => PrepareWorkbook(excelPath, null);
 
         /// <summary>
-        /// 为导出准备 workbook
+        /// prepare a workbook for export
         /// </summary>
         /// <param name="excelPath">excelPath</param>
         /// <param name="excelSetting">excelSetting</param>
@@ -83,7 +83,7 @@ namespace WeihanLi.Npoi
         }
 
         /// <summary>
-        /// 为导出准备 workbook
+        /// prepare a workbook for export
         /// </summary>
         /// <param name="excelFormat">excelFormat</param>
         /// <param name="excelSetting">excelSetting</param>
@@ -94,29 +94,30 @@ namespace WeihanLi.Npoi
         }
 
         /// <summary>
-        /// 获取一个 Excel Workbook（xlsx格式）
+        /// get a excel workbook(*.xlsx)
         /// </summary>
         /// <returns></returns>
         public static IWorkbook PrepareWorkbook() => PrepareWorkbook(true);
 
         /// <summary>
-        /// 获取一个 Excel Workbook（xlsx格式）
+        /// get a excel workbook
         /// </summary>
+        /// <param name="excelFormat">excelFormat</param>
         /// <returns></returns>
         public static IWorkbook PrepareWorkbook(ExcelFormat excelFormat) => PrepareWorkbook(excelFormat == ExcelFormat.Xlsx);
 
         /// <summary>
-        /// 获取一个Excel workbook
+        /// get a excel workbook
         /// </summary>
-        /// <param name="isXlsx">是否是 Xlsx 格式</param>
+        /// <param name="isXlsx">is for *.xlsx file</param>
         /// <returns></returns>
         public static IWorkbook PrepareWorkbook(bool isXlsx) =>
             PrepareWorkbook(isXlsx, null);
 
         /// <summary>
-        /// 获取一个Excel workbook
+        /// get a excel workbook
         /// </summary>
-        /// <param name="isXlsx">是否是 Xlsx 格式</param>
+        /// <param name="isXlsx">is for *.xlsx file</param>
         /// <param name="excelSetting">excelSettings</param>
         /// <returns></returns>
         public static IWorkbook PrepareWorkbook(bool isXlsx, ExcelSetting excelSetting)
@@ -160,7 +161,7 @@ namespace WeihanLi.Npoi
         }
 
         /// <summary>
-        /// 读取Excel的第一个sheet的内容到一个List中
+        /// read first sheet of excel from excel file path to a list
         /// </summary>
         /// <typeparam name="TEntity">EntityType</typeparam>
         /// <param name="excelPath">excelPath</param>
@@ -168,7 +169,7 @@ namespace WeihanLi.Npoi
         public static List<TEntity> ToEntityList<TEntity>(string excelPath) where TEntity : new() => ToEntityList<TEntity>(excelPath, 0);
 
         /// <summary>
-        /// 读取Excel内容到一个List中
+        /// read (sheetIndex) sheet of excel from excel file path to a list
         /// </summary>
         /// <typeparam name="TEntity">EntityType</typeparam>
         /// <param name="excelPath">excelPath</param>
@@ -181,7 +182,7 @@ namespace WeihanLi.Npoi
         }
 
         /// <summary>
-        /// 读取Excel的第一个Sheet中的内容到DataTable中
+        /// read first sheet of excel from excel file path to a datatable
         /// </summary>
         /// <typeparam name="TEntity">EntityType</typeparam>
         /// <param name="excelPath">excelPath</param>
@@ -189,7 +190,7 @@ namespace WeihanLi.Npoi
         public static DataTable ToDataTable<TEntity>(string excelPath) where TEntity : new() => ToDataTable<TEntity>(excelPath, 0);
 
         /// <summary>
-        /// 读取Excel内容到DataTable中
+        /// read (sheetIndex) sheet of excel from excel file path to a list(for specific class type)
         /// </summary>
         /// <typeparam name="TEntity">EntityType</typeparam>
         /// <param name="excelPath">excelPath</param>
@@ -199,18 +200,18 @@ namespace WeihanLi.Npoi
             => ToEntityList<TEntity>(excelPath, sheetIndex).ToDataTable();
 
         /// <summary>
-        /// 读取Excel第一个Sheet中的内容到DataTable中
+        /// read first sheet of excel from excel file path to a datatable
         /// </summary>
         /// <param name="excelPath">excelPath</param>
         /// <returns>DataTable</returns>
         public static DataTable ToDataTable(string excelPath) => ToDataTable(excelPath, 0, 0);
 
         /// <summary>
-        /// 读取Excel内容到DataTable中
+        /// read (sheetIndex) sheet of excel from excel file path to a datatable
         /// </summary>
         /// <param name="excelPath">excelPath</param>
-        /// <param name="sheetIndex">sheetIndex，默认是0</param>
-        /// <param name="headerRowIndex">列首行 headerRowIndex</param>
+        /// <param name="sheetIndex">sheetIndex</param>
+        /// <param name="headerRowIndex">headerRowIndex</param>
         /// <returns>DataTable</returns>
         public static DataTable ToDataTable(string excelPath, int sheetIndex, int headerRowIndex)
         {
@@ -223,14 +224,14 @@ namespace WeihanLi.Npoi
         }
 
         /// <summary>
-        /// 读取 Excel 内容到 DataSet
+        /// read first sheet of excel from excel file path to a DataSet from second row
         /// </summary>
         /// <param name="excelPath">excelPath</param>
         /// <returns></returns>
         public static DataSet ToDataSet(string excelPath) => ToDataSet(excelPath, 0);
 
         /// <summary>
-        /// 读取 Excel 内容到 DataSet
+        /// read first sheet of excel from excel file path to a DataSet from (headerRowIndex+1) row
         /// </summary>
         /// <param name="excelPath">excelPath</param>
         /// <param name="headerRowIndex">headerRowIndex</param>

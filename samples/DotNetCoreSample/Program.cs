@@ -14,11 +14,13 @@ namespace DotNetCoreSample
         {
             FluentSettingsForExcel();
 
-            using (var conn = new SqlConnection("server=.;uid=liweihan;pwd=Admin888;database=Reservation"))
-            {
-                var list = conn.Select<TestEntity>(@"SELECT * FROM [Reservation].[dbo].[tabSystemSettings]").ToArray();
-                list.ToExcelFile(ApplicationHelper.MapPath("test.xlsx"));
-            }
+            //using (var conn = new SqlConnection("server=.;uid=liweihan;pwd=Admin888;database=Reservation"))
+            //{
+            //    var list = conn.Select<TestEntity>(@"SELECT * FROM [Reservation].[dbo].[tabSystemSettings]").ToArray();
+            //    list.ToExcelFile(ApplicationHelper.MapPath("test.xlsx"));
+            //}
+
+            var entityList = ExcelHelper.ToEntityList<TestEntity>(ApplicationHelper.MapPath("test.xlsx"));
 
             Console.WriteLine("Success!");
 

@@ -40,8 +40,10 @@ namespace WeihanLi.Npoi
 
         public List<TEntity> SheetToEntityList([NotNull]ISheet sheet, int sheetIndex)
         {
-            var entities = new List<TEntity>(sheet.PhysicalNumberOfRows);
             var sheetSetting = sheetIndex >= 0 && sheetIndex < _sheetSettings.Count ? _sheetSettings[sheetIndex] : _sheetSettings[0];
+
+            var entities = new List<TEntity>(sheet.PhysicalNumberOfRows - sheetSetting.StartRowIndex);
+            
 
             foreach (var row in sheet.GetRowCollection())
             {
@@ -49,7 +51,12 @@ namespace WeihanLi.Npoi
                 {
                     for (var i = 0; i < row.Cells.Count; i++)
                     {
-                        var col = _propertyColumnDictionary.GetPropertySetting(row.Cells[i].StringCellValue.Trim());
+
+                        if (row.GetCell(i) == null)
+                        {
+                            continue;
+                        }
+                        var col = _propertyColumnDictionary.GetPropertySetting(row.GetCell(i).StringCellValue.Trim());
                         if (null != col)
                         {
                             col.ColumnIndex = i;
@@ -63,12 +70,7 @@ namespace WeihanLi.Npoi
                     foreach (var key in _propertyColumnDictionary.Keys)
                     {
                         var colIndex = _propertyColumnDictionary[key].ColumnIndex;
-                        if (colIndex < row.Cells.Count)
-                        {
-                            key.SetValue(entity,
-                                row.Cells[colIndex]
-                                    .GetCellValue(key.PropertyType));
-                        }
+                        key.SetValue(entity, row.GetCell(colIndex).GetCellValue(key.PropertyType));
                     }
                     entities.Add(entity);
                 }
