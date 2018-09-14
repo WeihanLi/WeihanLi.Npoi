@@ -520,7 +520,10 @@ namespace WeihanLi.Npoi
         /// <returns>cellValue</returns>
         public static object GetCellValue([NotNull] this ICell cell, Type propertyType)
         {
-            if (string.IsNullOrEmpty(cell.ToString())) return propertyType.GetDefaultValue();
+            if (string.IsNullOrEmpty(cell?.ToString()))
+            {
+                return propertyType.GetDefaultValue();
+            }
             switch (cell.CellType)
             {
                 case CellType.Numeric:
