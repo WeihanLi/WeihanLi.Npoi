@@ -16,10 +16,9 @@
     <PackageTags>npoi excel</PackageTags>
     <Description>NpoiExtensions for .net45 and .netstandard2.0</Description>
     <PackageReleaseNotes>
-      fix ExcelHelper.ToEntityList bug when there's a cell does not have value
+      StrongNaming package
     </PackageReleaseNotes>
     <Copyright>Copyright 2018 WeihanLi</Copyright>
     <GeneratePackageOnBuild Condition="'$(Configuration)'=='Release'">True</GeneratePackageOnBuild>
-    <NoWarn>$(NoWarn);CS8002</NoWarn>
   </PropertyGroup>
 </Project>
