@@ -16,12 +16,12 @@ namespace DotNetSample
         public static void Main(string[] args)
         {
             var conn = new SqlConnection("server=.;uid=liweihan;pwd=Admin888;database=AccountingApp");
-            //var entityList = conn.Select<TestEntity>("select * from Users");
+            //var entityList = conn.Select<TestEntity>("select * from Users").ToArray();
             //entityList[0].Amount = 0;
             //entityList[0].PasswordHash = "";
             ////var dataTable = entityList.ToDataTable();
-            //var result = entityList.ToExcelFile(ConfigurationHelper.MapPath("test.xlsx"));
-            //var result1 = ExcelHelper.ToEntityList<TestEntity>(ConfigurationHelper.MapPath("test.xlsx"));
+            //var result = entityList.ToExcelFile(ApplicationHelper.MapPath("test.xlsx"));
+            var result1 = ExcelHelper.ToEntityList<TestEntity>(ApplicationHelper.MapPath("test.xlsx"));
             //// 找不到文件
             ////var aaa = ExcelHelper.ToEntityList<TestEntity>("");
             //var entityList1 = conn.Select<TestEntity2>("select * from Bills");
