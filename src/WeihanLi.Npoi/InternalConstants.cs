@@ -1,11 +1,16 @@
 ﻿namespace WeihanLi.Npoi
 {
-    internal static class ExcelConstants
+    internal static class InternalConstants
     {
         /// <summary>
         /// Workbook中最多Sheet
         /// </summary>
         internal const int MaxSheetNum = 256;
+
+        /// <summary>
+        /// CsvSeparator
+        /// </summary>
+        internal const string CsvSeparator = ",";
 
         /// <summary>
         /// ApplicationName

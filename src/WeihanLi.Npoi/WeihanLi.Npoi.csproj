@@ -5,11 +5,8 @@
     <PackageReference Include="WeihanLi.Common" Version="1.0.10" />
   </ItemGroup>
 
-  <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
-    <PackageReference Include="DotNetCore.NPOI" Version="1.0.2" />
-  </ItemGroup>
-  <ItemGroup Condition="'$(TargetFramework)' == 'net45'">
-    <PackageReference Include="NPOI" Version="2.3.0" />
+  <ItemGroup>
+    <PackageReference Include="NPOI" Version="2.4.*" />
   </ItemGroup>
   <ItemGroup>
     <Compile Update="Resource.Designer.cs">

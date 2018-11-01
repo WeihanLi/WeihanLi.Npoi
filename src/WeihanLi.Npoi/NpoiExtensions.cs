@@ -174,10 +174,10 @@ namespace WeihanLi.Npoi
         public static int ImportData<TEntity>([NotNull] this IWorkbook workbook, IEnumerable<TEntity> list,
             int sheetIndex) where TEntity : new()
         {
-            if (sheetIndex >= ExcelConstants.MaxSheetNum)
+            if (sheetIndex >= InternalConstants.MaxSheetNum)
             {
                 throw new ArgumentException(
-                    string.Format(Resource.IndexOutOfRange, nameof(sheetIndex), ExcelConstants.MaxSheetNum),
+                    string.Format(Resource.IndexOutOfRange, nameof(sheetIndex), InternalConstants.MaxSheetNum),
                     nameof(sheetIndex));
             }
             InternalCache.TypeExcelConfigurationDictionary.TryGetValue(typeof(TEntity), out var configuration);
@@ -235,10 +235,10 @@ namespace WeihanLi.Npoi
         public static int ImportData<TEntity>([NotNull] this IWorkbook workbook, [NotNull] DataTable dataTable,
             int sheetIndex) where TEntity : new()
         {
-            if (sheetIndex >= ExcelConstants.MaxSheetNum)
+            if (sheetIndex >= InternalConstants.MaxSheetNum)
             {
                 throw new ArgumentException(
-                    string.Format(Resource.IndexOutOfRange, nameof(sheetIndex), ExcelConstants.MaxSheetNum),
+                    string.Format(Resource.IndexOutOfRange, nameof(sheetIndex), InternalConstants.MaxSheetNum),
                     nameof(sheetIndex));
             }
             InternalCache.TypeExcelConfigurationDictionary.TryGetValue(typeof(TEntity), out var configuration);

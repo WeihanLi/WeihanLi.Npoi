@@ -136,7 +136,7 @@ namespace WeihanLi.Npoi
                 props.CoreProperties.Category = setting.Category;
                 props.CoreProperties.Description = setting.Description;
                 props.ExtendedProperties.GetUnderlyingProperties().Company = setting.Company;
-                props.ExtendedProperties.GetUnderlyingProperties().Application = ExcelConstants.ApplicationName;
+                props.ExtendedProperties.GetUnderlyingProperties().Application = InternalConstants.ApplicationName;
                 return workbook;
             }
             else
@@ -154,7 +154,7 @@ namespace WeihanLi.Npoi
                 si.Author = setting.Author;
                 si.CreateDateTime = DateTime.Now;
                 si.Comments = setting.Description;
-                si.ApplicationName = ExcelConstants.ApplicationName;
+                si.ApplicationName = InternalConstants.ApplicationName;
                 workbook.SummaryInformation = si;
                 return workbook;
             }
