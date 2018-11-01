@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Data.SqlClient;
-using System.Linq;
-using WeihanLi.Common.Helpers;
-using WeihanLi.Extensions;
+using System.Collections.Generic;
 using WeihanLi.Npoi;
 
 // ReSharper disable All
@@ -20,9 +17,9 @@ namespace DotNetCoreSample
             //    list.ToExcelFile(ApplicationHelper.MapPath("test.xlsx"));
             //}
 
-            var entityList = ExcelHelper.ToEntityList<TestEntity>(ApplicationHelper.MapPath("test.xlsx"));
+            //var entityList = ExcelHelper.ToEntityList<TestEntity>(ApplicationHelper.MapPath("test.xlsx"));
 
-            Console.WriteLine("Success!");
+            //Console.WriteLine("Success!");
 
             //var mapping = ExcelHelper.ToEntityList<ProductPriceMapping>(@"C:\Users\liweihan\Desktop\temp\tempFiles\mapping.xlsx");
 
@@ -39,6 +36,27 @@ namespace DotNetCoreSample
             //{
             //    Console.WriteLine($"{shop.Key}---{shop.Count()}---distinct pid count:{shop.Select(_ => _.Pid).Distinct().Count()}");
             //}
+
+            var entities = new List<TestEntity>()
+            {
+                new TestEntity()
+                {
+                    SettingId = Guid.NewGuid(),
+                    SettingName = "Setting1",
+                    SettingValue = "Value1"
+                },
+                new TestEntity()
+                {
+                    SettingId = Guid.NewGuid(),
+                    SettingName = "Setting2",
+                    SettingValue = "Value2"
+                },
+            };
+            var csvFilePath = @"C:\Users\liweihan\Desktop\temp\test\test.csv";
+            entities.ToCsvFile(csvFilePath);
+            var entities1 = CsvHelper.ToEntityList<TestEntity>(csvFilePath);
+
+            entities.ToExcelFile(csvFilePath.Replace(".csv", ".xlsx"));
 
             Console.ReadLine();
         }

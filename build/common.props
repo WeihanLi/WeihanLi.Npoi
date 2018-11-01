@@ -16,7 +16,8 @@
     <PackageTags>npoi excel</PackageTags>
     <Description>NpoiExtensions for .net45 and .netstandard2.0</Description>
     <PackageReleaseNotes>
-      StrongNaming package
+      Update NPOI package
+      Add CsvHelper for import and export csv file, and mapping to entities
     </PackageReleaseNotes>
     <Copyright>Copyright 2018 WeihanLi</Copyright>
     <GeneratePackageOnBuild Condition="'$(Configuration)'=='Release'">True</GeneratePackageOnBuild>

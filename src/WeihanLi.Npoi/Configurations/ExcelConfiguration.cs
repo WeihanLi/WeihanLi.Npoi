@@ -36,7 +36,7 @@ namespace WeihanLi.Npoi.Configurations
         {
             PropertyConfigurationDictionary = new Dictionary<PropertyInfo, PropertyConfiguration>();
             ExcelSetting = setting ?? new ExcelSetting();
-            SheetSettings = new List<SheetSetting>(ExcelConstants.MaxSheetNum / 16)
+            SheetSettings = new List<SheetSetting>(InternalConstants.MaxSheetNum / 16)
             {
                 new SheetSetting()
             };
