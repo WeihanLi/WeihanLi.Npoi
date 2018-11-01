@@ -6,7 +6,7 @@
 
 ## Intro
 
-NpoiExtensions for target framework net4.5 or netstandard2.0.
+NpoiExtensions for target framework net45 and netstandard2.0.
 
 There' a lot of userful extensions for you, core fetures are as follows:
 
