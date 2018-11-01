@@ -56,6 +56,8 @@ namespace DotNetCoreSample
             entities.ToCsvFile(csvFilePath);
             var entities1 = CsvHelper.ToEntityList<TestEntity>(csvFilePath);
 
+            entities.ToExcelFile(csvFilePath.Replace(".csv", ".xlsx"));
+
             Console.ReadLine();
         }
 
