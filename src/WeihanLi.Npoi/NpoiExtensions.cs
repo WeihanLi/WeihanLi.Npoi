@@ -289,6 +289,13 @@ namespace WeihanLi.Npoi
             InternalCache.TypeExcelConfigurationDictionary.TryGetValue(typeof(TEntity), out var configuration);
             var workbook = ExcelHelper.PrepareWorkbook(excelPath, configuration?.ExcelSetting);
             workbook.ImportData(entityList.ToArray());
+
+            var dir = Path.GetDirectoryName(excelPath);
+            if (!Directory.Exists(dir))
+            {
+                Directory.CreateDirectory(dir);
+            }
+
             workbook.WriteToFile(excelPath);
             return 1;
         }
@@ -371,7 +378,11 @@ namespace WeihanLi.Npoi
                     row.CreateCell(j, CellType.String).SetCellValue(dataTable.Rows[i - 1][j]);
                 }
             }
-
+            var dir = Path.GetDirectoryName(excelPath);
+            if (!Directory.Exists(dir))
+            {
+                Directory.CreateDirectory(dir);
+            }
             workbook.WriteToFile(excelPath);
             return 1;
         }
@@ -597,6 +608,11 @@ namespace WeihanLi.Npoi
         /// <param name="filePath">file path</param>
         public static int WriteToFile([NotNull] this IWorkbook workbook, string filePath)
         {
+            var dir = Path.GetDirectoryName(filePath);
+            if (!Directory.Exists(dir))
+            {
+                Directory.CreateDirectory(dir);
+            }
             using (var fileStream = File.Create(filePath))
             {
                 workbook.Write(fileStream);
