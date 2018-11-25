@@ -18,7 +18,12 @@ namespace WeihanLi.Npoi
     public static class ExcelHelper
     {
         /// <summary>
-        /// Validate is a excel path valid 
+        /// Default excel setting for export excel files
+        /// </summary>
+        public static ExcelSetting DefaultExcelSetting = new ExcelSetting();
+
+        /// <summary>
+        /// Validate is a excel path valid
         /// </summary>
         /// <param name="excelPath">excel path</param>
         /// <param name="msg">error message</param>
@@ -122,7 +127,7 @@ namespace WeihanLi.Npoi
         /// <returns></returns>
         public static IWorkbook PrepareWorkbook(bool isXlsx, ExcelSetting excelSetting)
         {
-            var setting = excelSetting ?? new ExcelSetting();
+            var setting = (excelSetting ?? DefaultExcelSetting) ?? new ExcelSetting();
 
             if (isXlsx)
             {
