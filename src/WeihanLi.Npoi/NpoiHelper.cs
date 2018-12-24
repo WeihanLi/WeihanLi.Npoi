@@ -43,7 +43,6 @@ namespace WeihanLi.Npoi
             var sheetSetting = sheetIndex >= 0 && sheetIndex < _sheetSettings.Count ? _sheetSettings[sheetIndex] : _sheetSettings[0];
 
             var entities = new List<TEntity>(sheet.PhysicalNumberOfRows - sheetSetting.StartRowIndex);
-            
 
             foreach (var row in sheet.GetRowCollection())
             {
@@ -51,7 +50,6 @@ namespace WeihanLi.Npoi
                 {
                     for (var i = 0; i < row.Cells.Count; i++)
                     {
-
                         if (row.GetCell(i) == null)
                         {
                             continue;
@@ -70,7 +68,7 @@ namespace WeihanLi.Npoi
                     foreach (var key in _propertyColumnDictionary.Keys)
                     {
                         var colIndex = _propertyColumnDictionary[key].ColumnIndex;
-                        key.SetValue(entity, row.GetCell(colIndex).GetCellValue(key.PropertyType));
+                        key.GetValueSetter<TEntity>().Invoke(entity, row.GetCell(colIndex).GetCellValue(key.PropertyType));
                     }
                     entities.Add(entity);
                 }
@@ -144,7 +142,7 @@ namespace WeihanLi.Npoi
                 var row = sheet.CreateRow(sheetSetting.StartRowIndex + i);
                 foreach (var key in _propertyColumnDictionary.Keys)
                 {
-                    row.CreateCell(_propertyColumnDictionary[key].ColumnIndex).SetCellValue(key.GetValue(entityList[i]), _propertyColumnDictionary[key].ColumnFormatter);
+                    row.CreateCell(_propertyColumnDictionary[key].ColumnIndex).SetCellValue(key.GetValueGetter<TEntity>().Invoke(entityList[i]), _propertyColumnDictionary[key].ColumnFormatter);
                 }
             }
 
