@@ -64,11 +64,23 @@ namespace WeihanLi.Npoi
                 else if (row.RowNum >= sheetSetting.StartRowIndex)
                 {
                     var entity = new TEntity();
-
-                    foreach (var key in _propertyColumnDictionary.Keys)
+                    if (typeof(TEntity).IsValueType)
                     {
-                        var colIndex = _propertyColumnDictionary[key].ColumnIndex;
-                        key.GetValueSetter<TEntity>().Invoke(entity, row.GetCell(colIndex).GetCellValue(key.PropertyType));
+                        var obj = (object)entity;
+                        foreach (var key in _propertyColumnDictionary.Keys)
+                        {
+                            var colIndex = _propertyColumnDictionary[key].ColumnIndex;
+                            key.SetValue(obj, row.GetCell(colIndex).GetCellValue(key.PropertyType));
+                        }
+                        entity = (TEntity)obj;
+                    }
+                    else
+                    {
+                        foreach (var key in _propertyColumnDictionary.Keys)
+                        {
+                            var colIndex = _propertyColumnDictionary[key].ColumnIndex;
+                            key.GetValueSetter().Invoke(entity, row.GetCell(colIndex).GetCellValue(key.PropertyType));
+                        }
                     }
                     entities.Add(entity);
                 }

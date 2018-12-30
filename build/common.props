@@ -9,15 +9,16 @@
     <Company>WeihanLi</Company>
     <Product>WeihanLi.Npoi</Product>
     <PackageIconUrl>https://avatars3.githubusercontent.com/u/7604648</PackageIconUrl>
-    <PackageLicenseUrl>https://github.com/WeihanLi/WeihanLi.Npoi/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/WeihanLi/WeihanLi.Npoi</PackageProjectUrl>
     <RepositoryUrl>https://github.com/WeihanLi/WeihanLi.Npoi</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <PackageTags>npoi excel</PackageTags>
+    <PackageTags>npoi excel csv</PackageTags>
     <Description>NpoiExtensions for .net45 and .netstandard2.0</Description>
     <PackageReleaseNotes>
       Update NPOI package
-      Add CsvHelper for import and export csv file, and mapping to entities
+      Add support for struct types
+      Add default excel settings
     </PackageReleaseNotes>
     <Copyright>Copyright 2018 WeihanLi</Copyright>
     <GeneratePackageOnBuild Condition="'$(Configuration)'=='Release'">True</GeneratePackageOnBuild>
