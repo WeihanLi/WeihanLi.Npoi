@@ -6,9 +6,13 @@
 
 ## Intro
 
-Npoi 扩展,适用于.netframework4.5及以上和netstandard2.0, .netframework基于[NPOI](https://www.nuget.org/packages/NPOI/), .netstandard基于 [DotNetCore.NPOI](https://www.nuget.org/packages/DotNetCore.NPOI/)
+NpoiExtensions for target framework net45 and netstandard2.0.
 
-NpoiExtensions for target framework net4.5 or netstandard2.0,for net45 basedon [NPOI](https://www.nuget.org/packages/NPOI/),for .netstandard basedon [DotNetCore.NPOI](https://www.nuget.org/packages/DotNetCore.NPOI/)
+There' a lot of userful extensions for you, core fetures are as follows:
+
+- mapping a excel file data to a `DataTable` or `List<TEntity>`
+- export a `IEnumerable<TEntity>` or `DataTable` to Excel file or Excel file bytes or even write excel file stream to your stream
+- export a `IEnumerable<TEntity>` or `DataTable` to csv file or bytes.
 
 ## Use
 
@@ -30,7 +34,8 @@ dotnet add package WeihanLi.Npoi
 
 1. LoadFromExcelFile
 
-    it consider the first row of the sheet as the header not for read,it will read data from next row.You can point out your header row through the exposed api if needed.
+    it consider the first row of the sheet as the header, not for read,it will read data from next row.
+    You can point out your header row through the exposed api if needed.
 
     - Read Excel to DataSet
 
@@ -130,7 +135,15 @@ dotnet add package WeihanLi.Npoi
 
     T GetCellValue<T>([NotNull] this ICell cell)
 
-    SetCellValue([NotNull] this ICell cell, object value)
+    void SetCellValue([NotNull] this ICell cell, object value)
+
+    byte[] ToCsvBytes<TEntity>(this IEnumerable<TEntity> entities, bool includeHeader)
+
+    ToCsvFile<TEntity>(this IEnumerable<TEntity> entities, string filePath, bool includeHeader)
+
+    void ToCsvFile(this DataTable dt, string filePath, bool includeHeader)
+
+    byte[] ToCsvBytes(this DataTable dt, bool includeHeader)
 
     ```
 

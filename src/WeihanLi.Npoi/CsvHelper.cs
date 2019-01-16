@@ -50,8 +50,12 @@ namespace WeihanLi.Npoi
                 }
                 data.AppendLine();
             }
-
-            File.WriteAllText(filePath, data.ToString());
+            var dir = Path.GetDirectoryName(filePath);
+            if (!Directory.Exists(dir))
+            {
+                Directory.CreateDirectory(dir);
+            }
+            File.WriteAllText(filePath, data.ToString(), Encoding.UTF8);
         }
 
         /// <summary>
@@ -195,6 +199,11 @@ namespace WeihanLi.Npoi
                 data.AppendLine();
             }
 
+            var dir = Path.GetDirectoryName(filePath);
+            if (!Directory.Exists(dir))
+            {
+                Directory.CreateDirectory(dir);
+            }
             File.WriteAllText(filePath, data.ToString());
         }
 

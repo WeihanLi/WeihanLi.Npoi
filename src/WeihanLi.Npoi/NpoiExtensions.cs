@@ -8,6 +8,7 @@ using JetBrains.Annotations;
 using NPOI.SS.UserModel;
 using WeihanLi.Extensions;
 using WeihanLi.Npoi.Configurations;
+using WeihanLi.Npoi.Settings;
 
 namespace WeihanLi.Npoi
 {
@@ -289,6 +290,7 @@ namespace WeihanLi.Npoi
             InternalCache.TypeExcelConfigurationDictionary.TryGetValue(typeof(TEntity), out var configuration);
             var workbook = ExcelHelper.PrepareWorkbook(excelPath, configuration?.ExcelSetting);
             workbook.ImportData(entityList.ToArray());
+
             workbook.WriteToFile(excelPath);
             return 1;
         }
@@ -350,9 +352,18 @@ namespace WeihanLi.Npoi
         /// <param name="dataTable">dataTable</param>
         /// <param name="excelPath">excelPath</param>
         /// <returns></returns>
-        public static int ToExcelFile([NotNull] this DataTable dataTable, [NotNull] string excelPath)
+        public static int ToExcelFile([NotNull] this DataTable dataTable, [NotNull] string excelPath) => ToExcelFile(dataTable, excelPath, null);
+
+        /// <summary>
+        ///     export DataTable to excel file
+        /// </summary>
+        /// <param name="dataTable">dataTable</param>
+        /// <param name="excelPath">excelPath</param>
+        /// <param name="excelSetting">excelSetting</param>
+        /// <returns></returns>
+        public static int ToExcelFile([NotNull] this DataTable dataTable, [NotNull] string excelPath, ExcelSetting excelSetting)
         {
-            var workbook = ExcelHelper.PrepareWorkbook(excelPath);
+            var workbook = ExcelHelper.PrepareWorkbook(excelPath, excelSetting);
             var sheet = workbook.CreateSheet(
                 string.IsNullOrWhiteSpace(dataTable.TableName)
                 ? "Sheet0"
@@ -371,7 +382,11 @@ namespace WeihanLi.Npoi
                     row.CreateCell(j, CellType.String).SetCellValue(dataTable.Rows[i - 1][j]);
                 }
             }
-
+            var dir = Path.GetDirectoryName(excelPath);
+            if (!Directory.Exists(dir))
+            {
+                Directory.CreateDirectory(dir);
+            }
             workbook.WriteToFile(excelPath);
             return 1;
         }
@@ -392,7 +407,18 @@ namespace WeihanLi.Npoi
         /// <param name="stream">stream</param>
         /// <param name="excelFormat">excelFormat</param>
         /// <returns></returns>
-        public static int ToExcelStream([NotNull] this DataTable dataTable, [NotNull] Stream stream, ExcelFormat excelFormat)
+        public static int ToExcelStream([NotNull] this DataTable dataTable, [NotNull] Stream stream, ExcelFormat excelFormat) => ToExcelStream(dataTable, stream, excelFormat, null);
+
+        /// <summary>
+        ///     DataTable2ExcelStream
+        /// </summary>
+        /// <param name="dataTable">datatable</param>
+        /// <param name="stream">stream</param>
+        /// <param name="excelFormat">excelFormat</param>
+        /// <param name="excelSetting">excelSetting</param>
+        /// <returns></returns>
+        public static int ToExcelStream([NotNull] this DataTable dataTable, [NotNull] Stream stream, ExcelFormat excelFormat, ExcelSetting excelSetting)
+
         {
             var workbook = ExcelHelper.PrepareWorkbook(excelFormat);
             var sheet = workbook.CreateSheet(
@@ -430,9 +456,17 @@ namespace WeihanLi.Npoi
         /// </summary>
         /// <param name="dataTable">dataTable</param>
         /// <param name="excelFormat">excel格式</param>
-        public static byte[] ToExcelBytes([NotNull] this DataTable dataTable, ExcelFormat excelFormat)
+        public static byte[] ToExcelBytes([NotNull] this DataTable dataTable, ExcelFormat excelFormat) => ToExcelBytes(dataTable, excelFormat, null);
+
+        /// <summary>
+        ///     DataTable2ExcelBytes
+        /// </summary>
+        /// <param name="dataTable">dataTable</param>
+        /// <param name="excelFormat">excelFormat</param>
+        /// <param name="excelSetting">excelSetting</param>
+        public static byte[] ToExcelBytes([NotNull] this DataTable dataTable, ExcelFormat excelFormat, ExcelSetting excelSetting)
         {
-            var workbook = ExcelHelper.PrepareWorkbook();
+            var workbook = ExcelHelper.PrepareWorkbook(excelFormat, excelSetting);
             var sheet = workbook.CreateSheet(
                 string.IsNullOrWhiteSpace(dataTable.TableName)
                 ? "Sheet0"
@@ -597,6 +631,11 @@ namespace WeihanLi.Npoi
         /// <param name="filePath">file path</param>
         public static int WriteToFile([NotNull] this IWorkbook workbook, string filePath)
         {
+            var dir = Path.GetDirectoryName(filePath);
+            if (!Directory.Exists(dir))
+            {
+                Directory.CreateDirectory(dir);
+            }
             using (var fileStream = File.Create(filePath))
             {
                 workbook.Write(fileStream);

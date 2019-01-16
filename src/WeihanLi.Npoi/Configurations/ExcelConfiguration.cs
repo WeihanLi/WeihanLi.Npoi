@@ -35,7 +35,7 @@ namespace WeihanLi.Npoi.Configurations
         public ExcelConfiguration(ExcelSetting setting)
         {
             PropertyConfigurationDictionary = new Dictionary<PropertyInfo, PropertyConfiguration>();
-            ExcelSetting = setting ?? new ExcelSetting();
+            ExcelSetting = (setting ?? ExcelHelper.DefaultExcelSetting) ?? new ExcelSetting();
             SheetSettings = new List<SheetSetting>(InternalConstants.MaxSheetNum / 16)
             {
                 new SheetSetting()
