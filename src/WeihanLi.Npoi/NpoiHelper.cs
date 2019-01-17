@@ -66,13 +66,13 @@ namespace WeihanLi.Npoi
                     var entity = new TEntity();
                     if (typeof(TEntity).IsValueType)
                     {
-                        var obj = (object)entity;
+                        var obj = (object)entity;// boxing for value types
                         foreach (var key in _propertyColumnDictionary.Keys)
                         {
                             var colIndex = _propertyColumnDictionary[key].ColumnIndex;
                             key.SetValue(obj, row.GetCell(colIndex).GetCellValue(key.PropertyType));
                         }
-                        entity = (TEntity)obj;
+                        entity = (TEntity)obj;// unboxing
                     }
                     else
                     {
