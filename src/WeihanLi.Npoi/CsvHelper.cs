@@ -47,10 +47,7 @@ namespace WeihanLi.Npoi
         /// <summary>
         /// to csv bytes
         /// </summary>
-        public static byte[] ToCsvBytes(this DataTable dataTable, bool includeHeader)
-        {
-            return GetCsvText(dataTable, includeHeader).ToString().GetBytes();
-        }
+        public static byte[] ToCsvBytes(this DataTable dataTable, bool includeHeader) => GetCsvText(dataTable, includeHeader).GetBytes();
 
         /// <summary>
         /// convert csv file data to dataTable
@@ -141,11 +138,11 @@ namespace WeihanLi.Npoi
                     using (var sr = new StreamReader(fs, Encoding.UTF8))
                     {
                         string strLine;
-                        var isFirst = true;
+                        var isFirstLine = true;
                         while ((strLine = sr.ReadLine()).IsNotNullOrEmpty())
                         {
                             var cols = strLine.Split(new[] { InternalConstants.CsvSeparatorCharactor }, StringSplitOptions.RemoveEmptyEntries);
-                            if (isFirst)
+                            if (isFirstLine)
                             {
                                 for (int i = 0; i < cols.Length; i++)
                                 {
@@ -155,6 +152,7 @@ namespace WeihanLi.Npoi
                                         col.ColumnIndex = i;
                                     }
                                 }
+                                isFirstLine = false;
                             }
                             else
                             {

@@ -52,9 +52,8 @@ namespace WeihanLi.Npoi
         /// <returns></returns>
         public static PropertyInfo[] GetPropertiesForCsvHelper<TEntity>()
         {
-            var entityType = typeof(TEntity);
             var configuration = GetExcelConfigurationMapping<TEntity>();
-            return configuration.PropertyConfigurationDictionary.OrderBy(p => p.Value.PropertySetting.ColumnIndex).Select(p => p.Key).ToArray(); ;
+            return configuration.PropertyConfigurationDictionary.OrderBy(p => p.Value.PropertySetting.ColumnIndex).Select(p => p.Key).ToArray();
         }
     }
 }

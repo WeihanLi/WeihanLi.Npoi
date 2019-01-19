@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using WeihanLi.Extensions;
 using WeihanLi.Npoi;
 
 // ReSharper disable All
@@ -60,10 +61,11 @@ namespace DotNetCoreSample
 
             entities.ToExcelFile(csvFilePath.Replace(".csv", ".xlsx"));
 
-            var vals = new int[] { 1, 2, 3, 5, 4 };
+            var vals = new[] { 1, 2, 3, 5, 4 };
             vals.ToCsvFile(csvFilePath);
 
             var numList = CsvHelper.ToEntityList<int>(csvFilePath);
+            Console.WriteLine(numList.StringJoin(","));
 
             Console.ReadLine();
         }
