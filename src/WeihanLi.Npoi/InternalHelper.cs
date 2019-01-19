@@ -44,5 +44,16 @@ namespace WeihanLi.Npoi
             excelConfiguration.PropertyConfigurationDictionary = dic;
             return excelConfiguration;
         }
+
+        /// <summary>
+        /// GetProperties
+        /// </summary>
+        /// <typeparam name="TEntity">TEntity Type</typeparam>
+        /// <returns></returns>
+        public static PropertyInfo[] GetPropertiesForCsvHelper<TEntity>()
+        {
+            var configuration = GetExcelConfigurationMapping<TEntity>();
+            return configuration.PropertyConfigurationDictionary.OrderBy(p => p.Value.PropertySetting.ColumnIndex).Select(p => p.Key).ToArray();
+        }
     }
 }

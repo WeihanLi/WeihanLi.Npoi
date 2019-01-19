@@ -4,6 +4,7 @@ using System.Data;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using WeihanLi.Extensions;
 
@@ -17,45 +18,25 @@ namespace WeihanLi.Npoi
         /// <summary>
         /// save to csv file
         /// </summary>
-        public static void ToCsvFile(this DataTable dt, string filePath) => ToCsvFile(dt, filePath, true);
+        public static int ToCsvFile(this DataTable dt, string filePath) => ToCsvFile(dt, filePath, true);
 
         /// <summary>
         /// save to csv file
         /// </summary>
-        public static void ToCsvFile(this DataTable dt, string filePath, bool includeHeader)
+        public static int ToCsvFile(this DataTable dataTable, string filePath, bool includeHeader)
         {
-            var data = new StringBuilder();
-
-            if (includeHeader)
+            var csvText = GetCsvText(dataTable, includeHeader);
+            if (csvText.IsNullOrWhiteSpace())
             {
-                for (var i = 0; i < dt.Columns.Count; i++)
-                {
-                    data.Append(dt.Columns[i].ColumnName);
-                    if (i < dt.Columns.Count - 1)
-                    {
-                        data.Append(InternalConstants.CsvSeparator);
-                    }
-                }
-                data.AppendLine();
-            }
-            for (var i = 0; i < dt.Rows.Count; i++)
-            {
-                for (var j = 0; j < dt.Columns.Count; j++)
-                {
-                    data.Append(dt.Rows[i][j].ToString());
-                    if (j < dt.Columns.Count - 1)
-                    {
-                        data.Append(InternalConstants.CsvSeparator);
-                    }
-                }
-                data.AppendLine();
+                return 0;
             }
             var dir = Path.GetDirectoryName(filePath);
             if (!Directory.Exists(dir))
             {
                 Directory.CreateDirectory(dir);
             }
-            File.WriteAllText(filePath, data.ToString(), Encoding.UTF8);
+            File.WriteAllText(filePath, csvText, Encoding.UTF8);
+            return 1;
         }
 
         /// <summary>
@@ -66,37 +47,7 @@ namespace WeihanLi.Npoi
         /// <summary>
         /// to csv bytes
         /// </summary>
-        public static byte[] ToCsvBytes(this DataTable dt, bool includeHeader)
-        {
-            var data = new StringBuilder();
-
-            if (includeHeader)
-            {
-                for (var i = 0; i < dt.Columns.Count; i++)
-                {
-                    data.Append(dt.Columns[i].ColumnName);
-                    if (i < dt.Columns.Count - 1)
-                    {
-                        data.Append(InternalConstants.CsvSeparator);
-                    }
-                }
-                data.AppendLine();
-            }
-            for (var i = 0; i < dt.Rows.Count; i++)
-            {
-                for (var j = 0; j < dt.Columns.Count; j++)
-                {
-                    data.Append(dt.Rows[i][j].ToString());
-                    if (j < dt.Columns.Count - 1)
-                    {
-                        data.Append(InternalConstants.CsvSeparator);
-                    }
-                }
-                data.AppendLine();
-            }
-
-            return data.ToString().GetBytes();
-        }
+        public static byte[] ToCsvBytes(this DataTable dataTable, bool includeHeader) => GetCsvText(dataTable, includeHeader).GetBytes();
 
         /// <summary>
         /// convert csv file data to dataTable
@@ -155,56 +106,108 @@ namespace WeihanLi.Npoi
             {
                 throw new ArgumentException(Resource.FileNotFound, nameof(filePath));
             }
+            var entities = new List<TEntity>();
 
-            var dt = ToDataTable(filePath);
+            if (typeof(TEntity).IsBasicType())
+            {
+                using (var fs = new FileStream(filePath, FileMode.Open, FileAccess.Read))
+                {
+                    using (var sr = new StreamReader(fs, Encoding.UTF8))
+                    {
+                        string strLine;
+                        var isFirstLine = true;
+                        while ((strLine = sr.ReadLine()).IsNotNullOrEmpty())
+                        {
+                            if (isFirstLine)
+                            {
+                                isFirstLine = false;
+                                continue;
+                            }
+                            //
+                            entities.Add(strLine.Trim().To<TEntity>());
+                        }
+                    }
+                }
+            }
+            else
+            {
+                var propertyColumnDictionary = InternalHelper.GetExcelConfigurationMapping<TEntity>().PropertyConfigurationDictionary.Where(_ => !_.Value.PropertySetting.IsIgnored).ToDictionary(_ => _.Key, _ => _.Value.PropertySetting);
 
-            return dt.ToEntities<TEntity>().ToList();
+                using (var fs = new FileStream(filePath, FileMode.Open, FileAccess.Read))
+                {
+                    using (var sr = new StreamReader(fs, Encoding.UTF8))
+                    {
+                        string strLine;
+                        var isFirstLine = true;
+                        while ((strLine = sr.ReadLine()).IsNotNullOrEmpty())
+                        {
+                            var cols = strLine.Split(new[] { InternalConstants.CsvSeparatorCharactor }, StringSplitOptions.RemoveEmptyEntries);
+                            if (isFirstLine)
+                            {
+                                for (int i = 0; i < cols.Length; i++)
+                                {
+                                    var col = propertyColumnDictionary.GetPropertySetting(cols[i].Trim());
+                                    if (null != col)
+                                    {
+                                        col.ColumnIndex = i;
+                                    }
+                                }
+                                isFirstLine = false;
+                            }
+                            else
+                            {
+                                var entity = new TEntity();
+                                if (typeof(TEntity).IsValueType)
+                                {
+                                    var obj = (object)entity;// boxing for value types
+                                    foreach (var key in propertyColumnDictionary.Keys)
+                                    {
+                                        var colIndex = propertyColumnDictionary[key].ColumnIndex;
+                                        key.GetValueSetter().Invoke(obj, cols[colIndex]);
+                                    }
+                                    entity = (TEntity)obj;// unboxing
+                                }
+                                else
+                                {
+                                    foreach (var key in propertyColumnDictionary.Keys)
+                                    {
+                                        var colIndex = propertyColumnDictionary[key].ColumnIndex;
+                                        key.GetValueSetter().Invoke(entity, cols[colIndex]);
+                                    }
+                                }
+                                entities.Add(entity);
+                            }
+                        }
+                    }
+                }
+            }
+
+            return entities;
         }
 
         /// <summary>
         /// save to csv file
         /// </summary>
-        public static void ToCsvFile<TEntity>(this IEnumerable<TEntity> entities, string filePath) => ToCsvFile(entities, filePath, true);
+        public static int ToCsvFile<TEntity>(this IEnumerable<TEntity> entities, string filePath) => ToCsvFile(entities, filePath, true);
 
         /// <summary>
         /// save to csv file
         /// </summary>
-        public static void ToCsvFile<TEntity>(this IEnumerable<TEntity> entities, string filePath, bool includeHeader)
+        public static int ToCsvFile<TEntity>(this IEnumerable<TEntity> entities, string filePath, bool includeHeader)
         {
-            var dt = entities.ToDataTable();
-            var data = new StringBuilder();
-
-            if (includeHeader)
+            var csvTextData = GetCsvText(entities, includeHeader);
+            if (csvTextData.IsNullOrWhiteSpace())
             {
-                for (var i = 0; i < dt.Columns.Count; i++)
-                {
-                    data.Append(dt.Columns[i].ColumnName);
-                    if (i < dt.Columns.Count - 1)
-                    {
-                        data.Append(InternalConstants.CsvSeparator);
-                    }
-                }
-                data.AppendLine();
+                return 0;
             }
-            for (var i = 0; i < dt.Rows.Count; i++)
-            {
-                for (var j = 0; j < dt.Columns.Count; j++)
-                {
-                    data.Append(dt.Rows[i][j].ToString());
-                    if (j < dt.Columns.Count - 1)
-                    {
-                        data.Append(InternalConstants.CsvSeparator);
-                    }
-                }
-                data.AppendLine();
-            }
-
             var dir = Path.GetDirectoryName(filePath);
             if (!Directory.Exists(dir))
             {
                 Directory.CreateDirectory(dir);
             }
-            File.WriteAllText(filePath, data.ToString());
+            File.WriteAllText(filePath, csvTextData);
+
+            return 1;
         }
 
         /// <summary>
@@ -215,38 +218,101 @@ namespace WeihanLi.Npoi
         /// <summary>
         /// to csv bytes
         /// </summary>
-        public static byte[] ToCsvBytes<TEntity>(this IEnumerable<TEntity> entities, bool includeHeader)
+        public static byte[] ToCsvBytes<TEntity>(this IEnumerable<TEntity> entities, bool includeHeader) => GetCsvText(entities, includeHeader).GetBytes();
+
+        private static string GetCsvText<TEntity>(this IEnumerable<TEntity> entities, bool includeHeader)
         {
-            var dt = entities.ToDataTable();
+            if (entities == null || !entities.Any())
+            {
+                return string.Empty;
+            }
+            var isBasicType = typeof(TEntity).IsBasicType();
+            IReadOnlyList<PropertyInfo> props = InternalHelper.GetPropertiesForCsvHelper<TEntity>();
+            if (!isBasicType && props.Count == 0)
+            {
+                return string.Empty;
+            }
+            var data = new StringBuilder();
+            if (includeHeader)
+            {
+                if (isBasicType)
+                {
+                    data.Append(InternalConstants.DefaultPropertyNameForBasicType);
+                }
+                else
+                {
+                    for (var i = 0; i < props.Count; i++)
+                    {
+                        if (i > 0)
+                        {
+                            data.Append(InternalConstants.CsvSeparator);
+                        }
+                        data.Append(props[i].Name);
+                    }
+                }
+                data.AppendLine();
+            }
+
+            if (isBasicType)
+            {
+                foreach (var entity in entities)
+                {
+                    data.AppendLine(Convert.ToString(entity));
+                }
+            }
+            else
+            {
+                foreach (var entity in entities)
+                {
+                    for (var i = 0; i < props.Count; i++)
+                    {
+                        if (i > 0)
+                        {
+                            data.Append(InternalConstants.CsvSeparator);
+                        }
+                        data.Append(props[i].GetValueGetter().Invoke(entity));
+                    }
+                    data.AppendLine();
+                }
+            }
+
+            return data.ToString();
+        }
+
+        private static string GetCsvText(this DataTable dataTable, bool includeHeader)
+        {
+            if (dataTable == null || dataTable.Rows.Count == 0 || dataTable.Columns.Count == 0)
+            {
+                return string.Empty;
+            }
 
             var data = new StringBuilder();
 
             if (includeHeader)
             {
-                for (var i = 0; i < dt.Columns.Count; i++)
+                for (var i = 0; i < dataTable.Columns.Count; i++)
                 {
-                    data.Append(dt.Columns[i].ColumnName);
-                    if (i < dt.Columns.Count - 1)
+                    if (i > 0)
                     {
                         data.Append(InternalConstants.CsvSeparator);
                     }
+                    data.Append(dataTable.Columns[i].ColumnName);
                 }
                 data.AppendLine();
             }
-            for (var i = 0; i < dt.Rows.Count; i++)
+            for (var i = 0; i < dataTable.Rows.Count; i++)
             {
-                for (var j = 0; j < dt.Columns.Count; j++)
+                for (var j = 0; j < dataTable.Columns.Count; j++)
                 {
-                    data.Append(dt.Rows[i][j].ToString());
-                    if (j < dt.Columns.Count - 1)
+                    if (i > 0)
                     {
                         data.Append(InternalConstants.CsvSeparator);
                     }
+                    data.Append(dataTable.Rows[i][j]);
                 }
                 data.AppendLine();
             }
-
-            return data.ToString().GetBytes();
+            return data.ToString();
         }
     }
 }
