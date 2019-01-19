@@ -70,7 +70,7 @@ namespace WeihanLi.Npoi
                         foreach (var key in _propertyColumnDictionary.Keys)
                         {
                             var colIndex = _propertyColumnDictionary[key].ColumnIndex;
-                            key.SetValue(obj, row.GetCell(colIndex).GetCellValue(key.PropertyType));
+                            key.GetValueSetter().Invoke(obj, row.GetCell(colIndex).GetCellValue(key.PropertyType));
                         }
                         entity = (TEntity)obj;// unboxing
                     }

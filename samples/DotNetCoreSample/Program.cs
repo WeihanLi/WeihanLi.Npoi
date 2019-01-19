@@ -21,9 +21,9 @@ namespace DotNetCoreSample
 
             //Console.WriteLine("Success!");
 
-            //var mapping = ExcelHelper.ToEntityList<ProductPriceMapping>(@"C:\Users\liweihan\Desktop\temp\tempFiles\mapping.xlsx");
+            //var mapping = ExcelHelper.ToEntityList<ProductPriceMapping>($@"{Environment.GetEnvironmentVariable("USERPROFILE")}\Desktop\temp\tempFiles\mapping.xlsx");
 
-            //var mappingTemp = ExcelHelper.ToEntityList<ProductPriceMapping>(@"C:\Users\liweihan\Desktop\temp\tempFiles\mapping_temp.xlsx");
+            //var mappingTemp = ExcelHelper.ToEntityList<ProductPriceMapping>($@"{Environment.GetEnvironmentVariable("USERPROFILE")}\Desktop\temp\tempFiles\mapping_temp.xlsx");
 
             //Console.WriteLine($"-----normal({mapping.Count}【{mapping.Select(_ => _.Pid).Distinct().Count()}】)----");
             //foreach (var shop in mapping.GroupBy(_ => _.ShopCode).OrderBy(_ => _.Key))
@@ -41,22 +41,29 @@ namespace DotNetCoreSample
             {
                 new TestEntity()
                 {
+                    PKID = 1,
                     SettingId = Guid.NewGuid(),
                     SettingName = "Setting1",
                     SettingValue = "Value1"
                 },
                 new TestEntity()
                 {
+                    PKID=2,
                     SettingId = Guid.NewGuid(),
                     SettingName = "Setting2",
                     SettingValue = "Value2"
                 },
             };
-            var csvFilePath = @"C:\Users\liweihan\Desktop\temp\test\test.csv";
+            var csvFilePath = $@"{Environment.GetEnvironmentVariable("USERPROFILE")}\Desktop\temp\test\test.csv";
             entities.ToCsvFile(csvFilePath);
             var entities1 = CsvHelper.ToEntityList<TestEntity>(csvFilePath);
 
             entities.ToExcelFile(csvFilePath.Replace(".csv", ".xlsx"));
+
+            var vals = new int[] { 1, 2, 3, 5, 4 };
+            vals.ToCsvFile(csvFilePath);
+
+            var numList = CsvHelper.ToEntityList<int>(csvFilePath);
 
             Console.ReadLine();
         }

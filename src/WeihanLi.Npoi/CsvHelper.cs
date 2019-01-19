@@ -109,10 +109,82 @@ namespace WeihanLi.Npoi
             {
                 throw new ArgumentException(Resource.FileNotFound, nameof(filePath));
             }
+            var entities = new List<TEntity>();
 
-            var dt = ToDataTable(filePath);
+            if (typeof(TEntity).IsBasicType())
+            {
+                using (var fs = new FileStream(filePath, FileMode.Open, FileAccess.Read))
+                {
+                    using (var sr = new StreamReader(fs, Encoding.UTF8))
+                    {
+                        string strLine;
+                        var isFirstLine = true;
+                        while ((strLine = sr.ReadLine()).IsNotNullOrEmpty())
+                        {
+                            if (isFirstLine)
+                            {
+                                isFirstLine = false;
+                                continue;
+                            }
+                            //
+                            entities.Add(strLine.Trim().To<TEntity>());
+                        }
+                    }
+                }
+            }
+            else
+            {
+                var propertyColumnDictionary = InternalHelper.GetExcelConfigurationMapping<TEntity>().PropertyConfigurationDictionary.Where(_ => !_.Value.PropertySetting.IsIgnored).ToDictionary(_ => _.Key, _ => _.Value.PropertySetting);
 
-            return dt.ToEntities<TEntity>().ToList();
+                using (var fs = new FileStream(filePath, FileMode.Open, FileAccess.Read))
+                {
+                    using (var sr = new StreamReader(fs, Encoding.UTF8))
+                    {
+                        string strLine;
+                        var isFirst = true;
+                        while ((strLine = sr.ReadLine()).IsNotNullOrEmpty())
+                        {
+                            var cols = strLine.Split(new[] { InternalConstants.CsvSeparatorCharactor }, StringSplitOptions.RemoveEmptyEntries);
+                            if (isFirst)
+                            {
+                                for (int i = 0; i < cols.Length; i++)
+                                {
+                                    var col = propertyColumnDictionary.GetPropertySetting(cols[i].Trim());
+                                    if (null != col)
+                                    {
+                                        col.ColumnIndex = i;
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                var entity = new TEntity();
+                                if (typeof(TEntity).IsValueType)
+                                {
+                                    var obj = (object)entity;// boxing for value types
+                                    foreach (var key in propertyColumnDictionary.Keys)
+                                    {
+                                        var colIndex = propertyColumnDictionary[key].ColumnIndex;
+                                        key.GetValueSetter().Invoke(obj, cols[colIndex]);
+                                    }
+                                    entity = (TEntity)obj;// unboxing
+                                }
+                                else
+                                {
+                                    foreach (var key in propertyColumnDictionary.Keys)
+                                    {
+                                        var colIndex = propertyColumnDictionary[key].ColumnIndex;
+                                        key.GetValueSetter().Invoke(entity, cols[colIndex]);
+                                    }
+                                }
+                                entities.Add(entity);
+                            }
+                        }
+                    }
+                }
+            }
+
+            return entities;
         }
 
         /// <summary>
@@ -156,34 +228,56 @@ namespace WeihanLi.Npoi
             {
                 return string.Empty;
             }
+            var isBasicType = typeof(TEntity).IsBasicType();
             IReadOnlyList<PropertyInfo> props = InternalHelper.GetPropertiesForCsvHelper<TEntity>();
-
+            if (!isBasicType && props.Count == 0)
+            {
+                return string.Empty;
+            }
             var data = new StringBuilder();
-
             if (includeHeader)
             {
-                for (var i = 0; i < props.Count; i++)
+                if (isBasicType)
                 {
-                    if (i > 0)
+                    data.Append(InternalConstants.DefaultPropertyNameForBasicType);
+                }
+                else
+                {
+                    for (var i = 0; i < props.Count; i++)
                     {
-                        data.Append(InternalConstants.CsvSeparator);
+                        if (i > 0)
+                        {
+                            data.Append(InternalConstants.CsvSeparator);
+                        }
+                        data.Append(props[i].Name);
                     }
-                    data.Append(props[i].Name);
                 }
                 data.AppendLine();
             }
-            foreach (var entity in entities)
+
+            if (isBasicType)
             {
-                for (var i = 0; i < props.Count; i++)
+                foreach (var entity in entities)
                 {
-                    if (i > 0)
-                    {
-                        data.Append(InternalConstants.CsvSeparator);
-                    }
-                    data.Append(props[i].GetValueGetter<TEntity>().Invoke(entity));
+                    data.AppendLine(Convert.ToString(entity));
                 }
-                data.AppendLine();
             }
+            else
+            {
+                foreach (var entity in entities)
+                {
+                    for (var i = 0; i < props.Count; i++)
+                    {
+                        if (i > 0)
+                        {
+                            data.Append(InternalConstants.CsvSeparator);
+                        }
+                        data.Append(props[i].GetValueGetter().Invoke(entity));
+                    }
+                    data.AppendLine();
+                }
+            }
+
             return data.ToString();
         }
 
