@@ -52,8 +52,8 @@ namespace WeihanLi.Npoi
         /// <returns></returns>
         public static PropertyInfo[] GetPropertiesForCsvHelper<TEntity>()
         {
-            var configuration = GetExcelConfigurationMapping<TEntity>();
-            return configuration.PropertyConfigurationDictionary.OrderBy(p => p.Value.PropertySetting.ColumnIndex).Select(p => p.Key).ToArray();
+            var configuration = (ExcelConfiguration<TEntity>)InternalCache.TypeExcelConfigurationDictionary.GetOrAdd(typeof(TEntity), t => GetExcelConfigurationMapping<TEntity>());
+            return configuration.PropertyConfigurationDictionary.Where(p => !p.Value.PropertySetting.IsIgnored).OrderBy(p => p.Value.PropertySetting.ColumnIndex).Select(p => p.Key).ToArray();
         }
     }
 }
