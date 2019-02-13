@@ -5,6 +5,7 @@
 
 # Cutom files
 localBuild/
+_site
 
 # User-specific files
 *.suo
