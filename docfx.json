@@ -4,7 +4,7 @@
       "src": [
         {
           "files": [
-            "src/WeihanLi.Npoi/*.csproj"
+            "src/WeihanLi.Npoi/*.cs"
           ],
           "exclude": [ "**/bin/**", "**/obj/**" ]
         }
@@ -21,6 +21,7 @@
           "docs/articles/**.md",          
           "docs/articles/**/toc.yml",
           "docs/api/**.md",
+          "docs/api/**.yml",
           "docs/api/**/toc.yml",
           "toc.yml",
           "*.md"
