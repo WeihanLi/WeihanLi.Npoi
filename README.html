@@ -1,0 +1,324 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>WeihanLi.Npoi  </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="WeihanLi.Npoi  ">
+    <meta name="generator" content="docfx 2.40.10.0">
+    
+    <link rel="shortcut icon" href="favicon.ico">
+    <link rel="stylesheet" href="styles/docfx.vendor.css">
+    <link rel="stylesheet" href="styles/docfx.css">
+    <link rel="stylesheet" href="styles/main.css">
+    <meta property="docfx:navrel" content="toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="index.html">
+                <img id="logo" class="svg" src="logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        <div class="article row grid">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+<h1 id="weihanlinpoi-weihanlinpoi">WeihanLi.Npoi <a href="https://www.nuget.org/packages/WeihanLi.Npoi/"><img src="https://img.shields.io/nuget/v/WeihanLi.Npoi.svg" alt="WeihanLi.Npoi"></a></h1>
+
+<h2 id="build">Build</h2>
+<p><a href="https://travis-ci.org/WeihanLi/WeihanLi.Npoi"><img src="https://travis-ci.org/WeihanLi/WeihanLi.Npoi.svg?branch=master" alt="Build Status"></a></p>
+<h2 id="intro">Intro</h2>
+<p>NpoiExtensions for target framework net45 and netstandard2.0.</p>
+<p>There' a lot of userful extensions for you, core fetures are as follows:</p>
+<ul>
+<li>mapping a excel file data to a <code>DataTable</code> or <code>List&lt;TEntity&gt;</code></li>
+<li>export a <code>IEnumerable&lt;TEntity&gt;</code> or <code>DataTable</code> to Excel file or Excel file bytes or even write excel file stream to your stream</li>
+<li>export a <code>IEnumerable&lt;TEntity&gt;</code> or <code>DataTable</code> to csv file or bytes.</li>
+</ul>
+<h2 id="use">Use</h2>
+<h3 id="install">Install</h3>
+<p>.NetFramework</p>
+<pre><code class="lang-bash">Install-Package WeihanLi.Npoi
+</code></pre>
+<p>.NetCore</p>
+<pre><code class="lang-bash">dotnet add package WeihanLi.Npoi
+</code></pre>
+<h3 id="getstarted">GetStarted</h3>
+<ol>
+<li><p>LoadFromExcelFile</p>
+<p>it consider the first row of the sheet as the header, not for read,it will read data from next row.
+You can point out your header row through the exposed api if needed.</p>
+<ul>
+<li><p>Read Excel to DataSet</p>
+<pre><code class="lang-csharp">// read excel to dataSet, read all sheets data to dataSet,by default it will read from the headerRowIndex(0) + 1
+var dataSet = ExcelHelper.ToDataSet(string excelPath);
+
+// read excel to dataSet, read all sheets data to dataSet,headerRowIndex is not for read,read from headerRowIndex+1
+var dataSet = ExcelHelper.ToDataSet(string excelPath, int headerRowIndex);
+</code></pre>
+</li>
+<li><p>Read Excel to DataTable</p>
+<pre><code class="lang-csharp">// read excel to dataTable directly,by default read the first sheet content
+var dataTable = ExcelHelper.ToDataTable(string excelPath);
+
+// read excel workbook's sheetIndex sheet to dataTable directly
+var dataTableOfSheetIndex = ExcelHelper.ToDataTable(string excelPath, int sheetIndex);
+
+// read excel workbook's sheetIndex sheet to dataTable,custom headerRowIndex
+var dataTableOfSheetIndex = ExcelHelper.ToDataTable(string excelPath, int sheetIndex, int headerRowIndex);
+
+// read excel to dataTable use mapping relations and settings from typeof(T),by default read the first sheet content
+var dataTableT = ExcelHelper.ToDataTable&lt;T&gt;(string excelPath);
+
+// ... sheetIndex and headerRowIndex is also supported like above
+</code></pre>
+</li>
+<li><p>Read Excel to List</p>
+<pre><code class="lang-csharp">// read excel first sheet content to a List&lt;T&gt;
+var entityList = ExcelHelper.ToEntityList&lt;T&gt;(string excelPath);
+
+// read excel sheetIndex sheet content to a List&lt;T&gt;
+// you can custom header row index via sheet attribute or fluent api HasSheet
+var entityList1 = ExcelHelper.ToEntityList&lt;T&gt;(string excelPath, int sheetIndex);
+</code></pre>
+</li>
+</ul>
+</li>
+<li><p>Get a workbook</p>
+<pre><code class="lang-csharp">// load excel workbook from file
+var workbook = LoadExcel(string excelPath);
+
+// prepare a workbook accounting to excelPath
+var workbook = PrepareWorkbook(string excelPath);
+
+// prepare a workbook accounting to excelPath and custom excel settings
+var workbook = PrepareWorkbook(string excelPath, ExcelSetting excelSetting);
+
+// prepare a workbook whether *.xlsx file
+var workbook = PrepareWorkbook(bool isXlsx);
+
+// prepare a workbook whether *.xlsx file and custom excel setting
+var workbook = PrepareWorkbook(bool isXlsx, ExcelSetting excelSetting);
+</code></pre>
+</li>
+<li><p>Rich extensions</p>
+<pre><code class="lang-csharp">
+List&lt;TEntity&gt; ToEntityList&lt;TEntity&gt;([NotNull]this IWorkbook workbook)
+
+DataTable ToDataTable([NotNull]this IWorkbook workbook)
+
+ISheet ImportData&lt;TEntity&gt;([NotNull] this ISheet sheet, DataTable dataTable)
+
+int ImportData&lt;TEntity&gt;([NotNull] this IWorkbook workbook, IEnumerable&lt;TEntity&gt; list,
+            int sheetIndex)
+
+int ImportData&lt;TEntity&gt;([NotNull] this ISheet sheet, IEnumerable&lt;TEntity&gt; list)
+
+int ImportData&lt;TEntity&gt;([NotNull] this IWorkbook workbook, [NotNull] DataTable dataTable,
+            int sheetIndex)
+
+ToExcelFile&lt;TEntity&gt;([NotNull] this IEnumerable&lt;TEntity&gt; entityList,
+            [NotNull] string excelPath)
+
+int ToExcelStream&lt;TEntity&gt;([NotNull] this IEnumerable&lt;TEntity&gt; entityList,
+            [NotNull] Stream stream)
+
+byte[] ToExcelBytes&lt;TEntity&gt;([NotNull] this IEnumerable&lt;TEntity&gt; entityList)
+
+int ToExcelFile([NotNull] this DataTable dataTable, [NotNull] string excelPath)
+
+int ToExcelStream([NotNull] this DataTable dataTable, [NotNull] Stream stream)
+
+byte[] ToExcelBytes([NotNull] this DataTable dataTable)
+
+byte[] ToExcelBytes([NotNull] this IWorkbook workbook)
+
+int WriteToFile([NotNull] this IWorkbook workbook, string filePath)
+
+object GetCellValue([NotNull] this ICell cell, Type propertyType)
+
+T GetCellValue&lt;T&gt;([NotNull] this ICell cell)
+
+void SetCellValue([NotNull] this ICell cell, object value)
+
+byte[] ToCsvBytes&lt;TEntity&gt;(this IEnumerable&lt;TEntity&gt; entities, bool includeHeader)
+
+ToCsvFile&lt;TEntity&gt;(this IEnumerable&lt;TEntity&gt; entities, string filePath, bool includeHeader)
+
+void ToCsvFile(this DataTable dt, string filePath, bool includeHeader)
+
+byte[] ToCsvBytes(this DataTable dt, bool includeHeader)
+
+</code></pre>
+</li>
+</ol>
+<h3 id="define-custom-mapping-and-settings">Define Custom Mapping and settings</h3>
+<ol>
+<li><p>Attributes</p>
+<p>Add <code>ColumnAttribute</code> on the property of the entity which you used for export or import</p>
+<p>Add <code>SheetAttribute</code> on the entity which you used for export or import,you can set the <code>StartRowIndex</code> on your need(by default it is <code>1</code>)</p>
+<p>for example:</p>
+<pre><code class="lang-csharp">public class TestEntity
+{
+    [Column(&quot;Id&quot;)]
+    public int PKID { get; set; }
+
+    [Column(&quot;Bill Title&quot;)]
+    public string BillTitle { get; set; }
+
+    [Column(&quot;Bill Details&quot;)]
+    public string BillDetails { get; set; }
+
+    [Column(&quot;CreatedBy&quot;)]
+    public string CreatedBy { get; set; }
+
+    [Column(&quot;CreatedTime&quot;)]
+    public DateTime CreatedTime { get; set; }
+}
+
+public class TestEntity1
+{
+    [Column(&quot;Username&quot;)]
+    public string Username { get; set; }
+
+    [Column(IsIgnored = true)]
+    public string PasswordHash { get; set; }
+
+    [Column(&quot;Amount&quot;)]
+    public decimal Amount { get; set; } = 1000M;
+
+    [Column(&quot;WechatOpenId&quot;)]
+    public string WechatOpenId { get; set; }
+
+    [Column(&quot;IsActive&quot;)]
+    public bool IsActive { get; set; }
+}
+</code></pre>
+</li>
+<li><p>FluentApi</p>
+<p>You can also use FluentApi above version <code>1.0.3</code></p>
+<p>for example:</p>
+<pre><code class="lang-csharp">var setting = ExcelHelper.SettingFor&lt;TestEntity&gt;();
+// ExcelSetting
+setting.HasAuthor(&quot;WeihanLi&quot;)
+    .HasTitle(&quot;WeihanLi.Npoi test&quot;)
+    .HasDescription(&quot;&quot;)
+    .HasSubject(&quot;&quot;);
+
+setting.HasSheetConfiguration(0, &quot;System Settings&quot;);
+
+setting.HasFilter(0, 1)
+    .HasFreezePane(0, 1, 2, 1);
+setting.Property(_ =&gt; _.SettingId)
+    .HasColumnIndex(0);
+
+setting.Property(_ =&gt; _.SettingName)
+    .HasColumnTitle(&quot;SettingName&quot;)
+    .HasColumnIndex(1);
+
+setting.Property(_ =&gt; _.DisplayName)
+    .HasColumnTitle(&quot;DisplayName&quot;)
+    .HasColumnIndex(2);
+
+setting.Property(_ =&gt; _.SettingValue)
+    .HasColumnTitle(&quot;SettingValue&quot;)
+    .HasColumnIndex(3);
+
+setting.Property(_ =&gt; _.CreatedTime)
+    .HasColumnTitle(&quot;CreatedTime&quot;)
+    .HasColumnIndex(5)
+    .HasColumnFormatter(&quot;yyyy-MM-dd HH:mm:ss&quot;);
+
+setting.Property(_ =&gt; _.CreatedBy)
+    .HasColumnIndex(4)
+    .HasColumnTitle(&quot;CreatedBy&quot;);
+
+setting.Property(_ =&gt; _.UpdatedBy).Ignored();
+setting.Property(_ =&gt; _.UpdatedTime).Ignored();
+setting.Property(_ =&gt; _.PKID).Ignored();
+</code></pre>
+</li>
+</ol>
+<h3 id="samples">Samples</h3>
+<ul>
+<li><a href="https://github.com/WeihanLi/WeihanLi.Npoi/blob/dev/samples/DotNetCoreSample/Program.cs">dotnetcore sample</a></li>
+<li><a href="https://github.com/WeihanLi/WeihanLi.Npoi/blob/dev/samples/DotNetSample/Program.cs">dotnet sample</a></li>
+</ul>
+<h3 id="contact">Contact</h3>
+<p>Contact me: weihanli@outlook.com</p>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/WeihanLi/WeihanLi.Npoi/blob/dev/README.md/#L1" class="contribution-link">Improve this Doc</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="styles/docfx.js"></script>
+    <script type="text/javascript" src="styles/main.js"></script>
+  </body>
+</html>

@@ -1,0 +1,2349 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class NpoiExtensions
+   </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class NpoiExtensions
+   ">
+    <meta name="generator" content="docfx 2.40.10.0">
+    
+    <link rel="shortcut icon" href="../../favicon.ico">
+    <link rel="stylesheet" href="../../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../../styles/docfx.css">
+    <link rel="stylesheet" href="../../styles/main.css">
+    <meta property="docfx:navrel" content="../../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../../index.html">
+                <img id="logo" class="svg" src="../../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="WeihanLi.Npoi.NpoiExtensions">
+  
+  
+  <h1 id="WeihanLi_Npoi_NpoiExtensions" data-uid="WeihanLi.Npoi.NpoiExtensions" class="text-break">Class NpoiExtensions
+  </h1>
+  <div class="markdown level0 summary"></div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><span class="xref">System.Object</span></div>
+    <div class="level1"><span class="xref">NpoiExtensions</span></div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <span class="xref">System.Object.ToString()</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.Equals(System.Object)</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.Equals(System.Object, System.Object)</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.ReferenceEquals(System.Object, System.Object)</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.GetHashCode()</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.GetType()</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.MemberwiseClone()</span>
+    </div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="WeihanLi.Npoi.html">WeihanLi.Npoi</a></h6>
+  <h6><strong>Assembly</strong>: cs.temp.dll.dll</h6>
+  <h5 id="WeihanLi_Npoi_NpoiExtensions_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static class NpoiExtensions</code></pre>
+  </div>
+  <h3 id="methods">Methods
+  </h3>
+  
+  
+  <a id="WeihanLi_Npoi_NpoiExtensions_GetCellValue_" data-uid="WeihanLi.Npoi.NpoiExtensions.GetCellValue*"></a>
+  <h4 id="WeihanLi_Npoi_NpoiExtensions_GetCellValue_ICell_System_Type_" data-uid="WeihanLi.Npoi.NpoiExtensions.GetCellValue(ICell,System.Type)">GetCellValue(ICell, Type)</h4>
+  <div class="markdown level1 summary"><p>GetCellValue</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static object GetCellValue(this ICell cell, Type propertyType)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">ICell</span></td>
+        <td><span class="parametername">cell</span></td>
+        <td><p>cell</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Type</span></td>
+        <td><span class="parametername">propertyType</span></td>
+        <td><p>propertyType</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Object</span></td>
+        <td><p>cellValue</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="WeihanLi_Npoi_NpoiExtensions_GetCellValue_" data-uid="WeihanLi.Npoi.NpoiExtensions.GetCellValue*"></a>
+  <h4 id="WeihanLi_Npoi_NpoiExtensions_GetCellValue__1_ICell_" data-uid="WeihanLi.Npoi.NpoiExtensions.GetCellValue``1(ICell)">GetCellValue&lt;T&gt;(ICell)</h4>
+  <div class="markdown level1 summary"><p>GetCellValue</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static T GetCellValue&lt;T&gt;(this ICell cell)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">ICell</span></td>
+        <td><span class="parametername">cell</span></td>
+        <td><p>cell</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">T</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">T</span></td>
+        <td><p>Type</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="WeihanLi_Npoi_NpoiExtensions_GetRowCollection_" data-uid="WeihanLi.Npoi.NpoiExtensions.GetRowCollection*"></a>
+  <h4 id="WeihanLi_Npoi_NpoiExtensions_GetRowCollection_ISheet_" data-uid="WeihanLi.Npoi.NpoiExtensions.GetRowCollection(ISheet)">GetRowCollection(ISheet)</h4>
+  <div class="markdown level1 summary"><p>GetRowCollection</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static NpoiRowCollection GetRowCollection(this ISheet sheet)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">ISheet</span></td>
+        <td><span class="parametername">sheet</span></td>
+        <td><p>excel sheet</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="WeihanLi.Npoi.NpoiRowCollection.html">NpoiRowCollection</a></td>
+        <td><p>row collection</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="WeihanLi_Npoi_NpoiExtensions_ImportData_" data-uid="WeihanLi.Npoi.NpoiExtensions.ImportData*"></a>
+  <h4 id="WeihanLi_Npoi_NpoiExtensions_ImportData__1_ISheet_DataTable_" data-uid="WeihanLi.Npoi.NpoiExtensions.ImportData``1(ISheet,DataTable)">ImportData&lt;TEntity&gt;(ISheet, DataTable)</h4>
+  <div class="markdown level1 summary"><p>import datatable to sheet</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static ISheet ImportData&lt;TEntity&gt;(this ISheet sheet, DataTable dataTable)
+    where TEntity : new()</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">ISheet</span></td>
+        <td><span class="parametername">sheet</span></td>
+        <td><p>sheet</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">DataTable</span></td>
+        <td><span class="parametername">dataTable</span></td>
+        <td><p>dataTable</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">ISheet</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TEntity</span></td>
+        <td><p>EntityType</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="WeihanLi_Npoi_NpoiExtensions_ImportData_" data-uid="WeihanLi.Npoi.NpoiExtensions.ImportData*"></a>
+  <h4 id="WeihanLi_Npoi_NpoiExtensions_ImportData__1_ISheet_DataTable_System_Int32_" data-uid="WeihanLi.Npoi.NpoiExtensions.ImportData``1(ISheet,DataTable,System.Int32)">ImportData&lt;TEntity&gt;(ISheet, DataTable, Int32)</h4>
+  <div class="markdown level1 summary"><p>import datatable to sheet</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static ISheet ImportData&lt;TEntity&gt;(this ISheet sheet, DataTable dataTable, int sheetIndex)
+    where TEntity : new()</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">ISheet</span></td>
+        <td><span class="parametername">sheet</span></td>
+        <td><p>sheet</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">DataTable</span></td>
+        <td><span class="parametername">dataTable</span></td>
+        <td><p>dataTable</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">sheetIndex</span></td>
+        <td><p>sheetIndex</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">ISheet</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TEntity</span></td>
+        <td><p>EntityType</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="WeihanLi_Npoi_NpoiExtensions_ImportData_" data-uid="WeihanLi.Npoi.NpoiExtensions.ImportData*"></a>
+  <h4 id="WeihanLi_Npoi_NpoiExtensions_ImportData__1_ISheet_System_Collections_Generic_IEnumerable___0__" data-uid="WeihanLi.Npoi.NpoiExtensions.ImportData``1(ISheet,System.Collections.Generic.IEnumerable{``0})">ImportData&lt;TEntity&gt;(ISheet, IEnumerable&lt;TEntity&gt;)</h4>
+  <div class="markdown level1 summary"><p>import entityList to sheet</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static ISheet ImportData&lt;TEntity&gt;(this ISheet sheet, IEnumerable&lt;TEntity&gt; list)
+    where TEntity : new()</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">ISheet</span></td>
+        <td><span class="parametername">sheet</span></td>
+        <td><p>sheet</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.IEnumerable</span>&lt;TEntity&gt;</td>
+        <td><span class="parametername">list</span></td>
+        <td><p>entityList</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">ISheet</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TEntity</span></td>
+        <td><p>EntityType</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="WeihanLi_Npoi_NpoiExtensions_ImportData_" data-uid="WeihanLi.Npoi.NpoiExtensions.ImportData*"></a>
+  <h4 id="WeihanLi_Npoi_NpoiExtensions_ImportData__1_ISheet_System_Collections_Generic_IEnumerable___0__System_Int32_" data-uid="WeihanLi.Npoi.NpoiExtensions.ImportData``1(ISheet,System.Collections.Generic.IEnumerable{``0},System.Int32)">ImportData&lt;TEntity&gt;(ISheet, IEnumerable&lt;TEntity&gt;, Int32)</h4>
+  <div class="markdown level1 summary"><p>import entityList to sheet</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static ISheet ImportData&lt;TEntity&gt;(this ISheet sheet, IEnumerable&lt;TEntity&gt; list, int sheetIndex)
+    where TEntity : new()</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">ISheet</span></td>
+        <td><span class="parametername">sheet</span></td>
+        <td><p>sheet</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.IEnumerable</span>&lt;TEntity&gt;</td>
+        <td><span class="parametername">list</span></td>
+        <td><p>entityList</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">sheetIndex</span></td>
+        <td><p>sheetIndex</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">ISheet</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TEntity</span></td>
+        <td><p>EntityType</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="WeihanLi_Npoi_NpoiExtensions_ImportData_" data-uid="WeihanLi.Npoi.NpoiExtensions.ImportData*"></a>
+  <h4 id="WeihanLi_Npoi_NpoiExtensions_ImportData__1_IWorkbook_DataTable_" data-uid="WeihanLi.Npoi.NpoiExtensions.ImportData``1(IWorkbook,DataTable)">ImportData&lt;TEntity&gt;(IWorkbook, DataTable)</h4>
+  <div class="markdown level1 summary"><p>import datatable to workbook first sheet</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static int ImportData&lt;TEntity&gt;(this IWorkbook workbook, DataTable dataTable)
+    where TEntity : new()</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IWorkbook</span></td>
+        <td><span class="parametername">workbook</span></td>
+        <td><p>workbook</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">DataTable</span></td>
+        <td><span class="parametername">dataTable</span></td>
+        <td><p>dataTable</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TEntity</span></td>
+        <td><p>TEntity</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="WeihanLi_Npoi_NpoiExtensions_ImportData_" data-uid="WeihanLi.Npoi.NpoiExtensions.ImportData*"></a>
+  <h4 id="WeihanLi_Npoi_NpoiExtensions_ImportData__1_IWorkbook_DataTable_System_Int32_" data-uid="WeihanLi.Npoi.NpoiExtensions.ImportData``1(IWorkbook,DataTable,System.Int32)">ImportData&lt;TEntity&gt;(IWorkbook, DataTable, Int32)</h4>
+  <div class="markdown level1 summary"><p>import datatable to workbook first sheet</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static int ImportData&lt;TEntity&gt;(this IWorkbook workbook, DataTable dataTable, int sheetIndex)
+    where TEntity : new()</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IWorkbook</span></td>
+        <td><span class="parametername">workbook</span></td>
+        <td><p>workbook</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">DataTable</span></td>
+        <td><span class="parametername">dataTable</span></td>
+        <td><p>dataTable</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">sheetIndex</span></td>
+        <td><p>sheetIndex</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TEntity</span></td>
+        <td><p>TEntity</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="WeihanLi_Npoi_NpoiExtensions_ImportData_" data-uid="WeihanLi.Npoi.NpoiExtensions.ImportData*"></a>
+  <h4 id="WeihanLi_Npoi_NpoiExtensions_ImportData__1_IWorkbook_System_Collections_Generic_IEnumerable___0__" data-uid="WeihanLi.Npoi.NpoiExtensions.ImportData``1(IWorkbook,System.Collections.Generic.IEnumerable{``0})">ImportData&lt;TEntity&gt;(IWorkbook, IEnumerable&lt;TEntity&gt;)</h4>
+  <div class="markdown level1 summary"><p>import entityList to workbook first sheet</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static int ImportData&lt;TEntity&gt;(this IWorkbook workbook, IEnumerable&lt;TEntity&gt; list)
+    where TEntity : new()</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IWorkbook</span></td>
+        <td><span class="parametername">workbook</span></td>
+        <td><p>workbook</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.IEnumerable</span>&lt;TEntity&gt;</td>
+        <td><span class="parametername">list</span></td>
+        <td><p>entityList</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TEntity</span></td>
+        <td><p>TEntity</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="WeihanLi_Npoi_NpoiExtensions_ImportData_" data-uid="WeihanLi.Npoi.NpoiExtensions.ImportData*"></a>
+  <h4 id="WeihanLi_Npoi_NpoiExtensions_ImportData__1_IWorkbook_System_Collections_Generic_IEnumerable___0__System_Int32_" data-uid="WeihanLi.Npoi.NpoiExtensions.ImportData``1(IWorkbook,System.Collections.Generic.IEnumerable{``0},System.Int32)">ImportData&lt;TEntity&gt;(IWorkbook, IEnumerable&lt;TEntity&gt;, Int32)</h4>
+  <div class="markdown level1 summary"><p>import entityList to workbook sheet</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static int ImportData&lt;TEntity&gt;(this IWorkbook workbook, IEnumerable&lt;TEntity&gt; list, int sheetIndex)
+    where TEntity : new()</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IWorkbook</span></td>
+        <td><span class="parametername">workbook</span></td>
+        <td><p>workbook</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.IEnumerable</span>&lt;TEntity&gt;</td>
+        <td><span class="parametername">list</span></td>
+        <td><p>entityList</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">sheetIndex</span></td>
+        <td><p>sheetIndex</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TEntity</span></td>
+        <td><p>TEntity</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="WeihanLi_Npoi_NpoiExtensions_SetCellValue_" data-uid="WeihanLi.Npoi.NpoiExtensions.SetCellValue*"></a>
+  <h4 id="WeihanLi_Npoi_NpoiExtensions_SetCellValue_ICell_System_Object_" data-uid="WeihanLi.Npoi.NpoiExtensions.SetCellValue(ICell,System.Object)">SetCellValue(ICell, Object)</h4>
+  <div class="markdown level1 summary"><p>SetCellValue</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static void SetCellValue(this ICell cell, object value)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">ICell</span></td>
+        <td><span class="parametername">cell</span></td>
+        <td><p>ICell</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Object</span></td>
+        <td><span class="parametername">value</span></td>
+        <td><p>value</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="WeihanLi_Npoi_NpoiExtensions_SetCellValue_" data-uid="WeihanLi.Npoi.NpoiExtensions.SetCellValue*"></a>
+  <h4 id="WeihanLi_Npoi_NpoiExtensions_SetCellValue_ICell_System_Object_System_String_" data-uid="WeihanLi.Npoi.NpoiExtensions.SetCellValue(ICell,System.Object,System.String)">SetCellValue(ICell, Object, String)</h4>
+  <div class="markdown level1 summary"><p>SetCellValue</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static void SetCellValue(this ICell cell, object value, string formatter)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">ICell</span></td>
+        <td><span class="parametername">cell</span></td>
+        <td><p>ICell</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Object</span></td>
+        <td><span class="parametername">value</span></td>
+        <td><p>value</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">formatter</span></td>
+        <td><p>formatter</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="WeihanLi_Npoi_NpoiExtensions_ToDataSet_" data-uid="WeihanLi.Npoi.NpoiExtensions.ToDataSet*"></a>
+  <h4 id="WeihanLi_Npoi_NpoiExtensions_ToDataSet_IWorkbook_" data-uid="WeihanLi.Npoi.NpoiExtensions.ToDataSet(IWorkbook)">ToDataSet(IWorkbook)</h4>
+  <div class="markdown level1 summary"><p>Workbook2ToDataSet</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static DataSet ToDataSet(this IWorkbook workbook)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IWorkbook</span></td>
+        <td><span class="parametername">workbook</span></td>
+        <td><p>excel workbook</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">DataSet</span></td>
+        <td><p>DataSet</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="WeihanLi_Npoi_NpoiExtensions_ToDataSet_" data-uid="WeihanLi.Npoi.NpoiExtensions.ToDataSet*"></a>
+  <h4 id="WeihanLi_Npoi_NpoiExtensions_ToDataSet_IWorkbook_System_Int32_" data-uid="WeihanLi.Npoi.NpoiExtensions.ToDataSet(IWorkbook,System.Int32)">ToDataSet(IWorkbook, Int32)</h4>
+  <div class="markdown level1 summary"><p>Workbook2ToDataSet</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static DataSet ToDataSet(this IWorkbook workbook, int headerRowIndex)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IWorkbook</span></td>
+        <td><span class="parametername">workbook</span></td>
+        <td><p>excel workbook</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">headerRowIndex</span></td>
+        <td><p>headerRowIndex</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">DataSet</span></td>
+        <td><p>DataSet</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="WeihanLi_Npoi_NpoiExtensions_ToDataTable_" data-uid="WeihanLi.Npoi.NpoiExtensions.ToDataTable*"></a>
+  <h4 id="WeihanLi_Npoi_NpoiExtensions_ToDataTable_ISheet_" data-uid="WeihanLi.Npoi.NpoiExtensions.ToDataTable(ISheet)">ToDataTable(ISheet)</h4>
+  <div class="markdown level1 summary"><p>Sheet2DataTable</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static DataTable ToDataTable(this ISheet sheet)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">ISheet</span></td>
+        <td><span class="parametername">sheet</span></td>
+        <td><p>excel sheet</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">DataTable</span></td>
+        <td><p>DataTable</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="WeihanLi_Npoi_NpoiExtensions_ToDataTable_" data-uid="WeihanLi.Npoi.NpoiExtensions.ToDataTable*"></a>
+  <h4 id="WeihanLi_Npoi_NpoiExtensions_ToDataTable_ISheet_System_Int32_" data-uid="WeihanLi.Npoi.NpoiExtensions.ToDataTable(ISheet,System.Int32)">ToDataTable(ISheet, Int32)</h4>
+  <div class="markdown level1 summary"><p>Sheet2DataTable</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static DataTable ToDataTable(this ISheet sheet, int headerRowIndex)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">ISheet</span></td>
+        <td><span class="parametername">sheet</span></td>
+        <td><p>excel sheet</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">headerRowIndex</span></td>
+        <td><p>headerRowIndex</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">DataTable</span></td>
+        <td><p>DataTable</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="WeihanLi_Npoi_NpoiExtensions_ToDataTable_" data-uid="WeihanLi.Npoi.NpoiExtensions.ToDataTable*"></a>
+  <h4 id="WeihanLi_Npoi_NpoiExtensions_ToDataTable_IWorkbook_" data-uid="WeihanLi.Npoi.NpoiExtensions.ToDataTable(IWorkbook)">ToDataTable(IWorkbook)</h4>
+  <div class="markdown level1 summary"><p>Workbook2ToDataTable</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static DataTable ToDataTable(this IWorkbook workbook)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IWorkbook</span></td>
+        <td><span class="parametername">workbook</span></td>
+        <td><p>excel workbook</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">DataTable</span></td>
+        <td><p>DataTable</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="WeihanLi_Npoi_NpoiExtensions_ToDataTable_" data-uid="WeihanLi.Npoi.NpoiExtensions.ToDataTable*"></a>
+  <h4 id="WeihanLi_Npoi_NpoiExtensions_ToDataTable_IWorkbook_System_Int32_System_Int32_" data-uid="WeihanLi.Npoi.NpoiExtensions.ToDataTable(IWorkbook,System.Int32,System.Int32)">ToDataTable(IWorkbook, Int32, Int32)</h4>
+  <div class="markdown level1 summary"><p>Workbook2ToDataTable</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static DataTable ToDataTable(this IWorkbook workbook, int sheetIndex, int headerRowIndex)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IWorkbook</span></td>
+        <td><span class="parametername">workbook</span></td>
+        <td><p>excel workbook</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">sheetIndex</span></td>
+        <td><p>sheetIndex</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">headerRowIndex</span></td>
+        <td><p>headerRowIndex</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">DataTable</span></td>
+        <td><p>DataTable</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="WeihanLi_Npoi_NpoiExtensions_ToEntityList_" data-uid="WeihanLi.Npoi.NpoiExtensions.ToEntityList*"></a>
+  <h4 id="WeihanLi_Npoi_NpoiExtensions_ToEntityList__1_ISheet_" data-uid="WeihanLi.Npoi.NpoiExtensions.ToEntityList``1(ISheet)">ToEntityList&lt;TEntity&gt;(ISheet)</h4>
+  <div class="markdown level1 summary"><p>Sheet2EntityList</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static List&lt;TEntity&gt; ToEntityList&lt;TEntity&gt;(this ISheet sheet)
+    where TEntity : new()</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">ISheet</span></td>
+        <td><span class="parametername">sheet</span></td>
+        <td><p>excel sheet</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.List</span>&lt;TEntity&gt;</td>
+        <td><p>entity list</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TEntity</span></td>
+        <td><p>EntityType</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="WeihanLi_Npoi_NpoiExtensions_ToEntityList_" data-uid="WeihanLi.Npoi.NpoiExtensions.ToEntityList*"></a>
+  <h4 id="WeihanLi_Npoi_NpoiExtensions_ToEntityList__1_ISheet_System_Int32_" data-uid="WeihanLi.Npoi.NpoiExtensions.ToEntityList``1(ISheet,System.Int32)">ToEntityList&lt;TEntity&gt;(ISheet, Int32)</h4>
+  <div class="markdown level1 summary"><p>Sheet2EntityList</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static List&lt;TEntity&gt; ToEntityList&lt;TEntity&gt;(this ISheet sheet, int sheetIndex)
+    where TEntity : new()</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">ISheet</span></td>
+        <td><span class="parametername">sheet</span></td>
+        <td><p>excel sheet</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">sheetIndex</span></td>
+        <td><p>sheetIndex</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.List</span>&lt;TEntity&gt;</td>
+        <td><p>entity list</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TEntity</span></td>
+        <td><p>EntityType</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="WeihanLi_Npoi_NpoiExtensions_ToEntityList_" data-uid="WeihanLi.Npoi.NpoiExtensions.ToEntityList*"></a>
+  <h4 id="WeihanLi_Npoi_NpoiExtensions_ToEntityList__1_IWorkbook_" data-uid="WeihanLi.Npoi.NpoiExtensions.ToEntityList``1(IWorkbook)">ToEntityList&lt;TEntity&gt;(IWorkbook)</h4>
+  <div class="markdown level1 summary"><p>Workbook2EntityList</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static List&lt;TEntity&gt; ToEntityList&lt;TEntity&gt;(this IWorkbook workbook)
+    where TEntity : new()</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IWorkbook</span></td>
+        <td><span class="parametername">workbook</span></td>
+        <td><p>excel workbook</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.List</span>&lt;TEntity&gt;</td>
+        <td><p>entity list</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TEntity</span></td>
+        <td><p>EntityType</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="WeihanLi_Npoi_NpoiExtensions_ToEntityList_" data-uid="WeihanLi.Npoi.NpoiExtensions.ToEntityList*"></a>
+  <h4 id="WeihanLi_Npoi_NpoiExtensions_ToEntityList__1_IWorkbook_System_Int32_" data-uid="WeihanLi.Npoi.NpoiExtensions.ToEntityList``1(IWorkbook,System.Int32)">ToEntityList&lt;TEntity&gt;(IWorkbook, Int32)</h4>
+  <div class="markdown level1 summary"><p>Workbook2EntityList</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static List&lt;TEntity&gt; ToEntityList&lt;TEntity&gt;(this IWorkbook workbook, int sheetIndex)
+    where TEntity : new()</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IWorkbook</span></td>
+        <td><span class="parametername">workbook</span></td>
+        <td><p>excel workbook</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">sheetIndex</span></td>
+        <td><p>sheetIndex</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.List</span>&lt;TEntity&gt;</td>
+        <td><p>entity list</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TEntity</span></td>
+        <td><p>EntityType</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="WeihanLi_Npoi_NpoiExtensions_ToExcelBytes_" data-uid="WeihanLi.Npoi.NpoiExtensions.ToExcelBytes*"></a>
+  <h4 id="WeihanLi_Npoi_NpoiExtensions_ToExcelBytes_DataTable_" data-uid="WeihanLi.Npoi.NpoiExtensions.ToExcelBytes(DataTable)">ToExcelBytes(DataTable)</h4>
+  <div class="markdown level1 summary"><p>DataTable2ExcelBytes(*.xlsx by default)</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static byte[] ToExcelBytes(this DataTable dataTable)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">DataTable</span></td>
+        <td><span class="parametername">dataTable</span></td>
+        <td><p>dataTable</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Byte</span>[]</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="WeihanLi_Npoi_NpoiExtensions_ToExcelBytes_" data-uid="WeihanLi.Npoi.NpoiExtensions.ToExcelBytes*"></a>
+  <h4 id="WeihanLi_Npoi_NpoiExtensions_ToExcelBytes_DataTable_WeihanLi_Npoi_ExcelFormat_" data-uid="WeihanLi.Npoi.NpoiExtensions.ToExcelBytes(DataTable,WeihanLi.Npoi.ExcelFormat)">ToExcelBytes(DataTable, ExcelFormat)</h4>
+  <div class="markdown level1 summary"><p>DataTable2ExcelBytes</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static byte[] ToExcelBytes(this DataTable dataTable, ExcelFormat excelFormat)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">DataTable</span></td>
+        <td><span class="parametername">dataTable</span></td>
+        <td><p>dataTable</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="WeihanLi.Npoi.ExcelFormat.html">ExcelFormat</a></td>
+        <td><span class="parametername">excelFormat</span></td>
+        <td><p>excel格式</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Byte</span>[]</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="WeihanLi_Npoi_NpoiExtensions_ToExcelBytes_" data-uid="WeihanLi.Npoi.NpoiExtensions.ToExcelBytes*"></a>
+  <h4 id="WeihanLi_Npoi_NpoiExtensions_ToExcelBytes_DataTable_WeihanLi_Npoi_ExcelFormat_ExcelSetting_" data-uid="WeihanLi.Npoi.NpoiExtensions.ToExcelBytes(DataTable,WeihanLi.Npoi.ExcelFormat,ExcelSetting)">ToExcelBytes(DataTable, ExcelFormat, ExcelSetting)</h4>
+  <div class="markdown level1 summary"><p>DataTable2ExcelBytes</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static byte[] ToExcelBytes(this DataTable dataTable, ExcelFormat excelFormat, ExcelSetting excelSetting)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">DataTable</span></td>
+        <td><span class="parametername">dataTable</span></td>
+        <td><p>dataTable</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="WeihanLi.Npoi.ExcelFormat.html">ExcelFormat</a></td>
+        <td><span class="parametername">excelFormat</span></td>
+        <td><p>excelFormat</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">ExcelSetting</span></td>
+        <td><span class="parametername">excelSetting</span></td>
+        <td><p>excelSetting</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Byte</span>[]</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="WeihanLi_Npoi_NpoiExtensions_ToExcelBytes_" data-uid="WeihanLi.Npoi.NpoiExtensions.ToExcelBytes*"></a>
+  <h4 id="WeihanLi_Npoi_NpoiExtensions_ToExcelBytes_IWorkbook_" data-uid="WeihanLi.Npoi.NpoiExtensions.ToExcelBytes(IWorkbook)">ToExcelBytes(IWorkbook)</h4>
+  <div class="markdown level1 summary"><p>ToExcelBytes</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static byte[] ToExcelBytes(this IWorkbook workbook)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IWorkbook</span></td>
+        <td><span class="parametername">workbook</span></td>
+        <td><p>workbook</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Byte</span>[]</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="WeihanLi_Npoi_NpoiExtensions_ToExcelBytes_" data-uid="WeihanLi.Npoi.NpoiExtensions.ToExcelBytes*"></a>
+  <h4 id="WeihanLi_Npoi_NpoiExtensions_ToExcelBytes__1_System_Collections_Generic_IEnumerable___0__" data-uid="WeihanLi.Npoi.NpoiExtensions.ToExcelBytes``1(System.Collections.Generic.IEnumerable{``0})">ToExcelBytes&lt;TEntity&gt;(IEnumerable&lt;TEntity&gt;)</h4>
+  <div class="markdown level1 summary"><p>EntityList2ExcelBytes(*.xlsx by default)</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static byte[] ToExcelBytes&lt;TEntity&gt;(this IEnumerable&lt;TEntity&gt; entityList)
+    where TEntity : new()</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.IEnumerable</span>&lt;TEntity&gt;</td>
+        <td><span class="parametername">entityList</span></td>
+        <td><p>entityList</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Byte</span>[]</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TEntity</span></td>
+        <td><p>EntityType</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="WeihanLi_Npoi_NpoiExtensions_ToExcelBytes_" data-uid="WeihanLi.Npoi.NpoiExtensions.ToExcelBytes*"></a>
+  <h4 id="WeihanLi_Npoi_NpoiExtensions_ToExcelBytes__1_System_Collections_Generic_IEnumerable___0__WeihanLi_Npoi_ExcelFormat_" data-uid="WeihanLi.Npoi.NpoiExtensions.ToExcelBytes``1(System.Collections.Generic.IEnumerable{``0},WeihanLi.Npoi.ExcelFormat)">ToExcelBytes&lt;TEntity&gt;(IEnumerable&lt;TEntity&gt;, ExcelFormat)</h4>
+  <div class="markdown level1 summary"><p>EntityList2ExcelBytes</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static byte[] ToExcelBytes&lt;TEntity&gt;(this IEnumerable&lt;TEntity&gt; entityList, ExcelFormat excelFormat)
+    where TEntity : new()</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.IEnumerable</span>&lt;TEntity&gt;</td>
+        <td><span class="parametername">entityList</span></td>
+        <td><p>entityList</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="WeihanLi.Npoi.ExcelFormat.html">ExcelFormat</a></td>
+        <td><span class="parametername">excelFormat</span></td>
+        <td><p>excelFormat</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Byte</span>[]</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TEntity</span></td>
+        <td><p>EntityType</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="WeihanLi_Npoi_NpoiExtensions_ToExcelFile_" data-uid="WeihanLi.Npoi.NpoiExtensions.ToExcelFile*"></a>
+  <h4 id="WeihanLi_Npoi_NpoiExtensions_ToExcelFile_DataTable_System_String_" data-uid="WeihanLi.Npoi.NpoiExtensions.ToExcelFile(DataTable,System.String)">ToExcelFile(DataTable, String)</h4>
+  <div class="markdown level1 summary"><p>export DataTable to excel file</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static int ToExcelFile(this DataTable dataTable, string excelPath)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">DataTable</span></td>
+        <td><span class="parametername">dataTable</span></td>
+        <td><p>dataTable</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">excelPath</span></td>
+        <td><p>excelPath</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="WeihanLi_Npoi_NpoiExtensions_ToExcelFile_" data-uid="WeihanLi.Npoi.NpoiExtensions.ToExcelFile*"></a>
+  <h4 id="WeihanLi_Npoi_NpoiExtensions_ToExcelFile_DataTable_System_String_ExcelSetting_" data-uid="WeihanLi.Npoi.NpoiExtensions.ToExcelFile(DataTable,System.String,ExcelSetting)">ToExcelFile(DataTable, String, ExcelSetting)</h4>
+  <div class="markdown level1 summary"><p>export DataTable to excel file</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static int ToExcelFile(this DataTable dataTable, string excelPath, ExcelSetting excelSetting)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">DataTable</span></td>
+        <td><span class="parametername">dataTable</span></td>
+        <td><p>dataTable</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">excelPath</span></td>
+        <td><p>excelPath</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">ExcelSetting</span></td>
+        <td><span class="parametername">excelSetting</span></td>
+        <td><p>excelSetting</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="WeihanLi_Npoi_NpoiExtensions_ToExcelFile_" data-uid="WeihanLi.Npoi.NpoiExtensions.ToExcelFile*"></a>
+  <h4 id="WeihanLi_Npoi_NpoiExtensions_ToExcelFile__1_System_Collections_Generic_IEnumerable___0__System_String_" data-uid="WeihanLi.Npoi.NpoiExtensions.ToExcelFile``1(System.Collections.Generic.IEnumerable{``0},System.String)">ToExcelFile&lt;TEntity&gt;(IEnumerable&lt;TEntity&gt;, String)</h4>
+  <div class="markdown level1 summary"><p>EntityList2ExcelFile</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static int ToExcelFile&lt;TEntity&gt;(this IEnumerable&lt;TEntity&gt; entityList, string excelPath)
+    where TEntity : new()</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.IEnumerable</span>&lt;TEntity&gt;</td>
+        <td><span class="parametername">entityList</span></td>
+        <td><p>entityList</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">excelPath</span></td>
+        <td><p>excelPath</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TEntity</span></td>
+        <td><p>EntityType</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="WeihanLi_Npoi_NpoiExtensions_ToExcelStream_" data-uid="WeihanLi.Npoi.NpoiExtensions.ToExcelStream*"></a>
+  <h4 id="WeihanLi_Npoi_NpoiExtensions_ToExcelStream_DataTable_System_IO_Stream_" data-uid="WeihanLi.Npoi.NpoiExtensions.ToExcelStream(DataTable,System.IO.Stream)">ToExcelStream(DataTable, Stream)</h4>
+  <div class="markdown level1 summary"><p>DataTable2ExcelStream</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static int ToExcelStream(this DataTable dataTable, Stream stream)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">DataTable</span></td>
+        <td><span class="parametername">dataTable</span></td>
+        <td><p>datatable</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.IO.Stream</span></td>
+        <td><span class="parametername">stream</span></td>
+        <td><p>stream</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="WeihanLi_Npoi_NpoiExtensions_ToExcelStream_" data-uid="WeihanLi.Npoi.NpoiExtensions.ToExcelStream*"></a>
+  <h4 id="WeihanLi_Npoi_NpoiExtensions_ToExcelStream_DataTable_System_IO_Stream_WeihanLi_Npoi_ExcelFormat_" data-uid="WeihanLi.Npoi.NpoiExtensions.ToExcelStream(DataTable,System.IO.Stream,WeihanLi.Npoi.ExcelFormat)">ToExcelStream(DataTable, Stream, ExcelFormat)</h4>
+  <div class="markdown level1 summary"><p>DataTable2ExcelStream</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static int ToExcelStream(this DataTable dataTable, Stream stream, ExcelFormat excelFormat)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">DataTable</span></td>
+        <td><span class="parametername">dataTable</span></td>
+        <td><p>datatable</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.IO.Stream</span></td>
+        <td><span class="parametername">stream</span></td>
+        <td><p>stream</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="WeihanLi.Npoi.ExcelFormat.html">ExcelFormat</a></td>
+        <td><span class="parametername">excelFormat</span></td>
+        <td><p>excelFormat</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="WeihanLi_Npoi_NpoiExtensions_ToExcelStream_" data-uid="WeihanLi.Npoi.NpoiExtensions.ToExcelStream*"></a>
+  <h4 id="WeihanLi_Npoi_NpoiExtensions_ToExcelStream_DataTable_System_IO_Stream_WeihanLi_Npoi_ExcelFormat_ExcelSetting_" data-uid="WeihanLi.Npoi.NpoiExtensions.ToExcelStream(DataTable,System.IO.Stream,WeihanLi.Npoi.ExcelFormat,ExcelSetting)">ToExcelStream(DataTable, Stream, ExcelFormat, ExcelSetting)</h4>
+  <div class="markdown level1 summary"><p>DataTable2ExcelStream</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static int ToExcelStream(this DataTable dataTable, Stream stream, ExcelFormat excelFormat, ExcelSetting excelSetting)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">DataTable</span></td>
+        <td><span class="parametername">dataTable</span></td>
+        <td><p>datatable</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.IO.Stream</span></td>
+        <td><span class="parametername">stream</span></td>
+        <td><p>stream</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="WeihanLi.Npoi.ExcelFormat.html">ExcelFormat</a></td>
+        <td><span class="parametername">excelFormat</span></td>
+        <td><p>excelFormat</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">ExcelSetting</span></td>
+        <td><span class="parametername">excelSetting</span></td>
+        <td><p>excelSetting</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="WeihanLi_Npoi_NpoiExtensions_ToExcelStream_" data-uid="WeihanLi.Npoi.NpoiExtensions.ToExcelStream*"></a>
+  <h4 id="WeihanLi_Npoi_NpoiExtensions_ToExcelStream__1_System_Collections_Generic_IEnumerable___0__System_IO_Stream_" data-uid="WeihanLi.Npoi.NpoiExtensions.ToExcelStream``1(System.Collections.Generic.IEnumerable{``0},System.IO.Stream)">ToExcelStream&lt;TEntity&gt;(IEnumerable&lt;TEntity&gt;, Stream)</h4>
+  <div class="markdown level1 summary"><p>EntityList2ExcelStream(*.xlsx)</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static int ToExcelStream&lt;TEntity&gt;(this IEnumerable&lt;TEntity&gt; entityList, Stream stream)
+    where TEntity : new()</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.IEnumerable</span>&lt;TEntity&gt;</td>
+        <td><span class="parametername">entityList</span></td>
+        <td><p>entityList</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.IO.Stream</span></td>
+        <td><span class="parametername">stream</span></td>
+        <td><p>stream where to write</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TEntity</span></td>
+        <td><p>EntityType</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="WeihanLi_Npoi_NpoiExtensions_ToExcelStream_" data-uid="WeihanLi.Npoi.NpoiExtensions.ToExcelStream*"></a>
+  <h4 id="WeihanLi_Npoi_NpoiExtensions_ToExcelStream__1_System_Collections_Generic_IEnumerable___0__System_IO_Stream_WeihanLi_Npoi_ExcelFormat_" data-uid="WeihanLi.Npoi.NpoiExtensions.ToExcelStream``1(System.Collections.Generic.IEnumerable{``0},System.IO.Stream,WeihanLi.Npoi.ExcelFormat)">ToExcelStream&lt;TEntity&gt;(IEnumerable&lt;TEntity&gt;, Stream, ExcelFormat)</h4>
+  <div class="markdown level1 summary"><p>EntityList2ExcelStream</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static int ToExcelStream&lt;TEntity&gt;(this IEnumerable&lt;TEntity&gt; entityList, Stream stream, ExcelFormat excelFormat)
+    where TEntity : new()</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.IEnumerable</span>&lt;TEntity&gt;</td>
+        <td><span class="parametername">entityList</span></td>
+        <td><p>entityList</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.IO.Stream</span></td>
+        <td><span class="parametername">stream</span></td>
+        <td><p>stream where to write</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="WeihanLi.Npoi.ExcelFormat.html">ExcelFormat</a></td>
+        <td><span class="parametername">excelFormat</span></td>
+        <td><p>excelFormat</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TEntity</span></td>
+        <td><p>EntityType</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="WeihanLi_Npoi_NpoiExtensions_WriteToFile_" data-uid="WeihanLi.Npoi.NpoiExtensions.WriteToFile*"></a>
+  <h4 id="WeihanLi_Npoi_NpoiExtensions_WriteToFile_IWorkbook_System_String_" data-uid="WeihanLi.Npoi.NpoiExtensions.WriteToFile(IWorkbook,System.String)">WriteToFile(IWorkbook, String)</h4>
+  <div class="markdown level1 summary"><p>Write workbook to excel file</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static int WriteToFile(this IWorkbook workbook, string filePath)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IWorkbook</span></td>
+        <td><span class="parametername">workbook</span></td>
+        <td><p>workbook</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">filePath</span></td>
+        <td><p>file path</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../../styles/docfx.js"></script>
+    <script type="text/javascript" src="../../styles/main.js"></script>
+  </body>
+</html>

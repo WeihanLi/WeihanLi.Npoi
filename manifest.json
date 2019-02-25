@@ -1,0 +1,210 @@
+{
+  "homepages": [],
+  "source_base_path": "C:/projects/sources/WeihanLi.Npoi",
+  "xrefmap": "xrefmap.yml",
+  "files": [
+    {
+      "type": "Conceptual",
+      "source_relative_path": "README.md",
+      "output": {
+        ".html": {
+          "relative_path": "README.html",
+          "hash": "9usuPXaxLr3K9ShVbjELEA=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "docs/api/WeihanLi.Npoi.CsvHelper.yml",
+      "output": {
+        ".html": {
+          "relative_path": "docs/api/WeihanLi.Npoi.CsvHelper.html",
+          "hash": "L7T0FtdqojKnKSxc1qDh7g=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "docs/api/WeihanLi.Npoi.ExcelFormat.yml",
+      "output": {
+        ".html": {
+          "relative_path": "docs/api/WeihanLi.Npoi.ExcelFormat.html",
+          "hash": "UOCRVms2/D0JCfB61mcAEw=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "docs/api/WeihanLi.Npoi.ExcelHelper.yml",
+      "output": {
+        ".html": {
+          "relative_path": "docs/api/WeihanLi.Npoi.ExcelHelper.html",
+          "hash": "8WjvEn2hrEXoeViRc3JJDA=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "docs/api/WeihanLi.Npoi.NpoiExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "docs/api/WeihanLi.Npoi.NpoiExtensions.html",
+          "hash": "6dvl0H9gb3ZPcsdeSCRDjA=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "docs/api/WeihanLi.Npoi.NpoiRowCollection.yml",
+      "output": {
+        ".html": {
+          "relative_path": "docs/api/WeihanLi.Npoi.NpoiRowCollection.html",
+          "hash": "wRxz3le5UqBmqWTdM59/aQ=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "docs/api/WeihanLi.Npoi.yml",
+      "output": {
+        ".html": {
+          "relative_path": "docs/api/WeihanLi.Npoi.html",
+          "hash": "VLlL4rNyV9VIBiLlaWg0QQ=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "docs/api/index.md",
+      "output": {
+        ".html": {
+          "relative_path": "docs/api/index.html",
+          "hash": "hOAo84l4hG7wrkopRbpyqg=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "docs/api/toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "docs/api/toc.html",
+          "hash": "m49wBoWl3AsSzQVlvw1ShQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "docs/articles/intro.md",
+      "output": {
+        ".html": {
+          "relative_path": "docs/articles/intro.html",
+          "hash": "4Dup4MFkaiFhzrkMcQhCCg=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "docs/articles/toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "docs/articles/toc.html",
+          "hash": "t7iiFrmuYmrKWisdq+lN6Q=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "index.md",
+      "output": {
+        ".html": {
+          "relative_path": "index.html",
+          "hash": "5b/3wQlaU0g4BmtEvJbtrQ=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "toc.html",
+          "hash": "L36HWbX/qPlF9O0pmtlYJg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    }
+  ],
+  "incremental_info": [
+    {
+      "status": {
+        "can_incremental": true,
+        "incrementalPhase": "build",
+        "total_file_count": 0,
+        "skipped_file_count": 0
+      },
+      "processors": {
+        "ConceptualDocumentProcessor": {
+          "can_incremental": true,
+          "incrementalPhase": "build",
+          "total_file_count": 4,
+          "skipped_file_count": 4
+        },
+        "ManagedReferenceDocumentProcessor": {
+          "can_incremental": true,
+          "incrementalPhase": "build",
+          "total_file_count": 6,
+          "skipped_file_count": 6
+        },
+        "TocDocumentProcessor": {
+          "can_incremental": false,
+          "details": "Processor TocDocumentProcessor cannot support incremental build because the processor doesn't implement ISupportIncrementalDocumentProcessor interface.",
+          "incrementalPhase": "build",
+          "total_file_count": 0,
+          "skipped_file_count": 0
+        }
+      }
+    },
+    {
+      "status": {
+        "can_incremental": true,
+        "details": "Can support incremental post processing.",
+        "incrementalPhase": "postProcessing",
+        "total_file_count": 0,
+        "skipped_file_count": 0
+      },
+      "processors": {}
+    }
+  ],
+  "version_info": {},
+  "groups": [
+    {
+      "xrefmap": "xrefmap.yml"
+    }
+  ]
+}

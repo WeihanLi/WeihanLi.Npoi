@@ -1,0 +1,717 @@
+### YamlMime:XRefMap
+sorted: true
+references:
+- uid: WeihanLi.Npoi
+  name: WeihanLi.Npoi
+  href: docs/api/WeihanLi.Npoi.html
+  commentId: N:WeihanLi.Npoi
+  fullName: WeihanLi.Npoi
+  nameWithType: WeihanLi.Npoi
+- uid: WeihanLi.Npoi.CsvHelper
+  name: CsvHelper
+  href: docs/api/WeihanLi.Npoi.CsvHelper.html
+  commentId: T:WeihanLi.Npoi.CsvHelper
+  fullName: WeihanLi.Npoi.CsvHelper
+  nameWithType: CsvHelper
+- uid: WeihanLi.Npoi.CsvHelper.ToCsvBytes(DataTable)
+  name: ToCsvBytes(DataTable)
+  href: docs/api/WeihanLi.Npoi.CsvHelper.html#WeihanLi_Npoi_CsvHelper_ToCsvBytes_DataTable_
+  commentId: M:WeihanLi.Npoi.CsvHelper.ToCsvBytes(DataTable)
+  fullName: WeihanLi.Npoi.CsvHelper.ToCsvBytes(DataTable)
+  nameWithType: CsvHelper.ToCsvBytes(DataTable)
+- uid: WeihanLi.Npoi.CsvHelper.ToCsvBytes(DataTable,System.Boolean)
+  name: ToCsvBytes(DataTable, Boolean)
+  href: docs/api/WeihanLi.Npoi.CsvHelper.html#WeihanLi_Npoi_CsvHelper_ToCsvBytes_DataTable_System_Boolean_
+  commentId: M:WeihanLi.Npoi.CsvHelper.ToCsvBytes(DataTable,System.Boolean)
+  fullName: WeihanLi.Npoi.CsvHelper.ToCsvBytes(DataTable, System.Boolean)
+  nameWithType: CsvHelper.ToCsvBytes(DataTable, Boolean)
+- uid: WeihanLi.Npoi.CsvHelper.ToCsvBytes*
+  name: ToCsvBytes
+  href: docs/api/WeihanLi.Npoi.CsvHelper.html#WeihanLi_Npoi_CsvHelper_ToCsvBytes_
+  commentId: Overload:WeihanLi.Npoi.CsvHelper.ToCsvBytes
+  isSpec: "True"
+  fullName: WeihanLi.Npoi.CsvHelper.ToCsvBytes
+  nameWithType: CsvHelper.ToCsvBytes
+- uid: WeihanLi.Npoi.CsvHelper.ToCsvBytes``1(System.Collections.Generic.IEnumerable{``0})
+  name: ToCsvBytes<TEntity>(IEnumerable<TEntity>)
+  href: docs/api/WeihanLi.Npoi.CsvHelper.html#WeihanLi_Npoi_CsvHelper_ToCsvBytes__1_System_Collections_Generic_IEnumerable___0__
+  commentId: M:WeihanLi.Npoi.CsvHelper.ToCsvBytes``1(System.Collections.Generic.IEnumerable{``0})
+  name.vb: ToCsvBytes(Of TEntity)(IEnumerable(Of TEntity))
+  fullName: WeihanLi.Npoi.CsvHelper.ToCsvBytes<TEntity>(System.Collections.Generic.IEnumerable<TEntity>)
+  fullName.vb: WeihanLi.Npoi.CsvHelper.ToCsvBytes(Of TEntity)(System.Collections.Generic.IEnumerable(Of TEntity))
+  nameWithType: CsvHelper.ToCsvBytes<TEntity>(IEnumerable<TEntity>)
+  nameWithType.vb: CsvHelper.ToCsvBytes(Of TEntity)(IEnumerable(Of TEntity))
+- uid: WeihanLi.Npoi.CsvHelper.ToCsvBytes``1(System.Collections.Generic.IEnumerable{``0},System.Boolean)
+  name: ToCsvBytes<TEntity>(IEnumerable<TEntity>, Boolean)
+  href: docs/api/WeihanLi.Npoi.CsvHelper.html#WeihanLi_Npoi_CsvHelper_ToCsvBytes__1_System_Collections_Generic_IEnumerable___0__System_Boolean_
+  commentId: M:WeihanLi.Npoi.CsvHelper.ToCsvBytes``1(System.Collections.Generic.IEnumerable{``0},System.Boolean)
+  name.vb: ToCsvBytes(Of TEntity)(IEnumerable(Of TEntity), Boolean)
+  fullName: WeihanLi.Npoi.CsvHelper.ToCsvBytes<TEntity>(System.Collections.Generic.IEnumerable<TEntity>, System.Boolean)
+  fullName.vb: WeihanLi.Npoi.CsvHelper.ToCsvBytes(Of TEntity)(System.Collections.Generic.IEnumerable(Of TEntity), System.Boolean)
+  nameWithType: CsvHelper.ToCsvBytes<TEntity>(IEnumerable<TEntity>, Boolean)
+  nameWithType.vb: CsvHelper.ToCsvBytes(Of TEntity)(IEnumerable(Of TEntity), Boolean)
+- uid: WeihanLi.Npoi.CsvHelper.ToCsvFile(DataTable,System.String)
+  name: ToCsvFile(DataTable, String)
+  href: docs/api/WeihanLi.Npoi.CsvHelper.html#WeihanLi_Npoi_CsvHelper_ToCsvFile_DataTable_System_String_
+  commentId: M:WeihanLi.Npoi.CsvHelper.ToCsvFile(DataTable,System.String)
+  fullName: WeihanLi.Npoi.CsvHelper.ToCsvFile(DataTable, System.String)
+  nameWithType: CsvHelper.ToCsvFile(DataTable, String)
+- uid: WeihanLi.Npoi.CsvHelper.ToCsvFile(DataTable,System.String,System.Boolean)
+  name: ToCsvFile(DataTable, String, Boolean)
+  href: docs/api/WeihanLi.Npoi.CsvHelper.html#WeihanLi_Npoi_CsvHelper_ToCsvFile_DataTable_System_String_System_Boolean_
+  commentId: M:WeihanLi.Npoi.CsvHelper.ToCsvFile(DataTable,System.String,System.Boolean)
+  fullName: WeihanLi.Npoi.CsvHelper.ToCsvFile(DataTable, System.String, System.Boolean)
+  nameWithType: CsvHelper.ToCsvFile(DataTable, String, Boolean)
+- uid: WeihanLi.Npoi.CsvHelper.ToCsvFile*
+  name: ToCsvFile
+  href: docs/api/WeihanLi.Npoi.CsvHelper.html#WeihanLi_Npoi_CsvHelper_ToCsvFile_
+  commentId: Overload:WeihanLi.Npoi.CsvHelper.ToCsvFile
+  isSpec: "True"
+  fullName: WeihanLi.Npoi.CsvHelper.ToCsvFile
+  nameWithType: CsvHelper.ToCsvFile
+- uid: WeihanLi.Npoi.CsvHelper.ToCsvFile``1(System.Collections.Generic.IEnumerable{``0},System.String)
+  name: ToCsvFile<TEntity>(IEnumerable<TEntity>, String)
+  href: docs/api/WeihanLi.Npoi.CsvHelper.html#WeihanLi_Npoi_CsvHelper_ToCsvFile__1_System_Collections_Generic_IEnumerable___0__System_String_
+  commentId: M:WeihanLi.Npoi.CsvHelper.ToCsvFile``1(System.Collections.Generic.IEnumerable{``0},System.String)
+  name.vb: ToCsvFile(Of TEntity)(IEnumerable(Of TEntity), String)
+  fullName: WeihanLi.Npoi.CsvHelper.ToCsvFile<TEntity>(System.Collections.Generic.IEnumerable<TEntity>, System.String)
+  fullName.vb: WeihanLi.Npoi.CsvHelper.ToCsvFile(Of TEntity)(System.Collections.Generic.IEnumerable(Of TEntity), System.String)
+  nameWithType: CsvHelper.ToCsvFile<TEntity>(IEnumerable<TEntity>, String)
+  nameWithType.vb: CsvHelper.ToCsvFile(Of TEntity)(IEnumerable(Of TEntity), String)
+- uid: WeihanLi.Npoi.CsvHelper.ToCsvFile``1(System.Collections.Generic.IEnumerable{``0},System.String,System.Boolean)
+  name: ToCsvFile<TEntity>(IEnumerable<TEntity>, String, Boolean)
+  href: docs/api/WeihanLi.Npoi.CsvHelper.html#WeihanLi_Npoi_CsvHelper_ToCsvFile__1_System_Collections_Generic_IEnumerable___0__System_String_System_Boolean_
+  commentId: M:WeihanLi.Npoi.CsvHelper.ToCsvFile``1(System.Collections.Generic.IEnumerable{``0},System.String,System.Boolean)
+  name.vb: ToCsvFile(Of TEntity)(IEnumerable(Of TEntity), String, Boolean)
+  fullName: WeihanLi.Npoi.CsvHelper.ToCsvFile<TEntity>(System.Collections.Generic.IEnumerable<TEntity>, System.String, System.Boolean)
+  fullName.vb: WeihanLi.Npoi.CsvHelper.ToCsvFile(Of TEntity)(System.Collections.Generic.IEnumerable(Of TEntity), System.String, System.Boolean)
+  nameWithType: CsvHelper.ToCsvFile<TEntity>(IEnumerable<TEntity>, String, Boolean)
+  nameWithType.vb: CsvHelper.ToCsvFile(Of TEntity)(IEnumerable(Of TEntity), String, Boolean)
+- uid: WeihanLi.Npoi.CsvHelper.ToDataTable(System.String)
+  name: ToDataTable(String)
+  href: docs/api/WeihanLi.Npoi.CsvHelper.html#WeihanLi_Npoi_CsvHelper_ToDataTable_System_String_
+  commentId: M:WeihanLi.Npoi.CsvHelper.ToDataTable(System.String)
+  fullName: WeihanLi.Npoi.CsvHelper.ToDataTable(System.String)
+  nameWithType: CsvHelper.ToDataTable(String)
+- uid: WeihanLi.Npoi.CsvHelper.ToDataTable*
+  name: ToDataTable
+  href: docs/api/WeihanLi.Npoi.CsvHelper.html#WeihanLi_Npoi_CsvHelper_ToDataTable_
+  commentId: Overload:WeihanLi.Npoi.CsvHelper.ToDataTable
+  isSpec: "True"
+  fullName: WeihanLi.Npoi.CsvHelper.ToDataTable
+  nameWithType: CsvHelper.ToDataTable
+- uid: WeihanLi.Npoi.CsvHelper.ToEntityList*
+  name: ToEntityList
+  href: docs/api/WeihanLi.Npoi.CsvHelper.html#WeihanLi_Npoi_CsvHelper_ToEntityList_
+  commentId: Overload:WeihanLi.Npoi.CsvHelper.ToEntityList
+  isSpec: "True"
+  fullName: WeihanLi.Npoi.CsvHelper.ToEntityList
+  nameWithType: CsvHelper.ToEntityList
+- uid: WeihanLi.Npoi.CsvHelper.ToEntityList``1(System.String)
+  name: ToEntityList<TEntity>(String)
+  href: docs/api/WeihanLi.Npoi.CsvHelper.html#WeihanLi_Npoi_CsvHelper_ToEntityList__1_System_String_
+  commentId: M:WeihanLi.Npoi.CsvHelper.ToEntityList``1(System.String)
+  name.vb: ToEntityList(Of TEntity)(String)
+  fullName: WeihanLi.Npoi.CsvHelper.ToEntityList<TEntity>(System.String)
+  fullName.vb: WeihanLi.Npoi.CsvHelper.ToEntityList(Of TEntity)(System.String)
+  nameWithType: CsvHelper.ToEntityList<TEntity>(String)
+  nameWithType.vb: CsvHelper.ToEntityList(Of TEntity)(String)
+- uid: WeihanLi.Npoi.ExcelFormat
+  name: ExcelFormat
+  href: docs/api/WeihanLi.Npoi.ExcelFormat.html
+  commentId: T:WeihanLi.Npoi.ExcelFormat
+  fullName: WeihanLi.Npoi.ExcelFormat
+  nameWithType: ExcelFormat
+- uid: WeihanLi.Npoi.ExcelFormat.Xls
+  name: Xls
+  href: docs/api/WeihanLi.Npoi.ExcelFormat.html#WeihanLi_Npoi_ExcelFormat_Xls
+  commentId: F:WeihanLi.Npoi.ExcelFormat.Xls
+  fullName: WeihanLi.Npoi.ExcelFormat.Xls
+  nameWithType: ExcelFormat.Xls
+- uid: WeihanLi.Npoi.ExcelFormat.Xlsx
+  name: Xlsx
+  href: docs/api/WeihanLi.Npoi.ExcelFormat.html#WeihanLi_Npoi_ExcelFormat_Xlsx
+  commentId: F:WeihanLi.Npoi.ExcelFormat.Xlsx
+  fullName: WeihanLi.Npoi.ExcelFormat.Xlsx
+  nameWithType: ExcelFormat.Xlsx
+- uid: WeihanLi.Npoi.ExcelHelper
+  name: ExcelHelper
+  href: docs/api/WeihanLi.Npoi.ExcelHelper.html
+  commentId: T:WeihanLi.Npoi.ExcelHelper
+  fullName: WeihanLi.Npoi.ExcelHelper
+  nameWithType: ExcelHelper
+- uid: WeihanLi.Npoi.ExcelHelper.DefaultExcelSetting
+  name: DefaultExcelSetting
+  href: docs/api/WeihanLi.Npoi.ExcelHelper.html#WeihanLi_Npoi_ExcelHelper_DefaultExcelSetting
+  commentId: F:WeihanLi.Npoi.ExcelHelper.DefaultExcelSetting
+  fullName: WeihanLi.Npoi.ExcelHelper.DefaultExcelSetting
+  nameWithType: ExcelHelper.DefaultExcelSetting
+- uid: WeihanLi.Npoi.ExcelHelper.LoadExcel(System.String)
+  name: LoadExcel(String)
+  href: docs/api/WeihanLi.Npoi.ExcelHelper.html#WeihanLi_Npoi_ExcelHelper_LoadExcel_System_String_
+  commentId: M:WeihanLi.Npoi.ExcelHelper.LoadExcel(System.String)
+  fullName: WeihanLi.Npoi.ExcelHelper.LoadExcel(System.String)
+  nameWithType: ExcelHelper.LoadExcel(String)
+- uid: WeihanLi.Npoi.ExcelHelper.LoadExcel*
+  name: LoadExcel
+  href: docs/api/WeihanLi.Npoi.ExcelHelper.html#WeihanLi_Npoi_ExcelHelper_LoadExcel_
+  commentId: Overload:WeihanLi.Npoi.ExcelHelper.LoadExcel
+  isSpec: "True"
+  fullName: WeihanLi.Npoi.ExcelHelper.LoadExcel
+  nameWithType: ExcelHelper.LoadExcel
+- uid: WeihanLi.Npoi.ExcelHelper.PrepareWorkbook
+  name: PrepareWorkbook()
+  href: docs/api/WeihanLi.Npoi.ExcelHelper.html#WeihanLi_Npoi_ExcelHelper_PrepareWorkbook
+  commentId: M:WeihanLi.Npoi.ExcelHelper.PrepareWorkbook
+  fullName: WeihanLi.Npoi.ExcelHelper.PrepareWorkbook()
+  nameWithType: ExcelHelper.PrepareWorkbook()
+- uid: WeihanLi.Npoi.ExcelHelper.PrepareWorkbook(System.Boolean)
+  name: PrepareWorkbook(Boolean)
+  href: docs/api/WeihanLi.Npoi.ExcelHelper.html#WeihanLi_Npoi_ExcelHelper_PrepareWorkbook_System_Boolean_
+  commentId: M:WeihanLi.Npoi.ExcelHelper.PrepareWorkbook(System.Boolean)
+  fullName: WeihanLi.Npoi.ExcelHelper.PrepareWorkbook(System.Boolean)
+  nameWithType: ExcelHelper.PrepareWorkbook(Boolean)
+- uid: WeihanLi.Npoi.ExcelHelper.PrepareWorkbook(System.Boolean,ExcelSetting)
+  name: PrepareWorkbook(Boolean, ExcelSetting)
+  href: docs/api/WeihanLi.Npoi.ExcelHelper.html#WeihanLi_Npoi_ExcelHelper_PrepareWorkbook_System_Boolean_ExcelSetting_
+  commentId: M:WeihanLi.Npoi.ExcelHelper.PrepareWorkbook(System.Boolean,ExcelSetting)
+  fullName: WeihanLi.Npoi.ExcelHelper.PrepareWorkbook(System.Boolean, ExcelSetting)
+  nameWithType: ExcelHelper.PrepareWorkbook(Boolean, ExcelSetting)
+- uid: WeihanLi.Npoi.ExcelHelper.PrepareWorkbook(System.String)
+  name: PrepareWorkbook(String)
+  href: docs/api/WeihanLi.Npoi.ExcelHelper.html#WeihanLi_Npoi_ExcelHelper_PrepareWorkbook_System_String_
+  commentId: M:WeihanLi.Npoi.ExcelHelper.PrepareWorkbook(System.String)
+  fullName: WeihanLi.Npoi.ExcelHelper.PrepareWorkbook(System.String)
+  nameWithType: ExcelHelper.PrepareWorkbook(String)
+- uid: WeihanLi.Npoi.ExcelHelper.PrepareWorkbook(System.String,ExcelSetting)
+  name: PrepareWorkbook(String, ExcelSetting)
+  href: docs/api/WeihanLi.Npoi.ExcelHelper.html#WeihanLi_Npoi_ExcelHelper_PrepareWorkbook_System_String_ExcelSetting_
+  commentId: M:WeihanLi.Npoi.ExcelHelper.PrepareWorkbook(System.String,ExcelSetting)
+  fullName: WeihanLi.Npoi.ExcelHelper.PrepareWorkbook(System.String, ExcelSetting)
+  nameWithType: ExcelHelper.PrepareWorkbook(String, ExcelSetting)
+- uid: WeihanLi.Npoi.ExcelHelper.PrepareWorkbook(WeihanLi.Npoi.ExcelFormat)
+  name: PrepareWorkbook(ExcelFormat)
+  href: docs/api/WeihanLi.Npoi.ExcelHelper.html#WeihanLi_Npoi_ExcelHelper_PrepareWorkbook_WeihanLi_Npoi_ExcelFormat_
+  commentId: M:WeihanLi.Npoi.ExcelHelper.PrepareWorkbook(WeihanLi.Npoi.ExcelFormat)
+  fullName: WeihanLi.Npoi.ExcelHelper.PrepareWorkbook(WeihanLi.Npoi.ExcelFormat)
+  nameWithType: ExcelHelper.PrepareWorkbook(ExcelFormat)
+- uid: WeihanLi.Npoi.ExcelHelper.PrepareWorkbook(WeihanLi.Npoi.ExcelFormat,ExcelSetting)
+  name: PrepareWorkbook(ExcelFormat, ExcelSetting)
+  href: docs/api/WeihanLi.Npoi.ExcelHelper.html#WeihanLi_Npoi_ExcelHelper_PrepareWorkbook_WeihanLi_Npoi_ExcelFormat_ExcelSetting_
+  commentId: M:WeihanLi.Npoi.ExcelHelper.PrepareWorkbook(WeihanLi.Npoi.ExcelFormat,ExcelSetting)
+  fullName: WeihanLi.Npoi.ExcelHelper.PrepareWorkbook(WeihanLi.Npoi.ExcelFormat, ExcelSetting)
+  nameWithType: ExcelHelper.PrepareWorkbook(ExcelFormat, ExcelSetting)
+- uid: WeihanLi.Npoi.ExcelHelper.PrepareWorkbook*
+  name: PrepareWorkbook
+  href: docs/api/WeihanLi.Npoi.ExcelHelper.html#WeihanLi_Npoi_ExcelHelper_PrepareWorkbook_
+  commentId: Overload:WeihanLi.Npoi.ExcelHelper.PrepareWorkbook
+  isSpec: "True"
+  fullName: WeihanLi.Npoi.ExcelHelper.PrepareWorkbook
+  nameWithType: ExcelHelper.PrepareWorkbook
+- uid: WeihanLi.Npoi.ExcelHelper.SettingFor*
+  name: SettingFor
+  href: docs/api/WeihanLi.Npoi.ExcelHelper.html#WeihanLi_Npoi_ExcelHelper_SettingFor_
+  commentId: Overload:WeihanLi.Npoi.ExcelHelper.SettingFor
+  isSpec: "True"
+  fullName: WeihanLi.Npoi.ExcelHelper.SettingFor
+  nameWithType: ExcelHelper.SettingFor
+- uid: WeihanLi.Npoi.ExcelHelper.SettingFor``1
+  name: SettingFor<TEntity>()
+  href: docs/api/WeihanLi.Npoi.ExcelHelper.html#WeihanLi_Npoi_ExcelHelper_SettingFor__1
+  commentId: M:WeihanLi.Npoi.ExcelHelper.SettingFor``1
+  name.vb: SettingFor(Of TEntity)()
+  fullName: WeihanLi.Npoi.ExcelHelper.SettingFor<TEntity>()
+  fullName.vb: WeihanLi.Npoi.ExcelHelper.SettingFor(Of TEntity)()
+  nameWithType: ExcelHelper.SettingFor<TEntity>()
+  nameWithType.vb: ExcelHelper.SettingFor(Of TEntity)()
+- uid: WeihanLi.Npoi.ExcelHelper.ToDataSet(System.String)
+  name: ToDataSet(String)
+  href: docs/api/WeihanLi.Npoi.ExcelHelper.html#WeihanLi_Npoi_ExcelHelper_ToDataSet_System_String_
+  commentId: M:WeihanLi.Npoi.ExcelHelper.ToDataSet(System.String)
+  fullName: WeihanLi.Npoi.ExcelHelper.ToDataSet(System.String)
+  nameWithType: ExcelHelper.ToDataSet(String)
+- uid: WeihanLi.Npoi.ExcelHelper.ToDataSet(System.String,System.Int32)
+  name: ToDataSet(String, Int32)
+  href: docs/api/WeihanLi.Npoi.ExcelHelper.html#WeihanLi_Npoi_ExcelHelper_ToDataSet_System_String_System_Int32_
+  commentId: M:WeihanLi.Npoi.ExcelHelper.ToDataSet(System.String,System.Int32)
+  fullName: WeihanLi.Npoi.ExcelHelper.ToDataSet(System.String, System.Int32)
+  nameWithType: ExcelHelper.ToDataSet(String, Int32)
+- uid: WeihanLi.Npoi.ExcelHelper.ToDataSet*
+  name: ToDataSet
+  href: docs/api/WeihanLi.Npoi.ExcelHelper.html#WeihanLi_Npoi_ExcelHelper_ToDataSet_
+  commentId: Overload:WeihanLi.Npoi.ExcelHelper.ToDataSet
+  isSpec: "True"
+  fullName: WeihanLi.Npoi.ExcelHelper.ToDataSet
+  nameWithType: ExcelHelper.ToDataSet
+- uid: WeihanLi.Npoi.ExcelHelper.ToDataTable(System.String)
+  name: ToDataTable(String)
+  href: docs/api/WeihanLi.Npoi.ExcelHelper.html#WeihanLi_Npoi_ExcelHelper_ToDataTable_System_String_
+  commentId: M:WeihanLi.Npoi.ExcelHelper.ToDataTable(System.String)
+  fullName: WeihanLi.Npoi.ExcelHelper.ToDataTable(System.String)
+  nameWithType: ExcelHelper.ToDataTable(String)
+- uid: WeihanLi.Npoi.ExcelHelper.ToDataTable(System.String,System.Int32,System.Int32)
+  name: ToDataTable(String, Int32, Int32)
+  href: docs/api/WeihanLi.Npoi.ExcelHelper.html#WeihanLi_Npoi_ExcelHelper_ToDataTable_System_String_System_Int32_System_Int32_
+  commentId: M:WeihanLi.Npoi.ExcelHelper.ToDataTable(System.String,System.Int32,System.Int32)
+  fullName: WeihanLi.Npoi.ExcelHelper.ToDataTable(System.String, System.Int32, System.Int32)
+  nameWithType: ExcelHelper.ToDataTable(String, Int32, Int32)
+- uid: WeihanLi.Npoi.ExcelHelper.ToDataTable*
+  name: ToDataTable
+  href: docs/api/WeihanLi.Npoi.ExcelHelper.html#WeihanLi_Npoi_ExcelHelper_ToDataTable_
+  commentId: Overload:WeihanLi.Npoi.ExcelHelper.ToDataTable
+  isSpec: "True"
+  fullName: WeihanLi.Npoi.ExcelHelper.ToDataTable
+  nameWithType: ExcelHelper.ToDataTable
+- uid: WeihanLi.Npoi.ExcelHelper.ToDataTable``1(System.String)
+  name: ToDataTable<TEntity>(String)
+  href: docs/api/WeihanLi.Npoi.ExcelHelper.html#WeihanLi_Npoi_ExcelHelper_ToDataTable__1_System_String_
+  commentId: M:WeihanLi.Npoi.ExcelHelper.ToDataTable``1(System.String)
+  name.vb: ToDataTable(Of TEntity)(String)
+  fullName: WeihanLi.Npoi.ExcelHelper.ToDataTable<TEntity>(System.String)
+  fullName.vb: WeihanLi.Npoi.ExcelHelper.ToDataTable(Of TEntity)(System.String)
+  nameWithType: ExcelHelper.ToDataTable<TEntity>(String)
+  nameWithType.vb: ExcelHelper.ToDataTable(Of TEntity)(String)
+- uid: WeihanLi.Npoi.ExcelHelper.ToDataTable``1(System.String,System.Int32)
+  name: ToDataTable<TEntity>(String, Int32)
+  href: docs/api/WeihanLi.Npoi.ExcelHelper.html#WeihanLi_Npoi_ExcelHelper_ToDataTable__1_System_String_System_Int32_
+  commentId: M:WeihanLi.Npoi.ExcelHelper.ToDataTable``1(System.String,System.Int32)
+  name.vb: ToDataTable(Of TEntity)(String, Int32)
+  fullName: WeihanLi.Npoi.ExcelHelper.ToDataTable<TEntity>(System.String, System.Int32)
+  fullName.vb: WeihanLi.Npoi.ExcelHelper.ToDataTable(Of TEntity)(System.String, System.Int32)
+  nameWithType: ExcelHelper.ToDataTable<TEntity>(String, Int32)
+  nameWithType.vb: ExcelHelper.ToDataTable(Of TEntity)(String, Int32)
+- uid: WeihanLi.Npoi.ExcelHelper.ToEntityList*
+  name: ToEntityList
+  href: docs/api/WeihanLi.Npoi.ExcelHelper.html#WeihanLi_Npoi_ExcelHelper_ToEntityList_
+  commentId: Overload:WeihanLi.Npoi.ExcelHelper.ToEntityList
+  isSpec: "True"
+  fullName: WeihanLi.Npoi.ExcelHelper.ToEntityList
+  nameWithType: ExcelHelper.ToEntityList
+- uid: WeihanLi.Npoi.ExcelHelper.ToEntityList``1(System.String)
+  name: ToEntityList<TEntity>(String)
+  href: docs/api/WeihanLi.Npoi.ExcelHelper.html#WeihanLi_Npoi_ExcelHelper_ToEntityList__1_System_String_
+  commentId: M:WeihanLi.Npoi.ExcelHelper.ToEntityList``1(System.String)
+  name.vb: ToEntityList(Of TEntity)(String)
+  fullName: WeihanLi.Npoi.ExcelHelper.ToEntityList<TEntity>(System.String)
+  fullName.vb: WeihanLi.Npoi.ExcelHelper.ToEntityList(Of TEntity)(System.String)
+  nameWithType: ExcelHelper.ToEntityList<TEntity>(String)
+  nameWithType.vb: ExcelHelper.ToEntityList(Of TEntity)(String)
+- uid: WeihanLi.Npoi.ExcelHelper.ToEntityList``1(System.String,System.Int32)
+  name: ToEntityList<TEntity>(String, Int32)
+  href: docs/api/WeihanLi.Npoi.ExcelHelper.html#WeihanLi_Npoi_ExcelHelper_ToEntityList__1_System_String_System_Int32_
+  commentId: M:WeihanLi.Npoi.ExcelHelper.ToEntityList``1(System.String,System.Int32)
+  name.vb: ToEntityList(Of TEntity)(String, Int32)
+  fullName: WeihanLi.Npoi.ExcelHelper.ToEntityList<TEntity>(System.String, System.Int32)
+  fullName.vb: WeihanLi.Npoi.ExcelHelper.ToEntityList(Of TEntity)(System.String, System.Int32)
+  nameWithType: ExcelHelper.ToEntityList<TEntity>(String, Int32)
+  nameWithType.vb: ExcelHelper.ToEntityList(Of TEntity)(String, Int32)
+- uid: WeihanLi.Npoi.NpoiExtensions
+  name: NpoiExtensions
+  href: docs/api/WeihanLi.Npoi.NpoiExtensions.html
+  commentId: T:WeihanLi.Npoi.NpoiExtensions
+  fullName: WeihanLi.Npoi.NpoiExtensions
+  nameWithType: NpoiExtensions
+- uid: WeihanLi.Npoi.NpoiExtensions.GetCellValue(ICell,System.Type)
+  name: GetCellValue(ICell, Type)
+  href: docs/api/WeihanLi.Npoi.NpoiExtensions.html#WeihanLi_Npoi_NpoiExtensions_GetCellValue_ICell_System_Type_
+  commentId: M:WeihanLi.Npoi.NpoiExtensions.GetCellValue(ICell,System.Type)
+  fullName: WeihanLi.Npoi.NpoiExtensions.GetCellValue(ICell, System.Type)
+  nameWithType: NpoiExtensions.GetCellValue(ICell, Type)
+- uid: WeihanLi.Npoi.NpoiExtensions.GetCellValue*
+  name: GetCellValue
+  href: docs/api/WeihanLi.Npoi.NpoiExtensions.html#WeihanLi_Npoi_NpoiExtensions_GetCellValue_
+  commentId: Overload:WeihanLi.Npoi.NpoiExtensions.GetCellValue
+  isSpec: "True"
+  fullName: WeihanLi.Npoi.NpoiExtensions.GetCellValue
+  nameWithType: NpoiExtensions.GetCellValue
+- uid: WeihanLi.Npoi.NpoiExtensions.GetCellValue``1(ICell)
+  name: GetCellValue<T>(ICell)
+  href: docs/api/WeihanLi.Npoi.NpoiExtensions.html#WeihanLi_Npoi_NpoiExtensions_GetCellValue__1_ICell_
+  commentId: M:WeihanLi.Npoi.NpoiExtensions.GetCellValue``1(ICell)
+  name.vb: GetCellValue(Of T)(ICell)
+  fullName: WeihanLi.Npoi.NpoiExtensions.GetCellValue<T>(ICell)
+  fullName.vb: WeihanLi.Npoi.NpoiExtensions.GetCellValue(Of T)(ICell)
+  nameWithType: NpoiExtensions.GetCellValue<T>(ICell)
+  nameWithType.vb: NpoiExtensions.GetCellValue(Of T)(ICell)
+- uid: WeihanLi.Npoi.NpoiExtensions.GetRowCollection(ISheet)
+  name: GetRowCollection(ISheet)
+  href: docs/api/WeihanLi.Npoi.NpoiExtensions.html#WeihanLi_Npoi_NpoiExtensions_GetRowCollection_ISheet_
+  commentId: M:WeihanLi.Npoi.NpoiExtensions.GetRowCollection(ISheet)
+  fullName: WeihanLi.Npoi.NpoiExtensions.GetRowCollection(ISheet)
+  nameWithType: NpoiExtensions.GetRowCollection(ISheet)
+- uid: WeihanLi.Npoi.NpoiExtensions.GetRowCollection*
+  name: GetRowCollection
+  href: docs/api/WeihanLi.Npoi.NpoiExtensions.html#WeihanLi_Npoi_NpoiExtensions_GetRowCollection_
+  commentId: Overload:WeihanLi.Npoi.NpoiExtensions.GetRowCollection
+  isSpec: "True"
+  fullName: WeihanLi.Npoi.NpoiExtensions.GetRowCollection
+  nameWithType: NpoiExtensions.GetRowCollection
+- uid: WeihanLi.Npoi.NpoiExtensions.ImportData*
+  name: ImportData
+  href: docs/api/WeihanLi.Npoi.NpoiExtensions.html#WeihanLi_Npoi_NpoiExtensions_ImportData_
+  commentId: Overload:WeihanLi.Npoi.NpoiExtensions.ImportData
+  isSpec: "True"
+  fullName: WeihanLi.Npoi.NpoiExtensions.ImportData
+  nameWithType: NpoiExtensions.ImportData
+- uid: WeihanLi.Npoi.NpoiExtensions.ImportData``1(ISheet,DataTable)
+  name: ImportData<TEntity>(ISheet, DataTable)
+  href: docs/api/WeihanLi.Npoi.NpoiExtensions.html#WeihanLi_Npoi_NpoiExtensions_ImportData__1_ISheet_DataTable_
+  commentId: M:WeihanLi.Npoi.NpoiExtensions.ImportData``1(ISheet,DataTable)
+  name.vb: ImportData(Of TEntity)(ISheet, DataTable)
+  fullName: WeihanLi.Npoi.NpoiExtensions.ImportData<TEntity>(ISheet, DataTable)
+  fullName.vb: WeihanLi.Npoi.NpoiExtensions.ImportData(Of TEntity)(ISheet, DataTable)
+  nameWithType: NpoiExtensions.ImportData<TEntity>(ISheet, DataTable)
+  nameWithType.vb: NpoiExtensions.ImportData(Of TEntity)(ISheet, DataTable)
+- uid: WeihanLi.Npoi.NpoiExtensions.ImportData``1(ISheet,DataTable,System.Int32)
+  name: ImportData<TEntity>(ISheet, DataTable, Int32)
+  href: docs/api/WeihanLi.Npoi.NpoiExtensions.html#WeihanLi_Npoi_NpoiExtensions_ImportData__1_ISheet_DataTable_System_Int32_
+  commentId: M:WeihanLi.Npoi.NpoiExtensions.ImportData``1(ISheet,DataTable,System.Int32)
+  name.vb: ImportData(Of TEntity)(ISheet, DataTable, Int32)
+  fullName: WeihanLi.Npoi.NpoiExtensions.ImportData<TEntity>(ISheet, DataTable, System.Int32)
+  fullName.vb: WeihanLi.Npoi.NpoiExtensions.ImportData(Of TEntity)(ISheet, DataTable, System.Int32)
+  nameWithType: NpoiExtensions.ImportData<TEntity>(ISheet, DataTable, Int32)
+  nameWithType.vb: NpoiExtensions.ImportData(Of TEntity)(ISheet, DataTable, Int32)
+- uid: WeihanLi.Npoi.NpoiExtensions.ImportData``1(ISheet,System.Collections.Generic.IEnumerable{``0})
+  name: ImportData<TEntity>(ISheet, IEnumerable<TEntity>)
+  href: docs/api/WeihanLi.Npoi.NpoiExtensions.html#WeihanLi_Npoi_NpoiExtensions_ImportData__1_ISheet_System_Collections_Generic_IEnumerable___0__
+  commentId: M:WeihanLi.Npoi.NpoiExtensions.ImportData``1(ISheet,System.Collections.Generic.IEnumerable{``0})
+  name.vb: ImportData(Of TEntity)(ISheet, IEnumerable(Of TEntity))
+  fullName: WeihanLi.Npoi.NpoiExtensions.ImportData<TEntity>(ISheet, System.Collections.Generic.IEnumerable<TEntity>)
+  fullName.vb: WeihanLi.Npoi.NpoiExtensions.ImportData(Of TEntity)(ISheet, System.Collections.Generic.IEnumerable(Of TEntity))
+  nameWithType: NpoiExtensions.ImportData<TEntity>(ISheet, IEnumerable<TEntity>)
+  nameWithType.vb: NpoiExtensions.ImportData(Of TEntity)(ISheet, IEnumerable(Of TEntity))
+- uid: WeihanLi.Npoi.NpoiExtensions.ImportData``1(ISheet,System.Collections.Generic.IEnumerable{``0},System.Int32)
+  name: ImportData<TEntity>(ISheet, IEnumerable<TEntity>, Int32)
+  href: docs/api/WeihanLi.Npoi.NpoiExtensions.html#WeihanLi_Npoi_NpoiExtensions_ImportData__1_ISheet_System_Collections_Generic_IEnumerable___0__System_Int32_
+  commentId: M:WeihanLi.Npoi.NpoiExtensions.ImportData``1(ISheet,System.Collections.Generic.IEnumerable{``0},System.Int32)
+  name.vb: ImportData(Of TEntity)(ISheet, IEnumerable(Of TEntity), Int32)
+  fullName: WeihanLi.Npoi.NpoiExtensions.ImportData<TEntity>(ISheet, System.Collections.Generic.IEnumerable<TEntity>, System.Int32)
+  fullName.vb: WeihanLi.Npoi.NpoiExtensions.ImportData(Of TEntity)(ISheet, System.Collections.Generic.IEnumerable(Of TEntity), System.Int32)
+  nameWithType: NpoiExtensions.ImportData<TEntity>(ISheet, IEnumerable<TEntity>, Int32)
+  nameWithType.vb: NpoiExtensions.ImportData(Of TEntity)(ISheet, IEnumerable(Of TEntity), Int32)
+- uid: WeihanLi.Npoi.NpoiExtensions.ImportData``1(IWorkbook,DataTable)
+  name: ImportData<TEntity>(IWorkbook, DataTable)
+  href: docs/api/WeihanLi.Npoi.NpoiExtensions.html#WeihanLi_Npoi_NpoiExtensions_ImportData__1_IWorkbook_DataTable_
+  commentId: M:WeihanLi.Npoi.NpoiExtensions.ImportData``1(IWorkbook,DataTable)
+  name.vb: ImportData(Of TEntity)(IWorkbook, DataTable)
+  fullName: WeihanLi.Npoi.NpoiExtensions.ImportData<TEntity>(IWorkbook, DataTable)
+  fullName.vb: WeihanLi.Npoi.NpoiExtensions.ImportData(Of TEntity)(IWorkbook, DataTable)
+  nameWithType: NpoiExtensions.ImportData<TEntity>(IWorkbook, DataTable)
+  nameWithType.vb: NpoiExtensions.ImportData(Of TEntity)(IWorkbook, DataTable)
+- uid: WeihanLi.Npoi.NpoiExtensions.ImportData``1(IWorkbook,DataTable,System.Int32)
+  name: ImportData<TEntity>(IWorkbook, DataTable, Int32)
+  href: docs/api/WeihanLi.Npoi.NpoiExtensions.html#WeihanLi_Npoi_NpoiExtensions_ImportData__1_IWorkbook_DataTable_System_Int32_
+  commentId: M:WeihanLi.Npoi.NpoiExtensions.ImportData``1(IWorkbook,DataTable,System.Int32)
+  name.vb: ImportData(Of TEntity)(IWorkbook, DataTable, Int32)
+  fullName: WeihanLi.Npoi.NpoiExtensions.ImportData<TEntity>(IWorkbook, DataTable, System.Int32)
+  fullName.vb: WeihanLi.Npoi.NpoiExtensions.ImportData(Of TEntity)(IWorkbook, DataTable, System.Int32)
+  nameWithType: NpoiExtensions.ImportData<TEntity>(IWorkbook, DataTable, Int32)
+  nameWithType.vb: NpoiExtensions.ImportData(Of TEntity)(IWorkbook, DataTable, Int32)
+- uid: WeihanLi.Npoi.NpoiExtensions.ImportData``1(IWorkbook,System.Collections.Generic.IEnumerable{``0})
+  name: ImportData<TEntity>(IWorkbook, IEnumerable<TEntity>)
+  href: docs/api/WeihanLi.Npoi.NpoiExtensions.html#WeihanLi_Npoi_NpoiExtensions_ImportData__1_IWorkbook_System_Collections_Generic_IEnumerable___0__
+  commentId: M:WeihanLi.Npoi.NpoiExtensions.ImportData``1(IWorkbook,System.Collections.Generic.IEnumerable{``0})
+  name.vb: ImportData(Of TEntity)(IWorkbook, IEnumerable(Of TEntity))
+  fullName: WeihanLi.Npoi.NpoiExtensions.ImportData<TEntity>(IWorkbook, System.Collections.Generic.IEnumerable<TEntity>)
+  fullName.vb: WeihanLi.Npoi.NpoiExtensions.ImportData(Of TEntity)(IWorkbook, System.Collections.Generic.IEnumerable(Of TEntity))
+  nameWithType: NpoiExtensions.ImportData<TEntity>(IWorkbook, IEnumerable<TEntity>)
+  nameWithType.vb: NpoiExtensions.ImportData(Of TEntity)(IWorkbook, IEnumerable(Of TEntity))
+- uid: WeihanLi.Npoi.NpoiExtensions.ImportData``1(IWorkbook,System.Collections.Generic.IEnumerable{``0},System.Int32)
+  name: ImportData<TEntity>(IWorkbook, IEnumerable<TEntity>, Int32)
+  href: docs/api/WeihanLi.Npoi.NpoiExtensions.html#WeihanLi_Npoi_NpoiExtensions_ImportData__1_IWorkbook_System_Collections_Generic_IEnumerable___0__System_Int32_
+  commentId: M:WeihanLi.Npoi.NpoiExtensions.ImportData``1(IWorkbook,System.Collections.Generic.IEnumerable{``0},System.Int32)
+  name.vb: ImportData(Of TEntity)(IWorkbook, IEnumerable(Of TEntity), Int32)
+  fullName: WeihanLi.Npoi.NpoiExtensions.ImportData<TEntity>(IWorkbook, System.Collections.Generic.IEnumerable<TEntity>, System.Int32)
+  fullName.vb: WeihanLi.Npoi.NpoiExtensions.ImportData(Of TEntity)(IWorkbook, System.Collections.Generic.IEnumerable(Of TEntity), System.Int32)
+  nameWithType: NpoiExtensions.ImportData<TEntity>(IWorkbook, IEnumerable<TEntity>, Int32)
+  nameWithType.vb: NpoiExtensions.ImportData(Of TEntity)(IWorkbook, IEnumerable(Of TEntity), Int32)
+- uid: WeihanLi.Npoi.NpoiExtensions.SetCellValue(ICell,System.Object)
+  name: SetCellValue(ICell, Object)
+  href: docs/api/WeihanLi.Npoi.NpoiExtensions.html#WeihanLi_Npoi_NpoiExtensions_SetCellValue_ICell_System_Object_
+  commentId: M:WeihanLi.Npoi.NpoiExtensions.SetCellValue(ICell,System.Object)
+  fullName: WeihanLi.Npoi.NpoiExtensions.SetCellValue(ICell, System.Object)
+  nameWithType: NpoiExtensions.SetCellValue(ICell, Object)
+- uid: WeihanLi.Npoi.NpoiExtensions.SetCellValue(ICell,System.Object,System.String)
+  name: SetCellValue(ICell, Object, String)
+  href: docs/api/WeihanLi.Npoi.NpoiExtensions.html#WeihanLi_Npoi_NpoiExtensions_SetCellValue_ICell_System_Object_System_String_
+  commentId: M:WeihanLi.Npoi.NpoiExtensions.SetCellValue(ICell,System.Object,System.String)
+  fullName: WeihanLi.Npoi.NpoiExtensions.SetCellValue(ICell, System.Object, System.String)
+  nameWithType: NpoiExtensions.SetCellValue(ICell, Object, String)
+- uid: WeihanLi.Npoi.NpoiExtensions.SetCellValue*
+  name: SetCellValue
+  href: docs/api/WeihanLi.Npoi.NpoiExtensions.html#WeihanLi_Npoi_NpoiExtensions_SetCellValue_
+  commentId: Overload:WeihanLi.Npoi.NpoiExtensions.SetCellValue
+  isSpec: "True"
+  fullName: WeihanLi.Npoi.NpoiExtensions.SetCellValue
+  nameWithType: NpoiExtensions.SetCellValue
+- uid: WeihanLi.Npoi.NpoiExtensions.ToDataSet(IWorkbook)
+  name: ToDataSet(IWorkbook)
+  href: docs/api/WeihanLi.Npoi.NpoiExtensions.html#WeihanLi_Npoi_NpoiExtensions_ToDataSet_IWorkbook_
+  commentId: M:WeihanLi.Npoi.NpoiExtensions.ToDataSet(IWorkbook)
+  fullName: WeihanLi.Npoi.NpoiExtensions.ToDataSet(IWorkbook)
+  nameWithType: NpoiExtensions.ToDataSet(IWorkbook)
+- uid: WeihanLi.Npoi.NpoiExtensions.ToDataSet(IWorkbook,System.Int32)
+  name: ToDataSet(IWorkbook, Int32)
+  href: docs/api/WeihanLi.Npoi.NpoiExtensions.html#WeihanLi_Npoi_NpoiExtensions_ToDataSet_IWorkbook_System_Int32_
+  commentId: M:WeihanLi.Npoi.NpoiExtensions.ToDataSet(IWorkbook,System.Int32)
+  fullName: WeihanLi.Npoi.NpoiExtensions.ToDataSet(IWorkbook, System.Int32)
+  nameWithType: NpoiExtensions.ToDataSet(IWorkbook, Int32)
+- uid: WeihanLi.Npoi.NpoiExtensions.ToDataSet*
+  name: ToDataSet
+  href: docs/api/WeihanLi.Npoi.NpoiExtensions.html#WeihanLi_Npoi_NpoiExtensions_ToDataSet_
+  commentId: Overload:WeihanLi.Npoi.NpoiExtensions.ToDataSet
+  isSpec: "True"
+  fullName: WeihanLi.Npoi.NpoiExtensions.ToDataSet
+  nameWithType: NpoiExtensions.ToDataSet
+- uid: WeihanLi.Npoi.NpoiExtensions.ToDataTable(ISheet)
+  name: ToDataTable(ISheet)
+  href: docs/api/WeihanLi.Npoi.NpoiExtensions.html#WeihanLi_Npoi_NpoiExtensions_ToDataTable_ISheet_
+  commentId: M:WeihanLi.Npoi.NpoiExtensions.ToDataTable(ISheet)
+  fullName: WeihanLi.Npoi.NpoiExtensions.ToDataTable(ISheet)
+  nameWithType: NpoiExtensions.ToDataTable(ISheet)
+- uid: WeihanLi.Npoi.NpoiExtensions.ToDataTable(ISheet,System.Int32)
+  name: ToDataTable(ISheet, Int32)
+  href: docs/api/WeihanLi.Npoi.NpoiExtensions.html#WeihanLi_Npoi_NpoiExtensions_ToDataTable_ISheet_System_Int32_
+  commentId: M:WeihanLi.Npoi.NpoiExtensions.ToDataTable(ISheet,System.Int32)
+  fullName: WeihanLi.Npoi.NpoiExtensions.ToDataTable(ISheet, System.Int32)
+  nameWithType: NpoiExtensions.ToDataTable(ISheet, Int32)
+- uid: WeihanLi.Npoi.NpoiExtensions.ToDataTable(IWorkbook)
+  name: ToDataTable(IWorkbook)
+  href: docs/api/WeihanLi.Npoi.NpoiExtensions.html#WeihanLi_Npoi_NpoiExtensions_ToDataTable_IWorkbook_
+  commentId: M:WeihanLi.Npoi.NpoiExtensions.ToDataTable(IWorkbook)
+  fullName: WeihanLi.Npoi.NpoiExtensions.ToDataTable(IWorkbook)
+  nameWithType: NpoiExtensions.ToDataTable(IWorkbook)
+- uid: WeihanLi.Npoi.NpoiExtensions.ToDataTable(IWorkbook,System.Int32,System.Int32)
+  name: ToDataTable(IWorkbook, Int32, Int32)
+  href: docs/api/WeihanLi.Npoi.NpoiExtensions.html#WeihanLi_Npoi_NpoiExtensions_ToDataTable_IWorkbook_System_Int32_System_Int32_
+  commentId: M:WeihanLi.Npoi.NpoiExtensions.ToDataTable(IWorkbook,System.Int32,System.Int32)
+  fullName: WeihanLi.Npoi.NpoiExtensions.ToDataTable(IWorkbook, System.Int32, System.Int32)
+  nameWithType: NpoiExtensions.ToDataTable(IWorkbook, Int32, Int32)
+- uid: WeihanLi.Npoi.NpoiExtensions.ToDataTable*
+  name: ToDataTable
+  href: docs/api/WeihanLi.Npoi.NpoiExtensions.html#WeihanLi_Npoi_NpoiExtensions_ToDataTable_
+  commentId: Overload:WeihanLi.Npoi.NpoiExtensions.ToDataTable
+  isSpec: "True"
+  fullName: WeihanLi.Npoi.NpoiExtensions.ToDataTable
+  nameWithType: NpoiExtensions.ToDataTable
+- uid: WeihanLi.Npoi.NpoiExtensions.ToEntityList*
+  name: ToEntityList
+  href: docs/api/WeihanLi.Npoi.NpoiExtensions.html#WeihanLi_Npoi_NpoiExtensions_ToEntityList_
+  commentId: Overload:WeihanLi.Npoi.NpoiExtensions.ToEntityList
+  isSpec: "True"
+  fullName: WeihanLi.Npoi.NpoiExtensions.ToEntityList
+  nameWithType: NpoiExtensions.ToEntityList
+- uid: WeihanLi.Npoi.NpoiExtensions.ToEntityList``1(ISheet)
+  name: ToEntityList<TEntity>(ISheet)
+  href: docs/api/WeihanLi.Npoi.NpoiExtensions.html#WeihanLi_Npoi_NpoiExtensions_ToEntityList__1_ISheet_
+  commentId: M:WeihanLi.Npoi.NpoiExtensions.ToEntityList``1(ISheet)
+  name.vb: ToEntityList(Of TEntity)(ISheet)
+  fullName: WeihanLi.Npoi.NpoiExtensions.ToEntityList<TEntity>(ISheet)
+  fullName.vb: WeihanLi.Npoi.NpoiExtensions.ToEntityList(Of TEntity)(ISheet)
+  nameWithType: NpoiExtensions.ToEntityList<TEntity>(ISheet)
+  nameWithType.vb: NpoiExtensions.ToEntityList(Of TEntity)(ISheet)
+- uid: WeihanLi.Npoi.NpoiExtensions.ToEntityList``1(ISheet,System.Int32)
+  name: ToEntityList<TEntity>(ISheet, Int32)
+  href: docs/api/WeihanLi.Npoi.NpoiExtensions.html#WeihanLi_Npoi_NpoiExtensions_ToEntityList__1_ISheet_System_Int32_
+  commentId: M:WeihanLi.Npoi.NpoiExtensions.ToEntityList``1(ISheet,System.Int32)
+  name.vb: ToEntityList(Of TEntity)(ISheet, Int32)
+  fullName: WeihanLi.Npoi.NpoiExtensions.ToEntityList<TEntity>(ISheet, System.Int32)
+  fullName.vb: WeihanLi.Npoi.NpoiExtensions.ToEntityList(Of TEntity)(ISheet, System.Int32)
+  nameWithType: NpoiExtensions.ToEntityList<TEntity>(ISheet, Int32)
+  nameWithType.vb: NpoiExtensions.ToEntityList(Of TEntity)(ISheet, Int32)
+- uid: WeihanLi.Npoi.NpoiExtensions.ToEntityList``1(IWorkbook)
+  name: ToEntityList<TEntity>(IWorkbook)
+  href: docs/api/WeihanLi.Npoi.NpoiExtensions.html#WeihanLi_Npoi_NpoiExtensions_ToEntityList__1_IWorkbook_
+  commentId: M:WeihanLi.Npoi.NpoiExtensions.ToEntityList``1(IWorkbook)
+  name.vb: ToEntityList(Of TEntity)(IWorkbook)
+  fullName: WeihanLi.Npoi.NpoiExtensions.ToEntityList<TEntity>(IWorkbook)
+  fullName.vb: WeihanLi.Npoi.NpoiExtensions.ToEntityList(Of TEntity)(IWorkbook)
+  nameWithType: NpoiExtensions.ToEntityList<TEntity>(IWorkbook)
+  nameWithType.vb: NpoiExtensions.ToEntityList(Of TEntity)(IWorkbook)
+- uid: WeihanLi.Npoi.NpoiExtensions.ToEntityList``1(IWorkbook,System.Int32)
+  name: ToEntityList<TEntity>(IWorkbook, Int32)
+  href: docs/api/WeihanLi.Npoi.NpoiExtensions.html#WeihanLi_Npoi_NpoiExtensions_ToEntityList__1_IWorkbook_System_Int32_
+  commentId: M:WeihanLi.Npoi.NpoiExtensions.ToEntityList``1(IWorkbook,System.Int32)
+  name.vb: ToEntityList(Of TEntity)(IWorkbook, Int32)
+  fullName: WeihanLi.Npoi.NpoiExtensions.ToEntityList<TEntity>(IWorkbook, System.Int32)
+  fullName.vb: WeihanLi.Npoi.NpoiExtensions.ToEntityList(Of TEntity)(IWorkbook, System.Int32)
+  nameWithType: NpoiExtensions.ToEntityList<TEntity>(IWorkbook, Int32)
+  nameWithType.vb: NpoiExtensions.ToEntityList(Of TEntity)(IWorkbook, Int32)
+- uid: WeihanLi.Npoi.NpoiExtensions.ToExcelBytes(DataTable)
+  name: ToExcelBytes(DataTable)
+  href: docs/api/WeihanLi.Npoi.NpoiExtensions.html#WeihanLi_Npoi_NpoiExtensions_ToExcelBytes_DataTable_
+  commentId: M:WeihanLi.Npoi.NpoiExtensions.ToExcelBytes(DataTable)
+  fullName: WeihanLi.Npoi.NpoiExtensions.ToExcelBytes(DataTable)
+  nameWithType: NpoiExtensions.ToExcelBytes(DataTable)
+- uid: WeihanLi.Npoi.NpoiExtensions.ToExcelBytes(DataTable,WeihanLi.Npoi.ExcelFormat)
+  name: ToExcelBytes(DataTable, ExcelFormat)
+  href: docs/api/WeihanLi.Npoi.NpoiExtensions.html#WeihanLi_Npoi_NpoiExtensions_ToExcelBytes_DataTable_WeihanLi_Npoi_ExcelFormat_
+  commentId: M:WeihanLi.Npoi.NpoiExtensions.ToExcelBytes(DataTable,WeihanLi.Npoi.ExcelFormat)
+  fullName: WeihanLi.Npoi.NpoiExtensions.ToExcelBytes(DataTable, WeihanLi.Npoi.ExcelFormat)
+  nameWithType: NpoiExtensions.ToExcelBytes(DataTable, ExcelFormat)
+- uid: WeihanLi.Npoi.NpoiExtensions.ToExcelBytes(DataTable,WeihanLi.Npoi.ExcelFormat,ExcelSetting)
+  name: ToExcelBytes(DataTable, ExcelFormat, ExcelSetting)
+  href: docs/api/WeihanLi.Npoi.NpoiExtensions.html#WeihanLi_Npoi_NpoiExtensions_ToExcelBytes_DataTable_WeihanLi_Npoi_ExcelFormat_ExcelSetting_
+  commentId: M:WeihanLi.Npoi.NpoiExtensions.ToExcelBytes(DataTable,WeihanLi.Npoi.ExcelFormat,ExcelSetting)
+  fullName: WeihanLi.Npoi.NpoiExtensions.ToExcelBytes(DataTable, WeihanLi.Npoi.ExcelFormat, ExcelSetting)
+  nameWithType: NpoiExtensions.ToExcelBytes(DataTable, ExcelFormat, ExcelSetting)
+- uid: WeihanLi.Npoi.NpoiExtensions.ToExcelBytes(IWorkbook)
+  name: ToExcelBytes(IWorkbook)
+  href: docs/api/WeihanLi.Npoi.NpoiExtensions.html#WeihanLi_Npoi_NpoiExtensions_ToExcelBytes_IWorkbook_
+  commentId: M:WeihanLi.Npoi.NpoiExtensions.ToExcelBytes(IWorkbook)
+  fullName: WeihanLi.Npoi.NpoiExtensions.ToExcelBytes(IWorkbook)
+  nameWithType: NpoiExtensions.ToExcelBytes(IWorkbook)
+- uid: WeihanLi.Npoi.NpoiExtensions.ToExcelBytes*
+  name: ToExcelBytes
+  href: docs/api/WeihanLi.Npoi.NpoiExtensions.html#WeihanLi_Npoi_NpoiExtensions_ToExcelBytes_
+  commentId: Overload:WeihanLi.Npoi.NpoiExtensions.ToExcelBytes
+  isSpec: "True"
+  fullName: WeihanLi.Npoi.NpoiExtensions.ToExcelBytes
+  nameWithType: NpoiExtensions.ToExcelBytes
+- uid: WeihanLi.Npoi.NpoiExtensions.ToExcelBytes``1(System.Collections.Generic.IEnumerable{``0})
+  name: ToExcelBytes<TEntity>(IEnumerable<TEntity>)
+  href: docs/api/WeihanLi.Npoi.NpoiExtensions.html#WeihanLi_Npoi_NpoiExtensions_ToExcelBytes__1_System_Collections_Generic_IEnumerable___0__
+  commentId: M:WeihanLi.Npoi.NpoiExtensions.ToExcelBytes``1(System.Collections.Generic.IEnumerable{``0})
+  name.vb: ToExcelBytes(Of TEntity)(IEnumerable(Of TEntity))
+  fullName: WeihanLi.Npoi.NpoiExtensions.ToExcelBytes<TEntity>(System.Collections.Generic.IEnumerable<TEntity>)
+  fullName.vb: WeihanLi.Npoi.NpoiExtensions.ToExcelBytes(Of TEntity)(System.Collections.Generic.IEnumerable(Of TEntity))
+  nameWithType: NpoiExtensions.ToExcelBytes<TEntity>(IEnumerable<TEntity>)
+  nameWithType.vb: NpoiExtensions.ToExcelBytes(Of TEntity)(IEnumerable(Of TEntity))
+- uid: WeihanLi.Npoi.NpoiExtensions.ToExcelBytes``1(System.Collections.Generic.IEnumerable{``0},WeihanLi.Npoi.ExcelFormat)
+  name: ToExcelBytes<TEntity>(IEnumerable<TEntity>, ExcelFormat)
+  href: docs/api/WeihanLi.Npoi.NpoiExtensions.html#WeihanLi_Npoi_NpoiExtensions_ToExcelBytes__1_System_Collections_Generic_IEnumerable___0__WeihanLi_Npoi_ExcelFormat_
+  commentId: M:WeihanLi.Npoi.NpoiExtensions.ToExcelBytes``1(System.Collections.Generic.IEnumerable{``0},WeihanLi.Npoi.ExcelFormat)
+  name.vb: ToExcelBytes(Of TEntity)(IEnumerable(Of TEntity), ExcelFormat)
+  fullName: WeihanLi.Npoi.NpoiExtensions.ToExcelBytes<TEntity>(System.Collections.Generic.IEnumerable<TEntity>, WeihanLi.Npoi.ExcelFormat)
+  fullName.vb: WeihanLi.Npoi.NpoiExtensions.ToExcelBytes(Of TEntity)(System.Collections.Generic.IEnumerable(Of TEntity), WeihanLi.Npoi.ExcelFormat)
+  nameWithType: NpoiExtensions.ToExcelBytes<TEntity>(IEnumerable<TEntity>, ExcelFormat)
+  nameWithType.vb: NpoiExtensions.ToExcelBytes(Of TEntity)(IEnumerable(Of TEntity), ExcelFormat)
+- uid: WeihanLi.Npoi.NpoiExtensions.ToExcelFile(DataTable,System.String)
+  name: ToExcelFile(DataTable, String)
+  href: docs/api/WeihanLi.Npoi.NpoiExtensions.html#WeihanLi_Npoi_NpoiExtensions_ToExcelFile_DataTable_System_String_
+  commentId: M:WeihanLi.Npoi.NpoiExtensions.ToExcelFile(DataTable,System.String)
+  fullName: WeihanLi.Npoi.NpoiExtensions.ToExcelFile(DataTable, System.String)
+  nameWithType: NpoiExtensions.ToExcelFile(DataTable, String)
+- uid: WeihanLi.Npoi.NpoiExtensions.ToExcelFile(DataTable,System.String,ExcelSetting)
+  name: ToExcelFile(DataTable, String, ExcelSetting)
+  href: docs/api/WeihanLi.Npoi.NpoiExtensions.html#WeihanLi_Npoi_NpoiExtensions_ToExcelFile_DataTable_System_String_ExcelSetting_
+  commentId: M:WeihanLi.Npoi.NpoiExtensions.ToExcelFile(DataTable,System.String,ExcelSetting)
+  fullName: WeihanLi.Npoi.NpoiExtensions.ToExcelFile(DataTable, System.String, ExcelSetting)
+  nameWithType: NpoiExtensions.ToExcelFile(DataTable, String, ExcelSetting)
+- uid: WeihanLi.Npoi.NpoiExtensions.ToExcelFile*
+  name: ToExcelFile
+  href: docs/api/WeihanLi.Npoi.NpoiExtensions.html#WeihanLi_Npoi_NpoiExtensions_ToExcelFile_
+  commentId: Overload:WeihanLi.Npoi.NpoiExtensions.ToExcelFile
+  isSpec: "True"
+  fullName: WeihanLi.Npoi.NpoiExtensions.ToExcelFile
+  nameWithType: NpoiExtensions.ToExcelFile
+- uid: WeihanLi.Npoi.NpoiExtensions.ToExcelFile``1(System.Collections.Generic.IEnumerable{``0},System.String)
+  name: ToExcelFile<TEntity>(IEnumerable<TEntity>, String)
+  href: docs/api/WeihanLi.Npoi.NpoiExtensions.html#WeihanLi_Npoi_NpoiExtensions_ToExcelFile__1_System_Collections_Generic_IEnumerable___0__System_String_
+  commentId: M:WeihanLi.Npoi.NpoiExtensions.ToExcelFile``1(System.Collections.Generic.IEnumerable{``0},System.String)
+  name.vb: ToExcelFile(Of TEntity)(IEnumerable(Of TEntity), String)
+  fullName: WeihanLi.Npoi.NpoiExtensions.ToExcelFile<TEntity>(System.Collections.Generic.IEnumerable<TEntity>, System.String)
+  fullName.vb: WeihanLi.Npoi.NpoiExtensions.ToExcelFile(Of TEntity)(System.Collections.Generic.IEnumerable(Of TEntity), System.String)
+  nameWithType: NpoiExtensions.ToExcelFile<TEntity>(IEnumerable<TEntity>, String)
+  nameWithType.vb: NpoiExtensions.ToExcelFile(Of TEntity)(IEnumerable(Of TEntity), String)
+- uid: WeihanLi.Npoi.NpoiExtensions.ToExcelStream(DataTable,System.IO.Stream)
+  name: ToExcelStream(DataTable, Stream)
+  href: docs/api/WeihanLi.Npoi.NpoiExtensions.html#WeihanLi_Npoi_NpoiExtensions_ToExcelStream_DataTable_System_IO_Stream_
+  commentId: M:WeihanLi.Npoi.NpoiExtensions.ToExcelStream(DataTable,System.IO.Stream)
+  fullName: WeihanLi.Npoi.NpoiExtensions.ToExcelStream(DataTable, System.IO.Stream)
+  nameWithType: NpoiExtensions.ToExcelStream(DataTable, Stream)
+- uid: WeihanLi.Npoi.NpoiExtensions.ToExcelStream(DataTable,System.IO.Stream,WeihanLi.Npoi.ExcelFormat)
+  name: ToExcelStream(DataTable, Stream, ExcelFormat)
+  href: docs/api/WeihanLi.Npoi.NpoiExtensions.html#WeihanLi_Npoi_NpoiExtensions_ToExcelStream_DataTable_System_IO_Stream_WeihanLi_Npoi_ExcelFormat_
+  commentId: M:WeihanLi.Npoi.NpoiExtensions.ToExcelStream(DataTable,System.IO.Stream,WeihanLi.Npoi.ExcelFormat)
+  fullName: WeihanLi.Npoi.NpoiExtensions.ToExcelStream(DataTable, System.IO.Stream, WeihanLi.Npoi.ExcelFormat)
+  nameWithType: NpoiExtensions.ToExcelStream(DataTable, Stream, ExcelFormat)
+- uid: WeihanLi.Npoi.NpoiExtensions.ToExcelStream(DataTable,System.IO.Stream,WeihanLi.Npoi.ExcelFormat,ExcelSetting)
+  name: ToExcelStream(DataTable, Stream, ExcelFormat, ExcelSetting)
+  href: docs/api/WeihanLi.Npoi.NpoiExtensions.html#WeihanLi_Npoi_NpoiExtensions_ToExcelStream_DataTable_System_IO_Stream_WeihanLi_Npoi_ExcelFormat_ExcelSetting_
+  commentId: M:WeihanLi.Npoi.NpoiExtensions.ToExcelStream(DataTable,System.IO.Stream,WeihanLi.Npoi.ExcelFormat,ExcelSetting)
+  fullName: WeihanLi.Npoi.NpoiExtensions.ToExcelStream(DataTable, System.IO.Stream, WeihanLi.Npoi.ExcelFormat, ExcelSetting)
+  nameWithType: NpoiExtensions.ToExcelStream(DataTable, Stream, ExcelFormat, ExcelSetting)
+- uid: WeihanLi.Npoi.NpoiExtensions.ToExcelStream*
+  name: ToExcelStream
+  href: docs/api/WeihanLi.Npoi.NpoiExtensions.html#WeihanLi_Npoi_NpoiExtensions_ToExcelStream_
+  commentId: Overload:WeihanLi.Npoi.NpoiExtensions.ToExcelStream
+  isSpec: "True"
+  fullName: WeihanLi.Npoi.NpoiExtensions.ToExcelStream
+  nameWithType: NpoiExtensions.ToExcelStream
+- uid: WeihanLi.Npoi.NpoiExtensions.ToExcelStream``1(System.Collections.Generic.IEnumerable{``0},System.IO.Stream)
+  name: ToExcelStream<TEntity>(IEnumerable<TEntity>, Stream)
+  href: docs/api/WeihanLi.Npoi.NpoiExtensions.html#WeihanLi_Npoi_NpoiExtensions_ToExcelStream__1_System_Collections_Generic_IEnumerable___0__System_IO_Stream_
+  commentId: M:WeihanLi.Npoi.NpoiExtensions.ToExcelStream``1(System.Collections.Generic.IEnumerable{``0},System.IO.Stream)
+  name.vb: ToExcelStream(Of TEntity)(IEnumerable(Of TEntity), Stream)
+  fullName: WeihanLi.Npoi.NpoiExtensions.ToExcelStream<TEntity>(System.Collections.Generic.IEnumerable<TEntity>, System.IO.Stream)
+  fullName.vb: WeihanLi.Npoi.NpoiExtensions.ToExcelStream(Of TEntity)(System.Collections.Generic.IEnumerable(Of TEntity), System.IO.Stream)
+  nameWithType: NpoiExtensions.ToExcelStream<TEntity>(IEnumerable<TEntity>, Stream)
+  nameWithType.vb: NpoiExtensions.ToExcelStream(Of TEntity)(IEnumerable(Of TEntity), Stream)
+- uid: WeihanLi.Npoi.NpoiExtensions.ToExcelStream``1(System.Collections.Generic.IEnumerable{``0},System.IO.Stream,WeihanLi.Npoi.ExcelFormat)
+  name: ToExcelStream<TEntity>(IEnumerable<TEntity>, Stream, ExcelFormat)
+  href: docs/api/WeihanLi.Npoi.NpoiExtensions.html#WeihanLi_Npoi_NpoiExtensions_ToExcelStream__1_System_Collections_Generic_IEnumerable___0__System_IO_Stream_WeihanLi_Npoi_ExcelFormat_
+  commentId: M:WeihanLi.Npoi.NpoiExtensions.ToExcelStream``1(System.Collections.Generic.IEnumerable{``0},System.IO.Stream,WeihanLi.Npoi.ExcelFormat)
+  name.vb: ToExcelStream(Of TEntity)(IEnumerable(Of TEntity), Stream, ExcelFormat)
+  fullName: WeihanLi.Npoi.NpoiExtensions.ToExcelStream<TEntity>(System.Collections.Generic.IEnumerable<TEntity>, System.IO.Stream, WeihanLi.Npoi.ExcelFormat)
+  fullName.vb: WeihanLi.Npoi.NpoiExtensions.ToExcelStream(Of TEntity)(System.Collections.Generic.IEnumerable(Of TEntity), System.IO.Stream, WeihanLi.Npoi.ExcelFormat)
+  nameWithType: NpoiExtensions.ToExcelStream<TEntity>(IEnumerable<TEntity>, Stream, ExcelFormat)
+  nameWithType.vb: NpoiExtensions.ToExcelStream(Of TEntity)(IEnumerable(Of TEntity), Stream, ExcelFormat)
+- uid: WeihanLi.Npoi.NpoiExtensions.WriteToFile(IWorkbook,System.String)
+  name: WriteToFile(IWorkbook, String)
+  href: docs/api/WeihanLi.Npoi.NpoiExtensions.html#WeihanLi_Npoi_NpoiExtensions_WriteToFile_IWorkbook_System_String_
+  commentId: M:WeihanLi.Npoi.NpoiExtensions.WriteToFile(IWorkbook,System.String)
+  fullName: WeihanLi.Npoi.NpoiExtensions.WriteToFile(IWorkbook, System.String)
+  nameWithType: NpoiExtensions.WriteToFile(IWorkbook, String)
+- uid: WeihanLi.Npoi.NpoiExtensions.WriteToFile*
+  name: WriteToFile
+  href: docs/api/WeihanLi.Npoi.NpoiExtensions.html#WeihanLi_Npoi_NpoiExtensions_WriteToFile_
+  commentId: Overload:WeihanLi.Npoi.NpoiExtensions.WriteToFile
+  isSpec: "True"
+  fullName: WeihanLi.Npoi.NpoiExtensions.WriteToFile
+  nameWithType: NpoiExtensions.WriteToFile
+- uid: WeihanLi.Npoi.NpoiRowCollection
+  name: NpoiRowCollection
+  href: docs/api/WeihanLi.Npoi.NpoiRowCollection.html
+  commentId: T:WeihanLi.Npoi.NpoiRowCollection
+  fullName: WeihanLi.Npoi.NpoiRowCollection
+  nameWithType: NpoiRowCollection
+- uid: WeihanLi.Npoi.NpoiRowCollection.#ctor(ISheet)
+  name: NpoiRowCollection(ISheet)
+  href: docs/api/WeihanLi.Npoi.NpoiRowCollection.html#WeihanLi_Npoi_NpoiRowCollection__ctor_ISheet_
+  commentId: M:WeihanLi.Npoi.NpoiRowCollection.#ctor(ISheet)
+  fullName: WeihanLi.Npoi.NpoiRowCollection.NpoiRowCollection(ISheet)
+  nameWithType: NpoiRowCollection.NpoiRowCollection(ISheet)
+- uid: WeihanLi.Npoi.NpoiRowCollection.#ctor*
+  name: NpoiRowCollection
+  href: docs/api/WeihanLi.Npoi.NpoiRowCollection.html#WeihanLi_Npoi_NpoiRowCollection__ctor_
+  commentId: Overload:WeihanLi.Npoi.NpoiRowCollection.#ctor
+  isSpec: "True"
+  fullName: WeihanLi.Npoi.NpoiRowCollection.NpoiRowCollection
+  nameWithType: NpoiRowCollection.NpoiRowCollection
+- uid: WeihanLi.Npoi.NpoiRowCollection.Count
+  name: Count
+  href: docs/api/WeihanLi.Npoi.NpoiRowCollection.html#WeihanLi_Npoi_NpoiRowCollection_Count
+  commentId: P:WeihanLi.Npoi.NpoiRowCollection.Count
+  fullName: WeihanLi.Npoi.NpoiRowCollection.Count
+  nameWithType: NpoiRowCollection.Count
+- uid: WeihanLi.Npoi.NpoiRowCollection.Count*
+  name: Count
+  href: docs/api/WeihanLi.Npoi.NpoiRowCollection.html#WeihanLi_Npoi_NpoiRowCollection_Count_
+  commentId: Overload:WeihanLi.Npoi.NpoiRowCollection.Count
+  isSpec: "True"
+  fullName: WeihanLi.Npoi.NpoiRowCollection.Count
+  nameWithType: NpoiRowCollection.Count
+- uid: WeihanLi.Npoi.NpoiRowCollection.GetEnumerator
+  name: GetEnumerator()
+  href: docs/api/WeihanLi.Npoi.NpoiRowCollection.html#WeihanLi_Npoi_NpoiRowCollection_GetEnumerator
+  commentId: M:WeihanLi.Npoi.NpoiRowCollection.GetEnumerator
+  fullName: WeihanLi.Npoi.NpoiRowCollection.GetEnumerator()
+  nameWithType: NpoiRowCollection.GetEnumerator()
+- uid: WeihanLi.Npoi.NpoiRowCollection.GetEnumerator*
+  name: GetEnumerator
+  href: docs/api/WeihanLi.Npoi.NpoiRowCollection.html#WeihanLi_Npoi_NpoiRowCollection_GetEnumerator_
+  commentId: Overload:WeihanLi.Npoi.NpoiRowCollection.GetEnumerator
+  isSpec: "True"
+  fullName: WeihanLi.Npoi.NpoiRowCollection.GetEnumerator
+  nameWithType: NpoiRowCollection.GetEnumerator
