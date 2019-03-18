@@ -70,7 +70,7 @@ namespace WeihanLi.Npoi
                     while ((strLine = sr.ReadLine()).IsNotNullOrEmpty())
                     {
                         Debug.Assert(strLine != null, nameof(strLine) + " is null");
-                        var rowData = strLine.Trim().Split(new[] { InternalConstants.CsvSeparator }, StringSplitOptions.RemoveEmptyEntries);
+                        var rowData = strLine.Trim().Split(new[] { InternalConstants.CsvSeparatorCharacter });
                         var dtColumns = rowData.Length;
                         if (isFirst)
                         {
@@ -131,7 +131,7 @@ namespace WeihanLi.Npoi
             }
             else
             {
-                var propertyColumnDictionary = InternalHelper.GetExcelConfigurationMapping<TEntity>().PropertyConfigurationDictionary.Where(_ => !_.Value.PropertySetting.IsIgnored).ToDictionary(_ => _.Key, _ => _.Value.PropertySetting);
+                IReadOnlyList<PropertyInfo> props = InternalHelper.GetPropertiesForCsvHelper<TEntity>();
 
                 using (var fs = new FileStream(filePath, FileMode.Open, FileAccess.Read))
                 {
@@ -141,17 +141,9 @@ namespace WeihanLi.Npoi
                         var isFirstLine = true;
                         while ((strLine = sr.ReadLine()).IsNotNullOrEmpty())
                         {
-                            var cols = strLine.Split(new[] { InternalConstants.CsvSeparatorCharactor }, StringSplitOptions.RemoveEmptyEntries);
+                            var cols = strLine.Split(new[] { InternalConstants.CsvSeparatorCharacter });
                             if (isFirstLine)
                             {
-                                for (int i = 0; i < cols.Length; i++)
-                                {
-                                    var col = propertyColumnDictionary.GetPropertySetting(cols[i].Trim());
-                                    if (null != col)
-                                    {
-                                        col.ColumnIndex = i;
-                                    }
-                                }
                                 isFirstLine = false;
                             }
                             else
@@ -160,19 +152,17 @@ namespace WeihanLi.Npoi
                                 if (typeof(TEntity).IsValueType)
                                 {
                                     var obj = (object)entity;// boxing for value types
-                                    foreach (var key in propertyColumnDictionary.Keys)
+                                    for (int i = 0; i < cols.Length; i++)
                                     {
-                                        var colIndex = propertyColumnDictionary[key].ColumnIndex;
-                                        key.GetValueSetter().Invoke(obj, cols[colIndex]);
+                                        props[i].GetValueSetter().Invoke(obj, cols[i].ToOrDefault(props[i].PropertyType));
                                     }
                                     entity = (TEntity)obj;// unboxing
                                 }
                                 else
                                 {
-                                    foreach (var key in propertyColumnDictionary.Keys)
+                                    for (int i = 0; i < cols.Length; i++)
                                     {
-                                        var colIndex = propertyColumnDictionary[key].ColumnIndex;
-                                        key.GetValueSetter().Invoke(entity, cols[colIndex]);
+                                        props[i].GetValueSetter().Invoke(entity, cols[i].ToOrDefault(props[i].PropertyType));
                                     }
                                 }
                                 entities.Add(entity);
@@ -226,20 +216,24 @@ namespace WeihanLi.Npoi
             {
                 return string.Empty;
             }
-            var isBasicType = typeof(TEntity).IsBasicType();
-            IReadOnlyList<PropertyInfo> props = InternalHelper.GetPropertiesForCsvHelper<TEntity>();
-            if (!isBasicType && props.Count == 0)
-            {
-                return string.Empty;
-            }
+
             var data = new StringBuilder();
-            if (includeHeader)
+            var isBasicType = typeof(TEntity).IsBasicType();
+            if (isBasicType)
             {
-                if (isBasicType)
+                if (includeHeader)
                 {
-                    data.Append(InternalConstants.DefaultPropertyNameForBasicType);
+                    data.AppendLine(InternalConstants.DefaultPropertyNameForBasicType);
                 }
-                else
+                foreach (var entity in entities)
+                {
+                    data.AppendLine(Convert.ToString(entity));
+                }
+            }
+            else
+            {
+                IReadOnlyList<PropertyInfo> props = InternalHelper.GetPropertiesForCsvHelper<TEntity>();
+                if (includeHeader)
                 {
                     for (var i = 0; i < props.Count; i++)
                     {
@@ -249,19 +243,8 @@ namespace WeihanLi.Npoi
                         }
                         data.Append(props[i].Name);
                     }
+                    data.AppendLine();
                 }
-                data.AppendLine();
-            }
-
-            if (isBasicType)
-            {
-                foreach (var entity in entities)
-                {
-                    data.AppendLine(Convert.ToString(entity));
-                }
-            }
-            else
-            {
                 foreach (var entity in entities)
                 {
                     for (var i = 0; i < props.Count; i++)

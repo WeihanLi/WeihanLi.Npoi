@@ -1,6 +1,7 @@
 <Project>  
   <Import Project="sign.props" />
   <Import Project="version.props" />
+  <Import Project="document.props" />
   <PropertyGroup>        
     <TargetFrameworks>netstandard2.0;net45</TargetFrameworks>  
     <Title>WeihanLi.Npoi</Title>
@@ -20,9 +21,10 @@
       Custom Attribute/FluentAPI configuration
     </Description>
     <PackageReleaseNotes>
+      fix csv custom columnIndex bug
       Optimize csv operation for entity list
     </PackageReleaseNotes>
-    <Copyright>Copyright 2018 WeihanLi</Copyright>
+    <Copyright>Copyright 2018-2019 WeihanLi</Copyright>
     <GeneratePackageOnBuild Condition="'$(Configuration)'=='Release'">True</GeneratePackageOnBuild>
   </PropertyGroup>
 </Project>
