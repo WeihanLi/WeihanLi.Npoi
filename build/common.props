@@ -22,6 +22,7 @@
     </Description>
     <PackageReleaseNotes>
       fix csv custom columnIndex bug
+      Optimize csv operation for entity list
     </PackageReleaseNotes>
     <Copyright>Copyright 2018-2019 WeihanLi</Copyright>
     <GeneratePackageOnBuild Condition="'$(Configuration)'=='Release'">True</GeneratePackageOnBuild>
