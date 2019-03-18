@@ -21,9 +21,9 @@
       Custom Attribute/FluentAPI configuration
     </Description>
     <PackageReleaseNotes>
-      Optimize csv operation for entity list
+      fix csv custom columnIndex bug
     </PackageReleaseNotes>
-    <Copyright>Copyright 2018 WeihanLi</Copyright>
+    <Copyright>Copyright 2018-2019 WeihanLi</Copyright>
     <GeneratePackageOnBuild Condition="'$(Configuration)'=='Release'">True</GeneratePackageOnBuild>
   </PropertyGroup>
 </Project>

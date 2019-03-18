@@ -13,9 +13,9 @@
         internal const string CsvSeparator = ",";
 
         /// <summary>
-        /// CsvSeparatorCharactor
+        /// CsvSeparatorCharacter
         /// </summary>
-        internal const char CsvSeparatorCharactor = ',';
+        internal const char CsvSeparatorCharacter = ',';
 
         /// <summary>
         /// DefaultPropertyNameForBasicType
