@@ -279,8 +279,7 @@ __pycache__/
 *.pyc
 
 # Cake - Uncomment if you are using it
-# tools/**
-# !tools/packages.config
+tools/**
 
 # Telerik's JustMock configuration file
 *.jmconfig

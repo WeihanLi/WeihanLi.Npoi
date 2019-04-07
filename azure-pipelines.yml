@@ -1,0 +1,20 @@
+# ASP.NET Core
+# Build and test ASP.NET Core projects targeting .NET Core.
+# Add steps that run tests, create a NuGet package, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/dotnet-core
+
+trigger:
+- '*'
+
+pool:
+  vmImage: 'vs2017-win2016'
+
+steps:
+- script: dotnet --info
+  displayName: 'dotnet info'
+
+- powershell: ./build.ps1
+  displayName: 'Powershell Script'
+  env:
+    Nuget__ApiKey: $(nugetApiKey)
+    Nuget__SourceUrl: $(nugetSourceUrl)
