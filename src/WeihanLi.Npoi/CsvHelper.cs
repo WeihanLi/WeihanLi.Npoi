@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Reflection;
 using System.Text;
 using WeihanLi.Extensions;
@@ -212,7 +211,7 @@ namespace WeihanLi.Npoi
 
         private static string GetCsvText<TEntity>(this IEnumerable<TEntity> entities, bool includeHeader)
         {
-            if (entities == null || !entities.Any())
+            if (entities == null)
             {
                 return string.Empty;
             }
@@ -253,7 +252,12 @@ namespace WeihanLi.Npoi
                         {
                             data.Append(InternalConstants.CsvSeparator);
                         }
-                        data.Append(props[i].GetValueGetter().Invoke(entity));
+                        // https://stackoverflow.com/questions/4617935/is-there-a-way-to-include-commas-in-csv-columns-without-breaking-the-formatting
+                        var val = props[i].GetValueGetter().Invoke(entity)?.ToString().Replace("\"", "\"\"");
+                        if (!string.IsNullOrEmpty(val))
+                        {
+                            data.Append(val.IndexOf(',') > -1 ? $"\"{val}\"" : val);
+                        }
                     }
                     data.AppendLine();
                 }
@@ -291,7 +295,12 @@ namespace WeihanLi.Npoi
                     {
                         data.Append(InternalConstants.CsvSeparator);
                     }
-                    data.Append(dataTable.Rows[i][j]);
+                    // https://stackoverflow.com/questions/4617935/is-there-a-way-to-include-commas-in-csv-columns-without-breaking-the-formatting
+                    var val = dataTable.Rows[i][j]?.ToString().Replace("\"", "\"\"");
+                    if (!string.IsNullOrEmpty(val))
+                    {
+                        data.Append(val.IndexOf(',') > -1 ? $"\"{val}\"" : val);
+                    }
                 }
                 data.AppendLine();
             }
