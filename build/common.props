@@ -16,9 +16,7 @@
     <RepositoryType>git</RepositoryType>
     <PackageTags>npoi excel csv</PackageTags>
     <Description>
-      NpoiExtensions for .net45 and .netstandard2.0 
-      import/export excel or csv to/from DataTable or entity list
-      Custom Attribute/FluentAPI configuration
+      Csv escape when export
     </Description>
     <PackageReleaseNotes>
       fix csv custom columnIndex bug
