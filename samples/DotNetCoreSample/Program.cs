@@ -58,6 +58,8 @@ namespace DotNetCoreSample
             var csvFilePath = $@"{Environment.GetEnvironmentVariable("USERPROFILE")}\Desktop\temp\test\test.csv";
             entities.ToCsvFile(csvFilePath);
             var entities1 = CsvHelper.ToEntityList<TestEntity>(csvFilePath);
+            entities1[0].SettingValue = "value2,345";
+            entities1.ToCsvFile(csvFilePath.Replace(".csv", ".1.csv"));
 
             entities.ToExcelFile(csvFilePath.Replace(".csv", ".xlsx"));
 
