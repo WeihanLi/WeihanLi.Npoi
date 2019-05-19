@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Reflection;
 using System.Text;
 using WeihanLi.Extensions;
@@ -15,6 +14,8 @@ namespace WeihanLi.Npoi
     /// </summary>
     public static class CsvHelper
     {
+        public static char CsvSeparatorCharacter = ',';
+
         /// <summary>
         /// save to csv file
         /// </summary>
@@ -70,8 +71,8 @@ namespace WeihanLi.Npoi
                     while ((strLine = sr.ReadLine()).IsNotNullOrEmpty())
                     {
                         Debug.Assert(strLine != null, nameof(strLine) + " is null");
-                        var rowData = strLine.Trim().Split(new[] { InternalConstants.CsvSeparatorCharacter });
-                        var dtColumns = rowData.Length;
+                        var rowData = ParseLine(strLine);
+                        var dtColumns = rowData.Count;
                         if (isFirst)
                         {
                             for (var i = 0; i < dtColumns; i++)
@@ -141,10 +142,11 @@ namespace WeihanLi.Npoi
                         var isFirstLine = true;
                         while ((strLine = sr.ReadLine()).IsNotNullOrEmpty())
                         {
-                            var cols = strLine.Split(new[] { InternalConstants.CsvSeparatorCharacter });
+                            var cols = ParseLine(strLine);
                             if (isFirstLine)
                             {
                                 isFirstLine = false;
+                                continue;
                             }
                             else
                             {
@@ -152,7 +154,7 @@ namespace WeihanLi.Npoi
                                 if (typeof(TEntity).IsValueType)
                                 {
                                     var obj = (object)entity;// boxing for value types
-                                    for (int i = 0; i < cols.Length; i++)
+                                    for (var i = 0; i < cols.Count; i++)
                                     {
                                         props[i].GetValueSetter().Invoke(obj, cols[i].ToOrDefault(props[i].PropertyType));
                                     }
@@ -160,7 +162,7 @@ namespace WeihanLi.Npoi
                                 }
                                 else
                                 {
-                                    for (int i = 0; i < cols.Length; i++)
+                                    for (var i = 0; i < cols.Count; i++)
                                     {
                                         props[i].GetValueSetter().Invoke(entity, cols[i].ToOrDefault(props[i].PropertyType));
                                     }
@@ -173,6 +175,77 @@ namespace WeihanLi.Npoi
             }
 
             return entities;
+        }
+
+        private static IReadOnlyList<string> ParseLine(string line)
+        {
+            var _columnBuilder = new StringBuilder();
+            var fields = new List<string>();
+
+            var inColumn = false;
+            var inQuotes = false;
+
+            // Iterate through every character in the line
+            for (var i = 0; i < line.Length; i++)
+            {
+                var character = line[i];
+
+                // If we are not currently inside a column
+                if (!inColumn)
+                {
+                    // If the current character is a double quote then the column value is contained within
+                    // double quotes, otherwise append the next character
+                    inColumn = true;
+                    if (character == '"')
+                    {
+                        inQuotes = true;
+                        continue;
+                    }
+                }
+
+                // If we are in between double quotes
+                if (inQuotes)
+                {
+                    if ((i + 1) == line.Length)
+                    {
+                        fields.Add(line[i + 1].ToString());
+                        break;
+                    }
+
+                    if (character == '"' && line[i + 1] == CsvSeparatorCharacter) //结束转义，且后面有可能还有数据
+                    {
+                        fields.Add("");
+                        inQuotes = false;
+                        inColumn = false;
+                        i++; //跳过下一个字符
+                    }
+                    else if (character == '"' && line[i + 1] == '"') //双引号转义
+                    {
+                        i++; //跳过下一个字符
+                    }
+                    else if (character == '"')
+                    {
+                        throw new ArgumentException($"unable to escape {line}");
+                    }
+                }
+                else if (character == CsvSeparatorCharacter)
+                {
+                    inColumn = false;
+                }
+
+                // If we are no longer in the column clear the builder and add the columns to the list
+                if (!inColumn) //结束该元素时inColumn置为false，并且不处理当前字符，直接进行Add
+                {
+                    fields.Add(_columnBuilder.ToString());
+                    _columnBuilder.Clear();
+                }
+                else // append the current column
+                {
+                    _columnBuilder.Append(character);
+                }
+            }
+
+            return fields;
         }
 
         /// <summary>
@@ -212,7 +285,7 @@ namespace WeihanLi.Npoi
 
         private static string GetCsvText<TEntity>(this IEnumerable<TEntity> entities, bool includeHeader)
         {
-            if (entities == null || !entities.Any())
+            if (entities == null)
             {
                 return string.Empty;
             }
@@ -239,7 +312,7 @@ namespace WeihanLi.Npoi
                     {
                         if (i > 0)
                         {
-                            data.Append(InternalConstants.CsvSeparator);
+                            data.Append(CsvSeparatorCharacter);
                         }
                         data.Append(props[i].Name);
                     }
@@ -251,9 +324,14 @@ namespace WeihanLi.Npoi
                     {
                         if (i > 0)
                         {
-                            data.Append(InternalConstants.CsvSeparator);
+                            data.Append(CsvSeparatorCharacter);
                         }
-                        data.Append(props[i].GetValueGetter().Invoke(entity));
+                        // https://stackoverflow.com/questions/4617935/is-there-a-way-to-include-commas-in-csv-columns-without-breaking-the-formatting
+                        var val = props[i].GetValueGetter().Invoke(entity)?.ToString().Replace("\"", "\"\"");
+                        if (!string.IsNullOrEmpty(val))
+                        {
+                            data.Append(val.IndexOf(',') > -1 ? $"\"{val}\"" : val);
+                        }
                     }
                     data.AppendLine();
                 }
@@ -277,7 +355,7 @@ namespace WeihanLi.Npoi
                 {
                     if (i > 0)
                     {
-                        data.Append(InternalConstants.CsvSeparator);
+                        data.Append(CsvSeparatorCharacter);
                     }
                     data.Append(dataTable.Columns[i].ColumnName);
                 }
@@ -289,9 +367,14 @@ namespace WeihanLi.Npoi
                 {
                     if (i > 0)
                     {
-                        data.Append(InternalConstants.CsvSeparator);
+                        data.Append(CsvSeparatorCharacter);
                     }
-                    data.Append(dataTable.Rows[i][j]);
+                    // https://stackoverflow.com/questions/4617935/is-there-a-way-to-include-commas-in-csv-columns-without-breaking-the-formatting
+                    var val = dataTable.Rows[i][j]?.ToString().Replace("\"", "\"\"");
+                    if (!string.IsNullOrEmpty(val))
+                    {
+                        data.Append(val.IndexOf(',') > -1 ? $"\"{val}\"" : val);
+                    }
                 }
                 data.AppendLine();
             }
