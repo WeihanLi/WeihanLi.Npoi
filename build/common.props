@@ -16,7 +16,7 @@
     <RepositoryType>git</RepositoryType>
     <PackageTags>npoi excel csv</PackageTags>
     <Description>
-      Csv escape when export
+      add support for csv escape
     </Description>
     <PackageReleaseNotes>
       fix csv custom columnIndex bug

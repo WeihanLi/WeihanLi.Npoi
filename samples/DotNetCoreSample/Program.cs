@@ -61,6 +61,8 @@ namespace DotNetCoreSample
             entities1[0].SettingValue = "value2,345";
             entities1.ToCsvFile(csvFilePath.Replace(".csv", ".1.csv"));
 
+            var entities2 = CsvHelper.ToEntityList<TestEntity>(csvFilePath.Replace(".csv", ".1.csv"));
+
             entities.ToExcelFile(csvFilePath.Replace(".csv", ".xlsx"));
 
             var vals = new[] { 1, 2, 3, 5, 4 };
