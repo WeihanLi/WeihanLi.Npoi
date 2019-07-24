@@ -1,6 +1,4 @@
-<Project>  
-  <Import Project="sign.props" />
-  <Import Project="version.props" />
+<Project>
   <Import Project="document.props" />
   <PropertyGroup>        
     <TargetFrameworks>netstandard2.0;net45</TargetFrameworks>  
