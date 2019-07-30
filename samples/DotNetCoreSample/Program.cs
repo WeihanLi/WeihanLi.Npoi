@@ -97,7 +97,7 @@ namespace DotNetCoreSample
                 .HasColumnIndex(1);
 
             setting.Property(_ => _.DisplayName)
-                .HasColumnFormatter(s => $"AAA_{s}")
+                .HasColumnFormatter((entity, displayName) => $"AAA_{entity.SettingName}_{displayName}")
                 .HasColumnTitle("DisplayName")
                 .HasColumnIndex(2);
 

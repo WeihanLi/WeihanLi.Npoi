@@ -39,7 +39,7 @@ namespace WeihanLi.Npoi
                     column.Title = propertyInfo.Name;
                 }
 
-                var propertySettingType = typeof(PropertySetting<>).MakeGenericType(propertyInfo.PropertyType);
+                var propertySettingType = typeof(PropertySetting<,>).MakeGenericType(type, propertyInfo.PropertyType);
                 var propertySetting = Activator.CreateInstance(propertySettingType);
                 propertySettingType.GetProperty("ColumnTitle")?.GetSetMethod()?.Invoke(propertySetting, new object[] { column.PropertySetting.ColumnTitle });
                 propertySettingType.GetProperty("ColumnIndex")?.GetSetMethod()?.Invoke(propertySetting, new object[] { column.PropertySetting.ColumnIndex });
@@ -47,7 +47,7 @@ namespace WeihanLi.Npoi
                 propertySettingType.GetProperty("IsIgnored")?.GetSetMethod()?.Invoke(propertySetting, new object[] { column.PropertySetting.IsIgnored });
 
                 var propertyConfigurationType =
-                    typeof(PropertyConfiguration<>).MakeGenericType(propertyInfo.PropertyType);
+                    typeof(PropertyConfiguration<,>).MakeGenericType(type, propertyInfo.PropertyType);
                 var propertyConfiguration = Activator.CreateInstance(propertyConfigurationType, new object[] { propertySetting });
 
                 dic.Add(propertyInfo, (PropertyConfiguration)propertyConfiguration);

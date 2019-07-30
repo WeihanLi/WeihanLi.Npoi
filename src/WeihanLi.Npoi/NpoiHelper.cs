@@ -17,10 +17,12 @@ namespace WeihanLi.Npoi
         private readonly IReadOnlyList<SheetSetting> _sheetSettings;
         private readonly IDictionary<PropertyInfo, PropertySetting> _propertyColumnDictionary;
         private readonly ExcelConfiguration<TEntity> _excelConfiguration;
+        private readonly Type _entityType;
 
         internal NpoiHelper()
         {
-            _excelConfiguration = (ExcelConfiguration<TEntity>)InternalCache.TypeExcelConfigurationDictionary.GetOrAdd(typeof(TEntity),
+            _entityType = typeof(TEntity);
+            _excelConfiguration = (ExcelConfiguration<TEntity>)InternalCache.TypeExcelConfigurationDictionary.GetOrAdd(_entityType,
                 t => InternalHelper.GetExcelConfigurationMapping<TEntity>());
 
             _sheetSettings = _excelConfiguration.SheetSettings.AsReadOnly();
@@ -156,18 +158,18 @@ namespace WeihanLi.Npoi
                 foreach (var key in _propertyColumnDictionary.Keys)
                 {
                     // apply custom formatterFunc
-                    var propertyType = typeof(PropertySetting<>).MakeGenericType(key.PropertyType);
+                    var propertyType = typeof(PropertySetting<,>).MakeGenericType(_entityType, key.PropertyType);
 
                     var propertyValue = key.GetValueGetter<TEntity>().Invoke(entityList[i]);
                     var formatterFunc = propertyType.GetProperty("ColumnFormatterFunc")?.GetValue(_propertyColumnDictionary[key]);
                     if (null != formatterFunc)
                     {
-                        var funcType = typeof(Func<,>).MakeGenericType(key.PropertyType, typeof(object));
+                        var funcType = typeof(Func<,,>).MakeGenericType(_entityType, key.PropertyType, typeof(object));
                         var method = funcType.GetProperty("Method")?.GetValue(formatterFunc) as MethodInfo;
                         var target = funcType.GetProperty("Target")?.GetValue(formatterFunc);
 
                         if (null != method && target != null)
-                            propertyValue = method.Invoke(target, new[] { propertyValue.To(key.PropertyType) });
+                            propertyValue = method.Invoke(target, new[] { entityList[i], propertyValue });
                     }
 
                     row.CreateCell(_propertyColumnDictionary[key].ColumnIndex).SetCellValue(propertyValue, _propertyColumnDictionary[key].ColumnFormatter);

@@ -119,7 +119,7 @@ namespace WeihanLi.Npoi.Configurations
         /// <returns>The <see cref="IPropertyConfiguration"/>.</returns>
         /// <param name="propertyExpression">The property expression.</param>
         /// <typeparam name="TProperty">The type of parameter.</typeparam>
-        public IPropertyConfiguration<TProperty> Property<TProperty>(Expression<Func<TEntity, TProperty>> propertyExpression)
+        public IPropertyConfiguration<TEntity, TProperty> Property<TProperty>(Expression<Func<TEntity, TProperty>> propertyExpression)
         {
             var propertyName = propertyExpression.GetMemberInfo().Name;
             var property = _entityType.GetProperty(propertyName);
@@ -127,7 +127,7 @@ namespace WeihanLi.Npoi.Configurations
             {
                 throw new InvalidOperationException($"the property [{propertyName}] does not exists");
             }
-            return (IPropertyConfiguration<TProperty>)PropertyConfigurationDictionary[property];
+            return (IPropertyConfiguration<TEntity, TProperty>)PropertyConfigurationDictionary[property];
         }
 
         #endregion Property

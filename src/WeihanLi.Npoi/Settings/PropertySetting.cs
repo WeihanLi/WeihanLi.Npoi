@@ -28,11 +28,11 @@ namespace WeihanLi.Npoi.Settings
         public bool IsIgnored { get; set; }
     }
 
-    internal class PropertySetting<TProperty> : PropertySetting
+    internal class PropertySetting<TEntity, TProperty> : PropertySetting
     {
         /// <summary>
         /// ColumnFormatterFunc
         /// </summary>
-        public Func<TProperty, object> ColumnFormatterFunc { get; set; }
+        public Func<TEntity, TProperty, object> ColumnFormatterFunc { get; set; }
     }
 }

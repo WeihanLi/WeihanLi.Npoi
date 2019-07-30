@@ -11,17 +11,17 @@ namespace WeihanLi.Npoi.Configurations
         public PropertyConfiguration(PropertySetting propertySetting) => PropertySetting = propertySetting;
     }
 
-    internal class PropertyConfiguration<TProperty> : PropertyConfiguration, IPropertyConfiguration<TProperty>
+    internal class PropertyConfiguration<TEntity, TProperty> : PropertyConfiguration, IPropertyConfiguration<TEntity, TProperty>
     {
-        internal PropertyConfiguration() : this(new PropertySetting<TProperty>())
+        internal PropertyConfiguration() : this(new PropertySetting<TEntity, TProperty>())
         {
         }
 
-        public PropertyConfiguration(PropertySetting<TProperty> propertySetting) : base(propertySetting) => PropertySetting = propertySetting;
+        public PropertyConfiguration(PropertySetting<TEntity, TProperty> propertySetting) : base(propertySetting) => PropertySetting = propertySetting;
 
-        internal new PropertySetting<TProperty> PropertySetting { get; }
+        internal new PropertySetting<TEntity, TProperty> PropertySetting { get; }
 
-        public IPropertyConfiguration<TProperty> HasColumnIndex(int index)
+        public IPropertyConfiguration<TEntity, TProperty> HasColumnIndex(int index)
         {
             if (index >= 0)
             {
@@ -30,7 +30,7 @@ namespace WeihanLi.Npoi.Configurations
             return this;
         }
 
-        public IPropertyConfiguration<TProperty> HasColumnTitle(string title)
+        public IPropertyConfiguration<TEntity, TProperty> HasColumnTitle(string title)
         {
             if (title.IsNotNullOrWhiteSpace())
             {
@@ -39,7 +39,7 @@ namespace WeihanLi.Npoi.Configurations
             return this;
         }
 
-        public IPropertyConfiguration<TProperty> HasColumnFormatter(string formatter)
+        public IPropertyConfiguration<TEntity, TProperty> HasColumnFormatter(string formatter)
         {
             if (formatter.IsNotNullOrWhiteSpace())
             {
@@ -48,13 +48,13 @@ namespace WeihanLi.Npoi.Configurations
             return this;
         }
 
-        public IPropertyConfiguration<TProperty> Ignored()
+        public IPropertyConfiguration<TEntity, TProperty> Ignored()
         {
             PropertySetting.IsIgnored = true;
             return this;
         }
 
-        public IPropertyConfiguration<TProperty> HasColumnFormatter(Func<TProperty, object> formatterFunc)
+        public IPropertyConfiguration<TEntity, TProperty> HasColumnFormatter(Func<TEntity, TProperty, object> formatterFunc)
         {
             if (formatterFunc != null)
             {
