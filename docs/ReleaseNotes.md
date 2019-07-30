@@ -2,7 +2,7 @@
 
 ## [1.3.7](https://www.nuget.org/packages/WeihanLi.Npoi/1.3.7)
 
-- add `HasColumnFormatter<TProperty>(Func<TProperty, object> columnFormatter)`
+- add `HasColumnFormatter<TEntity, TProperty>(Func<TEntity, TProperty, object> columnFormatter)`
 
 ## [1.3.6](https://www.nuget.org/packages/WeihanLi.Npoi/1.3.6)
 
