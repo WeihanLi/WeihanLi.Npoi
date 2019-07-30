@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Reflection;
@@ -154,7 +155,22 @@ namespace WeihanLi.Npoi
                 var row = sheet.CreateRow(sheetSetting.StartRowIndex + i);
                 foreach (var key in _propertyColumnDictionary.Keys)
                 {
-                    row.CreateCell(_propertyColumnDictionary[key].ColumnIndex).SetCellValue(key.GetValueGetter<TEntity>().Invoke(entityList[i]), _propertyColumnDictionary[key].ColumnFormatter);
+                    // apply custom formatterFunc
+                    var propertyType = typeof(PropertySetting<>).MakeGenericType(key.PropertyType);
+
+                    var propertyValue = key.GetValueGetter<TEntity>().Invoke(entityList[i]);
+                    var formatterFunc = propertyType.GetProperty("ColumnFormatterFunc")?.GetValue(_propertyColumnDictionary[key]);
+                    if (null != formatterFunc)
+                    {
+                        var funcType = typeof(Func<,>).MakeGenericType(key.PropertyType, typeof(object));
+                        var method = funcType.GetProperty("Method")?.GetValue(formatterFunc) as MethodInfo;
+                        var target = funcType.GetProperty("Target")?.GetValue(formatterFunc);
+
+                        if (null != method && target != null)
+                            propertyValue = method.Invoke(target, new[] { propertyValue.To(key.PropertyType) });
+                    }
+
+                    row.CreateCell(_propertyColumnDictionary[key].ColumnIndex).SetCellValue(propertyValue, _propertyColumnDictionary[key].ColumnFormatter);
                 }
             }
 

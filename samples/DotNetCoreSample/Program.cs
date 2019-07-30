@@ -57,6 +57,8 @@ namespace DotNetCoreSample
             };
             var csvFilePath = $@"{Environment.GetEnvironmentVariable("USERPROFILE")}\Desktop\temp\test\test.csv";
             entities.ToCsvFile(csvFilePath);
+            entities.ToExcelFile(csvFilePath.Replace(".csv", ".xlsx"));
+
             var entities1 = CsvHelper.ToEntityList<TestEntity>(csvFilePath);
             entities1[0].SettingValue = "value2,345";
             entities1.ToCsvFile(csvFilePath.Replace(".csv", ".1.csv"));
@@ -95,6 +97,7 @@ namespace DotNetCoreSample
                 .HasColumnIndex(1);
 
             setting.Property(_ => _.DisplayName)
+                .HasColumnFormatter(s => $"AAA_{s}")
                 .HasColumnTitle("DisplayName")
                 .HasColumnIndex(2);
 
@@ -111,9 +114,9 @@ namespace DotNetCoreSample
                 .HasColumnIndex(4)
                 .HasColumnTitle("CreatedBy");
 
+            setting.Property(_ => _.PKID).Ignored();
             setting.Property(_ => _.UpdatedBy).Ignored();
             setting.Property(_ => _.UpdatedTime).Ignored();
-            setting.Property(_ => _.PKID).Ignored();
         }
     }
 

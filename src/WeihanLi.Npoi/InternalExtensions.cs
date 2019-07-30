@@ -26,5 +26,13 @@ namespace WeihanLi.Npoi
         /// <param name="columnTitle">列名称</param>
         /// <returns></returns>
         internal static PropertySetting GetPropertySetting([NotNull]this IDictionary<PropertyInfo, PropertySetting> mappingDictionary, [NotNull]string columnTitle) => mappingDictionary.Values.FirstOrDefault(k => k.ColumnTitle.EqualsIgnoreCase(columnTitle));
+
+        /// <summary>
+        /// 根据列显示名称获取列信息
+        /// </summary>
+        /// <param name="mappingDictionary">mappingDictionary</param>
+        /// <param name="columnTitle">列名称</param>
+        /// <returns></returns>
+        internal static PropertySetting<TProperty> GetPropertySetting<TProperty>([NotNull]this IDictionary<PropertyInfo, PropertySetting> mappingDictionary, [NotNull]string columnTitle) => mappingDictionary.Values.FirstOrDefault(k => k.ColumnTitle.EqualsIgnoreCase(columnTitle)) as PropertySetting<TProperty>;
     }
 }

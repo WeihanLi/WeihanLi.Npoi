@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using WeihanLi.Npoi.Attributes;
@@ -23,10 +24,8 @@ namespace WeihanLi.Npoi
                 {
                     type.GetCustomAttribute<SheetAttribute>()?.SheetSetting?? new SheetSetting()
                 },
-                FilterSetting =
-                    type.GetCustomAttribute<FilterAttribute>()?.FilterSeting,
-                FreezeSettings =
-                    type.GetCustomAttributes<FreezeAttribute>().Select(_ => _.FreezeSetting).ToList()
+                FilterSetting = type.GetCustomAttribute<FilterAttribute>()?.FilterSetting,
+                FreezeSettings = type.GetCustomAttributes<FreezeAttribute>().Select(_ => _.FreezeSetting).ToList()
             };
 
             // propertyInfos
@@ -39,7 +38,19 @@ namespace WeihanLi.Npoi
                 {
                     column.Title = propertyInfo.Name;
                 }
-                dic.Add(propertyInfo, new PropertyConfiguration(column.PropertySetting));
+
+                var propertySettingType = typeof(PropertySetting<>).MakeGenericType(propertyInfo.PropertyType);
+                var propertySetting = Activator.CreateInstance(propertySettingType);
+                propertySettingType.GetProperty("ColumnTitle")?.GetSetMethod()?.Invoke(propertySetting, new object[] { column.PropertySetting.ColumnTitle });
+                propertySettingType.GetProperty("ColumnIndex")?.GetSetMethod()?.Invoke(propertySetting, new object[] { column.PropertySetting.ColumnIndex });
+                propertySettingType.GetProperty("ColumnFormatter")?.GetSetMethod()?.Invoke(propertySetting, new object[] { column.PropertySetting.ColumnFormatter });
+                propertySettingType.GetProperty("IsIgnored")?.GetSetMethod()?.Invoke(propertySetting, new object[] { column.PropertySetting.IsIgnored });
+
+                var propertyConfigurationType =
+                    typeof(PropertyConfiguration<>).MakeGenericType(propertyInfo.PropertyType);
+                var propertyConfiguration = Activator.CreateInstance(propertyConfigurationType, new object[] { propertySetting });
+
+                dic.Add(propertyInfo, (PropertyConfiguration)propertyConfiguration);
             }
             excelConfiguration.PropertyConfigurationDictionary = dic;
             return excelConfiguration;

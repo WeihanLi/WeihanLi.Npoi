@@ -6,17 +6,17 @@ namespace WeihanLi.Npoi.Attributes
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
     public sealed class FilterAttribute : Attribute
     {
-        internal FilterSetting FilterSeting { get; }
+        internal FilterSetting FilterSetting { get; }
 
         /// <summary>
         /// Gets or sets the first column index.
         /// </summary>
-        public int FirstColumn => FilterSeting.FirstColumn;
+        public int FirstColumn => FilterSetting.FirstColumn;
 
         /// <summary>
         /// Gets or sets the last column index.
         /// </summary>
-        public int? LastColumn => FilterSeting.LastColumn;
+        public int? LastColumn => FilterSetting.LastColumn;
 
         public FilterAttribute(int firstColumn) : this(firstColumn, null)
         {
@@ -24,7 +24,7 @@ namespace WeihanLi.Npoi.Attributes
 
         public FilterAttribute(int firstColumn, int? lastColumn)
         {
-            FilterSeting = new FilterSetting(firstColumn, lastColumn);
+            FilterSetting = new FilterSetting(firstColumn, lastColumn);
         }
     }
 }

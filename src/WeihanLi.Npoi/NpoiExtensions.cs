@@ -554,7 +554,7 @@ namespace WeihanLi.Npoi
         /// <returns>cellValue</returns>
         public static object GetCellValue([NotNull] this ICell cell, Type propertyType)
         {
-            if (string.IsNullOrEmpty(cell?.ToString()))
+            if (string.IsNullOrEmpty(cell.ToString()))
             {
                 return propertyType.GetDefaultValue();
             }
