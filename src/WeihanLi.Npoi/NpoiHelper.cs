@@ -157,9 +157,9 @@ namespace WeihanLi.Npoi
                 var row = sheet.CreateRow(sheetSetting.StartRowIndex + i);
                 foreach (var key in _propertyColumnDictionary.Keys)
                 {
+                    // TODO: 使用 缓存/ExpressionTree 优化性能
                     // apply custom formatterFunc
                     var propertyType = typeof(PropertySetting<,>).MakeGenericType(_entityType, key.PropertyType);
-
                     var propertyValue = key.GetValueGetter<TEntity>().Invoke(entityList[i]);
                     var formatterFunc = propertyType.GetProperty("ColumnFormatterFunc")?.GetValue(_propertyColumnDictionary[key]);
                     if (null != formatterFunc)
