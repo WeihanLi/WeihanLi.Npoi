@@ -114,7 +114,7 @@ namespace DotNetCoreSample
                 .HasColumnIndex(4)
                 .HasColumnTitle("CreatedBy");
 
-            setting.Property(_ => _.PKID).Ignored();
+            // setting.Property(_ => _.PKID).Ignored();
             setting.Property(_ => _.UpdatedBy).Ignored();
             setting.Property(_ => _.UpdatedTime).Ignored();
         }
