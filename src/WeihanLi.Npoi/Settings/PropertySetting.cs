@@ -1,4 +1,6 @@
-﻿namespace WeihanLi.Npoi.Settings
+﻿using System;
+
+namespace WeihanLi.Npoi.Settings
 {
     /// <summary>
     /// PropertySetting
@@ -8,21 +10,29 @@
         /// <summary>
         /// ColumnIndex
         /// </summary>
-        internal int ColumnIndex { get; set; }
+        public int ColumnIndex { get; set; }
 
         /// <summary>
         /// Title
         /// </summary>
-        internal string ColumnTitle { get; set; }
+        public string ColumnTitle { get; set; }
 
         /// <summary>
         /// Formatter
         /// </summary>
-        internal string ColumnFormatter { get; set; }
+        public string ColumnFormatter { get; set; }
 
         /// <summary>
         /// the property is ignored.
         /// </summary>
-        internal bool IsIgnored { get; set; }
+        public bool IsIgnored { get; set; }
+    }
+
+    internal class PropertySetting<TEntity, TProperty> : PropertySetting
+    {
+        /// <summary>
+        /// ColumnFormatterFunc
+        /// </summary>
+        public Func<TEntity, TProperty, object> ColumnFormatterFunc { get; set; }
     }
 }

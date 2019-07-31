@@ -13,32 +13,32 @@ namespace WeihanLi.Npoi.Configurations
         IExcelConfiguration HasSheetConfiguration(int sheetIndex, string sheetName, int startRowIndex);
 
         /// <summary>
-        /// 设置冻结区域
-        /// Creates a split (freezepane). Any existing freezepane or split pane is overwritten.
+        /// setting freeze pane
+        /// Creates a split (freeze pane). Any existing freeze pane or split pane is overwritten.
         /// </summary>
-        /// <param name="colSplit">Horizonatal position of split</param>
+        /// <param name="colSplit">Horizontal position of split</param>
         /// <param name="rowSplit">Vertical position of split</param>
         IExcelConfiguration HasFreezePane(int colSplit, int rowSplit);
 
         /// <summary>
-        /// 设置冻结区域
-        /// Creates a split (freezepane). Any existing freezepane or split pane is overwritten.
+        /// setting freeze pane
+        /// Creates a split (freeze pane). Any existing freeze pane or split pane is overwritten.
         /// </summary>
-        /// <param name="colSplit">Horizonatal position of split</param>
+        /// <param name="colSplit">Horizontal position of split</param>
         /// <param name="rowSplit">Vertical position of split</param>
         /// <param name="leftmostColumn">Top row visible in bottom pane</param>
         /// <param name="topRow">Left column visible in right pane</param>
         IExcelConfiguration HasFreezePane(int colSplit, int rowSplit, int leftmostColumn, int topRow);
 
         /// <summary>
-        /// 设置 Filter
+        /// setting filter
         /// </summary>
         /// <param name="firstColumn">firstCol Index of first column</param>
         /// <returns></returns>
         IExcelConfiguration HasFilter(int firstColumn);
 
         /// <summary>
-        /// 设置 Filter
+        /// setting filter
         /// </summary>
         /// <param name="firstColumn">firstCol Index of first column</param>
         /// <param name="lastColumn">lastCol Index of last column (inclusive), must be equal to or larger than {@code firstCol}</param>
@@ -94,6 +94,6 @@ namespace WeihanLi.Npoi.Configurations
 
     public interface IExcelConfiguration<TEntity> : IExcelConfiguration
     {
-        IPropertyConfiguration Property<TProperty>(Expression<Func<TEntity, TProperty>> propertyExpression);
+        IPropertyConfiguration<TEntity, TProperty> Property<TProperty>(Expression<Func<TEntity, TProperty>> propertyExpression);
     }
 }

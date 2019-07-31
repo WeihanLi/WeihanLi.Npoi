@@ -1,10 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using JetBrains.Annotations;
+using NPOI.SS.UserModel;
+using NPOI.SS.Util;
+using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Reflection;
-using JetBrains.Annotations;
-using NPOI.SS.UserModel;
-using NPOI.SS.Util;
 using WeihanLi.Extensions;
 using WeihanLi.Npoi.Configurations;
 using WeihanLi.Npoi.Settings;
@@ -16,10 +17,12 @@ namespace WeihanLi.Npoi
         private readonly IReadOnlyList<SheetSetting> _sheetSettings;
         private readonly IDictionary<PropertyInfo, PropertySetting> _propertyColumnDictionary;
         private readonly ExcelConfiguration<TEntity> _excelConfiguration;
+        private readonly Type _entityType;
 
         internal NpoiHelper()
         {
-            _excelConfiguration = (ExcelConfiguration<TEntity>)InternalCache.TypeExcelConfigurationDictionary.GetOrAdd(typeof(TEntity),
+            _entityType = typeof(TEntity);
+            _excelConfiguration = (ExcelConfiguration<TEntity>)InternalCache.TypeExcelConfigurationDictionary.GetOrAdd(_entityType,
                 t => InternalHelper.GetExcelConfigurationMapping<TEntity>());
 
             _sheetSettings = _excelConfiguration.SheetSettings.AsReadOnly();
@@ -154,7 +157,28 @@ namespace WeihanLi.Npoi
                 var row = sheet.CreateRow(sheetSetting.StartRowIndex + i);
                 foreach (var key in _propertyColumnDictionary.Keys)
                 {
-                    row.CreateCell(_propertyColumnDictionary[key].ColumnIndex).SetCellValue(key.GetValueGetter<TEntity>().Invoke(entityList[i]), _propertyColumnDictionary[key].ColumnFormatter);
+                    var propertyValue = key.GetValueGetter<TEntity>().Invoke(entityList[i]);
+
+                    var formatterFunc = InternalCache.ColumnFormatterFuncCache.GetOrAdd(key, p =>
+                    {
+                        var propertyType = typeof(PropertySetting<,>).MakeGenericType(_entityType, p.PropertyType);
+                        return propertyType.GetProperty("ColumnFormatterFunc")?.GetValueGetter().Invoke(_propertyColumnDictionary[key]);
+                    });
+
+                    if (null != formatterFunc)
+                    {
+                        var funcType = typeof(Func<,,>).MakeGenericType(_entityType, key.PropertyType, typeof(object));
+                        var method = funcType.GetProperty("Method")?.GetValueGetter().Invoke(formatterFunc) as MethodInfo;
+                        var target = funcType.GetProperty("Target")?.GetValueGetter().Invoke(formatterFunc);
+
+                        if (null != method && target != null)
+                        {
+                            // apply custom formatterFunc
+                            propertyValue = method.Invoke(target, new[] { entityList[i], propertyValue });
+                        }
+                    }
+
+                    row.CreateCell(_propertyColumnDictionary[key].ColumnIndex).SetCellValue(propertyValue, _propertyColumnDictionary[key].ColumnFormatter);
                 }
             }
 

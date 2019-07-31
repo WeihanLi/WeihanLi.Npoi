@@ -19,17 +19,17 @@
         /// <summary>
         /// Title
         /// </summary>
-        public string Title { get; set; } = "WeihanLi.Npoi Generated";
+        public string Title { get; set; } = "WeihanLi.Npoi";
 
         /// <summary>
         /// Description
         /// </summary>
-        public string Description { get; set; } = "WeihanLi.Npoi Generated";
+        public string Description { get; set; } = "WeihanLi.Npoi";
 
         /// <summary>
         /// Subject
         /// </summary>
-        public string Subject { get; set; } = "WeihanLi.Npoi Generated";
+        public string Subject { get; set; } = "WeihanLi.Npoi";
 
         /// <summary>
         /// Category

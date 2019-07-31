@@ -3,7 +3,7 @@
     internal sealed class FreezeSetting
     {
         /// <summary>
-        /// Horizonatal position of split
+        /// horizontal position of split
         /// </summary>
         public int ColSplit { get; }
 

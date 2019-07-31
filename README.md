@@ -1,8 +1,10 @@
 # WeihanLi.Npoi [![WeihanLi.Npoi](https://img.shields.io/nuget/v/WeihanLi.Npoi.svg)](https://www.nuget.org/packages/WeihanLi.Npoi/)
 
-## Build
+## Build Status
 
-[![Build Status](https://travis-ci.org/WeihanLi/WeihanLi.Npoi.svg?branch=master)](https://travis-ci.org/WeihanLi/WeihanLi.Npoi)
+[![Travis Build Status](https://travis-ci.org/WeihanLi/WeihanLi.Npoi.svg?branch=master)](https://travis-ci.org/WeihanLi/WeihanLi.Npoi)
+
+[![Azure Pipeline Build Status](https://weihanli.visualstudio.com/Pipelines/_apis/build/status/WeihanLi.WeihanLi.Npoi?branchName=dev)](https://weihanli.visualstudio.com/Pipelines/_build/latest?definitionId=13&branchName=dev)
 
 ## Intro
 
@@ -195,9 +197,9 @@ dotnet add package WeihanLi.Npoi
     }
     ```
 
-1. FluentApi
+1. FluentApi (Recommend)
 
-    You can also use FluentApi above version `1.0.3`
+    You can use FluentApi also
 
     for example:
 
@@ -221,6 +223,7 @@ dotnet add package WeihanLi.Npoi
         .HasColumnIndex(1);
 
     setting.Property(_ => _.DisplayName)
+        .HasColumnFormatter((entity, displayName) => $"AAA_{entity.SettingName}_{displayName}")
         .HasColumnTitle("DisplayName")
         .HasColumnIndex(2);
 

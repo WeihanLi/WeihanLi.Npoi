@@ -119,14 +119,22 @@ namespace WeihanLi.Npoi.Configurations
         /// <returns>The <see cref="IPropertyConfiguration"/>.</returns>
         /// <param name="propertyExpression">The property expression.</param>
         /// <typeparam name="TProperty">The type of parameter.</typeparam>
-        public IPropertyConfiguration Property<TProperty>(Expression<Func<TEntity, TProperty>> propertyExpression) => PropertyConfigurationDictionary[_entityType.GetProperty(propertyExpression.GetMemberInfo().Name)];
+        public IPropertyConfiguration<TEntity, TProperty> Property<TProperty>(Expression<Func<TEntity, TProperty>> propertyExpression)
+        {
+            var propertyName = propertyExpression.GetMemberInfo().Name;
+            var property = _entityType.GetProperty(propertyName);
+            if (property == null)
+            {
+                throw new InvalidOperationException($"the property [{propertyName}] does not exists");
+            }
+            return (IPropertyConfiguration<TEntity, TProperty>)PropertyConfigurationDictionary[property];
+        }
 
         #endregion Property
 
         #region Sheet
 
-        public IExcelConfiguration HasSheetConfiguration(int sheetIndex, string sheetName) =>
-            HasSheetConfiguration(sheetIndex, sheetName, 1);
+        public IExcelConfiguration HasSheetConfiguration(int sheetIndex, string sheetName) => HasSheetConfiguration(sheetIndex, sheetName, 1);
 
         public IExcelConfiguration HasSheetConfiguration(int sheetIndex, string sheetName, int startRowIndex)
         {
