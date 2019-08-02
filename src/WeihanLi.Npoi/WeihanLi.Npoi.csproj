@@ -1,12 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <Import Project="../../build/common.props" />
-  <ItemGroup>
-    <PackageReference Include="JetBrains.Annotations" Version="2018.3.0" PrivateAssets="All" />
-  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="NPOI" Version="2.4.1" />
-    <PackageReference Include="WeihanLi.Common" Version="1.0.23.7-preview-20190730-035518" />
+    <PackageReference Include="WeihanLi.Common" Version="1.0.23.7" />
   </ItemGroup>
   <ItemGroup>
     <Compile Update="Resource.Designer.cs">

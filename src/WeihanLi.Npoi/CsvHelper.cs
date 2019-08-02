@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 using System.Text;
+using WeihanLi.Common.Helpers;
 using WeihanLi.Extensions;
 
 namespace WeihanLi.Npoi
@@ -32,9 +33,16 @@ namespace WeihanLi.Npoi
                 return 0;
             }
             var dir = Path.GetDirectoryName(filePath);
-            if (!Directory.Exists(dir))
+            if (string.IsNullOrWhiteSpace(dir))
             {
-                Directory.CreateDirectory(dir);
+                filePath = ApplicationHelper.MapPath(filePath);
+            }
+            else
+            {
+                if (!Directory.Exists(dir))
+                {
+                    Directory.CreateDirectory(dir);
+                }
             }
             File.WriteAllText(filePath, csvText, Encoding.UTF8);
             return 1;
@@ -71,6 +79,7 @@ namespace WeihanLi.Npoi
                     while ((strLine = sr.ReadLine()).IsNotNullOrEmpty())
                     {
                         Debug.Assert(strLine != null, nameof(strLine) + " is null");
+
                         var rowData = ParseLine(strLine);
                         var dtColumns = rowData.Count;
                         if (isFirst)
@@ -84,7 +93,7 @@ namespace WeihanLi.Npoi
                         else
                         {
                             var dataRow = dt.NewRow();
-                            for (var j = 0; j < dtColumns; j++)
+                            for (var j = 0; j < dt.Columns.Count; j++)
                             {
                                 dataRow[j] = rowData[j];
                             }
@@ -125,6 +134,7 @@ namespace WeihanLi.Npoi
                                 continue;
                             }
                             //
+                            Debug.Assert(strLine != null, nameof(strLine) + " is null");
                             entities.Add(strLine.Trim().To<TEntity>());
                         }
                     }
@@ -154,7 +164,7 @@ namespace WeihanLi.Npoi
                                 if (typeof(TEntity).IsValueType)
                                 {
                                     var obj = (object)entity;// boxing for value types
-                                    for (var i = 0; i < cols.Count; i++)
+                                    for (var i = 0; i < props.Count; i++)
                                     {
                                         props[i].GetValueSetter().Invoke(obj, cols[i].ToOrDefault(props[i].PropertyType));
                                     }
@@ -162,7 +172,7 @@ namespace WeihanLi.Npoi
                                 }
                                 else
                                 {
-                                    for (var i = 0; i < cols.Count; i++)
+                                    for (var i = 0; i < props.Count; i++)
                                     {
                                         props[i].GetValueSetter().Invoke(entity, cols[i].ToOrDefault(props[i].PropertyType));
                                     }
@@ -179,6 +189,9 @@ namespace WeihanLi.Npoi
 
         private static IReadOnlyList<string> ParseLine(string line)
         {
+            if (string.IsNullOrEmpty(line))
+                return new[] { string.Empty };
+
             var _columnBuilder = new StringBuilder();
             var fields = new List<string>();
 
@@ -212,16 +225,15 @@ namespace WeihanLi.Npoi
                         break;
                     }
 
-                    if (character == '"' && line[i + 1] == CsvSeparatorCharacter) //结束转义，且后面有可能还有数据
+                    if (character == '"' && line[i + 1] == CsvSeparatorCharacter) // quotes end
                     {
-                        fields.Add("");
                         inQuotes = false;
                         inColumn = false;
-                        i++; //跳过下一个字符
+                        i++; //skip next
                     }
-                    else if (character == '"' && line[i + 1] == '"') //双引号转义
+                    else if (character == '"' && line[i + 1] == '"') // quotes
                     {
-                        i++; //跳过下一个字符
+                        i++; //skip next
                     }
                     else if (character == '"')
                     {
@@ -234,7 +246,7 @@ namespace WeihanLi.Npoi
                 }
 
                 // If we are no longer in the column clear the builder and add the columns to the list
-                if (!inColumn) //结束该元素时inColumn置为false，并且不处理当前字符，直接进行Add
+                if (!inColumn)
                 {
                     fields.Add(_columnBuilder.ToString());
                     _columnBuilder.Clear();
@@ -244,6 +256,8 @@ namespace WeihanLi.Npoi
                     _columnBuilder.Append(character);
                 }
             }
+
+            fields.Add(_columnBuilder.ToString());
 
             return fields;
         }
@@ -365,7 +379,7 @@ namespace WeihanLi.Npoi
             {
                 for (var j = 0; j < dataTable.Columns.Count; j++)
                 {
-                    if (i > 0)
+                    if (j > 0)
                     {
                         data.Append(CsvSeparatorCharacter);
                     }

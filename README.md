@@ -1,18 +1,21 @@
 # WeihanLi.Npoi [![WeihanLi.Npoi](https://img.shields.io/nuget/v/WeihanLi.Npoi.svg)](https://www.nuget.org/packages/WeihanLi.Npoi/)
 
-## Build
+## Build Status
 
-[![Build Status](https://travis-ci.org/WeihanLi/WeihanLi.Npoi.svg?branch=master)](https://travis-ci.org/WeihanLi/WeihanLi.Npoi)
+[![Travis Build Status](https://travis-ci.org/WeihanLi/WeihanLi.Npoi.svg?branch=master)](https://travis-ci.org/WeihanLi/WeihanLi.Npoi)
+
+[![Azure Pipeline Build Status](https://weihanli.visualstudio.com/Pipelines/_apis/build/status/WeihanLi.WeihanLi.Npoi?branchName=dev)](https://weihanli.visualstudio.com/Pipelines/_build/latest?definitionId=13&branchName=dev)
 
 ## Intro
 
-NpoiExtensions for target framework net45 and netstandard2.0.
+[NPOI](https://github.com/tonyqus/npoi) extensions for target framework net45 and netstandard2.0.
 
 There' a lot of userful extensions for you, core fetures are as follows:
 
 - mapping a excel file data to a `DataTable` or `List<TEntity>`
-- export a `IEnumerable<TEntity>` or `DataTable` to Excel file or Excel file bytes or even write excel file stream to your stream
-- export a `IEnumerable<TEntity>` or `DataTable` to csv file or bytes.
+- export `IEnumerable<TEntity>` or `DataTable` data to Excel file or Excel file bytes or even write excel file stream to your stream
+- export `IEnumerable<TEntity>` or `DataTable` data to csv file or bytes.
+- custom configuration/mappings by Attribute or FluentAPI(inspired by [FluentExcel](https://github.com/Arch/FluentExcel/))
 
 ## Use
 
@@ -195,9 +198,9 @@ dotnet add package WeihanLi.Npoi
     }
     ```
 
-1. FluentApi
+1. FluentApi (Recommend)
 
-    You can also use FluentApi above version `1.0.3`
+    You can use FluentApi also
 
     for example:
 
@@ -221,6 +224,7 @@ dotnet add package WeihanLi.Npoi
         .HasColumnIndex(1);
 
     setting.Property(_ => _.DisplayName)
+        .HasColumnFormatter((entity, displayName) => $"AAA_{entity.SettingName}_{displayName}")
         .HasColumnTitle("DisplayName")
         .HasColumnIndex(2);
 

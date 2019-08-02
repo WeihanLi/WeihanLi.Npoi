@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Concurrent;
+using System.Reflection;
 using WeihanLi.Npoi.Configurations;
 
 namespace WeihanLi.Npoi
@@ -10,5 +11,7 @@ namespace WeihanLi.Npoi
         /// TypeExcelConfigurationCache
         /// </summary>
         internal static readonly ConcurrentDictionary<Type, IExcelConfiguration> TypeExcelConfigurationDictionary = new ConcurrentDictionary<Type, IExcelConfiguration>();
+
+        internal static readonly ConcurrentDictionary<PropertyInfo, object> ColumnFormatterFuncCache = new ConcurrentDictionary<PropertyInfo, object>();
     }
 }
