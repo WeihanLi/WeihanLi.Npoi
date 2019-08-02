@@ -13,6 +13,12 @@ references:
   commentId: T:WeihanLi.Npoi.CsvHelper
   fullName: WeihanLi.Npoi.CsvHelper
   nameWithType: CsvHelper
+- uid: WeihanLi.Npoi.CsvHelper.CsvSeparatorCharacter
+  name: CsvSeparatorCharacter
+  href: docs/api/WeihanLi.Npoi.CsvHelper.html#WeihanLi_Npoi_CsvHelper_CsvSeparatorCharacter
+  commentId: F:WeihanLi.Npoi.CsvHelper.CsvSeparatorCharacter
+  fullName: WeihanLi.Npoi.CsvHelper.CsvSeparatorCharacter
+  nameWithType: CsvHelper.CsvSeparatorCharacter
 - uid: WeihanLi.Npoi.CsvHelper.ToCsvBytes(DataTable)
   name: ToCsvBytes(DataTable)
   href: docs/api/WeihanLi.Npoi.CsvHelper.html#WeihanLi_Npoi_CsvHelper_ToCsvBytes_DataTable_
