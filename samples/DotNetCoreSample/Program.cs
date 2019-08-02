@@ -98,6 +98,7 @@ namespace DotNetCoreSample
 
             setting.HasFilter(0, 1)
                 .HasFreezePane(0, 1, 2, 1);
+
             setting.Property(_ => _.SettingId)
                 .HasColumnIndex(0);
 
@@ -116,7 +117,7 @@ namespace DotNetCoreSample
 
             setting.Property(_ => _.CreatedTime)
                 .HasColumnTitle("CreatedTime")
-                .HasColumnIndex(5)
+                .HasColumnIndex(4)
                 .HasColumnFormatter("yyyy-MM-dd HH:mm:ss");
 
             setting.Property(_ => _.CreatedBy)

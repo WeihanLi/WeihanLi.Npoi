@@ -27,6 +27,8 @@ namespace WeihanLi.Npoi
 
             _sheetSettings = _excelConfiguration.SheetSettings.AsReadOnly();
 
+            InternalHelper.AdjustColumnIndex(_excelConfiguration);
+
             _propertyColumnDictionary = _excelConfiguration.PropertyConfigurationDictionary.Where(_ => !_.Value.PropertySetting.IsIgnored).ToDictionary(_ => _.Key, _ => _.Value.PropertySetting);
         }
 
