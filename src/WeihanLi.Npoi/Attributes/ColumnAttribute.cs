@@ -11,7 +11,17 @@ namespace WeihanLi.Npoi.Attributes
         /// <summary>
         /// ColumnIndex
         /// </summary>
-        public int Index { get => PropertySetting.ColumnIndex; set => PropertySetting.ColumnIndex = value; }
+        public int Index
+        {
+            get => PropertySetting.ColumnIndex;
+            set
+            {
+                if (value >= 0)
+                {
+                    PropertySetting.ColumnIndex = value;
+                }
+            }
+        }
 
         /// <summary>
         /// ColumnTitle
