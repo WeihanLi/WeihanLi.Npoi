@@ -2,7 +2,7 @@
 
 ## [1.3.7](https://www.nuget.org/packages/WeihanLi.Npoi/1.3.7)
 
-- add `HasColumnFormatter<TEntity, TProperty>(Func<TEntity, TProperty, object> columnFormatter)`
+- add `HasColumnFormatter<TEntity, TProperty>(Func<TEntity, TProperty, object> columnFormatter)` to support for custom column output for export
 
 ## [1.3.6](https://www.nuget.org/packages/WeihanLi.Npoi/1.3.6)
 
