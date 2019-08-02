@@ -58,6 +58,11 @@ namespace WeihanLi.Npoi
             return excelConfiguration;
         }
 
+        /// <summary>
+        /// Adjust Column Index
+        /// </summary>
+        /// <typeparam name="TEntity">TEntity</typeparam>
+        /// <param name="excelConfiguration">excelConfiguration</param>
         public static void AdjustColumnIndex<TEntity>(ExcelConfiguration<TEntity> excelConfiguration)
         {
             var colIndexList = new List<int>(excelConfiguration.PropertyConfigurationDictionary.Count);
