@@ -54,6 +54,17 @@ namespace WeihanLi.Npoi
                 dic.Add(propertyInfo, (PropertyConfiguration)propertyConfiguration);
             }
             excelConfiguration.PropertyConfigurationDictionary = dic;
+
+            //AutoAdjustIndex
+            var colIndexList = new List<int>(excelConfiguration.PropertyConfigurationDictionary.Count);
+            foreach (var item in excelConfiguration.PropertyConfigurationDictionary.Values.Where(_ => !_.PropertySetting.IsIgnored))
+            {
+                while (colIndexList.Contains(item.PropertySetting.ColumnIndex))
+                {
+                    item.PropertySetting.ColumnIndex++;
+                }
+                colIndexList.Add(item.PropertySetting.ColumnIndex);
+            }
             return excelConfiguration;
         }
 
@@ -67,9 +78,15 @@ namespace WeihanLi.Npoi
             var configuration = (ExcelConfiguration<TEntity>)InternalCache.TypeExcelConfigurationDictionary.GetOrAdd(typeof(TEntity), t => GetExcelConfigurationMapping<TEntity>());
             return configuration.PropertyConfigurationDictionary
                 .Where(p => !p.Value.PropertySetting.IsIgnored)
-                .OrderBy(p => p.Value.PropertySetting.ColumnIndex)
-                .ThenBy(p => p.Key.Name)
-                .Select(p => p.Key)
+                .Select(_ => new
+                {
+                    _.Key.Name,
+                    _.Value.PropertySetting.ColumnIndex,
+                    Property = _.Key,
+                })
+                .OrderBy(p => p.ColumnIndex)
+                .ThenBy(p => p.Name)
+                .Select(p => p.Property)
                 .ToArray();
         }
     }

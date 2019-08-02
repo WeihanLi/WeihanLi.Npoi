@@ -59,10 +59,19 @@ namespace DotNetCoreSample
             entities.ToCsvFile(csvFilePath);
             entities.ToExcelFile(csvFilePath.Replace(".csv", ".xlsx"));
 
+            var dataTable = entities.ToDataTable();
+            dataTable.ToCsvFile(csvFilePath.Replace(".csv", ".datatable.csv"));
+            var dt = CsvHelper.ToDataTable(csvFilePath.Replace(".csv", ".datatable.csv"));
+            Console.WriteLine(dt.Columns.Count);
             var entities1 = CsvHelper.ToEntityList<TestEntity>(csvFilePath);
+            entities1[1].DisplayName = ",tadadada";
             entities1[0].SettingValue = "value2,345";
             entities1.ToCsvFile(csvFilePath.Replace(".csv", ".1.csv"));
+            entities1.ToDataTable().ToCsvFile(csvFilePath.Replace(".csv", ".1.datatable.csv"));
 
+            var list = CsvHelper.ToEntityList<TestEntity>(csvFilePath.Replace(".csv", ".1.csv"));
+            dt = CsvHelper.ToDataTable(csvFilePath.Replace(".csv", ".1.datatable.csv"));
+            Console.WriteLine(dt.Columns.Count);
             var entities2 = CsvHelper.ToEntityList<TestEntity>(csvFilePath.Replace(".csv", ".1.csv"));
 
             entities.ToExcelFile(csvFilePath.Replace(".csv", ".xlsx"));

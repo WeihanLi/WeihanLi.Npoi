@@ -1,11 +1,11 @@
-﻿using JetBrains.Annotations;
-using NPOI.SS.UserModel;
-using NPOI.SS.Util;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Reflection;
+using JetBrains.Annotations;
+using NPOI.SS.UserModel;
+using NPOI.SS.Util;
 using WeihanLi.Extensions;
 using WeihanLi.Npoi.Configurations;
 using WeihanLi.Npoi.Settings;
@@ -26,17 +26,6 @@ namespace WeihanLi.Npoi
                 t => InternalHelper.GetExcelConfigurationMapping<TEntity>());
 
             _sheetSettings = _excelConfiguration.SheetSettings.AsReadOnly();
-
-            //AutoAdjustIndex
-            var colIndexList = new List<int>(_excelConfiguration.PropertyConfigurationDictionary.Count);
-            foreach (var item in _excelConfiguration.PropertyConfigurationDictionary.Values.Where(_ => !_.PropertySetting.IsIgnored))
-            {
-                while (colIndexList.Contains(item.PropertySetting.ColumnIndex))
-                {
-                    item.PropertySetting.ColumnIndex++;
-                }
-                colIndexList.Add(item.PropertySetting.ColumnIndex);
-            }
 
             _propertyColumnDictionary = _excelConfiguration.PropertyConfigurationDictionary.Where(_ => !_.Value.PropertySetting.IsIgnored).ToDictionary(_ => _.Key, _ => _.Value.PropertySetting);
         }
