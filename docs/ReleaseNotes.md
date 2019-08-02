@@ -1,5 +1,9 @@
 # WeihanLi.Npoi Release Notes
 
+## [1.3.8](https://www.nuget.org/packages/WeihanLi.Npoi/1.3.8)
+
+- fix bug: `CsvHelper.ToDataTable()` and export DataTable to csv
+
 ## [1.3.7](https://www.nuget.org/packages/WeihanLi.Npoi/1.3.7)
 
 - add `HasColumnFormatter<TEntity, TProperty>(Func<TEntity, TProperty, object> columnFormatter)` to support for custom column output for export
