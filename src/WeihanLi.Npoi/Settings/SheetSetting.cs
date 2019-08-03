@@ -46,7 +46,7 @@ namespace WeihanLi.Npoi.Settings
             get => _startRowIndex;
             set
             {
-                if (value >= 1)
+                if (value >= 0)
                 {
                     _startRowIndex = value;
                 }

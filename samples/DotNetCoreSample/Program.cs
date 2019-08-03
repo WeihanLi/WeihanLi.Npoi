@@ -94,10 +94,9 @@ namespace DotNetCoreSample
                 .HasDescription("")
                 .HasSubject("");
 
-            setting.HasSheetConfiguration(0, "SystemSettingsList");
+            setting.HasSheetConfiguration(0, "SystemSettingsList", 0);
 
-            setting.HasFilter(0, 1)
-                .HasFreezePane(0, 1, 2, 1);
+            // setting.HasFilter(0, 1).HasFreezePane(0, 1, 2, 1);
 
             setting.Property(_ => _.SettingId)
                 .HasColumnIndex(0);
