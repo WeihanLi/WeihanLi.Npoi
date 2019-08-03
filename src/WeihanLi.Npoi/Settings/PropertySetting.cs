@@ -10,7 +10,7 @@ namespace WeihanLi.Npoi.Settings
         /// <summary>
         /// ColumnIndex
         /// </summary>
-        public int ColumnIndex { get; set; }
+        public int ColumnIndex { get; set; } = -1;
 
         /// <summary>
         /// Title

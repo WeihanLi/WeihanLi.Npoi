@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Data.SqlClient;
-using System.Linq;
+using System.Collections.Generic;
 using WeihanLi.Common.Helpers;
-using WeihanLi.Extensions;
 using WeihanLi.Npoi;
 using WeihanLi.Npoi.Attributes;
 
@@ -15,13 +13,13 @@ namespace DotNetSample
 
         public static void Main(string[] args)
         {
-            var conn = new SqlConnection("server=.;uid=liweihan;pwd=Admin888;database=AccountingApp");
+            //var conn = new SqlConnection("server=.;uid=liweihan;pwd=Admin888;database=AccountingApp");
             //var entityList = conn.Select<TestEntity>("select * from Users").ToArray();
             //entityList[0].Amount = 0;
             //entityList[0].PasswordHash = "";
             ////var dataTable = entityList.ToDataTable();
             //var result = entityList.ToExcelFile(ApplicationHelper.MapPath("test.xlsx"));
-            var result1 = ExcelHelper.ToEntityList<TestEntity>(ApplicationHelper.MapPath("test.xlsx"));
+            //var result1 = ExcelHelper.ToEntityList<TestEntity>(ApplicationHelper.MapPath("test.xlsx"));
             //// 找不到文件
             ////var aaa = ExcelHelper.ToEntityList<TestEntity>("");
             //var entityList1 = conn.Select<TestEntity2>("select * from Bills");
@@ -54,6 +52,27 @@ namespace DotNetSample
             //    Console.WriteLine($"导入结果：{connection.BulkCopy(table, "testBulkCopy")}");
             //}
 
+            var testData = new List<TestEntity>()
+            {
+                new TestEntity
+                {
+                    Amount = 1000,
+                    Username = "xxxx",
+                    CreateTime = DateTime.UtcNow.AddDays(-3),
+                    PKID = 1,
+                },
+                new TestEntity
+                {
+                    Amount = 10000,
+                    Username = "yyyyy",
+                    CreateTime = DateTime.UtcNow.AddDays(-3),
+                    PKID = 2,
+                }
+            };
+            var excelFilePath = $@"{Environment.GetEnvironmentVariable("USERPROFILE")}\Desktop\temp\test\test.fx.xlsx";
+
+            testData.ToExcelFile(excelFilePath);
+
             var setting = ExcelHelper.SettingFor<TestEntity>();
             // ExcelSetting
             setting.HasAuthor("WeihanLi")
@@ -81,7 +100,7 @@ namespace DotNetSample
 
             var entities = ExcelHelper.ToEntityList<TestEntity>(ApplicationHelper.MapPath("test.xlsx"));
             Console.WriteLine(entities.Count);
-            entities = conn.Select<TestEntity>("select * from Users").ToList();
+            //entities = conn.Select<TestEntity>("select * from Users").ToList();
             entities.ToExcelFile(ApplicationHelper.MapPath("test_1.xlsx"));
             Console.WriteLine("Success");
 
@@ -89,7 +108,8 @@ namespace DotNetSample
         }
     }
 
-    [Freeze(0, 1)]
+    //[Freeze(0, 1)]
+    [Sheet(SheetIndex = 0, SheetName = "Abc", StartRowIndex = 0)]
     internal class TestEntity
     {
         public int PKID { get; set; }

@@ -54,7 +54,39 @@ namespace WeihanLi.Npoi
                 dic.Add(propertyInfo, (PropertyConfiguration)propertyConfiguration);
             }
             excelConfiguration.PropertyConfigurationDictionary = dic;
+
             return excelConfiguration;
+        }
+
+        /// <summary>
+        /// Adjust Column Index
+        /// </summary>
+        /// <typeparam name="TEntity">TEntity</typeparam>
+        /// <param name="excelConfiguration">excelConfiguration</param>
+        public static void AdjustColumnIndex<TEntity>(ExcelConfiguration<TEntity> excelConfiguration)
+        {
+            var colIndexList = new List<int>(excelConfiguration.PropertyConfigurationDictionary.Count);
+
+            foreach (var item in excelConfiguration.PropertyConfigurationDictionary
+                .Where(_ => !_.Value.PropertySetting.IsIgnored)
+                .OrderBy(_ => _.Value.PropertySetting.ColumnIndex >= 0 ? _.Value.PropertySetting.ColumnIndex : int.MaxValue)
+                .ThenBy(_ => _.Key.Name)
+                .Select(_ => _.Value)
+                )
+            {
+                while (colIndexList.Contains(item.PropertySetting.ColumnIndex) || item.PropertySetting.ColumnIndex < 0)
+                {
+                    if (colIndexList.Count > 0)
+                    {
+                        item.PropertySetting.ColumnIndex = colIndexList.Max() + 1;
+                    }
+                    else
+                    {
+                        item.PropertySetting.ColumnIndex++;
+                    }
+                }
+                colIndexList.Add(item.PropertySetting.ColumnIndex);
+            }
         }
 
         /// <summary>
@@ -65,6 +97,9 @@ namespace WeihanLi.Npoi
         public static PropertyInfo[] GetPropertiesForCsvHelper<TEntity>()
         {
             var configuration = (ExcelConfiguration<TEntity>)InternalCache.TypeExcelConfigurationDictionary.GetOrAdd(typeof(TEntity), t => GetExcelConfigurationMapping<TEntity>());
+
+            AdjustColumnIndex(configuration);
+
             return configuration.PropertyConfigurationDictionary
                 .Where(p => !p.Value.PropertySetting.IsIgnored)
                 .OrderBy(p => p.Value.PropertySetting.ColumnIndex)
