@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using WeihanLi.Common.Helpers;
 using WeihanLi.Npoi;
 using WeihanLi.Npoi.Attributes;
@@ -69,9 +70,23 @@ namespace DotNetSample
                     PKID = 2,
                 }
             };
+            for (int i = 0; i < 100000; i++)
+            {
+                testData.Add(new TestEntity()
+                {
+                    Amount = 1000,
+                    Username = "xxxx",
+                    CreateTime = DateTime.UtcNow.AddDays(-3),
+                    PKID = i + 2,
+                });
+            }
+            var stopwatch = new Stopwatch();
             var excelFilePath = $@"{Environment.GetEnvironmentVariable("USERPROFILE")}\Desktop\temp\test\test.fx.xlsx";
-
+            stopwatch.Start();
             testData.ToExcelFile(excelFilePath);
+            stopwatch.Stop();
+            Console.WriteLine(stopwatch.ElapsedMilliseconds);
+            testData = null;
 
             var setting = ExcelHelper.SettingFor<TestEntity>();
             // ExcelSetting
@@ -108,8 +123,8 @@ namespace DotNetSample
         }
     }
 
-    //[Freeze(0, 1)]
-    [Sheet(SheetIndex = 0, SheetName = "Abc", StartRowIndex = 0)]
+    [Freeze(0, 1)]
+    //[Sheet(SheetIndex = 0, SheetName = "Abc", StartRowIndex = 0)]
     internal class TestEntity
     {
         public int PKID { get; set; }
