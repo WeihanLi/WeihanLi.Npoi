@@ -89,13 +89,13 @@ namespace DotNetSample
             Console.WriteLine($"WorkingSet size: {Process.GetCurrentProcess().WorkingSet64 / 1024} kb");
 
             // ExportExcelViaEpplusPerfTest();
-            ExportExcelViaEpplusPerfTest(1_000_000, 5);
-
-            // ExportCsvPerfTest(100_000, 10);
-            // ExportCsvPerfTest(1_000_000, 5);
+            // ExportExcelViaEpplusPerfTest(1_000_000, 5);
 
             // ExportExcelPerfTest(100_000, 10);
             // ExportExcelPerfTest(1_000_000, 5);
+
+            ExportCsvPerfTest(100_000, 10);
+            // ExportCsvPerfTest(1_000_000, 5);
 
             Console.WriteLine($"WorkingSet size: {Process.GetCurrentProcess().WorkingSet64 / 1024} kb");
             GC.Collect(2, GCCollectionMode.Forced);
