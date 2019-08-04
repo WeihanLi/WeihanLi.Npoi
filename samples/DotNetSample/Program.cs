@@ -86,8 +86,11 @@ namespace DotNetSample
 
             Console.WriteLine($"WorkingSet size: {Process.GetCurrentProcess().WorkingSet64 / 1024} kb");
 
-            ExportPerfTest(100_000, 10);
-            // ExportPerfTest(1_000_000, 5);
+            // ExportCsvPerfTest(100_000, 10);
+            ExportCsvPerfTest(1_000_000, 5);
+
+            // ExportExcelPerfTest(100_000, 10);
+            // ExportExcelPerfTest(1_000_000, 5);
 
             Console.WriteLine($"WorkingSet size: {Process.GetCurrentProcess().WorkingSet64 / 1024} kb");
             GC.Collect(2, GCCollectionMode.Forced);
@@ -97,7 +100,7 @@ namespace DotNetSample
             Console.ReadLine();
         }
 
-        private static void ExportPerfTest(int recordCount, int repeatTimes = 10)
+        private static void ExportExcelPerfTest(int recordCount, int repeatTimes = 10)
         {
             if (recordCount <= 0)
                 recordCount = 100_000;
@@ -121,6 +124,37 @@ namespace DotNetSample
             {
                 stopwatch.Restart();
                 testData.ToExcelFile(excelFilePath);
+                stopwatch.Stop();
+                elapsedList.Add(stopwatch.ElapsedMilliseconds);
+                Console.WriteLine($"{stopwatch.ElapsedMilliseconds} ms");
+            }
+            Console.WriteLine($"Average: {elapsedList.Average()} ms");
+        }
+
+        private static void ExportCsvPerfTest(int recordCount, int repeatTimes = 10)
+        {
+            if (recordCount <= 0)
+                recordCount = 100_000;
+
+            var testData = new List<TestEntity>(recordCount);
+
+            for (int i = 1; i <= recordCount; i++)
+            {
+                testData.Add(new TestEntity()
+                {
+                    Amount = 1000,
+                    Username = "xxxx",
+                    CreateTime = DateTime.UtcNow.AddDays(-3),
+                    PKID = i,
+                });
+            }
+            var stopwatch = new Stopwatch();
+            var excelFilePath = $@"{Environment.GetEnvironmentVariable("USERPROFILE")}\Desktop\temp\test\test.fx.csv";
+            var elapsedList = new List<long>(repeatTimes);
+            for (int i = 0; i < repeatTimes; i++)
+            {
+                stopwatch.Restart();
+                testData.ToCsvFile(excelFilePath);
                 stopwatch.Stop();
                 elapsedList.Add(stopwatch.ElapsedMilliseconds);
                 Console.WriteLine($"{stopwatch.ElapsedMilliseconds} ms");
