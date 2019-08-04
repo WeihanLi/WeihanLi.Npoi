@@ -1,5 +1,6 @@
 <Project>
   <Import Project="document.props" />
+  <Import Project="sign.props" />
   <PropertyGroup>        
     <TargetFrameworks>netstandard2.0;net45</TargetFrameworks>  
     <Title>WeihanLi.Npoi</Title>

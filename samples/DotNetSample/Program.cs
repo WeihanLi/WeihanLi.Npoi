@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using EPPlus.Core.Extensions;
+using EPPlus.Core.Extensions.Attributes;
 using WeihanLi.Npoi;
 using WeihanLi.Npoi.Attributes;
 
@@ -86,8 +88,11 @@ namespace DotNetSample
 
             Console.WriteLine($"WorkingSet size: {Process.GetCurrentProcess().WorkingSet64 / 1024} kb");
 
+            // ExportExcelViaEpplusPerfTest();
+            ExportExcelViaEpplusPerfTest(1_000_000, 5);
+
             // ExportCsvPerfTest(100_000, 10);
-            ExportCsvPerfTest(1_000_000, 5);
+            // ExportCsvPerfTest(1_000_000, 5);
 
             // ExportExcelPerfTest(100_000, 10);
             // ExportExcelPerfTest(1_000_000, 5);
@@ -131,6 +136,37 @@ namespace DotNetSample
             Console.WriteLine($"Average: {elapsedList.Average()} ms");
         }
 
+        private static void ExportExcelViaEpplusPerfTest(int recordCount = -1, int repeatTimes = 10)
+        {
+            if (recordCount <= 0)
+                recordCount = 100_000;
+
+            var testData = new List<TestEntity>(recordCount);
+
+            for (int i = 1; i <= recordCount; i++)
+            {
+                testData.Add(new TestEntity()
+                {
+                    Amount = 1000,
+                    Username = "xxxx",
+                    CreateTime = DateTime.UtcNow.AddDays(-3),
+                    PKID = i,
+                });
+            }
+            var stopwatch = new Stopwatch();
+            var excelFilePath = $@"{Environment.GetEnvironmentVariable("USERPROFILE")}\Desktop\temp\test\test.fx.epplus.xlsx";
+            var elapsedList = new List<long>(repeatTimes);
+            for (int i = 0; i < repeatTimes; i++)
+            {
+                stopwatch.Restart();
+                testData.ToExcelPackage().SaveAs(new System.IO.FileInfo(excelFilePath));
+                stopwatch.Stop();
+                elapsedList.Add(stopwatch.ElapsedMilliseconds);
+                Console.WriteLine($"{stopwatch.ElapsedMilliseconds} ms");
+            }
+            Console.WriteLine($"Average: {elapsedList.Average()} ms");
+        }
+
         private static void ExportCsvPerfTest(int recordCount, int repeatTimes = 10)
         {
             if (recordCount <= 0)
@@ -163,30 +199,37 @@ namespace DotNetSample
         }
     }
 
-    [Freeze(0, 1)]
+    //[Freeze(0, 1)]
     //[Sheet(SheetIndex = 0, SheetName = "Abc", StartRowIndex = 0)]
     internal class TestEntity
     {
+        [ExcelTableColumn("PKID")]
         public int PKID { get; set; }
 
         /// <summary>
         /// 用户名
         /// </summary>
         [Column("Username")]
+        [ExcelTableColumn("UserName")]
         public string Username { get; set; }
 
-        [Column("PasswordHash", IsIgnored = true)]
+        [Column("PasswordHash")]
+        [ExcelTableColumn("PasswordHash")]
         public string PasswordHash { get; set; }
 
         [Column("Amount")]
+        [ExcelTableColumn("Amount")]
         public decimal Amount { get; set; } = 1000M;
 
         [Column("WechatOpenId")]
+        [ExcelTableColumn("WechatOpenId")]
         public string WechatOpenId { get; set; }
 
         [Column("IsActive")]
+        [ExcelTableColumn("IsActive")]
         public bool IsActive { get; set; }
 
+        [ExcelTableColumn("CreateTime")]
         public DateTime CreateTime { get; set; } = DateTime.Now;
     }
 
