@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using EPPlus.Core.Extensions;
 using EPPlus.Core.Extensions.Attributes;
+using WeihanLi.Common.Helpers;
 using WeihanLi.Npoi;
 using WeihanLi.Npoi.Attributes;
 
@@ -12,8 +13,6 @@ namespace DotNetSample
 {
     public class Program
     {
-        private const string FilePath = @"C:\Users\liweihan.TUHU\Desktop\temp\tempFiles\\AllStores.xlsx";
-
         public static void Main(string[] args)
         {
             //var conn = new SqlConnection("server=.;uid=liweihan;pwd=Admin888;database=AccountingApp");
@@ -86,20 +85,39 @@ namespace DotNetSample
             //entities.ToExcelFile(ApplicationHelper.MapPath("test_1.xlsx"));
             //Console.WriteLine("Success");
 
-            Console.WriteLine($"WorkingSet size: {Process.GetCurrentProcess().WorkingSet64 / 1024} kb");
+            //Console.WriteLine($"WorkingSet size: {Process.GetCurrentProcess().WorkingSet64 / 1024} kb");
 
-            // ExportExcelViaEpplusPerfTest();
-            // ExportExcelViaEpplusPerfTest(1_000_000, 5);
+            //// ExportExcelViaEpplusPerfTest();
+            //// ExportExcelViaEpplusPerfTest(1_000_000, 5);
 
-            // ExportExcelPerfTest(100_000, 10);
-            // ExportExcelPerfTest(1_000_000, 5);
+            //// ExportExcelPerfTest(100_000, 10);
+            //// ExportExcelPerfTest(1_000_000, 5);
 
-            ExportCsvPerfTest(100_000, 10);
-            // ExportCsvPerfTest(1_000_000, 5);
+            //ExportCsvPerfTest(100_000, 10);
+            //// ExportCsvPerfTest(1_000_000, 5);
 
-            Console.WriteLine($"WorkingSet size: {Process.GetCurrentProcess().WorkingSet64 / 1024} kb");
-            GC.Collect(2, GCCollectionMode.Forced);
-            Console.WriteLine($"WorkingSet size: {Process.GetCurrentProcess().WorkingSet64 / 1024} kb");
+            //Console.WriteLine($"WorkingSet size: {Process.GetCurrentProcess().WorkingSet64 / 1024} kb");
+            //GC.Collect(2, GCCollectionMode.Forced);
+            //Console.WriteLine($"WorkingSet size: {Process.GetCurrentProcess().WorkingSet64 / 1024} kb");
+
+            var testData = new List<TestEntity>(10);
+
+            for (int i = 1; i <= 10; i++)
+            {
+                testData.Add(new TestEntity()
+                {
+                    Amount = 1000,
+                    Username = "xxxx",
+                    CreateTime = DateTime.UtcNow.AddDays(-3),
+                    PKID = i,
+                    PasswordHash = SecurityHelper.SHA1($"_x_{i}")
+                });
+            }
+            var excelFilePath = $@"{Environment.GetEnvironmentVariable("USERPROFILE")}\Desktop\temp\test\test123.fx.xlsx";
+            testData.ToExcelFile(excelFilePath);
+            testData.ToCsvFile(excelFilePath.Replace(".xlsx", ".csv"));
+
+            var list = ExcelHelper.ToEntityList<TestEntity>(excelFilePath);
 
             Console.WriteLine("complete");
             Console.ReadLine();
