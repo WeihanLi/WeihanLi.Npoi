@@ -42,10 +42,16 @@ namespace WeihanLi.Npoi
                 var propertySettingType = typeof(PropertySetting<,>).MakeGenericType(type, propertyInfo.PropertyType);
                 var propertySetting = Activator.CreateInstance(propertySettingType);
 
-                propertySettingType.GetProperty("ColumnTitle")?.GetSetMethod()?.Invoke(propertySetting, new object[] { column.PropertySetting.ColumnTitle });
-                propertySettingType.GetProperty("ColumnIndex")?.GetSetMethod()?.Invoke(propertySetting, new object[] { column.PropertySetting.ColumnIndex });
-                propertySettingType.GetProperty("ColumnFormatter")?.GetSetMethod()?.Invoke(propertySetting, new object[] { column.PropertySetting.ColumnFormatter });
-                propertySettingType.GetProperty("IsIgnored")?.GetSetMethod()?.Invoke(propertySetting, new object[] { column.PropertySetting.IsIgnored });
+                propertySettingType.GetProperty(nameof(column.PropertySetting.ColumnTitle))?.GetSetMethod()?
+                    .Invoke(propertySetting, new object[] { column.PropertySetting.ColumnTitle });
+                propertySettingType.GetProperty(nameof(column.PropertySetting.ColumnIndex))?.GetSetMethod()?
+                    .Invoke(propertySetting, new object[] { column.PropertySetting.ColumnIndex });
+                propertySettingType.GetProperty(nameof(column.PropertySetting.ColumnFormatter))?.GetSetMethod()?
+                    .Invoke(propertySetting, new object[] { column.PropertySetting.ColumnFormatter });
+                propertySettingType.GetProperty(nameof(column.PropertySetting.IsIgnored))?.GetSetMethod()?
+                    .Invoke(propertySetting, new object[] { column.PropertySetting.IsIgnored });
+                propertySettingType.GetProperty(nameof(column.PropertySetting.ColumnWidth))?.GetSetMethod()?
+                    .Invoke(propertySetting, new object[] { column.PropertySetting.ColumnWidth });
 
                 var propertyConfigurationType =
                     typeof(PropertyConfiguration<,>).MakeGenericType(type, propertyInfo.PropertyType);

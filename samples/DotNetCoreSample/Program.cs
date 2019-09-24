@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using WeihanLi.Extensions;
 using WeihanLi.Npoi;
 using WeihanLi.Npoi.Attributes;
@@ -46,7 +47,7 @@ namespace DotNetCoreSample
                 {
                     Id = i + 1,
                     Title = $"Title_{i}",
-                    Description = $"desc__{i}"
+                    Description = $"{Enumerable.Range(1, 200).StringJoin(",")}__{i}"
                 });
             }
             var tempDirPath = $@"{Environment.GetEnvironmentVariable("USERPROFILE")}\Desktop\temp\test";
@@ -73,8 +74,8 @@ namespace DotNetCoreSample
                 },
             };
             var csvFilePath = $@"{tempDirPath}\test.csv";
-            entities.ToCsvFile(csvFilePath);
             entities.ToExcelFile(csvFilePath.Replace(".csv", ".xlsx"));
+            entities.ToCsvFile(csvFilePath);
 
             var dataTable = entities.ToDataTable();
             dataTable.ToCsvFile(csvFilePath.Replace(".csv", ".datatable.csv"));
@@ -134,6 +135,7 @@ namespace DotNetCoreSample
             setting.Property(_ => _.CreatedTime)
                 .HasColumnTitle("CreatedTime")
                 .HasColumnIndex(4)
+                .HasColumnWidth(10)
                 .HasColumnFormatter("yyyy-MM-dd HH:mm:ss");
 
             setting.Property(_ => _.CreatedBy)
@@ -178,7 +180,10 @@ namespace DotNetCoreSample
         [Column(Index = 1)]
         public string Title { get; set; }
 
-        [Column(Index = 2)]
+        [Column(Index = 2, Width = 50)]
         public string Description { get; set; }
+
+        [Column(Index = 3, Width = 20)]
+        public string Extra { get; set; } = "{}";
     }
 }

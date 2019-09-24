@@ -181,7 +181,9 @@ namespace WeihanLi.Npoi
                     string.Format(Resource.IndexOutOfRange, nameof(sheetIndex), InternalConstants.MaxSheetNum),
                     nameof(sheetIndex));
             }
-            InternalCache.TypeExcelConfigurationDictionary.TryGetValue(typeof(TEntity), out var configuration);
+            var configuration = InternalCache.TypeExcelConfigurationDictionary.GetOrAdd(typeof(TEntity),
+                t => InternalHelper.GetExcelConfigurationMapping<TEntity>());
+
             while (workbook.NumberOfSheets <= sheetIndex)
             {
                 if (configuration != null && configuration is ExcelConfiguration<TEntity> excelConf &&
@@ -242,7 +244,9 @@ namespace WeihanLi.Npoi
                     string.Format(Resource.IndexOutOfRange, nameof(sheetIndex), InternalConstants.MaxSheetNum),
                     nameof(sheetIndex));
             }
-            InternalCache.TypeExcelConfigurationDictionary.TryGetValue(typeof(TEntity), out var configuration);
+            var configuration = InternalCache.TypeExcelConfigurationDictionary.GetOrAdd(typeof(TEntity),
+                t => InternalHelper.GetExcelConfigurationMapping<TEntity>());
+
             while (workbook.NumberOfSheets <= sheetIndex)
             {
                 if (configuration != null && configuration is ExcelConfiguration<TEntity> excelConf &&
