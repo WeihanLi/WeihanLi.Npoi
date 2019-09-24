@@ -42,6 +42,16 @@ namespace WeihanLi.Npoi.Attributes
             set => PropertySetting.IsIgnored = value;
         }
 
+        /// <summary>
+        /// ColumnWidth
+        /// Characters Count
+        /// </summary>
+        public int Width
+        {
+            get => PropertySetting.ColumnWidth;
+            set => PropertySetting.ColumnWidth = value;
+        }
+
         public ColumnAttribute() => PropertySetting = new PropertySetting();
 
         public ColumnAttribute(string title) => PropertySetting = new PropertySetting

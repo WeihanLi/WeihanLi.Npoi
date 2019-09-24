@@ -2,7 +2,8 @@
 
 ## [1.3.8](https://www.nuget.org/packages/WeihanLi.Npoi/1.3.8)
 
-- fix bug: `CsvHelper.ToDataTable()` and export DataTable to csv (Thanks for Arek's feedback)
+- fix : `CsvHelper.ToDataTable()` and export DataTable to csv (Thanks for Arek's feedback)
+- add support for no header when export excel(to fix #26 )
 
 ## [1.3.7](https://www.nuget.org/packages/WeihanLi.Npoi/1.3.7)
 

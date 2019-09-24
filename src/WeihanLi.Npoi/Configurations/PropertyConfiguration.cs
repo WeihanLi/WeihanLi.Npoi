@@ -39,6 +39,12 @@ namespace WeihanLi.Npoi.Configurations
             return this;
         }
 
+        public IPropertyConfiguration<TEntity, TProperty> HasColumnWidth(int width)
+        {
+            PropertySetting.ColumnWidth = width;
+            return this;
+        }
+
         public IPropertyConfiguration<TEntity, TProperty> HasColumnFormatter(string formatter)
         {
             if (formatter.IsNotNullOrWhiteSpace())

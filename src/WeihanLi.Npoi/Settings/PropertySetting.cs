@@ -13,6 +13,11 @@ namespace WeihanLi.Npoi.Settings
         public int ColumnIndex { get; set; } = -1;
 
         /// <summary>
+        /// ColumnWidth
+        /// </summary>
+        public int ColumnWidth { get; set; }
+
+        /// <summary>
         /// Title
         /// </summary>
         public string ColumnTitle { get; set; }

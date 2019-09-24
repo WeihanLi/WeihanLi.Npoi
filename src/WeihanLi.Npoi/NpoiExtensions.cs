@@ -1,11 +1,11 @@
-﻿using System;
+﻿using JetBrains.Annotations;
+using NPOI.SS.UserModel;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using JetBrains.Annotations;
-using NPOI.SS.UserModel;
 using WeihanLi.Extensions;
 using WeihanLi.Npoi.Configurations;
 using WeihanLi.Npoi.Settings;
@@ -181,7 +181,9 @@ namespace WeihanLi.Npoi
                     string.Format(Resource.IndexOutOfRange, nameof(sheetIndex), InternalConstants.MaxSheetNum),
                     nameof(sheetIndex));
             }
-            InternalCache.TypeExcelConfigurationDictionary.TryGetValue(typeof(TEntity), out var configuration);
+            var configuration = InternalCache.TypeExcelConfigurationDictionary.GetOrAdd(typeof(TEntity),
+                t => InternalHelper.GetExcelConfigurationMapping<TEntity>());
+
             while (workbook.NumberOfSheets <= sheetIndex)
             {
                 if (configuration != null && configuration is ExcelConfiguration<TEntity> excelConf &&
@@ -242,7 +244,9 @@ namespace WeihanLi.Npoi
                     string.Format(Resource.IndexOutOfRange, nameof(sheetIndex), InternalConstants.MaxSheetNum),
                     nameof(sheetIndex));
             }
-            InternalCache.TypeExcelConfigurationDictionary.TryGetValue(typeof(TEntity), out var configuration);
+            var configuration = InternalCache.TypeExcelConfigurationDictionary.GetOrAdd(typeof(TEntity),
+                t => InternalHelper.GetExcelConfigurationMapping<TEntity>());
+
             while (workbook.NumberOfSheets <= sheetIndex)
             {
                 if (configuration != null && configuration is ExcelConfiguration<TEntity> excelConf &&
@@ -260,7 +264,7 @@ namespace WeihanLi.Npoi
         }
 
         /// <summary>
-        ///     import datatable to sheet
+        /// import datatable to sheet
         /// </summary>
         /// <typeparam name="TEntity">EntityType</typeparam>
         /// <param name="sheet">sheet</param>
@@ -268,7 +272,7 @@ namespace WeihanLi.Npoi
         public static ISheet ImportData<TEntity>([NotNull] this ISheet sheet, DataTable dataTable) where TEntity : new() => sheet.ImportData<TEntity>(dataTable, 0);
 
         /// <summary>
-        ///     import datatable to sheet
+        /// import datatable to sheet
         /// </summary>
         /// <typeparam name="TEntity">EntityType</typeparam>
         /// <param name="sheet">sheet</param>
@@ -284,12 +288,24 @@ namespace WeihanLi.Npoi
         /// <param name="entityList">entityList</param>
         /// <param name="excelPath">excelPath</param>
         public static int ToExcelFile<TEntity>([NotNull] this IEnumerable<TEntity> entityList,
-            [NotNull] string excelPath)
+            [NotNull] string excelPath) where TEntity : new() => ToExcelFile(entityList, excelPath, 0);
+
+        /// <summary>
+        ///     EntityList2ExcelFile
+        /// </summary>
+        /// <typeparam name="TEntity">EntityType</typeparam>
+        /// <param name="entityList">entityList</param>
+        /// <param name="excelPath">excelPath</param>
+        /// <param name="sheetIndex">sheetIndex</param>
+        public static int ToExcelFile<TEntity>([NotNull] this IEnumerable<TEntity> entityList,
+            [NotNull] string excelPath, int sheetIndex)
             where TEntity : new()
         {
-            InternalCache.TypeExcelConfigurationDictionary.TryGetValue(typeof(TEntity), out var configuration);
+            var configuration = InternalCache.TypeExcelConfigurationDictionary.GetOrAdd(typeof(TEntity),
+                t => InternalHelper.GetExcelConfigurationMapping<TEntity>());
+
             var workbook = ExcelHelper.PrepareWorkbook(excelPath, configuration?.ExcelSetting);
-            workbook.ImportData(entityList.ToArray());
+            workbook.ImportData(entityList.ToArray(), sheetIndex);
 
             workbook.WriteToFile(excelPath);
             return 1;
@@ -312,16 +328,31 @@ namespace WeihanLi.Npoi
         /// <param name="entityList">entityList</param>
         /// <param name="stream">stream where to write</param>
         /// <param name="excelFormat">excelFormat</param>
+        /// <param name="sheetIndex">sheetIndex</param>
         public static int ToExcelStream<TEntity>([NotNull] this IEnumerable<TEntity> entityList,
-            [NotNull] Stream stream, ExcelFormat excelFormat)
+            [NotNull] Stream stream, ExcelFormat excelFormat, int sheetIndex)
             where TEntity : new()
         {
-            InternalCache.TypeExcelConfigurationDictionary.TryGetValue(typeof(TEntity), out var configuration);
+            var configuration = InternalCache.TypeExcelConfigurationDictionary.GetOrAdd(typeof(TEntity),
+                t => InternalHelper.GetExcelConfigurationMapping<TEntity>());
+
             var workbook = ExcelHelper.PrepareWorkbook(excelFormat, configuration?.ExcelSetting);
-            workbook.ImportData(entityList.ToArray());
+            workbook.ImportData(entityList.ToArray(), sheetIndex);
             workbook.Write(stream);
+
             return 1;
         }
+
+        /// <summary>
+        ///     EntityList2ExcelStream
+        /// </summary>
+        /// <typeparam name="TEntity">EntityType</typeparam>
+        /// <param name="entityList">entityList</param>
+        /// <param name="stream">stream where to write</param>
+        /// <param name="excelFormat">excelFormat</param>
+        public static int ToExcelStream<TEntity>([NotNull] this IEnumerable<TEntity> entityList,
+            [NotNull] Stream stream, ExcelFormat excelFormat)
+            where TEntity : new() => ToExcelStream(entityList, stream, excelFormat, 0);
 
         /// <summary>
         ///     EntityList2ExcelBytes(*.xlsx by default)
@@ -338,11 +369,24 @@ namespace WeihanLi.Npoi
         /// <param name="entityList">entityList</param>
         /// <param name="excelFormat">excelFormat</param>
         public static byte[] ToExcelBytes<TEntity>([NotNull] this IEnumerable<TEntity> entityList, ExcelFormat excelFormat)
+            where TEntity : new() => ToExcelBytes(entityList, excelFormat, 0);
+
+        /// <summary>
+        ///     EntityList2ExcelBytes
+        /// </summary>
+        /// <typeparam name="TEntity">EntityType</typeparam>
+        /// <param name="entityList">entityList</param>
+        /// <param name="excelFormat">excelFormat</param>
+        /// <param name="sheetIndex">sheetIndex</param>
+        public static byte[] ToExcelBytes<TEntity>([NotNull] this IEnumerable<TEntity> entityList, ExcelFormat excelFormat, int sheetIndex)
             where TEntity : new()
         {
-            InternalCache.TypeExcelConfigurationDictionary.TryGetValue(typeof(TEntity), out var configuration);
+            var configuration = InternalCache.TypeExcelConfigurationDictionary.GetOrAdd(typeof(TEntity),
+                t => InternalHelper.GetExcelConfigurationMapping<TEntity>());
+
             var workbook = ExcelHelper.PrepareWorkbook(excelFormat, configuration?.ExcelSetting);
-            workbook.ImportData(entityList.ToArray());
+            workbook.ImportData(entityList.ToArray(), sheetIndex);
+
             return workbook.ToExcelBytes();
         }
 
