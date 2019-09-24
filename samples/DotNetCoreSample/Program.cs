@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using WeihanLi.Extensions;
 using WeihanLi.Npoi;
+using WeihanLi.Npoi.Attributes;
 
 // ReSharper disable All
 namespace DotNetCoreSample
@@ -38,6 +40,22 @@ namespace DotNetCoreSample
             //    Console.WriteLine($"{shop.Key}---{shop.Count()}---distinct pid count:{shop.Select(_ => _.Pid).Distinct().Count()}");
             //}
 
+            var list2 = new List<TestEntity2>();
+            for (var i = 0; i < 10; i++)
+            {
+                list2.Add(new TestEntity2
+                {
+                    Id = i + 1,
+                    Title = $"Title_{i}",
+                    Description = $"{Enumerable.Range(1, 200).StringJoin(",")}__{i}"
+                });
+            }
+            var tempDirPath = $@"{Environment.GetEnvironmentVariable("USERPROFILE")}\Desktop\temp\test";
+            list2.ToExcelFile($@"{tempDirPath}\testEntity2.xlsx");
+
+            Console.WriteLine("Press Enter to continue...");
+            Console.ReadLine();
+
             var entities = new List<TestEntity>()
             {
                 new TestEntity()
@@ -55,9 +73,9 @@ namespace DotNetCoreSample
                     SettingValue = "Value2"
                 },
             };
-            var csvFilePath = $@"{Environment.GetEnvironmentVariable("USERPROFILE")}\Desktop\temp\test\test.csv";
-            entities.ToCsvFile(csvFilePath);
+            var csvFilePath = $@"{tempDirPath}\test.csv";
             entities.ToExcelFile(csvFilePath.Replace(".csv", ".xlsx"));
+            entities.ToCsvFile(csvFilePath);
 
             var dataTable = entities.ToDataTable();
             dataTable.ToCsvFile(csvFilePath.Replace(".csv", ".datatable.csv"));
@@ -117,6 +135,7 @@ namespace DotNetCoreSample
             setting.Property(_ => _.CreatedTime)
                 .HasColumnTitle("CreatedTime")
                 .HasColumnIndex(4)
+                .HasColumnWidth(10)
                 .HasColumnFormatter("yyyy-MM-dd HH:mm:ss");
 
             setting.Property(_ => _.CreatedBy)
@@ -150,5 +169,21 @@ namespace DotNetCoreSample
         public string UpdatedBy { get; set; }
 
         public DateTime UpdatedTime { get; set; }
+    }
+
+    [Sheet(SheetIndex = 0, SheetName = "TestSheet")]
+    internal class TestEntity2
+    {
+        [Column(Index = 0)]
+        public int Id { get; set; }
+
+        [Column(Index = 1)]
+        public string Title { get; set; }
+
+        [Column(Index = 2, Width = 50)]
+        public string Description { get; set; }
+
+        [Column(Index = 3, Width = 20)]
+        public string Extra { get; set; } = "{}";
     }
 }

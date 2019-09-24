@@ -19,6 +19,13 @@ namespace WeihanLi.Npoi.Configurations
         IPropertyConfiguration<TEntity, TProperty> HasColumnIndex(int index);
 
         /// <summary>
+        /// HasColumnWidth
+        /// </summary>
+        /// <param name="width">width</param>
+        /// <returns></returns>
+        IPropertyConfiguration<TEntity, TProperty> HasColumnWidth(int width);
+
+        /// <summary>
         /// HasColumnTitle
         /// </summary>
         /// <param name="title">title</param>

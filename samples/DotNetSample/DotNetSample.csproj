@@ -3,8 +3,11 @@
     <OutputType>Exe</OutputType>
     <RootNamespace>DotNetSample</RootNamespace>
     <AssemblyName>DotNetSample</AssemblyName>
-    <TargetFramework>net46</TargetFramework>
+    <TargetFramework>net461</TargetFramework>
   </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="EPPlus.Core.Extensions" Version="2.3.2" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\WeihanLi.Npoi\WeihanLi.Npoi.csproj">
     </ProjectReference>

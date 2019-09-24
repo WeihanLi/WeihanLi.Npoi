@@ -1,5 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+using EPPlus.Core.Extensions;
+using EPPlus.Core.Extensions.Attributes;
 using WeihanLi.Common.Helpers;
 using WeihanLi.Npoi;
 using WeihanLi.Npoi.Attributes;
@@ -9,8 +13,6 @@ namespace DotNetSample
 {
     public class Program
     {
-        private const string FilePath = @"C:\Users\liweihan.TUHU\Desktop\temp\tempFiles\\AllStores.xlsx";
-
         public static void Main(string[] args)
         {
             //var conn = new SqlConnection("server=.;uid=liweihan;pwd=Admin888;database=AccountingApp");
@@ -52,86 +54,200 @@ namespace DotNetSample
             //    Console.WriteLine($"导入结果：{connection.BulkCopy(table, "testBulkCopy")}");
             //}
 
-            var testData = new List<TestEntity>()
+            //var setting = ExcelHelper.SettingFor<TestEntity>();
+            //// ExcelSetting
+            //setting.HasAuthor("WeihanLi")
+            //    .HasTitle("WeihanLi.Npoi test")
+            //    .HasDescription("")
+            //    .HasSubject("");
+
+            //setting.HasFilter(0, 1)
+            //    .HasFreezePane(0, 1, 2, 1);
+
+            //setting.Property(_ => _.Amount)
+            //    .HasColumnTitle("Amount")
+            //    .HasColumnIndex(2);
+
+            //setting.Property(_ => _.Username)
+            //    .HasColumnTitle("Username")
+            //    .HasColumnIndex(0);
+
+            //setting.Property(_ => _.CreateTime)
+            //    .HasColumnTitle("CreateTime")
+            //    .HasColumnFormatter("yyyy-MM-dd HH:mm:ss");
+
+            //setting.Property(_ => _.PasswordHash)
+            //    .Ignored();
+
+            //var entities = ExcelHelper.ToEntityList<TestEntity>(ApplicationHelper.MapPath("test.xlsx"));
+            //Console.WriteLine(entities.Count);
+            ////entities = conn.Select<TestEntity>("select * from Users").ToList();
+            //entities.ToExcelFile(ApplicationHelper.MapPath("test_1.xlsx"));
+            //Console.WriteLine("Success");
+
+            //Console.WriteLine($"WorkingSet size: {Process.GetCurrentProcess().WorkingSet64 / 1024} kb");
+
+            //// ExportExcelViaEpplusPerfTest();
+            //// ExportExcelViaEpplusPerfTest(1_000_000, 5);
+
+            //// ExportExcelPerfTest(100_000, 10);
+            //// ExportExcelPerfTest(1_000_000, 5);
+
+            //ExportCsvPerfTest(100_000, 10);
+            //// ExportCsvPerfTest(1_000_000, 5);
+
+            //Console.WriteLine($"WorkingSet size: {Process.GetCurrentProcess().WorkingSet64 / 1024} kb");
+            //GC.Collect(2, GCCollectionMode.Forced);
+            //Console.WriteLine($"WorkingSet size: {Process.GetCurrentProcess().WorkingSet64 / 1024} kb");
+
+            var testData = new List<TestEntity>(10);
+
+            for (int i = 1; i <= 10; i++)
             {
-                new TestEntity
+                testData.Add(new TestEntity()
                 {
                     Amount = 1000,
                     Username = "xxxx",
                     CreateTime = DateTime.UtcNow.AddDays(-3),
-                    PKID = 1,
-                },
-                new TestEntity
-                {
-                    Amount = 10000,
-                    Username = "yyyyy",
-                    CreateTime = DateTime.UtcNow.AddDays(-3),
-                    PKID = 2,
-                }
-            };
-            var excelFilePath = $@"{Environment.GetEnvironmentVariable("USERPROFILE")}\Desktop\temp\test\test.fx.xlsx";
-
+                    PKID = i,
+                    PasswordHash = SecurityHelper.SHA1($"_x_{i}")
+                });
+            }
+            var excelFilePath = $@"{Environment.GetEnvironmentVariable("USERPROFILE")}\Desktop\temp\test\test123.fx.xlsx";
             testData.ToExcelFile(excelFilePath);
+            testData.ToCsvFile(excelFilePath.Replace(".xlsx", ".csv"));
 
-            var setting = ExcelHelper.SettingFor<TestEntity>();
-            // ExcelSetting
-            setting.HasAuthor("WeihanLi")
-                .HasTitle("WeihanLi.Npoi test")
-                .HasDescription("")
-                .HasSubject("");
+            var list = ExcelHelper.ToEntityList<TestEntity>(excelFilePath);
 
-            setting.HasFilter(0, 1)
-                .HasFreezePane(0, 1, 2, 1);
-
-            setting.Property(_ => _.Amount)
-                .HasColumnTitle("Amount")
-                .HasColumnIndex(2);
-
-            setting.Property(_ => _.Username)
-                .HasColumnTitle("Username")
-                .HasColumnIndex(0);
-
-            setting.Property(_ => _.CreateTime)
-                .HasColumnTitle("CreateTime")
-                .HasColumnFormatter("yyyy-MM-dd HH:mm:ss");
-
-            setting.Property(_ => _.PasswordHash)
-                .Ignored();
-
-            var entities = ExcelHelper.ToEntityList<TestEntity>(ApplicationHelper.MapPath("test.xlsx"));
-            Console.WriteLine(entities.Count);
-            //entities = conn.Select<TestEntity>("select * from Users").ToList();
-            entities.ToExcelFile(ApplicationHelper.MapPath("test_1.xlsx"));
-            Console.WriteLine("Success");
-
+            Console.WriteLine("complete");
             Console.ReadLine();
+        }
+
+        private static void ExportExcelPerfTest(int recordCount, int repeatTimes = 10)
+        {
+            if (recordCount <= 0)
+                recordCount = 100_000;
+
+            var testData = new List<TestEntity>(recordCount);
+
+            for (int i = 1; i <= recordCount; i++)
+            {
+                testData.Add(new TestEntity()
+                {
+                    Amount = 1000,
+                    Username = "xxxx",
+                    CreateTime = DateTime.UtcNow.AddDays(-3),
+                    PKID = i,
+                });
+            }
+            var stopwatch = new Stopwatch();
+            var excelFilePath = $@"{Environment.GetEnvironmentVariable("USERPROFILE")}\Desktop\temp\test\test.fx.xlsx";
+            var elapsedList = new List<long>(repeatTimes);
+            for (int i = 0; i < repeatTimes; i++)
+            {
+                stopwatch.Restart();
+                testData.ToExcelFile(excelFilePath);
+                stopwatch.Stop();
+                elapsedList.Add(stopwatch.ElapsedMilliseconds);
+                Console.WriteLine($"{stopwatch.ElapsedMilliseconds} ms");
+            }
+            Console.WriteLine($"Average: {elapsedList.Average()} ms");
+        }
+
+        private static void ExportExcelViaEpplusPerfTest(int recordCount = -1, int repeatTimes = 10)
+        {
+            if (recordCount <= 0)
+                recordCount = 100_000;
+
+            var testData = new List<TestEntity>(recordCount);
+
+            for (int i = 1; i <= recordCount; i++)
+            {
+                testData.Add(new TestEntity()
+                {
+                    Amount = 1000,
+                    Username = "xxxx",
+                    CreateTime = DateTime.UtcNow.AddDays(-3),
+                    PKID = i,
+                });
+            }
+            var stopwatch = new Stopwatch();
+            var excelFilePath = $@"{Environment.GetEnvironmentVariable("USERPROFILE")}\Desktop\temp\test\test.fx.epplus.xlsx";
+            var elapsedList = new List<long>(repeatTimes);
+            for (int i = 0; i < repeatTimes; i++)
+            {
+                stopwatch.Restart();
+                testData.ToExcelPackage().SaveAs(new System.IO.FileInfo(excelFilePath));
+                stopwatch.Stop();
+                elapsedList.Add(stopwatch.ElapsedMilliseconds);
+                Console.WriteLine($"{stopwatch.ElapsedMilliseconds} ms");
+            }
+            Console.WriteLine($"Average: {elapsedList.Average()} ms");
+        }
+
+        private static void ExportCsvPerfTest(int recordCount, int repeatTimes = 10)
+        {
+            if (recordCount <= 0)
+                recordCount = 100_000;
+
+            var testData = new List<TestEntity>(recordCount);
+
+            for (int i = 1; i <= recordCount; i++)
+            {
+                testData.Add(new TestEntity()
+                {
+                    Amount = 1000,
+                    Username = "xxxx",
+                    CreateTime = DateTime.UtcNow.AddDays(-3),
+                    PKID = i,
+                });
+            }
+            var stopwatch = new Stopwatch();
+            var excelFilePath = $@"{Environment.GetEnvironmentVariable("USERPROFILE")}\Desktop\temp\test\test.fx.csv";
+            var elapsedList = new List<long>(repeatTimes);
+            for (int i = 0; i < repeatTimes; i++)
+            {
+                stopwatch.Restart();
+                testData.ToCsvFile(excelFilePath);
+                stopwatch.Stop();
+                elapsedList.Add(stopwatch.ElapsedMilliseconds);
+                Console.WriteLine($"{stopwatch.ElapsedMilliseconds} ms");
+            }
+            Console.WriteLine($"Average: {elapsedList.Average()} ms");
         }
     }
 
     //[Freeze(0, 1)]
-    [Sheet(SheetIndex = 0, SheetName = "Abc", StartRowIndex = 0)]
+    //[Sheet(SheetIndex = 0, SheetName = "Abc", StartRowIndex = 0)]
     internal class TestEntity
     {
+        [ExcelTableColumn("PKID")]
         public int PKID { get; set; }
 
         /// <summary>
         /// 用户名
         /// </summary>
         [Column("Username")]
+        [ExcelTableColumn("UserName")]
         public string Username { get; set; }
 
-        [Column("PasswordHash", IsIgnored = true)]
+        [Column("PasswordHash")]
+        [ExcelTableColumn("PasswordHash")]
         public string PasswordHash { get; set; }
 
         [Column("Amount")]
+        [ExcelTableColumn("Amount")]
         public decimal Amount { get; set; } = 1000M;
 
         [Column("WechatOpenId")]
+        [ExcelTableColumn("WechatOpenId")]
         public string WechatOpenId { get; set; }
 
         [Column("IsActive")]
+        [ExcelTableColumn("IsActive")]
         public bool IsActive { get; set; }
 
+        [ExcelTableColumn("CreateTime")]
         public DateTime CreateTime { get; set; } = DateTime.Now;
     }
 

@@ -344,7 +344,7 @@ namespace WeihanLi.Npoi
                         var val = props[i].GetValueGetter().Invoke(entity)?.ToString().Replace("\"", "\"\"");
                         if (!string.IsNullOrEmpty(val))
                         {
-                            data.Append(val.IndexOf(',') > -1 ? $"\"{val}\"" : val);
+                            data.Append(val.IndexOf(CsvSeparatorCharacter) > -1 ? $"\"{val}\"" : val);
                         }
                     }
                     data.AppendLine();
@@ -387,7 +387,7 @@ namespace WeihanLi.Npoi
                     var val = dataTable.Rows[i][j]?.ToString().Replace("\"", "\"\"");
                     if (!string.IsNullOrEmpty(val))
                     {
-                        data.Append(val.IndexOf(',') > -1 ? $"\"{val}\"" : val);
+                        data.Append(val.IndexOf(CsvSeparatorCharacter) > -1 ? $"\"{val}\"" : val);
                     }
                 }
                 data.AppendLine();
