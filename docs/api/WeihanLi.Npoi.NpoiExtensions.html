@@ -1782,6 +1782,79 @@
   </table>
   
   
+  <a id="WeihanLi_Npoi_NpoiExtensions_ToExcelBytes_" data-uid="WeihanLi.Npoi.NpoiExtensions.ToExcelBytes*"></a>
+  <h4 id="WeihanLi_Npoi_NpoiExtensions_ToExcelBytes__1_System_Collections_Generic_IEnumerable___0__WeihanLi_Npoi_ExcelFormat_System_Int32_" data-uid="WeihanLi.Npoi.NpoiExtensions.ToExcelBytes``1(System.Collections.Generic.IEnumerable{``0},WeihanLi.Npoi.ExcelFormat,System.Int32)">ToExcelBytes&lt;TEntity&gt;(IEnumerable&lt;TEntity&gt;, ExcelFormat, Int32)</h4>
+  <div class="markdown level1 summary"><p>EntityList2ExcelBytes</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static byte[] ToExcelBytes&lt;TEntity&gt;(this IEnumerable&lt;TEntity&gt; entityList, ExcelFormat excelFormat, int sheetIndex)
+    where TEntity : new()</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.IEnumerable</span>&lt;TEntity&gt;</td>
+        <td><span class="parametername">entityList</span></td>
+        <td><p>entityList</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="WeihanLi.Npoi.ExcelFormat.html">ExcelFormat</a></td>
+        <td><span class="parametername">excelFormat</span></td>
+        <td><p>excelFormat</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">sheetIndex</span></td>
+        <td><p>sheetIndex</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Byte</span>[]</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TEntity</span></td>
+        <td><p>EntityType</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
   <a id="WeihanLi_Npoi_NpoiExtensions_ToExcelFile_" data-uid="WeihanLi.Npoi.NpoiExtensions.ToExcelFile*"></a>
   <h4 id="WeihanLi_Npoi_NpoiExtensions_ToExcelFile_DataTable_System_String_" data-uid="WeihanLi.Npoi.NpoiExtensions.ToExcelFile(DataTable,System.String)">ToExcelFile(DataTable, String)</h4>
   <div class="markdown level1 summary"><p>export DataTable to excel file</p>
@@ -1918,6 +1991,79 @@
         <td><span class="xref">System.String</span></td>
         <td><span class="parametername">excelPath</span></td>
         <td><p>excelPath</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TEntity</span></td>
+        <td><p>EntityType</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="WeihanLi_Npoi_NpoiExtensions_ToExcelFile_" data-uid="WeihanLi.Npoi.NpoiExtensions.ToExcelFile*"></a>
+  <h4 id="WeihanLi_Npoi_NpoiExtensions_ToExcelFile__1_System_Collections_Generic_IEnumerable___0__System_String_System_Int32_" data-uid="WeihanLi.Npoi.NpoiExtensions.ToExcelFile``1(System.Collections.Generic.IEnumerable{``0},System.String,System.Int32)">ToExcelFile&lt;TEntity&gt;(IEnumerable&lt;TEntity&gt;, String, Int32)</h4>
+  <div class="markdown level1 summary"><p>EntityList2ExcelFile</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static int ToExcelFile&lt;TEntity&gt;(this IEnumerable&lt;TEntity&gt; entityList, string excelPath, int sheetIndex)
+    where TEntity : new()</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.IEnumerable</span>&lt;TEntity&gt;</td>
+        <td><span class="parametername">entityList</span></td>
+        <td><p>entityList</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">excelPath</span></td>
+        <td><p>excelPath</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">sheetIndex</span></td>
+        <td><p>sheetIndex</p>
 </td>
       </tr>
     </tbody>
@@ -2226,6 +2372,85 @@
         <td><a class="xref" href="WeihanLi.Npoi.ExcelFormat.html">ExcelFormat</a></td>
         <td><span class="parametername">excelFormat</span></td>
         <td><p>excelFormat</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TEntity</span></td>
+        <td><p>EntityType</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="WeihanLi_Npoi_NpoiExtensions_ToExcelStream_" data-uid="WeihanLi.Npoi.NpoiExtensions.ToExcelStream*"></a>
+  <h4 id="WeihanLi_Npoi_NpoiExtensions_ToExcelStream__1_System_Collections_Generic_IEnumerable___0__System_IO_Stream_WeihanLi_Npoi_ExcelFormat_System_Int32_" data-uid="WeihanLi.Npoi.NpoiExtensions.ToExcelStream``1(System.Collections.Generic.IEnumerable{``0},System.IO.Stream,WeihanLi.Npoi.ExcelFormat,System.Int32)">ToExcelStream&lt;TEntity&gt;(IEnumerable&lt;TEntity&gt;, Stream, ExcelFormat, Int32)</h4>
+  <div class="markdown level1 summary"><p>EntityList2ExcelStream</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static int ToExcelStream&lt;TEntity&gt;(this IEnumerable&lt;TEntity&gt; entityList, Stream stream, ExcelFormat excelFormat, int sheetIndex)
+    where TEntity : new()</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.IEnumerable</span>&lt;TEntity&gt;</td>
+        <td><span class="parametername">entityList</span></td>
+        <td><p>entityList</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.IO.Stream</span></td>
+        <td><span class="parametername">stream</span></td>
+        <td><p>stream where to write</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="WeihanLi.Npoi.ExcelFormat.html">ExcelFormat</a></td>
+        <td><span class="parametername">excelFormat</span></td>
+        <td><p>excelFormat</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">sheetIndex</span></td>
+        <td><p>sheetIndex</p>
 </td>
       </tr>
     </tbody>

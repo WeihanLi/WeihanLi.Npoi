@@ -592,6 +592,15 @@ references:
   fullName.vb: WeihanLi.Npoi.NpoiExtensions.ToExcelBytes(Of TEntity)(System.Collections.Generic.IEnumerable(Of TEntity), WeihanLi.Npoi.ExcelFormat)
   nameWithType: NpoiExtensions.ToExcelBytes<TEntity>(IEnumerable<TEntity>, ExcelFormat)
   nameWithType.vb: NpoiExtensions.ToExcelBytes(Of TEntity)(IEnumerable(Of TEntity), ExcelFormat)
+- uid: WeihanLi.Npoi.NpoiExtensions.ToExcelBytes``1(System.Collections.Generic.IEnumerable{``0},WeihanLi.Npoi.ExcelFormat,System.Int32)
+  name: ToExcelBytes<TEntity>(IEnumerable<TEntity>, ExcelFormat, Int32)
+  href: docs/api/WeihanLi.Npoi.NpoiExtensions.html#WeihanLi_Npoi_NpoiExtensions_ToExcelBytes__1_System_Collections_Generic_IEnumerable___0__WeihanLi_Npoi_ExcelFormat_System_Int32_
+  commentId: M:WeihanLi.Npoi.NpoiExtensions.ToExcelBytes``1(System.Collections.Generic.IEnumerable{``0},WeihanLi.Npoi.ExcelFormat,System.Int32)
+  name.vb: ToExcelBytes(Of TEntity)(IEnumerable(Of TEntity), ExcelFormat, Int32)
+  fullName: WeihanLi.Npoi.NpoiExtensions.ToExcelBytes<TEntity>(System.Collections.Generic.IEnumerable<TEntity>, WeihanLi.Npoi.ExcelFormat, System.Int32)
+  fullName.vb: WeihanLi.Npoi.NpoiExtensions.ToExcelBytes(Of TEntity)(System.Collections.Generic.IEnumerable(Of TEntity), WeihanLi.Npoi.ExcelFormat, System.Int32)
+  nameWithType: NpoiExtensions.ToExcelBytes<TEntity>(IEnumerable<TEntity>, ExcelFormat, Int32)
+  nameWithType.vb: NpoiExtensions.ToExcelBytes(Of TEntity)(IEnumerable(Of TEntity), ExcelFormat, Int32)
 - uid: WeihanLi.Npoi.NpoiExtensions.ToExcelFile(DataTable,System.String)
   name: ToExcelFile(DataTable, String)
   href: docs/api/WeihanLi.Npoi.NpoiExtensions.html#WeihanLi_Npoi_NpoiExtensions_ToExcelFile_DataTable_System_String_
@@ -620,6 +629,15 @@ references:
   fullName.vb: WeihanLi.Npoi.NpoiExtensions.ToExcelFile(Of TEntity)(System.Collections.Generic.IEnumerable(Of TEntity), System.String)
   nameWithType: NpoiExtensions.ToExcelFile<TEntity>(IEnumerable<TEntity>, String)
   nameWithType.vb: NpoiExtensions.ToExcelFile(Of TEntity)(IEnumerable(Of TEntity), String)
+- uid: WeihanLi.Npoi.NpoiExtensions.ToExcelFile``1(System.Collections.Generic.IEnumerable{``0},System.String,System.Int32)
+  name: ToExcelFile<TEntity>(IEnumerable<TEntity>, String, Int32)
+  href: docs/api/WeihanLi.Npoi.NpoiExtensions.html#WeihanLi_Npoi_NpoiExtensions_ToExcelFile__1_System_Collections_Generic_IEnumerable___0__System_String_System_Int32_
+  commentId: M:WeihanLi.Npoi.NpoiExtensions.ToExcelFile``1(System.Collections.Generic.IEnumerable{``0},System.String,System.Int32)
+  name.vb: ToExcelFile(Of TEntity)(IEnumerable(Of TEntity), String, Int32)
+  fullName: WeihanLi.Npoi.NpoiExtensions.ToExcelFile<TEntity>(System.Collections.Generic.IEnumerable<TEntity>, System.String, System.Int32)
+  fullName.vb: WeihanLi.Npoi.NpoiExtensions.ToExcelFile(Of TEntity)(System.Collections.Generic.IEnumerable(Of TEntity), System.String, System.Int32)
+  nameWithType: NpoiExtensions.ToExcelFile<TEntity>(IEnumerable<TEntity>, String, Int32)
+  nameWithType.vb: NpoiExtensions.ToExcelFile(Of TEntity)(IEnumerable(Of TEntity), String, Int32)
 - uid: WeihanLi.Npoi.NpoiExtensions.ToExcelStream(DataTable,System.IO.Stream)
   name: ToExcelStream(DataTable, Stream)
   href: docs/api/WeihanLi.Npoi.NpoiExtensions.html#WeihanLi_Npoi_NpoiExtensions_ToExcelStream_DataTable_System_IO_Stream_
@@ -663,6 +681,15 @@ references:
   fullName.vb: WeihanLi.Npoi.NpoiExtensions.ToExcelStream(Of TEntity)(System.Collections.Generic.IEnumerable(Of TEntity), System.IO.Stream, WeihanLi.Npoi.ExcelFormat)
   nameWithType: NpoiExtensions.ToExcelStream<TEntity>(IEnumerable<TEntity>, Stream, ExcelFormat)
   nameWithType.vb: NpoiExtensions.ToExcelStream(Of TEntity)(IEnumerable(Of TEntity), Stream, ExcelFormat)
+- uid: WeihanLi.Npoi.NpoiExtensions.ToExcelStream``1(System.Collections.Generic.IEnumerable{``0},System.IO.Stream,WeihanLi.Npoi.ExcelFormat,System.Int32)
+  name: ToExcelStream<TEntity>(IEnumerable<TEntity>, Stream, ExcelFormat, Int32)
+  href: docs/api/WeihanLi.Npoi.NpoiExtensions.html#WeihanLi_Npoi_NpoiExtensions_ToExcelStream__1_System_Collections_Generic_IEnumerable___0__System_IO_Stream_WeihanLi_Npoi_ExcelFormat_System_Int32_
+  commentId: M:WeihanLi.Npoi.NpoiExtensions.ToExcelStream``1(System.Collections.Generic.IEnumerable{``0},System.IO.Stream,WeihanLi.Npoi.ExcelFormat,System.Int32)
+  name.vb: ToExcelStream(Of TEntity)(IEnumerable(Of TEntity), Stream, ExcelFormat, Int32)
+  fullName: WeihanLi.Npoi.NpoiExtensions.ToExcelStream<TEntity>(System.Collections.Generic.IEnumerable<TEntity>, System.IO.Stream, WeihanLi.Npoi.ExcelFormat, System.Int32)
+  fullName.vb: WeihanLi.Npoi.NpoiExtensions.ToExcelStream(Of TEntity)(System.Collections.Generic.IEnumerable(Of TEntity), System.IO.Stream, WeihanLi.Npoi.ExcelFormat, System.Int32)
+  nameWithType: NpoiExtensions.ToExcelStream<TEntity>(IEnumerable<TEntity>, Stream, ExcelFormat, Int32)
+  nameWithType.vb: NpoiExtensions.ToExcelStream(Of TEntity)(IEnumerable(Of TEntity), Stream, ExcelFormat, Int32)
 - uid: WeihanLi.Npoi.NpoiExtensions.WriteToFile(IWorkbook,System.String)
   name: WriteToFile(IWorkbook, String)
   href: docs/api/WeihanLi.Npoi.NpoiExtensions.html#WeihanLi_Npoi_NpoiExtensions_WriteToFile_IWorkbook_System_String_
