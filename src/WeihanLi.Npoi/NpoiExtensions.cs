@@ -634,7 +634,7 @@ namespace WeihanLi.Npoi
                     {
                         return cell.BooleanCellValue;
                     }
-                    return cell.BooleanCellValue;
+                    return cell.BooleanCellValue.ToOrDefault(propertyType);
 
                 default:
                     return cell.ToString().ToOrDefault(propertyType);
