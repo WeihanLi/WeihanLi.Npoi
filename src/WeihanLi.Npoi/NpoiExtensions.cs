@@ -598,7 +598,7 @@ namespace WeihanLi.Npoi
         /// <returns>cellValue</returns>
         public static object GetCellValue([CanBeNull] this ICell cell, Type propertyType)
         {
-            if (string.IsNullOrEmpty(cell?.ToString()))
+            if (cell == null || cell.CellType == CellType.Blank || cell.CellType == CellType.Error)
             {
                 return propertyType.GetDefaultValue();
             }
@@ -634,10 +634,7 @@ namespace WeihanLi.Npoi
                     {
                         return cell.BooleanCellValue;
                     }
-                    return cell.BooleanCellValue.ToString().ToOrDefault(propertyType);
-
-                case CellType.Blank:
-                    return propertyType.GetDefaultValue();
+                    return cell.BooleanCellValue;
 
                 default:
                     return cell.ToString().ToOrDefault(propertyType);
@@ -650,16 +647,7 @@ namespace WeihanLi.Npoi
         /// <typeparam name="T">Type</typeparam>
         /// <param name="cell">cell</param>
         /// <returns></returns>
-        public static T GetCellValue<T>([NotNull] this ICell cell)
-        {
-            if (cell.CellType == CellType.Numeric && DateUtil.IsCellDateFormatted(cell))
-            {
-                return cell.DateCellValue.Date == cell.DateCellValue
-                    ? cell.DateCellValue.ToStandardDateString().ToOrDefault<T>()
-                    : cell.DateCellValue.ToStandardTimeString().ToOrDefault<T>();
-            }
-            return cell.ToString().ToOrDefault<T>();
-        }
+        public static T GetCellValue<T>([CanBeNull] this ICell cell) => (T)cell.GetCellValue(typeof(T));
 
         /// <summary>
         /// GetRowCollection
