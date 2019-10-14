@@ -62,6 +62,11 @@
             <article class="content wrap" id="_content" data-uid="">
 <h1 id="weihanlinpoi-release-notes">WeihanLi.Npoi Release Notes</h1>
 
+<h2 id="143"><a href="https://www.nuget.org/packages/WeihanLi.Npoi/1.4.3">1.4.3</a></h2>
+<ul>
+<li>fix possible <code>NullReferenceException</code> when <code>ExcelHelper.ToEntityList()</code>/<code>ToExcelFile()</code></li>
+<li>fix treat <code>string.Empty</code> as <code>null</code> bug, <code>SetCellType</code> after <code>SetCellValue</code> so that <code>null</code> =&gt; <code>CellType.Blank</code>, <code>string.Empty</code> =&gt; <code>CellType.String</code></li>
+</ul>
 <h2 id="140"><a href="https://www.nuget.org/packages/WeihanLi.Npoi/1.4.0">1.4.0</a></h2>
 <ul>
 <li>add support for custom column width</li>
