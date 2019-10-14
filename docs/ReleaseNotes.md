@@ -1,5 +1,10 @@
 # WeihanLi.Npoi Release Notes
 
+## [1.4.3](https://www.nuget.org/packages/WeihanLi.Npoi/1.4.3)
+
+- fix possible `NullReferenceException` when `ExcelHelper.ToEntityList()`/`ToExcelFile()`
+- fix treat `string.Empty` as `null` bug, `SetCellType` after `SetCellValue` so that `null` => `CellType.Blank`, `string.Empty` => `CellType.String`
+
 ## [1.4.0](https://www.nuget.org/packages/WeihanLi.Npoi/1.4.0)
 
 - add support for custom column width
