@@ -596,9 +596,9 @@ namespace WeihanLi.Npoi
         /// <param name="cell">cell</param>
         /// <param name="propertyType">propertyType</param>
         /// <returns>cellValue</returns>
-        public static object GetCellValue([NotNull] this ICell cell, Type propertyType)
+        public static object GetCellValue([CanBeNull] this ICell cell, Type propertyType)
         {
-            if (string.IsNullOrEmpty(cell.ToString()))
+            if (cell == null || cell.CellType == CellType.Blank || cell.CellType == CellType.Error)
             {
                 return propertyType.GetDefaultValue();
             }
@@ -634,10 +634,7 @@ namespace WeihanLi.Npoi
                     {
                         return cell.BooleanCellValue;
                     }
-                    return cell.BooleanCellValue.ToString().ToOrDefault(propertyType);
-
-                case CellType.Blank:
-                    return propertyType.GetDefaultValue();
+                    return cell.BooleanCellValue.ToOrDefault(propertyType);
 
                 default:
                     return cell.ToString().ToOrDefault(propertyType);
@@ -650,16 +647,7 @@ namespace WeihanLi.Npoi
         /// <typeparam name="T">Type</typeparam>
         /// <param name="cell">cell</param>
         /// <returns></returns>
-        public static T GetCellValue<T>([NotNull] this ICell cell)
-        {
-            if (cell.CellType == CellType.Numeric && DateUtil.IsCellDateFormatted(cell))
-            {
-                return cell.DateCellValue.Date == cell.DateCellValue
-                    ? cell.DateCellValue.ToStandardDateString().ToOrDefault<T>()
-                    : cell.DateCellValue.ToStandardTimeString().ToOrDefault<T>();
-            }
-            return cell.ToString().ToOrDefault<T>();
-        }
+        public static T GetCellValue<T>([CanBeNull] this ICell cell) => (T)cell.GetCellValue(typeof(T));
 
         /// <summary>
         /// GetRowCollection
@@ -699,25 +687,5 @@ namespace WeihanLi.Npoi
                 return ms.ToArray();
             }
         }
-
-        ///// <summary>
-        ///// HasColumnFormatter
-        ///// set property formatter
-        ///// </summary>
-        ///// <typeparam name="TEntity">entity type</typeparam>
-        ///// <typeparam name="TProperty">property type</typeparam>
-        ///// <param name="propertyConfiguration">propertyConfiguration</param>
-        ///// <param name="formatter">property formatter</param>
-        ///// <returns></returns>
-        //public static IPropertyConfiguration<TEntity, TProperty> HasColumnFormatter<TEntity, TProperty>(
-        //    this IPropertyConfiguration<TEntity, TProperty> propertyConfiguration, string formatter)
-        //{
-        //    propertyConfiguration.HasColumnFormatter((entity, propertyValue) =>
-        //        formatter.IsNotNullOrWhiteSpace() && propertyValue is IFormattable val
-        //            ? val.ToString(formatter, CultureInfo.CurrentCulture)
-        //            : propertyValue.ToString()
-        //            );
-        //    return propertyConfiguration;
-        //}
     }
 }
