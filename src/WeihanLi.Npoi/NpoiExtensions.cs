@@ -596,9 +596,9 @@ namespace WeihanLi.Npoi
         /// <param name="cell">cell</param>
         /// <param name="propertyType">propertyType</param>
         /// <returns>cellValue</returns>
-        public static object GetCellValue([NotNull] this ICell cell, Type propertyType)
+        public static object GetCellValue([CanBeNull] this ICell cell, Type propertyType)
         {
-            if (string.IsNullOrEmpty(cell.ToString()))
+            if (string.IsNullOrEmpty(cell?.ToString()))
             {
                 return propertyType.GetDefaultValue();
             }
@@ -699,25 +699,5 @@ namespace WeihanLi.Npoi
                 return ms.ToArray();
             }
         }
-
-        ///// <summary>
-        ///// HasColumnFormatter
-        ///// set property formatter
-        ///// </summary>
-        ///// <typeparam name="TEntity">entity type</typeparam>
-        ///// <typeparam name="TProperty">property type</typeparam>
-        ///// <param name="propertyConfiguration">propertyConfiguration</param>
-        ///// <param name="formatter">property formatter</param>
-        ///// <returns></returns>
-        //public static IPropertyConfiguration<TEntity, TProperty> HasColumnFormatter<TEntity, TProperty>(
-        //    this IPropertyConfiguration<TEntity, TProperty> propertyConfiguration, string formatter)
-        //{
-        //    propertyConfiguration.HasColumnFormatter((entity, propertyValue) =>
-        //        formatter.IsNotNullOrWhiteSpace() && propertyValue is IFormattable val
-        //            ? val.ToString(formatter, CultureInfo.CurrentCulture)
-        //            : propertyValue.ToString()
-        //            );
-        //    return propertyConfiguration;
-        //}
     }
 }
