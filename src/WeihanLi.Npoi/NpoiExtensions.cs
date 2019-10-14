@@ -556,10 +556,10 @@ namespace WeihanLi.Npoi
 
             if (value is DateTime time)
             {
-                cell.SetCellType(CellType.String);
                 cell.SetCellValue(string.IsNullOrWhiteSpace(formatter)
                     ? (time.Date == time ? time.ToStandardDateString() : time.ToStandardTimeString())
                     : time.ToString(formatter));
+                cell.SetCellType(CellType.String);
             }
             else
             {
@@ -572,20 +572,20 @@ namespace WeihanLi.Npoi
                     type == typeof(decimal)
                 )
                 {
-                    cell.SetCellType(CellType.Numeric);
                     cell.SetCellValue(Convert.ToDouble(value));
+                    cell.SetCellType(CellType.Numeric);
                 }
                 else if (type == typeof(bool))
                 {
-                    cell.SetCellType(CellType.Boolean);
                     cell.SetCellValue((bool)value);
+                    cell.SetCellType(CellType.Boolean);
                 }
                 else
                 {
-                    cell.SetCellType(CellType.String);
                     cell.SetCellValue(value is IFormattable val && formatter.IsNotNullOrWhiteSpace()
                         ? val.ToString(formatter, CultureInfo.CurrentCulture)
                         : value.ToString());
+                    cell.SetCellType(CellType.String);
                 }
             }
         }

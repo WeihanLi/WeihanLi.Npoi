@@ -49,9 +49,13 @@ namespace DotNetCoreSample
                     Id = i + 1,
                     Title = $"Title_{i}",
                     Description = $"{Enumerable.Range(1, 200).StringJoin(",")}__{i}",
-                    Extra = i < 3 ? null : "{}"
                 });
             }
+            list2.Add(new TestEntity2()
+            {
+                Title = "",
+                Description = null
+            });
             var tempDirPath = $@"{Environment.GetEnvironmentVariable("USERPROFILE")}\Desktop\temp\test";
             list2.ToExcelFile($@"{tempDirPath}\testEntity2.xlsx");
 
