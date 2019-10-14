@@ -1,27 +1,27 @@
-language: csharp
-solution: WeihanLi.Npoi.sln
-# runtime config
-mono: none
-dotnet: 2.0.0
-dist: trusty
+language: csharp	
+solution: WeihanLi.Npoi.sln	
+# runtime config	
+mono: none	
+dotnet: 2.0.0	
+dist: trusty	
 
-# branch build config
-branches:
-  only:
-    - master
-    - dev
+# branch build config	
+branches:	
+  only:	
+    - master	
+    - dev	
 
-  except:
-    - gh-pages
+  except:	
+    - gh-pages	
 
 
-# git config
-git:
-  depth: 1
-  lfs_skip_smudge: true # disable the download of LFS objects when cloning
+# git config	
+git:	
+  depth: 1	
+  lfs_skip_smudge: true # disable the download of LFS objects when cloning	
 
-install:
-  - dotnet restore
-  
-script:
+install:	
+  - dotnet restore	
+
+script:	
   - dotnet build /p:Configuration=Release --framework:netstandard2.0 ./src/WeihanLi.Npoi/WeihanLi.Npoi.csproj

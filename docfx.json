@@ -18,6 +18,7 @@
     "content": [
       {
         "files": [
+          "docs/ReleaseNotes.md",
           "docs/articles/**.md",          
           "docs/articles/**/toc.yml",
           "docs/api/**.md",
