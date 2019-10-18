@@ -41,17 +41,25 @@ namespace DotNetCoreSample
             //}
 
             var list2 = new List<TestEntity2>();
+            list2.Add(null);
             for (var i = 0; i < 10; i++)
             {
                 list2.Add(new TestEntity2
                 {
                     Id = i + 1,
                     Title = $"Title_{i}",
-                    Description = $"{Enumerable.Range(1, 200).StringJoin(",")}__{i}"
+                    Description = $"{Enumerable.Range(1, 200).StringJoin(",")}__{i}",
                 });
             }
+            list2.Add(new TestEntity2()
+            {
+                Title = "",
+                Description = null
+            });
             var tempDirPath = $@"{Environment.GetEnvironmentVariable("USERPROFILE")}\Desktop\temp\test";
             list2.ToExcelFile($@"{tempDirPath}\testEntity2.xlsx");
+
+            var listTemp = ExcelHelper.ToEntityList<TestEntity2>($@"{tempDirPath}\testEntity2.xlsx");
 
             Console.WriteLine("Press Enter to continue...");
             Console.ReadLine();

@@ -1,5 +1,16 @@
 # WeihanLi.Npoi Release Notes
 
+## [1.4.3](https://www.nuget.org/packages/WeihanLi.Npoi/1.4.3)
+
+- fix possible `NullReferenceException` when `ExcelHelper.ToEntityList()`/`ToExcelFile()`
+- fix treat `string.Empty` as `null` bug, `SetCellType` after `SetCellValue` so that `null` => `CellType.Blank`, `string.Empty` => `CellType.String`
+
+## [1.4.0](https://www.nuget.org/packages/WeihanLi.Npoi/1.4.0)
+
+- add support for custom column width
+- fix `ToExcelFile`/`ImportData` extension not applied configuration bug
+- add support for specific sheetIndex when export excel
+
 ## [1.3.8](https://www.nuget.org/packages/WeihanLi.Npoi/1.3.8)
 
 - fix : `CsvHelper.ToDataTable()` and export DataTable to csv (Thanks for Arek's feedback)
