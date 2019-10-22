@@ -38,7 +38,7 @@ namespace WeihanLi.Npoi
 
             var entities = new List<TEntity>(sheet.LastRowNum - sheetSetting.HeaderRowIndex);
 
-            var propertyColumnDic = _propertyColumnDictionary.ToDictionary(_ => _.Key, _ => new PropertySetting()
+            IDictionary<PropertyInfo, PropertySetting> propertyColumnDic = _propertyColumnDictionary.ToDictionary(_ => _.Key, _ => new PropertySetting()
             {
                 ColumnIndex = -1,
                 ColumnFormatter = _.Value.ColumnFormatter,
@@ -66,6 +66,11 @@ namespace WeihanLi.Npoi
                                 col.ColumnIndex = i;
                             }
                         }
+                    }
+                    //
+                    if (propertyColumnDic.Values.All(_ => _.ColumnIndex < 0))
+                    {
+                        propertyColumnDic = _propertyColumnDictionary;
                     }
                 }
                 else if (rowIndex >= sheetSetting.StartRowIndex)
@@ -134,7 +139,7 @@ namespace WeihanLi.Npoi
                                             // apply custom formatterFunc
                                             var formattedValue = method.Invoke(target, new[] { entity, propertyValue });
                                             //
-                                            propertyInfo.GetValueSetter().Invoke(entity, formattedValue.ToOrDefault(propertyInfo.PropertyType));
+                                            propertyInfo.GetValueSetter().Invoke(entity, formattedValue);
                                         }
                                     }
                                 }
