@@ -80,6 +80,7 @@ namespace WeihanLi.Npoi
                         if (row.Cells.Count > 0)
                         {
                             entity = new TEntity();
+
                             if (typeof(TEntity).IsValueType)
                             {
                                 var obj = (object)entity;// boxing for value types
@@ -108,6 +109,36 @@ namespace WeihanLi.Npoi
                         else
                         {
                             entity = default;
+                        }
+
+                        if (null != entity)
+                        {
+                            foreach (var propertyInfo in _propertyColumnDictionary.Keys)
+                            {
+                                if (propertyInfo.CanWrite)
+                                {
+                                    var propertyValue = propertyInfo.GetValueGetter().Invoke(entity);
+                                    var formatterFunc = InternalCache.InputFormatterFuncCache.GetOrAdd(propertyInfo, p =>
+                                    {
+                                        var propertyType = typeof(PropertySetting<,>).MakeGenericType(_entityType, p.PropertyType);
+                                        return propertyType.GetProperty("InputFormatterFunc")?.GetValueGetter().Invoke(_propertyColumnDictionary[propertyInfo]);
+                                    });
+                                    if (null != formatterFunc)
+                                    {
+                                        var funcType = typeof(Func<,,>).MakeGenericType(_entityType, propertyInfo.PropertyType, typeof(object));
+                                        var method = funcType.GetProperty("Method")?.GetValueGetter().Invoke(formatterFunc) as MethodInfo;
+                                        var target = funcType.GetProperty("Target")?.GetValueGetter().Invoke(formatterFunc);
+
+                                        if (null != method && target != null)
+                                        {
+                                            // apply custom formatterFunc
+                                            var formattedValue = method.Invoke(target, new[] { entity, propertyValue });
+                                            //
+                                            propertyInfo.GetValueSetter().Invoke(entity, formattedValue.ToOrDefault(propertyInfo.PropertyType));
+                                        }
+                                    }
+                                }
+                            }
                         }
                         entities.Add(entity);
                     }
@@ -178,10 +209,10 @@ namespace WeihanLi.Npoi
                     {
                         var propertyValue = key.GetValueGetter<TEntity>().Invoke(entityList[i]);
 
-                        var formatterFunc = InternalCache.ColumnFormatterFuncCache.GetOrAdd(key, p =>
+                        var formatterFunc = InternalCache.OutputFormatterFuncCache.GetOrAdd(key, p =>
                         {
                             var propertyType = typeof(PropertySetting<,>).MakeGenericType(_entityType, p.PropertyType);
-                            return propertyType.GetProperty("ColumnFormatterFunc")?.GetValueGetter().Invoke(_propertyColumnDictionary[key]);
+                            return propertyType.GetProperty("OutputFormatterFunc")?.GetValueGetter().Invoke(_propertyColumnDictionary[key]);
                         });
                         if (null != formatterFunc)
                         {
