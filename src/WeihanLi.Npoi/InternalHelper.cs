@@ -71,8 +71,14 @@ namespace WeihanLi.Npoi
         /// <param name="excelConfiguration">excelConfiguration</param>
         public static void AdjustColumnIndex<TEntity>(ExcelConfiguration<TEntity> excelConfiguration)
         {
-            var colIndexList = new List<int>(excelConfiguration.PropertyConfigurationDictionary.Count);
+            if (excelConfiguration.PropertyConfigurationDictionary.Values.All(_ => _.PropertySetting.ColumnIndex > 0) &&
+                excelConfiguration.PropertyConfigurationDictionary.Values.Select(_ => _.PropertySetting.ColumnIndex)
+                    .Distinct().Count() == excelConfiguration.PropertyConfigurationDictionary.Values.Count)
+            {
+                return;
+            }
 
+            var colIndexList = new List<int>(excelConfiguration.PropertyConfigurationDictionary.Count);
             foreach (var item in excelConfiguration.PropertyConfigurationDictionary
                 .Where(_ => !_.Value.PropertySetting.IsIgnored)
                 .OrderBy(_ => _.Value.PropertySetting.ColumnIndex >= 0 ? _.Value.PropertySetting.ColumnIndex : int.MaxValue)
