@@ -360,7 +360,7 @@ namespace WeihanLi.Npoi
                     {
                         var propertyValue = props[i].GetValueGetter<TEntity>().Invoke(entity);
                         var entityType = typeof(TEntity);
-                        var formatterFunc = InternalCache.ColumnFormatterFuncCache.GetOrAdd(props[i], p =>
+                        var formatterFunc = InternalCache.OutputFormatterFuncCache.GetOrAdd(props[i], p =>
                         {
                             var propertyType = typeof(PropertySetting<,>).MakeGenericType(entityType, p.PropertyType);
                             return propertyType.GetProperty("ColumnFormatterFunc")?.GetValueGetter()
