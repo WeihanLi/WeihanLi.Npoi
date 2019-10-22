@@ -138,7 +138,6 @@ namespace WeihanLi.Npoi
                                         {
                                             // apply custom formatterFunc
                                             var formattedValue = method.Invoke(target, new[] { entity, propertyValue });
-                                            //
                                             propertyInfo.GetValueSetter().Invoke(entity, formattedValue);
                                         }
                                     }

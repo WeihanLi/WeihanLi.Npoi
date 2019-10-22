@@ -50,7 +50,7 @@ namespace WeihanLi.Npoi.Configurations
         /// </summary>
         /// <param name="formatterFunc">columnFormatter</param>
         /// <returns></returns>
-        [Obsolete("please use HasOutputFormatter instead")]
+        [Obsolete("please use HasOutputFormatter instead", true)]
         IPropertyConfiguration<TEntity, TProperty> HasColumnFormatter(Func<TEntity, TProperty, object> formatterFunc);
 
         /// <summary>
