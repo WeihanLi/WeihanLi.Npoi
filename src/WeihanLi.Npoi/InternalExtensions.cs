@@ -25,6 +25,9 @@ namespace WeihanLi.Npoi
         /// <param name="mappingDictionary">mappingDictionary</param>
         /// <param name="columnTitle">columnTitle</param>
         /// <returns></returns>
-        internal static PropertySetting GetPropertySetting([NotNull]this IDictionary<PropertyInfo, PropertySetting> mappingDictionary, [NotNull]string columnTitle) => mappingDictionary.Values.FirstOrDefault(k => k.ColumnTitle.EqualsIgnoreCase(columnTitle));
+        internal static PropertySetting GetPropertySetting([NotNull]this IDictionary<PropertyInfo, PropertySetting> mappingDictionary, [NotNull]string columnTitle)
+        {
+            return mappingDictionary.Values.FirstOrDefault(k => k.ColumnTitle.EqualsIgnoreCase(columnTitle)) ?? mappingDictionary.GetPropertySettingByPropertyName(columnTitle);
+        }
     }
 }

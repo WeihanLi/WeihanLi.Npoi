@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Text;
 using WeihanLi.Common.Helpers;
@@ -166,6 +167,11 @@ namespace WeihanLi.Npoi
                                     }
                                 }
 
+                                if (propertyColumnDic.Values.All(_ => _.ColumnIndex < 0))
+                                {
+                                    propertyColumnDic = InternalHelper.GetPropertyColumnDictionary<TEntity>();
+                                }
+
                                 isFirstLine = false;
                                 continue;
                             }
@@ -221,8 +227,7 @@ namespace WeihanLi.Npoi
                                                 {
                                                     // apply custom formatterFunc
                                                     var formattedValue = method.Invoke(target, new[] { entity, propertyValue });
-                                                    //
-                                                    propertyInfo.GetValueSetter().Invoke(entity, formattedValue.ToOrDefault(propertyInfo.PropertyType));
+                                                    propertyInfo.GetValueSetter().Invoke(entity, formattedValue);
                                                 }
                                             }
                                         }
