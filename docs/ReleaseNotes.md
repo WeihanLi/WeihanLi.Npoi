@@ -1,5 +1,9 @@
 # WeihanLi.Npoi Release Notes
 
+## [1.4.4](https://www.nuget.org/packages/WeihanLi.Npoi/1.4.4)
+
+- add `ExcelHelper.LoadExcel()`/`ExcelHelper.ToEntityList` override for stream/bytes
+
 ## [1.4.3](https://www.nuget.org/packages/WeihanLi.Npoi/1.4.3)
 
 - fix possible `NullReferenceException` when `ExcelHelper.ToEntityList()`/`ToExcelFile()`

@@ -53,6 +53,7 @@ namespace DotNetCoreSample
             }
             list2.Add(new TestEntity2()
             {
+                Id = 999,
                 Title = "",
                 Description = null
             });

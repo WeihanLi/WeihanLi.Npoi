@@ -7,6 +7,7 @@ using System.Reflection;
 using System.Text;
 using WeihanLi.Common.Helpers;
 using WeihanLi.Extensions;
+using WeihanLi.Npoi.Settings;
 
 namespace WeihanLi.Npoi
 {
@@ -142,7 +143,7 @@ namespace WeihanLi.Npoi
             }
             else
             {
-                IReadOnlyList<PropertyInfo> props = InternalHelper.GetPropertiesForCsvHelper<TEntity>();
+                var propertyColumnDic = InternalHelper.GetPropertyColumnDictionaryForImport<TEntity>();
 
                 using (var fs = new FileStream(filePath, FileMode.Open, FileAccess.Read))
                 {
@@ -155,6 +156,15 @@ namespace WeihanLi.Npoi
                             var cols = ParseLine(strLine);
                             if (isFirstLine)
                             {
+                                for (var index = 0; index < cols.Count; index++)
+                                {
+                                    var setting = propertyColumnDic.GetPropertySetting(cols[index]);
+                                    if (setting != null)
+                                    {
+                                        setting.ColumnIndex = index;
+                                    }
+                                }
+
                                 isFirstLine = false;
                                 continue;
                             }
@@ -164,17 +174,27 @@ namespace WeihanLi.Npoi
                                 if (typeof(TEntity).IsValueType)
                                 {
                                     var obj = (object)entity;// boxing for value types
-                                    for (var i = 0; i < props.Count; i++)
+
+                                    foreach (var key in propertyColumnDic.Keys)
                                     {
-                                        props[i].GetValueSetter().Invoke(obj, cols[i].ToOrDefault(props[i].PropertyType));
+                                        var colIndex = propertyColumnDic[key].ColumnIndex;
+                                        if (colIndex >= 0 && cols.Count > colIndex)
+                                        {
+                                            key.GetValueSetter().Invoke(obj, cols[colIndex].ToOrDefault(key.PropertyType));
+                                        }
                                     }
+
                                     entity = (TEntity)obj;// unboxing
                                 }
                                 else
                                 {
-                                    for (var i = 0; i < props.Count; i++)
+                                    foreach (var key in propertyColumnDic.Keys)
                                     {
-                                        props[i].GetValueSetter().Invoke(entity, cols[i].ToOrDefault(props[i].PropertyType));
+                                        var colIndex = propertyColumnDic[key].ColumnIndex;
+                                        if (colIndex >= 0 && cols.Count > colIndex)
+                                        {
+                                            key.GetValueSetter().Invoke(entity, cols[colIndex].ToOrDefault(key.PropertyType));
+                                        }
                                     }
                                 }
                                 entities.Add(entity);
@@ -319,29 +339,54 @@ namespace WeihanLi.Npoi
             }
             else
             {
-                IReadOnlyList<PropertyInfo> props = InternalHelper.GetPropertiesForCsvHelper<TEntity>();
+                var dic = InternalHelper.GetPropertyColumnDictionary<TEntity>();
+                var props = InternalHelper.GetPropertiesForCsvHelper<TEntity>();
                 if (includeHeader)
                 {
                     for (var i = 0; i < props.Count; i++)
                     {
-                        if (i > 0)
+                        if (i++ > 0)
                         {
                             data.Append(CsvSeparatorCharacter);
                         }
-                        data.Append(props[i].Name);
+                        data.Append(dic[props[i]].ColumnTitle);
                     }
+
                     data.AppendLine();
                 }
                 foreach (var entity in entities)
                 {
                     for (var i = 0; i < props.Count; i++)
                     {
+                        var propertyValue = props[i].GetValueGetter<TEntity>().Invoke(entity);
+                        var entityType = typeof(TEntity);
+                        var formatterFunc = InternalCache.ColumnFormatterFuncCache.GetOrAdd(props[i], p =>
+                        {
+                            var propertyType = typeof(PropertySetting<,>).MakeGenericType(entityType, p.PropertyType);
+                            return propertyType.GetProperty("ColumnFormatterFunc")?.GetValueGetter()
+                                .Invoke(dic[props[i]]);
+                        });
+                        if (null != formatterFunc)
+                        {
+                            var funcType =
+                                typeof(Func<,,>).MakeGenericType(entityType, props[i].PropertyType, typeof(object));
+                            var method =
+                                funcType.GetProperty("Method")?.GetValueGetter().Invoke(formatterFunc) as MethodInfo;
+                            var target = funcType.GetProperty("Target")?.GetValueGetter().Invoke(formatterFunc);
+
+                            if (null != method && target != null)
+                            {
+                                // apply custom formatterFunc
+                                propertyValue = method.Invoke(target, new[] { entity, propertyValue });
+                            }
+                        }
+
                         if (i > 0)
                         {
                             data.Append(CsvSeparatorCharacter);
                         }
                         // https://stackoverflow.com/questions/4617935/is-there-a-way-to-include-commas-in-csv-columns-without-breaking-the-formatting
-                        var val = props[i].GetValueGetter().Invoke(entity)?.ToString().Replace("\"", "\"\"");
+                        var val = propertyValue?.ToString().Replace("\"", "\"\"");
                         if (!string.IsNullOrEmpty(val))
                         {
                             data.Append(val.IndexOf(CsvSeparatorCharacter) > -1 ? $"\"{val}\"" : val);

@@ -36,42 +36,84 @@ namespace WeihanLi.Npoi
         {
             var sheetSetting = sheetIndex >= 0 && sheetIndex < _sheetSettings.Count ? _sheetSettings[sheetIndex] : _sheetSettings[0];
 
-            var entities = new List<TEntity>(sheet.PhysicalNumberOfRows - sheetSetting.StartRowIndex);
+            var entities = new List<TEntity>(sheet.LastRowNum - sheetSetting.HeaderRowIndex);
 
-            foreach (var row in sheet.GetRowCollection())
+            var propertyColumnDic = _propertyColumnDictionary.ToDictionary(_ => _.Key, _ => new PropertySetting()
             {
-                if (row.RowNum >= sheetSetting.StartRowIndex)
+                ColumnIndex = -1,
+                ColumnFormatter = _.Value.ColumnFormatter,
+                ColumnTitle = _.Value.ColumnTitle,
+                ColumnWidth = _.Value.ColumnWidth,
+                IsIgnored = _.Value.IsIgnored
+            });
+
+            for (var rowIndex = 0; rowIndex <= sheet.LastRowNum; rowIndex++)
+            {
+                var row = sheet.GetRow(rowIndex);
+                if (rowIndex == sheetSetting.HeaderRowIndex) // readerHeader
                 {
-                    TEntity entity;
-                    if (row.Cells.Count > 0)
+                    if (row != null)
                     {
-                        entity = new TEntity();
-                        if (typeof(TEntity).IsValueType)
+                        for (var i = 0; i < row.Cells.Count; i++)
                         {
-                            var obj = (object)entity;// boxing for value types
-                            foreach (var key in _propertyColumnDictionary.Keys)
+                            if (row.GetCell(i) == null)
                             {
-                                var colIndex = _propertyColumnDictionary[key].ColumnIndex;
-                                key.GetValueSetter().Invoke(obj, row.GetCell(colIndex).GetCellValue(key.PropertyType));
+                                continue;
                             }
-                            entity = (TEntity)obj;// unboxing
-                        }
-                        else
-                        {
-                            foreach (var key in _propertyColumnDictionary.Keys)
+                            var col = propertyColumnDic.GetPropertySetting(row.GetCell(i).StringCellValue.Trim());
+                            if (null != col)
                             {
-                                var colIndex = _propertyColumnDictionary[key].ColumnIndex;
-                                key.GetValueSetter().Invoke(entity, row.GetCell(colIndex).GetCellValue(key.PropertyType));
+                                col.ColumnIndex = i;
                             }
                         }
+                    }
+                }
+                else if (rowIndex >= sheetSetting.StartRowIndex)
+                {
+                    if (row == null)
+                    {
+                        entities.Add(default);
                     }
                     else
                     {
-                        entity = default;
+                        TEntity entity;
+                        if (row.Cells.Count > 0)
+                        {
+                            entity = new TEntity();
+                            if (typeof(TEntity).IsValueType)
+                            {
+                                var obj = (object)entity;// boxing for value types
+                                foreach (var key in propertyColumnDic.Keys)
+                                {
+                                    var colIndex = propertyColumnDic[key].ColumnIndex;
+                                    if (colIndex >= 0)
+                                    {
+                                        key.GetValueSetter().Invoke(obj, row.GetCell(colIndex).GetCellValue(key.PropertyType));
+                                    }
+                                }
+                                entity = (TEntity)obj;// unboxing
+                            }
+                            else
+                            {
+                                foreach (var key in propertyColumnDic.Keys)
+                                {
+                                    var colIndex = propertyColumnDic[key].ColumnIndex;
+                                    if (colIndex >= 0)
+                                    {
+                                        key.GetValueSetter().Invoke(entity, row.GetCell(colIndex).GetCellValue(key.PropertyType));
+                                    }
+                                }
+                            }
+                        }
+                        else
+                        {
+                            entity = default;
+                        }
+                        entities.Add(entity);
                     }
-                    entities.Add(entity);
                 }
             }
+
             return entities;
         }
 
