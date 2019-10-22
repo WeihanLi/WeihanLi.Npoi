@@ -38,8 +38,25 @@ namespace WeihanLi.Npoi
 
             var entities = new List<TEntity>(sheet.PhysicalNumberOfRows - sheetSetting.StartRowIndex);
 
+            var propertyColumnDic = _propertyColumnDictionary.ToDictionary(_ => _.Key, _ => _.Value);
+
             foreach (var row in sheet.GetRowCollection())
             {
+                if (row.RowNum == sheetSetting.HeaderRowIndex) // readerHeader
+                {
+                    for (var i = 0; i < row.Cells.Count; i++)
+                    {
+                        if (row.GetCell(i) == null)
+                        {
+                            continue;
+                        }
+                        var col = propertyColumnDic.GetPropertySetting(row.GetCell(i).StringCellValue.Trim());
+                        if (null != col)
+                        {
+                            col.ColumnIndex = i;
+                        }
+                    }
+                }
                 if (row.RowNum >= sheetSetting.StartRowIndex)
                 {
                     TEntity entity;
@@ -49,18 +66,18 @@ namespace WeihanLi.Npoi
                         if (typeof(TEntity).IsValueType)
                         {
                             var obj = (object)entity;// boxing for value types
-                            foreach (var key in _propertyColumnDictionary.Keys)
+                            foreach (var key in propertyColumnDic.Keys)
                             {
-                                var colIndex = _propertyColumnDictionary[key].ColumnIndex;
+                                var colIndex = propertyColumnDic[key].ColumnIndex;
                                 key.GetValueSetter().Invoke(obj, row.GetCell(colIndex).GetCellValue(key.PropertyType));
                             }
                             entity = (TEntity)obj;// unboxing
                         }
                         else
                         {
-                            foreach (var key in _propertyColumnDictionary.Keys)
+                            foreach (var key in propertyColumnDic.Keys)
                             {
-                                var colIndex = _propertyColumnDictionary[key].ColumnIndex;
+                                var colIndex = propertyColumnDic[key].ColumnIndex;
                                 key.GetValueSetter().Invoke(entity, row.GetCell(colIndex).GetCellValue(key.PropertyType));
                             }
                         }
