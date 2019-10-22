@@ -9,7 +9,7 @@ namespace WeihanLi.Npoi.Attributes
         internal FreezeSetting FreezeSetting { get; }
 
         /// <summary>
-        /// Horizonatal position of split
+        /// Horizontal position of split
         /// </summary>
         public int ColSplit => FreezeSetting.ColSplit;
 
