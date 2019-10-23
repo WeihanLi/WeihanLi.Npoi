@@ -1,5 +1,12 @@
 # WeihanLi.Npoi Release Notes
 
+## [1.4.5](https://www.nuget.org/packages/WeihanLi.Npoi/1.4.5)
+
+- try to auto adjust column index when import excel(do not update existing settings)
+- add `InputFormatter`/`OutputFormatter`
+- apply column settings for CSV
+- remove unused SheetConfiguration
+
 ## [1.4.4](https://www.nuget.org/packages/WeihanLi.Npoi/1.4.4)
 
 - add `ExcelHelper.LoadExcel()`/`ExcelHelper.ToEntityList` override for stream/bytes
