@@ -108,33 +108,36 @@ namespace WeihanLi.Npoi.Test
             var excelBytes = list.ToExcelBytes();
             //
             var noticeSetting = ExcelHelper.SettingFor<Notice>();
-            noticeSetting.Property(_ => _.Publisher)
-                .HasColumnIndex(4);
-            noticeSetting.Property(_ => _.PublishedAt)
-                .HasColumnIndex(3);
-
-            var importedList = ExcelHelper.ToEntityList<Notice>(excelBytes);
-            Assert.Equal(list.Count, importedList.Count);
-            for (var i = 0; i < list.Count; i++)
+            lock (noticeSetting)
             {
-                if (list[i] == null)
-                {
-                    Assert.Null(importedList[i]);
-                }
-                else
-                {
-                    Assert.Equal(list[i].Id, importedList[i].Id);
-                    Assert.Equal(list[i].Title, importedList[i].Title);
-                    Assert.Equal(list[i].Content, importedList[i].Content);
-                    Assert.Equal(list[i].Publisher, importedList[i].Publisher);
-                    Assert.Equal(list[i].PublishedAt.ToStandardTimeString(), importedList[i].PublishedAt.ToStandardTimeString());
-                }
-            }
+                noticeSetting.Property(_ => _.Publisher)
+                    .HasColumnIndex(4);
+                noticeSetting.Property(_ => _.PublishedAt)
+                    .HasColumnIndex(3);
 
-            noticeSetting.Property(_ => _.Publisher)
-                .HasColumnIndex(3);
-            noticeSetting.Property(_ => _.PublishedAt)
-                .HasColumnIndex(4);
+                var importedList = ExcelHelper.ToEntityList<Notice>(excelBytes);
+                Assert.Equal(list.Count, importedList.Count);
+                for (var i = 0; i < list.Count; i++)
+                {
+                    if (list[i] == null)
+                    {
+                        Assert.Null(importedList[i]);
+                    }
+                    else
+                    {
+                        Assert.Equal(list[i].Id, importedList[i].Id);
+                        Assert.Equal(list[i].Title, importedList[i].Title);
+                        Assert.Equal(list[i].Content, importedList[i].Content);
+                        Assert.Equal(list[i].Publisher, importedList[i].Publisher);
+                        Assert.Equal(list[i].PublishedAt.ToStandardTimeString(), importedList[i].PublishedAt.ToStandardTimeString());
+                    }
+                }
+
+                noticeSetting.Property(_ => _.Publisher)
+                    .HasColumnIndex(3);
+                noticeSetting.Property(_ => _.PublishedAt)
+                    .HasColumnIndex(4);
+            }
         }
     }
 }
