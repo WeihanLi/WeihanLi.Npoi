@@ -71,8 +71,14 @@ namespace WeihanLi.Npoi
         /// <param name="excelConfiguration">excelConfiguration</param>
         public static void AdjustColumnIndex<TEntity>(ExcelConfiguration<TEntity> excelConfiguration)
         {
-            var colIndexList = new List<int>(excelConfiguration.PropertyConfigurationDictionary.Count);
+            if (excelConfiguration.PropertyConfigurationDictionary.Values.All(_ => _.PropertySetting.ColumnIndex > 0) &&
+                excelConfiguration.PropertyConfigurationDictionary.Values.Select(_ => _.PropertySetting.ColumnIndex)
+                    .Distinct().Count() == excelConfiguration.PropertyConfigurationDictionary.Values.Count)
+            {
+                return;
+            }
 
+            var colIndexList = new List<int>(excelConfiguration.PropertyConfigurationDictionary.Count);
             foreach (var item in excelConfiguration.PropertyConfigurationDictionary
                 .Where(_ => !_.Value.PropertySetting.IsIgnored)
                 .OrderBy(_ => _.Value.PropertySetting.ColumnIndex >= 0 ? _.Value.PropertySetting.ColumnIndex : int.MaxValue)
@@ -96,11 +102,62 @@ namespace WeihanLi.Npoi
         }
 
         /// <summary>
+        /// GetPropertyColumnDictionary
+        /// </summary>
+        /// <typeparam name="TEntity">TEntity Type</typeparam>
+        /// <returns></returns>
+        public static IDictionary<PropertyInfo, PropertySetting> GetPropertyColumnDictionary<TEntity>()
+        {
+            var configuration = (ExcelConfiguration<TEntity>)InternalCache.TypeExcelConfigurationDictionary.GetOrAdd(typeof(TEntity), t => GetExcelConfigurationMapping<TEntity>());
+
+            AdjustColumnIndex(configuration);
+
+            return configuration.PropertyConfigurationDictionary
+                .Where(p => !p.Value.PropertySetting.IsIgnored)
+                .ToDictionary(_ => _.Key, _ => _.Value.PropertySetting);
+        }
+
+        /// <summary>
+        /// GetPropertyColumnDictionary
+        /// </summary>
+        /// <typeparam name="TEntity">TEntity Type</typeparam>
+        /// <returns></returns>
+        public static IDictionary<PropertyInfo, PropertySetting> GetPropertyColumnDictionaryForImport<TEntity>()
+        {
+            var configuration = (ExcelConfiguration<TEntity>)InternalCache.TypeExcelConfigurationDictionary.GetOrAdd(typeof(TEntity), t => GetExcelConfigurationMapping<TEntity>());
+
+            AdjustColumnIndex(configuration);
+
+            var dic = configuration.PropertyConfigurationDictionary
+                .Where(p => !p.Value.PropertySetting.IsIgnored)
+                .ToDictionary(_ => _.Key, _ => _.Value.PropertySetting);
+
+            if (configuration.SheetSettings[0].StartRowIndex > 0)
+            {
+                foreach (var key in dic.Keys)
+                {
+                    var originSetting = dic[key];
+                    var setting = new PropertySetting()
+                    {
+                        ColumnIndex = -1,
+                        ColumnTitle = originSetting.ColumnTitle,
+                        ColumnWidth = originSetting.ColumnWidth,
+                        ColumnFormatter = originSetting.ColumnFormatter,
+                        IsIgnored = originSetting.IsIgnored,
+                    };
+                    dic[key] = setting;
+                }
+            }
+
+            return dic;
+        }
+
+        /// <summary>
         /// GetProperties
         /// </summary>
         /// <typeparam name="TEntity">TEntity Type</typeparam>
         /// <returns></returns>
-        public static PropertyInfo[] GetPropertiesForCsvHelper<TEntity>()
+        public static IReadOnlyList<PropertyInfo> GetPropertiesForCsvHelper<TEntity>()
         {
             var configuration = (ExcelConfiguration<TEntity>)InternalCache.TypeExcelConfigurationDictionary.GetOrAdd(typeof(TEntity), t => GetExcelConfigurationMapping<TEntity>());
 

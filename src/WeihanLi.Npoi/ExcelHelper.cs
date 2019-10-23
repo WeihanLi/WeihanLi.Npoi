@@ -391,6 +391,7 @@ namespace WeihanLi.Npoi
 
         /// <summary>
         /// SettingFor
+        /// Fluent Settings
         /// </summary>
         /// <typeparam name="TEntity">TEntity</typeparam>
         /// <returns></returns>

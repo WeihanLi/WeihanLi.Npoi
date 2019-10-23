@@ -304,7 +304,7 @@ namespace WeihanLi.Npoi
             var configuration = InternalCache.TypeExcelConfigurationDictionary.GetOrAdd(typeof(TEntity),
                 t => InternalHelper.GetExcelConfigurationMapping<TEntity>());
 
-            var workbook = ExcelHelper.PrepareWorkbook(excelPath, configuration?.ExcelSetting);
+            var workbook = ExcelHelper.PrepareWorkbook(excelPath, configuration.ExcelSetting);
             workbook.ImportData(entityList.ToArray(), sheetIndex);
 
             workbook.WriteToFile(excelPath);
@@ -336,7 +336,7 @@ namespace WeihanLi.Npoi
             var configuration = InternalCache.TypeExcelConfigurationDictionary.GetOrAdd(typeof(TEntity),
                 t => InternalHelper.GetExcelConfigurationMapping<TEntity>());
 
-            var workbook = ExcelHelper.PrepareWorkbook(excelFormat, configuration?.ExcelSetting);
+            var workbook = ExcelHelper.PrepareWorkbook(excelFormat, configuration.ExcelSetting);
             workbook.ImportData(entityList.ToArray(), sheetIndex);
             workbook.Write(stream);
 
@@ -384,7 +384,7 @@ namespace WeihanLi.Npoi
             var configuration = InternalCache.TypeExcelConfigurationDictionary.GetOrAdd(typeof(TEntity),
                 t => InternalHelper.GetExcelConfigurationMapping<TEntity>());
 
-            var workbook = ExcelHelper.PrepareWorkbook(excelFormat, configuration?.ExcelSetting);
+            var workbook = ExcelHelper.PrepareWorkbook(excelFormat, configuration.ExcelSetting);
             workbook.ImportData(entityList.ToArray(), sheetIndex);
 
             return workbook.ToExcelBytes();

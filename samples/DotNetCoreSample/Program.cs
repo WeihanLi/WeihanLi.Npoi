@@ -53,6 +53,7 @@ namespace DotNetCoreSample
             }
             list2.Add(new TestEntity2()
             {
+                Id = 999,
                 Title = "",
                 Description = null
             });
@@ -83,6 +84,7 @@ namespace DotNetCoreSample
             };
             var csvFilePath = $@"{tempDirPath}\test.csv";
             entities.ToExcelFile(csvFilePath.Replace(".csv", ".xlsx"));
+            var entitiesT0 = ExcelHelper.ToEntityList<TestEntity>(csvFilePath.Replace(".csv", ".xlsx"));
             entities.ToCsvFile(csvFilePath);
 
             var dataTable = entities.ToDataTable();
@@ -117,10 +119,10 @@ namespace DotNetCoreSample
             // ExcelSetting
             setting.HasAuthor("WeihanLi")
                 .HasTitle("WeihanLi.Npoi test")
-                .HasDescription("")
-                .HasSubject("");
+                .HasDescription("WeihanLi.Npoi test")
+                .HasSubject("WeihanLi.Npoi test");
 
-            setting.HasSheetConfiguration(0, "SystemSettingsList", 0);
+            setting.HasSheetConfiguration(0, "SystemSettingsList", 1);
 
             // setting.HasFilter(0, 1).HasFreezePane(0, 1, 2, 1);
 
@@ -132,7 +134,8 @@ namespace DotNetCoreSample
                 .HasColumnIndex(1);
 
             setting.Property(_ => _.DisplayName)
-                .HasColumnFormatter((entity, displayName) => $"AAA_{entity.SettingName}_{displayName}")
+                .HasOutputFormatter((entity, displayName) => $"AAA_{entity.SettingName}_{displayName}")
+                .HasInputFormatter((entity, originVal) => originVal.Split(new[] { '_' }, StringSplitOptions.RemoveEmptyEntries)[2])
                 .HasColumnTitle("DisplayName")
                 .HasColumnIndex(2);
 

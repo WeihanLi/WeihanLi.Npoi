@@ -36,8 +36,13 @@ namespace WeihanLi.Npoi.Settings
     internal class PropertySetting<TEntity, TProperty> : PropertySetting
     {
         /// <summary>
-        /// ColumnFormatterFunc
+        /// InputFormatterFunc
         /// </summary>
-        public Func<TEntity, TProperty, object> ColumnFormatterFunc { get; set; }
+        public Func<TEntity, TProperty, TProperty> InputFormatterFunc { get; set; }
+
+        /// <summary>
+        /// OutputFormatterFunc
+        /// </summary>
+        public Func<TEntity, TProperty, object> OutputFormatterFunc { get; set; }
     }
 }

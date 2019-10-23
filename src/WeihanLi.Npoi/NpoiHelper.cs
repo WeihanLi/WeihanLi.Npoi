@@ -32,46 +32,132 @@ namespace WeihanLi.Npoi
             _propertyColumnDictionary = _excelConfiguration.PropertyConfigurationDictionary.Where(_ => !_.Value.PropertySetting.IsIgnored).ToDictionary(_ => _.Key, _ => _.Value.PropertySetting);
         }
 
+        private SheetSetting GetSheetSetting(int sheetIndex)
+        {
+            return sheetIndex >= 0 && sheetIndex < _sheetSettings.Count && _sheetSettings.Any(s => s.SheetIndex == sheetIndex)
+                ? _sheetSettings.First(s => s.SheetIndex == sheetIndex)
+                : _sheetSettings[0];
+        }
+
         public List<TEntity> SheetToEntityList([NotNull]ISheet sheet, int sheetIndex)
         {
-            var sheetSetting = sheetIndex >= 0 && sheetIndex < _sheetSettings.Count ? _sheetSettings[sheetIndex] : _sheetSettings[0];
+            var sheetSetting = GetSheetSetting(sheetIndex);
 
-            var entities = new List<TEntity>(sheet.PhysicalNumberOfRows - sheetSetting.StartRowIndex);
+            var entities = new List<TEntity>(sheet.LastRowNum - sheetSetting.HeaderRowIndex);
 
-            foreach (var row in sheet.GetRowCollection())
-            {
-                if (row.RowNum >= sheetSetting.StartRowIndex)
+            var propertyColumnDic = sheetSetting.HeaderRowIndex >= 0
+                ? _propertyColumnDictionary.ToDictionary(_ => _.Key, _ => new PropertySetting()
                 {
-                    TEntity entity;
-                    if (row.Cells.Count > 0)
+                    ColumnIndex = -1,
+                    ColumnFormatter = _.Value.ColumnFormatter,
+                    ColumnTitle = _.Value.ColumnTitle,
+                    ColumnWidth = _.Value.ColumnWidth,
+                    IsIgnored = _.Value.IsIgnored
+                })
+                : _propertyColumnDictionary;
+
+            for (var rowIndex = 0; rowIndex <= sheet.LastRowNum; rowIndex++)
+            {
+                var row = sheet.GetRow(rowIndex);
+                if (rowIndex == sheetSetting.HeaderRowIndex) // readerHeader
+                {
+                    if (row != null)
                     {
-                        entity = new TEntity();
-                        if (typeof(TEntity).IsValueType)
+                        for (var i = 0; i < row.Cells.Count; i++)
                         {
-                            var obj = (object)entity;// boxing for value types
-                            foreach (var key in _propertyColumnDictionary.Keys)
+                            if (row.GetCell(i) == null)
                             {
-                                var colIndex = _propertyColumnDictionary[key].ColumnIndex;
-                                key.GetValueSetter().Invoke(obj, row.GetCell(colIndex).GetCellValue(key.PropertyType));
+                                continue;
                             }
-                            entity = (TEntity)obj;// unboxing
-                        }
-                        else
-                        {
-                            foreach (var key in _propertyColumnDictionary.Keys)
+                            var col = propertyColumnDic.GetPropertySetting(row.GetCell(i).StringCellValue.Trim());
+                            if (null != col)
                             {
-                                var colIndex = _propertyColumnDictionary[key].ColumnIndex;
-                                key.GetValueSetter().Invoke(entity, row.GetCell(colIndex).GetCellValue(key.PropertyType));
+                                col.ColumnIndex = i;
                             }
                         }
+                    }
+                    //
+                    if (propertyColumnDic.Values.All(_ => _.ColumnIndex < 0))
+                    {
+                        propertyColumnDic = _propertyColumnDictionary;
+                    }
+                }
+                else if (rowIndex >= sheetSetting.StartRowIndex)
+                {
+                    if (row == null)
+                    {
+                        entities.Add(default);
                     }
                     else
                     {
-                        entity = default;
+                        TEntity entity;
+                        if (row.Cells.Count > 0)
+                        {
+                            entity = new TEntity();
+
+                            if (typeof(TEntity).IsValueType)
+                            {
+                                var obj = (object)entity;// boxing for value types
+                                foreach (var key in propertyColumnDic.Keys)
+                                {
+                                    var colIndex = propertyColumnDic[key].ColumnIndex;
+                                    if (colIndex >= 0)
+                                    {
+                                        key.GetValueSetter().Invoke(obj, row.GetCell(colIndex).GetCellValue(key.PropertyType));
+                                    }
+                                }
+                                entity = (TEntity)obj;// unboxing
+                            }
+                            else
+                            {
+                                foreach (var key in propertyColumnDic.Keys)
+                                {
+                                    var colIndex = propertyColumnDic[key].ColumnIndex;
+                                    if (colIndex >= 0)
+                                    {
+                                        key.GetValueSetter().Invoke(entity, row.GetCell(colIndex).GetCellValue(key.PropertyType));
+                                    }
+                                }
+                            }
+                        }
+                        else
+                        {
+                            entity = default;
+                        }
+
+                        if (null != entity)
+                        {
+                            foreach (var propertyInfo in _propertyColumnDictionary.Keys)
+                            {
+                                if (propertyInfo.CanWrite)
+                                {
+                                    var propertyValue = propertyInfo.GetValueGetter().Invoke(entity);
+                                    var formatterFunc = InternalCache.InputFormatterFuncCache.GetOrAdd(propertyInfo, p =>
+                                    {
+                                        var propertyType = typeof(PropertySetting<,>).MakeGenericType(_entityType, p.PropertyType);
+                                        return propertyType.GetProperty("InputFormatterFunc")?.GetValueGetter().Invoke(_propertyColumnDictionary[propertyInfo]);
+                                    });
+                                    if (null != formatterFunc)
+                                    {
+                                        var funcType = typeof(Func<,,>).MakeGenericType(_entityType, propertyInfo.PropertyType, typeof(object));
+                                        var method = funcType.GetProperty("Method")?.GetValueGetter().Invoke(formatterFunc) as MethodInfo;
+                                        var target = funcType.GetProperty("Target")?.GetValueGetter().Invoke(formatterFunc);
+
+                                        if (null != method && target != null)
+                                        {
+                                            // apply custom formatterFunc
+                                            var formattedValue = method.Invoke(target, new[] { entity, propertyValue });
+                                            propertyInfo.GetValueSetter().Invoke(entity, formattedValue);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        entities.Add(entity);
                     }
-                    entities.Add(entity);
                 }
             }
+
             return entities;
         }
 
@@ -81,7 +167,7 @@ namespace WeihanLi.Npoi
             {
                 return sheet;
             }
-            var sheetSetting = sheetIndex >= 0 && sheetIndex < _sheetSettings.Count ? _sheetSettings[sheetIndex] : _sheetSettings[0];
+            var sheetSetting = GetSheetSetting(sheetIndex);
 
             if (sheetSetting.HeaderRowIndex >= 0)
             {
@@ -117,7 +203,7 @@ namespace WeihanLi.Npoi
             {
                 return sheet;
             }
-            var sheetSetting = sheetIndex >= 0 && sheetIndex < _sheetSettings.Count ? _sheetSettings[sheetIndex] : _sheetSettings[0];
+            var sheetSetting = GetSheetSetting(sheetIndex);
             if (sheetSetting.HeaderRowIndex >= 0)
             {
                 var headerRow = sheet.CreateRow(sheetSetting.HeaderRowIndex);
@@ -136,10 +222,10 @@ namespace WeihanLi.Npoi
                     {
                         var propertyValue = key.GetValueGetter<TEntity>().Invoke(entityList[i]);
 
-                        var formatterFunc = InternalCache.ColumnFormatterFuncCache.GetOrAdd(key, p =>
+                        var formatterFunc = InternalCache.OutputFormatterFuncCache.GetOrAdd(key, p =>
                         {
                             var propertyType = typeof(PropertySetting<,>).MakeGenericType(_entityType, p.PropertyType);
-                            return propertyType.GetProperty("ColumnFormatterFunc")?.GetValueGetter().Invoke(_propertyColumnDictionary[key]);
+                            return propertyType.GetProperty("OutputFormatterFunc")?.GetValueGetter().Invoke(_propertyColumnDictionary[key]);
                         });
                         if (null != formatterFunc)
                         {

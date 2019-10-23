@@ -64,7 +64,26 @@ namespace WeihanLi.Npoi.Configurations
         {
             if (formatterFunc != null)
             {
-                PropertySetting.ColumnFormatterFunc = formatterFunc;
+                PropertySetting.OutputFormatterFunc = formatterFunc;
+            }
+            return this;
+        }
+
+        public IPropertyConfiguration<TEntity, TProperty> HasOutputFormatter(Func<TEntity, TProperty, object> formatterFunc)
+        {
+            if (formatterFunc != null)
+            {
+                PropertySetting.OutputFormatterFunc = formatterFunc;
+            }
+            return this;
+        }
+
+        public IPropertyConfiguration<TEntity, TProperty> HasInputFormatter(
+            Func<TEntity, TProperty, TProperty> formatterFunc)
+        {
+            if (formatterFunc != null)
+            {
+                PropertySetting.InputFormatterFunc = formatterFunc;
             }
             return this;
         }

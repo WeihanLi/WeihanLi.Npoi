@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using JetBrains.Annotations;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using JetBrains.Annotations;
 using WeihanLi.Extensions;
 using WeihanLi.Npoi.Settings;
 
@@ -10,21 +10,24 @@ namespace WeihanLi.Npoi
     internal static class InternalExtensions
     {
         /// <summary>
-        /// 根据属性名称获取列信息
+        /// GetPropertySettingByPropertyName
         /// </summary>
         /// <param name="mappingDictionary">mappingDictionary</param>
-        /// <param name="propertyName">属性名称</param>
+        /// <param name="propertyName">propertyName</param>
         /// <returns></returns>
         internal static PropertySetting GetPropertySettingByPropertyName([NotNull] this IDictionary<PropertyInfo, PropertySetting> mappingDictionary, [NotNull] string propertyName)
             => mappingDictionary.Keys.Any(_ => _.Name.EqualsIgnoreCase(propertyName)) ?
                 mappingDictionary[mappingDictionary.Keys.First(_ => _.Name.EqualsIgnoreCase(propertyName))] : null;
 
         /// <summary>
-        /// 根据列显示名称获取列信息
+        /// GetPropertySettingByColumnName
         /// </summary>
         /// <param name="mappingDictionary">mappingDictionary</param>
-        /// <param name="columnTitle">列名称</param>
+        /// <param name="columnTitle">columnTitle</param>
         /// <returns></returns>
-        internal static PropertySetting GetPropertySetting([NotNull]this IDictionary<PropertyInfo, PropertySetting> mappingDictionary, [NotNull]string columnTitle) => mappingDictionary.Values.FirstOrDefault(k => k.ColumnTitle.EqualsIgnoreCase(columnTitle));
+        internal static PropertySetting GetPropertySetting([NotNull]this IDictionary<PropertyInfo, PropertySetting> mappingDictionary, [NotNull]string columnTitle)
+        {
+            return mappingDictionary.Values.FirstOrDefault(k => k.ColumnTitle.EqualsIgnoreCase(columnTitle)) ?? mappingDictionary.GetPropertySettingByPropertyName(columnTitle);
+        }
     }
 }
