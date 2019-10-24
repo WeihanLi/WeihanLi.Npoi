@@ -21,7 +21,7 @@
       "output": {
         ".html": {
           "relative_path": "docs/ReleaseNotes.html",
-          "hash": "FXyzMN9ayUpBhzaKlcnsJw=="
+          "hash": "8aq9UWncM3ABXEK9vr9hwQ=="
         }
       },
       "is_incremental": false,
@@ -36,7 +36,7 @@
           "hash": "uYn2NJhSOTI9VzpBwOEuKg=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -45,10 +45,10 @@
       "output": {
         ".html": {
           "relative_path": "docs/api/WeihanLi.Npoi.ExcelFormat.html",
-          "hash": "68MwzUGsvkBluzg+gr5G7Q=="
+          "hash": "Azo37+RqHqV8hd27pDA69w=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -57,7 +57,7 @@
       "output": {
         ".html": {
           "relative_path": "docs/api/WeihanLi.Npoi.ExcelHelper.html",
-          "hash": "3il4+UQ2yJplZ1dgvxJelg=="
+          "hash": "ydM2hsisX2N65upuPSjVzg=="
         }
       },
       "is_incremental": false,
@@ -191,7 +191,7 @@
           "can_incremental": true,
           "incrementalPhase": "build",
           "total_file_count": 6,
-          "skipped_file_count": 3
+          "skipped_file_count": 1
         },
         "TocDocumentProcessor": {
           "can_incremental": false,
