@@ -62,7 +62,7 @@ namespace WeihanLi.Npoi
 
             using (var stream = File.OpenRead(excelPath))
             {
-                return Path.GetExtension(excelPath).EqualsIgnoreCase(".xlsx") ? (IWorkbook)new XSSFWorkbook(stream) : new HSSFWorkbook(stream);
+                return Path.GetExtension(excelPath).EqualsIgnoreCase(".xls") ? new HSSFWorkbook(stream) : (IWorkbook)new XSSFWorkbook(stream);
             }
         }
 
@@ -140,7 +140,7 @@ namespace WeihanLi.Npoi
             {
                 throw new ArgumentException(msg);
             }
-            return PrepareWorkbook(Path.GetExtension(excelPath).EqualsIgnoreCase(".xlsx"), excelSetting);
+            return PrepareWorkbook(!Path.GetExtension(excelPath).EqualsIgnoreCase(".xls"), excelSetting);
         }
 
         /// <summary>
@@ -333,7 +333,7 @@ namespace WeihanLi.Npoi
         }
 
         /// <summary>
-        /// read first sheet of excel from excel file path to a datatable
+        /// read first sheet of excel from excel file path to a data table
         /// </summary>
         /// <typeparam name="TEntity">EntityType</typeparam>
         /// <param name="excelPath">excelPath</param>
@@ -351,14 +351,14 @@ namespace WeihanLi.Npoi
             => ToEntityList<TEntity>(excelPath, sheetIndex).ToDataTable();
 
         /// <summary>
-        /// read first sheet of excel from excel file path to a datatable
+        /// read first sheet of excel from excel file path to a data table
         /// </summary>
         /// <param name="excelPath">excelPath</param>
         /// <returns>DataTable</returns>
         public static DataTable ToDataTable([NotNull]string excelPath) => ToDataTable(excelPath, 0, 0);
 
         /// <summary>
-        /// read (sheetIndex) sheet of excel from excel file path to a datatable
+        /// read (sheetIndex) sheet of excel from excel file path to a data table
         /// </summary>
         /// <param name="excelPath">excelPath</param>
         /// <param name="sheetIndex">sheetIndex</param>
