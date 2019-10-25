@@ -86,16 +86,14 @@ Task("test")
     .IsDependentOn("build")
     .Does(() =>
     {
-      if(isWindowsAgent || branchName == "local"){
-        var testSettings = new DotNetCoreTestSettings
-        {
-            NoRestore = true,
-            Configuration = configuration
-        };
-        foreach(var project in testProjects)
-        {
-            DotNetCoreTest(project.FullPath, testSettings);
-        }
+      var testSettings = new DotNetCoreTestSettings
+      {
+        NoRestore = true,
+        Configuration = configuration
+      };
+      foreach(var project in testProjects)
+      {
+        DotNetCoreTest(project.FullPath, testSettings);
       }
     });
 
