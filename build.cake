@@ -10,7 +10,7 @@ var srcProjects  = GetFiles("./src/**/*.csproj");
 var testProjects  = GetFiles("./test/**/*.csproj");
 
 var artifacts = "./artifacts/packages";
-var isWindowsAgent = (EnvironmentVariable("Agent_OS") ?? "Windows_NT") == "Windows_NT";
+var isWindowsAgent = EnvironmentVariable("Agent_OS") == "Windows_NT";
 var branchName = EnvironmentVariable("BUILD_SOURCEBRANCHNAME") ?? "local";
 
 void PrintBuildInfo(){
@@ -86,20 +86,23 @@ Task("test")
     .IsDependentOn("build")
     .Does(() =>
     {
-      var testSettings = new DotNetCoreTestSettings{
-         NoRestore = true,
-         Configuration = configuration
-      };
-      foreach(var project in testProjects)
-      {
-         DotNetCoreTest(project.FullPath, testSettings);
+      if(isWindowsAgent || branchName == "local"){
+        var testSettings = new DotNetCoreTestSettings
+        {
+            NoRestore = true,
+            Configuration = configuration
+        };
+        foreach(var project in testProjects)
+        {
+            DotNetCoreTest(project.FullPath, testSettings);
+        }
       }
     });
 
 
 Task("pack")
     .Description("Pack package")
-    .IsDependentOn("build")
+    .IsDependentOn("test")
     .Does(() =>
     {
       var settings = new DotNetCorePackSettings

@@ -1,5 +1,5 @@
 language: csharp
-solution: WeihanLi.Npoi.sln
+
 # runtime config
 mono: none
 dotnet: 3.0.100
@@ -7,8 +7,9 @@ dist: bionic
 
 # branch build config
 branches:
-    only:
+    only:        
         - master
+        - preview
         - dev
 
     except:
@@ -19,8 +20,5 @@ git:
     depth: 1
     lfs_skip_smudge: true # disable the download of LFS objects when cloning
 
-install:
-    - dotnet restore
-
 script:
-    - dotnet build /p:Configuration=Release --framework:netstandard2.0 ./src/WeihanLi.Npoi/WeihanLi.Npoi.csproj
+    - bash build.sh
