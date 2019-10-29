@@ -124,20 +124,31 @@ namespace WeihanLi.Npoi
         /// <returns></returns>
         public static IDictionary<PropertyInfo, PropertySetting> GetPropertyColumnDictionaryForImport<TEntity>()
         {
-            var dic = GetPropertyColumnDictionary<TEntity>();
-            foreach (var key in dic.Keys)
+            var configuration = (ExcelConfiguration<TEntity>)InternalCache.TypeExcelConfigurationDictionary.GetOrAdd(typeof(TEntity), t => GetExcelConfigurationMapping<TEntity>());
+
+            AdjustColumnIndex(configuration);
+
+            var dic = configuration.PropertyConfigurationDictionary
+                .Where(p => !p.Value.PropertySetting.IsIgnored)
+                .ToDictionary(_ => _.Key, _ => _.Value.PropertySetting);
+
+            if (configuration.SheetSettings[0].StartRowIndex > 0)
             {
-                var originSetting = dic[key];
-                var setting = new PropertySetting()
+                foreach (var key in dic.Keys)
                 {
-                    ColumnIndex = -1,
-                    ColumnTitle = originSetting.ColumnTitle,
-                    ColumnWidth = originSetting.ColumnWidth,
-                    ColumnFormatter = originSetting.ColumnFormatter,
-                    IsIgnored = originSetting.IsIgnored,
-                };
-                dic[key] = setting;
+                    var originSetting = dic[key];
+                    var setting = new PropertySetting()
+                    {
+                        ColumnIndex = -1,
+                        ColumnTitle = originSetting.ColumnTitle,
+                        ColumnWidth = originSetting.ColumnWidth,
+                        ColumnFormatter = originSetting.ColumnFormatter,
+                        IsIgnored = originSetting.IsIgnored,
+                    };
+                    dic[key] = setting;
+                }
             }
+
             return dic;
         }
 

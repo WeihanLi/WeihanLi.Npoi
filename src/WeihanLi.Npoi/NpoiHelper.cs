@@ -32,20 +32,29 @@ namespace WeihanLi.Npoi
             _propertyColumnDictionary = _excelConfiguration.PropertyConfigurationDictionary.Where(_ => !_.Value.PropertySetting.IsIgnored).ToDictionary(_ => _.Key, _ => _.Value.PropertySetting);
         }
 
+        private SheetSetting GetSheetSetting(int sheetIndex)
+        {
+            return sheetIndex >= 0 && sheetIndex < _sheetSettings.Count && _sheetSettings.Any(s => s.SheetIndex == sheetIndex)
+                ? _sheetSettings.First(s => s.SheetIndex == sheetIndex)
+                : _sheetSettings[0];
+        }
+
         public List<TEntity> SheetToEntityList([NotNull]ISheet sheet, int sheetIndex)
         {
-            var sheetSetting = sheetIndex >= 0 && sheetIndex < _sheetSettings.Count ? _sheetSettings[sheetIndex] : _sheetSettings[0];
+            var sheetSetting = GetSheetSetting(sheetIndex);
 
             var entities = new List<TEntity>(sheet.LastRowNum - sheetSetting.HeaderRowIndex);
 
-            IDictionary<PropertyInfo, PropertySetting> propertyColumnDic = _propertyColumnDictionary.ToDictionary(_ => _.Key, _ => new PropertySetting()
-            {
-                ColumnIndex = -1,
-                ColumnFormatter = _.Value.ColumnFormatter,
-                ColumnTitle = _.Value.ColumnTitle,
-                ColumnWidth = _.Value.ColumnWidth,
-                IsIgnored = _.Value.IsIgnored
-            });
+            var propertyColumnDic = sheetSetting.HeaderRowIndex >= 0
+                ? _propertyColumnDictionary.ToDictionary(_ => _.Key, _ => new PropertySetting()
+                {
+                    ColumnIndex = -1,
+                    ColumnFormatter = _.Value.ColumnFormatter,
+                    ColumnTitle = _.Value.ColumnTitle,
+                    ColumnWidth = _.Value.ColumnWidth,
+                    IsIgnored = _.Value.IsIgnored
+                })
+                : _propertyColumnDictionary;
 
             for (var rowIndex = 0; rowIndex <= sheet.LastRowNum; rowIndex++)
             {
@@ -138,7 +147,6 @@ namespace WeihanLi.Npoi
                                         {
                                             // apply custom formatterFunc
                                             var formattedValue = method.Invoke(target, new[] { entity, propertyValue });
-                                            //
                                             propertyInfo.GetValueSetter().Invoke(entity, formattedValue);
                                         }
                                     }
@@ -159,7 +167,7 @@ namespace WeihanLi.Npoi
             {
                 return sheet;
             }
-            var sheetSetting = sheetIndex >= 0 && sheetIndex < _sheetSettings.Count ? _sheetSettings[sheetIndex] : _sheetSettings[0];
+            var sheetSetting = GetSheetSetting(sheetIndex);
 
             if (sheetSetting.HeaderRowIndex >= 0)
             {
@@ -195,7 +203,7 @@ namespace WeihanLi.Npoi
             {
                 return sheet;
             }
-            var sheetSetting = sheetIndex >= 0 && sheetIndex < _sheetSettings.Count ? _sheetSettings[sheetIndex] : _sheetSettings[0];
+            var sheetSetting = GetSheetSetting(sheetIndex);
             if (sheetSetting.HeaderRowIndex >= 0)
             {
                 var headerRow = sheet.CreateRow(sheetSetting.HeaderRowIndex);
