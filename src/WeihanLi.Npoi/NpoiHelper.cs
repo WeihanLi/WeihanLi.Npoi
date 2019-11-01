@@ -259,10 +259,6 @@ namespace WeihanLi.Npoi
                 {
                     sheet.SetColumnWidth(setting.ColumnIndex, setting.ColumnWidth * 256);
                 }
-                else
-                {
-                    sheet.AutoSizeColumn(setting.ColumnIndex);
-                }
             }
 
             foreach (var freezeSetting in _excelConfiguration.FreezeSettings)
