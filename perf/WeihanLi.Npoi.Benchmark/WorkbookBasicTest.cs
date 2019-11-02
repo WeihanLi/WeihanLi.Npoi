@@ -9,6 +9,9 @@ namespace WeihanLi.Npoi.Benchmark
     [MinColumn, MaxColumn, MeanColumn, MedianColumn]
     public class WorkbookBasicTest
     {
+        private const int RowsCount = 65535;
+        private const int ColsCount = 10;
+
         [Benchmark]
         [MethodImpl(MethodImplOptions.NoInlining)]
         public void NpoiXlsWorkbookInit()
@@ -17,13 +20,13 @@ namespace WeihanLi.Npoi.Benchmark
 
             var sheet = workbook.CreateSheet("tempSheet");
 
-            for (int i = 0; i < 50000; i++)
+            for (var i = 0; i < RowsCount; i++)
             {
                 var row = sheet.CreateRow(i);
-                for (int j = 0; j < 10; j++)
+                for (var j = 0; j < ColsCount; j++)
                 {
                     var cell = row.CreateCell(j);
-                    cell.SetCellValue("asasasassa");
+                    cell.SetCellValue($"as ({i}, {j}) sa");
                 }
             }
 
@@ -38,10 +41,10 @@ namespace WeihanLi.Npoi.Benchmark
 
             var sheet = workbook.CreateSheet("tempSheet");
 
-            for (int i = 0; i < 50000; i++)
+            for (var i = 0; i < RowsCount; i++)
             {
                 var row = sheet.CreateRow(i);
-                for (int j = 0; j < 10; j++)
+                for (var j = 0; j < ColsCount; j++)
                 {
                     var cell = row.CreateCell(j);
                     cell.SetCellValue($"as ({i}, {j}) sa");
@@ -59,9 +62,9 @@ namespace WeihanLi.Npoi.Benchmark
 
             var sheet = excel.Workbook.Worksheets.Add("tempSheet");
 
-            for (int i = 1; i <= 50000; i++)
+            for (var i = 1; i <= RowsCount; i++)
             {
-                for (int j = 1; j <= 10; j++)
+                for (var j = 1; j <= ColsCount; j++)
                 {
                     sheet.Cells[i, j].Value = $"as ({i}, {j}) sa";
                 }
