@@ -2,7 +2,7 @@
 <html lang='en'>
 <head>
 <meta charset='utf-8' />
-<title>WeihanLi.Npoi.Benchmark.ExportExcelFileTest-20190804-105120</title>
+<title>WeihanLi.Npoi.Benchmark.ExportExcelFileTest-20191102-104118</title>
 
 <style type="text/css">
 	table { border-collapse: collapse; display: block; width: 100%; overflow: auto; }
@@ -14,10 +14,10 @@
 <body>
 <pre><code>
 BenchmarkDotNet=v0.11.5, OS=Windows 10.0.18362
-Intel Core i5-6300U CPU 2.40GHz (Skylake), 1 CPU, 4 logical and 2 physical cores
-.NET Core SDK=2.2.300
-  [Host]     : .NET Core 2.2.5 (CoreCLR 4.6.27617.05, CoreFX 4.6.27618.01), 64bit RyuJIT
-  Job-EGKCKL : .NET Core 2.2.5 (CoreCLR 4.6.27617.05, CoreFX 4.6.27618.01), 64bit RyuJIT
+Intel Core i5-3470 CPU 3.20GHz (Ivy Bridge), 1 CPU, 4 logical and 4 physical cores
+.NET Core SDK=3.0.100
+  [Host]     : .NET Core 2.2.6 (CoreCLR 4.6.27817.03, CoreFX 4.6.27818.02), 64bit RyuJIT
+  Job-ABUDTI : .NET Core 2.2.6 (CoreCLR 4.6.27817.03, CoreFX 4.6.27818.02), 64bit RyuJIT
 </code></pre>
 <pre><code>IterationCount=10  LaunchCount=1  WarmupCount=3  
 </code></pre>
@@ -25,8 +25,8 @@ Intel Core i5-6300U CPU 2.40GHz (Skylake), 1 CPU, 4 logical and 2 physical cores
 <table>
 <thead><tr><th>          Method</th><th>Mean</th><th>Error</th><th>StdDev</th><th>Min</th><th>Max</th><th>Median</th>
 </tr>
-</thead><tbody><tr><td>NpoiExportToFileTest</td><td>27.29 s</td><td>1.881 s</td><td>1.244 s</td><td>24.63 s</td><td>28.68 s</td><td>27.47 s</td>
-</tr><tr><td>EpplusExportToFileTest</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td>
+</thead><tbody><tr><td>NpoiExportToFileTest</td><td>5.220 s</td><td>0.4123 s</td><td>0.2727 s</td><td>4.952 s</td><td>5.596 s</td><td>5.162 s</td>
+</tr><tr><td>EpplusExportToFileTest</td><td>2.023 s</td><td>0.0138 s</td><td>0.0091 s</td><td>2.009 s</td><td>2.036 s</td><td>2.025 s</td>
 </tr></tbody></table>
 </body>
 </html>
