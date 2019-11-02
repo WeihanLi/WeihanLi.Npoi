@@ -2,7 +2,7 @@
 <html lang='en'>
 <head>
 <meta charset='utf-8' />
-<title>WeihanLi.Npoi.Benchmark.ExportExcelFileTest-20191102-104118</title>
+<title>WeihanLi.Npoi.Benchmark.ExportExcelFileTest-20191102-091630</title>
 
 <style type="text/css">
 	table { border-collapse: collapse; display: block; width: 100%; overflow: auto; }
@@ -17,16 +17,19 @@ BenchmarkDotNet=v0.11.5, OS=Windows 10.0.18362
 Intel Core i5-3470 CPU 3.20GHz (Ivy Bridge), 1 CPU, 4 logical and 4 physical cores
 .NET Core SDK=3.0.100
   [Host]     : .NET Core 2.2.6 (CoreCLR 4.6.27817.03, CoreFX 4.6.27818.02), 64bit RyuJIT
-  Job-ABUDTI : .NET Core 2.2.6 (CoreCLR 4.6.27817.03, CoreFX 4.6.27818.02), 64bit RyuJIT
+  Job-THIRET : .NET Core 2.2.6 (CoreCLR 4.6.27817.03, CoreFX 4.6.27818.02), 64bit RyuJIT
 </code></pre>
 <pre><code>IterationCount=10  LaunchCount=1  WarmupCount=3  
 </code></pre>
 
 <table>
-<thead><tr><th>          Method</th><th>Mean</th><th>Error</th><th>StdDev</th><th>Min</th><th>Max</th><th>Median</th>
+<thead><tr><th>                 Method</th><th>Mean</th><th>Error</th><th>StdDev</th><th>Min</th><th>Max</th><th>Median</th><th>Gen 0</th><th>Gen 1</th><th>Gen 2</th><th>Allocated</th>
 </tr>
-</thead><tbody><tr><td>NpoiExportToFileTest</td><td>5.220 s</td><td>0.4123 s</td><td>0.2727 s</td><td>4.952 s</td><td>5.596 s</td><td>5.162 s</td>
-</tr><tr><td>EpplusExportToFileTest</td><td>2.023 s</td><td>0.0138 s</td><td>0.0091 s</td><td>2.009 s</td><td>2.036 s</td><td>2.025 s</td>
+</thead><tbody><tr><td>NpoiExportToBytesTest</td><td>2.562 s</td><td>0.0191 s</td><td>0.0126 s</td><td>2.537 s</td><td>2.580 s</td><td>2.561 s</td><td>97000.0000</td><td>23000.0000</td><td>5000.0000</td><td>534.44 MB</td>
+</tr><tr><td>NpoiExportToXlsBytesTest</td><td>1.702 s</td><td>0.0174 s</td><td>0.0115 s</td><td>1.687 s</td><td>1.725 s</td><td>1.703 s</td><td>34000.0000</td><td>12000.0000</td><td>3000.0000</td><td>214.15 MB</td>
+</tr><tr><td>EpplusExportToBytesTest</td><td>1.043 s</td><td>0.0077 s</td><td>0.0051 s</td><td>1.032 s</td><td>1.048 s</td><td>1.043 s</td><td>51000.0000</td><td>13000.0000</td><td>2000.0000</td><td>270.93 MB</td>
+</tr><tr><td>NpoiStructExportToBytesTest</td><td>2.573 s</td><td>0.0346 s</td><td>0.0229 s</td><td>2.542 s</td><td>2.606 s</td><td>2.572 s</td><td>97000.0000</td><td>23000.0000</td><td>5000.0000</td><td>536.35 MB</td>
+</tr><tr><td>EpplusStructExportToBytesTest</td><td>1.060 s</td><td>0.0086 s</td><td>0.0051 s</td><td>1.052 s</td><td>1.069 s</td><td>1.058 s</td><td>51000.0000</td><td>13000.0000</td><td>2000.0000</td><td>270.94 MB</td>
 </tr></tbody></table>
 </body>
 </html>

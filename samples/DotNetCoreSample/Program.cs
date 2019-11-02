@@ -72,7 +72,8 @@ namespace DotNetCoreSample
                     PKID = 1,
                     SettingId = Guid.NewGuid(),
                     SettingName = "Setting1",
-                    SettingValue = "Value1"
+                    SettingValue = "Value1",
+                    DisplayName = "ddd1"
                 },
                 new TestEntity()
                 {
@@ -135,7 +136,7 @@ namespace DotNetCoreSample
 
             setting.Property(_ => _.DisplayName)
                 .HasOutputFormatter((entity, displayName) => $"AAA_{entity.SettingName}_{displayName}")
-                .HasInputFormatter((entity, originVal) => originVal.Split(new[] { '_' }, StringSplitOptions.RemoveEmptyEntries)[2])
+                .HasInputFormatter((entity, originVal) => originVal.Split(new[] { '_' })[2])
                 .HasColumnTitle("DisplayName")
                 .HasColumnIndex(2);
 

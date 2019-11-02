@@ -6,7 +6,8 @@ namespace WeihanLi.Npoi.Benchmark
     {
         public static void Main(string[] args)
         {
-            BenchmarkRunner.Run<ExportExcelFileTest>();
+            BenchmarkRunner.Run<WorkbookBasicTest>();
+            // BenchmarkRunner.Run<ExportExcelFileTest>();
         }
     }
 }

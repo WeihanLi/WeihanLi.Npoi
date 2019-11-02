@@ -395,6 +395,6 @@ namespace WeihanLi.Npoi
         /// </summary>
         /// <typeparam name="TEntity">TEntity</typeparam>
         /// <returns></returns>
-        public static IExcelConfiguration<TEntity> SettingFor<TEntity>() => InternalCache.TypeExcelConfigurationDictionary.GetOrAdd(typeof(TEntity), t => InternalHelper.GetExcelConfigurationMapping<TEntity>()) as IExcelConfiguration<TEntity>;
+        public static IExcelConfiguration<TEntity> SettingFor<TEntity>() => InternalHelper.GetExcelConfigurationMapping<TEntity>();
     }
 }
