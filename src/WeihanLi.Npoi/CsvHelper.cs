@@ -187,7 +187,7 @@ namespace WeihanLi.Npoi
                                         var colIndex = propertyColumnDic[key].ColumnIndex;
                                         if (colIndex >= 0 && cols.Count > colIndex)
                                         {
-                                            key.GetValueSetter().Invoke(obj, cols[colIndex].ToOrDefault(key.PropertyType));
+                                            key.GetValueSetter()?.Invoke(obj, cols[colIndex].ToOrDefault(key.PropertyType));
                                         }
                                     }
 
@@ -200,7 +200,7 @@ namespace WeihanLi.Npoi
                                         var colIndex = propertyColumnDic[key].ColumnIndex;
                                         if (colIndex >= 0 && cols.Count > colIndex)
                                         {
-                                            key.GetValueSetter().Invoke(entity, cols[colIndex].ToOrDefault(key.PropertyType));
+                                            key.GetValueSetter()?.Invoke(entity, cols[colIndex].ToOrDefault(key.PropertyType));
                                         }
                                     }
                                 }
