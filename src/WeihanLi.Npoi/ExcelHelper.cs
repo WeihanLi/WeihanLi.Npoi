@@ -62,7 +62,7 @@ namespace WeihanLi.Npoi
 
             using (var stream = File.OpenRead(excelPath))
             {
-                return Path.GetExtension(excelPath).EqualsIgnoreCase(".xlsx") ? (IWorkbook)new XSSFWorkbook(stream) : new HSSFWorkbook(stream);
+                return Path.GetExtension(excelPath).EqualsIgnoreCase(".xls") ? new HSSFWorkbook(stream) : (IWorkbook)new XSSFWorkbook(stream);
             }
         }
 
@@ -71,7 +71,7 @@ namespace WeihanLi.Npoi
         /// </summary>
         /// <param name="excelBytes">excel file bytes</param>
         /// <returns>workbook</returns>
-        public static IWorkbook LoadExcel([NotNull]byte[] excelBytes) => LoadExcel(excelBytes, ExcelFormat.Xlsx);
+        public static IWorkbook LoadExcel([NotNull]byte[] excelBytes) => LoadExcel(excelBytes, ExcelFormat.Xls);
 
         /// <summary>
         /// load excel from excelBytes
@@ -83,15 +83,7 @@ namespace WeihanLi.Npoi
         {
             using (var stream = new MemoryStream(excelBytes))
             {
-                switch (excelFormat)
-                {
-                    case ExcelFormat.Xls:
-                        return new HSSFWorkbook(stream);
-
-                    //case ExcelFormat.Xlsx:
-                    default:
-                        return new XSSFWorkbook(stream);
-                }
+                return LoadExcel(stream, excelFormat);
             }
         }
 
@@ -100,7 +92,7 @@ namespace WeihanLi.Npoi
         /// </summary>
         /// <param name="excelStream">excel file stream</param>
         /// <returns>workbook</returns>
-        public static IWorkbook LoadExcel([NotNull]Stream excelStream) => LoadExcel(excelStream, ExcelFormat.Xlsx);
+        public static IWorkbook LoadExcel([NotNull]Stream excelStream) => LoadExcel(excelStream, ExcelFormat.Xls);
 
         /// <summary>
         /// load excel from excelBytes
@@ -140,7 +132,7 @@ namespace WeihanLi.Npoi
             {
                 throw new ArgumentException(msg);
             }
-            return PrepareWorkbook(Path.GetExtension(excelPath).EqualsIgnoreCase(".xlsx"), excelSetting);
+            return PrepareWorkbook(!Path.GetExtension(excelPath).EqualsIgnoreCase(".xls"), excelSetting);
         }
 
         /// <summary>
@@ -172,8 +164,7 @@ namespace WeihanLi.Npoi
         /// </summary>
         /// <param name="isXlsx">is for *.xlsx file</param>
         /// <returns></returns>
-        public static IWorkbook PrepareWorkbook(bool isXlsx) =>
-            PrepareWorkbook(isXlsx, null);
+        public static IWorkbook PrepareWorkbook(bool isXlsx) => PrepareWorkbook(isXlsx, null);
 
         /// <summary>
         /// get a excel workbook
@@ -228,7 +219,7 @@ namespace WeihanLi.Npoi
         /// <param name="excelBytes">excelBytes</param>
         /// <returns>List</returns>
         public static List<TEntity> ToEntityList<TEntity>([NotNull]byte[] excelBytes) where TEntity : new()
-            => ToEntityList<TEntity>(excelBytes, ExcelFormat.Xlsx, 0);
+            => ToEntityList<TEntity>(excelBytes, ExcelFormat.Xls, 0);
 
         /// <summary>
         /// read (sheetIndex) sheet of excel from excel file bytes to a list
@@ -239,7 +230,7 @@ namespace WeihanLi.Npoi
         /// <returns>List</returns>
         public static List<TEntity> ToEntityList<TEntity>([NotNull] byte[] excelBytes, int sheetIndex)
             where TEntity : new()
-            => ToEntityList<TEntity>(excelBytes, ExcelFormat.Xlsx, sheetIndex);
+            => ToEntityList<TEntity>(excelBytes, ExcelFormat.Xls, sheetIndex);
 
         /// <summary>
         /// read first sheet of excel from excel file bytes to a list
@@ -249,8 +240,7 @@ namespace WeihanLi.Npoi
         /// <param name="excelFormat">excelFormat</param>
         /// <returns>List</returns>
         public static List<TEntity> ToEntityList<TEntity>([NotNull] byte[] excelBytes, ExcelFormat excelFormat)
-            where TEntity : new()
-            => ToEntityList<TEntity>(excelBytes, excelFormat, 0);
+            where TEntity : new() => ToEntityList<TEntity>(excelBytes, excelFormat, 0);
 
         /// <summary>
         /// read (sheetIndex) sheet of excel from excel bytes path to a list
@@ -273,7 +263,7 @@ namespace WeihanLi.Npoi
         /// <param name="excelStream">excelStream</param>
         /// <returns>List</returns>
         public static List<TEntity> ToEntityList<TEntity>([NotNull]Stream excelStream) where TEntity : new()
-            => ToEntityList<TEntity>(excelStream, ExcelFormat.Xlsx, 0);
+            => ToEntityList<TEntity>(excelStream, ExcelFormat.Xls, 0);
 
         /// <summary>
         /// read (sheetIndex) sheet of excel from excel file bytes to a list
@@ -284,7 +274,7 @@ namespace WeihanLi.Npoi
         /// <returns>List</returns>
         public static List<TEntity> ToEntityList<TEntity>([NotNull] Stream excelStream, int sheetIndex)
             where TEntity : new()
-            => ToEntityList<TEntity>(excelStream, ExcelFormat.Xlsx, sheetIndex);
+            => ToEntityList<TEntity>(excelStream, ExcelFormat.Xls, sheetIndex);
 
         /// <summary>
         /// read first sheet of excel from excel file bytes to a list
@@ -333,7 +323,7 @@ namespace WeihanLi.Npoi
         }
 
         /// <summary>
-        /// read first sheet of excel from excel file path to a datatable
+        /// read first sheet of excel from excel file path to a data table
         /// </summary>
         /// <typeparam name="TEntity">EntityType</typeparam>
         /// <param name="excelPath">excelPath</param>
@@ -351,14 +341,14 @@ namespace WeihanLi.Npoi
             => ToEntityList<TEntity>(excelPath, sheetIndex).ToDataTable();
 
         /// <summary>
-        /// read first sheet of excel from excel file path to a datatable
+        /// read first sheet of excel from excel file path to a data table
         /// </summary>
         /// <param name="excelPath">excelPath</param>
         /// <returns>DataTable</returns>
         public static DataTable ToDataTable([NotNull]string excelPath) => ToDataTable(excelPath, 0, 0);
 
         /// <summary>
-        /// read (sheetIndex) sheet of excel from excel file path to a datatable
+        /// read (sheetIndex) sheet of excel from excel file path to a data table
         /// </summary>
         /// <param name="excelPath">excelPath</param>
         /// <param name="sheetIndex">sheetIndex</param>
@@ -395,6 +385,6 @@ namespace WeihanLi.Npoi
         /// </summary>
         /// <typeparam name="TEntity">TEntity</typeparam>
         /// <returns></returns>
-        public static IExcelConfiguration<TEntity> SettingFor<TEntity>() => InternalCache.TypeExcelConfigurationDictionary.GetOrAdd(typeof(TEntity), t => InternalHelper.GetExcelConfigurationMapping<TEntity>()) as IExcelConfiguration<TEntity>;
+        public static IExcelConfiguration<TEntity> SettingFor<TEntity>() => InternalHelper.GetExcelConfigurationMapping<TEntity>();
     }
 }

@@ -14,6 +14,12 @@ namespace WeihanLi.Npoi.Attributes
 
         public int HeaderRowIndex => SheetSetting.HeaderRowIndex;
 
+        public bool AutoColumnWidthEnabled
+        {
+            get => SheetSetting.AutoColumnWidthEnabled;
+            set => SheetSetting.AutoColumnWidthEnabled = value;
+        }
+
         internal SheetSetting SheetSetting { get; }
 
         public SheetAttribute() => SheetSetting = new SheetSetting();

@@ -57,5 +57,10 @@ namespace WeihanLi.Npoi.Settings
         /// HeaderRowIndex
         /// </summary>
         public int HeaderRowIndex => StartRowIndex - 1;
+
+        /// <summary>
+        /// enable auto column width
+        /// </summary>
+        public bool AutoColumnWidthEnabled { get; set; }
     }
 }

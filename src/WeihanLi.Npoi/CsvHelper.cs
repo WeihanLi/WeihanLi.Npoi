@@ -118,13 +118,27 @@ namespace WeihanLi.Npoi
             {
                 throw new ArgumentException(Resource.FileNotFound, nameof(filePath));
             }
+
+            return ToEntityList<TEntity>(File.ReadAllBytes(filePath));
+        }
+
+        /// <summary>
+        /// convert csv file data to entity list
+        /// </summary>
+        /// <param name="csvBytes">csv bytes</param>
+        public static List<TEntity> ToEntityList<TEntity>(byte[] csvBytes) where TEntity : new()
+        {
+            if (null == csvBytes)
+            {
+                throw new ArgumentNullException(nameof(csvBytes));
+            }
             var entities = new List<TEntity>();
 
             if (typeof(TEntity).IsBasicType())
             {
-                using (var fs = new FileStream(filePath, FileMode.Open, FileAccess.Read))
+                using (var ms = new MemoryStream(csvBytes))
                 {
-                    using (var sr = new StreamReader(fs, Encoding.UTF8))
+                    using (var sr = new StreamReader(ms, Encoding.UTF8))
                     {
                         string strLine;
                         var isFirstLine = true;
@@ -144,11 +158,18 @@ namespace WeihanLi.Npoi
             }
             else
             {
-                var propertyColumnDic = InternalHelper.GetPropertyColumnDictionaryForImport<TEntity>();
-
-                using (var fs = new FileStream(filePath, FileMode.Open, FileAccess.Read))
+                var propertyColumnDictionary = InternalHelper.GetPropertyColumnDictionary<TEntity>();
+                var propertyColumnDic = propertyColumnDictionary.ToDictionary(_ => _.Key, _ => new PropertySetting()
                 {
-                    using (var sr = new StreamReader(fs, Encoding.UTF8))
+                    ColumnIndex = -1,
+                    ColumnFormatter = _.Value.ColumnFormatter,
+                    ColumnTitle = _.Value.ColumnTitle,
+                    ColumnWidth = _.Value.ColumnWidth,
+                    IsIgnored = _.Value.IsIgnored
+                });
+                using (var ms = new MemoryStream(csvBytes))
+                {
+                    using (var sr = new StreamReader(ms, Encoding.UTF8))
                     {
                         string strLine;
                         var isFirstLine = true;
@@ -169,7 +190,7 @@ namespace WeihanLi.Npoi
 
                                 if (propertyColumnDic.Values.All(_ => _.ColumnIndex < 0))
                                 {
-                                    propertyColumnDic = InternalHelper.GetPropertyColumnDictionary<TEntity>();
+                                    propertyColumnDic = propertyColumnDictionary;
                                 }
 
                                 isFirstLine = false;
@@ -187,7 +208,7 @@ namespace WeihanLi.Npoi
                                         var colIndex = propertyColumnDic[key].ColumnIndex;
                                         if (colIndex >= 0 && cols.Count > colIndex)
                                         {
-                                            key.GetValueSetter().Invoke(obj, cols[colIndex].ToOrDefault(key.PropertyType));
+                                            key.GetValueSetter()?.Invoke(obj, cols[colIndex].ToOrDefault(key.PropertyType));
                                         }
                                     }
 
@@ -200,7 +221,7 @@ namespace WeihanLi.Npoi
                                         var colIndex = propertyColumnDic[key].ColumnIndex;
                                         if (colIndex >= 0 && cols.Count > colIndex)
                                         {
-                                            key.GetValueSetter().Invoke(entity, cols[colIndex].ToOrDefault(key.PropertyType));
+                                            key.GetValueSetter()?.Invoke(entity, cols[colIndex].ToOrDefault(key.PropertyType));
                                         }
                                     }
                                 }
@@ -215,7 +236,7 @@ namespace WeihanLi.Npoi
                                             var formatterFunc = InternalCache.InputFormatterFuncCache.GetOrAdd(propertyInfo, p =>
                                             {
                                                 var propertyType = typeof(PropertySetting<,>).MakeGenericType(entityType, p.PropertyType);
-                                                return propertyType.GetProperty("InputFormatterFunc")?.GetValueGetter().Invoke(propertyColumnDic[propertyInfo]);
+                                                return propertyType.GetProperty(InternalConstants.InputFormatterFuncName)?.GetValueGetter().Invoke(propertyColumnDictionary[propertyInfo]);
                                             });
                                             if (null != formatterFunc)
                                             {
@@ -242,6 +263,19 @@ namespace WeihanLi.Npoi
             }
 
             return entities;
+        }
+
+        /// <summary>
+        /// convert csv file data to entity list
+        /// </summary>
+        /// <param name="csvStream">csv Stream</param>
+        public static List<TEntity> ToEntityList<TEntity>(Stream csvStream) where TEntity : new()
+        {
+            if (null == csvStream)
+            {
+                throw new ArgumentNullException(nameof(csvStream));
+            }
+            return ToEntityList<TEntity>(csvStream.ToByteArray());
         }
 
         private static IReadOnlyList<string> ParseLine(string line)
@@ -382,7 +416,7 @@ namespace WeihanLi.Npoi
                 {
                     for (var i = 0; i < props.Count; i++)
                     {
-                        if (i++ > 0)
+                        if (i > 0)
                         {
                             data.Append(CsvSeparatorCharacter);
                         }
@@ -400,7 +434,7 @@ namespace WeihanLi.Npoi
                         var formatterFunc = InternalCache.OutputFormatterFuncCache.GetOrAdd(props[i], p =>
                         {
                             var propertyType = typeof(PropertySetting<,>).MakeGenericType(entityType, p.PropertyType);
-                            return propertyType.GetProperty("ColumnFormatterFunc")?.GetValueGetter()
+                            return propertyType.GetProperty(InternalConstants.OutputFormatterFuncName)?.GetValueGetter()
                                 .Invoke(dic[props[i]]);
                         });
                         if (null != formatterFunc)

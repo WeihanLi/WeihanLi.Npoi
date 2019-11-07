@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using WeihanLi.Extensions;
@@ -26,7 +25,7 @@ namespace WeihanLi.Npoi.Configurations
 
         internal FilterSetting FilterSetting { get; set; }
 
-        internal IList<SheetSetting> SheetSettings { get; set; }
+        internal IDictionary<int, SheetSetting> SheetSettings { get; set; }
 
         public ExcelConfiguration() : this(null)
         {
@@ -36,9 +35,9 @@ namespace WeihanLi.Npoi.Configurations
         {
             PropertyConfigurationDictionary = new Dictionary<PropertyInfo, PropertyConfiguration>();
             ExcelSetting = (setting ?? ExcelHelper.DefaultExcelSetting) ?? new ExcelSetting();
-            SheetSettings = new List<SheetSetting>(InternalConstants.MaxSheetNum / 16)
+            SheetSettings = new Dictionary<int, SheetSetting>(4)
             {
-                new SheetSetting()
+                { 0, new SheetSetting() }
             };
             FreezeSettings = new List<FreezeSetting>();
         }
@@ -121,11 +120,15 @@ namespace WeihanLi.Npoi.Configurations
         /// <typeparam name="TProperty">The type of parameter.</typeparam>
         public IPropertyConfiguration<TEntity, TProperty> Property<TProperty>(Expression<Func<TEntity, TProperty>> propertyExpression)
         {
-            var propertyName = propertyExpression.GetMemberInfo().Name;
-            var property = _entityType.GetProperty(propertyName);
+            var memberInfo = propertyExpression.GetMemberInfo();
+            var property = memberInfo as PropertyInfo;
             if (property == null)
             {
-                throw new InvalidOperationException($"the property [{propertyName}] does not exists");
+                property = _entityType.GetProperty(memberInfo.Name);
+                if (null == property)
+                {
+                    throw new InvalidOperationException($"the property [{memberInfo.Name}] does not exists");
+                }
             }
             return (IPropertyConfiguration<TEntity, TProperty>)PropertyConfigurationDictionary[property];
         }
@@ -136,26 +139,32 @@ namespace WeihanLi.Npoi.Configurations
 
         public IExcelConfiguration HasSheetConfiguration(int sheetIndex, string sheetName) => HasSheetConfiguration(sheetIndex, sheetName, 1);
 
-        public IExcelConfiguration HasSheetConfiguration(int sheetIndex, string sheetName, int startRowIndex)
+        public IExcelConfiguration HasSheetConfiguration(int sheetIndex, string sheetName, bool enableAutoColumnWidth) => HasSheetConfiguration(sheetIndex, sheetName, 1, enableAutoColumnWidth);
+
+        public IExcelConfiguration HasSheetConfiguration(int sheetIndex, string sheetName, int startRowIndex) => HasSheetConfiguration(sheetIndex, sheetName, startRowIndex, false);
+
+        public IExcelConfiguration HasSheetConfiguration(int sheetIndex, string sheetName, int startRowIndex,
+            bool enableAutoColumnWidth)
         {
-            var sheetSetting =
-                SheetSettings.FirstOrDefault(_ => _.SheetIndex == sheetIndex);
-
-            if (sheetSetting == null)
+            if (sheetIndex >= 0)
             {
-                SheetSettings.Add(new SheetSetting
+                if (SheetSettings.TryGetValue(sheetIndex, out var sheetSetting))
                 {
-                    SheetIndex = sheetIndex,
-                    SheetName = sheetName,
-                    StartRowIndex = startRowIndex
-                });
+                    sheetSetting.SheetName = sheetName;
+                    sheetSetting.StartRowIndex = startRowIndex;
+                    sheetSetting.AutoColumnWidthEnabled = enableAutoColumnWidth;
+                }
+                else
+                {
+                    SheetSettings[sheetIndex] = new SheetSetting()
+                    {
+                        SheetIndex = sheetIndex,
+                        SheetName = sheetName,
+                        StartRowIndex = startRowIndex,
+                        AutoColumnWidthEnabled = enableAutoColumnWidth
+                    };
+                }
             }
-            else
-            {
-                sheetSetting.SheetName = sheetName;
-                sheetSetting.StartRowIndex = startRowIndex;
-            }
-
             return this;
         }
 

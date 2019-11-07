@@ -54,13 +54,14 @@ namespace DotNetCoreSample
             list2.Add(new TestEntity2()
             {
                 Id = 999,
-                Title = "",
+                Title = $"{Enumerable.Repeat(1, 10).StringJoin(",")}",
                 Description = null
             });
             var tempDirPath = $@"{Environment.GetEnvironmentVariable("USERPROFILE")}\Desktop\temp\test";
             list2.ToExcelFile($@"{tempDirPath}\testEntity2.xlsx");
 
             var listTemp = ExcelHelper.ToEntityList<TestEntity2>($@"{tempDirPath}\testEntity2.xlsx");
+            var dataTableTemp = ExcelHelper.ToDataTable($@"{tempDirPath}\testEntity2.xlsx");
 
             Console.WriteLine("Press Enter to continue...");
             Console.ReadLine();
@@ -72,7 +73,8 @@ namespace DotNetCoreSample
                     PKID = 1,
                     SettingId = Guid.NewGuid(),
                     SettingName = "Setting1",
-                    SettingValue = "Value1"
+                    SettingValue = "Value1",
+                    DisplayName = "ddd1"
                 },
                 new TestEntity()
                 {
@@ -135,7 +137,7 @@ namespace DotNetCoreSample
 
             setting.Property(_ => _.DisplayName)
                 .HasOutputFormatter((entity, displayName) => $"AAA_{entity.SettingName}_{displayName}")
-                .HasInputFormatter((entity, originVal) => originVal.Split(new[] { '_' }, StringSplitOptions.RemoveEmptyEntries)[2])
+                .HasInputFormatter((entity, originVal) => originVal.Split(new[] { '_' })[2])
                 .HasColumnTitle("DisplayName")
                 .HasColumnIndex(2);
 
@@ -182,7 +184,7 @@ namespace DotNetCoreSample
         public DateTime UpdatedTime { get; set; }
     }
 
-    [Sheet(SheetIndex = 0, SheetName = "TestSheet")]
+    [Sheet(SheetIndex = 0, SheetName = "TestSheet", AutoColumnWidthEnabled = true)]
     internal class TestEntity2
     {
         [Column(Index = 0)]

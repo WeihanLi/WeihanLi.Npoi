@@ -6,13 +6,13 @@
     public enum ExcelFormat : byte
     {
         /// <summary>
-        /// xlsx by default
+        /// xls by default
         /// </summary>
-        Xlsx = 0,
+        Xls = 0,
 
         /// <summary>
-        /// xls
+        /// xlsx
         /// </summary>
-        Xls = 1,
+        Xlsx = 1,
     }
 }
