@@ -28,7 +28,7 @@ namespace WeihanLi.Npoi.Benchmark
         }
 
         private readonly List<TestEntity> testData = new List<TestEntity>(51200);
-        private byte[] xlsBytes, xlsxBytes;
+        private byte[] xlsBytes, xlsxBytes, csvBytes;
 
         [GlobalSetup]
         public void GlobalSetup()
@@ -45,6 +45,7 @@ namespace WeihanLi.Npoi.Benchmark
 
             xlsBytes = testData.ToExcelBytes(ExcelFormat.Xls);
             xlsxBytes = testData.ToExcelBytes(ExcelFormat.Xlsx);
+            csvBytes = testData.ToCsvBytes();
         }
 
         [GlobalCleanup]
@@ -54,6 +55,14 @@ namespace WeihanLi.Npoi.Benchmark
             testData.Clear();
             xlsBytes = null;
             xlsxBytes = null;
+        }
+
+        [Benchmark]
+        [MethodImpl(MethodImplOptions.NoInlining)]
+        public int ImportFromCsvBytesTest()
+        {
+            var list = CsvHelper.ToEntityList<TestEntity>(csvBytes);
+            return list.Count;
         }
 
         [Benchmark]

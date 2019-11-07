@@ -27,10 +27,9 @@ namespace WeihanLi.Npoi
             var entityType = typeof(TEntity);
             var configuration = InternalHelper.GetExcelConfigurationMapping<TEntity>();
             var sheetSetting = GetSheetSetting(configuration.SheetSettings, sheetIndex);
-            var propertyColumnDictionary = InternalHelper.GetPropertyColumnDictionary(configuration);
-
             var entities = new List<TEntity>(sheet.LastRowNum - sheetSetting.HeaderRowIndex);
 
+            var propertyColumnDictionary = InternalHelper.GetPropertyColumnDictionary(configuration);
             var propertyColumnDic = sheetSetting.HeaderRowIndex >= 0
                 ? propertyColumnDictionary.ToDictionary(_ => _.Key, _ => new PropertySetting()
                 {

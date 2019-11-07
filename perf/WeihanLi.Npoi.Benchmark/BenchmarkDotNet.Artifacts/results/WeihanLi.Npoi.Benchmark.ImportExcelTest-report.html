@@ -2,7 +2,7 @@
 <html lang='en'>
 <head>
 <meta charset='utf-8' />
-<title>WeihanLi.Npoi.Benchmark.ImportExcelTest-20191107-123054</title>
+<title>WeihanLi.Npoi.Benchmark.ImportExcelTest-20191107-041516</title>
 
 <style type="text/css">
 	table { border-collapse: collapse; display: block; width: 100%; overflow: auto; }
@@ -17,16 +17,17 @@ BenchmarkDotNet=v0.11.5, OS=Windows 10.0.18362
 Intel Core i5-3470 CPU 3.20GHz (Ivy Bridge), 1 CPU, 4 logical and 4 physical cores
 .NET Core SDK=3.0.100
   [Host]     : .NET Core 2.2.6 (CoreCLR 4.6.27817.03, CoreFX 4.6.27818.02), 64bit RyuJIT
-  Job-VOGULL : .NET Core 2.2.6 (CoreCLR 4.6.27817.03, CoreFX 4.6.27818.02), 64bit RyuJIT
+  Job-YRZGQS : .NET Core 2.2.6 (CoreCLR 4.6.27817.03, CoreFX 4.6.27818.02), 64bit RyuJIT
 </code></pre>
 <pre><code>IterationCount=10  LaunchCount=1  WarmupCount=3  
 </code></pre>
 
 <table>
-<thead><tr><th>           Method</th><th>Mean</th><th>Error</th><th>StdDev</th><th>Min</th><th>Max</th><th>Median</th><th>Gen 0</th><th>Gen 1</th><th>Gen 2</th><th>Allocated</th>
+<thead><tr><th>           Method</th><th>Mean</th><th>Error</th><th>StdDev</th><th> Min</th><th> Max</th><th>Median</th><th>Gen 0</th><th>Gen 1</th><th>Gen 2</th><th>Allocated</th>
 </tr>
-</thead><tbody><tr><td>ImportFromXlsBytesTest</td><td>1.659 s</td><td>0.0186 s</td><td>0.0123 s</td><td>1.637 s</td><td>1.674 s</td><td>1.663 s</td><td>52000.0000</td><td>16000.0000</td><td>2000.0000</td><td>253.25 MB</td>
-</tr><tr><td>ImportFromXlsxBytesTest</td><td>3.786 s</td><td>0.0482 s</td><td>0.0319 s</td><td>3.745 s</td><td>3.853 s</td><td>3.779 s</td><td>93000.0000</td><td>35000.0000</td><td>3000.0000</td><td>490.18 MB</td>
+</thead><tbody><tr><td>ImportFromCsvBytesTest</td><td>894.6 ms</td><td>17.91 ms</td><td>11.85 ms</td><td>881.2 ms</td><td>918.5 ms</td><td>897.7 ms</td><td>50000.0000</td><td>12000.0000</td><td>1000.0000</td><td>182 MB</td>
+</tr><tr><td>ImportFromXlsBytesTest</td><td>1,722.5 ms</td><td>29.35 ms</td><td>19.42 ms</td><td>1,694.0 ms</td><td>1,753.2 ms</td><td>1,719.0 ms</td><td>76000.0000</td><td>28000.0000</td><td>2000.0000</td><td>315.85 MB</td>
+</tr><tr><td>ImportFromXlsxBytesTest</td><td>3,997.9 ms</td><td>61.59 ms</td><td>40.74 ms</td><td>3,952.2 ms</td><td>4,062.1 ms</td><td>3,986.1 ms</td><td>110000.0000</td><td>36000.0000</td><td>3000.0000</td><td>552.76 MB</td>
 </tr></tbody></table>
 </body>
 </html>
