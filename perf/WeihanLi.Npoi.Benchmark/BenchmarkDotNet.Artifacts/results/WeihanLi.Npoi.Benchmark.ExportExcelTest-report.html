@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='utf-8' />
+<title>WeihanLi.Npoi.Benchmark.ExportExcelTest-20191107-043751</title>
+
+<style type="text/css">
+	table { border-collapse: collapse; display: block; width: 100%; overflow: auto; }
+	td, th { padding: 6px 13px; border: 1px solid #ddd; }
+	tr { background-color: #fff; border-top: 1px solid #ccc; }
+	tr:nth-child(even) { background: #f8f8f8; }
+</style>
+</head>
+<body>
+<pre><code>
+BenchmarkDotNet=v0.11.5, OS=Windows 10.0.18362
+Intel Core i5-3470 CPU 3.20GHz (Ivy Bridge), 1 CPU, 4 logical and 4 physical cores
+.NET Core SDK=3.0.100
+  [Host]     : .NET Core 2.2.6 (CoreCLR 4.6.27817.03, CoreFX 4.6.27818.02), 64bit RyuJIT
+  Job-RTOLTK : .NET Core 2.2.6 (CoreCLR 4.6.27817.03, CoreFX 4.6.27818.02), 64bit RyuJIT
+</code></pre>
+<pre><code>IterationCount=10  LaunchCount=1  WarmupCount=3  
+</code></pre>
+
+<table>
+<thead><tr><th>                   Method</th><th>Mean</th><th>Error</th><th>StdDev</th><th> Min</th><th> Max</th><th>Median</th><th>Gen 0</th><th>Gen 1</th><th>Gen 2</th><th>Allocated</th>
+</tr>
+</thead><tbody><tr><td>ExportToCsvBytesTest</td><td>121.2 ms</td><td>2.2688 ms</td><td>1.5007 ms</td><td>119.8 ms</td><td>124.8 ms</td><td>120.9 ms</td><td>10000.0000</td><td>2000.0000</td><td>800.0000</td><td>60.81 MB</td>
+</tr><tr><td>NpoiExportToXlsBytesTest</td><td>1,686.8 ms</td><td>15.1307 ms</td><td>10.0080 ms</td><td>1,674.0 ms</td><td>1,700.0 ms</td><td>1,685.6 ms</td><td>33000.0000</td><td>12000.0000</td><td>3000.0000</td><td>212.25 MB</td>
+</tr><tr><td>NpoiExportToXlsxBytesTest</td><td>2,483.3 ms</td><td>14.0983 ms</td><td>8.3897 ms</td><td>2,469.6 ms</td><td>2,492.9 ms</td><td>2,487.8 ms</td><td>95000.0000</td><td>22000.0000</td><td>4000.0000</td><td>532.54 MB</td>
+</tr><tr><td>EpplusExportToBytesTest</td><td>1,027.0 ms</td><td>3.9548 ms</td><td>2.6159 ms</td><td>1,022.8 ms</td><td>1,029.7 ms</td><td>1,027.4 ms</td><td>51000.0000</td><td>13000.0000</td><td>2000.0000</td><td>270.94 MB</td>
+</tr><tr><td>StructExportToCsvBytesTest</td><td>113.2 ms</td><td>0.5914 ms</td><td>0.3912 ms</td><td>112.7 ms</td><td>113.9 ms</td><td>113.2 ms</td><td>10000.0000</td><td>2000.0000</td><td>800.0000</td><td>60.81 MB</td>
+</tr><tr><td>NpoiStructExportToXlsBytesTest</td><td>1,653.8 ms</td><td>10.5413 ms</td><td>6.9724 ms</td><td>1,644.3 ms</td><td>1,665.4 ms</td><td>1,654.6 ms</td><td>33000.0000</td><td>12000.0000</td><td>3000.0000</td><td>214.15 MB</td>
+</tr><tr><td>NpoiStructExportToXlsxBytesTest</td><td>2,513.1 ms</td><td>20.8778 ms</td><td>13.8094 ms</td><td>2,482.7 ms</td><td>2,525.5 ms</td><td>2,518.7 ms</td><td>100000.0000</td><td>24000.0000</td><td>4000.0000</td><td>534.44 MB</td>
+</tr><tr><td>EpplusStructExportToBytesTest</td><td>1,045.9 ms</td><td>8.0583 ms</td><td>5.3301 ms</td><td>1,037.8 ms</td><td>1,054.1 ms</td><td>1,046.7 ms</td><td>51000.0000</td><td>13000.0000</td><td>2000.0000</td><td>270.95 MB</td>
+</tr></tbody></table>
+</body>
+</html>
