@@ -30,7 +30,7 @@ namespace WeihanLi.Npoi
               };
               foreach (var sheetAttribute in type.GetCustomAttributes<SheetAttribute>())
               {
-                  if (sheetAttribute.SheetIndex > 0)
+                  if (sheetAttribute.SheetIndex >= 0)
                   {
                       excelConfiguration.SheetSettings[sheetAttribute.SheetIndex] = sheetAttribute.SheetSetting;
                   }

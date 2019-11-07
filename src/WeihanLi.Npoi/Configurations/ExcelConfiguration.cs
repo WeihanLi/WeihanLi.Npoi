@@ -139,7 +139,12 @@ namespace WeihanLi.Npoi.Configurations
 
         public IExcelConfiguration HasSheetConfiguration(int sheetIndex, string sheetName) => HasSheetConfiguration(sheetIndex, sheetName, 1);
 
-        public IExcelConfiguration HasSheetConfiguration(int sheetIndex, string sheetName, int startRowIndex)
+        public IExcelConfiguration HasSheetConfiguration(int sheetIndex, string sheetName, bool enableAutoColumnWidth) => HasSheetConfiguration(sheetIndex, sheetName, 1, enableAutoColumnWidth);
+
+        public IExcelConfiguration HasSheetConfiguration(int sheetIndex, string sheetName, int startRowIndex) => HasSheetConfiguration(sheetIndex, sheetName, startRowIndex, false);
+
+        public IExcelConfiguration HasSheetConfiguration(int sheetIndex, string sheetName, int startRowIndex,
+            bool enableAutoColumnWidth)
         {
             if (sheetIndex >= 0)
             {
@@ -147,6 +152,7 @@ namespace WeihanLi.Npoi.Configurations
                 {
                     sheetSetting.SheetName = sheetName;
                     sheetSetting.StartRowIndex = startRowIndex;
+                    sheetSetting.AutoColumnWidthEnabled = enableAutoColumnWidth;
                 }
                 else
                 {
@@ -154,7 +160,8 @@ namespace WeihanLi.Npoi.Configurations
                     {
                         SheetIndex = sheetIndex,
                         SheetName = sheetName,
-                        StartRowIndex = startRowIndex
+                        StartRowIndex = startRowIndex,
+                        AutoColumnWidthEnabled = enableAutoColumnWidth
                     };
                 }
             }

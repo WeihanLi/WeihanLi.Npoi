@@ -270,6 +270,13 @@ namespace WeihanLi.Npoi
                     {
                         sheet.SetColumnWidth(setting.ColumnIndex, setting.ColumnWidth * 256);
                     }
+                    else
+                    {
+                        if (sheetSetting.AutoColumnWidthEnabled)
+                        {
+                            sheet.AutoSizeColumn(setting.ColumnIndex);
+                        }
+                    }
                 }
 
                 foreach (var freezeSetting in excelConfiguration.FreezeSettings)

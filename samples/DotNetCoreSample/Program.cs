@@ -54,7 +54,7 @@ namespace DotNetCoreSample
             list2.Add(new TestEntity2()
             {
                 Id = 999,
-                Title = "",
+                Title = $"{Enumerable.Repeat(1, 10).StringJoin(",")}",
                 Description = null
             });
             var tempDirPath = $@"{Environment.GetEnvironmentVariable("USERPROFILE")}\Desktop\temp\test";
@@ -184,7 +184,7 @@ namespace DotNetCoreSample
         public DateTime UpdatedTime { get; set; }
     }
 
-    [Sheet(SheetIndex = 0, SheetName = "TestSheet")]
+    [Sheet(SheetIndex = 0, SheetName = "TestSheet", AutoColumnWidthEnabled = true)]
     internal class TestEntity2
     {
         [Column(Index = 0)]
