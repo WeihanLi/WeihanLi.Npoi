@@ -1,5 +1,14 @@
 # WeihanLi.Npoi Release Notes
 
+
+## [1.5.0](https://www.nuget.org/packages/WeihanLi.Npoi/1.5.0)
+
+- add support for more format, treat as xlsx 
+- add `AutoColumnWidthEnabled` setting to `SheetSetting`, not autoSizeColumn by default
+- add `CsvHelper.ToEntityList(byte[] bytes)`/`CsvHelper.ToEntityList(Stream stream)`
+- add null check for `propertyInfo.GetValueSetter`
+- use xls for default ExcelFormat(better performance)
+
 ## [1.4.5](https://www.nuget.org/packages/WeihanLi.Npoi/1.4.5)
 
 - try to auto adjust column index when import excel(do not update existing settings)
