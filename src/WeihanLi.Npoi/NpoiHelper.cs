@@ -115,13 +115,13 @@ namespace WeihanLi.Npoi
                         {
                             foreach (var propertyInfo in propertyColumnDic.Keys)
                             {
-                                if (propertyInfo.CanWrite && propertyColumnDic[propertyInfo].GetType().IsGenericType)
+                                if (propertyInfo.CanWrite)
                                 {
                                     var propertyValue = propertyInfo.GetValueGetter().Invoke(entity);
                                     var formatterFunc = InternalCache.InputFormatterFuncCache.GetOrAdd(propertyInfo, p =>
                                     {
-                                        var propertyType = typeof(PropertySetting<,>).MakeGenericType(entityType, p.PropertyType);
-                                        return propertyType.GetProperty("InputFormatterFunc")?.GetValueGetter()?.Invoke(propertyColumnDic[propertyInfo]);
+                                        var propertySettingType = typeof(PropertySetting<,>).MakeGenericType(entityType, p.PropertyType);
+                                        return propertySettingType.GetProperty("InputFormatterFunc")?.GetValueGetter()?.Invoke(propertyColumnDictionary[propertyInfo]);
                                     });
                                     if (null != formatterFunc)
                                     {
@@ -187,25 +187,21 @@ namespace WeihanLi.Npoi
                     foreach (var key in propertyColumnDictionary.Keys)
                     {
                         var propertyValue = key.GetValueGetter<TEntity>().Invoke(entity);
-
-                        if (propertyColumnDictionary[key].GetType().IsGenericType)
+                        var formatterFunc = InternalCache.OutputFormatterFuncCache.GetOrAdd(key, p =>
                         {
-                            var formatterFunc = InternalCache.OutputFormatterFuncCache.GetOrAdd(key, p =>
-                            {
-                                var propertyType = typeof(PropertySetting<,>).MakeGenericType(entityType, p.PropertyType);
-                                return propertyType.GetProperty("OutputFormatterFunc")?.GetValueGetter().Invoke(propertyColumnDictionary[key]);
-                            });
-                            if (null != formatterFunc)
-                            {
-                                var funcType = typeof(Func<,,>).MakeGenericType(entityType, key.PropertyType, typeof(object));
-                                var method = funcType.GetProperty("Method")?.GetValueGetter().Invoke(formatterFunc) as MethodInfo;
-                                var target = funcType.GetProperty("Target")?.GetValueGetter().Invoke(formatterFunc);
+                            var propertySettingType = typeof(PropertySetting<,>).MakeGenericType(entityType, p.PropertyType);
+                            return propertySettingType.GetProperty("OutputFormatterFunc")?.GetValueGetter().Invoke(propertyColumnDictionary[key]);
+                        });
+                        if (null != formatterFunc)
+                        {
+                            var funcType = typeof(Func<,,>).MakeGenericType(entityType, key.PropertyType, typeof(object));
+                            var method = funcType.GetProperty("Method")?.GetValueGetter().Invoke(formatterFunc) as MethodInfo;
+                            var target = funcType.GetProperty("Target")?.GetValueGetter().Invoke(formatterFunc);
 
-                                if (null != method && target != null)
-                                {
-                                    // apply custom formatterFunc
-                                    propertyValue = method.Invoke(target, new[] { entity, propertyValue });
-                                }
+                            if (null != method && target != null)
+                            {
+                                // apply custom formatterFunc
+                                propertyValue = method.Invoke(target, new[] { entity, propertyValue });
                             }
                         }
 
