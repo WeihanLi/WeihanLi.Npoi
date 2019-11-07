@@ -61,6 +61,7 @@ namespace DotNetCoreSample
             list2.ToExcelFile($@"{tempDirPath}\testEntity2.xlsx");
 
             var listTemp = ExcelHelper.ToEntityList<TestEntity2>($@"{tempDirPath}\testEntity2.xlsx");
+            var dataTableTemp = ExcelHelper.ToDataTable($@"{tempDirPath}\testEntity2.xlsx");
 
             Console.WriteLine("Press Enter to continue...");
             Console.ReadLine();

@@ -320,14 +320,14 @@ namespace WeihanLi.Npoi
         }
 
         /// <summary>
-        ///     EntityList2ExcelStream(*.xlsx)
+        ///     EntityList2ExcelStream(*.xls by default)
         /// </summary>
         /// <typeparam name="TEntity">EntityType</typeparam>
         /// <param name="entityList">entityList</param>
         /// <param name="stream">stream where to write</param>
         public static int ToExcelStream<TEntity>([NotNull] this IEnumerable<TEntity> entityList,
             [NotNull] Stream stream)
-            where TEntity : new() => ToExcelStream(entityList, stream, ExcelFormat.Xlsx);
+            where TEntity : new() => ToExcelStream(entityList, stream, ExcelFormat.Xls);
 
         /// <summary>
         ///     EntityList2ExcelStream
@@ -362,12 +362,12 @@ namespace WeihanLi.Npoi
             where TEntity : new() => ToExcelStream(entityList, stream, excelFormat, 0);
 
         /// <summary>
-        ///     EntityList2ExcelBytes(*.xlsx by default)
+        ///     EntityList2ExcelBytes(*.xls by default)
         /// </summary>
         /// <typeparam name="TEntity">EntityType</typeparam>
         /// <param name="entityList">entityList</param>
         public static byte[] ToExcelBytes<TEntity>([NotNull] this IEnumerable<TEntity> entityList) where TEntity : new() =>
-            ToExcelBytes(entityList, ExcelFormat.Xlsx);
+            ToExcelBytes(entityList, ExcelFormat.Xls);
 
         /// <summary>
         ///     EntityList2ExcelBytes

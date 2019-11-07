@@ -27,10 +27,9 @@ namespace WeihanLi.Npoi
             var entityType = typeof(TEntity);
             var configuration = InternalHelper.GetExcelConfigurationMapping<TEntity>();
             var sheetSetting = GetSheetSetting(configuration.SheetSettings, sheetIndex);
-            var propertyColumnDictionary = InternalHelper.GetPropertyColumnDictionary(configuration);
-
             var entities = new List<TEntity>(sheet.LastRowNum - sheetSetting.HeaderRowIndex);
 
+            var propertyColumnDictionary = InternalHelper.GetPropertyColumnDictionary(configuration);
             var propertyColumnDic = sheetSetting.HeaderRowIndex >= 0
                 ? propertyColumnDictionary.ToDictionary(_ => _.Key, _ => new PropertySetting()
                 {
@@ -89,7 +88,7 @@ namespace WeihanLi.Npoi
                                     var colIndex = propertyColumnDic[key].ColumnIndex;
                                     if (colIndex >= 0)
                                     {
-                                        key.GetValueSetter().Invoke(obj, row.GetCell(colIndex).GetCellValue(key.PropertyType));
+                                        key.GetValueSetter()?.Invoke(obj, row.GetCell(colIndex).GetCellValue(key.PropertyType));
                                     }
                                 }
                                 entity = (TEntity)obj;// unboxing
@@ -101,7 +100,7 @@ namespace WeihanLi.Npoi
                                     var colIndex = propertyColumnDic[key].ColumnIndex;
                                     if (colIndex >= 0)
                                     {
-                                        key.GetValueSetter().Invoke(entity, row.GetCell(colIndex).GetCellValue(key.PropertyType));
+                                        key.GetValueSetter()?.Invoke(entity, row.GetCell(colIndex).GetCellValue(key.PropertyType));
                                     }
                                 }
                             }
@@ -113,15 +112,15 @@ namespace WeihanLi.Npoi
 
                         if (null != entity)
                         {
-                            foreach (var propertyInfo in propertyColumnDictionary.Keys)
+                            foreach (var propertyInfo in propertyColumnDic.Keys)
                             {
                                 if (propertyInfo.CanWrite)
                                 {
                                     var propertyValue = propertyInfo.GetValueGetter().Invoke(entity);
                                     var formatterFunc = InternalCache.InputFormatterFuncCache.GetOrAdd(propertyInfo, p =>
                                     {
-                                        var propertyType = typeof(PropertySetting<,>).MakeGenericType(entityType, p.PropertyType);
-                                        return propertyType.GetProperty("InputFormatterFunc")?.GetValueGetter().Invoke(propertyColumnDictionary[propertyInfo]);
+                                        var propertySettingType = typeof(PropertySetting<,>).MakeGenericType(entityType, p.PropertyType);
+                                        return propertySettingType.GetProperty("InputFormatterFunc")?.GetValueGetter()?.Invoke(propertyColumnDictionary[propertyInfo]);
                                     });
                                     if (null != formatterFunc)
                                     {
@@ -187,11 +186,10 @@ namespace WeihanLi.Npoi
                     foreach (var key in propertyColumnDictionary.Keys)
                     {
                         var propertyValue = key.GetValueGetter<TEntity>().Invoke(entity);
-
                         var formatterFunc = InternalCache.OutputFormatterFuncCache.GetOrAdd(key, p =>
                         {
-                            var propertyType = typeof(PropertySetting<,>).MakeGenericType(entityType, p.PropertyType);
-                            return propertyType.GetProperty("OutputFormatterFunc")?.GetValueGetter().Invoke(propertyColumnDictionary[key]);
+                            var propertySettingType = typeof(PropertySetting<,>).MakeGenericType(entityType, p.PropertyType);
+                            return propertySettingType.GetProperty("OutputFormatterFunc")?.GetValueGetter().Invoke(propertyColumnDictionary[key]);
                         });
                         if (null != formatterFunc)
                         {

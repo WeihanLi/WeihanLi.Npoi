@@ -114,55 +114,20 @@ namespace WeihanLi.Npoi
         /// </summary>
         /// <typeparam name="TEntity">TEntity Type</typeparam>
         /// <returns></returns>
-        public static IDictionary<PropertyInfo, PropertySetting> GetPropertyColumnDictionary<TEntity>() => GetPropertyColumnDictionary(GetExcelConfigurationMapping<TEntity>());
+        public static Dictionary<PropertyInfo, PropertySetting> GetPropertyColumnDictionary<TEntity>() => GetPropertyColumnDictionary(GetExcelConfigurationMapping<TEntity>());
 
         /// <summary>
         /// GetPropertyColumnDictionary
         /// </summary>
         /// <typeparam name="TEntity">TEntity Type</typeparam>
         /// <returns></returns>
-        public static IDictionary<PropertyInfo, PropertySetting> GetPropertyColumnDictionary<TEntity>(ExcelConfiguration<TEntity> configuration)
+        public static Dictionary<PropertyInfo, PropertySetting> GetPropertyColumnDictionary<TEntity>(ExcelConfiguration<TEntity> configuration)
         {
             AdjustColumnIndex(configuration);
 
             return configuration.PropertyConfigurationDictionary
                 .Where(p => !p.Value.PropertySetting.IsIgnored)
                 .ToDictionary(_ => _.Key, _ => _.Value.PropertySetting);
-        }
-
-        /// <summary>
-        /// GetPropertyColumnDictionary
-        /// </summary>
-        /// <typeparam name="TEntity">TEntity Type</typeparam>
-        /// <returns></returns>
-        public static IDictionary<PropertyInfo, PropertySetting> GetPropertyColumnDictionaryForImport<TEntity>()
-        {
-            var configuration = GetExcelConfigurationMapping<TEntity>();
-
-            AdjustColumnIndex(configuration);
-
-            var dic = configuration.PropertyConfigurationDictionary
-                .Where(p => !p.Value.PropertySetting.IsIgnored)
-                .ToDictionary(_ => _.Key, _ => _.Value.PropertySetting);
-
-            if (configuration.SheetSettings[0].StartRowIndex > 0)
-            {
-                foreach (var key in dic.Keys)
-                {
-                    var originSetting = dic[key];
-                    var setting = new PropertySetting()
-                    {
-                        ColumnIndex = -1,
-                        ColumnTitle = originSetting.ColumnTitle,
-                        ColumnWidth = originSetting.ColumnWidth,
-                        ColumnFormatter = originSetting.ColumnFormatter,
-                        IsIgnored = originSetting.IsIgnored,
-                    };
-                    dic[key] = setting;
-                }
-            }
-
-            return dic;
         }
 
         /// <summary>

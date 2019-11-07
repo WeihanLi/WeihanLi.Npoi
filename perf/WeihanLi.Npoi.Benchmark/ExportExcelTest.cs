@@ -10,7 +10,7 @@ namespace WeihanLi.Npoi.Benchmark
     [SimpleJob(launchCount: 1, warmupCount: 3, targetCount: 10)]
     [MemoryDiagnoser]
     [MinColumn, MaxColumn, MeanColumn, MedianColumn]
-    public class ExportExcelFileTest
+    public class ExportExcelTest
     {
         private class TestEntity
         {
@@ -109,16 +109,24 @@ namespace WeihanLi.Npoi.Benchmark
 
         [Benchmark]
         [MethodImpl(MethodImplOptions.NoInlining)]
-        public void NpoiExportToBytesTest()
+        public void ExportToCsvBytesTest()
         {
-            var excelBytes = testData.ToExcelBytes();
+            var bytes = testData.ToCsvBytes();
         }
+
 
         [Benchmark]
         [MethodImpl(MethodImplOptions.NoInlining)]
         public void NpoiExportToXlsBytesTest()
         {
             var excelBytes = testData.ToExcelBytes(ExcelFormat.Xls);
+        }
+
+        [Benchmark]
+        [MethodImpl(MethodImplOptions.NoInlining)]
+        public void NpoiExportToXlsxBytesTest()
+        {
+            var excelBytes = testData.ToExcelBytes(ExcelFormat.Xlsx);
         }
 
         [Benchmark]
@@ -130,9 +138,23 @@ namespace WeihanLi.Npoi.Benchmark
 
         [Benchmark]
         [MethodImpl(MethodImplOptions.NoInlining)]
-        public void NpoiStructExportToBytesTest()
+        public void StructExportToCsvBytesTest()
         {
-            var excelBytes = testStructData.ToExcelBytes();
+            var bytes = testStructData.ToCsvBytes();
+        }
+
+        [Benchmark]
+        [MethodImpl(MethodImplOptions.NoInlining)]
+        public void NpoiStructExportToXlsBytesTest()
+        {
+            var excelBytes = testStructData.ToExcelBytes(ExcelFormat.Xls);
+        }
+
+        [Benchmark]
+        [MethodImpl(MethodImplOptions.NoInlining)]
+        public void NpoiStructExportToXlsxBytesTest()
+        {
+            var excelBytes = testStructData.ToExcelBytes(ExcelFormat.Xlsx);
         }
 
         [Benchmark]
