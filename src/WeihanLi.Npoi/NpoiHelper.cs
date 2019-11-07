@@ -120,7 +120,7 @@ namespace WeihanLi.Npoi
                                     var formatterFunc = InternalCache.InputFormatterFuncCache.GetOrAdd(propertyInfo, p =>
                                     {
                                         var propertySettingType = typeof(PropertySetting<,>).MakeGenericType(entityType, p.PropertyType);
-                                        return propertySettingType.GetProperty("InputFormatterFunc")?.GetValueGetter()?.Invoke(propertyColumnDictionary[propertyInfo]);
+                                        return propertySettingType.GetProperty(InternalConstants.InputFormatterFuncName)?.GetValueGetter()?.Invoke(propertyColumnDictionary[propertyInfo]);
                                     });
                                     if (null != formatterFunc)
                                     {
@@ -189,7 +189,7 @@ namespace WeihanLi.Npoi
                         var formatterFunc = InternalCache.OutputFormatterFuncCache.GetOrAdd(key, p =>
                         {
                             var propertySettingType = typeof(PropertySetting<,>).MakeGenericType(entityType, p.PropertyType);
-                            return propertySettingType.GetProperty("OutputFormatterFunc")?.GetValueGetter().Invoke(propertyColumnDictionary[key]);
+                            return propertySettingType.GetProperty(InternalConstants.OutputFormatterFuncName)?.GetValueGetter().Invoke(propertyColumnDictionary[key]);
                         });
                         if (null != formatterFunc)
                         {
