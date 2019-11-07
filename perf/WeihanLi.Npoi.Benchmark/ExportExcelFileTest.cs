@@ -111,7 +111,7 @@ namespace WeihanLi.Npoi.Benchmark
         [MethodImpl(MethodImplOptions.NoInlining)]
         public void NpoiExportToBytesTest()
         {
-            var excelBytes = testData.ToExcelBytes();
+            var excelBytes = testData.ToExcelBytes(ExcelFormat.Xlsx);
         }
 
         [Benchmark]
