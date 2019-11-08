@@ -21,12 +21,7 @@ namespace WeihanLi.Npoi
           {
               var excelConfiguration = new ExcelConfiguration<TEntity>
               {
-                  SheetSettings = new Dictionary<int, SheetSetting>()
-              {
-                    { 0, new SheetSetting() },
-              },
-                  FilterSetting = type.GetCustomAttribute<FilterAttribute>()?.FilterSetting,
-                  FreezeSettings = type.GetCustomAttributes<FreezeAttribute>().Select(_ => _.FreezeSetting).ToList()
+                  FilterSetting = type.GetCustomAttribute<FilterAttribute>()?.FilterSetting
               };
               foreach (var sheetAttribute in type.GetCustomAttributes<SheetAttribute>())
               {
@@ -34,6 +29,10 @@ namespace WeihanLi.Npoi
                   {
                       excelConfiguration.SheetSettings[sheetAttribute.SheetIndex] = sheetAttribute.SheetSetting;
                   }
+              }
+              foreach (var freezeAttribute in type.GetCustomAttributes<FreezeAttribute>())
+              {
+                  excelConfiguration.FreezeSettings.Add(freezeAttribute.FreezeSetting);
               }
               var dic = new Dictionary<PropertyInfo, PropertyConfiguration>();
               var propertyInfos = Common.CacheUtil.TypePropertyCache.GetOrAdd(type, t => t.GetProperties());
