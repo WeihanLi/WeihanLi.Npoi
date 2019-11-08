@@ -4,17 +4,18 @@ using System.Runtime.CompilerServices;
 
 namespace WeihanLi.Npoi.Benchmark
 {
-    [SimpleJob(launchCount: 1, warmupCount: 3, targetCount: 10)]
+    [SimpleJob(launchCount: 1, warmupCount: 1, targetCount: 5)]
     [MemoryDiagnoser]
     [MinColumn, MaxColumn, MeanColumn, MedianColumn]
     public class WorkbookBasicTest
     {
-        private const int RowsCount = 65535;
         private const int ColsCount = 10;
 
-        [Benchmark]
-        [MethodImpl(MethodImplOptions.NoInlining)]
-        public void NpoiXlsWorkbookInit()
+        [Params(10000, 30000, 50000, 65535)]
+        public int RowsCount;
+
+        [Benchmark(Baseline = true)]
+        public byte[] NpoiXlsWorkbookInit()
         {
             var workbook = ExcelHelper.PrepareWorkbook(ExcelFormat.Xls);
 
@@ -30,12 +31,12 @@ namespace WeihanLi.Npoi.Benchmark
                 }
             }
 
-            var excelBytes = workbook.ToExcelBytes();
+            return workbook.ToExcelBytes();
         }
 
         [Benchmark]
         [MethodImpl(MethodImplOptions.NoInlining)]
-        public void NpoiXlsxWorkbookInit()
+        public byte[] NpoiXlsxWorkbookInit()
         {
             var workbook = ExcelHelper.PrepareWorkbook(ExcelFormat.Xlsx);
 
@@ -51,12 +52,12 @@ namespace WeihanLi.Npoi.Benchmark
                 }
             }
 
-            var excelBytes = workbook.ToExcelBytes();
+            return workbook.ToExcelBytes();
         }
 
         [Benchmark]
         [MethodImpl(MethodImplOptions.NoInlining)]
-        public void EpplusWorkbookInit()
+        public byte[] EpplusWorkbookInit()
         {
             var excel = new ExcelPackage();
 
@@ -70,7 +71,7 @@ namespace WeihanLi.Npoi.Benchmark
                 }
             }
 
-            var excelBytes = excel.GetAsByteArray();
+            return excel.GetAsByteArray();
         }
     }
 }
