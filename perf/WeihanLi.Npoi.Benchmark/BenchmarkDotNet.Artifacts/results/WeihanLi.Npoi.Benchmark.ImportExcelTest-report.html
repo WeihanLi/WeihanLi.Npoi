@@ -2,7 +2,7 @@
 <html lang='en'>
 <head>
 <meta charset='utf-8' />
-<title>WeihanLi.Npoi.Benchmark.ImportExcelTest-20191107-041516</title>
+<title>WeihanLi.Npoi.Benchmark.ImportExcelTest-20191108-072305</title>
 
 <style type="text/css">
 	table { border-collapse: collapse; display: block; width: 100%; overflow: auto; }
@@ -17,17 +17,26 @@ BenchmarkDotNet=v0.11.5, OS=Windows 10.0.18362
 Intel Core i5-3470 CPU 3.20GHz (Ivy Bridge), 1 CPU, 4 logical and 4 physical cores
 .NET Core SDK=3.0.100
   [Host]     : .NET Core 2.2.6 (CoreCLR 4.6.27817.03, CoreFX 4.6.27818.02), 64bit RyuJIT
-  Job-YRZGQS : .NET Core 2.2.6 (CoreCLR 4.6.27817.03, CoreFX 4.6.27818.02), 64bit RyuJIT
+  Job-WDPKYY : .NET Core 2.2.6 (CoreCLR 4.6.27817.03, CoreFX 4.6.27818.02), 64bit RyuJIT
 </code></pre>
-<pre><code>IterationCount=10  LaunchCount=1  WarmupCount=3  
+<pre><code>IterationCount=5  LaunchCount=1  WarmupCount=1  
 </code></pre>
 
 <table>
-<thead><tr><th>           Method</th><th>Mean</th><th>Error</th><th>StdDev</th><th> Min</th><th> Max</th><th>Median</th><th>Gen 0</th><th>Gen 1</th><th>Gen 2</th><th>Allocated</th>
+<thead><tr><th>           Method</th><th>RowsCount</th><th>Mean</th><th>Error</th><th>StdDev</th><th> Min</th><th> Max</th><th>Median</th><th>Gen 0</th><th>Gen 1</th><th>Gen 2</th><th>Allocated</th>
 </tr>
-</thead><tbody><tr><td>ImportFromCsvBytesTest</td><td>894.6 ms</td><td>17.91 ms</td><td>11.85 ms</td><td>881.2 ms</td><td>918.5 ms</td><td>897.7 ms</td><td>50000.0000</td><td>12000.0000</td><td>1000.0000</td><td>182 MB</td>
-</tr><tr><td>ImportFromXlsBytesTest</td><td>1,722.5 ms</td><td>29.35 ms</td><td>19.42 ms</td><td>1,694.0 ms</td><td>1,753.2 ms</td><td>1,719.0 ms</td><td>76000.0000</td><td>28000.0000</td><td>2000.0000</td><td>315.85 MB</td>
-</tr><tr><td>ImportFromXlsxBytesTest</td><td>3,997.9 ms</td><td>61.59 ms</td><td>40.74 ms</td><td>3,952.2 ms</td><td>4,062.1 ms</td><td>3,986.1 ms</td><td>110000.0000</td><td>36000.0000</td><td>3000.0000</td><td>552.76 MB</td>
+</thead><tbody><tr><td>ImportFromCsvBytesTest</td><td>10000</td><td>171.2 ms</td><td>2.904 ms</td><td>0.7541 ms</td><td>170.0 ms</td><td>172.0 ms</td><td>171.2 ms</td><td>9333.3333</td><td>2000.0000</td><td>333.3333</td><td>36.44 MB</td>
+</tr><tr><td>ImportFromXlsBytesTest</td><td>10000</td><td>353.8 ms</td><td>10.170 ms</td><td>2.6412 ms</td><td>351.8 ms</td><td>358.4 ms</td><td>352.9 ms</td><td>15000.0000</td><td>6000.0000</td><td>2000.0000</td><td>64.71 MB</td>
+</tr><tr><td>ImportFromXlsxBytesTest</td><td>10000</td><td>758.2 ms</td><td>10.212 ms</td><td>2.6520 ms</td><td>755.6 ms</td><td>762.3 ms</td><td>757.8 ms</td><td>25000.0000</td><td>11000.0000</td><td>3000.0000</td><td>110.87 MB</td>
+</tr><tr><td>ImportFromCsvBytesTest</td><td>30000</td><td>511.5 ms</td><td>17.159 ms</td><td>4.4562 ms</td><td>504.0 ms</td><td>514.9 ms</td><td>512.7 ms</td><td>31000.0000</td><td>7000.0000</td><td>1000.0000</td><td>109.1 MB</td>
+</tr><tr><td>ImportFromXlsBytesTest</td><td>30000</td><td>1,050.8 ms</td><td>33.740 ms</td><td>8.7622 ms</td><td>1,040.2 ms</td><td>1,064.3 ms</td><td>1,049.8 ms</td><td>47000.0000</td><td>18000.0000</td><td>3000.0000</td><td>186.28 MB</td>
+</tr><tr><td>ImportFromXlsxBytesTest</td><td>30000</td><td>2,358.6 ms</td><td>284.891 ms</td><td>73.9854 ms</td><td>2,228.2 ms</td><td>2,405.3 ms</td><td>2,378.8 ms</td><td>67000.0000</td><td>23000.0000</td><td>4000.0000</td><td>331.5 MB</td>
+</tr><tr><td>ImportFromCsvBytesTest</td><td>50000</td><td>860.7 ms</td><td>11.026 ms</td><td>2.8634 ms</td><td>857.3 ms</td><td>865.1 ms</td><td>860.0 ms</td><td>50000.0000</td><td>12000.0000</td><td>1000.0000</td><td>182 MB</td>
+</tr><tr><td>ImportFromXlsBytesTest</td><td>50000</td><td>1,703.0 ms</td><td>23.050 ms</td><td>5.9861 ms</td><td>1,695.9 ms</td><td>1,709.7 ms</td><td>1,703.3 ms</td><td>76000.0000</td><td>28000.0000</td><td>2000.0000</td><td>315.85 MB</td>
+</tr><tr><td>ImportFromXlsxBytesTest</td><td>50000</td><td>3,869.8 ms</td><td>141.111 ms</td><td>36.6460 ms</td><td>3,817.0 ms</td><td>3,909.6 ms</td><td>3,872.4 ms</td><td>110000.0000</td><td>36000.0000</td><td>3000.0000</td><td>552.76 MB</td>
+</tr><tr><td>ImportFromCsvBytesTest</td><td>65535</td><td>1,144.7 ms</td><td>65.693 ms</td><td>17.0602 ms</td><td>1,121.2 ms</td><td>1,162.6 ms</td><td>1,149.4 ms</td><td>65000.0000</td><td>16000.0000</td><td>1000.0000</td><td>238.24 MB</td>
+</tr><tr><td>ImportFromXlsBytesTest</td><td>65535</td><td>2,324.6 ms</td><td>23.299 ms</td><td>6.0507 ms</td><td>2,318.4 ms</td><td>2,333.9 ms</td><td>2,323.8 ms</td><td>99000.0000</td><td>35000.0000</td><td>3000.0000</td><td>413.07 MB</td>
+</tr><tr><td>ImportFromXlsxBytesTest</td><td>65535</td><td>5,011.3 ms</td><td>108.362 ms</td><td>28.1414 ms</td><td>4,977.1 ms</td><td>5,054.4 ms</td><td>5,012.6 ms</td><td>145000.0000</td><td>48000.0000</td><td>3000.0000</td><td>723.66 MB</td>
 </tr></tbody></table>
 </body>
 </html>

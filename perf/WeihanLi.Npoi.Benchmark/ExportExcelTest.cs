@@ -7,7 +7,7 @@ using System.Runtime.CompilerServices;
 
 namespace WeihanLi.Npoi.Benchmark
 {
-    [SimpleJob(launchCount: 1, warmupCount: 3, targetCount: 10)]
+    [SimpleJob(launchCount: 1, warmupCount: 1, targetCount: 5)]
     [MemoryDiagnoser]
     [MinColumn, MaxColumn, MeanColumn, MedianColumn]
     public class ExportExcelTest
@@ -60,15 +60,16 @@ namespace WeihanLi.Npoi.Benchmark
             public DateTime CreateTime => DateTime.Now;
         }
 
-        private readonly string filePath = $@"{Environment.GetEnvironmentVariable("USERPROFILE")}\Desktop\temp\test\benchmarktest.xlsx";
-
         private readonly List<TestEntity> testData = new List<TestEntity>(51200);
         private readonly List<TestStruct> testStructData = new List<TestStruct>(51200);
+
+        [Params(10000, 30000, 50000, 65535)]
+        public int RowsCount;
 
         [GlobalSetup]
         public void GlobalSetup()
         {
-            for (var i = 1; i <= 50_000; i++)
+            for (var i = 1; i <= RowsCount; i++)
             {
                 testData.Add(new TestEntity()
                 {
@@ -92,20 +93,6 @@ namespace WeihanLi.Npoi.Benchmark
             // Disposing logic
             testData.Clear();
         }
-
-        //[Benchmark]
-        //[MethodImpl(MethodImplOptions.NoInlining)]
-        //public void NpoiExportToFileTest()
-        //{
-        //    testData.ToExcelFile(filePath.Replace(".xlsx", ".npoi.xlsx"));
-        //}
-
-        //[Benchmark]
-        //[MethodImpl(MethodImplOptions.NoInlining)]
-        //public void EpplusExportToFileTest()
-        //{
-        //    testData.ToExcelPackage().SaveAs(new System.IO.FileInfo(filePath.Replace(".xlsx", ".epplus.xlsx")));
-        //}
 
         [Benchmark]
         [MethodImpl(MethodImplOptions.NoInlining)]
