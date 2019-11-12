@@ -113,6 +113,24 @@ references:
   isSpec: "True"
   fullName: WeihanLi.Npoi.CsvHelper.ToEntityList
   nameWithType: CsvHelper.ToEntityList
+- uid: WeihanLi.Npoi.CsvHelper.ToEntityList``1(System.Byte[])
+  name: ToEntityList<TEntity>(Byte[])
+  href: docs/api/WeihanLi.Npoi.CsvHelper.html#WeihanLi_Npoi_CsvHelper_ToEntityList__1_System_Byte___
+  commentId: M:WeihanLi.Npoi.CsvHelper.ToEntityList``1(System.Byte[])
+  name.vb: ToEntityList(Of TEntity)(Byte())
+  fullName: WeihanLi.Npoi.CsvHelper.ToEntityList<TEntity>(System.Byte[])
+  fullName.vb: WeihanLi.Npoi.CsvHelper.ToEntityList(Of TEntity)(System.Byte())
+  nameWithType: CsvHelper.ToEntityList<TEntity>(Byte[])
+  nameWithType.vb: CsvHelper.ToEntityList(Of TEntity)(Byte())
+- uid: WeihanLi.Npoi.CsvHelper.ToEntityList``1(System.IO.Stream)
+  name: ToEntityList<TEntity>(Stream)
+  href: docs/api/WeihanLi.Npoi.CsvHelper.html#WeihanLi_Npoi_CsvHelper_ToEntityList__1_System_IO_Stream_
+  commentId: M:WeihanLi.Npoi.CsvHelper.ToEntityList``1(System.IO.Stream)
+  name.vb: ToEntityList(Of TEntity)(Stream)
+  fullName: WeihanLi.Npoi.CsvHelper.ToEntityList<TEntity>(System.IO.Stream)
+  fullName.vb: WeihanLi.Npoi.CsvHelper.ToEntityList(Of TEntity)(System.IO.Stream)
+  nameWithType: CsvHelper.ToEntityList<TEntity>(Stream)
+  nameWithType.vb: CsvHelper.ToEntityList(Of TEntity)(Stream)
 - uid: WeihanLi.Npoi.CsvHelper.ToEntityList``1(System.String)
   name: ToEntityList<TEntity>(String)
   href: docs/api/WeihanLi.Npoi.CsvHelper.html#WeihanLi_Npoi_CsvHelper_ToEntityList__1_System_String_

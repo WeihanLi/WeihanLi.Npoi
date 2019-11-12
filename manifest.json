@@ -21,7 +21,7 @@
       "output": {
         ".html": {
           "relative_path": "docs/ReleaseNotes.html",
-          "hash": "8aq9UWncM3ABXEK9vr9hwQ=="
+          "hash": "T6+0/kiUojVmthlaP72Xfw=="
         }
       },
       "is_incremental": false,
@@ -33,7 +33,7 @@
       "output": {
         ".html": {
           "relative_path": "docs/api/WeihanLi.Npoi.CsvHelper.html",
-          "hash": "uYn2NJhSOTI9VzpBwOEuKg=="
+          "hash": "5J2jmJSa+2K0H2cm7tgIIA=="
         }
       },
       "is_incremental": false,
@@ -45,7 +45,7 @@
       "output": {
         ".html": {
           "relative_path": "docs/api/WeihanLi.Npoi.ExcelFormat.html",
-          "hash": "Azo37+RqHqV8hd27pDA69w=="
+          "hash": "F8VGpaYbfkpNtqzuJcFunQ=="
         }
       },
       "is_incremental": false,
@@ -57,7 +57,7 @@
       "output": {
         ".html": {
           "relative_path": "docs/api/WeihanLi.Npoi.ExcelHelper.html",
-          "hash": "ydM2hsisX2N65upuPSjVzg=="
+          "hash": "i8gInTYACp/4FOsr/F/xiA=="
         }
       },
       "is_incremental": false,
@@ -69,7 +69,7 @@
       "output": {
         ".html": {
           "relative_path": "docs/api/WeihanLi.Npoi.NpoiExtensions.html",
-          "hash": "PUXtZ6XMJwMgpj615HIbYA=="
+          "hash": "taRBh4gLbszbRBACaZ2CPg=="
         }
       },
       "is_incremental": false,
@@ -181,17 +181,17 @@
         "skipped_file_count": 0
       },
       "processors": {
-        "ConceptualDocumentProcessor": {
-          "can_incremental": true,
-          "incrementalPhase": "build",
-          "total_file_count": 5,
-          "skipped_file_count": 4
-        },
         "ManagedReferenceDocumentProcessor": {
           "can_incremental": true,
           "incrementalPhase": "build",
           "total_file_count": 6,
           "skipped_file_count": 1
+        },
+        "ConceptualDocumentProcessor": {
+          "can_incremental": true,
+          "incrementalPhase": "build",
+          "total_file_count": 5,
+          "skipped_file_count": 4
         },
         "TocDocumentProcessor": {
           "can_incremental": false,
