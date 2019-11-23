@@ -16,10 +16,7 @@ namespace WeihanLi.Npoi.Test
             // ---------- notice npoi settings ----------------
             var noticeSetting = ExcelHelper.SettingFor<Notice>();
             noticeSetting.HasAuthor("WeihanLi")
-                .HasCategory("WeihanLi.NPOI test")
-                .HasTitle("WeihanLi.NPOI test")
-                .HasSubject("WeihanLi.NPOI test")
-                .HasDescription("WeihanLi.NPOI unit test")
+                .HasTitle("WeihanLi.Npoi test")
                 .HasSheetConfiguration(0, "NoticeList", 1)
                 ;
             noticeSetting.Property(_ => _.Id)
