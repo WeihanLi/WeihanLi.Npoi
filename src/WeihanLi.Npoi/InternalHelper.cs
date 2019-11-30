@@ -4,7 +4,6 @@ using System.Linq;
 using System.Reflection;
 using WeihanLi.Npoi.Attributes;
 using WeihanLi.Npoi.Configurations;
-using WeihanLi.Npoi.Settings;
 
 namespace WeihanLi.Npoi
 {
@@ -44,23 +43,20 @@ namespace WeihanLi.Npoi
                       column.Title = propertyInfo.Name;
                   }
 
-                  var propertySettingType = typeof(PropertySetting<,>).MakeGenericType(type, propertyInfo.PropertyType);
-                  var propertySetting = Activator.CreateInstance(propertySettingType);
-
-                  propertySettingType.GetProperty(nameof(column.PropertySetting.ColumnTitle))?.GetSetMethod()?
-                      .Invoke(propertySetting, new object[] { column.PropertySetting.ColumnTitle });
-                  propertySettingType.GetProperty(nameof(column.PropertySetting.ColumnIndex))?.GetSetMethod()?
-                      .Invoke(propertySetting, new object[] { column.PropertySetting.ColumnIndex });
-                  propertySettingType.GetProperty(nameof(column.PropertySetting.ColumnFormatter))?.GetSetMethod()?
-                      .Invoke(propertySetting, new object[] { column.PropertySetting.ColumnFormatter });
-                  propertySettingType.GetProperty(nameof(column.PropertySetting.IsIgnored))?.GetSetMethod()?
-                      .Invoke(propertySetting, new object[] { column.PropertySetting.IsIgnored });
-                  propertySettingType.GetProperty(nameof(column.PropertySetting.ColumnWidth))?.GetSetMethod()?
-                      .Invoke(propertySetting, new object[] { column.PropertySetting.ColumnWidth });
-
                   var propertyConfigurationType =
                       typeof(PropertyConfiguration<,>).MakeGenericType(type, propertyInfo.PropertyType);
-                  var propertyConfiguration = Activator.CreateInstance(propertyConfigurationType, new object[] { propertySetting });
+                  var propertyConfiguration = Activator.CreateInstance(propertyConfigurationType);
+
+                  propertyConfigurationType.GetProperty(nameof(column.PropertyConfiguration.ColumnTitle))?.GetSetMethod()?
+                      .Invoke(propertyConfiguration, new object[] { column.PropertyConfiguration.ColumnTitle });
+                  propertyConfigurationType.GetProperty(nameof(column.PropertyConfiguration.ColumnIndex))?.GetSetMethod()?
+                      .Invoke(propertyConfiguration, new object[] { column.PropertyConfiguration.ColumnIndex });
+                  propertyConfigurationType.GetProperty(nameof(column.PropertyConfiguration.ColumnFormatter))?.GetSetMethod()?
+                      .Invoke(propertyConfiguration, new object[] { column.PropertyConfiguration.ColumnFormatter });
+                  propertyConfigurationType.GetProperty(nameof(column.PropertyConfiguration.IsIgnored))?.GetSetMethod()?
+                      .Invoke(propertyConfiguration, new object[] { column.PropertyConfiguration.IsIgnored });
+                  propertyConfigurationType.GetProperty(nameof(column.PropertyConfiguration.ColumnWidth))?.GetSetMethod()?
+                      .Invoke(propertyConfiguration, new object[] { column.PropertyConfiguration.ColumnWidth });
 
                   dic.Add(propertyInfo, (PropertyConfiguration)propertyConfiguration);
               }
@@ -78,8 +74,8 @@ namespace WeihanLi.Npoi
         /// <param name="excelConfiguration">excelConfiguration</param>
         private static void AdjustColumnIndex<TEntity>(ExcelConfiguration<TEntity> excelConfiguration)
         {
-            if (excelConfiguration.PropertyConfigurationDictionary.Values.All(_ => _.PropertySetting.ColumnIndex >= 0) &&
-                excelConfiguration.PropertyConfigurationDictionary.Values.Select(_ => _.PropertySetting.ColumnIndex)
+            if (excelConfiguration.PropertyConfigurationDictionary.Values.All(_ => _.ColumnIndex >= 0) &&
+                excelConfiguration.PropertyConfigurationDictionary.Values.Select(_ => _.ColumnIndex)
                     .Distinct().Count() == excelConfiguration.PropertyConfigurationDictionary.Values.Count)
             {
                 return;
@@ -87,24 +83,24 @@ namespace WeihanLi.Npoi
 
             var colIndexList = new List<int>(excelConfiguration.PropertyConfigurationDictionary.Count);
             foreach (var item in excelConfiguration.PropertyConfigurationDictionary
-                .Where(_ => !_.Value.PropertySetting.IsIgnored)
-                .OrderBy(_ => _.Value.PropertySetting.ColumnIndex >= 0 ? _.Value.PropertySetting.ColumnIndex : int.MaxValue)
+                .Where(_ => !_.Value.IsIgnored)
+                .OrderBy(_ => _.Value.ColumnIndex >= 0 ? _.Value.ColumnIndex : int.MaxValue)
                 .ThenBy(_ => _.Key.Name)
                 .Select(_ => _.Value)
                 )
             {
-                while (colIndexList.Contains(item.PropertySetting.ColumnIndex) || item.PropertySetting.ColumnIndex < 0)
+                while (colIndexList.Contains(item.ColumnIndex) || item.ColumnIndex < 0)
                 {
                     if (colIndexList.Count > 0)
                     {
-                        item.PropertySetting.ColumnIndex = colIndexList.Max() + 1;
+                        item.ColumnIndex = colIndexList.Max() + 1;
                     }
                     else
                     {
-                        item.PropertySetting.ColumnIndex++;
+                        item.ColumnIndex++;
                     }
                 }
-                colIndexList.Add(item.PropertySetting.ColumnIndex);
+                colIndexList.Add(item.ColumnIndex);
             }
         }
 
@@ -113,20 +109,20 @@ namespace WeihanLi.Npoi
         /// </summary>
         /// <typeparam name="TEntity">TEntity Type</typeparam>
         /// <returns></returns>
-        public static Dictionary<PropertyInfo, PropertySetting> GetPropertyColumnDictionary<TEntity>() => GetPropertyColumnDictionary(GetExcelConfigurationMapping<TEntity>());
+        public static Dictionary<PropertyInfo, PropertyConfiguration> GetPropertyColumnDictionary<TEntity>() => GetPropertyColumnDictionary(GetExcelConfigurationMapping<TEntity>());
 
         /// <summary>
         /// GetPropertyColumnDictionary
         /// </summary>
         /// <typeparam name="TEntity">TEntity Type</typeparam>
         /// <returns></returns>
-        public static Dictionary<PropertyInfo, PropertySetting> GetPropertyColumnDictionary<TEntity>(ExcelConfiguration<TEntity> configuration)
+        public static Dictionary<PropertyInfo, PropertyConfiguration> GetPropertyColumnDictionary<TEntity>(ExcelConfiguration<TEntity> configuration)
         {
             AdjustColumnIndex(configuration);
 
             return configuration.PropertyConfigurationDictionary
-                .Where(p => !p.Value.PropertySetting.IsIgnored)
-                .ToDictionary(_ => _.Key, _ => _.Value.PropertySetting);
+                .Where(p => !p.Value.IsIgnored)
+                .ToDictionary(_ => _.Key, _ => _.Value);
         }
 
         /// <summary>
@@ -141,8 +137,8 @@ namespace WeihanLi.Npoi
             AdjustColumnIndex(configuration);
 
             return configuration.PropertyConfigurationDictionary
-                .Where(p => !p.Value.PropertySetting.IsIgnored)
-                .OrderBy(p => p.Value.PropertySetting.ColumnIndex)
+                .Where(p => !p.Value.IsIgnored)
+                .OrderBy(p => p.Value.ColumnIndex)
                 .ThenBy(p => p.Key.Name)
                 .Select(p => p.Key)
                 .ToArray();

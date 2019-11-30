@@ -1,24 +1,24 @@
 ﻿using System;
-using WeihanLi.Npoi.Settings;
+using WeihanLi.Npoi.Configurations;
 
 namespace WeihanLi.Npoi.Attributes
 {
     [AttributeUsage(AttributeTargets.Property)]
     public sealed class ColumnAttribute : Attribute
     {
-        internal PropertySetting PropertySetting { get; }
+        internal PropertyConfiguration PropertyConfiguration { get; }
 
         /// <summary>
         /// ColumnIndex
         /// </summary>
         public int Index
         {
-            get => PropertySetting.ColumnIndex;
+            get => PropertyConfiguration.ColumnIndex;
             set
             {
                 if (value >= 0)
                 {
-                    PropertySetting.ColumnIndex = value;
+                    PropertyConfiguration.ColumnIndex = value;
                 }
             }
         }
@@ -26,20 +26,20 @@ namespace WeihanLi.Npoi.Attributes
         /// <summary>
         /// ColumnTitle
         /// </summary>
-        public string Title { get => PropertySetting.ColumnTitle; set => PropertySetting.ColumnTitle = value; }
+        public string Title { get => PropertyConfiguration.ColumnTitle; set => PropertyConfiguration.ColumnTitle = value; }
 
         /// <summary>
         /// Formatter
         /// </summary>
-        public string Formatter { get => PropertySetting.ColumnFormatter; set => PropertySetting.ColumnFormatter = value; }
+        public string Formatter { get => PropertyConfiguration.ColumnFormatter; set => PropertyConfiguration.ColumnFormatter = value; }
 
         /// <summary>
         /// IsIgnored
         /// </summary>
         public bool IsIgnored
         {
-            get => PropertySetting.IsIgnored;
-            set => PropertySetting.IsIgnored = value;
+            get => PropertyConfiguration.IsIgnored;
+            set => PropertyConfiguration.IsIgnored = value;
         }
 
         /// <summary>
@@ -48,13 +48,18 @@ namespace WeihanLi.Npoi.Attributes
         /// </summary>
         public int Width
         {
-            get => PropertySetting.ColumnWidth;
-            set => PropertySetting.ColumnWidth = value;
+            get => PropertyConfiguration.ColumnWidth;
+            set => PropertyConfiguration.ColumnWidth = value;
         }
 
-        public ColumnAttribute() => PropertySetting = new PropertySetting();
+        public ColumnAttribute() => PropertyConfiguration = new PropertyConfiguration();
 
-        public ColumnAttribute(string title) => PropertySetting = new PropertySetting
+        public ColumnAttribute(int index) => PropertyConfiguration = new PropertyConfiguration
+        {
+            ColumnIndex = index
+        };
+
+        public ColumnAttribute(string title) => PropertyConfiguration = new PropertyConfiguration
         {
             ColumnTitle = title
         };
