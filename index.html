@@ -8,7 +8,7 @@
     <title>WeihanLi.Npoi </title>
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="WeihanLi.Npoi ">
-    <meta name="generator" content="docfx 2.42.4.0">
+    <meta name="generator" content="docfx 2.43.2.0">
     
     <link rel="shortcut icon" href="favicon.ico">
     <link rel="stylesheet" href="styles/docfx.vendor.css">
@@ -62,7 +62,8 @@
             <article class="content wrap" id="_content" data-uid="">
 <h1 id="weihanlinpoi">WeihanLi.Npoi</h1>
 
-<p><a href="https://github.com/tonyqus/npoi">NPOI</a> extensions for target framework net45 and netstandard2.0.</p>
+<h2 id="intro">Intro</h2>
+<p><a href="https://github.com/tonyqus/npoi">NPOI</a> extensions for target framework net45 and netstandard2.0, mainly for import and export</p>
 <p>There' a lot of userful extensions for you, core fetures are as follows:</p>
 <ul>
 <li>mapping a excel file data to a <code>DataTable</code> or <code>List&lt;TEntity&gt;</code></li>
@@ -70,6 +71,169 @@
 <li>export <code>IEnumerable&lt;TEntity&gt;</code> or <code>DataTable</code> data to csv file or bytes.</li>
 <li>custom configuration/mappings by Attribute or FluentAPI(inspired by <a href="https://github.com/Arch/FluentExcel/">FluentExcel</a>)</li>
 </ul>
+<h2 id="sample">Sample</h2>
+<pre><code class="lang-csharp">var list2 = new List&lt;TestEntity2&gt;();
+list2.Add(null);
+for (var i = 0; i &lt; 10; i++)
+{
+    list2.Add(new TestEntity2
+    {
+        Id = i + 1,
+        Title = $&quot;Title_{i}&quot;,
+        Description = $&quot;{Enumerable.Range(1, 200).StringJoin(&quot;,&quot;)}__{i}&quot;,
+    });
+}
+list2.Add(new TestEntity2()
+{
+    Id = 999,
+    Title = $&quot;{Enumerable.Repeat(1, 10).StringJoin(&quot;,&quot;)}&quot;,
+    Description = null
+});
+var tempDirPath = $@&quot;{Environment.GetEnvironmentVariable(&quot;USERPROFILE&quot;)}\Desktop\temp\test&quot;;
+list2.ToExcelFile($@&quot;{tempDirPath}\testEntity2.xlsx&quot;);
+
+var listTemp = ExcelHelper.ToEntityList&lt;TestEntity2&gt;($@&quot;{tempDirPath}\testEntity2.xlsx&quot;);
+var dataTableTemp = ExcelHelper.ToDataTable($@&quot;{tempDirPath}\testEntity2.xlsx&quot;);
+
+Console.WriteLine(&quot;Press Enter to continue...&quot;);
+Console.ReadLine();
+
+var entities = new List&lt;TestEntity&gt;()
+{
+    new TestEntity()
+    {
+        PKID = 1,
+        SettingId = Guid.NewGuid(),
+        SettingName = &quot;Setting1&quot;,
+        SettingValue = &quot;Value1&quot;,
+        DisplayName = &quot;ddd1&quot;
+    },
+    new TestEntity()
+    {
+        PKID = 2,
+        SettingId = Guid.NewGuid(),
+        SettingName = &quot;Setting2&quot;,
+        SettingValue = &quot;Value2&quot;
+    },
+};
+var csvFilePath = $@&quot;{tempDirPath}\test.csv&quot;;
+entities.ToExcelFile(csvFilePath.Replace(&quot;.csv&quot;, &quot;.xlsx&quot;));
+var entitiesT0 = ExcelHelper.ToEntityList&lt;TestEntity&gt;(csvFilePath.Replace(&quot;.csv&quot;, &quot;.xlsx&quot;));
+entities.ToCsvFile(csvFilePath);
+
+var dataTable = entities.ToDataTable();
+dataTable.ToCsvFile(csvFilePath.Replace(&quot;.csv&quot;, &quot;.datatable.csv&quot;));
+var dt = CsvHelper.ToDataTable(csvFilePath.Replace(&quot;.csv&quot;, &quot;.datatable.csv&quot;));
+Console.WriteLine(dt.Columns.Count);
+var entities1 = CsvHelper.ToEntityList&lt;TestEntity&gt;(csvFilePath);
+entities1[1].DisplayName = &quot;,tadadada&quot;;
+entities1[0].SettingValue = &quot;value2,345&quot;;
+entities1.ToCsvFile(csvFilePath.Replace(&quot;.csv&quot;, &quot;.1.csv&quot;));
+entities1.ToDataTable().ToCsvFile(csvFilePath.Replace(&quot;.csv&quot;, &quot;.1.datatable.csv&quot;));
+
+var list = CsvHelper.ToEntityList&lt;TestEntity&gt;(csvFilePath.Replace(&quot;.csv&quot;, &quot;.1.csv&quot;));
+dt = CsvHelper.ToDataTable(csvFilePath.Replace(&quot;.csv&quot;, &quot;.1.datatable.csv&quot;));
+Console.WriteLine(dt.Columns.Count);
+var entities2 = CsvHelper.ToEntityList&lt;TestEntity&gt;(csvFilePath.Replace(&quot;.csv&quot;, &quot;.1.csv&quot;));
+
+entities.ToExcelFile(csvFilePath.Replace(&quot;.csv&quot;, &quot;.xlsx&quot;));
+
+var vals = new[] { 1, 2, 3, 5, 4 };
+vals.ToCsvFile(csvFilePath);
+
+var numList = CsvHelper.ToEntityList&lt;int&gt;(csvFilePath);
+Console.WriteLine(numList.StringJoin(&quot;,&quot;));
+
+</code></pre>
+<h2 id="configuration">Configuration</h2>
+<ol>
+<li><p>Attributes</p>
+<p>Add <code>ColumnAttribute</code> on the property of the entity which you used for export or import</p>
+<p>Add <code>SheetAttribute</code> on the entity which you used for export or import,you can set the <code>StartRowIndex</code> on your need(by default it is <code>1</code>)</p>
+<p>for example:</p>
+<pre><code class="lang-csharp">public class TestEntity
+{
+    [Column(&quot;Id&quot;)]
+    public int PKID { get; set; }
+
+    [Column(&quot;BillTitle&quot;)]
+    public string BillTitle { get; set; }
+
+    [Column(&quot;BillDetails&quot;)]
+    public string BillDetails { get; set; }
+
+    [Column(&quot;CreatedByUser&quot;)]
+    public string CreatedBy { get; set; }
+
+    [Column(&quot;CreatedTime&quot;)]
+    public DateTime CreatedTime { get; set; }
+}
+
+public class TestEntity1
+{
+    [Column(&quot;Username&quot;)]
+    public string Username { get; set; }
+
+    [Column(IsIgnored = true)]
+    public string PasswordHash { get; set; }
+
+    [Column(&quot;Amount&quot;)]
+    public decimal Amount { get; set; } = 1000M;
+
+    [Column(&quot;WechatOpenId&quot;)]
+    public string WechatOpenId { get; set; }
+
+    [Column(&quot;IsActive&quot;)]
+    public bool IsActive { get; set; }
+}
+</code></pre>
+</li>
+<li><p>FluentApi (Recommend)</p>
+<p>You can use FluentApi also</p>
+<p>for example:</p>
+<pre><code class="lang-csharp">var setting = ExcelHelper.SettingFor&lt;TestEntity&gt;();
+// ExcelSetting
+setting.HasAuthor(&quot;WeihanLi&quot;)
+    .HasTitle(&quot;WeihanLi.Npoi test&quot;)
+    .HasDescription(&quot;&quot;)
+    .HasSubject(&quot;&quot;);
+
+setting.HasSheetConfiguration(0, &quot;System Settings&quot;);
+
+setting.HasFilter(0, 1)
+    .HasFreezePane(0, 1, 2, 1);
+setting.Property(_ =&gt; _.SettingId)
+    .HasColumnIndex(0);
+
+setting.Property(_ =&gt; _.SettingName)
+    .HasColumnTitle(&quot;SettingName&quot;)
+    .HasColumnIndex(1);
+
+setting.Property(_ =&gt; _.DisplayName)
+    .HasOutputFormatter((entity, displayName) =&gt; $&quot;AAA_{entity.SettingName}_{displayName}&quot;)
+    .HasInputFormatter((entity, originVal) =&gt; originVal.Split(new[] { '_' })[2])
+    .HasColumnTitle(&quot;DisplayName&quot;)
+    .HasColumnIndex(2);
+
+setting.Property(_ =&gt; _.SettingValue)
+    .HasColumnTitle(&quot;SettingValue&quot;)
+    .HasColumnIndex(3);
+
+setting.Property(_ =&gt; _.CreatedTime)
+    .HasColumnTitle(&quot;CreatedTime&quot;)
+    .HasColumnIndex(5)
+    .HasColumnFormatter(&quot;yyyy-MM-dd HH:mm:ss&quot;);
+
+setting.Property(_ =&gt; _.CreatedBy)
+    .HasColumnIndex(4)
+    .HasColumnTitle(&quot;CreatedBy&quot;);
+
+setting.Property(_ =&gt; _.UpdatedBy).Ignored();
+setting.Property(_ =&gt; _.UpdatedTime).Ignored();
+setting.Property(_ =&gt; _.PKID).Ignored();
+</code></pre>
+</li>
+</ol>
 </article>
           </div>
           
@@ -78,7 +242,7 @@
               <div class="contribution">
                 <ul class="nav">
                   <li>
-                    <a href="https://github.com/WeihanLi/WeihanLi.Npoi/blob/dev/index.md/#L1" class="contribution-link">Improve this Doc</a>
+                    <a href="https://github.com/WeihanLi/weihanli.npoi/blob/dev/index.md/#L1" class="contribution-link">Improve this Doc</a>
                   </li>
                 </ul>
               </div>
