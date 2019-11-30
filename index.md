@@ -89,3 +89,99 @@ Console.WriteLine(numList.StringJoin(","));
 
 ```
 
+## Configuration
+
+1. Attributes
+
+    Add `ColumnAttribute` on the property of the entity which you used for export or import
+
+    Add `SheetAttribute` on the entity which you used for export or import,you can set the `StartRowIndex` on your need(by default it is `1`)
+
+    for example:
+
+    ``` csharp
+    public class TestEntity
+    {
+        [Column("Id")]
+        public int PKID { get; set; }
+
+        [Column("BillTitle")]
+        public string BillTitle { get; set; }
+
+        [Column("BillDetails")]
+        public string BillDetails { get; set; }
+
+        [Column("CreatedByUser")]
+        public string CreatedBy { get; set; }
+
+        [Column("CreatedTime")]
+        public DateTime CreatedTime { get; set; }
+    }
+
+    public class TestEntity1
+    {
+        [Column("Username")]
+        public string Username { get; set; }
+
+        [Column(IsIgnored = true)]
+        public string PasswordHash { get; set; }
+
+        [Column("Amount")]
+        public decimal Amount { get; set; } = 1000M;
+
+        [Column("WechatOpenId")]
+        public string WechatOpenId { get; set; }
+
+        [Column("IsActive")]
+        public bool IsActive { get; set; }
+    }
+    ```
+
+1. FluentApi (Recommend)
+
+    You can use FluentApi also
+
+    for example:
+
+    ``` csharp
+    var setting = ExcelHelper.SettingFor<TestEntity>();
+    // ExcelSetting
+    setting.HasAuthor("WeihanLi")
+        .HasTitle("WeihanLi.Npoi test")
+        .HasDescription("")
+        .HasSubject("");
+
+    setting.HasSheetConfiguration(0, "System Settings");
+
+    setting.HasFilter(0, 1)
+        .HasFreezePane(0, 1, 2, 1);
+    setting.Property(_ => _.SettingId)
+        .HasColumnIndex(0);
+
+    setting.Property(_ => _.SettingName)
+        .HasColumnTitle("SettingName")
+        .HasColumnIndex(1);
+
+    setting.Property(_ => _.DisplayName)
+        .HasOutputFormatter((entity, displayName) => $"AAA_{entity.SettingName}_{displayName}")
+        .HasInputFormatter((entity, originVal) => originVal.Split(new[] { '_' })[2])
+        .HasColumnTitle("DisplayName")
+        .HasColumnIndex(2);
+
+    setting.Property(_ => _.SettingValue)
+        .HasColumnTitle("SettingValue")
+        .HasColumnIndex(3);
+
+    setting.Property(_ => _.CreatedTime)
+        .HasColumnTitle("CreatedTime")
+        .HasColumnIndex(5)
+        .HasColumnFormatter("yyyy-MM-dd HH:mm:ss");
+
+    setting.Property(_ => _.CreatedBy)
+        .HasColumnIndex(4)
+        .HasColumnTitle("CreatedBy");
+
+    setting.Property(_ => _.UpdatedBy).Ignored();
+    setting.Property(_ => _.UpdatedTime).Ignored();
+    setting.Property(_ => _.PKID).Ignored();
+    ```
