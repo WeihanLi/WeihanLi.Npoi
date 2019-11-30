@@ -31,7 +31,7 @@ namespace WeihanLi.Npoi
 
             var propertyColumnDictionary = InternalHelper.GetPropertyColumnDictionary(configuration);
             var propertyColumnDic = sheetSetting.HeaderRowIndex >= 0
-                ? propertyColumnDictionary.ToDictionary(_ => _.Key, _ => new PropertySetting()
+                ? propertyColumnDictionary.ToDictionary(_ => _.Key, _ => new PropertyConfiguration()
                 {
                     ColumnIndex = -1,
                     ColumnFormatter = _.Value.ColumnFormatter,
@@ -119,7 +119,7 @@ namespace WeihanLi.Npoi
                                     var propertyValue = propertyInfo.GetValueGetter().Invoke(entity);
                                     var formatterFunc = InternalCache.InputFormatterFuncCache.GetOrAdd(propertyInfo, p =>
                                     {
-                                        var propertySettingType = typeof(PropertySetting<,>).MakeGenericType(entityType, p.PropertyType);
+                                        var propertySettingType = typeof(PropertyConfiguration<,>).MakeGenericType(entityType, p.PropertyType);
                                         return propertySettingType.GetProperty(InternalConstants.InputFormatterFuncName)?.GetValueGetter()?.Invoke(propertyColumnDictionary[propertyInfo]);
                                     });
                                     if (null != formatterFunc)
@@ -188,8 +188,8 @@ namespace WeihanLi.Npoi
                         var propertyValue = key.GetValueGetter<TEntity>().Invoke(entity);
                         var formatterFunc = InternalCache.OutputFormatterFuncCache.GetOrAdd(key, p =>
                         {
-                            var propertySettingType = typeof(PropertySetting<,>).MakeGenericType(entityType, p.PropertyType);
-                            return propertySettingType.GetProperty(InternalConstants.OutputFormatterFuncName)?.GetValueGetter().Invoke(propertyColumnDictionary[key]);
+                            var propertyConfigurationType = typeof(PropertyConfiguration<,>).MakeGenericType(entityType, p.PropertyType);
+                            return propertyConfigurationType.GetProperty(InternalConstants.OutputFormatterFuncName)?.GetValueGetter().Invoke(propertyColumnDictionary[key]);
                         });
                         if (null != formatterFunc)
                         {
@@ -260,7 +260,7 @@ namespace WeihanLi.Npoi
             return sheet;
         }
 
-        private static void PostSheetProcess<TEntity>(ISheet sheet, SheetSetting sheetSetting, int rowsCount, ExcelConfiguration<TEntity> excelConfiguration, IDictionary<PropertyInfo, PropertySetting> propertyColumnDictionary)
+        private static void PostSheetProcess<TEntity>(ISheet sheet, SheetSetting sheetSetting, int rowsCount, ExcelConfiguration<TEntity> excelConfiguration, IDictionary<PropertyInfo, PropertyConfiguration> propertyColumnDictionary)
         {
             if (rowsCount > 0)
             {

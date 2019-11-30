@@ -39,7 +39,7 @@ namespace WeihanLi.Npoi.Configurations
             {
                 { 0, new SheetSetting() }
             };
-            FreezeSettings = new List<FreezeSetting>();
+            FreezeSettings = new List<FreezeSetting>(4);
         }
 
         #region ExcelSettings FluentAPI

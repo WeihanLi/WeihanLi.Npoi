@@ -2,7 +2,7 @@
 <html lang='en'>
 <head>
 <meta charset='utf-8' />
-<title>WeihanLi.Npoi.Benchmark.ExportExcelTest-20191107-043751</title>
+<title>WeihanLi.Npoi.Benchmark.ExportExcelTest-20191108-071719</title>
 
 <style type="text/css">
 	table { border-collapse: collapse; display: block; width: 100%; overflow: auto; }
@@ -17,22 +17,46 @@ BenchmarkDotNet=v0.11.5, OS=Windows 10.0.18362
 Intel Core i5-3470 CPU 3.20GHz (Ivy Bridge), 1 CPU, 4 logical and 4 physical cores
 .NET Core SDK=3.0.100
   [Host]     : .NET Core 2.2.6 (CoreCLR 4.6.27817.03, CoreFX 4.6.27818.02), 64bit RyuJIT
-  Job-RTOLTK : .NET Core 2.2.6 (CoreCLR 4.6.27817.03, CoreFX 4.6.27818.02), 64bit RyuJIT
+  Job-WDPKYY : .NET Core 2.2.6 (CoreCLR 4.6.27817.03, CoreFX 4.6.27818.02), 64bit RyuJIT
 </code></pre>
-<pre><code>IterationCount=10  LaunchCount=1  WarmupCount=3  
+<pre><code>IterationCount=5  LaunchCount=1  WarmupCount=1  
 </code></pre>
 
 <table>
-<thead><tr><th>                   Method</th><th>Mean</th><th>Error</th><th>StdDev</th><th> Min</th><th> Max</th><th>Median</th><th>Gen 0</th><th>Gen 1</th><th>Gen 2</th><th>Allocated</th>
+<thead><tr><th>                   Method</th><th>RowsCount</th><th> Mean</th><th>Error</th><th>StdDev</th><th>  Min</th><th>  Max</th><th>Median</th><th>Gen 0</th><th>Gen 1</th><th>Gen 2</th><th>Allocated</th>
 </tr>
-</thead><tbody><tr><td>ExportToCsvBytesTest</td><td>121.2 ms</td><td>2.2688 ms</td><td>1.5007 ms</td><td>119.8 ms</td><td>124.8 ms</td><td>120.9 ms</td><td>10000.0000</td><td>2000.0000</td><td>800.0000</td><td>60.81 MB</td>
-</tr><tr><td>NpoiExportToXlsBytesTest</td><td>1,686.8 ms</td><td>15.1307 ms</td><td>10.0080 ms</td><td>1,674.0 ms</td><td>1,700.0 ms</td><td>1,685.6 ms</td><td>33000.0000</td><td>12000.0000</td><td>3000.0000</td><td>212.25 MB</td>
-</tr><tr><td>NpoiExportToXlsxBytesTest</td><td>2,483.3 ms</td><td>14.0983 ms</td><td>8.3897 ms</td><td>2,469.6 ms</td><td>2,492.9 ms</td><td>2,487.8 ms</td><td>95000.0000</td><td>22000.0000</td><td>4000.0000</td><td>532.54 MB</td>
-</tr><tr><td>EpplusExportToBytesTest</td><td>1,027.0 ms</td><td>3.9548 ms</td><td>2.6159 ms</td><td>1,022.8 ms</td><td>1,029.7 ms</td><td>1,027.4 ms</td><td>51000.0000</td><td>13000.0000</td><td>2000.0000</td><td>270.94 MB</td>
-</tr><tr><td>StructExportToCsvBytesTest</td><td>113.2 ms</td><td>0.5914 ms</td><td>0.3912 ms</td><td>112.7 ms</td><td>113.9 ms</td><td>113.2 ms</td><td>10000.0000</td><td>2000.0000</td><td>800.0000</td><td>60.81 MB</td>
-</tr><tr><td>NpoiStructExportToXlsBytesTest</td><td>1,653.8 ms</td><td>10.5413 ms</td><td>6.9724 ms</td><td>1,644.3 ms</td><td>1,665.4 ms</td><td>1,654.6 ms</td><td>33000.0000</td><td>12000.0000</td><td>3000.0000</td><td>214.15 MB</td>
-</tr><tr><td>NpoiStructExportToXlsxBytesTest</td><td>2,513.1 ms</td><td>20.8778 ms</td><td>13.8094 ms</td><td>2,482.7 ms</td><td>2,525.5 ms</td><td>2,518.7 ms</td><td>100000.0000</td><td>24000.0000</td><td>4000.0000</td><td>534.44 MB</td>
-</tr><tr><td>EpplusStructExportToBytesTest</td><td>1,045.9 ms</td><td>8.0583 ms</td><td>5.3301 ms</td><td>1,037.8 ms</td><td>1,054.1 ms</td><td>1,046.7 ms</td><td>51000.0000</td><td>13000.0000</td><td>2000.0000</td><td>270.95 MB</td>
+</thead><tbody><tr><td>ExportToCsvBytesTest</td><td>10000</td><td>22.77 ms</td><td>0.5667 ms</td><td>0.1472 ms</td><td>22.54 ms</td><td>22.95 ms</td><td>22.77 ms</td><td>2281.2500</td><td>937.5000</td><td>281.2500</td><td>12.12 MB</td>
+</tr><tr><td>NpoiExportToXlsBytesTest</td><td>10000</td><td>219.87 ms</td><td>3.8409 ms</td><td>0.9975 ms</td><td>218.92 ms</td><td>221.40 ms</td><td>219.60 ms</td><td>6000.0000</td><td>2000.0000</td><td>1000.0000</td><td>43.99 MB</td>
+</tr><tr><td>NpoiExportToXlsxBytesTest</td><td>10000</td><td>470.79 ms</td><td>9.3139 ms</td><td>2.4188 ms</td><td>467.01 ms</td><td>473.70 ms</td><td>471.26 ms</td><td>20000.0000</td><td>6000.0000</td><td>2000.0000</td><td>104.31 MB</td>
+</tr><tr><td>EpplusExportToBytesTest</td><td>10000</td><td>203.82 ms</td><td>5.0193 ms</td><td>1.3035 ms</td><td>203.13 ms</td><td>206.15 ms</td><td>203.25 ms</td><td>11000.0000</td><td>4000.0000</td><td>1000.0000</td><td>56.66 MB</td>
+</tr><tr><td>StructExportToCsvBytesTest</td><td>10000</td><td>21.46 ms</td><td>0.7542 ms</td><td>0.1959 ms</td><td>21.30 ms</td><td>21.73 ms</td><td>21.34 ms</td><td>2281.2500</td><td>937.5000</td><td>281.2500</td><td>12.12 MB</td>
+</tr><tr><td>NpoiStructExportToXlsBytesTest</td><td>10000</td><td>212.54 ms</td><td>12.7005 ms</td><td>3.2983 ms</td><td>209.21 ms</td><td>216.65 ms</td><td>211.42 ms</td><td>7000.0000</td><td>3000.0000</td><td>1000.0000</td><td>44.37 MB</td>
+</tr><tr><td>NpoiStructExportToXlsxBytesTest</td><td>10000</td><td>495.55 ms</td><td>45.1010 ms</td><td>11.7126 ms</td><td>482.73 ms</td><td>514.33 ms</td><td>492.62 ms</td><td>20000.0000</td><td>7000.0000</td><td>2000.0000</td><td>104.69 MB</td>
+</tr><tr><td>EpplusStructExportToBytesTest</td><td>10000</td><td>208.60 ms</td><td>5.3520 ms</td><td>1.3899 ms</td><td>206.94 ms</td><td>210.32 ms</td><td>208.32 ms</td><td>11000.0000</td><td>4000.0000</td><td>1000.0000</td><td>56.66 MB</td>
+</tr><tr><td>ExportToCsvBytesTest</td><td>30000</td><td>72.16 ms</td><td>3.2924 ms</td><td>0.8550 ms</td><td>71.34 ms</td><td>73.59 ms</td><td>71.86 ms</td><td>6000.0000</td><td>1571.4286</td><td>571.4286</td><td>36.47 MB</td>
+</tr><tr><td>NpoiExportToXlsBytesTest</td><td>30000</td><td>839.63 ms</td><td>22.8596 ms</td><td>5.9366 ms</td><td>835.13 ms</td><td>849.85 ms</td><td>837.76 ms</td><td>20000.0000</td><td>8000.0000</td><td>2000.0000</td><td>124.18 MB</td>
+</tr><tr><td>NpoiExportToXlsxBytesTest</td><td>30000</td><td>1,478.00 ms</td><td>48.6880 ms</td><td>12.6441 ms</td><td>1,457.50 ms</td><td>1,489.99 ms</td><td>1,480.52 ms</td><td>59000.0000</td><td>16000.0000</td><td>4000.0000</td><td>315.85 MB</td>
+</tr><tr><td>EpplusExportToBytesTest</td><td>30000</td><td>624.67 ms</td><td>40.5093 ms</td><td>10.5201 ms</td><td>616.60 ms</td><td>642.67 ms</td><td>621.37 ms</td><td>31000.0000</td><td>10000.0000</td><td>3000.0000</td><td>172.73 MB</td>
+</tr><tr><td>StructExportToCsvBytesTest</td><td>30000</td><td>63.51 ms</td><td>2.5019 ms</td><td>0.6497 ms</td><td>62.53 ms</td><td>64.25 ms</td><td>63.58 ms</td><td>5875.0000</td><td>1375.0000</td><td>375.0000</td><td>36.47 MB</td>
+</tr><tr><td>NpoiStructExportToXlsBytesTest</td><td>30000</td><td>853.48 ms</td><td>33.3918 ms</td><td>8.6718 ms</td><td>839.53 ms</td><td>862.13 ms</td><td>856.08 ms</td><td>20000.0000</td><td>8000.0000</td><td>2000.0000</td><td>125.32 MB</td>
+</tr><tr><td>NpoiStructExportToXlsxBytesTest</td><td>30000</td><td>1,516.05 ms</td><td>141.2409 ms</td><td>36.6798 ms</td><td>1,474.05 ms</td><td>1,553.23 ms</td><td>1,534.14 ms</td><td>59000.0000</td><td>16000.0000</td><td>4000.0000</td><td>317 MB</td>
+</tr><tr><td>EpplusStructExportToBytesTest</td><td>30000</td><td>624.10 ms</td><td>18.2990 ms</td><td>4.7522 ms</td><td>616.20 ms</td><td>627.98 ms</td><td>624.45 ms</td><td>31000.0000</td><td>10000.0000</td><td>3000.0000</td><td>172.72 MB</td>
+</tr><tr><td>ExportToCsvBytesTest</td><td>50000</td><td>113.06 ms</td><td>1.6585 ms</td><td>0.4307 ms</td><td>112.55 ms</td><td>113.55 ms</td><td>113.01 ms</td><td>10000.0000</td><td>2000.0000</td><td>800.0000</td><td>60.81 MB</td>
+</tr><tr><td>NpoiExportToXlsBytesTest</td><td>50000</td><td>1,666.19 ms</td><td>43.1443 ms</td><td>11.2044 ms</td><td>1,651.36 ms</td><td>1,677.04 ms</td><td>1,669.51 ms</td><td>33000.0000</td><td>12000.0000</td><td>3000.0000</td><td>212.25 MB</td>
+</tr><tr><td>NpoiExportToXlsxBytesTest</td><td>50000</td><td>2,562.64 ms</td><td>130.8702 ms</td><td>33.9866 ms</td><td>2,516.62 ms</td><td>2,595.77 ms</td><td>2,573.09 ms</td><td>96000.0000</td><td>24000.0000</td><td>4000.0000</td><td>532.54 MB</td>
+</tr><tr><td>EpplusExportToBytesTest</td><td>50000</td><td>1,059.02 ms</td><td>76.3548 ms</td><td>19.8291 ms</td><td>1,041.61 ms</td><td>1,093.02 ms</td><td>1,052.11 ms</td><td>51000.0000</td><td>13000.0000</td><td>2000.0000</td><td>270.94 MB</td>
+</tr><tr><td>StructExportToCsvBytesTest</td><td>50000</td><td>108.91 ms</td><td>4.0316 ms</td><td>1.0470 ms</td><td>107.28 ms</td><td>110.19 ms</td><td>108.95 ms</td><td>10000.0000</td><td>2000.0000</td><td>800.0000</td><td>60.81 MB</td>
+</tr><tr><td>NpoiStructExportToXlsBytesTest</td><td>50000</td><td>1,675.32 ms</td><td>63.9457 ms</td><td>16.6065 ms</td><td>1,660.80 ms</td><td>1,703.80 ms</td><td>1,669.06 ms</td><td>33000.0000</td><td>12000.0000</td><td>3000.0000</td><td>214.15 MB</td>
+</tr><tr><td>NpoiStructExportToXlsxBytesTest</td><td>50000</td><td>2,505.01 ms</td><td>231.4485 ms</td><td>60.1064 ms</td><td>2,443.93 ms</td><td>2,576.48 ms</td><td>2,494.21 ms</td><td>96000.0000</td><td>24000.0000</td><td>4000.0000</td><td>534.45 MB</td>
+</tr><tr><td>EpplusStructExportToBytesTest</td><td>50000</td><td>1,031.01 ms</td><td>17.5706 ms</td><td>4.5630 ms</td><td>1,027.89 ms</td><td>1,038.94 ms</td><td>1,029.03 ms</td><td>51000.0000</td><td>13000.0000</td><td>2000.0000</td><td>270.93 MB</td>
+</tr><tr><td>ExportToCsvBytesTest</td><td>65535</td><td>147.35 ms</td><td>1.3296 ms</td><td>0.3453 ms</td><td>147.03 ms</td><td>147.83 ms</td><td>147.16 ms</td><td>12750.0000</td><td>2000.0000</td><td>500.0000</td><td>79.73 MB</td>
+</tr><tr><td>NpoiExportToXlsBytesTest</td><td>65535</td><td>2,456.24 ms</td><td>21.4291 ms</td><td>5.5651 ms</td><td>2,448.12 ms</td><td>2,462.39 ms</td><td>2,455.63 ms</td><td>43000.0000</td><td>15000.0000</td><td>3000.0000</td><td>277.42 MB</td>
+</tr><tr><td>NpoiExportToXlsxBytesTest</td><td>65535</td><td>3,292.05 ms</td><td>120.2493 ms</td><td>31.2284 ms</td><td>3,257.61 ms</td><td>3,327.38 ms</td><td>3,280.70 ms</td><td>127000.0000</td><td>30000.0000</td><td>5000.0000</td><td>685.91 MB</td>
+</tr><tr><td>EpplusExportToBytesTest</td><td>65535</td><td>1,365.16 ms</td><td>27.3326 ms</td><td>7.0982 ms</td><td>1,355.48 ms</td><td>1,374.40 ms</td><td>1,363.77 ms</td><td>68000.0000</td><td>17000.0000</td><td>3000.0000</td><td>343.35 MB</td>
+</tr><tr><td>StructExportToCsvBytesTest</td><td>65535</td><td>141.21 ms</td><td>6.6211 ms</td><td>1.7195 ms</td><td>139.06 ms</td><td>143.00 ms</td><td>141.42 ms</td><td>12750.0000</td><td>2000.0000</td><td>500.0000</td><td>79.73 MB</td>
+</tr><tr><td>NpoiStructExportToXlsBytesTest</td><td>65535</td><td>2,505.47 ms</td><td>83.5632 ms</td><td>21.7011 ms</td><td>2,483.53 ms</td><td>2,536.38 ms</td><td>2,504.97 ms</td><td>43000.0000</td><td>15000.0000</td><td>3000.0000</td><td>279.92 MB</td>
+</tr><tr><td>NpoiStructExportToXlsxBytesTest</td><td>65535</td><td>3,235.57 ms</td><td>116.3763 ms</td><td>30.2226 ms</td><td>3,205.37 ms</td><td>3,284.36 ms</td><td>3,230.79 ms</td><td>127000.0000</td><td>30000.0000</td><td>5000.0000</td><td>688.39 MB</td>
+</tr><tr><td>EpplusStructExportToBytesTest</td><td>65535</td><td>1,349.52 ms</td><td>8.8304 ms</td><td>2.2932 ms</td><td>1,346.47 ms</td><td>1,352.90 ms</td><td>1,349.45 ms</td><td>67000.0000</td><td>16000.0000</td><td>3000.0000</td><td>343.35 MB</td>
 </tr></tbody></table>
 </body>
 </html>

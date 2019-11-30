@@ -8,7 +8,7 @@ using System.Reflection;
 using System.Text;
 using WeihanLi.Common.Helpers;
 using WeihanLi.Extensions;
-using WeihanLi.Npoi.Settings;
+using WeihanLi.Npoi.Configurations;
 
 namespace WeihanLi.Npoi
 {
@@ -159,7 +159,7 @@ namespace WeihanLi.Npoi
             else
             {
                 var propertyColumnDictionary = InternalHelper.GetPropertyColumnDictionary<TEntity>();
-                var propertyColumnDic = propertyColumnDictionary.ToDictionary(_ => _.Key, _ => new PropertySetting()
+                var propertyColumnDic = propertyColumnDictionary.ToDictionary(_ => _.Key, _ => new PropertyConfiguration()
                 {
                     ColumnIndex = -1,
                     ColumnFormatter = _.Value.ColumnFormatter,
@@ -235,7 +235,7 @@ namespace WeihanLi.Npoi
                                             var propertyValue = propertyInfo.GetValueGetter().Invoke(entity);
                                             var formatterFunc = InternalCache.InputFormatterFuncCache.GetOrAdd(propertyInfo, p =>
                                             {
-                                                var propertyType = typeof(PropertySetting<,>).MakeGenericType(entityType, p.PropertyType);
+                                                var propertyType = typeof(PropertyConfiguration<,>).MakeGenericType(entityType, p.PropertyType);
                                                 return propertyType.GetProperty(InternalConstants.InputFormatterFuncName)?.GetValueGetter().Invoke(propertyColumnDictionary[propertyInfo]);
                                             });
                                             if (null != formatterFunc)
@@ -433,7 +433,7 @@ namespace WeihanLi.Npoi
                         var entityType = typeof(TEntity);
                         var formatterFunc = InternalCache.OutputFormatterFuncCache.GetOrAdd(props[i], p =>
                         {
-                            var propertyType = typeof(PropertySetting<,>).MakeGenericType(entityType, p.PropertyType);
+                            var propertyType = typeof(PropertyConfiguration<,>).MakeGenericType(entityType, p.PropertyType);
                             return propertyType.GetProperty(InternalConstants.OutputFormatterFuncName)?.GetValueGetter()
                                 .Invoke(dic[props[i]]);
                         });

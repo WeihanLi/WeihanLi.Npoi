@@ -60,6 +60,11 @@ namespace WeihanLi.Npoi.Configurations
         /// <returns></returns>
         IPropertyConfiguration<TEntity, TProperty> HasOutputFormatter(Func<TEntity, TProperty, object> formatterFunc);
 
+        /// <summary>
+        /// HasInputFormatter
+        /// </summary>
+        /// <param name="formatterFunc">columnFormatter</param>
+        /// <returns></returns>
         IPropertyConfiguration<TEntity, TProperty> HasInputFormatter(Func<TEntity, TProperty, TProperty> formatterFunc);
     }
 }
