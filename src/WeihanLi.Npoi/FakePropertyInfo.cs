@@ -33,6 +33,8 @@ namespace WeihanLi.Npoi
 
         public override MethodInfo GetSetMethod(bool nonPublic) => null;
 
+        public override string ToString() => $"{PropertyType.Name}, {Name}";
+
         public override object[] GetCustomAttributes(bool inherit) => throw new NotSupportedException();
 
         public override object[] GetCustomAttributes(Type attributeType, bool inherit) => throw new NotSupportedException();

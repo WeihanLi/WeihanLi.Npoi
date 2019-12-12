@@ -116,7 +116,7 @@ namespace WeihanLi.Npoi
                             {
                                 if (propertyInfo.CanWrite)
                                 {
-                                    var propertyValue = propertyInfo.GetValueGetter().Invoke(entity);
+                                    var propertyValue = propertyInfo.GetValueGetter()?.Invoke(entity);
                                     var formatterFunc = InternalCache.InputFormatterFuncCache.GetOrAdd(propertyInfo, p =>
                                     {
                                         var propertySettingType = typeof(PropertyConfiguration<,>).MakeGenericType(entityType, p.PropertyType);
@@ -125,8 +125,8 @@ namespace WeihanLi.Npoi
                                     if (null != formatterFunc)
                                     {
                                         var funcType = typeof(Func<,,>).MakeGenericType(entityType, propertyInfo.PropertyType, typeof(object));
-                                        var method = funcType.GetProperty("Method")?.GetValueGetter().Invoke(formatterFunc) as MethodInfo;
-                                        var target = funcType.GetProperty("Target")?.GetValueGetter().Invoke(formatterFunc);
+                                        var method = funcType.GetProperty("Method")?.GetValueGetter()?.Invoke(formatterFunc) as MethodInfo;
+                                        var target = funcType.GetProperty("Target")?.GetValueGetter()?.Invoke(formatterFunc);
 
                                         if (null != method && target != null)
                                         {
@@ -185,17 +185,17 @@ namespace WeihanLi.Npoi
                 {
                     foreach (var key in propertyColumnDictionary.Keys)
                     {
-                        var propertyValue = key.GetValueGetter<TEntity>().Invoke(entity);
+                        var propertyValue = key.GetValueGetter<TEntity>()?.Invoke(entity);
                         var formatterFunc = InternalCache.OutputFormatterFuncCache.GetOrAdd(key, p =>
                         {
                             var propertyConfigurationType = typeof(PropertyConfiguration<,>).MakeGenericType(entityType, p.PropertyType);
-                            return propertyConfigurationType.GetProperty(InternalConstants.OutputFormatterFuncName)?.GetValueGetter().Invoke(propertyColumnDictionary[key]);
+                            return propertyConfigurationType.GetProperty(InternalConstants.OutputFormatterFuncName)?.GetValueGetter()?.Invoke(propertyColumnDictionary[key]);
                         });
                         if (null != formatterFunc)
                         {
                             var funcType = typeof(Func<,,>).MakeGenericType(entityType, key.PropertyType, typeof(object));
-                            var method = funcType.GetProperty("Method")?.GetValueGetter().Invoke(formatterFunc) as MethodInfo;
-                            var target = funcType.GetProperty("Target")?.GetValueGetter().Invoke(formatterFunc);
+                            var method = funcType.GetProperty("Method")?.GetValueGetter()?.Invoke(formatterFunc) as MethodInfo;
+                            var target = funcType.GetProperty("Target")?.GetValueGetter()?.Invoke(formatterFunc);
 
                             if (null != method && target != null)
                             {
