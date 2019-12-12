@@ -25,7 +25,7 @@ namespace WeihanLi.Npoi
         public override string Name { get; }
         public override Type ReflectedType { get; }
 
-        public override bool CanRead => true;
+        public override bool CanRead => false;
         public override bool CanWrite => false;
         public override Type PropertyType { get; }
 
