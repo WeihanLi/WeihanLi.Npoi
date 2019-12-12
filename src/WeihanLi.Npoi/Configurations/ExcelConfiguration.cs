@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using WeihanLi.Extensions;
@@ -131,6 +132,30 @@ namespace WeihanLi.Npoi.Configurations
                 }
             }
             return (IPropertyConfiguration<TEntity, TProperty>)PropertyConfigurationDictionary[property];
+        }
+
+        public IPropertyConfiguration<TEntity, TProperty> Property<TProperty>(string propertyName)
+        {
+            var property = PropertyConfigurationDictionary.Keys.FirstOrDefault(p => p.Name == propertyName);
+            if (property != null)
+            {
+                return (IPropertyConfiguration<TEntity, TProperty>)PropertyConfigurationDictionary[property];
+            }
+
+            var entityType = typeof(TEntity);
+            var propertyType = typeof(TProperty);
+
+            property = new FakePropertyInfo(entityType, propertyType, propertyName);
+
+            var propertyConfigurationType =
+                typeof(PropertyConfiguration<,>).MakeGenericType(entityType, propertyType);
+            var propertyConfiguration = (PropertyConfiguration)Activator.CreateInstance(propertyConfigurationType);
+            propertyConfigurationType.GetProperty("ColumnTitle")?.GetSetMethod()?
+                .Invoke(propertyConfiguration, new object[] { propertyName });
+
+            PropertyConfigurationDictionary[property] = propertyConfiguration;
+
+            return (IPropertyConfiguration<TEntity, TProperty>)propertyConfiguration;
         }
 
         #endregion Property

@@ -99,5 +99,7 @@ namespace WeihanLi.Npoi.Configurations
     public interface IExcelConfiguration<TEntity> : IExcelConfiguration
     {
         IPropertyConfiguration<TEntity, TProperty> Property<TProperty>(Expression<Func<TEntity, TProperty>> propertyExpression);
+
+        IPropertyConfiguration<TEntity, TProperty> Property<TProperty>(string propertyName);
     }
 }
