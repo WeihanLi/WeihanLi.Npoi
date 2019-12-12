@@ -117,13 +117,16 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ArgumentCanNotBeEmpty" xml:space="preserve">
+    <value>the argument can not be empty</value>
+  </data>
   <data name="FileNotFound" xml:space="preserve">
-    <value>找不到文件</value>
+    <value>can not find the file</value>
   </data>
   <data name="IndexOutOfRange" xml:space="preserve">
-    <value>{0}超出范围，最大为{1}</value>
+    <value>{0} out of range, max value: {1}</value>
   </data>
-  <data name="InvalidFile" xml:space="preserve">
-    <value>文件不合法，不是Excel文件</value>
+  <data name="InvalidExcelFile" xml:space="preserve">
+    <value>invalid excel file</value>
   </data>
 </root>

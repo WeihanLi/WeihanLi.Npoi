@@ -4,6 +4,10 @@
 
 [![Azure Pipeline Build Status](https://weihanli.visualstudio.com/Pipelines/_apis/build/status/WeihanLi.WeihanLi.Npoi?branchName=dev)](https://weihanli.visualstudio.com/Pipelines/_build/latest?definitionId=13&branchName=dev)
 
+[![Github Build Status](https://github.com/WeihanLi/WeihanLi.Npoi/workflows/dotnetcore/badge.svg?branch=dev)](https://github.com/WeihanLi/WeihanLi.Npoi/actions?query=workflow%3Adotnetcore+branch%3Adev)
+
+[![Travis Build Status](https://travis-ci.org/WeihanLi/WeihanLi.Npoi.svg?branch=dev)](https://travis-ci.org/WeihanLi/WeihanLi.Npoi)
+
 ## Intro
 
 [NPOI](https://github.com/tonyqus/npoi) extensions for target framework net45 and netstandard2.0.
@@ -14,22 +18,6 @@ There' a lot of userful extensions for you, core fetures are as follows:
 - export `IEnumerable<TEntity>` or `DataTable` data to Excel file or Excel file bytes or even write excel file stream to your stream
 - export `IEnumerable<TEntity>` or `DataTable` data to csv file or bytes.
 - custom configuration/mappings by Attribute or FluentAPI(inspired by [FluentExcel](https://github.com/Arch/FluentExcel/))
-
-## Use
-
-### Install
-
-.NetFramework
-
-``` bash
-Install-Package WeihanLi.Npoi
-```
-
-.NetCore
-
-``` bash
-dotnet add package WeihanLi.Npoi
-```
 
 ### GetStarted
 
@@ -89,10 +77,10 @@ dotnet add package WeihanLi.Npoi
     // prepare a workbook accounting to excelPath and custom excel settings
     var workbook = PrepareWorkbook(string excelPath, ExcelSetting excelSetting);
 
-    // prepare a workbook whether *.xlsx file
-    var workbook = PrepareWorkbook(bool isXlsx);
+    // prepare a workbook whether *.xls file
+    var workbook = PrepareWorkbook(bool isXls);
 
-    // prepare a workbook whether *.xlsx file and custom excel setting
+    // prepare a workbook whether *.xls file and custom excel setting
     var workbook = PrepareWorkbook(bool isXlsx, ExcelSetting excelSetting);
     ```
 
@@ -239,6 +227,9 @@ dotnet add package WeihanLi.Npoi
     setting.Property(_ => _.CreatedBy)
         .HasColumnIndex(4)
         .HasColumnTitle("CreatedBy");
+
+    setting.Property("HiddenProp")
+        .HasOutputFormatter((entity, val) => $"HiddenProp_{entity.PKID}");
 
     setting.Property(_ => _.UpdatedBy).Ignored();
     setting.Property(_ => _.UpdatedTime).Ignored();
