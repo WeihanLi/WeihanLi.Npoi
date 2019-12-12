@@ -8,7 +8,7 @@ namespace WeihanLi.Npoi.Benchmark
         {
             // BenchmarkRunner.Run<WorkbookBasicTest>();
             BenchmarkRunner.Run<ExportExcelTest>();
-            // BenchmarkRunner.Run<ImportExcelTest>();
+            BenchmarkRunner.Run<ImportExcelTest>();
         }
     }
 }

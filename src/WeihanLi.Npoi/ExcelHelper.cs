@@ -40,7 +40,7 @@ namespace WeihanLi.Npoi
                     msg = string.Empty;
                     return true;
                 }
-                msg = Resource.InvalidFile;
+                msg = Resource.InvalidExcelFile;
                 return false;
             }
 
@@ -166,6 +166,8 @@ namespace WeihanLi.Npoi
         /// <returns></returns>
         public static IWorkbook PrepareWorkbook(bool isXlsx) => PrepareWorkbook(isXlsx, null);
 
+        private static readonly Version Version = typeof(ExcelHelper).Assembly.GetName().Version;
+
         /// <summary>
         /// get a excel workbook
         /// </summary>
@@ -189,6 +191,7 @@ namespace WeihanLi.Npoi
                 props.CoreProperties.Description = setting.Description;
                 props.ExtendedProperties.GetUnderlyingProperties().Company = setting.Company;
                 props.ExtendedProperties.GetUnderlyingProperties().Application = InternalConstants.ApplicationName;
+                props.ExtendedProperties.GetUnderlyingProperties().AppVersion = Version.ToString();
                 return workbook;
             }
             else

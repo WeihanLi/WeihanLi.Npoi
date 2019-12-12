@@ -10,7 +10,11 @@ namespace WeihanLi.Npoi.Configurations
 
         IExcelConfiguration HasSheetConfiguration(int sheetIndex, string sheetName);
 
+        IExcelConfiguration HasSheetConfiguration(int sheetIndex, string sheetName, bool enableAutoColumnWidth);
+
         IExcelConfiguration HasSheetConfiguration(int sheetIndex, string sheetName, int startRowIndex);
+
+        IExcelConfiguration HasSheetConfiguration(int sheetIndex, string sheetName, int startRowIndex, bool enableAutoColumnWidth);
 
         /// <summary>
         /// setting freeze pane
@@ -95,5 +99,7 @@ namespace WeihanLi.Npoi.Configurations
     public interface IExcelConfiguration<TEntity> : IExcelConfiguration
     {
         IPropertyConfiguration<TEntity, TProperty> Property<TProperty>(Expression<Func<TEntity, TProperty>> propertyExpression);
+
+        IPropertyConfiguration<TEntity, TProperty> Property<TProperty>(string propertyName);
     }
 }

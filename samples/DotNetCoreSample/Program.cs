@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using WeihanLi.Extensions;
 using WeihanLi.Npoi;
 using WeihanLi.Npoi.Attributes;
@@ -13,6 +12,7 @@ namespace DotNetCoreSample
         public static void Main(string[] args)
         {
             FluentSettingsForExcel();
+            var tempDirPath = $@"{Environment.GetEnvironmentVariable("USERPROFILE")}\Desktop\temp\test";
 
             //using (var conn = new SqlConnection("server=.;uid=liweihan;pwd=Admin888;database=Reservation"))
             //{
@@ -40,31 +40,34 @@ namespace DotNetCoreSample
             //    Console.WriteLine($"{shop.Key}---{shop.Count()}---distinct pid count:{shop.Select(_ => _.Pid).Distinct().Count()}");
             //}
 
-            var list2 = new List<TestEntity2>();
-            list2.Add(null);
-            for (var i = 0; i < 10; i++)
-            {
-                list2.Add(new TestEntity2
-                {
-                    Id = i + 1,
-                    Title = $"Title_{i}",
-                    Description = $"{Enumerable.Range(1, 200).StringJoin(",")}__{i}",
-                });
-            }
-            list2.Add(new TestEntity2()
-            {
-                Id = 999,
-                Title = "",
-                Description = null
-            });
-            var tempDirPath = $@"{Environment.GetEnvironmentVariable("USERPROFILE")}\Desktop\temp\test";
-            list2.ToExcelFile($@"{tempDirPath}\testEntity2.xlsx");
+            //Console.WriteLine("Press Enter to continue...");
+            //Console.ReadLine();
 
-            var listTemp = ExcelHelper.ToEntityList<TestEntity2>($@"{tempDirPath}\testEntity2.xlsx");
-            var dataTableTemp = ExcelHelper.ToDataTable($@"{tempDirPath}\testEntity2.xlsx");
+            //var list2 = new List<TestEntity2>();
+            //list2.Add(null);
+            //for (var i = 0; i < 10; i++)
+            //{
+            //    list2.Add(new TestEntity2
+            //    {
+            //        Id = i + 1,
+            //        Title = $"Title_{i}",
+            //        Description = $"{Enumerable.Range(1, 200).StringJoin(",")}__{i}",
+            //    });
+            //}
+            //list2.Add(new TestEntity2()
+            //{
+            //    Id = 999,
+            //    Title = $"{Enumerable.Repeat(1, 10).StringJoin(",")}",
+            //    Description = null
+            //});
 
-            Console.WriteLine("Press Enter to continue...");
-            Console.ReadLine();
+            //list2.ToExcelFile($@"{tempDirPath}\testEntity2.xlsx");
+
+            //var listTemp = ExcelHelper.ToEntityList<TestEntity2>($@"{tempDirPath}\testEntity2.xlsx");
+            //var dataTableTemp = ExcelHelper.ToDataTable($@"{tempDirPath}\testEntity2.xlsx");
+
+            //Console.WriteLine("Press Enter to continue...");
+            //Console.ReadLine();
 
             var entities = new List<TestEntity>()
             {
@@ -155,6 +158,9 @@ namespace DotNetCoreSample
                 .HasColumnIndex(4)
                 .HasColumnTitle("CreatedBy");
 
+            setting.Property("HiddenProp")
+                .HasOutputFormatter((entity, val) => $"HiddenProp_{entity.PKID}");
+
             // setting.Property(_ => _.PKID).Ignored();
             setting.Property(_ => _.UpdatedBy).Ignored();
             setting.Property(_ => _.UpdatedTime).Ignored();
@@ -184,7 +190,7 @@ namespace DotNetCoreSample
         public DateTime UpdatedTime { get; set; }
     }
 
-    [Sheet(SheetIndex = 0, SheetName = "TestSheet")]
+    [Sheet(SheetIndex = 0, SheetName = "TestSheet", AutoColumnWidthEnabled = true)]
     internal class TestEntity2
     {
         [Column(Index = 0)]

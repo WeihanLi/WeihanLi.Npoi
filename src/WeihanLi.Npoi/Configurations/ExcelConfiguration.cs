@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using WeihanLi.Extensions;
@@ -39,7 +40,7 @@ namespace WeihanLi.Npoi.Configurations
             {
                 { 0, new SheetSetting() }
             };
-            FreezeSettings = new List<FreezeSetting>();
+            FreezeSettings = new List<FreezeSetting>(4);
         }
 
         #region ExcelSettings FluentAPI
@@ -133,13 +134,42 @@ namespace WeihanLi.Npoi.Configurations
             return (IPropertyConfiguration<TEntity, TProperty>)PropertyConfigurationDictionary[property];
         }
 
+        public IPropertyConfiguration<TEntity, TProperty> Property<TProperty>(string propertyName)
+        {
+            var property = PropertyConfigurationDictionary.Keys.FirstOrDefault(p => p.Name == propertyName);
+            if (property != null)
+            {
+                return (IPropertyConfiguration<TEntity, TProperty>)PropertyConfigurationDictionary[property];
+            }
+
+            var entityType = typeof(TEntity);
+            var propertyType = typeof(TProperty);
+
+            property = new FakePropertyInfo(entityType, propertyType, propertyName);
+
+            var propertyConfigurationType =
+                typeof(PropertyConfiguration<,>).MakeGenericType(entityType, propertyType);
+            var propertyConfiguration = (PropertyConfiguration)Activator.CreateInstance(propertyConfigurationType);
+            propertyConfigurationType.GetProperty("ColumnTitle")?.GetSetMethod()?
+                .Invoke(propertyConfiguration, new object[] { propertyName });
+
+            PropertyConfigurationDictionary[property] = propertyConfiguration;
+
+            return (IPropertyConfiguration<TEntity, TProperty>)propertyConfiguration;
+        }
+
         #endregion Property
 
         #region Sheet
 
         public IExcelConfiguration HasSheetConfiguration(int sheetIndex, string sheetName) => HasSheetConfiguration(sheetIndex, sheetName, 1);
 
-        public IExcelConfiguration HasSheetConfiguration(int sheetIndex, string sheetName, int startRowIndex)
+        public IExcelConfiguration HasSheetConfiguration(int sheetIndex, string sheetName, bool enableAutoColumnWidth) => HasSheetConfiguration(sheetIndex, sheetName, 1, enableAutoColumnWidth);
+
+        public IExcelConfiguration HasSheetConfiguration(int sheetIndex, string sheetName, int startRowIndex) => HasSheetConfiguration(sheetIndex, sheetName, startRowIndex, false);
+
+        public IExcelConfiguration HasSheetConfiguration(int sheetIndex, string sheetName, int startRowIndex,
+            bool enableAutoColumnWidth)
         {
             if (sheetIndex >= 0)
             {
@@ -147,6 +177,7 @@ namespace WeihanLi.Npoi.Configurations
                 {
                     sheetSetting.SheetName = sheetName;
                     sheetSetting.StartRowIndex = startRowIndex;
+                    sheetSetting.AutoColumnWidthEnabled = enableAutoColumnWidth;
                 }
                 else
                 {
@@ -154,7 +185,8 @@ namespace WeihanLi.Npoi.Configurations
                     {
                         SheetIndex = sheetIndex,
                         SheetName = sheetName,
-                        StartRowIndex = startRowIndex
+                        StartRowIndex = startRowIndex,
+                        AutoColumnWidthEnabled = enableAutoColumnWidth
                     };
                 }
             }

@@ -8,7 +8,7 @@ using System.Reflection;
 using System.Text;
 using WeihanLi.Common.Helpers;
 using WeihanLi.Extensions;
-using WeihanLi.Npoi.Settings;
+using WeihanLi.Npoi.Configurations;
 
 namespace WeihanLi.Npoi
 {
@@ -159,7 +159,7 @@ namespace WeihanLi.Npoi
             else
             {
                 var propertyColumnDictionary = InternalHelper.GetPropertyColumnDictionary<TEntity>();
-                var propertyColumnDic = propertyColumnDictionary.ToDictionary(_ => _.Key, _ => new PropertySetting()
+                var propertyColumnDic = propertyColumnDictionary.ToDictionary(_ => _.Key, _ => new PropertyConfiguration()
                 {
                     ColumnIndex = -1,
                     ColumnFormatter = _.Value.ColumnFormatter,
@@ -232,17 +232,17 @@ namespace WeihanLi.Npoi
                                     {
                                         if (propertyInfo.CanWrite)
                                         {
-                                            var propertyValue = propertyInfo.GetValueGetter().Invoke(entity);
+                                            var propertyValue = propertyInfo.GetValueGetter()?.Invoke(entity);
                                             var formatterFunc = InternalCache.InputFormatterFuncCache.GetOrAdd(propertyInfo, p =>
                                             {
-                                                var propertyType = typeof(PropertySetting<,>).MakeGenericType(entityType, p.PropertyType);
-                                                return propertyType.GetProperty("InputFormatterFunc")?.GetValueGetter().Invoke(propertyColumnDictionary[propertyInfo]);
+                                                var propertyType = typeof(PropertyConfiguration<,>).MakeGenericType(entityType, p.PropertyType);
+                                                return propertyType.GetProperty(InternalConstants.InputFormatterFuncName)?.GetValueGetter()?.Invoke(propertyColumnDictionary[propertyInfo]);
                                             });
                                             if (null != formatterFunc)
                                             {
                                                 var funcType = typeof(Func<,,>).MakeGenericType(entityType, propertyInfo.PropertyType, typeof(object));
-                                                var method = funcType.GetProperty("Method")?.GetValueGetter().Invoke(formatterFunc) as MethodInfo;
-                                                var target = funcType.GetProperty("Target")?.GetValueGetter().Invoke(formatterFunc);
+                                                var method = funcType.GetProperty("Method")?.GetValueGetter()?.Invoke(formatterFunc) as MethodInfo;
+                                                var target = funcType.GetProperty("Target")?.GetValueGetter()?.Invoke(formatterFunc);
 
                                                 if (null != method && target != null)
                                                 {
@@ -429,12 +429,12 @@ namespace WeihanLi.Npoi
                 {
                     for (var i = 0; i < props.Count; i++)
                     {
-                        var propertyValue = props[i].GetValueGetter<TEntity>().Invoke(entity);
+                        var propertyValue = props[i].GetValueGetter<TEntity>()?.Invoke(entity);
                         var entityType = typeof(TEntity);
                         var formatterFunc = InternalCache.OutputFormatterFuncCache.GetOrAdd(props[i], p =>
                         {
-                            var propertyType = typeof(PropertySetting<,>).MakeGenericType(entityType, p.PropertyType);
-                            return propertyType.GetProperty("OutputFormatterFunc")?.GetValueGetter()
+                            var propertyType = typeof(PropertyConfiguration<,>).MakeGenericType(entityType, p.PropertyType);
+                            return propertyType.GetProperty(InternalConstants.OutputFormatterFuncName)?.GetValueGetter()?
                                 .Invoke(dic[props[i]]);
                         });
                         if (null != formatterFunc)
@@ -442,8 +442,8 @@ namespace WeihanLi.Npoi
                             var funcType =
                                 typeof(Func<,,>).MakeGenericType(entityType, props[i].PropertyType, typeof(object));
                             var method =
-                                funcType.GetProperty("Method")?.GetValueGetter().Invoke(formatterFunc) as MethodInfo;
-                            var target = funcType.GetProperty("Target")?.GetValueGetter().Invoke(formatterFunc);
+                                funcType.GetProperty("Method")?.GetValueGetter()?.Invoke(formatterFunc) as MethodInfo;
+                            var target = funcType.GetProperty("Target")?.GetValueGetter()?.Invoke(formatterFunc);
 
                             if (null != method && target != null)
                             {

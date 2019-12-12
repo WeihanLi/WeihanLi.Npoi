@@ -222,7 +222,8 @@ dotnet add package WeihanLi.Npoi
         .HasColumnIndex(1);
 
     setting.Property(_ => _.DisplayName)
-        .HasColumnFormatter((entity, displayName) => $"AAA_{entity.SettingName}_{displayName}")
+        .HasOutputFormatter((entity, displayName) => $"AAA_{entity.SettingName}_{displayName}")
+        .HasInputFormatter((entity, originVal) => originVal.Split(new[] { '_' })[2])
         .HasColumnTitle("DisplayName")
         .HasColumnIndex(2);
 

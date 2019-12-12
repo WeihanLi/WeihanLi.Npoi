@@ -1,31 +1,53 @@
 ﻿using System;
 using WeihanLi.Extensions;
-using WeihanLi.Npoi.Settings;
 
 namespace WeihanLi.Npoi.Configurations
 {
     internal class PropertyConfiguration : IPropertyConfiguration
     {
-        internal PropertySetting PropertySetting { get; }
+        /// <summary>
+        /// ColumnIndex
+        /// </summary>
+        public int ColumnIndex { get; set; } = -1;
 
-        public PropertyConfiguration(PropertySetting propertySetting) => PropertySetting = propertySetting;
+        /// <summary>
+        /// ColumnWidth
+        /// </summary>
+        public int ColumnWidth { get; set; }
+
+        /// <summary>
+        /// Title
+        /// </summary>
+        public string ColumnTitle { get; set; }
+
+        /// <summary>
+        /// Formatter
+        /// </summary>
+        public string ColumnFormatter { get; set; }
+
+        /// <summary>
+        /// the property is ignored.
+        /// </summary>
+        public bool IsIgnored { get; set; }
     }
 
     internal class PropertyConfiguration<TEntity, TProperty> : PropertyConfiguration, IPropertyConfiguration<TEntity, TProperty>
     {
-        internal PropertyConfiguration() : this(new PropertySetting<TEntity, TProperty>())
-        {
-        }
+        /// <summary>
+        /// InputFormatterFunc
+        /// </summary>
+        public Func<TEntity, TProperty, TProperty> InputFormatterFunc { get; set; }
 
-        public PropertyConfiguration(PropertySetting<TEntity, TProperty> propertySetting) : base(propertySetting) => PropertySetting = propertySetting;
-
-        internal new PropertySetting<TEntity, TProperty> PropertySetting { get; }
+        /// <summary>
+        /// OutputFormatterFunc
+        /// </summary>
+        public Func<TEntity, TProperty, object> OutputFormatterFunc { get; set; }
 
         public IPropertyConfiguration<TEntity, TProperty> HasColumnIndex(int index)
         {
             if (index >= 0)
             {
-                PropertySetting.ColumnIndex = index;
+                ColumnIndex = index;
             }
             return this;
         }
@@ -34,14 +56,14 @@ namespace WeihanLi.Npoi.Configurations
         {
             if (title.IsNotNullOrWhiteSpace())
             {
-                PropertySetting.ColumnTitle = title;
+                ColumnTitle = title;
             }
             return this;
         }
 
         public IPropertyConfiguration<TEntity, TProperty> HasColumnWidth(int width)
         {
-            PropertySetting.ColumnWidth = width;
+            ColumnWidth = width;
             return this;
         }
 
@@ -49,14 +71,14 @@ namespace WeihanLi.Npoi.Configurations
         {
             if (formatter.IsNotNullOrWhiteSpace())
             {
-                PropertySetting.ColumnFormatter = formatter;
+                ColumnFormatter = formatter;
             }
             return this;
         }
 
         public IPropertyConfiguration<TEntity, TProperty> Ignored()
         {
-            PropertySetting.IsIgnored = true;
+            IsIgnored = true;
             return this;
         }
 
@@ -64,7 +86,7 @@ namespace WeihanLi.Npoi.Configurations
         {
             if (formatterFunc != null)
             {
-                PropertySetting.OutputFormatterFunc = formatterFunc;
+                OutputFormatterFunc = formatterFunc;
             }
             return this;
         }
@@ -73,7 +95,7 @@ namespace WeihanLi.Npoi.Configurations
         {
             if (formatterFunc != null)
             {
-                PropertySetting.OutputFormatterFunc = formatterFunc;
+                OutputFormatterFunc = formatterFunc;
             }
             return this;
         }
@@ -83,7 +105,7 @@ namespace WeihanLi.Npoi.Configurations
         {
             if (formatterFunc != null)
             {
-                PropertySetting.InputFormatterFunc = formatterFunc;
+                InputFormatterFunc = formatterFunc;
             }
             return this;
         }

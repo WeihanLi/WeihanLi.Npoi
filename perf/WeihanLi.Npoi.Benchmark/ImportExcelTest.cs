@@ -5,7 +5,7 @@ using System.Runtime.CompilerServices;
 
 namespace WeihanLi.Npoi.Benchmark
 {
-    [SimpleJob(launchCount: 1, warmupCount: 3, targetCount: 10)]
+    [SimpleJob(launchCount: 1, warmupCount: 1, targetCount: 5)]
     [MemoryDiagnoser]
     [MinColumn, MaxColumn, MeanColumn, MedianColumn]
     public class ImportExcelTest
@@ -30,10 +30,14 @@ namespace WeihanLi.Npoi.Benchmark
         private readonly List<TestEntity> testData = new List<TestEntity>(51200);
         private byte[] xlsBytes, xlsxBytes, csvBytes;
 
+
+        [Params(10000, 30000, 50000, 65535)]
+        public int RowsCount;
+
         [GlobalSetup]
         public void GlobalSetup()
         {
-            for (var i = 1; i <= 50_000; i++)
+            for (var i = 1; i <= RowsCount; i++)
             {
                 testData.Add(new TestEntity()
                 {
