@@ -1,9 +1,12 @@
 # WeihanLi.Npoi Release Notes
 
+## [1.6.0](https://www.nuget.org/packages/WeihanLi.Npoi/1.6.0)
+
+- add hidden property support
 
 ## [1.5.0](https://www.nuget.org/packages/WeihanLi.Npoi/1.5.0)
 
-- add support for more format, treat as xlsx 
+- add support for more format, treat as xlsx
 - add `AutoColumnWidthEnabled` setting to `SheetSetting`, no autoSizeColumn by default
 - add `CsvHelper.ToEntityList(byte[] bytes)`/`CsvHelper.ToEntityList(Stream stream)`
 - use xls for default ExcelFormat(better performance)
