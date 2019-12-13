@@ -551,6 +551,22 @@ references:
   fullName.vb: WeihanLi.Npoi.NpoiExtensions.ImportData(Of TEntity)(IWorkbook, System.Collections.Generic.IEnumerable(Of TEntity), System.Int32)
   nameWithType: NpoiExtensions.ImportData<TEntity>(IWorkbook, IEnumerable<TEntity>, Int32)
   nameWithType.vb: NpoiExtensions.ImportData(Of TEntity)(IWorkbook, IEnumerable(Of TEntity), Int32)
+- uid: WeihanLi.Npoi.NpoiExtensions.Property*
+  name: Property
+  href: docs/api/WeihanLi.Npoi.NpoiExtensions.html#WeihanLi_Npoi_NpoiExtensions_Property_
+  commentId: Overload:WeihanLi.Npoi.NpoiExtensions.Property
+  isSpec: "True"
+  fullName: WeihanLi.Npoi.NpoiExtensions.Property
+  nameWithType: NpoiExtensions.Property
+- uid: WeihanLi.Npoi.NpoiExtensions.Property``1(IExcelConfiguration{``0},System.String)
+  name: Property<TEntity>(IExcelConfiguration<TEntity>, String)
+  href: docs/api/WeihanLi.Npoi.NpoiExtensions.html#WeihanLi_Npoi_NpoiExtensions_Property__1_IExcelConfiguration___0__System_String_
+  commentId: M:WeihanLi.Npoi.NpoiExtensions.Property``1(IExcelConfiguration{``0},System.String)
+  name.vb: Property(Of TEntity)(IExcelConfiguration(Of TEntity), String)
+  fullName: WeihanLi.Npoi.NpoiExtensions.Property<TEntity>(IExcelConfiguration<TEntity>, System.String)
+  fullName.vb: WeihanLi.Npoi.NpoiExtensions.Property(Of TEntity)(IExcelConfiguration(Of TEntity), System.String)
+  nameWithType: NpoiExtensions.Property<TEntity>(IExcelConfiguration<TEntity>, String)
+  nameWithType.vb: NpoiExtensions.Property(Of TEntity)(IExcelConfiguration(Of TEntity), String)
 - uid: WeihanLi.Npoi.NpoiExtensions.SetCellValue(ICell,System.Object)
   name: SetCellValue(ICell, Object)
   href: docs/api/WeihanLi.Npoi.NpoiExtensions.html#WeihanLi_Npoi_NpoiExtensions_SetCellValue_ICell_System_Object_

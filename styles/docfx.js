@@ -1136,15 +1136,8 @@ $(function () {
     }
 
     $(window).on('hashchange', scrollToCurrent);
-
-    $(window).load(function () {
-        // scroll to the anchor if present, offset by the header
-        scrollToCurrent();
-    });
-
-    $(document).ready(function () {
-        // Exclude tabbed content case
-        $('a:not([data-tab])').click(function (e) { delegateAnchors(e); });
-    });
+    // Exclude tabbed content case
+    $('a:not([data-tab])').click(delegateAnchors);
+    scrollToCurrent();
   }
 });

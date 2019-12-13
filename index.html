@@ -8,7 +8,7 @@
     <title>WeihanLi.Npoi </title>
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="WeihanLi.Npoi ">
-    <meta name="generator" content="docfx 2.43.2.0">
+    <meta name="generator" content="docfx 2.42.4.0">
     
     <link rel="shortcut icon" href="favicon.ico">
     <link rel="stylesheet" href="styles/docfx.vendor.css">
@@ -228,6 +228,10 @@ setting.Property(_ =&gt; _.CreatedBy)
     .HasColumnIndex(4)
     .HasColumnTitle(&quot;CreatedBy&quot;);
 
+// add a shadow property
+setting.Property(&quot;HiddenProp&quot;)
+    .HasOutputFormatter((entity, val) =&gt; $&quot;HiddenProp_{entity.PKID}&quot;);
+
 setting.Property(_ =&gt; _.UpdatedBy).Ignored();
 setting.Property(_ =&gt; _.UpdatedTime).Ignored();
 setting.Property(_ =&gt; _.PKID).Ignored();
@@ -242,7 +246,7 @@ setting.Property(_ =&gt; _.PKID).Ignored();
               <div class="contribution">
                 <ul class="nav">
                   <li>
-                    <a href="https://github.com/WeihanLi/weihanli.npoi/blob/dev/index.md/#L1" class="contribution-link">Improve this Doc</a>
+                    <a href="https://github.com/WeihanLi/WeihanLi.Npoi/blob/dev/index.md/#L1" class="contribution-link">Improve this Doc</a>
                   </li>
                 </ul>
               </div>
