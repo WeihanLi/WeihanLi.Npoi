@@ -3,6 +3,7 @@
 ## [1.6.0](https://www.nuget.org/packages/WeihanLi.Npoi/1.6.0)
 
 - add shadow property support
+- add version info when export `*.xlsx` excel
 
 ## [1.5.0](https://www.nuget.org/packages/WeihanLi.Npoi/1.5.0)
 

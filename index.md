@@ -11,7 +11,6 @@ There' a lot of userful extensions for you, core fetures are as follows:
 - export `IEnumerable<TEntity>` or `DataTable` data to csv file or bytes.
 - custom configuration/mappings by Attribute or FluentAPI(inspired by [FluentExcel](https://github.com/Arch/FluentExcel/))
 
-
 ## Sample
 
 ``` csharp
@@ -180,6 +179,10 @@ Console.WriteLine(numList.StringJoin(","));
     setting.Property(_ => _.CreatedBy)
         .HasColumnIndex(4)
         .HasColumnTitle("CreatedBy");
+
+    // add a shadow property
+    setting.Property("HiddenProp")
+        .HasOutputFormatter((entity, val) => $"HiddenProp_{entity.PKID}");
 
     setting.Property(_ => _.UpdatedBy).Ignored();
     setting.Property(_ => _.UpdatedTime).Ignored();
