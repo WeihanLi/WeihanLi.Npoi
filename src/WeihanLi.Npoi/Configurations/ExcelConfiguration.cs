@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
+using WeihanLi.Common;
 using WeihanLi.Extensions;
 using WeihanLi.Npoi.Settings;
 
@@ -123,9 +124,10 @@ namespace WeihanLi.Npoi.Configurations
         {
             var memberInfo = propertyExpression.GetMemberInfo();
             var property = memberInfo as PropertyInfo;
-            if (property == null)
+            if (property == null || !PropertyConfigurationDictionary.ContainsKey(property))
             {
-                property = _entityType.GetProperty(memberInfo.Name);
+                property = CacheUtil.TypePropertyCache.GetOrAdd(_entityType, t => t.GetProperties())
+                    .FirstOrDefault(p => p.Name == memberInfo.Name);
                 if (null == property)
                 {
                     throw new InvalidOperationException($"the property [{memberInfo.Name}] does not exists");
