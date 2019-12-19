@@ -89,8 +89,8 @@ namespace DotNetCoreSample
             };
             var csvFilePath = $@"{tempDirPath}\test.csv";
             entities.ToExcelFile(csvFilePath.Replace(".csv", ".xlsx"));
-            var entitiesT0 = ExcelHelper.ToEntityList<TestEntity>(csvFilePath.Replace(".csv", ".xlsx"));
             entities.ToCsvFile(csvFilePath);
+            var entitiesT0 = ExcelHelper.ToEntityList<TestEntity>(csvFilePath.Replace(".csv", ".xlsx"));
 
             var dataTable = entities.ToDataTable();
             dataTable.ToCsvFile(csvFilePath.Replace(".csv", ".datatable.csv"));
@@ -161,7 +161,7 @@ namespace DotNetCoreSample
             setting.Property("HiddenProp")
                 .HasOutputFormatter((entity, val) => $"HiddenProp_{entity.PKID}");
 
-            // setting.Property(_ => _.PKID).Ignored();
+            setting.Property(_ => _.PKID).Ignored();
             setting.Property(_ => _.UpdatedBy).Ignored();
             setting.Property(_ => _.UpdatedTime).Ignored();
         }

@@ -76,9 +76,9 @@ namespace WeihanLi.Npoi.Configurations
             return this;
         }
 
-        public IPropertyConfiguration<TEntity, TProperty> Ignored()
+        public IPropertyConfiguration<TEntity, TProperty> Ignored(bool ignored = true)
         {
-            IsIgnored = true;
+            IsIgnored = ignored;
             return this;
         }
 

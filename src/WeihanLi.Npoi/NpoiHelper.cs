@@ -48,7 +48,7 @@ namespace WeihanLi.Npoi
                 {
                     if (row != null)
                     {
-                        for (var i = 0; i < row.Cells.Count; i++)
+                        for (var i = 0; i <= row.LastCellNum; i++)
                         {
                             if (row.GetCell(i) == null)
                             {
@@ -80,7 +80,7 @@ namespace WeihanLi.Npoi
                         {
                             entity = new TEntity();
 
-                            if (typeof(TEntity).IsValueType)
+                            if (entityType.IsValueType)
                             {
                                 var obj = (object)entity;// boxing for value types
                                 foreach (var key in propertyColumnDic.Keys)
