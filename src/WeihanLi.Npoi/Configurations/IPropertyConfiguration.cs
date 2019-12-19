@@ -43,7 +43,7 @@ namespace WeihanLi.Npoi.Configurations
         /// Ignored
         /// </summary>
         /// <returns></returns>
-        IPropertyConfiguration<TEntity, TProperty> Ignored();
+        IPropertyConfiguration<TEntity, TProperty> Ignored(bool ignored = true);
 
         /// <summary>
         /// HasColumnFormatter
