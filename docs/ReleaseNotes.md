@@ -3,7 +3,7 @@
 ## [1.6.1](https://www.nuget.org/packages/WeihanLi.Npoi/1.6.1)
 
 - fix inherit property configure bug
-- fix empty colmumn skipped bug, fix with `row.Cells.Count` => `row.LastCellNumber`
+- fix empty column skipped bug, fix with `row.Cells.Count` => `row.LastCellNumber`
 - optimize `AdjustColumnIndex`
 - allow use `Ignored(false)` to unignore property
 
