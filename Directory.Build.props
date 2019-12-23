@@ -1,6 +1,4 @@
 <Project>
-  <!-- <Import Project="./build/sign.props" /> -->
-
   <PropertyGroup>
 		<VersionMajor>1</VersionMajor>
 		<VersionMinor>6</VersionMinor>
