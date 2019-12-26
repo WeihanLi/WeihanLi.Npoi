@@ -57,7 +57,7 @@ namespace WeihanLi.Npoi.Abstract
     internal class NPOIRow : IRow
     {
         public int CellsCount => _row.PhysicalNumberOfCells;
-        public int FirstCellNum => _row.FirstCellNum;
+        public int FirstCellNum => _row.FirstCellNum + 1;
         public int LastCellNum => _row.LastCellNum;
 
         public ICell GetCell(int cellIndex)

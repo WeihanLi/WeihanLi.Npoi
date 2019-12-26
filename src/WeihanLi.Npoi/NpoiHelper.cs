@@ -24,6 +24,9 @@ namespace WeihanLi.Npoi
 
         public static List<TEntity> SheetToEntityList<TEntity>([NotNull]ISheet sheet, int sheetIndex) where TEntity : new()
         {
+            if (sheet.FirstRowNum < 0)
+                return new List<TEntity>(0);
+
             var entityType = typeof(TEntity);
             var configuration = InternalHelper.GetExcelConfigurationMapping<TEntity>();
             var sheetSetting = GetSheetSetting(configuration.SheetSettings, sheetIndex);
@@ -48,7 +51,7 @@ namespace WeihanLi.Npoi
                 {
                     if (row != null)
                     {
-                        for (var i = row.FirstCellNum - 1; i < row.LastCellNum; i++)
+                        for (var i = row.FirstCellNum; i < row.LastCellNum; i++)
                         {
                             if (row.GetCell(i) == null)
                             {
