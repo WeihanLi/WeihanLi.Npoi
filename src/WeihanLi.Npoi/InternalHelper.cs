@@ -45,7 +45,7 @@ namespace WeihanLi.Npoi
 
                   var propertyConfigurationType =
                       typeof(PropertyConfiguration<,>).MakeGenericType(type, propertyInfo.PropertyType);
-                  var propertyConfiguration = Activator.CreateInstance(propertyConfigurationType);
+                  var propertyConfiguration = Activator.CreateInstance(propertyConfigurationType, new object[] { propertyInfo });
 
                   propertyConfigurationType.GetProperty(nameof(column.PropertyConfiguration.ColumnTitle))?.GetSetMethod()?
                       .Invoke(propertyConfiguration, new object[] { column.PropertyConfiguration.ColumnTitle });
@@ -74,14 +74,17 @@ namespace WeihanLi.Npoi
         /// <param name="excelConfiguration">excelConfiguration</param>
         private static void AdjustColumnIndex<TEntity>(ExcelConfiguration<TEntity> excelConfiguration)
         {
-            if (excelConfiguration.PropertyConfigurationDictionary.Values.All(_ => _.ColumnIndex >= 0) &&
-                excelConfiguration.PropertyConfigurationDictionary.Values.Select(_ => _.ColumnIndex)
-                    .Distinct().Count() == excelConfiguration.PropertyConfigurationDictionary.Values.Count)
+            ICollection<int> validColumnIndex = excelConfiguration.PropertyConfigurationDictionary.Values.
+                Where(c => !c.IsIgnored)
+                .Select(x => x.ColumnIndex)
+                .ToArray();
+            if (validColumnIndex.All(_ => _ >= 0) &&
+                validColumnIndex.Distinct().Count() == validColumnIndex.Count)
             {
                 return;
             }
 
-            var colIndexList = new List<int>(excelConfiguration.PropertyConfigurationDictionary.Count);
+            var colIndexList = new List<int>(validColumnIndex.Count);
             foreach (var item in excelConfiguration.PropertyConfigurationDictionary
                 .Where(_ => !_.Value.IsIgnored)
                 .OrderBy(_ => _.Value.ColumnIndex >= 0 ? _.Value.ColumnIndex : int.MaxValue)
@@ -139,7 +142,6 @@ namespace WeihanLi.Npoi
             return configuration.PropertyConfigurationDictionary
                 .Where(p => !p.Value.IsIgnored)
                 .OrderBy(p => p.Value.ColumnIndex)
-                .ThenBy(p => p.Key.Name)
                 .Select(p => p.Key)
                 .ToArray();
         }

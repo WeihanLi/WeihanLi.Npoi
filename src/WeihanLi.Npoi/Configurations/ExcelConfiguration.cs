@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
+using WeihanLi.Common;
 using WeihanLi.Extensions;
 using WeihanLi.Npoi.Settings;
 
@@ -123,9 +124,10 @@ namespace WeihanLi.Npoi.Configurations
         {
             var memberInfo = propertyExpression.GetMemberInfo();
             var property = memberInfo as PropertyInfo;
-            if (property == null)
+            if (property == null || !PropertyConfigurationDictionary.ContainsKey(property))
             {
-                property = _entityType.GetProperty(memberInfo.Name);
+                property = CacheUtil.TypePropertyCache.GetOrAdd(_entityType, t => t.GetProperties())
+                    .FirstOrDefault(p => p.Name == memberInfo.Name);
                 if (null == property)
                 {
                     throw new InvalidOperationException($"the property [{memberInfo.Name}] does not exists");
@@ -149,9 +151,7 @@ namespace WeihanLi.Npoi.Configurations
 
             var propertyConfigurationType =
                 typeof(PropertyConfiguration<,>).MakeGenericType(entityType, propertyType);
-            var propertyConfiguration = (PropertyConfiguration)Activator.CreateInstance(propertyConfigurationType);
-            propertyConfigurationType.GetProperty("ColumnTitle")?.GetSetMethod()?
-                .Invoke(propertyConfiguration, new object[] { propertyName });
+            var propertyConfiguration = (PropertyConfiguration)Activator.CreateInstance(propertyConfigurationType, new object[] { property });
 
             PropertyConfigurationDictionary[property] = propertyConfiguration;
 
@@ -161,12 +161,6 @@ namespace WeihanLi.Npoi.Configurations
         #endregion Property
 
         #region Sheet
-
-        public IExcelConfiguration HasSheetConfiguration(int sheetIndex, string sheetName) => HasSheetConfiguration(sheetIndex, sheetName, 1);
-
-        public IExcelConfiguration HasSheetConfiguration(int sheetIndex, string sheetName, bool enableAutoColumnWidth) => HasSheetConfiguration(sheetIndex, sheetName, 1, enableAutoColumnWidth);
-
-        public IExcelConfiguration HasSheetConfiguration(int sheetIndex, string sheetName, int startRowIndex) => HasSheetConfiguration(sheetIndex, sheetName, startRowIndex, false);
 
         public IExcelConfiguration HasSheetConfiguration(int sheetIndex, string sheetName, int startRowIndex,
             bool enableAutoColumnWidth)

@@ -7,7 +7,6 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using WeihanLi.Extensions;
-using WeihanLi.Npoi.Configurations;
 using WeihanLi.Npoi.Settings;
 
 namespace WeihanLi.Npoi
@@ -698,16 +697,5 @@ namespace WeihanLi.Npoi
                 return ms.ToArray();
             }
         }
-
-        /// <summary>
-        /// get excelConfiguration property configuration
-        /// </summary>
-        /// <typeparam name="TEntity">TEntity</typeparam>
-        /// <param name="excelConfiguration">excelConfiguration</param>
-        /// <param name="propertyName">propertyName</param>
-        /// <returns>PropertyConfiguration</returns>
-        public static IPropertyConfiguration<TEntity, string> Property<TEntity>(
-            this IExcelConfiguration<TEntity> excelConfiguration, string propertyName) =>
-            excelConfiguration.Property<string>(propertyName);
     }
 }

@@ -43,15 +43,14 @@ namespace WeihanLi.Npoi.Configurations
         /// Ignored
         /// </summary>
         /// <returns></returns>
-        IPropertyConfiguration<TEntity, TProperty> Ignored();
+        IPropertyConfiguration<TEntity, TProperty> Ignored(bool ignored = true);
 
         /// <summary>
-        /// HasColumnFormatter
+        /// HasColumnInputFormatter
         /// </summary>
-        /// <param name="formatterFunc">columnFormatter</param>
+        /// <param name="formatterFunc">formatterFunc</param>
         /// <returns></returns>
-        [Obsolete("please use HasOutputFormatter instead", true)]
-        IPropertyConfiguration<TEntity, TProperty> HasColumnFormatter(Func<TEntity, TProperty, object> formatterFunc);
+        IPropertyConfiguration<TEntity, TProperty> HasColumnInputFormatter(Func<string, TProperty> formatterFunc);
 
         /// <summary>
         /// HasOutputFormatter

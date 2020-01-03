@@ -1,17 +1,17 @@
 ﻿using WeihanLi.Extensions;
 using WeihanLi.Npoi.Test.Models;
+using Xunit;
 
 namespace WeihanLi.Npoi.Test
 {
-    public class TestBase
+    public class TestFixture
     {
-        static TestBase()
+        public TestFixture()
         {
-            // 初始化配置
             FluentSettings();
         }
 
-        private static void FluentSettings()
+        private void FluentSettings()
         {
             // ---------- notice npoi settings ----------------
             var noticeSetting = ExcelHelper.SettingFor<Notice>();
@@ -31,5 +31,15 @@ namespace WeihanLi.Npoi.Test
                 .HasColumnIndex(4)
                 .HasOutputFormatter((entity, x) => x.ToStandardTimeString());
         }
+    }
+
+    [CollectionDefinition("Tests")]
+    public class NoneParallelTestCollection : ICollectionFixture<TestFixture>
+    {
+    }
+
+    [Collection("Tests")]
+    public class TestBase
+    {
     }
 }

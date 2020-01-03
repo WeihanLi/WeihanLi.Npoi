@@ -1,8 +1,16 @@
 # WeihanLi.Npoi Release Notes
 
+## [1.6.1](https://www.nuget.org/packages/WeihanLi.Npoi/1.6.1)
+
+- fix inherit property configure bug
+- fix empty column skipped bug, fix with `row.Cells.Count` => `row.LastCellNumber`
+- optimize `AdjustColumnIndex`
+- allow use `Ignored(false)` to unignore property
+
 ## [1.6.0](https://www.nuget.org/packages/WeihanLi.Npoi/1.6.0)
 
-- add hidden property support
+- add shadow property support
+- add version info when export `*.xlsx` excel
 
 ## [1.5.0](https://www.nuget.org/packages/WeihanLi.Npoi/1.5.0)
 
