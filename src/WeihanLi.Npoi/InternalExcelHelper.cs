@@ -5,6 +5,7 @@ using System.Data;
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
+using WeihanLi.Common.Helpers;
 using WeihanLi.Extensions;
 using WeihanLi.Npoi.Abstract;
 using WeihanLi.Npoi.Configurations;
@@ -85,9 +86,37 @@ namespace WeihanLi.Npoi
                                 foreach (var key in propertyColumnDic.Keys)
                                 {
                                     var colIndex = propertyColumnDic[key].ColumnIndex;
-                                    if (colIndex >= 0)
+                                    if (colIndex >= 0 && key.CanWrite)
                                     {
-                                        key.GetValueSetter()?.Invoke(obj, row.GetCell(colIndex).GetCellValue(key.PropertyType));
+                                        var columnValue = key.PropertyType.GetDefaultValue();
+
+                                        var valueApplied = false;
+                                        if (InternalCache.ColumnInputFormatterFuncCache.TryGetValue(key, out var formatterFunc) && formatterFunc != null)
+                                        {
+                                            var cellValue = row.GetCell(colIndex).GetCellValue<string>();
+                                            var funcType = typeof(Func<,>).MakeGenericType(typeof(string), key.PropertyType);
+                                            var method = funcType.GetProperty("Method")?.GetValueGetter()?.Invoke(formatterFunc) as MethodInfo;
+                                            var target = funcType.GetProperty("Target")?.GetValueGetter()?.Invoke(formatterFunc);
+                                            if (null != method && target != null)
+                                            {
+                                                try
+                                                {
+                                                    // apply custom formatterFunc
+                                                    columnValue = method.Invoke(target, new object[] { cellValue });
+                                                    valueApplied = true;
+                                                }
+                                                catch (Exception e)
+                                                {
+                                                    Debug.WriteLine(e);
+                                                    InvokeHelper.OnInvokeException?.Invoke(e);
+                                                }
+                                            }
+                                        }
+                                        if (valueApplied == false)
+                                        {
+                                            columnValue = row.GetCell(colIndex).GetCellValue(key.PropertyType);
+                                        }
+                                        key.GetValueSetter()?.Invoke(entity, columnValue);
                                     }
                                 }
                                 entity = (TEntity)obj;// unboxing
@@ -97,9 +126,38 @@ namespace WeihanLi.Npoi
                                 foreach (var key in propertyColumnDic.Keys)
                                 {
                                     var colIndex = propertyColumnDic[key].ColumnIndex;
-                                    if (colIndex >= 0)
+                                    if (colIndex >= 0 && key.CanWrite)
                                     {
-                                        key.GetValueSetter()?.Invoke(entity, row.GetCell(colIndex).GetCellValue(key.PropertyType));
+                                        var columnValue = key.PropertyType.GetDefaultValue();
+
+                                        var valueApplied = false;
+                                        if (InternalCache.ColumnInputFormatterFuncCache.TryGetValue(key, out var formatterFunc) && formatterFunc != null)
+                                        {
+                                            var cellValue = row.GetCell(colIndex).GetCellValue<string>();
+                                            var funcType = typeof(Func<,>).MakeGenericType(typeof(string), key.PropertyType);
+                                            var method = funcType.GetProperty("Method")?.GetValueGetter()?.Invoke(formatterFunc) as MethodInfo;
+                                            var target = funcType.GetProperty("Target")?.GetValueGetter()?.Invoke(formatterFunc);
+                                            if (null != method && target != null)
+                                            {
+                                                try
+                                                {
+                                                    // apply custom formatterFunc
+                                                    columnValue = method.Invoke(target, new object[] { cellValue });
+                                                    valueApplied = true;
+                                                }
+                                                catch (Exception e)
+                                                {
+                                                    Debug.WriteLine(e);
+                                                    InvokeHelper.OnInvokeException?.Invoke(e);
+                                                }
+                                            }
+                                        }
+                                        if (valueApplied == false)
+                                        {
+                                            columnValue = row.GetCell(colIndex).GetCellValue(key.PropertyType);
+                                        }
+
+                                        key.GetValueSetter()?.Invoke(entity, columnValue);
                                     }
                                 }
                             }
@@ -116,12 +174,7 @@ namespace WeihanLi.Npoi
                                 if (propertyInfo.CanWrite)
                                 {
                                     var propertyValue = propertyInfo.GetValueGetter()?.Invoke(entity);
-                                    var formatterFunc = InternalCache.InputFormatterFuncCache.GetOrAdd(propertyInfo, p =>
-                                    {
-                                        var propertySettingType = typeof(PropertyConfiguration<,>).MakeGenericType(entityType, p.PropertyType);
-                                        return propertySettingType.GetProperty(InternalConstants.InputFormatterFuncName)?.GetValueGetter()?.Invoke(propertyColumnDictionary[propertyInfo]);
-                                    });
-                                    if (null != formatterFunc)
+                                    if (InternalCache.InputFormatterFuncCache.TryGetValue(propertyInfo, out var formatterFunc) && formatterFunc != null)
                                     {
                                         var funcType = typeof(Func<,,>).MakeGenericType(entityType, propertyInfo.PropertyType, typeof(object));
                                         var method = funcType.GetProperty("Method")?.GetValueGetter()?.Invoke(formatterFunc) as MethodInfo;
@@ -138,6 +191,7 @@ namespace WeihanLi.Npoi
                                             catch (Exception e)
                                             {
                                                 Debug.WriteLine(e);
+                                                InvokeHelper.OnInvokeException?.Invoke(e);
                                             }
                                         }
                                     }
@@ -186,17 +240,11 @@ namespace WeihanLi.Npoi
                     foreach (var key in propertyColumnDictionary.Keys)
                     {
                         var propertyValue = key.GetValueGetter<TEntity>()?.Invoke(entity);
-                        var formatterFunc = InternalCache.OutputFormatterFuncCache.GetOrAdd(key, p =>
-                        {
-                            var propertyConfigurationType = typeof(PropertyConfiguration<,>).MakeGenericType(entityType, p.PropertyType);
-                            return propertyConfigurationType.GetProperty(InternalConstants.OutputFormatterFuncName)?.GetValueGetter()?.Invoke(propertyColumnDictionary[key]);
-                        });
-                        if (null != formatterFunc)
+                        if (InternalCache.OutputFormatterFuncCache.TryGetValue(key, out var formatterFunc) && formatterFunc != null)
                         {
                             var funcType = typeof(Func<,,>).MakeGenericType(entityType, key.PropertyType, typeof(object));
                             var method = funcType.GetProperty("Method")?.GetValueGetter()?.Invoke(formatterFunc) as MethodInfo;
                             var target = funcType.GetProperty("Target")?.GetValueGetter()?.Invoke(formatterFunc);
-
                             if (null != method && target != null)
                             {
                                 // apply custom formatterFunc

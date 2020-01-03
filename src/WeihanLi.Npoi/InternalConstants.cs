@@ -18,6 +18,11 @@
         public const string ApplicationName = "WeihanLi.Npoi";
 
         /// <summary>
+        /// ColumnInputFormatterFuncName
+        /// </summary>
+        public const string ColumnInputFormatterFuncName = "ColumnInputFormatterFunc";
+
+        /// <summary>
         /// InputFormatterFuncName
         /// </summary>
         public const string InputFormatterFuncName = "InputFormatterFunc";

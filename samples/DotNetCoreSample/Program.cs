@@ -155,6 +155,7 @@ namespace DotNetCoreSample
                 .HasColumnFormatter("yyyy-MM-dd HH:mm:ss");
 
             setting.Property(_ => _.CreatedBy)
+                .HasColumnInputFormatter(x => x += "_test")
                 .HasColumnIndex(4)
                 .HasColumnTitle("CreatedBy");
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reflection;
 using WeihanLi.Extensions;
 
 namespace WeihanLi.Npoi.Configurations
@@ -33,15 +34,13 @@ namespace WeihanLi.Npoi.Configurations
 
     internal class PropertyConfiguration<TEntity, TProperty> : PropertyConfiguration, IPropertyConfiguration<TEntity, TProperty>
     {
-        /// <summary>
-        /// InputFormatterFunc
-        /// </summary>
-        public Func<TEntity, TProperty, TProperty> InputFormatterFunc { get; set; }
+        private readonly PropertyInfo _propertyInfo;
 
-        /// <summary>
-        /// OutputFormatterFunc
-        /// </summary>
-        public Func<TEntity, TProperty, object> OutputFormatterFunc { get; set; }
+        public PropertyConfiguration(PropertyInfo propertyInfo)
+        {
+            _propertyInfo = propertyInfo;
+            ColumnTitle = propertyInfo.Name;
+        }
 
         public IPropertyConfiguration<TEntity, TProperty> HasColumnIndex(int index)
         {
@@ -82,31 +81,22 @@ namespace WeihanLi.Npoi.Configurations
             return this;
         }
 
-        public IPropertyConfiguration<TEntity, TProperty> HasColumnFormatter(Func<TEntity, TProperty, object> formatterFunc)
-        {
-            if (formatterFunc != null)
-            {
-                OutputFormatterFunc = formatterFunc;
-            }
-            return this;
-        }
-
         public IPropertyConfiguration<TEntity, TProperty> HasOutputFormatter(Func<TEntity, TProperty, object> formatterFunc)
         {
-            if (formatterFunc != null)
-            {
-                OutputFormatterFunc = formatterFunc;
-            }
+            InternalCache.OutputFormatterFuncCache.AddOrUpdate(_propertyInfo, formatterFunc);
             return this;
         }
 
         public IPropertyConfiguration<TEntity, TProperty> HasInputFormatter(
             Func<TEntity, TProperty, TProperty> formatterFunc)
         {
-            if (formatterFunc != null)
-            {
-                InputFormatterFunc = formatterFunc;
-            }
+            InternalCache.InputFormatterFuncCache.AddOrUpdate(_propertyInfo, formatterFunc);
+            return this;
+        }
+
+        public IPropertyConfiguration<TEntity, TProperty> HasColumnInputFormatter(Func<string, TProperty> formatterFunc)
+        {
+            InternalCache.ColumnInputFormatterFuncCache.AddOrUpdate(_propertyInfo, formatterFunc);
             return this;
         }
     }

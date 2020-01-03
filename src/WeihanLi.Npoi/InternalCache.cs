@@ -5,7 +5,14 @@ using WeihanLi.Npoi.Configurations;
 
 namespace WeihanLi.Npoi
 {
-    internal static class InternalCache
+#if DEBUG
+
+    public
+#else
+    internal
+
+#endif
+        static class InternalCache
     {
         /// <summary>
         /// TypeExcelConfigurationCache
@@ -15,5 +22,7 @@ namespace WeihanLi.Npoi
         public static readonly ConcurrentDictionary<PropertyInfo, object> OutputFormatterFuncCache = new ConcurrentDictionary<PropertyInfo, object>();
 
         public static readonly ConcurrentDictionary<PropertyInfo, object> InputFormatterFuncCache = new ConcurrentDictionary<PropertyInfo, object>();
+
+        public static readonly ConcurrentDictionary<PropertyInfo, object> ColumnInputFormatterFuncCache = new ConcurrentDictionary<PropertyInfo, object>();
     }
 }
