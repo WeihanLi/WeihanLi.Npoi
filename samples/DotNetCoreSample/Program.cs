@@ -84,7 +84,8 @@ namespace DotNetCoreSample
                     PKID=2,
                     SettingId = Guid.NewGuid(),
                     SettingName = "Setting2",
-                    SettingValue = "Value2"
+                    SettingValue = "Value2",
+                    Enabled = true
                 },
             };
             var csvFilePath = $@"{tempDirPath}\test.csv";
@@ -159,6 +160,10 @@ namespace DotNetCoreSample
                 .HasColumnIndex(4)
                 .HasColumnTitle("CreatedBy");
 
+            setting.Property(x => x.Enabled)
+                .HasColumnInputFormatter(val => "启用".Equals(val))
+                .HasColumnOutputFormatter(v => v ? "启用" : "禁用");
+
             setting.Property("HiddenProp")
                 .HasOutputFormatter((entity, val) => $"HiddenProp_{entity.PKID}");
 
@@ -189,6 +194,8 @@ namespace DotNetCoreSample
         public string UpdatedBy { get; set; }
 
         public DateTime UpdatedTime { get; set; }
+
+        public bool Enabled { get; set; }
     }
 
     [Sheet(SheetIndex = 0, SheetName = "TestSheet", AutoColumnWidthEnabled = true)]
