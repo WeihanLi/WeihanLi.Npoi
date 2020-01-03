@@ -229,5 +229,90 @@ namespace WeihanLi.Npoi.Test
                     .HasColumnIndex(0);
             }
         }
+
+        [Fact]
+        public void ColumnInputFormatterTest()
+        {
+            IReadOnlyList<Notice> list = Enumerable.Range(0, 10).Select(i => new Notice()
+            {
+                Id = i + 1,
+                Content = $"content_{i}",
+                Title = $"title_{i}",
+                PublishedAt = DateTime.UtcNow.AddDays(-i),
+                Publisher = $"publisher_{i}"
+            }).ToArray();
+
+            var excelBytes = list.ToExcelBytes();
+
+            var settings = ExcelHelper.SettingFor<Notice>();
+            lock (settings)
+            {
+                settings.Property(x => x.Title).HasColumnInputFormatter(x => $"{x}_Test");
+
+                var importedList = ExcelHelper.ToEntityList<Notice>(excelBytes);
+                Assert.Equal(list.Count, importedList.Count);
+                for (var i = 0; i < list.Count; i++)
+                {
+                    if (list[i] == null)
+                    {
+                        Assert.Null(importedList[i]);
+                    }
+                    else
+                    {
+                        Assert.Equal(list[i].Id, importedList[i].Id);
+                        Assert.Equal(list[i].Title + "_Test", importedList[i].Title);
+                        Assert.Equal(list[i].Content, importedList[i].Content);
+                        Assert.Equal(list[i].Publisher, importedList[i].Publisher);
+                        Assert.Equal(list[i].PublishedAt.ToStandardTimeString(), importedList[i].PublishedAt.ToStandardTimeString());
+                    }
+                }
+
+                settings.Property(_ => _.Title).HasColumnInputFormatter(null);
+            }
+        }
+
+        [Fact]
+        public void InputOutputColumnFormatterTest()
+        {
+            IReadOnlyList<Notice> list = Enumerable.Range(0, 10).Select(i => new Notice()
+            {
+                Id = i + 1,
+                Content = $"content_{i}",
+                Title = $"title_{i}",
+                PublishedAt = DateTime.UtcNow.AddDays(-i),
+                Publisher = $"publisher_{i}"
+            }).ToArray();
+
+            var settings = ExcelHelper.SettingFor<Notice>();
+            lock (settings)
+            {
+                settings.Property(x => x.Id)
+                    .HasColumnOutputFormatter(x => $"{x}_Test")
+                    .HasColumnInputFormatter(x => Convert.ToInt32(x.Split(new char[] { '_' }, StringSplitOptions.RemoveEmptyEntries)[0]));
+                var excelBytes = list.ToExcelBytes();
+
+                var importedList = ExcelHelper.ToEntityList<Notice>(excelBytes);
+                Assert.Equal(list.Count, importedList.Count);
+                for (var i = 0; i < list.Count; i++)
+                {
+                    if (list[i] == null)
+                    {
+                        Assert.Null(importedList[i]);
+                    }
+                    else
+                    {
+                        Assert.Equal(list[i].Id, importedList[i].Id);
+                        Assert.Equal(list[i].Title, importedList[i].Title);
+                        Assert.Equal(list[i].Content, importedList[i].Content);
+                        Assert.Equal(list[i].Publisher, importedList[i].Publisher);
+                        Assert.Equal(list[i].PublishedAt.ToStandardTimeString(), importedList[i].PublishedAt.ToStandardTimeString());
+                    }
+                }
+
+                settings.Property(x => x.Id)
+                    .HasColumnOutputFormatter(null)
+                    .HasColumnInputFormatter(null);
+            }
+        }
     }
 }

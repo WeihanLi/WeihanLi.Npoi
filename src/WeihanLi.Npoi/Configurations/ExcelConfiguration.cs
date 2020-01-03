@@ -151,9 +151,7 @@ namespace WeihanLi.Npoi.Configurations
 
             var propertyConfigurationType =
                 typeof(PropertyConfiguration<,>).MakeGenericType(entityType, propertyType);
-            var propertyConfiguration = (PropertyConfiguration)Activator.CreateInstance(propertyConfigurationType);
-            propertyConfigurationType.GetProperty("ColumnTitle")?.GetSetMethod()?
-                .Invoke(propertyConfiguration, new object[] { propertyName });
+            var propertyConfiguration = (PropertyConfiguration)Activator.CreateInstance(propertyConfigurationType, new object[] { property });
 
             PropertyConfigurationDictionary[property] = propertyConfiguration;
 
@@ -163,12 +161,6 @@ namespace WeihanLi.Npoi.Configurations
         #endregion Property
 
         #region Sheet
-
-        public IExcelConfiguration HasSheetConfiguration(int sheetIndex, string sheetName) => HasSheetConfiguration(sheetIndex, sheetName, 1);
-
-        public IExcelConfiguration HasSheetConfiguration(int sheetIndex, string sheetName, bool enableAutoColumnWidth) => HasSheetConfiguration(sheetIndex, sheetName, 1, enableAutoColumnWidth);
-
-        public IExcelConfiguration HasSheetConfiguration(int sheetIndex, string sheetName, int startRowIndex) => HasSheetConfiguration(sheetIndex, sheetName, startRowIndex, false);
 
         public IExcelConfiguration HasSheetConfiguration(int sheetIndex, string sheetName, int startRowIndex,
             bool enableAutoColumnWidth)

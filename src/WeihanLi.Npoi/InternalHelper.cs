@@ -45,7 +45,7 @@ namespace WeihanLi.Npoi
 
                   var propertyConfigurationType =
                       typeof(PropertyConfiguration<,>).MakeGenericType(type, propertyInfo.PropertyType);
-                  var propertyConfiguration = Activator.CreateInstance(propertyConfigurationType);
+                  var propertyConfiguration = Activator.CreateInstance(propertyConfigurationType, new object[] { propertyInfo });
 
                   propertyConfigurationType.GetProperty(nameof(column.PropertyConfiguration.ColumnTitle))?.GetSetMethod()?
                       .Invoke(propertyConfiguration, new object[] { column.PropertyConfiguration.ColumnTitle });

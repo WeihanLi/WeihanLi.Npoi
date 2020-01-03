@@ -1,5 +1,18 @@
 # WeihanLi.Npoi Release Notes
 
+
+## [1.7.0](https://www.nuget.org/packages/WeihanLi.Npoi/1.7.0)
+
+- add `HasColumnInputFormatter`/`HasColumnOutputFormatter`
+- simply `IExcelConfiguration` SheetConfiguration
+
+## [1.6.1](https://www.nuget.org/packages/WeihanLi.Npoi/1.6.1)
+
+- fix inherit property configure bug
+- fix empty column skipped bug, fix with `row.Cells.Count` => `row.LastCellNumber`
+- optimize `AdjustColumnIndex`
+- allow use `Ignored(false)` to unignore property
+
 ## [1.6.0](https://www.nuget.org/packages/WeihanLi.Npoi/1.6.0)
 
 - add shadow property support
