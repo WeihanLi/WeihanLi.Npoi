@@ -5,6 +5,18 @@ namespace WeihanLi.Npoi
 {
     public static class ConfigurationExtensions
     {
+        public static IExcelConfiguration HasSheetConfiguration(this IExcelConfiguration configuration, int sheetIndex,
+            string sheetName)
+            => configuration.HasSheetConfiguration(sheetIndex, sheetName, 1, false);
+
+        public static IExcelConfiguration HasSheetConfiguration(this IExcelConfiguration configuration, int sheetIndex,
+            string sheetName, bool enableAutoColumnWidth)
+            => configuration.HasSheetConfiguration(sheetIndex, sheetName, 1, enableAutoColumnWidth);
+
+        public static IExcelConfiguration HasSheetConfiguration(this IExcelConfiguration configuration, int sheetIndex,
+            string sheetName, int startRowIndex) =>
+            configuration.HasSheetConfiguration(sheetIndex, sheetName, startRowIndex, false);
+
         /// <summary>
         /// get excelConfiguration property configuration
         /// </summary>

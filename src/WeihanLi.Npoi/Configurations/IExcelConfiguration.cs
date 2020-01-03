@@ -8,12 +8,6 @@ namespace WeihanLi.Npoi.Configurations
     {
         ExcelSetting ExcelSetting { get; }
 
-        IExcelConfiguration HasSheetConfiguration(int sheetIndex, string sheetName);
-
-        IExcelConfiguration HasSheetConfiguration(int sheetIndex, string sheetName, bool enableAutoColumnWidth);
-
-        IExcelConfiguration HasSheetConfiguration(int sheetIndex, string sheetName, int startRowIndex);
-
         IExcelConfiguration HasSheetConfiguration(int sheetIndex, string sheetName, int startRowIndex, bool enableAutoColumnWidth);
 
         /// <summary>
