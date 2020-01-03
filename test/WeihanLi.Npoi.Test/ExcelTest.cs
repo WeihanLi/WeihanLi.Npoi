@@ -272,7 +272,7 @@ namespace WeihanLi.Npoi.Test
         }
 
         [Fact]
-        public void InputOutputFormatterTest()
+        public void InputOutputColumnFormatterTest()
         {
             IReadOnlyList<Notice> list = Enumerable.Range(0, 10).Select(i => new Notice()
             {
