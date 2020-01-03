@@ -195,13 +195,14 @@ There' a lot of userful extensions for you, core fetures are as follows:
     // ExcelSetting
     setting.HasAuthor("WeihanLi")
         .HasTitle("WeihanLi.Npoi test")
-        .HasDescription("")
-        .HasSubject("");
+        .HasDescription("WeihanLi.Npoi test")
+        .HasSubject("WeihanLi.Npoi test");
 
-    setting.HasSheetConfiguration(0, "System Settings");
+    setting.HasSheetConfiguration(0, "SystemSettingsList", true);
+    // setting.HasSheetConfiguration(1, "SystemSettingsList", 1, true);
 
-    setting.HasFilter(0, 1)
-        .HasFreezePane(0, 1, 2, 1);
+    // setting.HasFilter(0, 1).HasFreezePane(0, 1, 2, 1);
+
     setting.Property(_ => _.SettingId)
         .HasColumnIndex(0);
 
@@ -221,19 +222,25 @@ There' a lot of userful extensions for you, core fetures are as follows:
 
     setting.Property(_ => _.CreatedTime)
         .HasColumnTitle("CreatedTime")
-        .HasColumnIndex(5)
+        .HasColumnIndex(4)
+        .HasColumnWidth(10)
         .HasColumnFormatter("yyyy-MM-dd HH:mm:ss");
 
     setting.Property(_ => _.CreatedBy)
+        .HasColumnInputFormatter(x => x += "_test")
         .HasColumnIndex(4)
         .HasColumnTitle("CreatedBy");
+
+    setting.Property(x => x.Enabled)
+        .HasColumnInputFormatter(val => "启用".Equals(val))
+        .HasColumnOutputFormatter(v => v ? "启用" : "禁用");
 
     setting.Property("HiddenProp")
         .HasOutputFormatter((entity, val) => $"HiddenProp_{entity.PKID}");
 
+    setting.Property(_ => _.PKID).Ignored();
     setting.Property(_ => _.UpdatedBy).Ignored();
     setting.Property(_ => _.UpdatedTime).Ignored();
-    setting.Property(_ => _.PKID).Ignored();
     ```
 
 ### Samples
