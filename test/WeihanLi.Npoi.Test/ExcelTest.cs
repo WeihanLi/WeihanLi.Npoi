@@ -286,8 +286,9 @@ namespace WeihanLi.Npoi.Test
             var settings = ExcelHelper.SettingFor<Notice>();
             lock (settings)
             {
-                settings.Property(x => x.Id).HasOutputFormatter((e, x) => $"{x}_Test");
-                settings.Property(x => x.Id).HasColumnInputFormatter(x => Convert.ToInt32(x.Split(new char[] { '_' }, StringSplitOptions.RemoveEmptyEntries)[0]));
+                settings.Property(x => x.Id)
+                    .HasColumnOutputFormatter(x => $"{x}_Test")
+                    .HasColumnInputFormatter(x => Convert.ToInt32(x.Split(new char[] { '_' }, StringSplitOptions.RemoveEmptyEntries)[0]));
                 var excelBytes = list.ToExcelBytes();
 
                 var importedList = ExcelHelper.ToEntityList<Notice>(excelBytes);
@@ -308,7 +309,9 @@ namespace WeihanLi.Npoi.Test
                     }
                 }
 
-                settings.Property(_ => _.Title).HasColumnInputFormatter(null);
+                settings.Property(x => x.Id)
+                    .HasColumnOutputFormatter(null)
+                    .HasColumnInputFormatter(null);
             }
         }
     }
