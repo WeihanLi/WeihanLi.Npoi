@@ -100,8 +100,7 @@ namespace WeihanLi.Npoi
         /// <param name="propertyName">propertyName</param>
         /// <returns></returns>
         internal static PropertyConfiguration GetPropertySettingByPropertyName([NotNull] this IDictionary<PropertyInfo, PropertyConfiguration> mappingDictionary, [NotNull] string propertyName)
-            => mappingDictionary.Keys.Any(_ => _.Name.EqualsIgnoreCase(propertyName)) ?
-                mappingDictionary[mappingDictionary.Keys.First(_ => _.Name.EqualsIgnoreCase(propertyName))] : null;
+            => mappingDictionary.Values.FirstOrDefault(_ => _.PropertyName.EqualsIgnoreCase(propertyName));
 
         /// <summary>
         /// GetPropertyConfigurationByColumnName

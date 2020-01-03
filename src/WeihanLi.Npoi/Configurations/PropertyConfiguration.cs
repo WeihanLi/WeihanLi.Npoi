@@ -30,6 +30,11 @@ namespace WeihanLi.Npoi.Configurations
         /// the property is ignored.
         /// </summary>
         public bool IsIgnored { get; set; }
+
+        /// <summary>
+        /// PropertyName
+        /// </summary>
+        public string PropertyName { get; set; }
     }
 
     internal class PropertyConfiguration<TEntity, TProperty> : PropertyConfiguration, IPropertyConfiguration<TEntity, TProperty>
@@ -39,6 +44,7 @@ namespace WeihanLi.Npoi.Configurations
         public PropertyConfiguration(PropertyInfo propertyInfo)
         {
             _propertyInfo = propertyInfo;
+            PropertyName = propertyInfo.Name;
             ColumnTitle = propertyInfo.Name;
         }
 

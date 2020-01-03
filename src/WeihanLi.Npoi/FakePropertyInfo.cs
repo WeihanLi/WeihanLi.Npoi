@@ -5,7 +5,7 @@ using WeihanLi.Extensions;
 
 namespace WeihanLi.Npoi
 {
-    internal class FakePropertyInfo : PropertyInfo
+    internal sealed class FakePropertyInfo : PropertyInfo
     {
         private readonly object _value;
         private readonly Func<object> _getValueFunc;
