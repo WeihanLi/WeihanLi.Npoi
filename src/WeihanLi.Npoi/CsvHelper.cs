@@ -425,7 +425,7 @@ namespace WeihanLi.Npoi
             {
                 Directory.CreateDirectory(dir);
             }
-            File.WriteAllText(filePath, csvTextData);
+            File.WriteAllText(filePath, csvTextData, Encoding.UTF8);
 
             return 1;
         }
