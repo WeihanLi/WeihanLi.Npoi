@@ -64,6 +64,8 @@
 
 <h2 id="build-status">Build Status</h2>
 <p><a href="https://weihanli.visualstudio.com/Pipelines/_build/latest?definitionId=13&amp;branchName=dev"><img src="https://weihanli.visualstudio.com/Pipelines/_apis/build/status/WeihanLi.WeihanLi.Npoi?branchName=dev" alt="Azure Pipeline Build Status"></a></p>
+<p><a href="https://github.com/WeihanLi/WeihanLi.Npoi/actions?query=workflow%3Adotnetcore+branch%3Adev"><img src="https://github.com/WeihanLi/WeihanLi.Npoi/workflows/dotnetcore/badge.svg?branch=dev" alt="Github Build Status"></a></p>
+<p><a href="https://travis-ci.org/WeihanLi/WeihanLi.Npoi"><img src="https://travis-ci.org/WeihanLi/WeihanLi.Npoi.svg?branch=dev" alt="Travis Build Status"></a></p>
 <h2 id="intro">Intro</h2>
 <p><a href="https://github.com/tonyqus/npoi">NPOI</a> extensions for target framework net45 and netstandard2.0.</p>
 <p>There' a lot of userful extensions for you, core fetures are as follows:</p>
@@ -73,14 +75,6 @@
 <li>export <code>IEnumerable&lt;TEntity&gt;</code> or <code>DataTable</code> data to csv file or bytes.</li>
 <li>custom configuration/mappings by Attribute or FluentAPI(inspired by <a href="https://github.com/Arch/FluentExcel/">FluentExcel</a>)</li>
 </ul>
-<h2 id="use">Use</h2>
-<h3 id="install">Install</h3>
-<p>.NetFramework</p>
-<pre><code class="lang-bash">Install-Package WeihanLi.Npoi
-</code></pre>
-<p>.NetCore</p>
-<pre><code class="lang-bash">dotnet add package WeihanLi.Npoi
-</code></pre>
 <h3 id="getstarted">GetStarted</h3>
 <ol>
 <li><p>LoadFromExcelFile</p>
@@ -132,10 +126,10 @@ var workbook = PrepareWorkbook(string excelPath);
 // prepare a workbook accounting to excelPath and custom excel settings
 var workbook = PrepareWorkbook(string excelPath, ExcelSetting excelSetting);
 
-// prepare a workbook whether *.xlsx file
-var workbook = PrepareWorkbook(bool isXlsx);
+// prepare a workbook whether *.xls file
+var workbook = PrepareWorkbook(bool isXls);
 
-// prepare a workbook whether *.xlsx file and custom excel setting
+// prepare a workbook whether *.xls file and custom excel setting
 var workbook = PrepareWorkbook(bool isXlsx, ExcelSetting excelSetting);
 </code></pre>
 </li>
@@ -240,13 +234,14 @@ public class TestEntity1
 // ExcelSetting
 setting.HasAuthor(&quot;WeihanLi&quot;)
     .HasTitle(&quot;WeihanLi.Npoi test&quot;)
-    .HasDescription(&quot;&quot;)
-    .HasSubject(&quot;&quot;);
+    .HasDescription(&quot;WeihanLi.Npoi test&quot;)
+    .HasSubject(&quot;WeihanLi.Npoi test&quot;);
 
-setting.HasSheetConfiguration(0, &quot;System Settings&quot;);
+setting.HasSheetConfiguration(0, &quot;SystemSettingsList&quot;, true);
+// setting.HasSheetConfiguration(1, &quot;SystemSettingsList&quot;, 1, true);
 
-setting.HasFilter(0, 1)
-    .HasFreezePane(0, 1, 2, 1);
+// setting.HasFilter(0, 1).HasFreezePane(0, 1, 2, 1);
+
 setting.Property(_ =&gt; _.SettingId)
     .HasColumnIndex(0);
 
@@ -266,16 +261,25 @@ setting.Property(_ =&gt; _.SettingValue)
 
 setting.Property(_ =&gt; _.CreatedTime)
     .HasColumnTitle(&quot;CreatedTime&quot;)
-    .HasColumnIndex(5)
+    .HasColumnIndex(4)
+    .HasColumnWidth(10)
     .HasColumnFormatter(&quot;yyyy-MM-dd HH:mm:ss&quot;);
 
 setting.Property(_ =&gt; _.CreatedBy)
+    .HasColumnInputFormatter(x =&gt; x += &quot;_test&quot;)
     .HasColumnIndex(4)
     .HasColumnTitle(&quot;CreatedBy&quot;);
 
+setting.Property(x =&gt; x.Enabled)
+    .HasColumnInputFormatter(val =&gt; &quot;启用&quot;.Equals(val))
+    .HasColumnOutputFormatter(v =&gt; v ? &quot;启用&quot; : &quot;禁用&quot;);
+
+setting.Property(&quot;HiddenProp&quot;)
+    .HasOutputFormatter((entity, val) =&gt; $&quot;HiddenProp_{entity.PKID}&quot;);
+
+setting.Property(_ =&gt; _.PKID).Ignored();
 setting.Property(_ =&gt; _.UpdatedBy).Ignored();
 setting.Property(_ =&gt; _.UpdatedTime).Ignored();
-setting.Property(_ =&gt; _.PKID).Ignored();
 </code></pre>
 </li>
 </ol>

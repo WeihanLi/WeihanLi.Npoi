@@ -195,13 +195,14 @@ public class TestEntity1
 // ExcelSetting
 setting.HasAuthor(&quot;WeihanLi&quot;)
     .HasTitle(&quot;WeihanLi.Npoi test&quot;)
-    .HasDescription(&quot;&quot;)
-    .HasSubject(&quot;&quot;);
+    .HasDescription(&quot;WeihanLi.Npoi test&quot;)
+    .HasSubject(&quot;WeihanLi.Npoi test&quot;);
 
-setting.HasSheetConfiguration(0, &quot;System Settings&quot;);
+setting.HasSheetConfiguration(0, &quot;SystemSettingsList&quot;, true);
+// setting.HasSheetConfiguration(1, &quot;SystemSettingsList&quot;, 1, true);
 
-setting.HasFilter(0, 1)
-    .HasFreezePane(0, 1, 2, 1);
+// setting.HasFilter(0, 1).HasFreezePane(0, 1, 2, 1);
+
 setting.Property(_ =&gt; _.SettingId)
     .HasColumnIndex(0);
 
@@ -221,16 +222,25 @@ setting.Property(_ =&gt; _.SettingValue)
 
 setting.Property(_ =&gt; _.CreatedTime)
     .HasColumnTitle(&quot;CreatedTime&quot;)
-    .HasColumnIndex(5)
+    .HasColumnIndex(4)
+    .HasColumnWidth(10)
     .HasColumnFormatter(&quot;yyyy-MM-dd HH:mm:ss&quot;);
 
 setting.Property(_ =&gt; _.CreatedBy)
+    .HasColumnInputFormatter(x =&gt; x += &quot;_test&quot;)
     .HasColumnIndex(4)
     .HasColumnTitle(&quot;CreatedBy&quot;);
 
+setting.Property(x =&gt; x.Enabled)
+    .HasColumnInputFormatter(val =&gt; &quot;启用&quot;.Equals(val))
+    .HasColumnOutputFormatter(v =&gt; v ? &quot;启用&quot; : &quot;禁用&quot;);
+
+setting.Property(&quot;HiddenProp&quot;)
+    .HasOutputFormatter((entity, val) =&gt; $&quot;HiddenProp_{entity.PKID}&quot;);
+
+setting.Property(_ =&gt; _.PKID).Ignored();
 setting.Property(_ =&gt; _.UpdatedBy).Ignored();
 setting.Property(_ =&gt; _.UpdatedTime).Ignored();
-setting.Property(_ =&gt; _.PKID).Ignored();
 </code></pre>
 </li>
 </ol>

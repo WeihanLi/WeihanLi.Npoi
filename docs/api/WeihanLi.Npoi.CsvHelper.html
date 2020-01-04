@@ -233,7 +233,7 @@
   
   
   <a id="WeihanLi_Npoi_CsvHelper_ToCsvBytes_" data-uid="WeihanLi.Npoi.CsvHelper.ToCsvBytes*"></a>
-  <h4 id="WeihanLi_Npoi_CsvHelper_ToCsvBytes__1_System_Collections_Generic_IEnumerable___0__" data-uid="WeihanLi.Npoi.CsvHelper.ToCsvBytes``1(System.Collections.Generic.IEnumerable{``0})">ToCsvBytes&lt;TEntity&gt;(IEnumerable&lt;TEntity&gt;)</h4>
+  <h4 id="WeihanLi_Npoi_CsvHelper_ToCsvBytes__1_IEnumerable___0__" data-uid="WeihanLi.Npoi.CsvHelper.ToCsvBytes``1(IEnumerable{``0})">ToCsvBytes&lt;TEntity&gt;(IEnumerable&lt;TEntity&gt;)</h4>
   <div class="markdown level1 summary"><p>to csv bytes</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -252,7 +252,7 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Collections.Generic.IEnumerable</span>&lt;TEntity&gt;</td>
+        <td><span class="xref">IEnumerable</span>&lt;TEntity&gt;</td>
         <td><span class="parametername">entities</span></td>
         <td></td>
       </tr>
@@ -291,7 +291,7 @@
   
   
   <a id="WeihanLi_Npoi_CsvHelper_ToCsvBytes_" data-uid="WeihanLi.Npoi.CsvHelper.ToCsvBytes*"></a>
-  <h4 id="WeihanLi_Npoi_CsvHelper_ToCsvBytes__1_System_Collections_Generic_IEnumerable___0__System_Boolean_" data-uid="WeihanLi.Npoi.CsvHelper.ToCsvBytes``1(System.Collections.Generic.IEnumerable{``0},System.Boolean)">ToCsvBytes&lt;TEntity&gt;(IEnumerable&lt;TEntity&gt;, Boolean)</h4>
+  <h4 id="WeihanLi_Npoi_CsvHelper_ToCsvBytes__1_IEnumerable___0__System_Boolean_" data-uid="WeihanLi.Npoi.CsvHelper.ToCsvBytes``1(IEnumerable{``0},System.Boolean)">ToCsvBytes&lt;TEntity&gt;(IEnumerable&lt;TEntity&gt;, Boolean)</h4>
   <div class="markdown level1 summary"><p>to csv bytes</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -310,7 +310,7 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Collections.Generic.IEnumerable</span>&lt;TEntity&gt;</td>
+        <td><span class="xref">IEnumerable</span>&lt;TEntity&gt;</td>
         <td><span class="parametername">entities</span></td>
         <td></td>
       </tr>
@@ -455,7 +455,7 @@
   
   
   <a id="WeihanLi_Npoi_CsvHelper_ToCsvFile_" data-uid="WeihanLi.Npoi.CsvHelper.ToCsvFile*"></a>
-  <h4 id="WeihanLi_Npoi_CsvHelper_ToCsvFile__1_System_Collections_Generic_IEnumerable___0__System_String_" data-uid="WeihanLi.Npoi.CsvHelper.ToCsvFile``1(System.Collections.Generic.IEnumerable{``0},System.String)">ToCsvFile&lt;TEntity&gt;(IEnumerable&lt;TEntity&gt;, String)</h4>
+  <h4 id="WeihanLi_Npoi_CsvHelper_ToCsvFile__1_IEnumerable___0__System_String_" data-uid="WeihanLi.Npoi.CsvHelper.ToCsvFile``1(IEnumerable{``0},System.String)">ToCsvFile&lt;TEntity&gt;(IEnumerable&lt;TEntity&gt;, String)</h4>
   <div class="markdown level1 summary"><p>save to csv file</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -474,7 +474,7 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Collections.Generic.IEnumerable</span>&lt;TEntity&gt;</td>
+        <td><span class="xref">IEnumerable</span>&lt;TEntity&gt;</td>
         <td><span class="parametername">entities</span></td>
         <td></td>
       </tr>
@@ -518,7 +518,7 @@
   
   
   <a id="WeihanLi_Npoi_CsvHelper_ToCsvFile_" data-uid="WeihanLi.Npoi.CsvHelper.ToCsvFile*"></a>
-  <h4 id="WeihanLi_Npoi_CsvHelper_ToCsvFile__1_System_Collections_Generic_IEnumerable___0__System_String_System_Boolean_" data-uid="WeihanLi.Npoi.CsvHelper.ToCsvFile``1(System.Collections.Generic.IEnumerable{``0},System.String,System.Boolean)">ToCsvFile&lt;TEntity&gt;(IEnumerable&lt;TEntity&gt;, String, Boolean)</h4>
+  <h4 id="WeihanLi_Npoi_CsvHelper_ToCsvFile__1_IEnumerable___0__System_String_System_Boolean_" data-uid="WeihanLi.Npoi.CsvHelper.ToCsvFile``1(IEnumerable{``0},System.String,System.Boolean)">ToCsvFile&lt;TEntity&gt;(IEnumerable&lt;TEntity&gt;, String, Boolean)</h4>
   <div class="markdown level1 summary"><p>save to csv file</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -537,7 +537,7 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Collections.Generic.IEnumerable</span>&lt;TEntity&gt;</td>
+        <td><span class="xref">IEnumerable</span>&lt;TEntity&gt;</td>
         <td><span class="parametername">entities</span></td>
         <td></td>
       </tr>
@@ -630,6 +630,66 @@
   
   
   <a id="WeihanLi_Npoi_CsvHelper_ToEntityList_" data-uid="WeihanLi.Npoi.CsvHelper.ToEntityList*"></a>
+  <h4 id="WeihanLi_Npoi_CsvHelper_ToEntityList__1_Stream_" data-uid="WeihanLi.Npoi.CsvHelper.ToEntityList``1(Stream)">ToEntityList&lt;TEntity&gt;(Stream)</h4>
+  <div class="markdown level1 summary"><p>convert csv file data to entity list</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static List&lt;TEntity&gt; ToEntityList&lt;TEntity&gt;(Stream csvStream)
+    where TEntity : new()</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Stream</span></td>
+        <td><span class="parametername">csvStream</span></td>
+        <td><p>csv Stream</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">List</span>&lt;TEntity&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TEntity</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="WeihanLi_Npoi_CsvHelper_ToEntityList_" data-uid="WeihanLi.Npoi.CsvHelper.ToEntityList*"></a>
   <h4 id="WeihanLi_Npoi_CsvHelper_ToEntityList__1_System_Byte___" data-uid="WeihanLi.Npoi.CsvHelper.ToEntityList``1(System.Byte[])">ToEntityList&lt;TEntity&gt;(Byte[])</h4>
   <div class="markdown level1 summary"><p>convert csv file data to entity list</p>
 </div>
@@ -667,67 +727,7 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Collections.Generic.List</span>&lt;TEntity&gt;</td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  <h5 class="typeParameters">Type Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="parametername">TEntity</span></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  
-  
-  <a id="WeihanLi_Npoi_CsvHelper_ToEntityList_" data-uid="WeihanLi.Npoi.CsvHelper.ToEntityList*"></a>
-  <h4 id="WeihanLi_Npoi_CsvHelper_ToEntityList__1_System_IO_Stream_" data-uid="WeihanLi.Npoi.CsvHelper.ToEntityList``1(System.IO.Stream)">ToEntityList&lt;TEntity&gt;(Stream)</h4>
-  <div class="markdown level1 summary"><p>convert csv file data to entity list</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static List&lt;TEntity&gt; ToEntityList&lt;TEntity&gt;(Stream csvStream)
-    where TEntity : new()</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">System.IO.Stream</span></td>
-        <td><span class="parametername">csvStream</span></td>
-        <td><p>csv Stream</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">System.Collections.Generic.List</span>&lt;TEntity&gt;</td>
+        <td><span class="xref">List</span>&lt;TEntity&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -787,7 +787,7 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Collections.Generic.List</span>&lt;TEntity&gt;</td>
+        <td><span class="xref">List</span>&lt;TEntity&gt;</td>
         <td></td>
       </tr>
     </tbody>
