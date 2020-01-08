@@ -224,7 +224,7 @@ namespace WeihanLi.Npoi
             where TEntity : new() => NpoiHelper.EntityListToSheet(sheet, list, sheetIndex);
 
         /// <summary>
-        ///     import datatable to workbook first sheet
+        ///     import dataTable to workbook first sheet
         /// </summary>
         /// <typeparam name="TEntity">TEntity</typeparam>
         /// <param name="workbook">workbook</param>
@@ -233,7 +233,7 @@ namespace WeihanLi.Npoi
             where TEntity : new() => workbook.ImportData<TEntity>(dataTable, 0);
 
         /// <summary>
-        ///     import datatable to workbook first sheet
+        ///     import dataTable to workbook first sheet
         /// </summary>
         /// <typeparam name="TEntity">TEntity</typeparam>
         /// <param name="workbook">workbook</param>
@@ -273,7 +273,7 @@ namespace WeihanLi.Npoi
         }
 
         /// <summary>
-        /// import datatable to sheet
+        /// import dataTable to sheet
         /// </summary>
         /// <typeparam name="TEntity">EntityType</typeparam>
         /// <param name="sheet">sheet</param>
@@ -281,7 +281,7 @@ namespace WeihanLi.Npoi
         public static ISheet ImportData<TEntity>([NotNull] this ISheet sheet, DataTable dataTable) where TEntity : new() => sheet.ImportData<TEntity>(dataTable, 0);
 
         /// <summary>
-        /// import datatable to sheet
+        /// import dataTable to sheet
         /// </summary>
         /// <typeparam name="TEntity">EntityType</typeparam>
         /// <param name="sheet">sheet</param>
@@ -444,16 +444,15 @@ namespace WeihanLi.Npoi
         /// <summary>
         ///     DataTable2ExcelStream
         /// </summary>
-        /// <param name="dataTable">datatable</param>
+        /// <param name="dataTable">dataTable</param>
         /// <param name="stream">stream</param>
         /// <returns></returns>
-        public static int ToExcelStream([NotNull] this DataTable dataTable, [NotNull] Stream stream) =>
-            ToExcelStream(dataTable, stream, ExcelFormat.Xlsx);
+        public static int ToExcelStream([NotNull] this DataTable dataTable, [NotNull] Stream stream) => ToExcelStream(dataTable, stream, ExcelFormat.Xls);
 
         /// <summary>
         ///     DataTable2ExcelStream
         /// </summary>
-        /// <param name="dataTable">datatable</param>
+        /// <param name="dataTable">dataTable</param>
         /// <param name="stream">stream</param>
         /// <param name="excelFormat">excelFormat</param>
         /// <returns></returns>
@@ -462,7 +461,7 @@ namespace WeihanLi.Npoi
         /// <summary>
         ///     DataTable2ExcelStream
         /// </summary>
-        /// <param name="dataTable">datatable</param>
+        /// <param name="dataTable">dataTable</param>
         /// <param name="stream">stream</param>
         /// <param name="excelFormat">excelFormat</param>
         /// <param name="excelSetting">excelSetting</param>
@@ -486,7 +485,7 @@ namespace WeihanLi.Npoi
                 var row = sheet.CreateRow(i);
                 for (var j = 0; j < dataTable.Columns.Count; j++)
                 {
-                    row.CreateCell(j, CellType.String).SetCellValue(dataTable.Rows[i][j]);
+                    row.CreateCell(j, CellType.String).SetCellValue(dataTable.Rows[i - 1][j]);
                 }
             }
 
@@ -498,8 +497,7 @@ namespace WeihanLi.Npoi
         ///     DataTable2ExcelBytes(*.xlsx by default)
         /// </summary>
         /// <param name="dataTable">dataTable</param>
-        public static byte[] ToExcelBytes([NotNull] this DataTable dataTable) =>
-            ToExcelBytes(dataTable, ExcelFormat.Xlsx);
+        public static byte[] ToExcelBytes([NotNull] this DataTable dataTable) => ToExcelBytes(dataTable, ExcelFormat.Xls);
 
         /// <summary>
         ///     DataTable2ExcelBytes
@@ -532,7 +530,7 @@ namespace WeihanLi.Npoi
                 var row = sheet.CreateRow(i);
                 for (var j = 0; j < dataTable.Columns.Count; j++)
                 {
-                    row.CreateCell(j, CellType.String).SetCellValue(dataTable.Rows[i][j]);
+                    row.CreateCell(j, CellType.String).SetCellValue(dataTable.Rows[i - 1][j]);
                 }
             }
 

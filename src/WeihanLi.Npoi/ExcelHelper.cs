@@ -351,6 +351,15 @@ namespace WeihanLi.Npoi
         public static DataTable ToDataTable([NotNull]string excelPath) => ToDataTable(excelPath, 0, 0);
 
         /// <summary>
+        /// read first sheet of excel from excel file path to a data table
+        /// </summary>
+        /// <param name="excelPath">excelPath</param>
+        /// <param name="sheetIndex">sheetIndex</param>
+        /// <returns>DataTable</returns>
+        public static DataTable ToDataTable([NotNull]string excelPath, int sheetIndex) =>
+            ToDataTable(excelPath, sheetIndex, 0);
+
+        /// <summary>
         /// read (sheetIndex) sheet of excel from excel file path to a data table
         /// </summary>
         /// <param name="excelPath">excelPath</param>
@@ -364,7 +373,43 @@ namespace WeihanLi.Npoi
             {
                 throw new ArgumentOutOfRangeException(nameof(sheetIndex), string.Format(Resource.IndexOutOfRange, nameof(sheetIndex), workbook.NumberOfSheets));
             }
-            return workbook.GetSheetAt(sheetIndex).ToDataTable();
+            return workbook.GetSheetAt(sheetIndex).ToDataTable(headerRowIndex);
+        }
+
+        /// <summary>
+        /// read first sheet of excel from excelBytes to a data table
+        /// </summary>
+        /// <param name="excelBytes">excelBytes</param>
+        /// <param name="excelFormat"></param>
+        /// <returns>DataTable</returns>
+        public static DataTable ToDataTable([NotNull]byte[] excelBytes, ExcelFormat excelFormat) => ToDataTable(excelBytes, excelFormat, 0);
+
+        /// <summary>
+        /// read (sheetIndex) sheet of excel from excelBytes to a data table
+        /// </summary>
+        /// <param name="excelBytes">excelBytes</param>
+        /// <param name="excelFormat"></param>
+        /// <param name="sheetIndex">sheetIndex</param>
+        /// <returns>DataTable</returns>
+        public static DataTable ToDataTable([NotNull] byte[] excelBytes, ExcelFormat excelFormat, int sheetIndex) =>
+            ToDataTable(excelBytes, excelFormat, sheetIndex, 0);
+
+        /// <summary>
+        /// read (sheetIndex) sheet of excel from excelBytes to a data table
+        /// </summary>
+        /// <param name="excelBytes">excelBytes</param>
+        /// <param name="excelFormat"></param>
+        /// <param name="sheetIndex">sheetIndex</param>
+        /// <param name="headerRowIndex">headerRowIndex</param>
+        /// <returns>DataTable</returns>
+        public static DataTable ToDataTable([NotNull]byte[] excelBytes, ExcelFormat excelFormat, int sheetIndex, int headerRowIndex)
+        {
+            var workbook = LoadExcel(excelBytes, excelFormat);
+            if (workbook.NumberOfSheets <= sheetIndex)
+            {
+                throw new ArgumentOutOfRangeException(nameof(sheetIndex), string.Format(Resource.IndexOutOfRange, nameof(sheetIndex), workbook.NumberOfSheets));
+            }
+            return workbook.GetSheetAt(sheetIndex).ToDataTable(headerRowIndex);
         }
 
         /// <summary>
