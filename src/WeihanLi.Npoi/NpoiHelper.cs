@@ -210,6 +210,12 @@ namespace WeihanLi.Npoi
             return entities;
         }
 
+        public static ISheet EntityListToSheetByTemplate<TEntity>([NotNull]ISheet sheet, IEnumerable<TEntity> entityList, int sheetIndex, ISheet templateSheet) where TEntity : new()
+        {
+            // TODO: export via existing template
+            return sheet;
+        }
+
         public static ISheet EntityListToSheet<TEntity>([NotNull]ISheet sheet, IEnumerable<TEntity> entityList, int sheetIndex) where TEntity : new()
         {
             if (null == entityList)
