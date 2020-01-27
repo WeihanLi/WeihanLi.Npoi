@@ -274,7 +274,7 @@ namespace WeihanLi.Npoi
             return sheet;
         }
 
-        public static ISheet DataTableToSheet<TEntity>([NotNull]ISheet sheet, DataTable dataTable, int sheetIndex) where TEntity : new()
+        public static ISheet DataTableToSheet<TEntity>([NotNull]ISheet sheet, DataTable dataTable, int sheetIndex)
         {
             if (null == dataTable || dataTable.Rows.Count == 0 || dataTable.Columns.Count == 0)
             {
