@@ -1,5 +1,9 @@
 # WeihanLi.Npoi Release Notes
 
+## [1.8.0](https://www.nuget.org/packages/WeihanLi.Npoi/1.8.0)
+
+- add `ExportToExcelByTemplate`
+- update `NpoiRowCollection`
 
 ## [1.7.0](https://www.nuget.org/packages/WeihanLi.Npoi/1.7.0)
 
