@@ -18,7 +18,7 @@ namespace WeihanLi.Npoi
 
         public IEnumerator<IRow> GetEnumerator()
         {
-            for (var i = 0; i < _sheet.LastRowNum; i++)
+            for (var i = 0; i <= _sheet.LastRowNum; i++)
             {
                 yield return _sheet.GetRow(i);
             }

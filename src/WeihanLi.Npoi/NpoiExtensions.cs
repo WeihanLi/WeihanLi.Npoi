@@ -121,7 +121,7 @@ namespace WeihanLi.Npoi
         /// <returns>DataTable</returns>
         public static DataTable ToDataTable([NotNull] this ISheet sheet, int headerRowIndex)
         {
-            if (sheet.PhysicalNumberOfRows <= headerRowIndex)
+            if (sheet.LastRowNum <= headerRowIndex)
             {
                 throw new ArgumentOutOfRangeException(nameof(headerRowIndex),
                     string.Format(Resource.IndexOutOfRange, nameof(headerRowIndex), sheet.PhysicalNumberOfRows));
@@ -130,7 +130,7 @@ namespace WeihanLi.Npoi
 
             foreach (var row in sheet.GetRowCollection())
             {
-                if (row.RowNum < headerRowIndex)
+                if (row == null || row.RowNum < headerRowIndex)
                 {
                     continue;
                 }
