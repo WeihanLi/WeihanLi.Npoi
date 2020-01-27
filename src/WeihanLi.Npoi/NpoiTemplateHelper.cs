@@ -9,12 +9,11 @@ namespace WeihanLi.Npoi
     internal static class NpoiTemplateHelper
     {
         private const string GlobalParamFormat = "$(Global:{0})";
-
         private const string HeaderParamFormat = "$(Header:{0})";
+        private const string DataParamFormat = "$(Data:{0})";
 
         private const string DataBegin = "<Data>";
         private const string DataEnd = "</Data>";
-        private const string DataParamFormat = "$(Data:{0})";
 
         // export via template
         public static ISheet EntityListToSheetByTemplate<TEntity>(
