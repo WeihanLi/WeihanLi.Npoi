@@ -324,11 +324,12 @@ namespace WeihanLi.Npoi
         /// <typeparam name="TEntity">Entity Type</typeparam>
         /// <param name="entities">entities</param>
         /// <param name="templateBytes">templateBytes</param>
+        /// <param name="excelFormat">excelFormat</param>
         /// <param name="excelPath">excelPath</param>
         /// <param name="sheetIndex">sheetIndex,zero by default</param>
         /// <param name="extraData">extraData</param>
         /// <returns>exported excel bytes</returns>
-        public static int ToExcelFileByTemplate<TEntity>([NotNull]this IEnumerable<TEntity> entities, byte[] templateBytes, string excelPath, int sheetIndex = 0, object extraData = null)
+        public static int ToExcelFileByTemplate<TEntity>([NotNull]this IEnumerable<TEntity> entities, byte[] templateBytes, string excelPath, ExcelFormat excelFormat = ExcelFormat.Xls, int sheetIndex = 0, object extraData = null)
         {
             if (templateBytes == null)
             {
@@ -339,7 +340,7 @@ namespace WeihanLi.Npoi
                 throw new ArgumentNullException(nameof(excelPath));
             }
 
-            var workbook = ExcelHelper.LoadExcel(templateBytes);
+            var workbook = ExcelHelper.LoadExcel(templateBytes, excelFormat);
             return entities.ToExcelFileByTemplate(workbook, excelPath, sheetIndex, extraData);
         }
 
@@ -383,7 +384,7 @@ namespace WeihanLi.Npoi
         /// <returns>exported excel bytes</returns>
         public static byte[] ToExcelBytesByTemplate<TEntity>([NotNull]this IEnumerable<TEntity> entities, string templatePath, int sheetIndex = 0, object extraData = null)
         {
-            return ToExcelBytesByTemplate(entities, File.ReadAllBytes(templatePath), sheetIndex, extraData);
+            return ToExcelBytesByTemplate(entities, ExcelHelper.LoadExcel(templatePath), sheetIndex, extraData);
         }
 
         /// <summary>
@@ -392,17 +393,18 @@ namespace WeihanLi.Npoi
         /// <typeparam name="TEntity">Entity Type</typeparam>
         /// <param name="entities">entities</param>
         /// <param name="templateBytes">templateBytes</param>
+        /// <param name="excelFormat">excelFormat</param>
         /// <param name="sheetIndex">sheetIndex,zero by default</param>
         /// <param name="extraData">extraData</param>
         /// <returns>exported excel bytes</returns>
-        public static byte[] ToExcelBytesByTemplate<TEntity>([NotNull]this IEnumerable<TEntity> entities, byte[] templateBytes, int sheetIndex = 0, object extraData = null)
+        public static byte[] ToExcelBytesByTemplate<TEntity>([NotNull]this IEnumerable<TEntity> entities, byte[] templateBytes, ExcelFormat excelFormat = ExcelFormat.Xls, int sheetIndex = 0, object extraData = null)
         {
             if (templateBytes == null)
             {
                 throw new ArgumentNullException(nameof(templateBytes));
             }
 
-            var workbook = ExcelHelper.LoadExcel(templateBytes);
+            var workbook = ExcelHelper.LoadExcel(templateBytes, excelFormat);
             return ToExcelBytesByTemplate(entities, workbook, sheetIndex, extraData);
         }
 
@@ -412,17 +414,18 @@ namespace WeihanLi.Npoi
         /// <typeparam name="TEntity">Entity Type</typeparam>
         /// <param name="entities">entities</param>
         /// <param name="templateStream">templateStream</param>
+        /// <param name="excelFormat">excelFormat</param>
         /// <param name="sheetIndex">sheetIndex,zero by default</param>
         /// <param name="extraData">extraData</param>
         /// <returns>exported excel bytes</returns>
-        public static byte[] ToExcelBytesByTemplate<TEntity>([NotNull]this IEnumerable<TEntity> entities, Stream templateStream, int sheetIndex = 0, object extraData = null)
+        public static byte[] ToExcelBytesByTemplate<TEntity>([NotNull]this IEnumerable<TEntity> entities, Stream templateStream, ExcelFormat excelFormat = ExcelFormat.Xls, int sheetIndex = 0, object extraData = null)
         {
             if (templateStream == null)
             {
                 throw new ArgumentNullException(nameof(templateStream));
             }
 
-            var workbook = ExcelHelper.LoadExcel(templateStream);
+            var workbook = ExcelHelper.LoadExcel(templateStream, excelFormat);
             return ToExcelBytesByTemplate(entities, workbook, sheetIndex, extraData);
         }
 
