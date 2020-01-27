@@ -12,7 +12,7 @@
           "hash": "Fo2Cy9XcVVa/DQAmMkyR7w=="
         }
       },
-      "is_incremental": false,
+      "is_incremental": true,
       "version": ""
     },
     {
@@ -21,10 +21,10 @@
       "output": {
         ".html": {
           "relative_path": "docs/ReleaseNotes.html",
-          "hash": "QrSyWWRwW5gy5aq6TKtVsw=="
+          "hash": "0IFVbCIQe6mgvgTB+ImywQ=="
         }
       },
-      "is_incremental": false,
+      "is_incremental": true,
       "version": ""
     },
     {
@@ -33,7 +33,7 @@
       "output": {
         ".html": {
           "relative_path": "docs/api/WeihanLi.Npoi.ConfigurationExtensions.html",
-          "hash": "v3wN+UhKZUqeKaabHRox2A=="
+          "hash": "adwsIwE0Py79cFwhrGn7zQ=="
         }
       },
       "is_incremental": false,
@@ -45,10 +45,10 @@
       "output": {
         ".html": {
           "relative_path": "docs/api/WeihanLi.Npoi.CsvHelper.html",
-          "hash": "xfrXP+PjkuhWu4OyzBb4/Q=="
+          "hash": "4niK49wwB2tBZmzTSShLLg=="
         }
       },
-      "is_incremental": false,
+      "is_incremental": true,
       "version": ""
     },
     {
@@ -60,7 +60,7 @@
           "hash": "dexTFY56/V4VbFIUKSGPVQ=="
         }
       },
-      "is_incremental": false,
+      "is_incremental": true,
       "version": ""
     },
     {
@@ -69,10 +69,10 @@
       "output": {
         ".html": {
           "relative_path": "docs/api/WeihanLi.Npoi.ExcelHelper.html",
-          "hash": "TTIe2lKDMzbSVN0X2uKrkA=="
+          "hash": "irRhG17zbpLQ/ZTCyRGM/w=="
         }
       },
-      "is_incremental": false,
+      "is_incremental": true,
       "version": ""
     },
     {
@@ -81,10 +81,10 @@
       "output": {
         ".html": {
           "relative_path": "docs/api/WeihanLi.Npoi.NpoiExtensions.html",
-          "hash": "AdsAvkIm81L/jV2Gu12EZg=="
+          "hash": "uNifywJpLx/nHdzt3XY4RQ=="
         }
       },
-      "is_incremental": false,
+      "is_incremental": true,
       "version": ""
     },
     {
@@ -93,10 +93,10 @@
       "output": {
         ".html": {
           "relative_path": "docs/api/WeihanLi.Npoi.NpoiRowCollection.html",
-          "hash": "Evf1CyrQC6ISbVNzmJyO4A=="
+          "hash": "8x8LwA0fLWUALsJb60FymA=="
         }
       },
-      "is_incremental": false,
+      "is_incremental": true,
       "version": ""
     },
     {
@@ -105,7 +105,7 @@
       "output": {
         ".html": {
           "relative_path": "docs/api/WeihanLi.Npoi.html",
-          "hash": "BZhheaCeW2szofBc8TWa2w=="
+          "hash": "cjCNfRlCX79frNYbGz16sQ=="
         }
       },
       "is_incremental": false,
@@ -120,7 +120,7 @@
           "hash": "SAqowUOW++NiNxOgOZT0Pg=="
         }
       },
-      "is_incremental": false,
+      "is_incremental": true,
       "version": ""
     },
     {
@@ -168,7 +168,7 @@
           "hash": "Ea7W0R3o9MJyVkKN/gWqrw=="
         }
       },
-      "is_incremental": false,
+      "is_incremental": true,
       "version": ""
     },
     {
@@ -197,13 +197,13 @@
           "can_incremental": true,
           "incrementalPhase": "build",
           "total_file_count": 5,
-          "skipped_file_count": 2
+          "skipped_file_count": 5
         },
         "ManagedReferenceDocumentProcessor": {
           "can_incremental": true,
           "incrementalPhase": "build",
           "total_file_count": 7,
-          "skipped_file_count": 0
+          "skipped_file_count": 6
         },
         "TocDocumentProcessor": {
           "can_incremental": false,
