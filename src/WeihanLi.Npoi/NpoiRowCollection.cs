@@ -1,13 +1,12 @@
-﻿using System;
+﻿using NPOI.SS.UserModel;
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using NPOI.SS.UserModel;
 
 namespace WeihanLi.Npoi
 {
     /// <summary>
     /// Sheet row collection
-    /// readonly
     /// </summary>
     public class NpoiRowCollection : IReadOnlyCollection<IRow>
     {
@@ -15,11 +14,14 @@ namespace WeihanLi.Npoi
 
         public NpoiRowCollection(ISheet sheet) => _sheet = sheet ?? throw new ArgumentNullException(nameof(sheet));
 
-        public int Count => _sheet.PhysicalNumberOfRows;
+        public int Count => _sheet.LastRowNum + 1;
 
         public IEnumerator<IRow> GetEnumerator()
         {
-            return (IEnumerator<IRow>)_sheet.GetRowEnumerator();
+            for (var i = 0; i < _sheet.LastRowNum; i++)
+            {
+                yield return _sheet.GetRow(i);
+            }
         }
 
         IEnumerator IEnumerable.GetEnumerator()
