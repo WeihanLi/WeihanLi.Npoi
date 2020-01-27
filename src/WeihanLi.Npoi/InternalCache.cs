@@ -5,14 +5,7 @@ using WeihanLi.Npoi.Configurations;
 
 namespace WeihanLi.Npoi
 {
-#if DEBUG
-
-    public
-#else
-    internal
-
-#endif
-        static class InternalCache
+    internal static class InternalCache
     {
         /// <summary>
         /// TypeExcelConfigurationCache

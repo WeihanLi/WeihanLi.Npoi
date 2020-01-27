@@ -1,13 +1,18 @@
 ﻿using System;
 using System.Linq.Expressions;
-using WeihanLi.Npoi.Settings;
 
 namespace WeihanLi.Npoi.Configurations
 {
     public interface IExcelConfiguration
     {
-        ExcelSetting ExcelSetting { get; }
-
+        /// <summary>
+        /// Sheet Configuration
+        /// </summary>
+        /// <param name="sheetIndex">sheetIndex</param>
+        /// <param name="sheetName">sheetName</param>
+        /// <param name="startRowIndex">startRowIndex</param>
+        /// <param name="enableAutoColumnWidth">enable auto column width if true otherwise false</param>
+        /// <returns>current excel configuration<see cref="IExcelConfiguration"/></returns>
         IExcelConfiguration HasSheetConfiguration(int sheetIndex, string sheetName, int startRowIndex, bool enableAutoColumnWidth);
 
         /// <summary>
@@ -16,6 +21,7 @@ namespace WeihanLi.Npoi.Configurations
         /// </summary>
         /// <param name="colSplit">Horizontal position of split</param>
         /// <param name="rowSplit">Vertical position of split</param>
+        /// <returns>current excel configuration<see cref="IExcelConfiguration"/></returns>
         IExcelConfiguration HasFreezePane(int colSplit, int rowSplit);
 
         /// <summary>
@@ -26,13 +32,14 @@ namespace WeihanLi.Npoi.Configurations
         /// <param name="rowSplit">Vertical position of split</param>
         /// <param name="leftmostColumn">Top row visible in bottom pane</param>
         /// <param name="topRow">Left column visible in right pane</param>
+        /// <returns>current excel configuration<see cref="IExcelConfiguration"/></returns>
         IExcelConfiguration HasFreezePane(int colSplit, int rowSplit, int leftmostColumn, int topRow);
 
         /// <summary>
         /// setting filter
         /// </summary>
         /// <param name="firstColumn">firstCol Index of first column</param>
-        /// <returns></returns>
+        /// <returns>current excel configuration<see cref="IExcelConfiguration"/></returns>
         IExcelConfiguration HasFilter(int firstColumn);
 
         /// <summary>
@@ -40,7 +47,7 @@ namespace WeihanLi.Npoi.Configurations
         /// </summary>
         /// <param name="firstColumn">firstCol Index of first column</param>
         /// <param name="lastColumn">lastCol Index of last column (inclusive), must be equal to or larger than {@code firstCol}</param>
-        /// <returns></returns>
+        /// <returns>current excel configuration<see cref="IExcelConfiguration"/></returns>
         IExcelConfiguration HasFilter(int firstColumn, int? lastColumn);
 
         #region ExcelSettings FluentAPI
@@ -49,42 +56,42 @@ namespace WeihanLi.Npoi.Configurations
         /// set excel Author
         /// </summary>
         /// <param name="author">author</param>
-        /// <returns></returns>
+        /// <returns>current excel configuration<see cref="IExcelConfiguration"/></returns>
         IExcelConfiguration HasAuthor(string author);
 
         /// <summary>
         /// set excel title
         /// </summary>
         /// <param name="title">title</param>
-        /// <returns></returns>
+        /// <returns>current excel configuration<see cref="IExcelConfiguration"/></returns>
         IExcelConfiguration HasTitle(string title);
 
         /// <summary>
         /// set excel description
         /// </summary>
         /// <param name="description">description</param>
-        /// <returns></returns>
+        /// <returns>current excel configuration<see cref="IExcelConfiguration"/></returns>
         IExcelConfiguration HasDescription(string description);
 
         /// <summary>
         /// set excel subject
         /// </summary>
         /// <param name="subject">subject</param>
-        /// <returns></returns>
+        /// <returns>current excel configuration<see cref="IExcelConfiguration"/></returns>
         IExcelConfiguration HasSubject(string subject);
 
         /// <summary>
         /// set excel company
         /// </summary>
         /// <param name="company">company</param>
-        /// <returns></returns>
+        /// <returns>current excel configuration<see cref="IExcelConfiguration"/></returns>
         IExcelConfiguration HasCompany(string company);
 
         /// <summary>
         /// set excel category
         /// </summary>
         /// <param name="category">category</param>
-        /// <returns></returns>
+        /// <returns>current excel configuration<see cref="IExcelConfiguration"/></returns>
         IExcelConfiguration HasCategory(string category);
 
         #endregion ExcelSettings FluentAPI
@@ -92,8 +99,20 @@ namespace WeihanLi.Npoi.Configurations
 
     public interface IExcelConfiguration<TEntity> : IExcelConfiguration
     {
+        /// <summary>
+        /// property configuration
+        /// </summary>
+        /// <typeparam name="TProperty">PropertyType</typeparam>
+        /// <param name="propertyExpression">propertyExpression to get property info</param>
+        /// <returns>current excel configuration</returns>
         IPropertyConfiguration<TEntity, TProperty> Property<TProperty>(Expression<Func<TEntity, TProperty>> propertyExpression);
 
+        /// <summary>
+        /// property configuration
+        /// </summary>
+        /// <typeparam name="TProperty">PropertyType</typeparam>
+        /// <param name="propertyName">propertyName</param>
+        /// <returns>current excel configuration</returns>
         IPropertyConfiguration<TEntity, TProperty> Property<TProperty>(string propertyName);
     }
 }

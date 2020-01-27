@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using WeihanLi.Extensions;
 using WeihanLi.Npoi.Test.Models;
@@ -85,6 +86,37 @@ namespace WeihanLi.Npoi.Test
                     .HasColumnIndex(3);
                 noticeSetting.Property(_ => _.PublishedAt)
                     .HasColumnIndex(4);
+            }
+        }
+
+        [Fact]
+        public void DataTableImportExportTest()
+        {
+            var dt = new DataTable();
+            dt.Columns.AddRange(new[]
+            {
+                new DataColumn("Name"),
+                new DataColumn("Age"),
+                new DataColumn("Desc"),
+            });
+            for (var i = 0; i < 10; i++)
+            {
+                var row = dt.NewRow();
+                row.ItemArray = new object[] { $"Test_{i}", i + 10, $"Desc_{i}" };
+                dt.Rows.Add(row);
+            }
+            //
+            var csvBytes = dt.ToCsvBytes();
+            var importedData = CsvHelper.ToDataTable(csvBytes);
+            Assert.NotNull(importedData);
+            Assert.Equal(dt.Rows.Count, importedData.Rows.Count);
+            for (var i = 0; i < dt.Rows.Count; i++)
+            {
+                Assert.Equal(dt.Rows[i].ItemArray.Length, importedData.Rows[i].ItemArray.Length);
+                for (var j = 0; j < dt.Rows[i].ItemArray.Length; j++)
+                {
+                    Assert.Equal(dt.Rows[i].ItemArray[j], importedData.Rows[i].ItemArray[j]);
+                }
             }
         }
     }
