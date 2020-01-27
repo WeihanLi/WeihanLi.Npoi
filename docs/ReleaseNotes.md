@@ -2,8 +2,11 @@
 
 ## [1.8.0](https://www.nuget.org/packages/WeihanLi.Npoi/1.8.0)
 
-- add `ExportToExcelByTemplate`
+- add `ExportExcelByTemplate`, fix #33 
 - update `NpoiRowCollection`
+- optimize `DataTable` support for csv
+- export csv as utf8 encoding
+- update export generic type constraint, remove `new()` constraint
 
 ## [1.7.0](https://www.nuget.org/packages/WeihanLi.Npoi/1.7.0)
 

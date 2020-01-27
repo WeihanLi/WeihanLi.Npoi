@@ -1,7 +1,11 @@
 ﻿using JetBrains.Annotations;
 using NPOI.SS.UserModel;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using System.Reflection;
+using WeihanLi.Common.Helpers;
 using WeihanLi.Extensions;
 
 namespace WeihanLi.Npoi
@@ -36,7 +40,34 @@ namespace WeihanLi.Npoi
             }
 
             var dataFuncDictionary = propertyColumnDictionary
-                .ToDictionary(x => DataParamFormat.FormatWith(x.Key.Name), x => x.Key.GetValueGetter());
+                .ToDictionary(x => DataParamFormat.FormatWith(x.Key.Name), x => x.Key.GetValueGetter<TEntity>());
+            foreach (var key in propertyColumnDictionary.Keys)
+            {
+                if (InternalCache.OutputFormatterFuncCache.TryGetValue(key, out var formatterFunc) && formatterFunc != null)
+                {
+                    dataFuncDictionary[DataParamFormat.FormatWith(key.Name)] = entity =>
+                    {
+                        var val = key.GetValueGetter<TEntity>()?.Invoke(entity);
+                        var funcType = typeof(Func<,,>).MakeGenericType(configuration.EntityType, key.PropertyType, typeof(object));
+                        var method = funcType.GetProperty("Method")?.GetValueGetter()?.Invoke(formatterFunc) as MethodInfo;
+                        var target = funcType.GetProperty("Target")?.GetValueGetter()?.Invoke(formatterFunc);
+                        if (null != method && null != target)
+                        {
+                            try
+                            {
+                                var formattedValue = method.Invoke(target, new object[] { entity, val });
+                                return formattedValue;
+                            }
+                            catch (Exception e)
+                            {
+                                Debug.WriteLine(e);
+                                InvokeHelper.OnInvokeException?.Invoke(e);
+                            }
+                        }
+                        return val;
+                    };
+                }
+            }
 
             // parseTemplate
             int dataStartRow = -1, dataRowsCount = -1;
