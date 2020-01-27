@@ -11,7 +11,7 @@ namespace WeihanLi.Npoi
         /// <param name="configuration">excel configuration</param>
         /// <param name="sheetIndex">sheetIndex</param>
         /// <param name="sheetName">sheetName</param>
-        /// <returns>current excel configuration<see cref="IExcelConfiguration"/></returns>
+        /// <returns>current excel configuration</returns>
         public static IExcelConfiguration HasSheetConfiguration(this IExcelConfiguration configuration, int sheetIndex,
             string sheetName) => configuration.HasSheetConfiguration(sheetIndex, sheetName, 1, false);
 
@@ -22,7 +22,7 @@ namespace WeihanLi.Npoi
         /// <param name="sheetIndex">sheetIndex</param>
         /// <param name="sheetName">sheetName</param>
         /// <param name="enableAutoColumnWidth">enable auto column width if true otherwise false</param>
-        /// <returns>current excel configuration<see cref="IExcelConfiguration"/></returns>
+        /// <returns>current excel configuration</returns>
         public static IExcelConfiguration HasSheetConfiguration(this IExcelConfiguration configuration, int sheetIndex,
             string sheetName, bool enableAutoColumnWidth) => configuration.HasSheetConfiguration(sheetIndex, sheetName, 1, enableAutoColumnWidth);
 
@@ -33,7 +33,7 @@ namespace WeihanLi.Npoi
         /// <param name="sheetIndex">sheetIndex</param>
         /// <param name="sheetName">sheetName</param>
         /// <param name="startRowIndex">startRowIndex</param>
-        /// <returns>current excel configuration<see cref="IExcelConfiguration"/></returns>
+        /// <returns>current excel configuration</returns>
         public static IExcelConfiguration HasSheetConfiguration(this IExcelConfiguration configuration, int sheetIndex,
             string sheetName, int startRowIndex) => configuration.HasSheetConfiguration(sheetIndex, sheetName, startRowIndex, false);
 
