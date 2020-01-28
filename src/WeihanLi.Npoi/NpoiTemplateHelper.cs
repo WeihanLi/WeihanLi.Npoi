@@ -12,14 +12,7 @@ namespace WeihanLi.Npoi
 {
     internal static class NpoiTemplateHelper
     {
-        private const string GlobalParamFormat = "$(Global:{0})";
-        private const string HeaderParamFormat = "$(Header:{0})";
-        private const string DataParamFormat = "$(Data:{0})";
-
-        private const string DataPrefix = "$(Data:";
-
-        private const string DataBegin = "<Data>";
-        private const string DataEnd = "</Data>";
+        public static readonly TemplateOptions TemplateOptions = new TemplateOptions();
 
         // export via template
         public static ISheet EntityListToSheetByTemplate<TEntity>(
@@ -35,19 +28,19 @@ namespace WeihanLi.Npoi
             var propertyColumnDictionary = InternalHelper.GetPropertyColumnDictionary(configuration);
 
             var globalDictionary = extraData.ParseParamInfo()
-                .ToDictionary(x => GlobalParamFormat.FormatWith(x.Key), x => x.Value);
+                .ToDictionary(x => TemplateOptions.TemplateGlobalParamFormat.FormatWith(x.Key), x => x.Value);
             foreach (var propertyConfiguration in propertyColumnDictionary)
             {
-                globalDictionary.Add(HeaderParamFormat.FormatWith(propertyConfiguration.Key.Name), propertyConfiguration.Value.ColumnTitle);
+                globalDictionary.Add(TemplateOptions.TemplateHeaderParamFormat.FormatWith(propertyConfiguration.Key.Name), propertyConfiguration.Value.ColumnTitle);
             }
 
             var dataFuncDictionary = propertyColumnDictionary
-                .ToDictionary(x => DataParamFormat.FormatWith(x.Key.Name), x => x.Key.GetValueGetter<TEntity>());
+                .ToDictionary(x => TemplateOptions.TemplateDataParamFormat.FormatWith(x.Key.Name), x => x.Key.GetValueGetter<TEntity>());
             foreach (var key in propertyColumnDictionary.Keys)
             {
                 if (InternalCache.OutputFormatterFuncCache.TryGetValue(key, out var formatterFunc) && formatterFunc != null)
                 {
-                    dataFuncDictionary[DataParamFormat.FormatWith(key.Name)] = entity =>
+                    dataFuncDictionary[TemplateOptions.TemplateDataParamFormat.FormatWith(key.Name)] = entity =>
                     {
                         var val = key.GetValueGetter<TEntity>()?.Invoke(entity);
                         var funcType = typeof(Func<,,>).MakeGenericType(configuration.EntityType, key.PropertyType, typeof(object));
@@ -72,8 +65,7 @@ namespace WeihanLi.Npoi
             }
 
             // parseTemplate
-            int dataStartRow = -1, dataRowsCount = -1;
-
+            int dataStartRow = -1, dataRowsCount = 0;
             for (var rowIndex = sheet.FirstRowNum; rowIndex <= sheet.LastRowNum; rowIndex++)
             {
                 var row = sheet.GetRow(rowIndex);
@@ -97,18 +89,18 @@ namespace WeihanLi.Npoi
                         {
                             if (dataStartRow >= 0)
                             {
-                                if (cellValue.Contains(DataEnd))
+                                if (cellValue.Contains(TemplateOptions.TemplateDataEnd))
                                 {
                                     dataRowsCount = rowIndex - dataStartRow + 1;
-                                    cellValue = cellValue.Replace(DataEnd, string.Empty);
+                                    cellValue = cellValue.Replace(TemplateOptions.TemplateDataEnd, string.Empty);
                                 }
                             }
                             else
                             {
-                                if (cellValue.Contains(DataBegin))
+                                if (cellValue.Contains(TemplateOptions.TemplateDataBegin))
                                 {
                                     dataStartRow = rowIndex;
-                                    cellValue = cellValue.Replace(DataBegin, string.Empty);
+                                    cellValue = cellValue.Replace(TemplateOptions.TemplateDataBegin, string.Empty);
                                 }
                             }
                         }
@@ -148,7 +140,7 @@ namespace WeihanLi.Npoi
                                 if (null != cell)
                                 {
                                     var cellValue = cell.GetCellValue<string>();
-                                    if (!string.IsNullOrEmpty(cellValue) && cellValue.Contains(DataPrefix))
+                                    if (!string.IsNullOrEmpty(cellValue) && cellValue.Contains(TemplateOptions.TemplateDataPrefix))
                                     {
                                         var beforeValue = cellValue;
 
@@ -174,7 +166,7 @@ namespace WeihanLi.Npoi
                     dataStartRow += dataRowsCount;
                 }
 
-                // remove template
+                // remove data template
                 for (var i = 0; i < dataRowsCount; i++)
                 {
                     var row = sheet.GetRow(dataStartRow + i);
@@ -183,7 +175,6 @@ namespace WeihanLi.Npoi
                         sheet.RemoveRow(row);
                     }
                 }
-
                 sheet.ShiftRows(dataStartRow + dataRowsCount, sheet.LastRowNum, -dataRowsCount);
             }
 
