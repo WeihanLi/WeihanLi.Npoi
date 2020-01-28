@@ -8,7 +8,7 @@ namespace WeihanLi.Npoi
     /// <summary>
     /// Sheet row collection
     /// </summary>
-    public class NpoiRowCollection : IReadOnlyCollection<IRow>
+    public sealed class NpoiRowCollection : IReadOnlyCollection<IRow>
     {
         private readonly ISheet _sheet;
 

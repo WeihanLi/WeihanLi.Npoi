@@ -46,6 +46,12 @@ namespace WeihanLi.Npoi.Abstract
 
         public void SetAutoFilter(int firstRowIndex, int lastRowIndex, int firstColumnIndex, int lastColumnIndex) => _sheet.SetAutoFilter(new CellRangeAddress(firstRowIndex, lastRowIndex, firstColumnIndex, lastColumnIndex));
 
+        public void ShiftRows(int startRow, int endRow, int n) => _sheet.ShiftRows(startRow, endRow, n);
+
+        public IRow CopyRow(int sourceIndex, int targetIndex) => new NPOIRow(_sheet.CopyRow(sourceIndex, targetIndex));
+
+        public void RemoveRow(IRow row) => _sheet.RemoveRow(row.UnderlyingValue as NModel.IRow);
+
         private readonly NModel.ISheet _sheet;
 
         public NPOISheet(NModel.ISheet sheet)
@@ -68,6 +74,8 @@ namespace WeihanLi.Npoi.Abstract
         }
 
         public ICell CreateCell(int cellIndex) => new NPOICell(_row.CreateCell(cellIndex));
+
+        public object UnderlyingValue => _row;
 
         private readonly NModel.IRow _row;
 

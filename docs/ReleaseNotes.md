@@ -1,6 +1,11 @@
 # WeihanLi.Npoi Release Notes
 
-## [1.8.0](https://www.nuget.org/packages/WeihanLi.Npoi/1.8.0)
+
+## [1.8.2](https://www.nuget.org/packages/WeihanLi.Npoi/1.8.2)
+
+- add `TemplateHelper.ConfigureTemplateOptions` to allow user config templateParamFormat
+
+## [1.8.1](https://www.nuget.org/packages/WeihanLi.Npoi/1.8.1)
 
 - add `ExportExcelByTemplate`, fix #33 
 - update `NpoiRowCollection`

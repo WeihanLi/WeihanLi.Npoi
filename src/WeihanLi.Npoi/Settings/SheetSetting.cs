@@ -2,7 +2,7 @@
 
 namespace WeihanLi.Npoi.Settings
 {
-    internal class SheetSetting
+    internal sealed class SheetSetting
     {
         private int _startRowIndex = 1;
         private string _sheetName = "Sheet0";

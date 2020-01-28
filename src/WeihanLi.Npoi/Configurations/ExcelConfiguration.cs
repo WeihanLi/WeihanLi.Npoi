@@ -9,7 +9,7 @@ using WeihanLi.Npoi.Settings;
 
 namespace WeihanLi.Npoi.Configurations
 {
-    internal class ExcelConfiguration<TEntity> : IExcelConfiguration<TEntity>
+    internal sealed class ExcelConfiguration<TEntity> : IExcelConfiguration<TEntity>
     {
         /// <summary>
         /// EntityType
