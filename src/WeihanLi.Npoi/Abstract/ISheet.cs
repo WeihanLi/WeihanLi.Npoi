@@ -25,5 +25,11 @@
         void CreateFreezePane(int colSplit, int rowSplit, int leftMostCol, int topRow);
 
         void SetAutoFilter(int firstRowIndex, int lastRowIndex, int firstColumnIndex, int lastColumnIndex);
+
+        void ShiftRows(int startRow, int endRow, int n);
+
+        IRow CopyRow(int sourceIndex, int targetIndex);
+
+        void RemoveRow(IRow row);
     }
 }

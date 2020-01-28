@@ -29,5 +29,10 @@
         /// </param>
         /// <returns></returns>
         ICell CreateCell(int cellIndex);
+
+        /// <summary>
+        /// UnderlyingValue
+        /// </summary>
+        object UnderlyingValue { get; }
     }
 }
