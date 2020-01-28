@@ -12,6 +12,9 @@ namespace WeihanLi.Npoi
         private string _templateDataBegin = InternalConstants.TemplateDataBegin;
         private string _templateDataEnd = InternalConstants.TemplateDataEnd;
 
+        /// <summary>
+        /// Global Param Format
+        /// </summary>
         public string TemplateGlobalParamFormat
         {
             get => _templateGlobalParamFormat;
@@ -22,6 +25,9 @@ namespace WeihanLi.Npoi
             }
         }
 
+        /// <summary>
+        /// Header Param Format
+        /// </summary>
         public string TemplateHeaderParamFormat
         {
             get => _templateHeaderParamFormat;
@@ -32,6 +38,9 @@ namespace WeihanLi.Npoi
             }
         }
 
+        /// <summary>
+        /// Data Param Format
+        /// </summary>
         public string TemplateDataParamFormat
         {
             get => _templateDataParamFormat;
@@ -42,6 +51,9 @@ namespace WeihanLi.Npoi
             }
         }
 
+        /// <summary>
+        /// Data Param Prefix
+        /// </summary>
         public string TemplateDataPrefix
         {
             get => _templateDataPrefix;
@@ -52,6 +64,9 @@ namespace WeihanLi.Npoi
             }
         }
 
+        /// <summary>
+        /// Data Begin markup
+        /// </summary>
         public string TemplateDataBegin
         {
             get => _templateDataBegin;
@@ -62,6 +77,9 @@ namespace WeihanLi.Npoi
             }
         }
 
+        /// <summary>
+        /// Data End markup
+        /// </summary>
         public string TemplateDataEnd
         {
             get => _templateDataEnd;
@@ -75,6 +93,10 @@ namespace WeihanLi.Npoi
 
     public static class TemplateHelper
     {
+        /// <summary>
+        /// Configure TemplateOptions
+        /// </summary>
+        /// <param name="optionsAction">optionsAction</param>
         public static void ConfigureTemplateOptions(Action<TemplateOptions> optionsAction)
         {
             if (null == optionsAction)
