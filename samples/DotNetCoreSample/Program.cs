@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using WeihanLi.Common.Helpers;
 using WeihanLi.Extensions;
 using WeihanLi.Npoi;
 using WeihanLi.Npoi.Attributes;
@@ -89,6 +91,15 @@ namespace DotNetCoreSample
                 },
             };
             var csvFilePath = $@"{tempDirPath}\test.csv";
+            entities.ToExcelFileByTemplate(
+                Path.Combine(ApplicationHelper.AppRoot, "Templates", "testTemplate.xlsx"),
+                ApplicationHelper.MapPath("templateTestEntities.xlsx"),
+                extraData: new
+                {
+                    Author = "WeihanLi",
+                    Title = "导出结果"
+                }
+            );
             entities.ToExcelFile(csvFilePath.Replace(".csv", ".xlsx"));
             entities.ToCsvFile(csvFilePath);
             var entitiesT0 = ExcelHelper.ToEntityList<TestEntity>(csvFilePath.Replace(".csv", ".xlsx"));

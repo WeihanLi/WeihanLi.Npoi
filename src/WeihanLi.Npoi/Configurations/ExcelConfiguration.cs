@@ -14,7 +14,7 @@ namespace WeihanLi.Npoi.Configurations
         /// <summary>
         /// EntityType
         /// </summary>
-        private readonly Type _entityType = typeof(TEntity);
+        public Type EntityType => typeof(TEntity);
 
         /// <summary>
         /// PropertyConfigurationDictionary
@@ -126,7 +126,7 @@ namespace WeihanLi.Npoi.Configurations
             var property = memberInfo as PropertyInfo;
             if (property == null || !PropertyConfigurationDictionary.ContainsKey(property))
             {
-                property = CacheUtil.TypePropertyCache.GetOrAdd(_entityType, t => t.GetProperties())
+                property = CacheUtil.TypePropertyCache.GetOrAdd(EntityType, t => t.GetProperties())
                     .FirstOrDefault(p => p.Name == memberInfo.Name);
                 if (null == property)
                 {
@@ -144,13 +144,12 @@ namespace WeihanLi.Npoi.Configurations
                 return (IPropertyConfiguration<TEntity, TProperty>)PropertyConfigurationDictionary[property];
             }
 
-            var entityType = typeof(TEntity);
             var propertyType = typeof(TProperty);
 
-            property = new FakePropertyInfo(entityType, propertyType, propertyName);
+            property = new FakePropertyInfo(EntityType, propertyType, propertyName);
 
             var propertyConfigurationType =
-                typeof(PropertyConfiguration<,>).MakeGenericType(entityType, propertyType);
+                typeof(PropertyConfiguration<,>).MakeGenericType(EntityType, propertyType);
             var propertyConfiguration = (PropertyConfiguration)Activator.CreateInstance(propertyConfigurationType, new object[] { property });
 
             PropertyConfigurationDictionary[property] = propertyConfiguration;

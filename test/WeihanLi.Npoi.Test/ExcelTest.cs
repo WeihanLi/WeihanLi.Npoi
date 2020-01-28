@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using WeihanLi.Extensions;
 using WeihanLi.Npoi.Test.Models;
@@ -272,7 +273,7 @@ namespace WeihanLi.Npoi.Test
         }
 
         [Fact]
-        public void InputOutputFormatterTest()
+        public void InputOutputColumnFormatterTest()
         {
             IReadOnlyList<Notice> list = Enumerable.Range(0, 10).Select(i => new Notice()
             {
@@ -286,8 +287,9 @@ namespace WeihanLi.Npoi.Test
             var settings = ExcelHelper.SettingFor<Notice>();
             lock (settings)
             {
-                settings.Property(x => x.Id).HasOutputFormatter((e, x) => $"{x}_Test");
-                settings.Property(x => x.Id).HasColumnInputFormatter(x => Convert.ToInt32(x.Split(new char[] { '_' }, StringSplitOptions.RemoveEmptyEntries)[0]));
+                settings.Property(x => x.Id)
+                    .HasColumnOutputFormatter(x => $"{x}_Test")
+                    .HasColumnInputFormatter(x => Convert.ToInt32(x.Split(new char[] { '_' }, StringSplitOptions.RemoveEmptyEntries)[0]));
                 var excelBytes = list.ToExcelBytes();
 
                 var importedList = ExcelHelper.ToEntityList<Notice>(excelBytes);
@@ -308,7 +310,42 @@ namespace WeihanLi.Npoi.Test
                     }
                 }
 
-                settings.Property(_ => _.Title).HasColumnInputFormatter(null);
+                settings.Property(x => x.Id)
+                    .HasColumnOutputFormatter(null)
+                    .HasColumnInputFormatter(null);
+            }
+        }
+
+        [Theory]
+        [InlineData(ExcelFormat.Xls)]
+        [InlineData(ExcelFormat.Xlsx)]
+        public void DataTableImportExportTest(ExcelFormat excelFormat)
+        {
+            var dt = new DataTable();
+            dt.Columns.AddRange(new[]
+            {
+                new DataColumn("Name"),
+                new DataColumn("Age"),
+                new DataColumn("Desc"),
+            });
+            for (var i = 0; i < 10; i++)
+            {
+                var row = dt.NewRow();
+                row.ItemArray = new object[] { $"Test_{i}", i + 10, $"Desc_{i}" };
+                dt.Rows.Add(row);
+            }
+            //
+            var excelBytes = dt.ToExcelBytes(excelFormat);
+            var importedData = ExcelHelper.ToDataTable(excelBytes, excelFormat);
+            Assert.NotNull(importedData);
+            Assert.Equal(dt.Rows.Count, importedData.Rows.Count);
+            for (var i = 0; i < dt.Rows.Count; i++)
+            {
+                Assert.Equal(dt.Rows[i].ItemArray.Length, importedData.Rows[i].ItemArray.Length);
+                for (var j = 0; j < dt.Rows[i].ItemArray.Length; j++)
+                {
+                    Assert.Equal(dt.Rows[i].ItemArray[j], importedData.Rows[i].ItemArray[j]);
+                }
             }
         }
     }

@@ -1,5 +1,27 @@
 # WeihanLi.Npoi Release Notes
 
+
+## [1.8.2](https://www.nuget.org/packages/WeihanLi.Npoi/1.8.2)
+
+- add `TemplateHelper.ConfigureTemplateOptions` to allow user config templateParamFormat
+
+## [1.8.1](https://www.nuget.org/packages/WeihanLi.Npoi/1.8.1)
+
+- apply column output formatter for `ExportExcelByTemplate`
+
+## [1.8.0](https://www.nuget.org/packages/WeihanLi.Npoi/1.8.0)
+
+- add `ExportExcelByTemplate`, fix #33 
+- update `NpoiRowCollection`
+- optimize `DataTable` support for csv
+- export csv as utf8 encoding
+- update export generic type constraint, remove `new()` constraint
+
+## [1.7.0](https://www.nuget.org/packages/WeihanLi.Npoi/1.7.0)
+
+- add `HasColumnInputFormatter`/`HasColumnOutputFormatter`
+- simply `IExcelConfiguration` SheetConfiguration
+
 ## [1.6.1](https://www.nuget.org/packages/WeihanLi.Npoi/1.6.1)
 
 - fix inherit property configure bug

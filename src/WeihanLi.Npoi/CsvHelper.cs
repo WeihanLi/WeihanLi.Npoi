@@ -63,18 +63,35 @@ namespace WeihanLi.Npoi
         /// <summary>
         /// convert csv file data to dataTable
         /// </summary>
-        /// <param name="filePath">csv file path</param>
-        public static DataTable ToDataTable(string filePath)
+        /// <param name="csvBytes">csv bytes</param>
+        public static DataTable ToDataTable(byte[] csvBytes)
         {
-            if (!File.Exists(filePath))
+            if (null == csvBytes)
             {
-                throw new ArgumentException(Resource.FileNotFound, nameof(filePath));
+                throw new ArgumentNullException(nameof(csvBytes));
+            }
+
+            using (var ms = new MemoryStream(csvBytes))
+            {
+                return ToDataTable(ms);
+            }
+        }
+
+        /// <summary>
+        /// convert csv stream data to dataTable
+        /// </summary>
+        /// <param name="stream">stream</param>
+        public static DataTable ToDataTable(Stream stream)
+        {
+            if (null == stream)
+            {
+                throw new ArgumentNullException(nameof(stream));
             }
             var dt = new DataTable();
 
-            using (var fs = new FileStream(filePath, FileMode.Open, FileAccess.Read))
+            if (stream.CanRead)
             {
-                using (var sr = new StreamReader(fs, Encoding.UTF8))
+                using (var sr = new StreamReader(stream, Encoding.UTF8))
                 {
                     string strLine;
                     var isFirst = true;
@@ -106,6 +123,23 @@ namespace WeihanLi.Npoi
             }
 
             return dt;
+        }
+
+        /// <summary>
+        /// convert csv file data to dataTable
+        /// </summary>
+        /// <param name="filePath">csv file path</param>
+        public static DataTable ToDataTable(string filePath)
+        {
+            if (!File.Exists(filePath))
+            {
+                throw new ArgumentException(Resource.FileNotFound, nameof(filePath));
+            }
+
+            using (var fs = new FileStream(filePath, FileMode.Open, FileAccess.Read))
+            {
+                return ToDataTable(fs);
+            }
         }
 
         /// <summary>
@@ -425,7 +459,7 @@ namespace WeihanLi.Npoi
             {
                 Directory.CreateDirectory(dir);
             }
-            File.WriteAllText(filePath, csvTextData);
+            File.WriteAllText(filePath, csvTextData, Encoding.UTF8);
 
             return 1;
         }

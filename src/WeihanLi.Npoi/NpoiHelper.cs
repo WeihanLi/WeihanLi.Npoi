@@ -18,7 +18,7 @@ namespace WeihanLi.Npoi
     {
         private static SheetSetting GetSheetSetting(IDictionary<int, SheetSetting> sheetSettings, int sheetIndex)
         {
-            return sheetIndex >= 0 && sheetSettings.ContainsKey(sheetIndex)
+            return sheetIndex > 0 && sheetSettings.ContainsKey(sheetIndex)
                 ? sheetSettings[sheetIndex]
                 : sheetSettings[0];
         }
@@ -28,7 +28,6 @@ namespace WeihanLi.Npoi
             if (sheet.FirstRowNum < 0)
                 return new List<TEntity>(0);
 
-            var entityType = typeof(TEntity);
             var configuration = InternalHelper.GetExcelConfigurationMapping<TEntity>();
             var sheetSetting = GetSheetSetting(configuration.SheetSettings, sheetIndex);
             var entities = new List<TEntity>(sheet.LastRowNum - sheetSetting.HeaderRowIndex);
@@ -84,7 +83,7 @@ namespace WeihanLi.Npoi
                         {
                             entity = new TEntity();
 
-                            if (entityType.IsValueType)
+                            if (configuration.EntityType.IsValueType)
                             {
                                 var obj = (object)entity;// boxing for value types
                                 foreach (var key in propertyColumnDic.Keys)
@@ -180,7 +179,7 @@ namespace WeihanLi.Npoi
                                     var propertyValue = propertyInfo.GetValueGetter()?.Invoke(entity);
                                     if (InternalCache.InputFormatterFuncCache.TryGetValue(propertyInfo, out var formatterFunc) && formatterFunc != null)
                                     {
-                                        var funcType = typeof(Func<,,>).MakeGenericType(entityType, propertyInfo.PropertyType, typeof(object));
+                                        var funcType = typeof(Func<,,>).MakeGenericType(configuration.EntityType, propertyInfo.PropertyType, typeof(object));
                                         var method = funcType.GetProperty("Method")?.GetValueGetter()?.Invoke(formatterFunc) as MethodInfo;
                                         var target = funcType.GetProperty("Target")?.GetValueGetter()?.Invoke(formatterFunc);
 
@@ -210,13 +209,12 @@ namespace WeihanLi.Npoi
             return entities;
         }
 
-        public static ISheet EntityListToSheet<TEntity>([NotNull]ISheet sheet, IEnumerable<TEntity> entityList, int sheetIndex) where TEntity : new()
+        public static ISheet EntityListToSheet<TEntity>([NotNull]ISheet sheet, IEnumerable<TEntity> entityList, int sheetIndex)
         {
             if (null == entityList)
             {
                 return sheet;
             }
-            var entityType = typeof(TEntity);
             var configuration = InternalHelper.GetExcelConfigurationMapping<TEntity>();
             var propertyColumnDictionary = InternalHelper.GetPropertyColumnDictionary(configuration);
             if (propertyColumnDictionary.Keys.Count == 0)
@@ -245,7 +243,7 @@ namespace WeihanLi.Npoi
                         var propertyValue = key.GetValueGetter<TEntity>()?.Invoke(entity);
                         if (InternalCache.OutputFormatterFuncCache.TryGetValue(key, out var formatterFunc) && formatterFunc != null)
                         {
-                            var funcType = typeof(Func<,,>).MakeGenericType(entityType, key.PropertyType, typeof(object));
+                            var funcType = typeof(Func<,,>).MakeGenericType(configuration.EntityType, key.PropertyType, typeof(object));
                             var method = funcType.GetProperty("Method")?.GetValueGetter()?.Invoke(formatterFunc) as MethodInfo;
                             var target = funcType.GetProperty("Target")?.GetValueGetter()?.Invoke(formatterFunc);
 
@@ -276,7 +274,7 @@ namespace WeihanLi.Npoi
             return sheet;
         }
 
-        public static ISheet DataTableToSheet<TEntity>([NotNull]ISheet sheet, DataTable dataTable, int sheetIndex) where TEntity : new()
+        public static ISheet DataTableToSheet<TEntity>([NotNull]ISheet sheet, DataTable dataTable, int sheetIndex)
         {
             if (null == dataTable || dataTable.Rows.Count == 0 || dataTable.Columns.Count == 0)
             {

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Reflection;
+using WeihanLi.Common;
 using WeihanLi.Extensions;
 using WeihanLi.Npoi.Configurations;
 using CellType = WeihanLi.Npoi.Abstract.CellType;
@@ -13,6 +14,43 @@ namespace WeihanLi.Npoi
 {
     internal static class InternalExtensions
     {
+        /// <summary>
+        /// Parse obj to paramDictionary
+        /// </summary>
+        /// <param name="paramInfo">param object</param>
+        /// <returns></returns>
+        public static IDictionary<string, object> ParseParamInfo(this object paramInfo)
+        {
+            var paramDic = new Dictionary<string, object>();
+            if (null != paramInfo)
+            {
+                if (paramInfo.IsValueTuple())// Tuple
+                {
+                    var fields = paramInfo.GetFields();
+                    foreach (var field in fields)
+                    {
+                        paramDic.Add(field.Name, field.GetValue(paramInfo));
+                    }
+                }
+                else if (paramInfo is IDictionary<string, object> paramDictionary)
+                {
+                    return paramDictionary;
+                }
+                else // get properties
+                {
+                    var properties = CacheUtil.TypePropertyCache.GetOrAdd(paramInfo.GetType(), t => t.GetProperties());
+                    foreach (var property in properties)
+                    {
+                        if (property.CanRead)
+                        {
+                            paramDic.Add(property.Name, property.GetValueGetter().Invoke(paramInfo));
+                        }
+                    }
+                }
+            }
+            return paramDic;
+        }
+
         /// <summary>
         ///     GetCellValue
         /// </summary>

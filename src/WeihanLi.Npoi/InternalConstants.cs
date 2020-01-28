@@ -17,19 +17,15 @@
         /// </summary>
         public const string ApplicationName = "WeihanLi.Npoi";
 
-        /// <summary>
-        /// ColumnInputFormatterFuncName
-        /// </summary>
-        public const string ColumnInputFormatterFuncName = "ColumnInputFormatterFunc";
+        #region TemplateParamFormat
 
-        /// <summary>
-        /// InputFormatterFuncName
-        /// </summary>
-        public const string InputFormatterFuncName = "InputFormatterFunc";
+        public const string TemplateGlobalParamFormat = "$(Global:{0})";
+        public const string TemplateHeaderParamFormat = "$(Header:{0})";
+        public const string TemplateDataParamFormat = "$(Data:{0})";
+        public const string TemplateDataPrefix = "$(Data:";
+        public const string TemplateDataBegin = "<Data>";
+        public const string TemplateDataEnd = "</Data>";
 
-        /// <summary>
-        /// OutputFormatterFunc
-        /// </summary>
-        public const string OutputFormatterFuncName = "OutputFormatterFunc";
+        #endregion TemplateParamFormat
     }
 }
