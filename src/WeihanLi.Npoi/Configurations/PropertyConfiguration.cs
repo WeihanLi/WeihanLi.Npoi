@@ -37,7 +37,7 @@ namespace WeihanLi.Npoi.Configurations
         public string PropertyName { get; set; }
     }
 
-    internal class PropertyConfiguration<TEntity, TProperty> : PropertyConfiguration, IPropertyConfiguration<TEntity, TProperty>
+    internal sealed class PropertyConfiguration<TEntity, TProperty> : PropertyConfiguration, IPropertyConfiguration<TEntity, TProperty>
     {
         private readonly PropertyInfo _propertyInfo;
 

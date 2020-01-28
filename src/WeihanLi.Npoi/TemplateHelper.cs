@@ -3,7 +3,7 @@ using WeihanLi.Extensions;
 
 namespace WeihanLi.Npoi
 {
-    public class TemplateOptions
+    public sealed class TemplateOptions
     {
         private string _templateGlobalParamFormat = InternalConstants.TemplateGlobalParamFormat;
         private string _templateHeaderParamFormat = InternalConstants.TemplateHeaderParamFormat;
