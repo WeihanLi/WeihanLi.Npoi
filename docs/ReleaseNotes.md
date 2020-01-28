@@ -7,10 +7,6 @@
 
 ## [1.8.1](https://www.nuget.org/packages/WeihanLi.Npoi/1.8.1)
 
-- apply column output formatter for `ExportExcelByTemplate`
-
-## [1.8.0](https://www.nuget.org/packages/WeihanLi.Npoi/1.8.0)
-
 - add `ExportExcelByTemplate`, fix #33 
 - update `NpoiRowCollection`
 - optimize `DataTable` support for csv
