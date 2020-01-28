@@ -1996,13 +1996,13 @@
   
   
   <a id="WeihanLi_Npoi_NpoiExtensions_ToExcelBytesByTemplate_" data-uid="WeihanLi.Npoi.NpoiExtensions.ToExcelBytesByTemplate*"></a>
-  <h4 id="WeihanLi_Npoi_NpoiExtensions_ToExcelBytesByTemplate__1_IEnumerable___0__Stream_System_Int32_System_Object_" data-uid="WeihanLi.Npoi.NpoiExtensions.ToExcelBytesByTemplate``1(IEnumerable{``0},Stream,System.Int32,System.Object)">ToExcelBytesByTemplate&lt;TEntity&gt;(IEnumerable&lt;TEntity&gt;, Stream, Int32, Object)</h4>
+  <h4 id="WeihanLi_Npoi_NpoiExtensions_ToExcelBytesByTemplate__1_IEnumerable___0__Stream_WeihanLi_Npoi_ExcelFormat_System_Int32_System_Object_" data-uid="WeihanLi.Npoi.NpoiExtensions.ToExcelBytesByTemplate``1(IEnumerable{``0},Stream,WeihanLi.Npoi.ExcelFormat,System.Int32,System.Object)">ToExcelBytesByTemplate&lt;TEntity&gt;(IEnumerable&lt;TEntity&gt;, Stream, ExcelFormat, Int32, Object)</h4>
   <div class="markdown level1 summary"><p>export excel via template</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static byte[] ToExcelBytesByTemplate&lt;TEntity&gt;(this IEnumerable&lt;TEntity&gt; entities, Stream templateStream, int sheetIndex = 0, object extraData = null)</code></pre>
+    <pre><code class="lang-csharp hljs">public static byte[] ToExcelBytesByTemplate&lt;TEntity&gt;(this IEnumerable&lt;TEntity&gt; entities, Stream templateStream, ExcelFormat excelFormat = ExcelFormat.Xls, int sheetIndex = 0, object extraData = null)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -2024,6 +2024,12 @@
         <td><span class="xref">Stream</span></td>
         <td><span class="parametername">templateStream</span></td>
         <td><p>templateStream</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="WeihanLi.Npoi.ExcelFormat.html">ExcelFormat</a></td>
+        <td><span class="parametername">excelFormat</span></td>
+        <td><p>excelFormat</p>
 </td>
       </tr>
       <tr>
@@ -2075,13 +2081,13 @@
   
   
   <a id="WeihanLi_Npoi_NpoiExtensions_ToExcelBytesByTemplate_" data-uid="WeihanLi.Npoi.NpoiExtensions.ToExcelBytesByTemplate*"></a>
-  <h4 id="WeihanLi_Npoi_NpoiExtensions_ToExcelBytesByTemplate__1_IEnumerable___0__System_Byte___System_Int32_System_Object_" data-uid="WeihanLi.Npoi.NpoiExtensions.ToExcelBytesByTemplate``1(IEnumerable{``0},System.Byte[],System.Int32,System.Object)">ToExcelBytesByTemplate&lt;TEntity&gt;(IEnumerable&lt;TEntity&gt;, Byte[], Int32, Object)</h4>
+  <h4 id="WeihanLi_Npoi_NpoiExtensions_ToExcelBytesByTemplate__1_IEnumerable___0__System_Byte___WeihanLi_Npoi_ExcelFormat_System_Int32_System_Object_" data-uid="WeihanLi.Npoi.NpoiExtensions.ToExcelBytesByTemplate``1(IEnumerable{``0},System.Byte[],WeihanLi.Npoi.ExcelFormat,System.Int32,System.Object)">ToExcelBytesByTemplate&lt;TEntity&gt;(IEnumerable&lt;TEntity&gt;, Byte[], ExcelFormat, Int32, Object)</h4>
   <div class="markdown level1 summary"><p>export excel via template</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static byte[] ToExcelBytesByTemplate&lt;TEntity&gt;(this IEnumerable&lt;TEntity&gt; entities, byte[] templateBytes, int sheetIndex = 0, object extraData = null)</code></pre>
+    <pre><code class="lang-csharp hljs">public static byte[] ToExcelBytesByTemplate&lt;TEntity&gt;(this IEnumerable&lt;TEntity&gt; entities, byte[] templateBytes, ExcelFormat excelFormat = ExcelFormat.Xls, int sheetIndex = 0, object extraData = null)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -2103,6 +2109,12 @@
         <td><span class="xref">System.Byte</span>[]</td>
         <td><span class="parametername">templateBytes</span></td>
         <td><p>templateBytes</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="WeihanLi.Npoi.ExcelFormat.html">ExcelFormat</a></td>
+        <td><span class="parametername">excelFormat</span></td>
+        <td><p>excelFormat</p>
 </td>
       </tr>
       <tr>
@@ -2561,13 +2573,13 @@
   
   
   <a id="WeihanLi_Npoi_NpoiExtensions_ToExcelFileByTemplate_" data-uid="WeihanLi.Npoi.NpoiExtensions.ToExcelFileByTemplate*"></a>
-  <h4 id="WeihanLi_Npoi_NpoiExtensions_ToExcelFileByTemplate__1_IEnumerable___0__System_Byte___System_String_System_Int32_System_Object_" data-uid="WeihanLi.Npoi.NpoiExtensions.ToExcelFileByTemplate``1(IEnumerable{``0},System.Byte[],System.String,System.Int32,System.Object)">ToExcelFileByTemplate&lt;TEntity&gt;(IEnumerable&lt;TEntity&gt;, Byte[], String, Int32, Object)</h4>
+  <h4 id="WeihanLi_Npoi_NpoiExtensions_ToExcelFileByTemplate__1_IEnumerable___0__System_Byte___System_String_WeihanLi_Npoi_ExcelFormat_System_Int32_System_Object_" data-uid="WeihanLi.Npoi.NpoiExtensions.ToExcelFileByTemplate``1(IEnumerable{``0},System.Byte[],System.String,WeihanLi.Npoi.ExcelFormat,System.Int32,System.Object)">ToExcelFileByTemplate&lt;TEntity&gt;(IEnumerable&lt;TEntity&gt;, Byte[], String, ExcelFormat, Int32, Object)</h4>
   <div class="markdown level1 summary"><p>export excel via template</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static int ToExcelFileByTemplate&lt;TEntity&gt;(this IEnumerable&lt;TEntity&gt; entities, byte[] templateBytes, string excelPath, int sheetIndex = 0, object extraData = null)</code></pre>
+    <pre><code class="lang-csharp hljs">public static int ToExcelFileByTemplate&lt;TEntity&gt;(this IEnumerable&lt;TEntity&gt; entities, byte[] templateBytes, string excelPath, ExcelFormat excelFormat = ExcelFormat.Xls, int sheetIndex = 0, object extraData = null)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -2595,6 +2607,12 @@
         <td><span class="xref">System.String</span></td>
         <td><span class="parametername">excelPath</span></td>
         <td><p>excelPath</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="WeihanLi.Npoi.ExcelFormat.html">ExcelFormat</a></td>
+        <td><span class="parametername">excelFormat</span></td>
+        <td><p>excelFormat</p>
 </td>
       </tr>
       <tr>

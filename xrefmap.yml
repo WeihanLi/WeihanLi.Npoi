@@ -857,24 +857,24 @@ references:
   fullName.vb: WeihanLi.Npoi.NpoiExtensions.ToExcelBytesByTemplate(Of TEntity)(IEnumerable(Of TEntity), IWorkbook, System.Int32, System.Object)
   nameWithType: NpoiExtensions.ToExcelBytesByTemplate<TEntity>(IEnumerable<TEntity>, IWorkbook, Int32, Object)
   nameWithType.vb: NpoiExtensions.ToExcelBytesByTemplate(Of TEntity)(IEnumerable(Of TEntity), IWorkbook, Int32, Object)
-- uid: WeihanLi.Npoi.NpoiExtensions.ToExcelBytesByTemplate``1(IEnumerable{``0},Stream,System.Int32,System.Object)
-  name: ToExcelBytesByTemplate<TEntity>(IEnumerable<TEntity>, Stream, Int32, Object)
-  href: docs/api/WeihanLi.Npoi.NpoiExtensions.html#WeihanLi_Npoi_NpoiExtensions_ToExcelBytesByTemplate__1_IEnumerable___0__Stream_System_Int32_System_Object_
-  commentId: M:WeihanLi.Npoi.NpoiExtensions.ToExcelBytesByTemplate``1(IEnumerable{``0},Stream,System.Int32,System.Object)
-  name.vb: ToExcelBytesByTemplate(Of TEntity)(IEnumerable(Of TEntity), Stream, Int32, Object)
-  fullName: WeihanLi.Npoi.NpoiExtensions.ToExcelBytesByTemplate<TEntity>(IEnumerable<TEntity>, Stream, System.Int32, System.Object)
-  fullName.vb: WeihanLi.Npoi.NpoiExtensions.ToExcelBytesByTemplate(Of TEntity)(IEnumerable(Of TEntity), Stream, System.Int32, System.Object)
-  nameWithType: NpoiExtensions.ToExcelBytesByTemplate<TEntity>(IEnumerable<TEntity>, Stream, Int32, Object)
-  nameWithType.vb: NpoiExtensions.ToExcelBytesByTemplate(Of TEntity)(IEnumerable(Of TEntity), Stream, Int32, Object)
-- uid: WeihanLi.Npoi.NpoiExtensions.ToExcelBytesByTemplate``1(IEnumerable{``0},System.Byte[],System.Int32,System.Object)
-  name: ToExcelBytesByTemplate<TEntity>(IEnumerable<TEntity>, Byte[], Int32, Object)
-  href: docs/api/WeihanLi.Npoi.NpoiExtensions.html#WeihanLi_Npoi_NpoiExtensions_ToExcelBytesByTemplate__1_IEnumerable___0__System_Byte___System_Int32_System_Object_
-  commentId: M:WeihanLi.Npoi.NpoiExtensions.ToExcelBytesByTemplate``1(IEnumerable{``0},System.Byte[],System.Int32,System.Object)
-  name.vb: ToExcelBytesByTemplate(Of TEntity)(IEnumerable(Of TEntity), Byte(), Int32, Object)
-  fullName: WeihanLi.Npoi.NpoiExtensions.ToExcelBytesByTemplate<TEntity>(IEnumerable<TEntity>, System.Byte[], System.Int32, System.Object)
-  fullName.vb: WeihanLi.Npoi.NpoiExtensions.ToExcelBytesByTemplate(Of TEntity)(IEnumerable(Of TEntity), System.Byte(), System.Int32, System.Object)
-  nameWithType: NpoiExtensions.ToExcelBytesByTemplate<TEntity>(IEnumerable<TEntity>, Byte[], Int32, Object)
-  nameWithType.vb: NpoiExtensions.ToExcelBytesByTemplate(Of TEntity)(IEnumerable(Of TEntity), Byte(), Int32, Object)
+- uid: WeihanLi.Npoi.NpoiExtensions.ToExcelBytesByTemplate``1(IEnumerable{``0},Stream,WeihanLi.Npoi.ExcelFormat,System.Int32,System.Object)
+  name: ToExcelBytesByTemplate<TEntity>(IEnumerable<TEntity>, Stream, ExcelFormat, Int32, Object)
+  href: docs/api/WeihanLi.Npoi.NpoiExtensions.html#WeihanLi_Npoi_NpoiExtensions_ToExcelBytesByTemplate__1_IEnumerable___0__Stream_WeihanLi_Npoi_ExcelFormat_System_Int32_System_Object_
+  commentId: M:WeihanLi.Npoi.NpoiExtensions.ToExcelBytesByTemplate``1(IEnumerable{``0},Stream,WeihanLi.Npoi.ExcelFormat,System.Int32,System.Object)
+  name.vb: ToExcelBytesByTemplate(Of TEntity)(IEnumerable(Of TEntity), Stream, ExcelFormat, Int32, Object)
+  fullName: WeihanLi.Npoi.NpoiExtensions.ToExcelBytesByTemplate<TEntity>(IEnumerable<TEntity>, Stream, WeihanLi.Npoi.ExcelFormat, System.Int32, System.Object)
+  fullName.vb: WeihanLi.Npoi.NpoiExtensions.ToExcelBytesByTemplate(Of TEntity)(IEnumerable(Of TEntity), Stream, WeihanLi.Npoi.ExcelFormat, System.Int32, System.Object)
+  nameWithType: NpoiExtensions.ToExcelBytesByTemplate<TEntity>(IEnumerable<TEntity>, Stream, ExcelFormat, Int32, Object)
+  nameWithType.vb: NpoiExtensions.ToExcelBytesByTemplate(Of TEntity)(IEnumerable(Of TEntity), Stream, ExcelFormat, Int32, Object)
+- uid: WeihanLi.Npoi.NpoiExtensions.ToExcelBytesByTemplate``1(IEnumerable{``0},System.Byte[],WeihanLi.Npoi.ExcelFormat,System.Int32,System.Object)
+  name: ToExcelBytesByTemplate<TEntity>(IEnumerable<TEntity>, Byte[], ExcelFormat, Int32, Object)
+  href: docs/api/WeihanLi.Npoi.NpoiExtensions.html#WeihanLi_Npoi_NpoiExtensions_ToExcelBytesByTemplate__1_IEnumerable___0__System_Byte___WeihanLi_Npoi_ExcelFormat_System_Int32_System_Object_
+  commentId: M:WeihanLi.Npoi.NpoiExtensions.ToExcelBytesByTemplate``1(IEnumerable{``0},System.Byte[],WeihanLi.Npoi.ExcelFormat,System.Int32,System.Object)
+  name.vb: ToExcelBytesByTemplate(Of TEntity)(IEnumerable(Of TEntity), Byte(), ExcelFormat, Int32, Object)
+  fullName: WeihanLi.Npoi.NpoiExtensions.ToExcelBytesByTemplate<TEntity>(IEnumerable<TEntity>, System.Byte[], WeihanLi.Npoi.ExcelFormat, System.Int32, System.Object)
+  fullName.vb: WeihanLi.Npoi.NpoiExtensions.ToExcelBytesByTemplate(Of TEntity)(IEnumerable(Of TEntity), System.Byte(), WeihanLi.Npoi.ExcelFormat, System.Int32, System.Object)
+  nameWithType: NpoiExtensions.ToExcelBytesByTemplate<TEntity>(IEnumerable<TEntity>, Byte[], ExcelFormat, Int32, Object)
+  nameWithType.vb: NpoiExtensions.ToExcelBytesByTemplate(Of TEntity)(IEnumerable(Of TEntity), Byte(), ExcelFormat, Int32, Object)
 - uid: WeihanLi.Npoi.NpoiExtensions.ToExcelBytesByTemplate``1(IEnumerable{``0},System.String,System.Int32,System.Object)
   name: ToExcelBytesByTemplate<TEntity>(IEnumerable<TEntity>, String, Int32, Object)
   href: docs/api/WeihanLi.Npoi.NpoiExtensions.html#WeihanLi_Npoi_NpoiExtensions_ToExcelBytesByTemplate__1_IEnumerable___0__System_String_System_Int32_System_Object_
@@ -937,15 +937,15 @@ references:
   fullName.vb: WeihanLi.Npoi.NpoiExtensions.ToExcelFileByTemplate(Of TEntity)(IEnumerable(Of TEntity), IWorkbook, System.String, System.Int32, System.Object)
   nameWithType: NpoiExtensions.ToExcelFileByTemplate<TEntity>(IEnumerable<TEntity>, IWorkbook, String, Int32, Object)
   nameWithType.vb: NpoiExtensions.ToExcelFileByTemplate(Of TEntity)(IEnumerable(Of TEntity), IWorkbook, String, Int32, Object)
-- uid: WeihanLi.Npoi.NpoiExtensions.ToExcelFileByTemplate``1(IEnumerable{``0},System.Byte[],System.String,System.Int32,System.Object)
-  name: ToExcelFileByTemplate<TEntity>(IEnumerable<TEntity>, Byte[], String, Int32, Object)
-  href: docs/api/WeihanLi.Npoi.NpoiExtensions.html#WeihanLi_Npoi_NpoiExtensions_ToExcelFileByTemplate__1_IEnumerable___0__System_Byte___System_String_System_Int32_System_Object_
-  commentId: M:WeihanLi.Npoi.NpoiExtensions.ToExcelFileByTemplate``1(IEnumerable{``0},System.Byte[],System.String,System.Int32,System.Object)
-  name.vb: ToExcelFileByTemplate(Of TEntity)(IEnumerable(Of TEntity), Byte(), String, Int32, Object)
-  fullName: WeihanLi.Npoi.NpoiExtensions.ToExcelFileByTemplate<TEntity>(IEnumerable<TEntity>, System.Byte[], System.String, System.Int32, System.Object)
-  fullName.vb: WeihanLi.Npoi.NpoiExtensions.ToExcelFileByTemplate(Of TEntity)(IEnumerable(Of TEntity), System.Byte(), System.String, System.Int32, System.Object)
-  nameWithType: NpoiExtensions.ToExcelFileByTemplate<TEntity>(IEnumerable<TEntity>, Byte[], String, Int32, Object)
-  nameWithType.vb: NpoiExtensions.ToExcelFileByTemplate(Of TEntity)(IEnumerable(Of TEntity), Byte(), String, Int32, Object)
+- uid: WeihanLi.Npoi.NpoiExtensions.ToExcelFileByTemplate``1(IEnumerable{``0},System.Byte[],System.String,WeihanLi.Npoi.ExcelFormat,System.Int32,System.Object)
+  name: ToExcelFileByTemplate<TEntity>(IEnumerable<TEntity>, Byte[], String, ExcelFormat, Int32, Object)
+  href: docs/api/WeihanLi.Npoi.NpoiExtensions.html#WeihanLi_Npoi_NpoiExtensions_ToExcelFileByTemplate__1_IEnumerable___0__System_Byte___System_String_WeihanLi_Npoi_ExcelFormat_System_Int32_System_Object_
+  commentId: M:WeihanLi.Npoi.NpoiExtensions.ToExcelFileByTemplate``1(IEnumerable{``0},System.Byte[],System.String,WeihanLi.Npoi.ExcelFormat,System.Int32,System.Object)
+  name.vb: ToExcelFileByTemplate(Of TEntity)(IEnumerable(Of TEntity), Byte(), String, ExcelFormat, Int32, Object)
+  fullName: WeihanLi.Npoi.NpoiExtensions.ToExcelFileByTemplate<TEntity>(IEnumerable<TEntity>, System.Byte[], System.String, WeihanLi.Npoi.ExcelFormat, System.Int32, System.Object)
+  fullName.vb: WeihanLi.Npoi.NpoiExtensions.ToExcelFileByTemplate(Of TEntity)(IEnumerable(Of TEntity), System.Byte(), System.String, WeihanLi.Npoi.ExcelFormat, System.Int32, System.Object)
+  nameWithType: NpoiExtensions.ToExcelFileByTemplate<TEntity>(IEnumerable<TEntity>, Byte[], String, ExcelFormat, Int32, Object)
+  nameWithType.vb: NpoiExtensions.ToExcelFileByTemplate(Of TEntity)(IEnumerable(Of TEntity), Byte(), String, ExcelFormat, Int32, Object)
 - uid: WeihanLi.Npoi.NpoiExtensions.ToExcelFileByTemplate``1(IEnumerable{``0},System.String,System.String,System.Int32,System.Object)
   name: ToExcelFileByTemplate<TEntity>(IEnumerable<TEntity>, String, String, Int32, Object)
   href: docs/api/WeihanLi.Npoi.NpoiExtensions.html#WeihanLi_Npoi_NpoiExtensions_ToExcelFileByTemplate__1_IEnumerable___0__System_String_System_String_System_Int32_System_Object_
@@ -1065,3 +1065,109 @@ references:
   isSpec: "True"
   fullName: WeihanLi.Npoi.NpoiRowCollection.GetEnumerator
   nameWithType: NpoiRowCollection.GetEnumerator
+- uid: WeihanLi.Npoi.TemplateHelper
+  name: TemplateHelper
+  href: docs/api/WeihanLi.Npoi.TemplateHelper.html
+  commentId: T:WeihanLi.Npoi.TemplateHelper
+  fullName: WeihanLi.Npoi.TemplateHelper
+  nameWithType: TemplateHelper
+- uid: WeihanLi.Npoi.TemplateHelper.ConfigureTemplateOptions(System.Action{WeihanLi.Npoi.TemplateOptions})
+  name: ConfigureTemplateOptions(Action<TemplateOptions>)
+  href: docs/api/WeihanLi.Npoi.TemplateHelper.html#WeihanLi_Npoi_TemplateHelper_ConfigureTemplateOptions_System_Action_WeihanLi_Npoi_TemplateOptions__
+  commentId: M:WeihanLi.Npoi.TemplateHelper.ConfigureTemplateOptions(System.Action{WeihanLi.Npoi.TemplateOptions})
+  name.vb: ConfigureTemplateOptions(Action(Of TemplateOptions))
+  fullName: WeihanLi.Npoi.TemplateHelper.ConfigureTemplateOptions(System.Action<WeihanLi.Npoi.TemplateOptions>)
+  fullName.vb: WeihanLi.Npoi.TemplateHelper.ConfigureTemplateOptions(System.Action(Of WeihanLi.Npoi.TemplateOptions))
+  nameWithType: TemplateHelper.ConfigureTemplateOptions(Action<TemplateOptions>)
+  nameWithType.vb: TemplateHelper.ConfigureTemplateOptions(Action(Of TemplateOptions))
+- uid: WeihanLi.Npoi.TemplateHelper.ConfigureTemplateOptions*
+  name: ConfigureTemplateOptions
+  href: docs/api/WeihanLi.Npoi.TemplateHelper.html#WeihanLi_Npoi_TemplateHelper_ConfigureTemplateOptions_
+  commentId: Overload:WeihanLi.Npoi.TemplateHelper.ConfigureTemplateOptions
+  isSpec: "True"
+  fullName: WeihanLi.Npoi.TemplateHelper.ConfigureTemplateOptions
+  nameWithType: TemplateHelper.ConfigureTemplateOptions
+- uid: WeihanLi.Npoi.TemplateOptions
+  name: TemplateOptions
+  href: docs/api/WeihanLi.Npoi.TemplateOptions.html
+  commentId: T:WeihanLi.Npoi.TemplateOptions
+  fullName: WeihanLi.Npoi.TemplateOptions
+  nameWithType: TemplateOptions
+- uid: WeihanLi.Npoi.TemplateOptions.TemplateDataBegin
+  name: TemplateDataBegin
+  href: docs/api/WeihanLi.Npoi.TemplateOptions.html#WeihanLi_Npoi_TemplateOptions_TemplateDataBegin
+  commentId: P:WeihanLi.Npoi.TemplateOptions.TemplateDataBegin
+  fullName: WeihanLi.Npoi.TemplateOptions.TemplateDataBegin
+  nameWithType: TemplateOptions.TemplateDataBegin
+- uid: WeihanLi.Npoi.TemplateOptions.TemplateDataBegin*
+  name: TemplateDataBegin
+  href: docs/api/WeihanLi.Npoi.TemplateOptions.html#WeihanLi_Npoi_TemplateOptions_TemplateDataBegin_
+  commentId: Overload:WeihanLi.Npoi.TemplateOptions.TemplateDataBegin
+  isSpec: "True"
+  fullName: WeihanLi.Npoi.TemplateOptions.TemplateDataBegin
+  nameWithType: TemplateOptions.TemplateDataBegin
+- uid: WeihanLi.Npoi.TemplateOptions.TemplateDataEnd
+  name: TemplateDataEnd
+  href: docs/api/WeihanLi.Npoi.TemplateOptions.html#WeihanLi_Npoi_TemplateOptions_TemplateDataEnd
+  commentId: P:WeihanLi.Npoi.TemplateOptions.TemplateDataEnd
+  fullName: WeihanLi.Npoi.TemplateOptions.TemplateDataEnd
+  nameWithType: TemplateOptions.TemplateDataEnd
+- uid: WeihanLi.Npoi.TemplateOptions.TemplateDataEnd*
+  name: TemplateDataEnd
+  href: docs/api/WeihanLi.Npoi.TemplateOptions.html#WeihanLi_Npoi_TemplateOptions_TemplateDataEnd_
+  commentId: Overload:WeihanLi.Npoi.TemplateOptions.TemplateDataEnd
+  isSpec: "True"
+  fullName: WeihanLi.Npoi.TemplateOptions.TemplateDataEnd
+  nameWithType: TemplateOptions.TemplateDataEnd
+- uid: WeihanLi.Npoi.TemplateOptions.TemplateDataParamFormat
+  name: TemplateDataParamFormat
+  href: docs/api/WeihanLi.Npoi.TemplateOptions.html#WeihanLi_Npoi_TemplateOptions_TemplateDataParamFormat
+  commentId: P:WeihanLi.Npoi.TemplateOptions.TemplateDataParamFormat
+  fullName: WeihanLi.Npoi.TemplateOptions.TemplateDataParamFormat
+  nameWithType: TemplateOptions.TemplateDataParamFormat
+- uid: WeihanLi.Npoi.TemplateOptions.TemplateDataParamFormat*
+  name: TemplateDataParamFormat
+  href: docs/api/WeihanLi.Npoi.TemplateOptions.html#WeihanLi_Npoi_TemplateOptions_TemplateDataParamFormat_
+  commentId: Overload:WeihanLi.Npoi.TemplateOptions.TemplateDataParamFormat
+  isSpec: "True"
+  fullName: WeihanLi.Npoi.TemplateOptions.TemplateDataParamFormat
+  nameWithType: TemplateOptions.TemplateDataParamFormat
+- uid: WeihanLi.Npoi.TemplateOptions.TemplateDataPrefix
+  name: TemplateDataPrefix
+  href: docs/api/WeihanLi.Npoi.TemplateOptions.html#WeihanLi_Npoi_TemplateOptions_TemplateDataPrefix
+  commentId: P:WeihanLi.Npoi.TemplateOptions.TemplateDataPrefix
+  fullName: WeihanLi.Npoi.TemplateOptions.TemplateDataPrefix
+  nameWithType: TemplateOptions.TemplateDataPrefix
+- uid: WeihanLi.Npoi.TemplateOptions.TemplateDataPrefix*
+  name: TemplateDataPrefix
+  href: docs/api/WeihanLi.Npoi.TemplateOptions.html#WeihanLi_Npoi_TemplateOptions_TemplateDataPrefix_
+  commentId: Overload:WeihanLi.Npoi.TemplateOptions.TemplateDataPrefix
+  isSpec: "True"
+  fullName: WeihanLi.Npoi.TemplateOptions.TemplateDataPrefix
+  nameWithType: TemplateOptions.TemplateDataPrefix
+- uid: WeihanLi.Npoi.TemplateOptions.TemplateGlobalParamFormat
+  name: TemplateGlobalParamFormat
+  href: docs/api/WeihanLi.Npoi.TemplateOptions.html#WeihanLi_Npoi_TemplateOptions_TemplateGlobalParamFormat
+  commentId: P:WeihanLi.Npoi.TemplateOptions.TemplateGlobalParamFormat
+  fullName: WeihanLi.Npoi.TemplateOptions.TemplateGlobalParamFormat
+  nameWithType: TemplateOptions.TemplateGlobalParamFormat
+- uid: WeihanLi.Npoi.TemplateOptions.TemplateGlobalParamFormat*
+  name: TemplateGlobalParamFormat
+  href: docs/api/WeihanLi.Npoi.TemplateOptions.html#WeihanLi_Npoi_TemplateOptions_TemplateGlobalParamFormat_
+  commentId: Overload:WeihanLi.Npoi.TemplateOptions.TemplateGlobalParamFormat
+  isSpec: "True"
+  fullName: WeihanLi.Npoi.TemplateOptions.TemplateGlobalParamFormat
+  nameWithType: TemplateOptions.TemplateGlobalParamFormat
+- uid: WeihanLi.Npoi.TemplateOptions.TemplateHeaderParamFormat
+  name: TemplateHeaderParamFormat
+  href: docs/api/WeihanLi.Npoi.TemplateOptions.html#WeihanLi_Npoi_TemplateOptions_TemplateHeaderParamFormat
+  commentId: P:WeihanLi.Npoi.TemplateOptions.TemplateHeaderParamFormat
+  fullName: WeihanLi.Npoi.TemplateOptions.TemplateHeaderParamFormat
+  nameWithType: TemplateOptions.TemplateHeaderParamFormat
+- uid: WeihanLi.Npoi.TemplateOptions.TemplateHeaderParamFormat*
+  name: TemplateHeaderParamFormat
+  href: docs/api/WeihanLi.Npoi.TemplateOptions.html#WeihanLi_Npoi_TemplateOptions_TemplateHeaderParamFormat_
+  commentId: Overload:WeihanLi.Npoi.TemplateOptions.TemplateHeaderParamFormat
+  isSpec: "True"
+  fullName: WeihanLi.Npoi.TemplateOptions.TemplateHeaderParamFormat
+  nameWithType: TemplateOptions.TemplateHeaderParamFormat
