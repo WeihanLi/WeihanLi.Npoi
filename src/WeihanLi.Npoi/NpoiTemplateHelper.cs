@@ -16,6 +16,8 @@ namespace WeihanLi.Npoi
         private const string HeaderParamFormat = "$(Header:{0})";
         private const string DataParamFormat = "$(Data:{0})";
 
+        private const string DataPrefix = "$(Data:";
+
         private const string DataBegin = "<Data>";
         private const string DataEnd = "</Data>";
 
@@ -55,7 +57,7 @@ namespace WeihanLi.Npoi
                         {
                             try
                             {
-                                var formattedValue = method.Invoke(target, new object[] { entity, val });
+                                var formattedValue = method.Invoke(target, new[] { entity, val });
                                 return formattedValue;
                             }
                             catch (Exception e)
@@ -146,9 +148,10 @@ namespace WeihanLi.Npoi
                                 if (null != cell)
                                 {
                                     var cellValue = cell.GetCellValue<string>();
-                                    if (!string.IsNullOrEmpty(cellValue))
+                                    if (!string.IsNullOrEmpty(cellValue) && cellValue.Contains(DataPrefix))
                                     {
                                         var beforeValue = cellValue;
+
                                         foreach (var param in dataFuncDictionary.Keys)
                                         {
                                             if (cellValue.Contains(param))
