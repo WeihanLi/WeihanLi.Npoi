@@ -1,0 +1,227 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>&#26681;&#25454;&#27169;&#26495;&#23548;&#20986;Excel </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="&#26681;&#25454;&#27169;&#26495;&#23548;&#20986;Excel ">
+    <meta name="generator" content="docfx 2.43.2.0">
+    
+    <link rel="shortcut icon" href="../../../favicon.ico">
+    <link rel="stylesheet" href="../../../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../../../styles/docfx.css">
+    <link rel="stylesheet" href="../../../styles/main.css">
+    <meta property="docfx:navrel" content="../../../toc.html">
+    <meta property="docfx:tocrel" content="../toc.html">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../../../index.html">
+                <img id="logo" class="svg" src="../../../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+<h1 id="根据模板导出excel">根据模板导出Excel</h1>
+
+<h2 id="intro">Intro</h2>
+<p>原来的导出方式比较适用于比较简单的导出，每一条数据在一行，数据列虽然自定义程度比较高，如果要一条数据对应多行就做不到了，于是就想支持根据模板导出，在 1.8.0 版本中引入了根据模板导出的功能</p>
+<h2 id="使用示例">使用示例</h2>
+<h3 id="示例模板">示例模板</h3>
+<p><img src="https://img2018.cnblogs.com/blog/489462/202001/489462-20200128142956273-1478084552.png" alt=""></p>
+<p>模板规划的可以有三种数据：</p>
+<ul>
+<li>Global：一个是导出的时候可以指定一些参数，作为 Global 参数，默认参数格式使用: <code>$(Global:PropName)</code> 的格式</li>
+<li>Header：配置的对应属性的显示名称，默认是属性名称，默认参数格式：<code>$(Header:PropName)</code></li>
+<li>Data：对应数据的属性值，默认参数格式：<code>$(Data:PropName)</code></li>
+</ul>
+<p>默认模板参数格式（从 1.8.2 版本开始支持通过 <code>TemplateHelper.ConfigureTemplateOptions</code> 方法来自定义）：</p>
+<ul>
+<li>Global 参数：<code>$(Global:{0})</code></li>
+<li>Header 参数：<code>$(Header:{0})</code></li>
+<li>Data 参数：<code>$(Data:{0})</code></li>
+<li>Data Begin: <code>&lt;Data&gt;</code></li>
+<li>Data End: <code>&lt;/Data&gt;</code></li>
+</ul>
+<p>模板规范：</p>
+<p>模板需要通过 Data Begin 和 Data End 来配置数据模板的开始和结束以识别每一个数据对应的开始行和结束行</p>
+<h3 id="示例代码">示例代码</h3>
+<p>示例配置</p>
+<pre><code class="lang-csharp">var setting = ExcelHelper.SettingFor&lt;TestEntity&gt;();
+// ExcelSetting
+setting.HasAuthor(&quot;WeihanLi&quot;)
+    .HasTitle(&quot;WeihanLi.Npoi test&quot;)
+    .HasDescription(&quot;WeihanLi.Npoi test&quot;)
+    .HasSubject(&quot;WeihanLi.Npoi test&quot;);
+
+setting.HasSheetConfiguration(0, &quot;SystemSettingsList&quot;, 1, true);
+
+setting.Property(_ =&gt; _.SettingId)
+    .HasColumnIndex(0);
+
+setting.Property(_ =&gt; _.SettingName)
+    .HasColumnTitle(&quot;SettingName&quot;)
+    .HasColumnIndex(1);
+
+setting.Property(_ =&gt; _.DisplayName)
+    .HasOutputFormatter((entity, displayName) =&gt; $&quot;AAA_{entity.SettingName}_{displayName}&quot;)
+    .HasInputFormatter((entity, originVal) =&gt; originVal.Split(new[] { '_' })[2])
+    .HasColumnTitle(&quot;DisplayName&quot;)
+    .HasColumnIndex(2);
+
+setting.Property(_ =&gt; _.SettingValue)
+    .HasColumnTitle(&quot;SettingValue&quot;)
+    .HasColumnIndex(3);
+
+setting.Property(x =&gt; x.Enabled)
+    .HasColumnInputFormatter(val =&gt; &quot;启用&quot;.Equals(val))
+    .HasColumnOutputFormatter(v =&gt; v ? &quot;启用&quot; : &quot;禁用&quot;);
+
+setting.Property(&quot;HiddenProp&quot;)
+    .HasOutputFormatter((entity, val) =&gt; $&quot;HiddenProp_{entity.PKID}&quot;);
+
+setting.Property(_ =&gt; _.PKID).Ignored();
+setting.Property(_ =&gt; _.UpdatedBy).Ignored();
+setting.Property(_ =&gt; _.UpdatedTime).Ignored();
+</code></pre>
+<p>根据模板导出示例代码：</p>
+<pre><code class="lang-csharp">var entities = new List&lt;TestEntity&gt;()
+{
+    new TestEntity()
+    {
+        PKID = 1,
+        SettingId = Guid.NewGuid(),
+        SettingName = &quot;Setting1&quot;,
+        SettingValue = &quot;Value1&quot;,
+        DisplayName = &quot;ddd1&quot;
+    },
+    new TestEntity()
+    {
+        PKID=2,
+        SettingId = Guid.NewGuid(),
+        SettingName = &quot;Setting2&quot;,
+        SettingValue = &quot;Value2&quot;,
+        Enabled = true
+    },
+};
+var csvFilePath = $@&quot;{tempDirPath}\test.csv&quot;;
+entities.ToExcelFileByTemplate(
+    Path.Combine(ApplicationHelper.AppRoot, &quot;Templates&quot;, &quot;testTemplate.xlsx&quot;),
+    ApplicationHelper.MapPath(&quot;templateTestEntities.xlsx&quot;),
+    extraData: new
+    {
+        Author = &quot;WeihanLi&quot;,
+        Title = &quot;导出结果&quot;
+    }
+);
+</code></pre>
+<h3 id="导出结果">导出结果</h3>
+<p><img src="https://img2018.cnblogs.com/blog/489462/202001/489462-20200128143038865-1452547986.png" alt=""></p>
+<h2 id="more">More</h2>
+<p>为了方便使用，增加了一些方便的扩展方法：</p>
+<pre><code class="lang-csharp">public static int ToExcelFileByTemplate&lt;TEntity&gt;([NotNull]this IEnumerable&lt;TEntity&gt; entities, string templatePath, string excelPath, int sheetIndex = 0, object extraData = null);
+
+public static int ToExcelFileByTemplate&lt;TEntity&gt;([NotNull]this IEnumerable&lt;TEntity&gt; entities, byte[] templateBytes, string excelPath, ExcelFormat excelFormat = ExcelFormat.Xls, int sheetIndex = 0, object extraData = null);
+
+public static int ToExcelFileByTemplate&lt;TEntity&gt;([NotNull]this IEnumerable&lt;TEntity&gt; entities, IWorkbook templateWorkbook, string excelPath, int sheetIndex = 0, object extraData = null);
+
+public static byte[] ToExcelBytesByTemplate&lt;TEntity&gt;([NotNull]this IEnumerable&lt;TEntity&gt; entities, string templatePath, int sheetIndex = 0, object extraData = null);
+
+public static byte[] ToExcelBytesByTemplate&lt;TEntity&gt;([NotNull]this IEnumerable&lt;TEntity&gt; entities, byte[] templateBytes, ExcelFormat excelFormat = ExcelFormat.Xls, int sheetIndex = 0, object extraData = null);
+
+public static byte[] ToExcelBytesByTemplate&lt;TEntity&gt;([NotNull]this IEnumerable&lt;TEntity&gt; entities, Stream templateStream, ExcelFormat excelFormat = ExcelFormat.Xls, int sheetIndex = 0, object extraData = null);
+
+public static byte[] ToExcelBytesByTemplate&lt;TEntity&gt;([NotNull]this IEnumerable&lt;TEntity&gt; entities, IWorkbook templateWorkbook, int sheetIndex = 0, object extraData = null);
+
+public static byte[] ToExcelBytesByTemplate&lt;TEntity&gt;([NotNull]this IEnumerable&lt;TEntity&gt; entities, ISheet templateSheet, object extraData = null);
+
+</code></pre>
+<h2 id="reference">Reference</h2>
+<ul>
+<li><a href="https://github.com/WeihanLi/WeihanLi.Npoi">https://github.com/WeihanLi/WeihanLi.Npoi</a></li>
+<li><a href="https://github.com/WeihanLi/WeihanLi.Npoi/blob/917e8fb798e9cbae52d121a7d593e37639870911/samples/DotNetCoreSample/Program.cs#L94">https://github.com/WeihanLi/WeihanLi.Npoi/blob/917e8fb798e9cbae52d121a7d593e37639870911/samples/DotNetCoreSample/Program.cs#L94</a></li>
+</ul>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/WeihanLi/WeihanLi.Npoi/blob/dev/docs/articles/zh/TemplateExport.md/#L1" class="contribution-link">Improve this Doc</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../../../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../../../styles/docfx.js"></script>
+    <script type="text/javascript" src="../../../styles/main.js"></script>
+  </body>
+</html>

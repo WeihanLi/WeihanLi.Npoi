@@ -21,10 +21,10 @@
       "output": {
         ".html": {
           "relative_path": "docs/ReleaseNotes.html",
-          "hash": "HbjSmFj3jKR2ZelTZpFrbQ=="
+          "hash": "/NbC4+GgJoQu525ybxvd8Q=="
         }
       },
-      "is_incremental": false,
+      "is_incremental": true,
       "version": ""
     },
     {
@@ -36,7 +36,7 @@
           "hash": "adwsIwE0Py79cFwhrGn7zQ=="
         }
       },
-      "is_incremental": false,
+      "is_incremental": true,
       "version": ""
     },
     {
@@ -48,7 +48,7 @@
           "hash": "4niK49wwB2tBZmzTSShLLg=="
         }
       },
-      "is_incremental": false,
+      "is_incremental": true,
       "version": ""
     },
     {
@@ -60,7 +60,7 @@
           "hash": "dexTFY56/V4VbFIUKSGPVQ=="
         }
       },
-      "is_incremental": false,
+      "is_incremental": true,
       "version": ""
     },
     {
@@ -72,7 +72,7 @@
           "hash": "irRhG17zbpLQ/ZTCyRGM/w=="
         }
       },
-      "is_incremental": false,
+      "is_incremental": true,
       "version": ""
     },
     {
@@ -84,7 +84,7 @@
           "hash": "1EaPYvPYcjZM3Tg2eOVkBw=="
         }
       },
-      "is_incremental": false,
+      "is_incremental": true,
       "version": ""
     },
     {
@@ -93,10 +93,10 @@
       "output": {
         ".html": {
           "relative_path": "docs/api/WeihanLi.Npoi.NpoiRowCollection.html",
-          "hash": "8x8LwA0fLWUALsJb60FymA=="
+          "hash": "GpTFSQ9X5MSeHjQYJj8tMg=="
         }
       },
-      "is_incremental": false,
+      "is_incremental": true,
       "version": ""
     },
     {
@@ -105,10 +105,10 @@
       "output": {
         ".html": {
           "relative_path": "docs/api/WeihanLi.Npoi.TemplateHelper.html",
-          "hash": "JnPKZdjAxO59H71SaAaK2w=="
+          "hash": "g+tP8exKz7M10HYH4LLejQ=="
         }
       },
-      "is_incremental": false,
+      "is_incremental": true,
       "version": ""
     },
     {
@@ -117,10 +117,10 @@
       "output": {
         ".html": {
           "relative_path": "docs/api/WeihanLi.Npoi.TemplateOptions.html",
-          "hash": "/Xkhxa13Rg69fwNWyu1ecQ=="
+          "hash": "zJA0NqaQIcdKE5JsHdKcAw=="
         }
       },
-      "is_incremental": false,
+      "is_incremental": true,
       "version": ""
     },
     {
@@ -132,7 +132,7 @@
           "hash": "ds0g8VHJdFiMwkVF1c8ngA=="
         }
       },
-      "is_incremental": false,
+      "is_incremental": true,
       "version": ""
     },
     {
@@ -144,7 +144,7 @@
           "hash": "SAqowUOW++NiNxOgOZT0Pg=="
         }
       },
-      "is_incremental": false,
+      "is_incremental": true,
       "version": ""
     },
     {
@@ -165,10 +165,10 @@
       "output": {
         ".html": {
           "relative_path": "docs/articles/intro.html",
-          "hash": "JL3kwfGv6qZWdZXPty33VA=="
+          "hash": "4lHNt3wm1bt+dBzaOckjDA=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -177,7 +177,43 @@
       "output": {
         ".html": {
           "relative_path": "docs/articles/toc.html",
-          "hash": "t7iiFrmuYmrKWisdq+lN6Q=="
+          "hash": "4sk+vVf26jMiKW3p4DuVNA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "docs/articles/zh/InputOutputFormatter.md",
+      "output": {
+        ".html": {
+          "relative_path": "docs/articles/zh/InputOutputFormatter.html",
+          "hash": "mJ111LWHT9XTH89VuYs0PQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "docs/articles/zh/ShadowProperty.md",
+      "output": {
+        ".html": {
+          "relative_path": "docs/articles/zh/ShadowProperty.html",
+          "hash": "Oc6OsT03YADnJzDWcJXVOA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "docs/articles/zh/TemplateExport.md",
+      "output": {
+        ".html": {
+          "relative_path": "docs/articles/zh/TemplateExport.html",
+          "hash": "ikDKTVGv03WuvM7ehFlWdQ=="
         }
       },
       "is_incremental": false,
@@ -220,14 +256,14 @@
         "ConceptualDocumentProcessor": {
           "can_incremental": true,
           "incrementalPhase": "build",
-          "total_file_count": 5,
-          "skipped_file_count": 4
+          "total_file_count": 8,
+          "skipped_file_count": 6
         },
         "ManagedReferenceDocumentProcessor": {
           "can_incremental": true,
           "incrementalPhase": "build",
           "total_file_count": 9,
-          "skipped_file_count": 4
+          "skipped_file_count": 9
         },
         "TocDocumentProcessor": {
           "can_incremental": false,

@@ -1,0 +1,218 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>ColumnInputFormatter &#20171;&#32461; </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="ColumnInputFormatter &#20171;&#32461; ">
+    <meta name="generator" content="docfx 2.43.2.0">
+    
+    <link rel="shortcut icon" href="../../../favicon.ico">
+    <link rel="stylesheet" href="../../../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../../../styles/docfx.css">
+    <link rel="stylesheet" href="../../../styles/main.css">
+    <meta property="docfx:navrel" content="../../../toc.html">
+    <meta property="docfx:tocrel" content="../toc.html">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../../../index.html">
+                <img id="logo" class="svg" src="../../../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+<h1 id="columninputformatter-介绍">ColumnInputFormatter 介绍</h1>
+
+<h2 id="intro">Intro</h2>
+<p>WeihanLi.Npoi 引入了 <code>OutputFormatter</code>/<code>InputFormatter</code>/<code>ColumnInputFormatter</code>/<code>ColumnOutputFormatter</code>，极大程度上增强了导入导出的灵活性，来看下面的示例</p>
+<h2 id="columninputformattercolumnoutputformatter">ColumnInputFormatter/ColumnOutputFormatter</h2>
+<p>示例 Model:</p>
+<pre><code class="lang-csharp">internal abstract class BaseEntity
+{
+    public int PKID { get; set; }
+}
+
+internal class TestEntity : BaseEntity
+{
+    public Guid SettingId { get; set; }
+
+    public string SettingName { get; set; }
+
+    public string DisplayName { get; set; }
+    public string SettingValue { get; set; }
+
+    public string CreatedBy { get; set; } = &quot;liweihan&quot;;
+
+    public DateTime CreatedTime { get; set; } = DateTime.Now;
+
+    public string UpdatedBy { get; set; }
+
+    public DateTime UpdatedTime { get; set; }
+
+    public bool Enabled { get; set; }
+}
+
+</code></pre>
+<p>示例配置：</p>
+<pre><code class="lang-csharp">var setting = ExcelHelper.SettingFor&lt;TestEntity&gt;();
+// ExcelSetting
+setting.HasAuthor(&quot;WeihanLi&quot;)
+    .HasTitle(&quot;WeihanLi.Npoi test&quot;)
+    .HasDescription(&quot;WeihanLi.Npoi test&quot;)
+    .HasSubject(&quot;WeihanLi.Npoi test&quot;);
+
+setting.HasSheetConfiguration(0, &quot;SystemSettingsList&quot;, 1, true);
+
+setting.Property(_ =&gt; _.SettingId)
+    .HasColumnIndex(0);
+
+setting.Property(_ =&gt; _.SettingName)
+    .HasColumnTitle(&quot;SettingName&quot;)
+    .HasColumnIndex(1);
+
+setting.Property(_ =&gt; _.DisplayName)
+    .HasOutputFormatter((entity, displayName) =&gt; $&quot;AAA_{entity.SettingName}_{displayName}&quot;)
+    .HasInputFormatter((entity, originVal) =&gt; originVal.Split(new[] { '_' })[2])
+    .HasColumnTitle(&quot;DisplayName&quot;)
+    .HasColumnIndex(2);
+
+setting.Property(_ =&gt; _.SettingValue)
+    .HasColumnTitle(&quot;SettingValue&quot;)
+    .HasColumnIndex(3);
+
+setting.Property(_ =&gt; _.CreatedTime)
+    .HasColumnTitle(&quot;CreatedTime&quot;)
+    .HasColumnIndex(4)
+    .HasColumnWidth(10)
+    .HasColumnFormatter(&quot;yyyy-MM-dd HH:mm:ss&quot;);
+
+setting.Property(_ =&gt; _.CreatedBy)
+    .HasColumnInputFormatter(x =&gt; x += &quot;_test&quot;)
+    .HasColumnIndex(4)
+    .HasColumnTitle(&quot;CreatedBy&quot;);
+
+setting.Property(x =&gt; x.Enabled)
+    .HasColumnInputFormatter(val =&gt; &quot;启用&quot;.Equals(val))
+    .HasColumnOutputFormatter(v =&gt; v ? &quot;启用&quot; : &quot;禁用&quot;);
+
+setting.Property(&quot;HiddenProp&quot;)
+    .HasOutputFormatter((entity, val) =&gt; $&quot;HiddenProp_{entity.PKID}&quot;);
+
+setting.Property(_ =&gt; _.PKID).Ignored();
+setting.Property(_ =&gt; _.UpdatedBy).Ignored();
+setting.Property(_ =&gt; _.UpdatedTime).Ignored();
+</code></pre>
+<p>测试代码：</p>
+<pre><code class="lang-csharp">var entities = new List&lt;TestEntity&gt;()
+{
+    new TestEntity()
+    {
+        PKID = 1,
+        SettingId = Guid.NewGuid(),
+        SettingName = &quot;Setting1&quot;,
+        SettingValue = &quot;Value1&quot;,
+        DisplayName = &quot;ddd1&quot;
+    },
+    new TestEntity()
+    {
+        PKID=2,
+        SettingId = Guid.NewGuid(),
+        SettingName = &quot;Setting2&quot;,
+        SettingValue = &quot;Value2&quot;,
+        Enabled = true
+    },
+};
+var path = $@&quot;{tempDirPath}\test.xlsx&quot;;
+entities.ToExcelFile(path);
+var entitiesT0 = ExcelHelper.ToEntityList&lt;TestEntity&gt;(path);
+</code></pre>
+<p>导出结果：</p>
+<p><img src="https://img2018.cnblogs.com/blog/489462/202001/489462-20200104112133779-1180097402.png" alt=""></p>
+<p>导入结果：</p>
+<p><img src="https://img2018.cnblogs.com/blog/489462/202001/489462-20200104112017420-1450911242.png" alt=""></p>
+<p><img src="https://img2018.cnblogs.com/blog/489462/202001/489462-20200104112025927-873408781.png" alt=""></p>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/WeihanLi/WeihanLi.Npoi/blob/dev/docs/articles/zh/InputOutputFormatter.md/#L1" class="contribution-link">Improve this Doc</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../../../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../../../styles/docfx.js"></script>
+    <script type="text/javascript" src="../../../styles/main.js"></script>
+  </body>
+</html>

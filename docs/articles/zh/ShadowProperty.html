@@ -1,0 +1,193 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>WeihanLi.Npoi &#25903;&#25345; ShadowProperty &#20102; </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="WeihanLi.Npoi &#25903;&#25345; ShadowProperty &#20102; ">
+    <meta name="generator" content="docfx 2.43.2.0">
+    
+    <link rel="shortcut icon" href="../../../favicon.ico">
+    <link rel="stylesheet" href="../../../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../../../styles/docfx.css">
+    <link rel="stylesheet" href="../../../styles/main.css">
+    <meta property="docfx:navrel" content="../../../toc.html">
+    <meta property="docfx:tocrel" content="../toc.html">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../../../index.html">
+                <img id="logo" class="svg" src="../../../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+<h1 id="weihanlinpoi-支持-shadowproperty-了">WeihanLi.Npoi 支持 <code>ShadowProperty</code> 了</h1>
+
+<h2 id="intro">Intro</h2>
+<p>在 EF 里有个 <code>ShadowProperty</code> (阴影属性/影子属性)的概念，你可以通过 FluentAPI 的方式来定义一个不在 .NET model 里定义的属性，只能通过 EF 里的 <code>Change Tracker</code> 来操作这种属性。</p>
+<p>在导出 Excel 的时候，可能希望导出的列并不是都定义好在我们的 model 中的，有的可能只是想增加一列导出某个属性中的嵌套属性之中的某一个属性值，或者我就是单纯的想多定义一列，而这个时候可能 model 是别的地方写死的，不方便改。</p>
+<p>于是 <code>WeihanLi.Npoi</code> 从 1.6.0 版本开始支持 <code>ShadowProperty</code> ，将  EF 里的 <code>ShadowProperty</code> 引入到 excel 导出里，目前来说 <code>ShadowProperty</code> 是不可写的，读取的话也只是返回一个类型的默认值，不支持 <code>ChangeTracker</code>，不支持改。</p>
+<h2 id="使用示例">使用示例</h2>
+<p>来看一个简单使用示例：(示例来源于网友提出的这个issue： <a href="https://github.com/WeihanLi/WeihanLi.Npoi/issues/51">https://github.com/WeihanLi/WeihanLi.Npoi/issues/51</a>)</p>
+<pre><code class="lang-csharp">using System;
+using System.Collections.Generic;
+using System.IO;
+using WeihanLi.Npoi;
+
+namespace NpoiTest
+{
+    public class Program
+    {
+        public static void Main(string[] args)
+        {
+            var settings = ExcelHelper.SettingFor&lt;TestEntity&gt;();
+            settings.Property(x =&gt; x.Name)
+                .HasColumnIndex(0);
+            // settings.Property(x =&gt; x.UserFields)
+            //     .HasOutputFormatter((entity, value) =&gt; $&quot;{value[0].Value},{value[2].Value}&quot;)
+            //     .HasColumnTitle(&quot;姓名,工号&quot;)
+            //     .HasColumnIndex(1);
+            settings.Property(x=&gt;x.UserFields).Ignored();
+            settings.Property(&quot;工号&quot;)
+                .HasOutputFormatter((entity,val)=&gt; $&quot;{entity.UserFields[2].Value}&quot;)
+                 ;
+            settings.Property(&quot;部门&quot;)
+                .HasOutputFormatter((entity,val)=&gt; $&quot;{entity.UserFields[1].Value}&quot;)
+                 ;
+
+            var data = new List&lt;TestEntity&gt;()
+            {
+                new TestEntity()
+                {
+                    Name = &quot;xiaoming&quot;,
+                    TotalScore = 100,
+                    UserFields = new UserField[]
+                    {
+                        new UserField()
+                        {
+                            Name = &quot;姓名&quot;,
+                            Value = &quot;xaioming&quot;,
+                        },
+                        new UserField()
+                        {
+                            Name = &quot;部门&quot;,
+                            Value = &quot;1212&quot;
+                        },
+                        new UserField()
+                        {
+                            Name = &quot;工号&quot;,
+                            Value = &quot;121213131&quot;
+                        },
+                    }
+                }
+            };
+            data.ToExcelFile($@&quot;{Directory.GetCurrentDirectory()}\output.xls&quot;);
+            Console.WriteLine(&quot;complete.&quot;);
+        }
+
+        private class TestEntity
+        {
+            public string Name { get; set; }
+
+            public UserField[] UserFields { get; set; }
+
+            public int TotalScore { get; set; }
+        }
+
+        private class UserField
+        {
+            public string Fid { get; set; }
+            public string Name { get; set; }
+            public string Value { get; set; }
+        }
+    }
+}
+</code></pre>
+<p>导出效果如下：</p>
+<p><img src="https://img2018.cnblogs.com/blog/489462/201912/489462-20191213084226066-1767559517.png" alt=""></p>
+<p>可以看到，我们为导出的 Excel 增加在原本的 Model 里没有定义的两列，借助于此，我们可以更灵活的定制要导出的内容</p>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/WeihanLi/WeihanLi.Npoi/blob/dev/docs/articles/zh/ShadowProperty.md/#L1" class="contribution-link">Improve this Doc</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../../../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../../../styles/docfx.js"></script>
+    <script type="text/javascript" src="../../../styles/main.js"></script>
+  </body>
+</html>
