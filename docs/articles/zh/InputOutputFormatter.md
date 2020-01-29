@@ -1,8 +1,8 @@
-# ColumnInputFormatter 介绍
+# InputOutputFormatter 介绍
 
 ## Intro
 
-WeihanLi.Npoi 引入了 `OutputFormatter`/`InputFormatter`/`ColumnInputFormatter`/`ColumnOutputFormatter`，极大程度上增强了导入导出的灵活性，来看下面的示例
+WeihanLi.Npoi 引入了 `OutputFormatter`/`InputFormatter`/`ColumnInputFormatter`/`ColumnOutputFormatter`，极大程度上增强了导入导出的灵活性，只支持通过 FluentAPI 配置，来看下面的示例
 
 ## ColumnInputFormatter/ColumnOutputFormatter
 

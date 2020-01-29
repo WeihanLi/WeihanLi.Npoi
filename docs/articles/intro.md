@@ -10,6 +10,7 @@ english:
 
 中文：
 
+- [基本示例](./zh/GetStarted.md)
 - [InputOutputFormatter 使用](./zh/InputOutputFormatter.md)
 - [ShadowProperty 使用](./zh/ShadowProperty.md)
 - [根据模板导出](./zh/TemplateExport.md)

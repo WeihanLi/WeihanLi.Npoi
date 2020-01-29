@@ -1,8 +1,10 @@
 - name: Introduction
   href: intro.md
-- name: ShadowProperty
-  href: zh/ShadowProperty.md
+- name: GetStarted
+  href: zh/GetStarted.md
 - name: InputOutputFormatter
   href: zh/InputOutputFormatter.md
+- name: ShadowProperty
+  href: zh/ShadowProperty.md
 - name: TemplateExport
   href: zh/TemplateExport.md
