@@ -71,7 +71,7 @@
 
 <h2 id="intro">Intro</h2>
 <p>WeihanLi.Npoi 引入了 <code>OutputFormatter</code>/<code>InputFormatter</code>/<code>ColumnInputFormatter</code>/<code>ColumnOutputFormatter</code>，极大程度上增强了导入导出的灵活性，只支持通过 FluentAPI 配置，来看下面的示例</p>
-<h2 id="columninputformattercolumnoutputformatter">ColumnInputFormatter/ColumnOutputFormatter</h2>
+<h2 id="inputformatteroutputformatter">InputFormatter/OutputFormatter</h2>
 <p>示例 Model:</p>
 <pre><code class="lang-csharp">internal abstract class BaseEntity
 {
@@ -97,7 +97,6 @@ internal class TestEntity : BaseEntity
 
     public bool Enabled { get; set; }
 }
-
 </code></pre>
 <p>示例配置：</p>
 <pre><code class="lang-csharp">var setting = ExcelHelper.SettingFor&lt;TestEntity&gt;();
@@ -173,10 +172,10 @@ entities.ToExcelFile(path);
 var entitiesT0 = ExcelHelper.ToEntityList&lt;TestEntity&gt;(path);
 </code></pre>
 <p>导出结果：</p>
-<p><img src="https://img2018.cnblogs.com/blog/489462/202001/489462-20200104112133779-1180097402.png" alt=""></p>
+<p><img src="./images/489462-20200104112133779-1180097402.png" alt=""></p>
 <p>导入结果：</p>
-<p><img src="https://img2018.cnblogs.com/blog/489462/202001/489462-20200104112017420-1450911242.png" alt=""></p>
-<p><img src="https://img2018.cnblogs.com/blog/489462/202001/489462-20200104112025927-873408781.png" alt=""></p>
+<p><img src="./images/489462-20200104112017420-1450911242.png" alt=""></p>
+<p><img src="./images/489462-20200104112025927-873408781.png" alt=""></p>
 </article>
           </div>
           

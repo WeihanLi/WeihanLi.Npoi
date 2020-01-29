@@ -9,7 +9,7 @@
       "output": {
         ".html": {
           "relative_path": "README.html",
-          "hash": "Fo2Cy9XcVVa/DQAmMkyR7w=="
+          "hash": "8Tgiuf77Xua8C/KnIKsEhw=="
         }
       },
       "is_incremental": true,
@@ -168,7 +168,7 @@
           "hash": "3sUUS7690sgfAKWjkoEwsg=="
         }
       },
-      "is_incremental": false,
+      "is_incremental": true,
       "version": ""
     },
     {
@@ -192,7 +192,7 @@
           "hash": "e/9dCBYToFP6d43o/nHYaQ=="
         }
       },
-      "is_incremental": false,
+      "is_incremental": true,
       "version": ""
     },
     {
@@ -201,7 +201,7 @@
       "output": {
         ".html": {
           "relative_path": "docs/articles/zh/InputOutputFormatter.html",
-          "hash": "Y82B85128ryOMyO9mKThUw=="
+          "hash": "l9y+KgdUZflvaJsMQqbIEQ=="
         }
       },
       "is_incremental": true,
@@ -213,7 +213,7 @@
       "output": {
         ".html": {
           "relative_path": "docs/articles/zh/ShadowProperty.html",
-          "hash": "Oc6OsT03YADnJzDWcJXVOA=="
+          "hash": "ek/3FwTsrk8PQbO9eFqvPQ=="
         }
       },
       "is_incremental": true,
@@ -225,10 +225,76 @@
       "output": {
         ".html": {
           "relative_path": "docs/articles/zh/TemplateExport.html",
-          "hash": "ikDKTVGv03WuvM7ehFlWdQ=="
+          "hash": "0nl6LxMy1ceDlDibYpb5vQ=="
         }
       },
       "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "docs/articles/zh/images/489462-20191213084226066-1767559517.png",
+      "output": {
+        "resource": {
+          "relative_path": "docs/articles/zh/images/489462-20191213084226066-1767559517.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "docs/articles/zh/images/489462-20200104112017420-1450911242.png",
+      "output": {
+        "resource": {
+          "relative_path": "docs/articles/zh/images/489462-20200104112017420-1450911242.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "docs/articles/zh/images/489462-20200104112025927-873408781.png",
+      "output": {
+        "resource": {
+          "relative_path": "docs/articles/zh/images/489462-20200104112025927-873408781.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "docs/articles/zh/images/489462-20200104112133779-1180097402.png",
+      "output": {
+        "resource": {
+          "relative_path": "docs/articles/zh/images/489462-20200104112133779-1180097402.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "docs/articles/zh/images/489462-20200128142956273-1478084552.png",
+      "output": {
+        "resource": {
+          "relative_path": "docs/articles/zh/images/489462-20200128142956273-1478084552.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "docs/articles/zh/images/489462-20200128143038865-1452547986.png",
+      "output": {
+        "resource": {
+          "relative_path": "docs/articles/zh/images/489462-20200128143038865-1452547986.png"
+        }
+      },
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -269,13 +335,20 @@
           "can_incremental": true,
           "incrementalPhase": "build",
           "total_file_count": 9,
-          "skipped_file_count": 8
+          "skipped_file_count": 9
         },
         "ManagedReferenceDocumentProcessor": {
           "can_incremental": true,
           "incrementalPhase": "build",
           "total_file_count": 9,
           "skipped_file_count": 9
+        },
+        "ResourceDocumentProcessor": {
+          "can_incremental": false,
+          "details": "Processor ResourceDocumentProcessor cannot support incremental build because the processor doesn't implement ISupportIncrementalDocumentProcessor interface.",
+          "incrementalPhase": "build",
+          "total_file_count": 0,
+          "skipped_file_count": 0
         },
         "TocDocumentProcessor": {
           "can_incremental": false,
