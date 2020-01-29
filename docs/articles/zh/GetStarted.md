@@ -33,8 +33,10 @@ internal class Notice : BaseModel
 
 ``` csharp
 // entities excel import/export
-[Fact]
-public void BasicImportExportTest()
+[Theory]
+[InlineData(ExcelFormat.Xls)]
+[InlineData(ExcelFormat.Xlsx)]
+public void BasicImportExportTest(ExcelFormat excelFormat)
 {
     var list = new List<Notice>();
     for (var i = 0; i < 10; i++)
@@ -50,26 +52,31 @@ public void BasicImportExportTest()
     }
     list.Add(new Notice() { Title = "nnnn" });
     list.Add(null);
-    var excelBytes = list.ToExcelBytes();
-
-    var importedList = ExcelHelper.ToEntityList<Notice>(excelBytes);
-    Assert.Equal(list.Count, importedList.Count);
-    for (var i = 0; i < list.Count; i++)
+    var noticeSetting = ExcelHelper.SettingFor<Notice>();
+    lock (noticeSetting)
     {
-        if (list[i] == null)
+        var excelBytes = list.ToExcelBytes(excelFormat);
+
+        var importedList = ExcelHelper.ToEntityList<Notice>(excelBytes, excelFormat);
+        Assert.Equal(list.Count, importedList.Count);
+        for (var i = 0; i < list.Count; i++)
         {
-            Assert.Null(importedList[i]);
-        }
-        else
-        {
-            Assert.Equal(list[i].Id, importedList[i].Id);
-            Assert.Equal(list[i].Title, importedList[i].Title);
-            Assert.Equal(list[i].Content, importedList[i].Content);
-            Assert.Equal(list[i].Publisher, importedList[i].Publisher);
-            Assert.Equal(list[i].PublishedAt.ToStandardTimeString(), importedList[i].PublishedAt.ToStandardTimeString());
+            if (list[i] == null)
+            {
+                Assert.Null(importedList[i]);
+            }
+            else
+            {
+                Assert.Equal(list[i].Id, importedList[i].Id);
+                Assert.Equal(list[i].Title, importedList[i].Title);
+                Assert.Equal(list[i].Content, importedList[i].Content);
+                Assert.Equal(list[i].Publisher, importedList[i].Publisher);
+                Assert.Equal(list[i].PublishedAt.ToStandardTimeString(), importedList[i].PublishedAt.ToStandardTimeString());
+            }
         }
     }
 }
+
 // DataTable Excel import/export
 [Theory]
 [InlineData(ExcelFormat.Xls)]
