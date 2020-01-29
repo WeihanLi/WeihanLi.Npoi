@@ -4,7 +4,7 @@
 
 WeihanLi.Npoi 引入了 `OutputFormatter`/`InputFormatter`/`ColumnInputFormatter`/`ColumnOutputFormatter`，极大程度上增强了导入导出的灵活性，只支持通过 FluentAPI 配置，来看下面的示例
 
-## ColumnInputFormatter/ColumnOutputFormatter
+## InputFormatter/OutputFormatter
 
 示例 Model:
 
@@ -33,7 +33,6 @@ internal class TestEntity : BaseEntity
 
     public bool Enabled { get; set; }
 }
-
 ```
 
 示例配置：
@@ -117,11 +116,11 @@ var entitiesT0 = ExcelHelper.ToEntityList<TestEntity>(path);
 
 导出结果：
 
-![](https://img2018.cnblogs.com/blog/489462/202001/489462-20200104112133779-1180097402.png)
+![](./images/489462-20200104112133779-1180097402.png)
 
 
 导入结果：
 
-![](https://img2018.cnblogs.com/blog/489462/202001/489462-20200104112017420-1450911242.png)
+![](./images/489462-20200104112017420-1450911242.png)
 
-![](https://img2018.cnblogs.com/blog/489462/202001/489462-20200104112025927-873408781.png)
+![](./images/489462-20200104112025927-873408781.png)
