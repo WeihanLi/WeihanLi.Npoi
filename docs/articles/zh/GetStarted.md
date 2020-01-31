@@ -52,27 +52,23 @@ public void BasicImportExportTest(ExcelFormat excelFormat)
     }
     list.Add(new Notice() { Title = "nnnn" });
     list.Add(null);
-    var noticeSetting = ExcelHelper.SettingFor<Notice>();
-    lock (noticeSetting)
-    {
-        var excelBytes = list.ToExcelBytes(excelFormat);
+    var excelBytes = list.ToExcelBytes(excelFormat);
 
-        var importedList = ExcelHelper.ToEntityList<Notice>(excelBytes, excelFormat);
-        Assert.Equal(list.Count, importedList.Count);
-        for (var i = 0; i < list.Count; i++)
+    var importedList = ExcelHelper.ToEntityList<Notice>(excelBytes, excelFormat);
+    Assert.Equal(list.Count, importedList.Count);
+    for (var i = 0; i < list.Count; i++)
+    {
+        if (list[i] == null)
         {
-            if (list[i] == null)
-            {
-                Assert.Null(importedList[i]);
-            }
-            else
-            {
-                Assert.Equal(list[i].Id, importedList[i].Id);
-                Assert.Equal(list[i].Title, importedList[i].Title);
-                Assert.Equal(list[i].Content, importedList[i].Content);
-                Assert.Equal(list[i].Publisher, importedList[i].Publisher);
-                Assert.Equal(list[i].PublishedAt.ToStandardTimeString(), importedList[i].PublishedAt.ToStandardTimeString());
-            }
+            Assert.Null(importedList[i]);
+        }
+        else
+        {
+            Assert.Equal(list[i].Id, importedList[i].Id);
+            Assert.Equal(list[i].Title, importedList[i].Title);
+            Assert.Equal(list[i].Content, importedList[i].Content);
+            Assert.Equal(list[i].Publisher, importedList[i].Publisher);
+            Assert.Equal(list[i].PublishedAt.ToStandardTimeString(), importedList[i].PublishedAt.ToStandardTimeString());
         }
     }
 }
@@ -134,7 +130,6 @@ public void BasicImportExportTest()
         Title = $"title",
         PublishedAt = DateTime.UtcNow.AddDays(1),
     });
-    var noticeSetting = ExcelHelper.SettingFor<Notice>();
     var csvBytes = list.ToCsvBytes();
     var importedList = CsvHelper.ToEntityList<Notice>(csvBytes);
     Assert.Equal(list.Count, importedList.Count);
