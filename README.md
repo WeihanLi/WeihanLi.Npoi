@@ -63,8 +63,6 @@ There' a lot of userful extensions for you, core fetures are as follows:
 
     // read csv file data to dataTable
     var dataTable1 = CsvHelper.ToDataTable(string csvFilePath);
-
-    // ... sheetIndex and headerRowIndex is also supported like above
     ```
 
 More Api here: <https://weihanli.github.io/WeihanLi.Npoi/docs/api/WeihanLi.Npoi.html>
