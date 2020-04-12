@@ -155,7 +155,7 @@ namespace WeihanLi.Npoi.Test
         [Theory]
         [InlineData(ExcelFormat.Xls)]
         [InlineData(ExcelFormat.Xlsx)]
-        public void HiddenPropertyTest(ExcelFormat excelFormat)
+        public void ShadowPropertyTest(ExcelFormat excelFormat)
         {
             IReadOnlyList<Notice> list = Enumerable.Range(0, 10).Select(i => new Notice()
             {
@@ -169,7 +169,7 @@ namespace WeihanLi.Npoi.Test
             var noticeSetting = ExcelHelper.SettingFor<Notice>();
             lock (noticeSetting)
             {
-                noticeSetting.Property<string>("HiddenProperty")
+                noticeSetting.Property<string>("ShadowProperty")
                     .HasOutputFormatter((x, val) => $"{x.Id}...")
                     ;
 
