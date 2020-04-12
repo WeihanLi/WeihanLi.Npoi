@@ -1,8 +1,8 @@
 <Project>
   <PropertyGroup>
 		<VersionMajor>1</VersionMajor>
-		<VersionMinor>8</VersionMinor>
-		<VersionPatch>2</VersionPatch>
+		<VersionMinor>9</VersionMinor>
+		<VersionPatch>0</VersionPatch>
 		<VersionRevision>0</VersionRevision>
 		<VersionPrefix Condition="'$(VersionRevision)'=='0'">$(VersionMajor).$(VersionMinor).$(VersionPatch)</VersionPrefix>
     <VersionPrefix Condition="'$(VersionRevision)'!='0'">$(VersionMajor).$(VersionMinor).$(VersionPatch).$(VersionRevision)</VersionPrefix>

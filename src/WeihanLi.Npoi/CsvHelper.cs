@@ -22,32 +22,31 @@ namespace WeihanLi.Npoi
         /// <summary>
         /// save to csv file
         /// </summary>
-        public static int ToCsvFile(this DataTable dt, string filePath) => ToCsvFile(dt, filePath, true);
+        public static bool ToCsvFile(this DataTable dt, string filePath) => ToCsvFile(dt, filePath, true);
 
         /// <summary>
         /// save to csv file
         /// </summary>
-        public static int ToCsvFile(this DataTable dataTable, string filePath, bool includeHeader)
+        public static bool ToCsvFile(this DataTable dataTable, string filePath, bool includeHeader)
         {
+            var dir = Path.GetDirectoryName(filePath);
+            if (dir == null)
+            {
+                throw new ArgumentException(Resource.InvalidFilePath);
+            }
+            if (!Directory.Exists(dir))
+            {
+                Directory.CreateDirectory(dir);
+            }
+
             var csvText = GetCsvText(dataTable, includeHeader);
             if (csvText.IsNullOrWhiteSpace())
             {
-                return 0;
+                return false;
             }
-            var dir = Path.GetDirectoryName(filePath);
-            if (string.IsNullOrWhiteSpace(dir))
-            {
-                filePath = ApplicationHelper.MapPath(filePath);
-            }
-            else
-            {
-                if (!Directory.Exists(dir))
-                {
-                    Directory.CreateDirectory(dir);
-                }
-            }
+
             File.WriteAllText(filePath, csvText, Encoding.UTF8);
-            return 1;
+            return true;
         }
 
         /// <summary>
@@ -369,7 +368,7 @@ namespace WeihanLi.Npoi
             if (string.IsNullOrEmpty(line))
                 return new[] { string.Empty };
 
-            var _columnBuilder = new StringBuilder();
+            var columnBuilder = new StringBuilder();
             var fields = new List<string>();
 
             var inColumn = false;
@@ -425,16 +424,16 @@ namespace WeihanLi.Npoi
                 // If we are no longer in the column clear the builder and add the columns to the list
                 if (!inColumn)
                 {
-                    fields.Add(_columnBuilder.ToString());
-                    _columnBuilder.Clear();
+                    fields.Add(columnBuilder.ToString());
+                    columnBuilder.Clear();
                 }
                 else // append the current column
                 {
-                    _columnBuilder.Append(character);
+                    columnBuilder.Append(character);
                 }
             }
 
-            fields.Add(_columnBuilder.ToString());
+            fields.Add(columnBuilder.ToString());
 
             return fields;
         }
@@ -442,26 +441,31 @@ namespace WeihanLi.Npoi
         /// <summary>
         /// save to csv file
         /// </summary>
-        public static int ToCsvFile<TEntity>(this IEnumerable<TEntity> entities, string filePath) => ToCsvFile(entities, filePath, true);
+        public static bool ToCsvFile<TEntity>(this IEnumerable<TEntity> entities, string filePath) => ToCsvFile(entities, filePath, true);
 
         /// <summary>
         /// save to csv file
         /// </summary>
-        public static int ToCsvFile<TEntity>(this IEnumerable<TEntity> entities, string filePath, bool includeHeader)
+        public static bool ToCsvFile<TEntity>(this IEnumerable<TEntity> entities, string filePath, bool includeHeader)
         {
-            var csvTextData = GetCsvText(entities, includeHeader);
-            if (csvTextData.IsNullOrWhiteSpace())
-            {
-                return 0;
-            }
             var dir = Path.GetDirectoryName(filePath);
+            if (dir == null)
+            {
+                throw new ArgumentException(Resource.InvalidFilePath);
+            }
             if (!Directory.Exists(dir))
             {
                 Directory.CreateDirectory(dir);
             }
-            File.WriteAllText(filePath, csvTextData, Encoding.UTF8);
 
-            return 1;
+            var csvTextData = GetCsvText(entities, includeHeader);
+            if (csvTextData.IsNullOrWhiteSpace())
+            {
+                return false;
+            }
+
+            File.WriteAllText(filePath, csvTextData, Encoding.UTF8);
+            return true;
         }
 
         /// <summary>
