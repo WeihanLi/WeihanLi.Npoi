@@ -278,7 +278,7 @@ namespace WeihanLi.Npoi
                                             var columnValue = key.PropertyType.GetDefaultValue();
 
                                             var valueApplied = false;
-                                            if (InternalCache.ColumnInputFormatterFuncCache.TryGetValue(key, out var formatterFunc) && formatterFunc != null)
+                                            if (InternalCache.ColumnInputFormatterFuncCache.TryGetValue(key, out var formatterFunc) && formatterFunc?.Item1 != null)
                                             {
                                                 var cellValue = cols[colIndex];
                                                 try

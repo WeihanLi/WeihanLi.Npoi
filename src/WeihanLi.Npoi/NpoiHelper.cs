@@ -165,10 +165,10 @@ namespace WeihanLi.Npoi
                                 if (propertyInfo.CanWrite)
                                 {
                                     var propertyValue = propertyInfo.GetValueGetter()?.Invoke(entity);
-                                    if (InternalCache.InputFormatterFuncCache.TryGetValue(propertyInfo, out var formatterFunc) && formatterFunc != null)
+                                    if (InternalCache.InputFormatterFuncCache.TryGetValue(propertyInfo, out var formatterFunc) && formatterFunc?.Item1 != null)
                                     {
                                         var valueSetter = propertyInfo.GetValueSetter();
-                                        if (null != formatterFunc.Item1 && valueSetter != null)
+                                        if (valueSetter != null)
                                         {
                                             try
                                             {
