@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Reflection;
 using WeihanLi.Common.Helpers;
 using WeihanLi.Extensions;
 
@@ -38,26 +37,20 @@ namespace WeihanLi.Npoi
                 .ToDictionary(x => TemplateOptions.TemplateDataParamFormat.FormatWith(x.Key.Name), x => x.Key.GetValueGetter<TEntity>());
             foreach (var key in propertyColumnDictionary.Keys)
             {
-                if (InternalCache.OutputFormatterFuncCache.TryGetValue(key, out var formatterFunc) && formatterFunc != null)
+                if (InternalCache.OutputFormatterFuncCache.TryGetValue(key, out var formatterFunc) && formatterFunc?.Item1 != null)
                 {
                     dataFuncDictionary[TemplateOptions.TemplateDataParamFormat.FormatWith(key.Name)] = entity =>
                     {
                         var val = key.GetValueGetter<TEntity>()?.Invoke(entity);
-                        var funcType = typeof(Func<,,>).MakeGenericType(configuration.EntityType, key.PropertyType, typeof(object));
-                        var method = funcType.GetProperty("Method")?.GetValueGetter()?.Invoke(formatterFunc) as MethodInfo;
-                        var target = funcType.GetProperty("Target")?.GetValueGetter()?.Invoke(formatterFunc);
-                        if (null != method && null != target)
+                        try
                         {
-                            try
-                            {
-                                var formattedValue = method.Invoke(target, new[] { entity, val });
-                                return formattedValue;
-                            }
-                            catch (Exception e)
-                            {
-                                Debug.WriteLine(e);
-                                InvokeHelper.OnInvokeException?.Invoke(e);
-                            }
+                            var formattedValue = formatterFunc.Item1.Invoke(formatterFunc.Item2, new[] { entity, val });
+                            return formattedValue;
+                        }
+                        catch (Exception e)
+                        {
+                            Debug.WriteLine(e);
+                            InvokeHelper.OnInvokeException?.Invoke(e);
                         }
                         return val;
                     };

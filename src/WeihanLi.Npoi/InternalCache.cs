@@ -12,10 +12,10 @@ namespace WeihanLi.Npoi
         /// </summary>
         public static readonly ConcurrentDictionary<Type, IExcelConfiguration> TypeExcelConfigurationDictionary = new ConcurrentDictionary<Type, IExcelConfiguration>();
 
-        public static readonly ConcurrentDictionary<PropertyInfo, object> OutputFormatterFuncCache = new ConcurrentDictionary<PropertyInfo, object>();
+        public static readonly ConcurrentDictionary<PropertyInfo, Tuple<MethodInfo, object>> OutputFormatterFuncCache = new ConcurrentDictionary<PropertyInfo, Tuple<MethodInfo, object>>();
 
-        public static readonly ConcurrentDictionary<PropertyInfo, object> InputFormatterFuncCache = new ConcurrentDictionary<PropertyInfo, object>();
+        public static readonly ConcurrentDictionary<PropertyInfo, Tuple<MethodInfo, object>> InputFormatterFuncCache = new ConcurrentDictionary<PropertyInfo, Tuple<MethodInfo, object>>();
 
-        public static readonly ConcurrentDictionary<PropertyInfo, object> ColumnInputFormatterFuncCache = new ConcurrentDictionary<PropertyInfo, object>();
+        public static readonly ConcurrentDictionary<PropertyInfo, Tuple<MethodInfo, object>> ColumnInputFormatterFuncCache = new ConcurrentDictionary<PropertyInfo, Tuple<MethodInfo, object>>();
     }
 }
