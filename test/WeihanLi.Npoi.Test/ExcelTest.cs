@@ -10,8 +10,10 @@ namespace WeihanLi.Npoi.Test
 {
     public class ExcelTest : TestBase
     {
-        [Fact]
-        public void BasicImportExportTest()
+        [Theory]
+        [InlineData(ExcelFormat.Xls)]
+        [InlineData(ExcelFormat.Xlsx)]
+        public void BasicImportExportTest(ExcelFormat excelFormat)
         {
             var list = new List<Notice>();
             for (var i = 0; i < 10; i++)
@@ -27,12 +29,12 @@ namespace WeihanLi.Npoi.Test
             }
             list.Add(new Notice() { Title = "nnnn" });
             list.Add(null);
-            var noticeSetting = ExcelHelper.SettingFor<Notice>();
+            var noticeSetting = FluentSettings.For<Notice>();
             lock (noticeSetting)
             {
-                var excelBytes = list.ToExcelBytes();
+                var excelBytes = list.ToExcelBytes(excelFormat);
 
-                var importedList = ExcelHelper.ToEntityList<Notice>(excelBytes);
+                var importedList = ExcelHelper.ToEntityList<Notice>(excelBytes, excelFormat);
                 Assert.Equal(list.Count, importedList.Count);
                 for (var i = 0; i < list.Count; i++)
                 {
@@ -52,8 +54,10 @@ namespace WeihanLi.Npoi.Test
             }
         }
 
-        [Fact]
-        public void BasicImportExportWithoutHeaderTest()
+        [Theory]
+        [InlineData(ExcelFormat.Xls)]
+        [InlineData(ExcelFormat.Xlsx)]
+        public void BasicImportExportWithoutHeaderTest(ExcelFormat excelFormat)
         {
             var list = new List<Notice>();
             for (var i = 0; i < 10; i++)
@@ -70,14 +74,14 @@ namespace WeihanLi.Npoi.Test
             list.Add(new Notice() { Title = "nnnn" });
             list.Add(null);
 
-            var noticeSetting = ExcelHelper.SettingFor<Notice>();
+            var noticeSetting = FluentSettings.For<Notice>();
             lock (noticeSetting)
             {
                 noticeSetting.HasSheetConfiguration(0, "test", 0);
 
-                var excelBytes = list.ToExcelBytes();
+                var excelBytes = list.ToExcelBytes(excelFormat);
 
-                var importedList = ExcelHelper.ToEntityList<Notice>(excelBytes);
+                var importedList = ExcelHelper.ToEntityList<Notice>(excelBytes, excelFormat);
                 Assert.Equal(list.Count, importedList.Count);
                 for (var i = 0; i < list.Count; i++)
                 {
@@ -99,8 +103,10 @@ namespace WeihanLi.Npoi.Test
             }
         }
 
-        [Fact]
-        public void ImportWithNotSpecificColumnIndex()
+        [Theory]
+        [InlineData(ExcelFormat.Xls)]
+        [InlineData(ExcelFormat.Xlsx)]
+        public void ImportWithNotSpecificColumnIndex(ExcelFormat excelFormat)
         {
             IReadOnlyList<Notice> list = Enumerable.Range(0, 10).Select(i => new Notice()
             {
@@ -111,17 +117,17 @@ namespace WeihanLi.Npoi.Test
                 Publisher = $"publisher_{i}"
             }).ToArray();
             //
-            var noticeSetting = ExcelHelper.SettingFor<Notice>();
+            var noticeSetting = FluentSettings.For<Notice>();
             lock (noticeSetting)
             {
-                var excelBytes = list.ToExcelBytes();
+                var excelBytes = list.ToExcelBytes(excelFormat);
 
                 noticeSetting.Property(_ => _.Publisher)
                     .HasColumnIndex(4);
                 noticeSetting.Property(_ => _.PublishedAt)
                     .HasColumnIndex(3);
 
-                var importedList = ExcelHelper.ToEntityList<Notice>(excelBytes);
+                var importedList = ExcelHelper.ToEntityList<Notice>(excelBytes, excelFormat);
                 Assert.Equal(list.Count, importedList.Count);
                 for (var i = 0; i < list.Count; i++)
                 {
@@ -146,8 +152,10 @@ namespace WeihanLi.Npoi.Test
             }
         }
 
-        [Fact]
-        public void HiddenPropertyTest()
+        [Theory]
+        [InlineData(ExcelFormat.Xls)]
+        [InlineData(ExcelFormat.Xlsx)]
+        public void ShadowPropertyTest(ExcelFormat excelFormat)
         {
             IReadOnlyList<Notice> list = Enumerable.Range(0, 10).Select(i => new Notice()
             {
@@ -158,17 +166,17 @@ namespace WeihanLi.Npoi.Test
                 Publisher = $"publisher_{i}"
             }).ToArray();
 
-            var noticeSetting = ExcelHelper.SettingFor<Notice>();
+            var noticeSetting = FluentSettings.For<Notice>();
             lock (noticeSetting)
             {
-                noticeSetting.Property<string>("HiddenProperty")
+                noticeSetting.Property<string>("ShadowProperty")
                     .HasOutputFormatter((x, val) => $"{x.Id}...")
                     ;
 
-                var excelBytes = list.ToExcelBytes();
+                var excelBytes = list.ToExcelBytes(excelFormat);
                 // list.ToExcelFile($"{Directory.GetCurrentDirectory()}/output.xlsx");
 
-                var importedList = ExcelHelper.ToEntityList<Notice>(excelBytes);
+                var importedList = ExcelHelper.ToEntityList<Notice>(excelBytes, excelFormat);
                 Assert.Equal(list.Count, importedList.Count);
                 for (var i = 0; i < list.Count; i++)
                 {
@@ -188,8 +196,10 @@ namespace WeihanLi.Npoi.Test
             }
         }
 
-        [Fact]
-        public void IgnoreInheritPropertyTest()
+        [Theory]
+        [InlineData(ExcelFormat.Xls)]
+        [InlineData(ExcelFormat.Xlsx)]
+        public void IgnoreInheritPropertyTest(ExcelFormat excelFormat)
         {
             IReadOnlyList<Notice> list = Enumerable.Range(0, 10).Select(i => new Notice()
             {
@@ -200,14 +210,14 @@ namespace WeihanLi.Npoi.Test
                 Publisher = $"publisher_{i}"
             }).ToArray();
 
-            var settings = ExcelHelper.SettingFor<Notice>();
+            var settings = FluentSettings.For<Notice>();
             lock (settings)
             {
                 settings.Property(x => x.Id).Ignored();
 
-                var excelBytes = list.ToExcelBytes();
+                var excelBytes = list.ToExcelBytes(excelFormat);
                 // list.ToExcelFile($"{Directory.GetCurrentDirectory()}/ttt.xls");
-                var importedList = ExcelHelper.ToEntityList<Notice>(excelBytes);
+                var importedList = ExcelHelper.ToEntityList<Notice>(excelBytes, excelFormat);
                 Assert.Equal(list.Count, importedList.Count);
                 for (var i = 0; i < list.Count; i++)
                 {
@@ -231,8 +241,10 @@ namespace WeihanLi.Npoi.Test
             }
         }
 
-        [Fact]
-        public void ColumnInputFormatterTest()
+        [Theory]
+        [InlineData(ExcelFormat.Xls)]
+        [InlineData(ExcelFormat.Xlsx)]
+        public void ColumnInputFormatterTest(ExcelFormat excelFormat)
         {
             IReadOnlyList<Notice> list = Enumerable.Range(0, 10).Select(i => new Notice()
             {
@@ -243,14 +255,14 @@ namespace WeihanLi.Npoi.Test
                 Publisher = $"publisher_{i}"
             }).ToArray();
 
-            var excelBytes = list.ToExcelBytes();
+            var excelBytes = list.ToExcelBytes(excelFormat);
 
-            var settings = ExcelHelper.SettingFor<Notice>();
+            var settings = FluentSettings.For<Notice>();
             lock (settings)
             {
                 settings.Property(x => x.Title).HasColumnInputFormatter(x => $"{x}_Test");
 
-                var importedList = ExcelHelper.ToEntityList<Notice>(excelBytes);
+                var importedList = ExcelHelper.ToEntityList<Notice>(excelBytes, excelFormat);
                 Assert.Equal(list.Count, importedList.Count);
                 for (var i = 0; i < list.Count; i++)
                 {
@@ -272,8 +284,10 @@ namespace WeihanLi.Npoi.Test
             }
         }
 
-        [Fact]
-        public void InputOutputColumnFormatterTest()
+        [Theory]
+        [InlineData(ExcelFormat.Xls)]
+        [InlineData(ExcelFormat.Xlsx)]
+        public void InputOutputColumnFormatterTest(ExcelFormat excelFormat)
         {
             IReadOnlyList<Notice> list = Enumerable.Range(0, 10).Select(i => new Notice()
             {
@@ -284,15 +298,15 @@ namespace WeihanLi.Npoi.Test
                 Publisher = $"publisher_{i}"
             }).ToArray();
 
-            var settings = ExcelHelper.SettingFor<Notice>();
+            var settings = FluentSettings.For<Notice>();
             lock (settings)
             {
                 settings.Property(x => x.Id)
                     .HasColumnOutputFormatter(x => $"{x}_Test")
-                    .HasColumnInputFormatter(x => Convert.ToInt32(x.Split(new char[] { '_' }, StringSplitOptions.RemoveEmptyEntries)[0]));
-                var excelBytes = list.ToExcelBytes();
+                    .HasColumnInputFormatter(x => Convert.ToInt32(x.Split(new[] { '_' }, StringSplitOptions.RemoveEmptyEntries)[0]));
+                var excelBytes = list.ToExcelBytes(excelFormat);
 
-                var importedList = ExcelHelper.ToEntityList<Notice>(excelBytes);
+                var importedList = ExcelHelper.ToEntityList<Notice>(excelBytes, excelFormat);
                 Assert.Equal(list.Count, importedList.Count);
                 for (var i = 0; i < list.Count; i++)
                 {

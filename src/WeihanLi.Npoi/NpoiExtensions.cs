@@ -172,6 +172,7 @@ namespace WeihanLi.Npoi
         /// <param name="workbook">workbook</param>
         /// <param name="list">entityList</param>
         /// <param name="sheetIndex">sheetIndex</param>
+        /// <returns>the sheet LastRowNum</returns>
         public static int ImportData<TEntity>([NotNull] this IWorkbook workbook, IEnumerable<TEntity> list,
             int sheetIndex)
         {
@@ -201,8 +202,8 @@ namespace WeihanLi.Npoi
                 }
             }
 
-            NpoiHelper.EntityListToSheet(workbook.GetSheetAt(sheetIndex), list, sheetIndex);
-            return 1;
+            var sheet = NpoiHelper.EntityListToSheet(workbook.GetSheetAt(sheetIndex), list, sheetIndex);
+            return sheet.LastRowNum;
         }
 
         /// <summary>
@@ -240,6 +241,7 @@ namespace WeihanLi.Npoi
         /// <param name="workbook">workbook</param>
         /// <param name="dataTable">dataTable</param>
         /// <param name="sheetIndex">sheetIndex</param>
+        /// <returns>the sheet LastRowNum</returns>
         public static int ImportData<TEntity>([NotNull] this IWorkbook workbook, [NotNull] DataTable dataTable,
             int sheetIndex)
         {
@@ -269,8 +271,8 @@ namespace WeihanLi.Npoi
                 }
             }
 
-            NpoiHelper.DataTableToSheet<TEntity>(workbook.GetSheetAt(sheetIndex), dataTable, sheetIndex);
-            return 1;
+            var sheet = NpoiHelper.DataTableToSheet<TEntity>(workbook.GetSheetAt(sheetIndex), dataTable, sheetIndex);
+            return sheet.LastRowNum;
         }
 
         /// <summary>
@@ -303,7 +305,7 @@ namespace WeihanLi.Npoi
         /// <param name="sheetIndex">sheetIndex,zero by default</param>
         /// <param name="extraData">extraData</param>
         /// <returns>exported excel bytes</returns>
-        public static int ToExcelFileByTemplate<TEntity>([NotNull]this IEnumerable<TEntity> entities, string templatePath, string excelPath, int sheetIndex = 0, object extraData = null)
+        public static void ToExcelFileByTemplate<TEntity>([NotNull]this IEnumerable<TEntity> entities, string templatePath, string excelPath, int sheetIndex = 0, object extraData = null)
         {
             if (templatePath == null)
             {
@@ -315,7 +317,7 @@ namespace WeihanLi.Npoi
             }
 
             var workbook = ExcelHelper.LoadExcel(templatePath);
-            return entities.ToExcelFileByTemplate(workbook, excelPath, sheetIndex, extraData);
+            entities.ToExcelFileByTemplate(workbook, excelPath, sheetIndex, extraData);
         }
 
         /// <summary>
@@ -329,7 +331,7 @@ namespace WeihanLi.Npoi
         /// <param name="sheetIndex">sheetIndex,zero by default</param>
         /// <param name="extraData">extraData</param>
         /// <returns>exported excel bytes</returns>
-        public static int ToExcelFileByTemplate<TEntity>([NotNull]this IEnumerable<TEntity> entities, byte[] templateBytes, string excelPath, ExcelFormat excelFormat = ExcelFormat.Xls, int sheetIndex = 0, object extraData = null)
+        public static void ToExcelFileByTemplate<TEntity>([NotNull]this IEnumerable<TEntity> entities, byte[] templateBytes, string excelPath, ExcelFormat excelFormat = ExcelFormat.Xls, int sheetIndex = 0, object extraData = null)
         {
             if (templateBytes == null)
             {
@@ -341,7 +343,7 @@ namespace WeihanLi.Npoi
             }
 
             var workbook = ExcelHelper.LoadExcel(templateBytes, excelFormat);
-            return entities.ToExcelFileByTemplate(workbook, excelPath, sheetIndex, extraData);
+            entities.ToExcelFileByTemplate(workbook, excelPath, sheetIndex, extraData);
         }
 
         /// <summary>
@@ -354,7 +356,7 @@ namespace WeihanLi.Npoi
         /// <param name="sheetIndex">sheetIndex</param>
         /// <param name="extraData">extraData</param>
         /// <returns>exported excel bytes</returns>
-        public static int ToExcelFileByTemplate<TEntity>([NotNull]this IEnumerable<TEntity> entities, IWorkbook templateWorkbook, string excelPath, int sheetIndex = 0, object extraData = null)
+        public static void ToExcelFileByTemplate<TEntity>([NotNull]this IEnumerable<TEntity> entities, IWorkbook templateWorkbook, string excelPath, int sheetIndex = 0, object extraData = null)
         {
             if (null == templateWorkbook)
             {
@@ -370,7 +372,7 @@ namespace WeihanLi.Npoi
             NpoiTemplateHelper.EntityListToSheetByTemplate(
                 templateSheet, entities, extraData
             );
-            return templateWorkbook.WriteToFile(excelPath);
+            templateWorkbook.WriteToFile(excelPath);
         }
 
         /// <summary>
@@ -480,7 +482,7 @@ namespace WeihanLi.Npoi
         /// <typeparam name="TEntity">EntityType</typeparam>
         /// <param name="entityList">entityList</param>
         /// <param name="excelPath">excelPath</param>
-        public static int ToExcelFile<TEntity>([NotNull] this IEnumerable<TEntity> entityList,
+        public static void ToExcelFile<TEntity>([NotNull] this IEnumerable<TEntity> entityList,
             [NotNull] string excelPath) => ToExcelFile(entityList, excelPath, 0);
 
         /// <summary>
@@ -490,7 +492,7 @@ namespace WeihanLi.Npoi
         /// <param name="entityList">entityList</param>
         /// <param name="excelPath">excelPath</param>
         /// <param name="sheetIndex">sheetIndex</param>
-        public static int ToExcelFile<TEntity>([NotNull] this IEnumerable<TEntity> entityList,
+        public static void ToExcelFile<TEntity>([NotNull] this IEnumerable<TEntity> entityList,
             [NotNull] string excelPath, int sheetIndex)
 
         {
@@ -500,7 +502,6 @@ namespace WeihanLi.Npoi
             workbook.ImportData(entityList.ToArray(), sheetIndex);
 
             workbook.WriteToFile(excelPath);
-            return 1;
         }
 
         /// <summary>
@@ -509,7 +510,7 @@ namespace WeihanLi.Npoi
         /// <typeparam name="TEntity">EntityType</typeparam>
         /// <param name="entityList">entityList</param>
         /// <param name="stream">stream where to write</param>
-        public static int ToExcelStream<TEntity>([NotNull] this IEnumerable<TEntity> entityList,
+        public static void ToExcelStream<TEntity>([NotNull] this IEnumerable<TEntity> entityList,
             [NotNull] Stream stream) => ToExcelStream(entityList, stream, ExcelFormat.Xls);
 
         /// <summary>
@@ -520,7 +521,7 @@ namespace WeihanLi.Npoi
         /// <param name="stream">stream where to write</param>
         /// <param name="excelFormat">excelFormat</param>
         /// <param name="sheetIndex">sheetIndex</param>
-        public static int ToExcelStream<TEntity>([NotNull] this IEnumerable<TEntity> entityList,
+        public static void ToExcelStream<TEntity>([NotNull] this IEnumerable<TEntity> entityList,
             [NotNull] Stream stream, ExcelFormat excelFormat, int sheetIndex)
         {
             var configuration = InternalHelper.GetExcelConfigurationMapping<TEntity>();
@@ -528,8 +529,6 @@ namespace WeihanLi.Npoi
             var workbook = ExcelHelper.PrepareWorkbook(excelFormat, configuration.ExcelSetting);
             workbook.ImportData(entityList.ToArray(), sheetIndex);
             workbook.Write(stream);
-
-            return 1;
         }
 
         /// <summary>
@@ -539,7 +538,7 @@ namespace WeihanLi.Npoi
         /// <param name="entityList">entityList</param>
         /// <param name="stream">stream where to write</param>
         /// <param name="excelFormat">excelFormat</param>
-        public static int ToExcelStream<TEntity>([NotNull] this IEnumerable<TEntity> entityList,
+        public static void ToExcelStream<TEntity>([NotNull] this IEnumerable<TEntity> entityList,
             [NotNull] Stream stream, ExcelFormat excelFormat) => ToExcelStream(entityList, stream, excelFormat, 0);
 
         /// <summary>
@@ -583,7 +582,7 @@ namespace WeihanLi.Npoi
         /// <param name="dataTable">dataTable</param>
         /// <param name="excelPath">excelPath</param>
         /// <returns></returns>
-        public static int ToExcelFile([NotNull] this DataTable dataTable, [NotNull] string excelPath) => ToExcelFile(dataTable, excelPath, null);
+        public static void ToExcelFile([NotNull] this DataTable dataTable, [NotNull] string excelPath) => ToExcelFile(dataTable, excelPath, null);
 
         /// <summary>
         ///     export DataTable to excel file
@@ -592,29 +591,30 @@ namespace WeihanLi.Npoi
         /// <param name="excelPath">excelPath</param>
         /// <param name="excelSetting">excelSetting</param>
         /// <returns></returns>
-        public static int ToExcelFile([NotNull] this DataTable dataTable, [NotNull] string excelPath, ExcelSetting excelSetting)
+        public static void ToExcelFile([NotNull] this DataTable dataTable, [NotNull] string excelPath, ExcelSetting excelSetting)
         {
             var workbook = ExcelHelper.PrepareWorkbook(excelPath, excelSetting);
             var sheet = workbook.CreateSheet(
                 string.IsNullOrWhiteSpace(dataTable.TableName)
                 ? "Sheet0"
                 : dataTable.TableName);
-            var headerRow = sheet.CreateRow(0);
-            for (var i = 0; i < dataTable.Columns.Count; i++)
+            if (dataTable.Columns.Count > 0)
             {
-                headerRow.CreateCell(i, CellType.String).SetCellValue(dataTable.Columns[i].ColumnName);
-            }
-
-            for (var i = 1; i <= dataTable.Rows.Count; i++)
-            {
-                var row = sheet.CreateRow(i);
-                for (var j = 0; j < dataTable.Columns.Count; j++)
+                var headerRow = sheet.CreateRow(0);
+                for (var i = 0; i < dataTable.Columns.Count; i++)
                 {
-                    row.CreateCell(j, CellType.String).SetCellValue(dataTable.Rows[i - 1][j]);
+                    headerRow.CreateCell(i, CellType.String).SetCellValue(dataTable.Columns[i].ColumnName);
+                }
+                for (var i = 1; i <= dataTable.Rows.Count; i++)
+                {
+                    var row = sheet.CreateRow(i);
+                    for (var j = 0; j < dataTable.Columns.Count; j++)
+                    {
+                        row.CreateCell(j, CellType.String).SetCellValue(dataTable.Rows[i - 1][j]);
+                    }
                 }
             }
             workbook.WriteToFile(excelPath);
-            return 1;
         }
 
         /// <summary>
@@ -623,7 +623,7 @@ namespace WeihanLi.Npoi
         /// <param name="dataTable">dataTable</param>
         /// <param name="stream">stream</param>
         /// <returns></returns>
-        public static int ToExcelStream([NotNull] this DataTable dataTable, [NotNull] Stream stream) => ToExcelStream(dataTable, stream, ExcelFormat.Xls);
+        public static void ToExcelStream([NotNull] this DataTable dataTable, [NotNull] Stream stream) => ToExcelStream(dataTable, stream, ExcelFormat.Xls);
 
         /// <summary>
         ///     DataTable2ExcelStream
@@ -632,7 +632,7 @@ namespace WeihanLi.Npoi
         /// <param name="stream">stream</param>
         /// <param name="excelFormat">excelFormat</param>
         /// <returns></returns>
-        public static int ToExcelStream([NotNull] this DataTable dataTable, [NotNull] Stream stream, ExcelFormat excelFormat) => ToExcelStream(dataTable, stream, excelFormat, null);
+        public static void ToExcelStream([NotNull] this DataTable dataTable, [NotNull] Stream stream, ExcelFormat excelFormat) => ToExcelStream(dataTable, stream, excelFormat, null);
 
         /// <summary>
         ///     DataTable2ExcelStream
@@ -642,7 +642,7 @@ namespace WeihanLi.Npoi
         /// <param name="excelFormat">excelFormat</param>
         /// <param name="excelSetting">excelSetting</param>
         /// <returns></returns>
-        public static int ToExcelStream([NotNull] this DataTable dataTable, [NotNull] Stream stream, ExcelFormat excelFormat, ExcelSetting excelSetting)
+        public static void ToExcelStream([NotNull] this DataTable dataTable, [NotNull] Stream stream, ExcelFormat excelFormat, ExcelSetting excelSetting)
 
         {
             var workbook = ExcelHelper.PrepareWorkbook(excelFormat);
@@ -666,7 +666,6 @@ namespace WeihanLi.Npoi
             }
 
             workbook.Write(stream);
-            return 1;
         }
 
         /// <summary>
@@ -841,7 +840,7 @@ namespace WeihanLi.Npoi
         /// </summary>
         /// <param name="workbook">workbook</param>
         /// <param name="filePath">file path</param>
-        public static int WriteToFile([NotNull] this IWorkbook workbook, string filePath)
+        public static void WriteToFile([NotNull] this IWorkbook workbook, string filePath)
         {
             var dir = Path.GetDirectoryName(filePath);
             if (null == dir)
@@ -859,7 +858,6 @@ namespace WeihanLi.Npoi
             using (var fileStream = File.Create(filePath))
             {
                 workbook.Write(fileStream);
-                return 1;
             }
         }
 

@@ -8,13 +8,13 @@ namespace WeihanLi.Npoi.Test
     {
         public TestFixture()
         {
-            FluentSettings();
+            FluentSettingsConfigure();
         }
 
-        private void FluentSettings()
+        private void FluentSettingsConfigure()
         {
             // ---------- notice npoi settings ----------------
-            var noticeSetting = ExcelHelper.SettingFor<Notice>();
+            var noticeSetting = FluentSettings.For<Notice>();
             noticeSetting.HasAuthor("WeihanLi")
                 .HasTitle("WeihanLi.Npoi test")
                 .HasSheetConfiguration(0, "NoticeList", 1)

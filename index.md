@@ -143,7 +143,7 @@ Console.WriteLine(numList.StringJoin(","));
     for example:
 
     ``` csharp
-    var setting = ExcelHelper.SettingFor<TestEntity>();
+    var setting = FluentSettings.For<TestEntity>();
     // ExcelSetting
     setting.HasAuthor("WeihanLi")
         .HasTitle("WeihanLi.Npoi test")

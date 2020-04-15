@@ -97,7 +97,7 @@ namespace DotNetCoreSample
                 extraData: new
                 {
                     Author = "WeihanLi",
-                    Title = "导出结果"
+                    Title = "Export Result"
                 }
             );
             entities.ToExcelFile(csvFilePath.Replace(".csv", ".xlsx"));
@@ -132,7 +132,7 @@ namespace DotNetCoreSample
 
         private static void FluentSettingsForExcel()
         {
-            var setting = ExcelHelper.SettingFor<TestEntity>();
+            var setting = FluentSettings.For<TestEntity>();
             // ExcelSetting
             setting.HasAuthor("WeihanLi")
                 .HasTitle("WeihanLi.Npoi test")
@@ -172,8 +172,8 @@ namespace DotNetCoreSample
                 .HasColumnTitle("CreatedBy");
 
             setting.Property(x => x.Enabled)
-                .HasColumnInputFormatter(val => "启用".Equals(val))
-                .HasColumnOutputFormatter(v => v ? "启用" : "禁用");
+                .HasColumnInputFormatter(val => "Enabled".EqualsIgnoreCase(val))
+                .HasColumnOutputFormatter(v => v ? "Enabled" : "Disabled");
 
             setting.Property("HiddenProp")
                 .HasOutputFormatter((entity, val) => $"HiddenProp_{entity.PKID}");
