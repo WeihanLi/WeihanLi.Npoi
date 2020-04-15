@@ -77,19 +77,27 @@
 </ul>
 <h3 id="getstarted">GetStarted</h3>
 <ol>
-<li><p>LoadFromExcelFile</p>
-<p>it consider the first row of the sheet as the header, not for read,it will read data from next row.
-You can point out your header row through the exposed api if needed.</p>
-<ul>
-<li><p>Read Excel to DataSet</p>
-<pre><code class="lang-csharp">// read excel to dataSet, read all sheets data to dataSet,by default it will read from the headerRowIndex(0) + 1
-var dataSet = ExcelHelper.ToDataSet(string excelPath);
-
-// read excel to dataSet, read all sheets data to dataSet,headerRowIndex is not for read,read from headerRowIndex+1
-var dataSet = ExcelHelper.ToDataSet(string excelPath, int headerRowIndex);
+<li><p>Export list/dataTable to Excel/csv</p>
+<pre><code class="lang-csharp">var entities = new List&lt;Entity&gt;();
+entities.ToExcelFiel(string excelPath);
+entities.ToExcelBytes(ExcelFormat excelFormat);
+entities.ToCsvFile(string csvPath);
+entities.ToCsvBytes();
 </code></pre>
 </li>
-<li><p>Read Excel to DataTable</p>
+<li><p>Read Excel/csv to List</p>
+<pre><code class="lang-csharp">// read excel first sheet content to a List&lt;T&gt;
+var entityList = ExcelHelper.ToEntityList&lt;T&gt;(string excelPath);
+
+// read excel sheetIndex sheet content to a List&lt;T&gt;
+// you can custom header row index via sheet attribute or fluent api HasSheet
+var entityList1 = ExcelHelper.ToEntityList&lt;T&gt;(string excelPath, int sheetIndex);
+
+var entityList2 = CsvHelper.ToEntityList&lt;T&gt;(string csvPath);
+var entityList3 = CsvHelper.ToEntityList&lt;T&gt;(byte[] csvBytes);
+</code></pre>
+</li>
+<li><p>Read Excel/csv to DataTable</p>
 <pre><code class="lang-csharp">// read excel to dataTable directly,by default read the first sheet content
 var dataTable = ExcelHelper.ToDataTable(string excelPath);
 
@@ -102,20 +110,115 @@ var dataTableOfSheetIndex = ExcelHelper.ToDataTable(string excelPath, int sheetI
 // read excel to dataTable use mapping relations and settings from typeof(T),by default read the first sheet content
 var dataTableT = ExcelHelper.ToDataTable&lt;T&gt;(string excelPath);
 
-// ... sheetIndex and headerRowIndex is also supported like above
+// read csv file data to dataTable
+var dataTable1 = CsvHelper.ToDataTable(string csvFilePath);
 </code></pre>
 </li>
-<li><p>Read Excel to List</p>
-<pre><code class="lang-csharp">// read excel first sheet content to a List&lt;T&gt;
-var entityList = ExcelHelper.ToEntityList&lt;T&gt;(string excelPath);
+</ol>
+<p>More Api here: <a href="https://weihanli.github.io/WeihanLi.Npoi/docs/api/WeihanLi.Npoi.html">https://weihanli.github.io/WeihanLi.Npoi/docs/api/WeihanLi.Npoi.html</a></p>
+<h3 id="define-custom-mapping-and-settings">Define Custom Mapping and settings</h3>
+<ol>
+<li><p>Attributes</p>
+<p>Add <code>ColumnAttribute</code> on the property of the entity which you used for export or import</p>
+<p>Add <code>SheetAttribute</code> on the entity which you used for export or import,you can set the <code>StartRowIndex</code> on your need(by default it is <code>1</code>)</p>
+<p>for example:</p>
+<pre><code class="lang-csharp">public class TestEntity
+{
+    [Column(&quot;Id&quot;)]
+    public int PKID { get; set; }
 
-// read excel sheetIndex sheet content to a List&lt;T&gt;
-// you can custom header row index via sheet attribute or fluent api HasSheet
-var entityList1 = ExcelHelper.ToEntityList&lt;T&gt;(string excelPath, int sheetIndex);
+    [Column(&quot;Bill Title&quot;)]
+    public string BillTitle { get; set; }
+
+    [Column(&quot;Bill Details&quot;)]
+    public string BillDetails { get; set; }
+
+    [Column(&quot;CreatedBy&quot;)]
+    public string CreatedBy { get; set; }
+
+    [Column(&quot;CreatedTime&quot;)]
+    public DateTime CreatedTime { get; set; }
+}
+
+public class TestEntity1
+{
+    [Column(&quot;Username&quot;)]
+    public string Username { get; set; }
+
+    [Column(IsIgnored = true)]
+    public string PasswordHash { get; set; }
+
+    [Column(&quot;Amount&quot;)]
+    public decimal Amount { get; set; } = 1000M;
+
+    [Column(&quot;WechatOpenId&quot;)]
+    public string WechatOpenId { get; set; }
+
+    [Column(&quot;IsActive&quot;)]
+    public bool IsActive { get; set; }
+}
 </code></pre>
 </li>
-</ul>
+<li><p>FluentApi (Recommend)</p>
+<p>You can use FluentApi also</p>
+<p>for example:</p>
+<pre><code class="lang-csharp">var setting = FluentSettings.For&lt;TestEntity&gt;();
+// ExcelSetting
+setting.HasAuthor(&quot;WeihanLi&quot;)
+    .HasTitle(&quot;WeihanLi.Npoi test&quot;)
+    .HasDescription(&quot;WeihanLi.Npoi test&quot;)
+    .HasSubject(&quot;WeihanLi.Npoi test&quot;);
+
+setting.HasSheetConfiguration(0, &quot;SystemSettingsList&quot;, true);
+// setting.HasSheetConfiguration(1, &quot;SystemSettingsList&quot;, 1, true);
+
+// setting.HasFilter(0, 1).HasFreezePane(0, 1, 2, 1);
+
+setting.Property(_ =&gt; _.SettingId)
+    .HasColumnIndex(0);
+
+setting.Property(_ =&gt; _.SettingName)
+    .HasColumnTitle(&quot;SettingName&quot;)
+    .HasColumnIndex(1);
+
+setting.Property(_ =&gt; _.DisplayName)
+    .HasOutputFormatter((entity, displayName) =&gt; $&quot;AAA_{entity.SettingName}_{displayName}&quot;)
+    .HasInputFormatter((entity, originVal) =&gt; originVal.Split(new[] { '_' })[2])
+    .HasColumnTitle(&quot;DisplayName&quot;)
+    .HasColumnIndex(2);
+
+setting.Property(_ =&gt; _.SettingValue)
+    .HasColumnTitle(&quot;SettingValue&quot;)
+    .HasColumnIndex(3);
+
+setting.Property(_ =&gt; _.CreatedTime)
+    .HasColumnTitle(&quot;CreatedTime&quot;)
+    .HasColumnIndex(4)
+    .HasColumnWidth(10)
+    .HasColumnFormatter(&quot;yyyy-MM-dd HH:mm:ss&quot;);
+
+setting.Property(_ =&gt; _.CreatedBy)
+    .HasColumnInputFormatter(x =&gt; x += &quot;_test&quot;)
+    .HasColumnIndex(4)
+    .HasColumnTitle(&quot;CreatedBy&quot;);
+
+setting.Property(x =&gt; x.Enabled)
+    .HasColumnInputFormatter(val =&gt; &quot;Enabled&quot;.Equals(val))
+    .HasColumnOutputFormatter(v =&gt; v ? &quot;Enabled&quot; : &quot;Disabled&quot;);
+
+setting.Property(&quot;HiddenProp&quot;)
+    .HasOutputFormatter((entity, val) =&gt; $&quot;HiddenProp_{entity.PKID}&quot;);
+
+setting.Property(_ =&gt; _.PKID).Ignored();
+setting.Property(_ =&gt; _.UpdatedBy).Ignored();
+setting.Property(_ =&gt; _.UpdatedTime).Ignored();
+</code></pre>
 </li>
+</ol>
+<h3 id="more">More</h3>
+<p>see some articles here: <a href="https://weihanli.github.io/WeihanLi.Npoi/docs/articles/intro.html">https://weihanli.github.io/WeihanLi.Npoi/docs/articles/intro.html</a></p>
+<p>more usage:</p>
+<ol>
 <li><p>Get a workbook</p>
 <pre><code class="lang-csharp">// load excel workbook from file
 var workbook = LoadExcel(string excelPath);
@@ -181,105 +284,6 @@ void ToCsvFile(this DataTable dt, string filePath, bool includeHeader)
 
 byte[] ToCsvBytes(this DataTable dt, bool includeHeader)
 
-</code></pre>
-</li>
-</ol>
-<h3 id="define-custom-mapping-and-settings">Define Custom Mapping and settings</h3>
-<ol>
-<li><p>Attributes</p>
-<p>Add <code>ColumnAttribute</code> on the property of the entity which you used for export or import</p>
-<p>Add <code>SheetAttribute</code> on the entity which you used for export or import,you can set the <code>StartRowIndex</code> on your need(by default it is <code>1</code>)</p>
-<p>for example:</p>
-<pre><code class="lang-csharp">public class TestEntity
-{
-    [Column(&quot;Id&quot;)]
-    public int PKID { get; set; }
-
-    [Column(&quot;Bill Title&quot;)]
-    public string BillTitle { get; set; }
-
-    [Column(&quot;Bill Details&quot;)]
-    public string BillDetails { get; set; }
-
-    [Column(&quot;CreatedBy&quot;)]
-    public string CreatedBy { get; set; }
-
-    [Column(&quot;CreatedTime&quot;)]
-    public DateTime CreatedTime { get; set; }
-}
-
-public class TestEntity1
-{
-    [Column(&quot;Username&quot;)]
-    public string Username { get; set; }
-
-    [Column(IsIgnored = true)]
-    public string PasswordHash { get; set; }
-
-    [Column(&quot;Amount&quot;)]
-    public decimal Amount { get; set; } = 1000M;
-
-    [Column(&quot;WechatOpenId&quot;)]
-    public string WechatOpenId { get; set; }
-
-    [Column(&quot;IsActive&quot;)]
-    public bool IsActive { get; set; }
-}
-</code></pre>
-</li>
-<li><p>FluentApi (Recommend)</p>
-<p>You can use FluentApi also</p>
-<p>for example:</p>
-<pre><code class="lang-csharp">var setting = ExcelHelper.SettingFor&lt;TestEntity&gt;();
-// ExcelSetting
-setting.HasAuthor(&quot;WeihanLi&quot;)
-    .HasTitle(&quot;WeihanLi.Npoi test&quot;)
-    .HasDescription(&quot;WeihanLi.Npoi test&quot;)
-    .HasSubject(&quot;WeihanLi.Npoi test&quot;);
-
-setting.HasSheetConfiguration(0, &quot;SystemSettingsList&quot;, true);
-// setting.HasSheetConfiguration(1, &quot;SystemSettingsList&quot;, 1, true);
-
-// setting.HasFilter(0, 1).HasFreezePane(0, 1, 2, 1);
-
-setting.Property(_ =&gt; _.SettingId)
-    .HasColumnIndex(0);
-
-setting.Property(_ =&gt; _.SettingName)
-    .HasColumnTitle(&quot;SettingName&quot;)
-    .HasColumnIndex(1);
-
-setting.Property(_ =&gt; _.DisplayName)
-    .HasOutputFormatter((entity, displayName) =&gt; $&quot;AAA_{entity.SettingName}_{displayName}&quot;)
-    .HasInputFormatter((entity, originVal) =&gt; originVal.Split(new[] { '_' })[2])
-    .HasColumnTitle(&quot;DisplayName&quot;)
-    .HasColumnIndex(2);
-
-setting.Property(_ =&gt; _.SettingValue)
-    .HasColumnTitle(&quot;SettingValue&quot;)
-    .HasColumnIndex(3);
-
-setting.Property(_ =&gt; _.CreatedTime)
-    .HasColumnTitle(&quot;CreatedTime&quot;)
-    .HasColumnIndex(4)
-    .HasColumnWidth(10)
-    .HasColumnFormatter(&quot;yyyy-MM-dd HH:mm:ss&quot;);
-
-setting.Property(_ =&gt; _.CreatedBy)
-    .HasColumnInputFormatter(x =&gt; x += &quot;_test&quot;)
-    .HasColumnIndex(4)
-    .HasColumnTitle(&quot;CreatedBy&quot;);
-
-setting.Property(x =&gt; x.Enabled)
-    .HasColumnInputFormatter(val =&gt; &quot;启用&quot;.Equals(val))
-    .HasColumnOutputFormatter(v =&gt; v ? &quot;启用&quot; : &quot;禁用&quot;);
-
-setting.Property(&quot;HiddenProp&quot;)
-    .HasOutputFormatter((entity, val) =&gt; $&quot;HiddenProp_{entity.PKID}&quot;);
-
-setting.Property(_ =&gt; _.PKID).Ignored();
-setting.Property(_ =&gt; _.UpdatedBy).Ignored();
-setting.Property(_ =&gt; _.UpdatedTime).Ignored();
 </code></pre>
 </li>
 </ol>

@@ -86,7 +86,7 @@ namespace NpoiTest
     {
         public static void Main(string[] args)
         {
-            var settings = ExcelHelper.SettingFor&lt;TestEntity&gt;();
+            var settings = FluentSettings.For&lt;TestEntity&gt;();
             settings.Property(x =&gt; x.Name)
                 .HasColumnIndex(0);
             // settings.Property(x =&gt; x.UserFields)

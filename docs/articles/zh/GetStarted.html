@@ -295,7 +295,7 @@ internal class TestEntity2
 }
 </code></pre>
 <p>使用 FluentAPI 配置（推荐，更灵活）</p>
-<pre><code class="lang-csharp">var setting = ExcelHelper.SettingFor&lt;TestEntity&gt;();
+<pre><code class="lang-csharp">var setting = FluentSettings.For&lt;TestEntity&gt;();
 // ExcelSetting
 setting.HasAuthor(&quot;WeihanLi&quot;)
     .HasTitle(&quot;WeihanLi.Npoi test&quot;)

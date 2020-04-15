@@ -92,7 +92,7 @@
 <p>模板需要通过 Data Begin 和 Data End 来配置数据模板的开始和结束以识别每一个数据对应的开始行和结束行</p>
 <h3 id="示例代码">示例代码</h3>
 <p>示例配置</p>
-<pre><code class="lang-csharp">var setting = ExcelHelper.SettingFor&lt;TestEntity&gt;();
+<pre><code class="lang-csharp">var setting = FluentSettings.For&lt;TestEntity&gt;();
 // ExcelSetting
 setting.HasAuthor(&quot;WeihanLi&quot;)
     .HasTitle(&quot;WeihanLi.Npoi test&quot;)
