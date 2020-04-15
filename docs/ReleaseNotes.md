@@ -1,5 +1,10 @@
 # WeihanLi.Npoi Release Notes
 
+## [1.9.0](https://www.nuget.org/packages/WeihanLi.Npoi/1.9.0)
+
+- remove `return 1` code fix #64
+- optimize fluent formatter performance
+- add `FluentSettings.For` instead of `ExcelHelper.SettingsFor`, fluent settings is not only for excel, but also work with csv
 
 ## [1.8.2](https://www.nuget.org/packages/WeihanLi.Npoi/1.8.2)
 
@@ -7,7 +12,7 @@
 
 ## [1.8.1](https://www.nuget.org/packages/WeihanLi.Npoi/1.8.1)
 
-- add `ExportExcelByTemplate`, fix #33 
+- add `ExportExcelByTemplate`, fix #33
 - update `NpoiRowCollection`
 - optimize `DataTable` support for csv
 - export csv as utf8 encoding
