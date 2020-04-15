@@ -34,14 +34,14 @@ namespace WeihanLi.Npoi
                 .ToDictionary(x => NpoiTemplateHelper.TemplateOptions.TemplateDataParamFormat.FormatWith(x.Key.Name), x => x.Key.GetValueGetter<TEntity>());
             foreach (var key in propertyColumnDictionary.Keys)
             {
-                if (InternalCache.OutputFormatterFuncCache.TryGetValue(key, out var formatterFunc) && formatterFunc?.Item1 != null)
+                if (InternalCache.OutputFormatterFuncCache.TryGetValue(key, out var formatterFunc) && formatterFunc?.MethodInfo != null)
                 {
                     dataFuncDictionary[NpoiTemplateHelper.TemplateOptions.TemplateDataParamFormat.FormatWith(key.Name)] = entity =>
                     {
                         var val = key.GetValueGetter<TEntity>()?.Invoke(entity);
                         try
                         {
-                            var formattedValue = formatterFunc.Item1.Invoke(formatterFunc.Item2, new[] { entity, val });
+                            var formattedValue = formatterFunc.Invoke(new[] { entity, val });
                             return formattedValue;
                         }
                         catch (Exception e)
