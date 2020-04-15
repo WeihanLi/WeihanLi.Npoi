@@ -14,7 +14,7 @@ namespace WeihanLi.Npoi
             Target = @delegate.Target;
         }
 
-        public object Invoke(params object[] parameters)
+        public object Invoke(object[] parameters)
         {
             return MethodInfo?.Invoke(Target, parameters);
         }
