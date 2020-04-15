@@ -132,7 +132,7 @@ namespace DotNetCoreSample
 
         private static void FluentSettingsForExcel()
         {
-            var setting = ExcelHelper.SettingFor<TestEntity>();
+            var setting = FluentSettings.For<TestEntity>();
             // ExcelSetting
             setting.HasAuthor("WeihanLi")
                 .HasTitle("WeihanLi.Npoi test")

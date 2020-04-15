@@ -433,6 +433,7 @@ namespace WeihanLi.Npoi
         /// </summary>
         /// <typeparam name="TEntity">TEntity</typeparam>
         /// <returns></returns>
-        public static IExcelConfiguration<TEntity> SettingFor<TEntity>() => InternalHelper.GetExcelConfigurationMapping<TEntity>();
+        [Obsolete("Please use FluentSettings.For<TEntity>, this method will be removed in next release")]
+        public static IExcelConfiguration<TEntity> SettingFor<TEntity>() => FluentSettings.For<TEntity>();
     }
 }

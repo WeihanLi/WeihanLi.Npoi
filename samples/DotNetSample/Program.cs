@@ -54,7 +54,7 @@ namespace DotNetSample
             //    Console.WriteLine($"导入结果：{connection.BulkCopy(table, "testBulkCopy")}");
             //}
 
-            //var setting = ExcelHelper.SettingFor<TestEntity>();
+            //var setting = FluentSettings.For<TestEntity>();
             //// ExcelSetting
             //setting.HasAuthor("WeihanLi")
             //    .HasTitle("WeihanLi.Npoi test")
