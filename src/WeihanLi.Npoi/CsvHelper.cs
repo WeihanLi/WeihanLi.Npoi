@@ -242,7 +242,7 @@ namespace WeihanLi.Npoi
                                         {
                                             var columnValue = key.PropertyType.GetDefaultValue();
                                             var valueApplied = false;
-                                            if (InternalCache.ColumnInputFormatterFuncCache.TryGetValue(key, out var formatterFunc) && formatterFunc?.MethodInfo != null)
+                                            if (InternalCache.ColumnInputFormatterFuncCache.TryGetValue(key, out var formatterFunc) && formatterFunc?.Method != null)
                                             {
                                                 var cellValue = cols[colIndex];
                                                 try
@@ -278,7 +278,7 @@ namespace WeihanLi.Npoi
                                             var columnValue = key.PropertyType.GetDefaultValue();
 
                                             var valueApplied = false;
-                                            if (InternalCache.ColumnInputFormatterFuncCache.TryGetValue(key, out var formatterFunc) && formatterFunc?.MethodInfo != null)
+                                            if (InternalCache.ColumnInputFormatterFuncCache.TryGetValue(key, out var formatterFunc) && formatterFunc?.Method != null)
                                             {
                                                 var cellValue = cols[colIndex];
                                                 try
@@ -310,7 +310,7 @@ namespace WeihanLi.Npoi
                                         if (propertyInfo.CanWrite)
                                         {
                                             var propertyValue = propertyInfo.GetValueGetter()?.Invoke(entity);
-                                            if (InternalCache.InputFormatterFuncCache.TryGetValue(propertyInfo, out var formatterFunc) && formatterFunc?.MethodInfo != null)
+                                            if (InternalCache.InputFormatterFuncCache.TryGetValue(propertyInfo, out var formatterFunc) && formatterFunc?.Method != null)
                                             {
                                                 try
                                                 {
@@ -508,7 +508,7 @@ namespace WeihanLi.Npoi
                     for (var i = 0; i < props.Count; i++)
                     {
                         var propertyValue = props[i].GetValueGetter<TEntity>()?.Invoke(entity);
-                        if (InternalCache.OutputFormatterFuncCache.TryGetValue(props[i], out var formatterFunc) && formatterFunc?.MethodInfo != null)
+                        if (InternalCache.OutputFormatterFuncCache.TryGetValue(props[i], out var formatterFunc) && formatterFunc?.Method != null)
                         {
                             try
                             {

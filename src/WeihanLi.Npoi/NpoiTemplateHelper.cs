@@ -37,7 +37,7 @@ namespace WeihanLi.Npoi
                 .ToDictionary(x => TemplateOptions.TemplateDataParamFormat.FormatWith(x.Key.Name), x => x.Key.GetValueGetter<TEntity>());
             foreach (var key in propertyColumnDictionary.Keys)
             {
-                if (InternalCache.OutputFormatterFuncCache.TryGetValue(key, out var formatterFunc) && formatterFunc?.MethodInfo != null)
+                if (InternalCache.OutputFormatterFuncCache.TryGetValue(key, out var formatterFunc) && formatterFunc?.Method != null)
                 {
                     dataFuncDictionary[TemplateOptions.TemplateDataParamFormat.FormatWith(key.Name)] = entity =>
                     {

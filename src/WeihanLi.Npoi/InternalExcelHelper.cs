@@ -91,7 +91,7 @@ namespace WeihanLi.Npoi
                                         var columnValue = key.PropertyType.GetDefaultValue();
 
                                         var valueApplied = false;
-                                        if (InternalCache.ColumnInputFormatterFuncCache.TryGetValue(key, out var formatterFunc) && formatterFunc?.MethodInfo != null)
+                                        if (InternalCache.ColumnInputFormatterFuncCache.TryGetValue(key, out var formatterFunc) && formatterFunc?.Method != null)
                                         {
                                             var cellValue = row.GetCell(colIndex).GetCellValue<string>();
                                             try
@@ -125,7 +125,7 @@ namespace WeihanLi.Npoi
                                         var columnValue = key.PropertyType.GetDefaultValue();
 
                                         var valueApplied = false;
-                                        if (InternalCache.ColumnInputFormatterFuncCache.TryGetValue(key, out var formatterFunc) && formatterFunc?.MethodInfo != null)
+                                        if (InternalCache.ColumnInputFormatterFuncCache.TryGetValue(key, out var formatterFunc) && formatterFunc?.Method != null)
                                         {
                                             var cellValue = row.GetCell(colIndex).GetCellValue<string>();
                                             try
@@ -162,7 +162,7 @@ namespace WeihanLi.Npoi
                                 if (propertyInfo.CanWrite)
                                 {
                                     var propertyValue = propertyInfo.GetValueGetter()?.Invoke(entity);
-                                    if (InternalCache.InputFormatterFuncCache.TryGetValue(propertyInfo, out var formatterFunc) && formatterFunc?.MethodInfo != null)
+                                    if (InternalCache.InputFormatterFuncCache.TryGetValue(propertyInfo, out var formatterFunc) && formatterFunc?.Method != null)
                                     {
                                         try
                                         {
@@ -221,7 +221,7 @@ namespace WeihanLi.Npoi
                     foreach (var key in propertyColumnDictionary.Keys)
                     {
                         var propertyValue = key.GetValueGetter<TEntity>()?.Invoke(entity);
-                        if (InternalCache.OutputFormatterFuncCache.TryGetValue(key, out var formatterFunc) && formatterFunc?.MethodInfo != null)
+                        if (InternalCache.OutputFormatterFuncCache.TryGetValue(key, out var formatterFunc) && formatterFunc?.Method != null)
                         {
                             try
                             {
