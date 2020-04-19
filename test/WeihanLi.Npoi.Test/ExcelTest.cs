@@ -29,7 +29,7 @@ namespace WeihanLi.Npoi.Test
             }
             list.Add(new Notice() { Title = "nnnn" });
             list.Add(null);
-            var noticeSetting = ExcelHelper.SettingFor<Notice>();
+            var noticeSetting = FluentSettings.For<Notice>();
             lock (noticeSetting)
             {
                 var excelBytes = list.ToExcelBytes(excelFormat);
@@ -74,7 +74,7 @@ namespace WeihanLi.Npoi.Test
             list.Add(new Notice() { Title = "nnnn" });
             list.Add(null);
 
-            var noticeSetting = ExcelHelper.SettingFor<Notice>();
+            var noticeSetting = FluentSettings.For<Notice>();
             lock (noticeSetting)
             {
                 noticeSetting.HasSheetConfiguration(0, "test", 0);
@@ -117,7 +117,7 @@ namespace WeihanLi.Npoi.Test
                 Publisher = $"publisher_{i}"
             }).ToArray();
             //
-            var noticeSetting = ExcelHelper.SettingFor<Notice>();
+            var noticeSetting = FluentSettings.For<Notice>();
             lock (noticeSetting)
             {
                 var excelBytes = list.ToExcelBytes(excelFormat);
@@ -166,7 +166,7 @@ namespace WeihanLi.Npoi.Test
                 Publisher = $"publisher_{i}"
             }).ToArray();
 
-            var noticeSetting = ExcelHelper.SettingFor<Notice>();
+            var noticeSetting = FluentSettings.For<Notice>();
             lock (noticeSetting)
             {
                 noticeSetting.Property<string>("ShadowProperty")
@@ -210,7 +210,7 @@ namespace WeihanLi.Npoi.Test
                 Publisher = $"publisher_{i}"
             }).ToArray();
 
-            var settings = ExcelHelper.SettingFor<Notice>();
+            var settings = FluentSettings.For<Notice>();
             lock (settings)
             {
                 settings.Property(x => x.Id).Ignored();
@@ -257,7 +257,7 @@ namespace WeihanLi.Npoi.Test
 
             var excelBytes = list.ToExcelBytes(excelFormat);
 
-            var settings = ExcelHelper.SettingFor<Notice>();
+            var settings = FluentSettings.For<Notice>();
             lock (settings)
             {
                 settings.Property(x => x.Title).HasColumnInputFormatter(x => $"{x}_Test");
@@ -298,7 +298,7 @@ namespace WeihanLi.Npoi.Test
                 Publisher = $"publisher_{i}"
             }).ToArray();
 
-            var settings = ExcelHelper.SettingFor<Notice>();
+            var settings = FluentSettings.For<Notice>();
             lock (settings)
             {
                 settings.Property(x => x.Id)

@@ -38,7 +38,7 @@
 示例配置
 
 ``` csharp
-var setting = ExcelHelper.SettingFor<TestEntity>();
+var setting = FluentSettings.For<TestEntity>();
 // ExcelSetting
 setting.HasAuthor("WeihanLi")
     .HasTitle("WeihanLi.Npoi test")

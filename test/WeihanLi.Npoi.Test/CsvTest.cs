@@ -32,7 +32,7 @@ namespace WeihanLi.Npoi.Test
                 Title = $"title",
                 PublishedAt = DateTime.UtcNow.AddDays(1),
             });
-            var noticeSetting = ExcelHelper.SettingFor<Notice>();
+            var noticeSetting = FluentSettings.For<Notice>();
             lock (noticeSetting)
             {
                 var csvBytes = list.ToCsvBytes();
@@ -61,7 +61,7 @@ namespace WeihanLi.Npoi.Test
                 Publisher = $"publisher_{i}"
             }).ToArray();
             //
-            var noticeSetting = ExcelHelper.SettingFor<Notice>();
+            var noticeSetting = FluentSettings.For<Notice>();
             lock (noticeSetting)
             {
                 var excelBytes = list.ToCsvBytes();
