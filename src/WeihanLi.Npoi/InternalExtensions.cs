@@ -150,5 +150,10 @@ namespace WeihanLi.Npoi
         {
             return mappingDictionary.Values.FirstOrDefault(k => k.ColumnTitle.EqualsIgnoreCase(columnTitle)) ?? mappingDictionary.GetPropertySettingByPropertyName(columnTitle);
         }
+
+        public static object Invoke([NotNull]this Delegate @delegate, object[] parameters)
+        {
+            return @delegate.Method?.Invoke(@delegate.Target, parameters);
+        }
     }
 }
