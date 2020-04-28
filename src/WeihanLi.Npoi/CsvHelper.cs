@@ -385,7 +385,7 @@ namespace WeihanLi.Npoi
                 {
                     if ((i + 1) == line.Length)
                     {
-                        fields.Add(line[i + 1].ToString());
+                        fields.Add(line[i].ToString());
                         break;
                     }
 
