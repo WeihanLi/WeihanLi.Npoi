@@ -87,8 +87,7 @@ Task("test")
     {
       var testSettings = new DotNetCoreTestSettings
       {
-        NoRestore = false,
-        Configuration = configuration
+        NoRestore = false
       };
       foreach(var project in testProjects)
       {
