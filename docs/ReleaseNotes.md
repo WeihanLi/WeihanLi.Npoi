@@ -1,5 +1,9 @@
 # WeihanLi.Npoi Release Notes
 
+## [1.9.2](https://www.nuget.org/packages/WeihanLi.Npoi/1.9.2)
+
+- fix `CsvHelper.ParseLine` bug with quoted value, thanks for hokis's effort
+
 ## [1.9.0](https://www.nuget.org/packages/WeihanLi.Npoi/1.9.0)
 
 - remove `return 1` code fix #64

@@ -25,7 +25,7 @@ There' a lot of userful extensions for you, core fetures are as follows:
 
     ``` csharp
     var entities = new List<Entity>();
-    entities.ToExcelFiel(string excelPath);
+    entities.ToExcelFile(string excelPath);
     entities.ToExcelBytes(ExcelFormat excelFormat);
     entities.ToCsvFile(string csvPath);
     entities.ToCsvBytes();
@@ -250,7 +250,6 @@ more usage:
     byte[] ToCsvBytes(this DataTable dt, bool includeHeader)
 
     ```
-
 
 ### Samples
 

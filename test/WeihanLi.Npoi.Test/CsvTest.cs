@@ -119,5 +119,25 @@ namespace WeihanLi.Npoi.Test
                 }
             }
         }
+
+        [Theory]
+        [InlineData("\"XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\"")]
+        [InlineData("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX")]
+        [InlineData("\"X,XXX\"")]
+        [InlineData("")]
+        public void ParseCsvLineTest(string str)
+        {
+            var data = new object[] { 1, "tom", 33, str };
+            var lineData = string.Join(CsvHelper.CsvSeparatorCharacter, data);
+            var cols = CsvHelper.ParseLine(lineData);
+            Assert.Equal(data.Length, cols.Count);
+
+            for (var i = 0; i < cols.Count; i++)
+            {
+                Assert.Equal(data[i]?.ToString()?
+                    .Replace(CsvHelper.CsvQuoteCharacter.ToString(), string.Empty)
+                    ?? string.Empty, cols[i]);
+            }
+        }
     }
 }
