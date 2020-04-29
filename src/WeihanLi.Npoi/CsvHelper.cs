@@ -403,7 +403,7 @@ namespace WeihanLi.Npoi
                         break;
                     }
 
-                    if (character == '"' && line[i + 1] == CsvSeparatorCharacter) // quotes end
+                    if (character == CsvQuoteCharacter && line[i + 1] == CsvSeparatorCharacter) // quotes end
                     {
                         inQuotes = false;
                         inColumn = false;

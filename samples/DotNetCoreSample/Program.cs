@@ -79,7 +79,7 @@ namespace DotNetCoreSample
                     SettingId = Guid.NewGuid(),
                     SettingName = "Setting1",
                     SettingValue = "Value1",
-                    DisplayName = "ddd1"
+                    DisplayName = "dd\"d,1"
                 },
                 new TestEntity()
                 {
@@ -87,7 +87,8 @@ namespace DotNetCoreSample
                     SettingId = Guid.NewGuid(),
                     SettingName = "Setting2",
                     SettingValue = "Value2",
-                    Enabled = true
+                    Enabled = true,
+                    CreatedBy = "li\"_"
                 },
             };
             var csvFilePath = $@"{tempDirPath}\test.csv";
