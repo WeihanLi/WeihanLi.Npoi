@@ -251,7 +251,6 @@ more usage:
 
     ```
 
-
 ### Samples
 
 - [dotnetcore sample](https://github.com/WeihanLi/WeihanLi.Npoi/blob/dev/samples/DotNetCoreSample/Program.cs)
