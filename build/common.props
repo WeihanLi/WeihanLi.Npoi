@@ -22,6 +22,5 @@
     <PackageReleaseNotes>
       https://github.com/WeihanLi/WeihanLi.Npoi/tree/dev/docs/ReleaseNotes.md
     </PackageReleaseNotes>
-    <Copyright>Copyright 2018-2019 WeihanLi</Copyright>
   </PropertyGroup>
 </Project>
