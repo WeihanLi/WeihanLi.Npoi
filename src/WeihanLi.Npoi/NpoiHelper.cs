@@ -100,7 +100,7 @@ namespace WeihanLi.Npoi
                                             try
                                             {
                                                 // apply custom formatterFunc
-                                                columnValue = formatterFunc.Invoke(new object[] { cellValue });
+                                                columnValue = formatterFunc.DynamicInvoke(cellValue);
                                                 valueApplied = true;
                                             }
                                             catch (Exception e)
@@ -134,7 +134,7 @@ namespace WeihanLi.Npoi
                                             try
                                             {
                                                 // apply custom formatterFunc
-                                                columnValue = formatterFunc.Invoke(new object[] { cellValue });
+                                                columnValue = formatterFunc.DynamicInvoke(cellValue);
                                                 valueApplied = true;
                                             }
                                             catch (Exception e)
@@ -173,7 +173,7 @@ namespace WeihanLi.Npoi
                                             try
                                             {
                                                 // apply custom formatterFunc
-                                                var formattedValue = formatterFunc.Invoke(new[] { entity, propertyValue });
+                                                var formattedValue = formatterFunc.DynamicInvoke(entity, propertyValue);
                                                 valueSetter.Invoke(entity, formattedValue);
                                             }
                                             catch (Exception e)
@@ -231,7 +231,7 @@ namespace WeihanLi.Npoi
                             try
                             {
                                 // apply custom formatterFunc
-                                propertyValue = formatterFunc.Invoke(new[] { entity, propertyValue });
+                                propertyValue = formatterFunc.DynamicInvoke(entity, propertyValue);
                             }
                             catch (Exception e)
                             {

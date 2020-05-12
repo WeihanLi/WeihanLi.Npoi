@@ -256,7 +256,7 @@ namespace WeihanLi.Npoi
                                                 try
                                                 {
                                                     // apply custom formatterFunc
-                                                    columnValue = formatterFunc.Invoke(new object[] { cellValue });
+                                                    columnValue = formatterFunc.DynamicInvoke(cellValue);
                                                     valueApplied = true;
                                                 }
                                                 catch (Exception e)
@@ -292,7 +292,7 @@ namespace WeihanLi.Npoi
                                                 try
                                                 {
                                                     // apply custom formatterFunc
-                                                    columnValue = formatterFunc.Invoke(new object[] { cellValue });
+                                                    columnValue = formatterFunc.DynamicInvoke(cellValue);
                                                     valueApplied = true;
                                                 }
                                                 catch (Exception e)
@@ -323,7 +323,7 @@ namespace WeihanLi.Npoi
                                                 try
                                                 {
                                                     // apply custom formatterFunc
-                                                    var formattedValue = formatterFunc.Invoke(new[] { entity, propertyValue });
+                                                    var formattedValue = formatterFunc.DynamicInvoke(entity, propertyValue);
                                                     propertyInfo.GetValueSetter()?.Invoke(entity, formattedValue);
                                                 }
                                                 catch (Exception e)
@@ -403,7 +403,7 @@ namespace WeihanLi.Npoi
                         break;
                     }
 
-                    if (character == '"' && line[i + 1] == CsvSeparatorCharacter) // quotes end
+                    if (character == CsvQuoteCharacter && line[i + 1] == CsvSeparatorCharacter) // quotes end
                     {
                         inQuotes = false;
                         inColumn = false;
@@ -527,7 +527,7 @@ namespace WeihanLi.Npoi
                             try
                             {
                                 // apply custom formatterFunc
-                                propertyValue = formatterFunc.Invoke(new[] { entity, propertyValue });
+                                propertyValue = formatterFunc.DynamicInvoke(entity, propertyValue);
                             }
                             catch (Exception e)
                             {

@@ -44,7 +44,7 @@ namespace WeihanLi.Npoi
                         var val = key.GetValueGetter<TEntity>()?.Invoke(entity);
                         try
                         {
-                            var formattedValue = formatterFunc.Invoke(new[] { entity, val });
+                            var formattedValue = formatterFunc.DynamicInvoke(entity, val);
                             return formattedValue;
                         }
                         catch (Exception e)

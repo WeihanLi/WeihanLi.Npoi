@@ -121,9 +121,12 @@ namespace WeihanLi.Npoi.Test
         }
 
         [Theory]
-        [InlineData("\"XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\"")]
-        [InlineData("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX")]
+        [InlineData("\"XXXXX\"")]
+        [InlineData("XXX")]
         [InlineData("\"X,XXX\"")]
+        [InlineData("XX\"X")]
+        [InlineData("XX\"\"X")]
+        [InlineData("\"dd\"\"d,1\"")]
         [InlineData("")]
         public void ParseCsvLineTest(string str)
         {
@@ -134,10 +137,24 @@ namespace WeihanLi.Npoi.Test
 
             for (var i = 0; i < cols.Count; i++)
             {
-                Assert.Equal(data[i]?.ToString()?
-                    .Replace(CsvHelper.CsvQuoteCharacter.ToString(), string.Empty)
-                    ?? string.Empty, cols[i]);
+                Assert.Equal(TrimQuotes(data[i]?.ToString()), cols[i]);
             }
+        }
+
+        private static string TrimQuotes(string str)
+        {
+            if (string.IsNullOrEmpty(str))
+            {
+                return string.Empty;
+            }
+            //
+
+            if (str[0] == CsvHelper.CsvQuoteCharacter)
+            {
+                return str.Substring(1, str.Length - 2).Replace("\"\"", "\"");
+            }
+
+            return str;
         }
     }
 }
