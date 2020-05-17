@@ -662,7 +662,8 @@
     <tbody>
       <tr>
         <td><span class="xref">System.Int32</span></td>
-        <td></td>
+        <td><p>the sheet LastRowNum</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -800,7 +801,8 @@
     <tbody>
       <tr>
         <td><span class="xref">System.Int32</span></td>
-        <td></td>
+        <td><p>the sheet LastRowNum</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -2251,7 +2253,7 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static int ToExcelFile(this DataTable dataTable, string excelPath)</code></pre>
+    <pre><code class="lang-csharp hljs">public static void ToExcelFile(this DataTable dataTable, string excelPath)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -2277,21 +2279,6 @@
       </tr>
     </tbody>
   </table>
-  <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">System.Int32</span></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
   
   
   <a id="WeihanLi_Npoi_NpoiExtensions_ToExcelFile_" data-uid="WeihanLi.Npoi.NpoiExtensions.ToExcelFile*"></a>
@@ -2301,7 +2288,7 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static int ToExcelFile(this DataTable dataTable, string excelPath, ExcelSetting excelSetting)</code></pre>
+    <pre><code class="lang-csharp hljs">public static void ToExcelFile(this DataTable dataTable, string excelPath, ExcelSetting excelSetting)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -2333,21 +2320,6 @@
       </tr>
     </tbody>
   </table>
-  <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">System.Int32</span></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
   
   
   <a id="WeihanLi_Npoi_NpoiExtensions_ToExcelFile_" data-uid="WeihanLi.Npoi.NpoiExtensions.ToExcelFile*"></a>
@@ -2357,7 +2329,7 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static int ToExcelFile&lt;TEntity&gt;(this IEnumerable&lt;TEntity&gt; entityList, string excelPath)</code></pre>
+    <pre><code class="lang-csharp hljs">public static void ToExcelFile&lt;TEntity&gt;(this IEnumerable&lt;TEntity&gt; entityList, string excelPath)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -2380,21 +2352,6 @@
         <td><span class="parametername">excelPath</span></td>
         <td><p>excelPath</p>
 </td>
-      </tr>
-    </tbody>
-  </table>
-  <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">System.Int32</span></td>
-        <td></td>
       </tr>
     </tbody>
   </table>
@@ -2423,7 +2380,7 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static int ToExcelFile&lt;TEntity&gt;(this IEnumerable&lt;TEntity&gt; entityList, string excelPath, int sheetIndex)</code></pre>
+    <pre><code class="lang-csharp hljs">public static void ToExcelFile&lt;TEntity&gt;(this IEnumerable&lt;TEntity&gt; entityList, string excelPath, int sheetIndex)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -2455,21 +2412,6 @@
       </tr>
     </tbody>
   </table>
-  <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">System.Int32</span></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
   <h5 class="typeParameters">Type Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
     <thead>
@@ -2495,7 +2437,7 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static int ToExcelFileByTemplate&lt;TEntity&gt;(this IEnumerable&lt;TEntity&gt; entities, IWorkbook templateWorkbook, string excelPath, int sheetIndex = 0, object extraData = null)</code></pre>
+    <pre><code class="lang-csharp hljs">public static void ToExcelFileByTemplate&lt;TEntity&gt;(this IEnumerable&lt;TEntity&gt; entities, IWorkbook templateWorkbook, string excelPath, int sheetIndex = 0, object extraData = null)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -2538,22 +2480,6 @@
       </tr>
     </tbody>
   </table>
-  <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">System.Int32</span></td>
-        <td><p>exported excel bytes</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
   <h5 class="typeParameters">Type Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
     <thead>
@@ -2579,7 +2505,7 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static int ToExcelFileByTemplate&lt;TEntity&gt;(this IEnumerable&lt;TEntity&gt; entities, byte[] templateBytes, string excelPath, ExcelFormat excelFormat = ExcelFormat.Xls, int sheetIndex = 0, object extraData = null)</code></pre>
+    <pre><code class="lang-csharp hljs">public static void ToExcelFileByTemplate&lt;TEntity&gt;(this IEnumerable&lt;TEntity&gt; entities, byte[] templateBytes, string excelPath, ExcelFormat excelFormat = ExcelFormat.Xls, int sheetIndex = 0, object extraData = null)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -2629,22 +2555,6 @@
       </tr>
     </tbody>
   </table>
-  <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">System.Int32</span></td>
-        <td><p>exported excel bytes</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
   <h5 class="typeParameters">Type Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
     <thead>
@@ -2670,7 +2580,7 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static int ToExcelFileByTemplate&lt;TEntity&gt;(this IEnumerable&lt;TEntity&gt; entities, string templatePath, string excelPath, int sheetIndex = 0, object extraData = null)</code></pre>
+    <pre><code class="lang-csharp hljs">public static void ToExcelFileByTemplate&lt;TEntity&gt;(this IEnumerable&lt;TEntity&gt; entities, string templatePath, string excelPath, int sheetIndex = 0, object extraData = null)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -2713,22 +2623,6 @@
       </tr>
     </tbody>
   </table>
-  <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">System.Int32</span></td>
-        <td><p>exported excel bytes</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
   <h5 class="typeParameters">Type Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
     <thead>
@@ -2754,7 +2648,7 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static int ToExcelStream(this DataTable dataTable, Stream stream)</code></pre>
+    <pre><code class="lang-csharp hljs">public static void ToExcelStream(this DataTable dataTable, Stream stream)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -2780,21 +2674,6 @@
       </tr>
     </tbody>
   </table>
-  <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">System.Int32</span></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
   
   
   <a id="WeihanLi_Npoi_NpoiExtensions_ToExcelStream_" data-uid="WeihanLi.Npoi.NpoiExtensions.ToExcelStream*"></a>
@@ -2804,7 +2683,7 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static int ToExcelStream(this DataTable dataTable, Stream stream, ExcelFormat excelFormat)</code></pre>
+    <pre><code class="lang-csharp hljs">public static void ToExcelStream(this DataTable dataTable, Stream stream, ExcelFormat excelFormat)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -2836,21 +2715,6 @@
       </tr>
     </tbody>
   </table>
-  <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">System.Int32</span></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
   
   
   <a id="WeihanLi_Npoi_NpoiExtensions_ToExcelStream_" data-uid="WeihanLi.Npoi.NpoiExtensions.ToExcelStream*"></a>
@@ -2860,7 +2724,7 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static int ToExcelStream(this DataTable dataTable, Stream stream, ExcelFormat excelFormat, ExcelSetting excelSetting)</code></pre>
+    <pre><code class="lang-csharp hljs">public static void ToExcelStream(this DataTable dataTable, Stream stream, ExcelFormat excelFormat, ExcelSetting excelSetting)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -2898,21 +2762,6 @@
       </tr>
     </tbody>
   </table>
-  <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">System.Int32</span></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
   
   
   <a id="WeihanLi_Npoi_NpoiExtensions_ToExcelStream_" data-uid="WeihanLi.Npoi.NpoiExtensions.ToExcelStream*"></a>
@@ -2922,7 +2771,7 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static int ToExcelStream&lt;TEntity&gt;(this IEnumerable&lt;TEntity&gt; entityList, Stream stream)</code></pre>
+    <pre><code class="lang-csharp hljs">public static void ToExcelStream&lt;TEntity&gt;(this IEnumerable&lt;TEntity&gt; entityList, Stream stream)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -2945,21 +2794,6 @@
         <td><span class="parametername">stream</span></td>
         <td><p>stream where to write</p>
 </td>
-      </tr>
-    </tbody>
-  </table>
-  <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">System.Int32</span></td>
-        <td></td>
       </tr>
     </tbody>
   </table>
@@ -2988,7 +2822,7 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static int ToExcelStream&lt;TEntity&gt;(this IEnumerable&lt;TEntity&gt; entityList, Stream stream, ExcelFormat excelFormat)</code></pre>
+    <pre><code class="lang-csharp hljs">public static void ToExcelStream&lt;TEntity&gt;(this IEnumerable&lt;TEntity&gt; entityList, Stream stream, ExcelFormat excelFormat)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -3020,21 +2854,6 @@
       </tr>
     </tbody>
   </table>
-  <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">System.Int32</span></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
   <h5 class="typeParameters">Type Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
     <thead>
@@ -3060,7 +2879,7 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static int ToExcelStream&lt;TEntity&gt;(this IEnumerable&lt;TEntity&gt; entityList, Stream stream, ExcelFormat excelFormat, int sheetIndex)</code></pre>
+    <pre><code class="lang-csharp hljs">public static void ToExcelStream&lt;TEntity&gt;(this IEnumerable&lt;TEntity&gt; entityList, Stream stream, ExcelFormat excelFormat, int sheetIndex)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -3098,21 +2917,6 @@
       </tr>
     </tbody>
   </table>
-  <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">System.Int32</span></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
   <h5 class="typeParameters">Type Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
     <thead>
@@ -3138,7 +2942,7 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static int WriteToFile(this IWorkbook workbook, string filePath)</code></pre>
+    <pre><code class="lang-csharp hljs">public static void WriteToFile(this IWorkbook workbook, string filePath)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -3161,21 +2965,6 @@
         <td><span class="parametername">filePath</span></td>
         <td><p>file path</p>
 </td>
-      </tr>
-    </tbody>
-  </table>
-  <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">System.Int32</span></td>
-        <td></td>
       </tr>
     </tbody>
   </table>

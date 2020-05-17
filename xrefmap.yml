@@ -76,6 +76,12 @@ references:
   commentId: T:WeihanLi.Npoi.CsvHelper
   fullName: WeihanLi.Npoi.CsvHelper
   nameWithType: CsvHelper
+- uid: WeihanLi.Npoi.CsvHelper.CsvQuoteCharacter
+  name: CsvQuoteCharacter
+  href: docs/api/WeihanLi.Npoi.CsvHelper.html#WeihanLi_Npoi_CsvHelper_CsvQuoteCharacter
+  commentId: F:WeihanLi.Npoi.CsvHelper.CsvQuoteCharacter
+  fullName: WeihanLi.Npoi.CsvHelper.CsvQuoteCharacter
+  nameWithType: CsvHelper.CsvQuoteCharacter
 - uid: WeihanLi.Npoi.CsvHelper.CsvSeparatorCharacter
   name: CsvSeparatorCharacter
   href: docs/api/WeihanLi.Npoi.CsvHelper.html#WeihanLi_Npoi_CsvHelper_CsvSeparatorCharacter
@@ -542,6 +548,28 @@ references:
   fullName.vb: WeihanLi.Npoi.ExcelHelper.ToEntityList(Of TEntity)(System.String, System.Int32)
   nameWithType: ExcelHelper.ToEntityList<TEntity>(String, Int32)
   nameWithType.vb: ExcelHelper.ToEntityList(Of TEntity)(String, Int32)
+- uid: WeihanLi.Npoi.FluentSettings
+  name: FluentSettings
+  href: docs/api/WeihanLi.Npoi.FluentSettings.html
+  commentId: T:WeihanLi.Npoi.FluentSettings
+  fullName: WeihanLi.Npoi.FluentSettings
+  nameWithType: FluentSettings
+- uid: WeihanLi.Npoi.FluentSettings.For*
+  name: For
+  href: docs/api/WeihanLi.Npoi.FluentSettings.html#WeihanLi_Npoi_FluentSettings_For_
+  commentId: Overload:WeihanLi.Npoi.FluentSettings.For
+  isSpec: "True"
+  fullName: WeihanLi.Npoi.FluentSettings.For
+  nameWithType: FluentSettings.For
+- uid: WeihanLi.Npoi.FluentSettings.For``1
+  name: For<TEntity>()
+  href: docs/api/WeihanLi.Npoi.FluentSettings.html#WeihanLi_Npoi_FluentSettings_For__1
+  commentId: M:WeihanLi.Npoi.FluentSettings.For``1
+  name.vb: For(Of TEntity)()
+  fullName: WeihanLi.Npoi.FluentSettings.For<TEntity>()
+  fullName.vb: WeihanLi.Npoi.FluentSettings.For(Of TEntity)()
+  nameWithType: FluentSettings.For<TEntity>()
+  nameWithType.vb: FluentSettings.For(Of TEntity)()
 - uid: WeihanLi.Npoi.NpoiExtensions
   name: NpoiExtensions
   href: docs/api/WeihanLi.Npoi.NpoiExtensions.html

@@ -232,8 +232,8 @@ setting.Property(_ =&gt; _.CreatedBy)
     .HasColumnTitle(&quot;CreatedBy&quot;);
 
 setting.Property(x =&gt; x.Enabled)
-    .HasColumnInputFormatter(val =&gt; &quot;启用&quot;.Equals(val))
-    .HasColumnOutputFormatter(v =&gt; v ? &quot;启用&quot; : &quot;禁用&quot;);
+    .HasColumnInputFormatter(val =&gt; &quot;Enabled&quot;.Equals(val))
+    .HasColumnOutputFormatter(v =&gt; v ? &quot;Enabled&quot; : &quot;Disabled&quot;);
 
 setting.Property(&quot;HiddenProp&quot;)
     .HasOutputFormatter((entity, val) =&gt; $&quot;HiddenProp_{entity.PKID}&quot;);

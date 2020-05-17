@@ -115,8 +115,34 @@
   </h3>
   
   
+  <h4 id="WeihanLi_Npoi_CsvHelper_CsvQuoteCharacter" data-uid="WeihanLi.Npoi.CsvHelper.CsvQuoteCharacter">CsvQuoteCharacter</h4>
+  <div class="markdown level1 summary"><p>CsvQuoteCharacter, '&quot;' by default</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static char CsvQuoteCharacter</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Char</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
   <h4 id="WeihanLi_Npoi_CsvHelper_CsvSeparatorCharacter" data-uid="WeihanLi.Npoi.CsvHelper.CsvSeparatorCharacter">CsvSeparatorCharacter</h4>
-  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 summary"><p>CsvSeparatorCharacter, ',' by default</p>
+</div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
@@ -360,7 +386,7 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static int ToCsvFile(this DataTable dt, string filePath)</code></pre>
+    <pre><code class="lang-csharp hljs">public static bool ToCsvFile(this DataTable dt, string filePath)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -394,7 +420,7 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Int32</span></td>
+        <td><span class="xref">System.Boolean</span></td>
         <td></td>
       </tr>
     </tbody>
@@ -408,7 +434,7 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static int ToCsvFile(this DataTable dataTable, string filePath, bool includeHeader)</code></pre>
+    <pre><code class="lang-csharp hljs">public static bool ToCsvFile(this DataTable dataTable, string filePath, bool includeHeader)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -447,7 +473,7 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Int32</span></td>
+        <td><span class="xref">System.Boolean</span></td>
         <td></td>
       </tr>
     </tbody>
@@ -461,7 +487,7 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static int ToCsvFile&lt;TEntity&gt;(this IEnumerable&lt;TEntity&gt; entities, string filePath)</code></pre>
+    <pre><code class="lang-csharp hljs">public static bool ToCsvFile&lt;TEntity&gt;(this IEnumerable&lt;TEntity&gt; entities, string filePath)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -495,7 +521,7 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Int32</span></td>
+        <td><span class="xref">System.Boolean</span></td>
         <td></td>
       </tr>
     </tbody>
@@ -524,7 +550,7 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static int ToCsvFile&lt;TEntity&gt;(this IEnumerable&lt;TEntity&gt; entities, string filePath, bool includeHeader)</code></pre>
+    <pre><code class="lang-csharp hljs">public static bool ToCsvFile&lt;TEntity&gt;(this IEnumerable&lt;TEntity&gt; entities, string filePath, bool includeHeader)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -563,7 +589,7 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Int32</span></td>
+        <td><span class="xref">System.Boolean</span></td>
         <td></td>
       </tr>
     </tbody>
