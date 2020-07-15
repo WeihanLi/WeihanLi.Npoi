@@ -480,7 +480,10 @@ namespace WeihanLi.Npoi
         /// </summary>
         public static byte[] ToCsvBytes<TEntity>(this IEnumerable<TEntity> entities, bool includeHeader) => GetCsvText(entities, includeHeader).GetBytes();
 
-        private static string GetCsvText<TEntity>(this IEnumerable<TEntity> entities, bool includeHeader)
+        /// <summary>
+        /// Get csv text
+        /// </summary>
+        public static string GetCsvText<TEntity>(this IEnumerable<TEntity> entities, bool includeHeader)
         {
             if (entities == null)
             {
@@ -554,7 +557,10 @@ namespace WeihanLi.Npoi
             return data.ToString();
         }
 
-        private static string GetCsvText(this DataTable dataTable, bool includeHeader)
+        /// <summary>
+        /// Get csv text
+        /// </summary>
+        public static string GetCsvText(this DataTable dataTable, bool includeHeader)
         {
             if (dataTable == null || dataTable.Rows.Count == 0 || dataTable.Columns.Count == 0)
             {

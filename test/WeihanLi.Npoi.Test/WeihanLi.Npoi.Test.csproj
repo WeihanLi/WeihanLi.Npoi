@@ -21,7 +21,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\WeihanLi.Npoi\WeihanLi.Npoi.csproj" />
-     <!--<PackageReference Include="WeihanLi.Npoi" Version="1.7.0" />--> 
   </ItemGroup>
 
 </Project>

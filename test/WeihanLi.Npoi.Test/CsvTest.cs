@@ -141,6 +141,17 @@ namespace WeihanLi.Npoi.Test
             }
         }
 
+        [Fact]
+        public void GetCsvTextTest()
+        {
+            var text = Enumerable.Range(1, 5)
+                .GetCsvText(false);
+
+            var expected = Enumerable.Range(1, 5)
+                .StringJoin(Environment.NewLine) + Environment.NewLine;
+            Assert.Equal(expected, text);
+        }
+
         private static string TrimQuotes(string str)
         {
             if (string.IsNullOrEmpty(str))
