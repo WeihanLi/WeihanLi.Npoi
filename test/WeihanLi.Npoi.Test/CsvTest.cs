@@ -127,6 +127,10 @@ namespace WeihanLi.Npoi.Test
         [InlineData("XX\"X")]
         [InlineData("XX\"\"X")]
         [InlineData("\"dd\"\"d,1\"")]
+        [InlineData("ddd\nccc")]
+        [InlineData("ddd\r\nccc")]
+        [InlineData(@"bbb
+        ccc")]
         [InlineData("")]
         public void ParseCsvLineTest(string str)
         {
