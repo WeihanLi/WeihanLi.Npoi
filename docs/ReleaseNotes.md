@@ -1,5 +1,9 @@
 # WeihanLi.Npoi Release Notes
 
+## [1.9.6](https://www.nuget.org/packages/WeihanLi.Npoi/1.9.6)
+
+- fix xlsx workbook `AppVersion` property value caused warning
+
 ## [1.9.5](https://www.nuget.org/packages/WeihanLi.Npoi/1.9.5)
 
 - fix `ExcelHelper.ToDataTable` bug with blank cell, thanks for hokis's feedback
