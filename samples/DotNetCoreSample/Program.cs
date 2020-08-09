@@ -16,6 +16,9 @@ namespace DotNetCoreSample
             FluentSettingsForExcel();
             var tempDirPath = $@"{Environment.GetEnvironmentVariable("USERPROFILE")}\Desktop\temp\test";
 
+            //var tempExcelPath = Path.Combine(tempDirPath, "test.xlsx");
+            //var tempTable = ExcelHelper.ToDataTable(tempExcelPath);
+
             //using (var conn = new SqlConnection("server=.;uid=liweihan;pwd=Admin888;database=Reservation"))
             //{
             //    var list = conn.Select<TestEntity>(@"SELECT * FROM [Reservation].[dbo].[tabSystemSettings]").ToArray();

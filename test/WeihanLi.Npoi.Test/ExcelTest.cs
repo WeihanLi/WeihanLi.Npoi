@@ -57,6 +57,50 @@ namespace WeihanLi.Npoi.Test
         [Theory]
         [InlineData(ExcelFormat.Xls)]
         [InlineData(ExcelFormat.Xlsx)]
+        public void BasicImportExportTestWithEmptyValue(ExcelFormat excelFormat)
+        {
+            var list = new List<Notice>();
+            for (var i = 0; i < 10; i++)
+            {
+                list.Add(new Notice()
+                {
+                    Id = i + 1,
+                    Content = i < 3 ? $"content_{i}" : string.Empty,
+                    Title = $"title_{i}",
+                    PublishedAt = DateTime.UtcNow.AddDays(-i),
+                    Publisher = i < 3 ? $"publisher_{i}" : null
+                });
+            }
+            list.Add(new Notice() { Title = "nnnn" });
+            list.Add(null);
+            var noticeSetting = FluentSettings.For<Notice>();
+            lock (noticeSetting)
+            {
+                var excelBytes = list.ToExcelBytes(excelFormat);
+
+                var importedList = ExcelHelper.ToEntityList<Notice>(excelBytes, excelFormat);
+                Assert.Equal(list.Count, importedList.Count);
+                for (var i = 0; i < list.Count; i++)
+                {
+                    if (list[i] == null)
+                    {
+                        Assert.Null(importedList[i]);
+                    }
+                    else
+                    {
+                        Assert.Equal(list[i].Id, importedList[i].Id);
+                        Assert.Equal(list[i].Title, importedList[i].Title);
+                        Assert.Equal(list[i].Content, importedList[i].Content);
+                        Assert.Equal(list[i].Publisher, importedList[i].Publisher);
+                        Assert.Equal(list[i].PublishedAt.ToStandardTimeString(), importedList[i].PublishedAt.ToStandardTimeString());
+                    }
+                }
+            }
+        }
+
+        [Theory]
+        [InlineData(ExcelFormat.Xls)]
+        [InlineData(ExcelFormat.Xlsx)]
         public void BasicImportExportWithoutHeaderTest(ExcelFormat excelFormat)
         {
             var list = new List<Notice>();
@@ -357,6 +401,45 @@ namespace WeihanLi.Npoi.Test
             {
                 Assert.Equal(dt.Rows[i].ItemArray.Length, importedData.Rows[i].ItemArray.Length);
                 for (var j = 0; j < dt.Rows[i].ItemArray.Length; j++)
+                {
+                    Assert.Equal(dt.Rows[i].ItemArray[j], importedData.Rows[i].ItemArray[j]);
+                }
+            }
+        }
+
+        [Theory]
+        [InlineData(ExcelFormat.Xls)]
+        [InlineData(ExcelFormat.Xlsx)]
+        public void DataTableImportExportWithEmptyValueTest(ExcelFormat excelFormat)
+        {
+            var dt = new DataTable();
+            dt.Columns.AddRange(new[]
+            {
+                new DataColumn("Name"),
+                new DataColumn("Age"),
+                new DataColumn("Desc"),
+            });
+            for (var i = 0; i < 10; i++)
+            {
+                var row = dt.NewRow();
+                row.ItemArray = new object[]
+                {
+                    i < 4 ? $"Test_{i}" : null,
+                    i + 10,
+                    i % 2 == 0 ? $"Desc_{i}" : string.Empty
+                };
+                dt.Rows.Add(row);
+            }
+            //
+            var excelBytes = dt.ToExcelBytes(excelFormat);
+            var importedData = ExcelHelper.ToDataTable(excelBytes, excelFormat);
+            Assert.NotNull(importedData);
+            Assert.Equal(dt.Rows.Count, importedData.Rows.Count);
+            Assert.Equal(dt.Columns.Count, importedData.Columns.Count);
+            for (var i = 0; i < dt.Rows.Count; i++)
+            {
+                Assert.Equal(dt.Rows[i].ItemArray.Length, importedData.Rows[i].ItemArray.Length);
+                for (var j = 0; j < dt.Columns.Count; j++)
                 {
                     Assert.Equal(dt.Rows[i].ItemArray[j], importedData.Rows[i].ItemArray[j]);
                 }

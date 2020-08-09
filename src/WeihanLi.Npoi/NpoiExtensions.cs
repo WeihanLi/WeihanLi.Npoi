@@ -137,18 +137,22 @@ namespace WeihanLi.Npoi
 
                 if (row.RowNum == headerRowIndex)
                 {
-                    foreach (var cell in row.Cells)
+                    foreach (var cell in row.GetCellCollection())
                     {
+                        if (cell == null)
+                        {
+                            continue;
+                        }
                         dataTable.Columns.Add(cell.StringCellValue.Trim());
                     }
                 }
                 else
                 {
                     var dataRow = dataTable.NewRow();
-                    for (var i = 0; i < row.Cells.Count; i++)
-                    {
-                        dataRow[i] = row.Cells[i].GetCellValue(typeof(string));
-                    }
+
+                    dataRow.ItemArray = row.GetCellCollection()
+                        .Select(cell => cell.GetCellValue(typeof(string)))
+                        .ToArray();
                     dataTable.Rows.Add(dataRow);
                 }
             }
@@ -305,7 +309,7 @@ namespace WeihanLi.Npoi
         /// <param name="sheetIndex">sheetIndex,zero by default</param>
         /// <param name="extraData">extraData</param>
         /// <returns>exported excel bytes</returns>
-        public static void ToExcelFileByTemplate<TEntity>([NotNull]this IEnumerable<TEntity> entities, string templatePath, string excelPath, int sheetIndex = 0, object extraData = null)
+        public static void ToExcelFileByTemplate<TEntity>([NotNull] this IEnumerable<TEntity> entities, string templatePath, string excelPath, int sheetIndex = 0, object extraData = null)
         {
             if (templatePath == null)
             {
@@ -331,7 +335,7 @@ namespace WeihanLi.Npoi
         /// <param name="sheetIndex">sheetIndex,zero by default</param>
         /// <param name="extraData">extraData</param>
         /// <returns>exported excel bytes</returns>
-        public static void ToExcelFileByTemplate<TEntity>([NotNull]this IEnumerable<TEntity> entities, byte[] templateBytes, string excelPath, ExcelFormat excelFormat = ExcelFormat.Xls, int sheetIndex = 0, object extraData = null)
+        public static void ToExcelFileByTemplate<TEntity>([NotNull] this IEnumerable<TEntity> entities, byte[] templateBytes, string excelPath, ExcelFormat excelFormat = ExcelFormat.Xls, int sheetIndex = 0, object extraData = null)
         {
             if (templateBytes == null)
             {
@@ -356,7 +360,7 @@ namespace WeihanLi.Npoi
         /// <param name="sheetIndex">sheetIndex</param>
         /// <param name="extraData">extraData</param>
         /// <returns>exported excel bytes</returns>
-        public static void ToExcelFileByTemplate<TEntity>([NotNull]this IEnumerable<TEntity> entities, IWorkbook templateWorkbook, string excelPath, int sheetIndex = 0, object extraData = null)
+        public static void ToExcelFileByTemplate<TEntity>([NotNull] this IEnumerable<TEntity> entities, IWorkbook templateWorkbook, string excelPath, int sheetIndex = 0, object extraData = null)
         {
             if (null == templateWorkbook)
             {
@@ -384,7 +388,7 @@ namespace WeihanLi.Npoi
         /// <param name="sheetIndex">sheetIndex,zero by default</param>
         /// <param name="extraData">extraData</param>
         /// <returns>exported excel bytes</returns>
-        public static byte[] ToExcelBytesByTemplate<TEntity>([NotNull]this IEnumerable<TEntity> entities, string templatePath, int sheetIndex = 0, object extraData = null)
+        public static byte[] ToExcelBytesByTemplate<TEntity>([NotNull] this IEnumerable<TEntity> entities, string templatePath, int sheetIndex = 0, object extraData = null)
         {
             return ToExcelBytesByTemplate(entities, ExcelHelper.LoadExcel(templatePath), sheetIndex, extraData);
         }
@@ -399,7 +403,7 @@ namespace WeihanLi.Npoi
         /// <param name="sheetIndex">sheetIndex,zero by default</param>
         /// <param name="extraData">extraData</param>
         /// <returns>exported excel bytes</returns>
-        public static byte[] ToExcelBytesByTemplate<TEntity>([NotNull]this IEnumerable<TEntity> entities, byte[] templateBytes, ExcelFormat excelFormat = ExcelFormat.Xls, int sheetIndex = 0, object extraData = null)
+        public static byte[] ToExcelBytesByTemplate<TEntity>([NotNull] this IEnumerable<TEntity> entities, byte[] templateBytes, ExcelFormat excelFormat = ExcelFormat.Xls, int sheetIndex = 0, object extraData = null)
         {
             if (templateBytes == null)
             {
@@ -420,7 +424,7 @@ namespace WeihanLi.Npoi
         /// <param name="sheetIndex">sheetIndex,zero by default</param>
         /// <param name="extraData">extraData</param>
         /// <returns>exported excel bytes</returns>
-        public static byte[] ToExcelBytesByTemplate<TEntity>([NotNull]this IEnumerable<TEntity> entities, Stream templateStream, ExcelFormat excelFormat = ExcelFormat.Xls, int sheetIndex = 0, object extraData = null)
+        public static byte[] ToExcelBytesByTemplate<TEntity>([NotNull] this IEnumerable<TEntity> entities, Stream templateStream, ExcelFormat excelFormat = ExcelFormat.Xls, int sheetIndex = 0, object extraData = null)
         {
             if (templateStream == null)
             {
@@ -440,7 +444,7 @@ namespace WeihanLi.Npoi
         /// <param name="sheetIndex">sheetIndex</param>
         /// <param name="extraData">extraData</param>
         /// <returns>exported excel bytes</returns>
-        public static byte[] ToExcelBytesByTemplate<TEntity>([NotNull]this IEnumerable<TEntity> entities, IWorkbook templateWorkbook, int sheetIndex = 0, object extraData = null)
+        public static byte[] ToExcelBytesByTemplate<TEntity>([NotNull] this IEnumerable<TEntity> entities, IWorkbook templateWorkbook, int sheetIndex = 0, object extraData = null)
         {
             if (null == templateWorkbook)
             {
@@ -466,7 +470,7 @@ namespace WeihanLi.Npoi
         /// <param name="templateSheet"></param>
         /// <param name="extraData">extraData</param>
         /// <returns>exported excel bytes</returns>
-        public static byte[] ToExcelBytesByTemplate<TEntity>([NotNull]this IEnumerable<TEntity> entities, ISheet templateSheet, object extraData = null)
+        public static byte[] ToExcelBytesByTemplate<TEntity>([NotNull] this IEnumerable<TEntity> entities, ISheet templateSheet, object extraData = null)
         {
             NpoiTemplateHelper.EntityListToSheetByTemplate(
                 templateSheet, entities, extraData
@@ -697,7 +701,8 @@ namespace WeihanLi.Npoi
             var headerRow = sheet.CreateRow(0);
             for (var i = 0; i < dataTable.Columns.Count; i++)
             {
-                headerRow.CreateCell(i, CellType.String).SetCellValue(dataTable.Columns[i].ColumnName);
+                headerRow.CreateCell(i, CellType.String)
+                    .SetCellValue(dataTable.Columns[i].ColumnName);
             }
 
             for (var i = 1; i <= dataTable.Rows.Count; i++)
@@ -705,7 +710,8 @@ namespace WeihanLi.Npoi
                 var row = sheet.CreateRow(i);
                 for (var j = 0; j < dataTable.Columns.Count; j++)
                 {
-                    row.CreateCell(j, CellType.String).SetCellValue(dataTable.Rows[i - 1][j]);
+                    row.CreateCell(j, CellType.String)
+                        .SetCellValue(dataTable.Rows[i - 1][j]);
                 }
             }
 
@@ -727,7 +733,7 @@ namespace WeihanLi.Npoi
         /// <param name="formatter">formatter</param>
         public static void SetCellValue([NotNull] this ICell cell, object value, string formatter)
         {
-            if (null == value)
+            if (null == value || DBNull.Value == value)
             {
                 cell.SetCellType(CellType.Blank);
                 return;
@@ -829,11 +835,18 @@ namespace WeihanLi.Npoi
         public static T GetCellValue<T>([CanBeNull] this ICell cell) => (T)cell.GetCellValue(typeof(T));
 
         /// <summary>
-        /// GetRowCollection
+        /// Get Sheet Row Collection
         /// </summary>
         /// <param name="sheet">excel sheet</param>
         /// <returns>row collection</returns>
-        public static NpoiRowCollection GetRowCollection([NotNull]this ISheet sheet) => new NpoiRowCollection(sheet);
+        public static NpoiRowCollection GetRowCollection([NotNull] this ISheet sheet) => new NpoiRowCollection(sheet);
+
+        /// <summary>
+        /// Get Row Cell Collection
+        /// </summary>
+        /// <param name="row">excel sheet row</param>
+        /// <returns>row collection</returns>
+        public static NpoiCellCollection GetCellCollection([NotNull] this IRow row) => new NpoiCellCollection(row);
 
         /// <summary>
         ///     Write workbook to excel file
