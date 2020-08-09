@@ -88,6 +88,28 @@ references:
   commentId: F:WeihanLi.Npoi.CsvHelper.CsvSeparatorCharacter
   fullName: WeihanLi.Npoi.CsvHelper.CsvSeparatorCharacter
   nameWithType: CsvHelper.CsvSeparatorCharacter
+- uid: WeihanLi.Npoi.CsvHelper.GetCsvText(DataTable,System.Boolean)
+  name: GetCsvText(DataTable, Boolean)
+  href: docs/api/WeihanLi.Npoi.CsvHelper.html#WeihanLi_Npoi_CsvHelper_GetCsvText_DataTable_System_Boolean_
+  commentId: M:WeihanLi.Npoi.CsvHelper.GetCsvText(DataTable,System.Boolean)
+  fullName: WeihanLi.Npoi.CsvHelper.GetCsvText(DataTable, System.Boolean)
+  nameWithType: CsvHelper.GetCsvText(DataTable, Boolean)
+- uid: WeihanLi.Npoi.CsvHelper.GetCsvText*
+  name: GetCsvText
+  href: docs/api/WeihanLi.Npoi.CsvHelper.html#WeihanLi_Npoi_CsvHelper_GetCsvText_
+  commentId: Overload:WeihanLi.Npoi.CsvHelper.GetCsvText
+  isSpec: "True"
+  fullName: WeihanLi.Npoi.CsvHelper.GetCsvText
+  nameWithType: CsvHelper.GetCsvText
+- uid: WeihanLi.Npoi.CsvHelper.GetCsvText``1(IEnumerable{``0},System.Boolean)
+  name: GetCsvText<TEntity>(IEnumerable<TEntity>, Boolean)
+  href: docs/api/WeihanLi.Npoi.CsvHelper.html#WeihanLi_Npoi_CsvHelper_GetCsvText__1_IEnumerable___0__System_Boolean_
+  commentId: M:WeihanLi.Npoi.CsvHelper.GetCsvText``1(IEnumerable{``0},System.Boolean)
+  name.vb: GetCsvText(Of TEntity)(IEnumerable(Of TEntity), Boolean)
+  fullName: WeihanLi.Npoi.CsvHelper.GetCsvText<TEntity>(IEnumerable<TEntity>, System.Boolean)
+  fullName.vb: WeihanLi.Npoi.CsvHelper.GetCsvText(Of TEntity)(IEnumerable(Of TEntity), System.Boolean)
+  nameWithType: CsvHelper.GetCsvText<TEntity>(IEnumerable<TEntity>, Boolean)
+  nameWithType.vb: CsvHelper.GetCsvText(Of TEntity)(IEnumerable(Of TEntity), Boolean)
 - uid: WeihanLi.Npoi.CsvHelper.ToCsvBytes(DataTable)
   name: ToCsvBytes(DataTable)
   href: docs/api/WeihanLi.Npoi.CsvHelper.html#WeihanLi_Npoi_CsvHelper_ToCsvBytes_DataTable_
@@ -570,12 +592,70 @@ references:
   fullName.vb: WeihanLi.Npoi.FluentSettings.For(Of TEntity)()
   nameWithType: FluentSettings.For<TEntity>()
   nameWithType.vb: FluentSettings.For(Of TEntity)()
+- uid: WeihanLi.Npoi.NpoiCellCollection
+  name: NpoiCellCollection
+  href: docs/api/WeihanLi.Npoi.NpoiCellCollection.html
+  commentId: T:WeihanLi.Npoi.NpoiCellCollection
+  fullName: WeihanLi.Npoi.NpoiCellCollection
+  nameWithType: NpoiCellCollection
+- uid: WeihanLi.Npoi.NpoiCellCollection.#ctor(IRow)
+  name: NpoiCellCollection(IRow)
+  href: docs/api/WeihanLi.Npoi.NpoiCellCollection.html#WeihanLi_Npoi_NpoiCellCollection__ctor_IRow_
+  commentId: M:WeihanLi.Npoi.NpoiCellCollection.#ctor(IRow)
+  fullName: WeihanLi.Npoi.NpoiCellCollection.NpoiCellCollection(IRow)
+  nameWithType: NpoiCellCollection.NpoiCellCollection(IRow)
+- uid: WeihanLi.Npoi.NpoiCellCollection.#ctor*
+  name: NpoiCellCollection
+  href: docs/api/WeihanLi.Npoi.NpoiCellCollection.html#WeihanLi_Npoi_NpoiCellCollection__ctor_
+  commentId: Overload:WeihanLi.Npoi.NpoiCellCollection.#ctor
+  isSpec: "True"
+  fullName: WeihanLi.Npoi.NpoiCellCollection.NpoiCellCollection
+  nameWithType: NpoiCellCollection.NpoiCellCollection
+- uid: WeihanLi.Npoi.NpoiCellCollection.Count
+  name: Count
+  href: docs/api/WeihanLi.Npoi.NpoiCellCollection.html#WeihanLi_Npoi_NpoiCellCollection_Count
+  commentId: P:WeihanLi.Npoi.NpoiCellCollection.Count
+  fullName: WeihanLi.Npoi.NpoiCellCollection.Count
+  nameWithType: NpoiCellCollection.Count
+- uid: WeihanLi.Npoi.NpoiCellCollection.Count*
+  name: Count
+  href: docs/api/WeihanLi.Npoi.NpoiCellCollection.html#WeihanLi_Npoi_NpoiCellCollection_Count_
+  commentId: Overload:WeihanLi.Npoi.NpoiCellCollection.Count
+  isSpec: "True"
+  fullName: WeihanLi.Npoi.NpoiCellCollection.Count
+  nameWithType: NpoiCellCollection.Count
+- uid: WeihanLi.Npoi.NpoiCellCollection.GetEnumerator
+  name: GetEnumerator()
+  href: docs/api/WeihanLi.Npoi.NpoiCellCollection.html#WeihanLi_Npoi_NpoiCellCollection_GetEnumerator
+  commentId: M:WeihanLi.Npoi.NpoiCellCollection.GetEnumerator
+  fullName: WeihanLi.Npoi.NpoiCellCollection.GetEnumerator()
+  nameWithType: NpoiCellCollection.GetEnumerator()
+- uid: WeihanLi.Npoi.NpoiCellCollection.GetEnumerator*
+  name: GetEnumerator
+  href: docs/api/WeihanLi.Npoi.NpoiCellCollection.html#WeihanLi_Npoi_NpoiCellCollection_GetEnumerator_
+  commentId: Overload:WeihanLi.Npoi.NpoiCellCollection.GetEnumerator
+  isSpec: "True"
+  fullName: WeihanLi.Npoi.NpoiCellCollection.GetEnumerator
+  nameWithType: NpoiCellCollection.GetEnumerator
 - uid: WeihanLi.Npoi.NpoiExtensions
   name: NpoiExtensions
   href: docs/api/WeihanLi.Npoi.NpoiExtensions.html
   commentId: T:WeihanLi.Npoi.NpoiExtensions
   fullName: WeihanLi.Npoi.NpoiExtensions
   nameWithType: NpoiExtensions
+- uid: WeihanLi.Npoi.NpoiExtensions.GetCellCollection(IRow)
+  name: GetCellCollection(IRow)
+  href: docs/api/WeihanLi.Npoi.NpoiExtensions.html#WeihanLi_Npoi_NpoiExtensions_GetCellCollection_IRow_
+  commentId: M:WeihanLi.Npoi.NpoiExtensions.GetCellCollection(IRow)
+  fullName: WeihanLi.Npoi.NpoiExtensions.GetCellCollection(IRow)
+  nameWithType: NpoiExtensions.GetCellCollection(IRow)
+- uid: WeihanLi.Npoi.NpoiExtensions.GetCellCollection*
+  name: GetCellCollection
+  href: docs/api/WeihanLi.Npoi.NpoiExtensions.html#WeihanLi_Npoi_NpoiExtensions_GetCellCollection_
+  commentId: Overload:WeihanLi.Npoi.NpoiExtensions.GetCellCollection
+  isSpec: "True"
+  fullName: WeihanLi.Npoi.NpoiExtensions.GetCellCollection
+  nameWithType: NpoiExtensions.GetCellCollection
 - uid: WeihanLi.Npoi.NpoiExtensions.GetCellValue(ICell,System.Type)
   name: GetCellValue(ICell, Type)
   href: docs/api/WeihanLi.Npoi.NpoiExtensions.html#WeihanLi_Npoi_NpoiExtensions_GetCellValue_ICell_System_Type_
