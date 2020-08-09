@@ -16,6 +16,9 @@ namespace DotNetCoreSample
             FluentSettingsForExcel();
             var tempDirPath = $@"{Environment.GetEnvironmentVariable("USERPROFILE")}\Desktop\temp\test";
 
+            //var tempExcelPath = Path.Combine(tempDirPath, "test.xlsx");
+            //var tempTable = ExcelHelper.ToDataTable(tempExcelPath);
+
             //using (var conn = new SqlConnection("server=.;uid=liweihan;pwd=Admin888;database=Reservation"))
             //{
             //    var list = conn.Select<TestEntity>(@"SELECT * FROM [Reservation].[dbo].[tabSystemSettings]").ToArray();
@@ -79,7 +82,7 @@ namespace DotNetCoreSample
                     SettingId = Guid.NewGuid(),
                     SettingName = "Setting1",
                     SettingValue = "Value1",
-                    DisplayName = "ddd1"
+                    DisplayName = "dd\"d,1"
                 },
                 new TestEntity()
                 {
@@ -87,7 +90,8 @@ namespace DotNetCoreSample
                     SettingId = Guid.NewGuid(),
                     SettingName = "Setting2",
                     SettingValue = "Value2",
-                    Enabled = true
+                    Enabled = true,
+                    CreatedBy = "li\"_"
                 },
             };
             var csvFilePath = $@"{tempDirPath}\test.csv";

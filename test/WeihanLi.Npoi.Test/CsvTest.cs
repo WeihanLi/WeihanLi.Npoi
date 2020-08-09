@@ -119,5 +119,57 @@ namespace WeihanLi.Npoi.Test
                 }
             }
         }
+
+        [Theory]
+        [InlineData("\"XXXXX\"")]
+        [InlineData("XXX")]
+        [InlineData("\"X,XXX\"")]
+        [InlineData("XX\"X")]
+        [InlineData("XX\"\"X")]
+        [InlineData("\"dd\"\"d,1\"")]
+        [InlineData("ddd\nccc")]
+        [InlineData("ddd\r\nccc")]
+        [InlineData(@"bbb
+        ccc")]
+        [InlineData("")]
+        public void ParseCsvLineTest(string str)
+        {
+            var data = new object[] { 1, "tom", 33, str };
+            var lineData = string.Join(CsvHelper.CsvSeparatorCharacter, data);
+            var cols = CsvHelper.ParseLine(lineData);
+            Assert.Equal(data.Length, cols.Count);
+
+            for (var i = 0; i < cols.Count; i++)
+            {
+                Assert.Equal(TrimQuotes(data[i]?.ToString()), cols[i]);
+            }
+        }
+
+        [Fact]
+        public void GetCsvTextTest()
+        {
+            var text = Enumerable.Range(1, 5)
+                .GetCsvText(false);
+
+            var expected = Enumerable.Range(1, 5)
+                .StringJoin(Environment.NewLine) + Environment.NewLine;
+            Assert.Equal(expected, text);
+        }
+
+        private static string TrimQuotes(string str)
+        {
+            if (string.IsNullOrEmpty(str))
+            {
+                return string.Empty;
+            }
+            //
+
+            if (str[0] == CsvHelper.CsvQuoteCharacter)
+            {
+                return str.Substring(1, str.Length - 2).Replace("\"\"", "\"");
+            }
+
+            return str;
+        }
     }
 }

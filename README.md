@@ -18,6 +18,7 @@ There' a lot of userful extensions for you, core fetures are as follows:
 - export `IEnumerable<TEntity>` or `DataTable` data to Excel file or Excel file bytes or even write excel file stream to your stream
 - export `IEnumerable<TEntity>` or `DataTable` data to csv file or bytes.
 - custom configuration/mappings by Attribute or FluentAPI(inspired by [FluentExcel](https://github.com/Arch/FluentExcel/))
+- great flexibility by fluent InputFormatter/OutputFormatter/ColumnInputFormatter/ColumnOutputFormatter
 
 ### GetStarted
 
@@ -25,7 +26,7 @@ There' a lot of userful extensions for you, core fetures are as follows:
 
     ``` csharp
     var entities = new List<Entity>();
-    entities.ToExcelFiel(string excelPath);
+    entities.ToExcelFile(string excelPath);
     entities.ToExcelBytes(ExcelFormat excelFormat);
     entities.ToCsvFile(string csvPath);
     entities.ToCsvBytes();
@@ -250,7 +251,6 @@ more usage:
     byte[] ToCsvBytes(this DataTable dt, bool includeHeader)
 
     ```
-
 
 ### Samples
 

@@ -16,7 +16,15 @@ namespace WeihanLi.Npoi
     /// </summary>
     public static class CsvHelper
     {
+        /// <summary>
+        /// CsvSeparatorCharacter, ',' by default
+        /// </summary>
         public static char CsvSeparatorCharacter = ',';
+
+        /// <summary>
+        /// CsvQuoteCharacter, '"' by default
+        /// </summary>
+        public static char CsvQuoteCharacter = '"';
 
         /// <summary>
         /// save to csv file
@@ -248,7 +256,7 @@ namespace WeihanLi.Npoi
                                                 try
                                                 {
                                                     // apply custom formatterFunc
-                                                    columnValue = formatterFunc.Invoke(new object[] { cellValue });
+                                                    columnValue = formatterFunc.DynamicInvoke(cellValue);
                                                     valueApplied = true;
                                                 }
                                                 catch (Exception e)
@@ -284,7 +292,7 @@ namespace WeihanLi.Npoi
                                                 try
                                                 {
                                                     // apply custom formatterFunc
-                                                    columnValue = formatterFunc.Invoke(new object[] { cellValue });
+                                                    columnValue = formatterFunc.DynamicInvoke(cellValue);
                                                     valueApplied = true;
                                                 }
                                                 catch (Exception e)
@@ -315,7 +323,7 @@ namespace WeihanLi.Npoi
                                                 try
                                                 {
                                                     // apply custom formatterFunc
-                                                    var formattedValue = formatterFunc.Invoke(new[] { entity, propertyValue });
+                                                    var formattedValue = formatterFunc.DynamicInvoke(entity, propertyValue);
                                                     propertyInfo.GetValueSetter()?.Invoke(entity, formattedValue);
                                                 }
                                                 catch (Exception e)
@@ -351,7 +359,14 @@ namespace WeihanLi.Npoi
             return ToEntityList<TEntity>(csvStream.ToByteArray());
         }
 
-        private static IReadOnlyList<string> ParseLine(string line)
+#if DEBUG
+
+        public
+#else
+        private
+
+#endif
+            static IReadOnlyList<string> ParseLine(string line)
         {
             if (string.IsNullOrEmpty(line))
                 return new[] { string.Empty };
@@ -373,7 +388,7 @@ namespace WeihanLi.Npoi
                     // If the current character is a double quote then the column value is contained within
                     // double quotes, otherwise append the next character
                     inColumn = true;
-                    if (character == '"')
+                    if (character == CsvQuoteCharacter)
                     {
                         inQuotes = true;
                         continue;
@@ -383,23 +398,22 @@ namespace WeihanLi.Npoi
                 // If we are in between double quotes
                 if (inQuotes)
                 {
-                    if ((i + 1) == line.Length)
+                    if (i + 1 == line.Length)
                     {
-                        fields.Add(line[i + 1].ToString());
                         break;
                     }
 
-                    if (character == '"' && line[i + 1] == CsvSeparatorCharacter) // quotes end
+                    if (character == CsvQuoteCharacter && line[i + 1] == CsvSeparatorCharacter) // quotes end
                     {
                         inQuotes = false;
                         inColumn = false;
                         i++; //skip next
                     }
-                    else if (character == '"' && line[i + 1] == '"') // quotes
+                    else if (character == CsvQuoteCharacter && line[i + 1] == CsvQuoteCharacter) // quotes
                     {
                         i++; //skip next
                     }
-                    else if (character == '"')
+                    else if (character == CsvQuoteCharacter)
                     {
                         throw new ArgumentException($"unable to escape {line}");
                     }
@@ -466,7 +480,10 @@ namespace WeihanLi.Npoi
         /// </summary>
         public static byte[] ToCsvBytes<TEntity>(this IEnumerable<TEntity> entities, bool includeHeader) => GetCsvText(entities, includeHeader).GetBytes();
 
-        private static string GetCsvText<TEntity>(this IEnumerable<TEntity> entities, bool includeHeader)
+        /// <summary>
+        /// Get csv text
+        /// </summary>
+        public static string GetCsvText<TEntity>(this IEnumerable<TEntity> entities, bool includeHeader)
         {
             if (entities == null)
             {
@@ -513,7 +530,7 @@ namespace WeihanLi.Npoi
                             try
                             {
                                 // apply custom formatterFunc
-                                propertyValue = formatterFunc.Invoke(new[] { entity, propertyValue });
+                                propertyValue = formatterFunc.DynamicInvoke(entity, propertyValue);
                             }
                             catch (Exception e)
                             {
@@ -540,7 +557,10 @@ namespace WeihanLi.Npoi
             return data.ToString();
         }
 
-        private static string GetCsvText(this DataTable dataTable, bool includeHeader)
+        /// <summary>
+        /// Get csv text
+        /// </summary>
+        public static string GetCsvText(this DataTable dataTable, bool includeHeader)
         {
             if (dataTable == null || dataTable.Rows.Count == 0 || dataTable.Columns.Count == 0)
             {

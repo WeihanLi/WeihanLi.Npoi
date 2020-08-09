@@ -184,8 +184,8 @@ Console.WriteLine(numList.StringJoin(","));
         .HasColumnTitle("CreatedBy");
 
     setting.Property(x => x.Enabled)
-        .HasColumnInputFormatter(val => "启用".Equals(val))
-        .HasColumnOutputFormatter(v => v ? "启用" : "禁用");
+        .HasColumnInputFormatter(val => "Enabled".Equals(val))
+        .HasColumnOutputFormatter(v => v ? "Enabled" : "Disabled");
 
     setting.Property("HiddenProp")
         .HasOutputFormatter((entity, val) => $"HiddenProp_{entity.PKID}");
