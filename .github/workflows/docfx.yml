@@ -16,10 +16,9 @@ jobs:
           path: source
       - name: install DocFX
         run: "choco install docfx -y"
-        working-directory: ./source
       # Run a build
       - name: Build docs
-        run: "docfx"
+        run: docfx ./docfx.json
         working-directory: ./source
       # Check out gh-pages branch to the 'docs' subdirectory
       - name: Checkout docs
