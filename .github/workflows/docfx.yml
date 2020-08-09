@@ -20,6 +20,7 @@ jobs:
       # Run a build
       - name: Build docs
         run: "docfx"
+        working-directory: ./source
       # Check out gh-pages branch to the 'docs' subdirectory
       - name: Checkout docs
         uses: actions/checkout@v2
