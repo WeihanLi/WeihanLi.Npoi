@@ -166,6 +166,8 @@ namespace WeihanLi.Npoi
         /// <returns></returns>
         public static IWorkbook PrepareWorkbook(bool isXlsx) => PrepareWorkbook(isXlsx, null);
 
+        private static readonly Version _appVersion = typeof(ExcelHelper).Assembly.GetName().Version;
+
         /// <summary>
         /// get a excel workbook
         /// </summary>
@@ -189,6 +191,7 @@ namespace WeihanLi.Npoi
                 props.CoreProperties.Description = setting.Description;
                 props.ExtendedProperties.GetUnderlyingProperties().Company = setting.Company;
                 props.ExtendedProperties.GetUnderlyingProperties().Application = InternalConstants.ApplicationName;
+                props.ExtendedProperties.GetUnderlyingProperties().AppVersion = _appVersion.ToString(3);
                 return workbook;
             }
             else
