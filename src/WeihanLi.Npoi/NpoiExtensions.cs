@@ -150,7 +150,7 @@ namespace WeihanLi.Npoi
                 {
                     var dataRow = dataTable.NewRow();
 
-                    dataRow.ItemArray = row.GetCellCollection().WhereNotNull()
+                    dataRow.ItemArray = row.GetCellCollection()
                         .Select(cell => cell.GetCellValue(typeof(string)))
                         .ToArray();
                     dataTable.Rows.Add(dataRow);
