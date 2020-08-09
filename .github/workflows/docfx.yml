@@ -31,8 +31,7 @@ jobs:
       - name: Clear docs repo
         run: Get-ChildItem -Force -Exclude .git | ForEach-Object { Remove-Item -Recurse -Verbose -Force $_ }
       - name: Sync new content
-        run: Copy-Item -Recurse -Verbose -Force "$(env:GITHUB_WORKSPACE)/source/_site/*" .
-        working-directory: ./docs
+        run: Copy-Item -Recurse -Verbose -Force "$env:GITHUB_WORKSPACE/source/_site/*" "$env:GITHUB_WORKSPACE/docs"
       # update docs
       - name: Commit to gh-pages and push
         run: |
