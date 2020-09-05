@@ -1,8 +1,7 @@
 ﻿using System;
-using WeihanLi.Document.Configurations;
 using WeihanLi.Document.Configurations.Excel;
 
-namespace WeihanLi.Document
+namespace WeihanLi.Document.Configurations
 {
     public static class ConfigurationExtensions
     {
@@ -46,7 +45,7 @@ namespace WeihanLi.Document
         /// <param name="propertyName">propertyName</param>
         /// <returns>PropertyConfiguration</returns>
         public static IPropertyConfiguration<TEntity, string> Property<TEntity>(
-            this IExcelConfiguration<TEntity> excelConfiguration, string propertyName) =>
+            this IDocumentConfiguration<TEntity> excelConfiguration, string propertyName) =>
             excelConfiguration.Property<string>(propertyName);
 
         /// <summary>

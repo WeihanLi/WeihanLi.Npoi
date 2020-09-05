@@ -1,4 +1,5 @@
 ﻿using WeihanLi.Document;
+using WeihanLi.Document.Configurations;
 using WeihanLi.Extensions;
 using WeihanLi.Npoi.Test.Models;
 using Xunit;

@@ -5,6 +5,7 @@ using WeihanLi.Common.Helpers;
 using WeihanLi.Document;
 using WeihanLi.Document.Attributes;
 using WeihanLi.Document.Attributes.Excel;
+using WeihanLi.Document.Configurations;
 using WeihanLi.Extensions;
 using WeihanLi.Npoi;
 

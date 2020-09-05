@@ -22,7 +22,8 @@
   <ItemGroup>
     <PackageReference Include="WeihanLi.Common" Version="1.0.41" />
     <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
-      <_Parameter1>WeihanLi.Npoi,PublicKey=0024000004800000940000000602000000240000525341310004000001000100b9567ca1495d374ebde24d16e7d47de27ae6c3ded022658f4e9b9dbe0858f1ed9383a4b50360229f2f75d650dc16350e097290c814fb77f5bf3f3dec54a6c6149e815f961a4732ef898e0ff20e15078c2ce64db505922f4766c37014b828123811d7f5cdfabd62fa00a7c3267ef2f1b456d8bf048e2307a51ff43a242249c4bd</_Parameter1>
+      <_Parameter1 Condition="'$(OS)' == 'Windows_NT'">WeihanLi.Npoi,PublicKey=0024000004800000940000000602000000240000525341310004000001000100b9567ca1495d374ebde24d16e7d47de27ae6c3ded022658f4e9b9dbe0858f1ed9383a4b50360229f2f75d650dc16350e097290c814fb77f5bf3f3dec54a6c6149e815f961a4732ef898e0ff20e15078c2ce64db505922f4766c37014b828123811d7f5cdfabd62fa00a7c3267ef2f1b456d8bf048e2307a51ff43a242249c4bd</_Parameter1>
+      <_Parameter1 Condition="'$(OS)' != 'Windows_NT'">WeihanLi.Npoi</_Parameter1>
     </AssemblyAttribute>
   </ItemGroup>
 
