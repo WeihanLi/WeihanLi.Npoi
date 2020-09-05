@@ -1,13 +1,28 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
+  <Import Project="../../build/document.props" />
+  <Import Project="../../build/sign.props" />
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0;net45</TargetFrameworks>
+    <Title>WeihanLi.Document</Title>
+    <PackageId>WeihanLi.Document</PackageId>
+    <Authors>WeihanLi</Authors>
+    <Company>WeihanLi</Company>
+    <Product>WeihanLi.Document</Product>
+    <PackageIconUrl>https://avatars3.githubusercontent.com/u/7604648</PackageIconUrl>
+    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/WeihanLi/WeihanLi.Npoi</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/WeihanLi/WeihanLi.Npoi</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>npoi excel csv</PackageTags>
+    <PackageReleaseNotes>
+      https://github.com/WeihanLi/WeihanLi.Npoi/tree/dev/docs/ReleaseNotes.md
+    </PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="WeihanLi.Common" Version="1.0.41" />
     <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
-      <_Parameter1>WeihanLi.Npoi</_Parameter1>
+      <_Parameter1>WeihanLi.Npoi,PublicKey=0024000004800000940000000602000000240000525341310004000001000100b9567ca1495d374ebde24d16e7d47de27ae6c3ded022658f4e9b9dbe0858f1ed9383a4b50360229f2f75d650dc16350e097290c814fb77f5bf3f3dec54a6c6149e815f961a4732ef898e0ff20e15078c2ce64db505922f4766c37014b828123811d7f5cdfabd62fa00a7c3267ef2f1b456d8bf048e2307a51ff43a242249c4bd</_Parameter1>
     </AssemblyAttribute>
   </ItemGroup>
 
