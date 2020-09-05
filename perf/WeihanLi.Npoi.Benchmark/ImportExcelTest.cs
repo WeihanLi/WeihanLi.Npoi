@@ -2,6 +2,8 @@
 using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using WeihanLi.Document;
+using WeihanLi.Document.Excel;
 
 namespace WeihanLi.Npoi.Benchmark
 {
@@ -29,7 +31,6 @@ namespace WeihanLi.Npoi.Benchmark
 
         private readonly List<TestEntity> testData = new List<TestEntity>(51200);
         private byte[] xlsBytes, xlsxBytes, csvBytes;
-
 
         [Params(10000, 30000, 50000, 65535)]
         public int RowsCount;

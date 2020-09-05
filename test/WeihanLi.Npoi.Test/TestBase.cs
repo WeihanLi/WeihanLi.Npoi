@@ -1,4 +1,5 @@
-﻿using WeihanLi.Extensions;
+﻿using WeihanLi.Document;
+using WeihanLi.Extensions;
 using WeihanLi.Npoi.Test.Models;
 using Xunit;
 
@@ -14,7 +15,7 @@ namespace WeihanLi.Npoi.Test
         private void FluentSettingsConfigure()
         {
             // ---------- notice npoi settings ----------------
-            var noticeSetting = FluentSettings.For<Notice>();
+            var noticeSetting = FluentSettings.ExcelSettingsFor<Notice>();
             noticeSetting.HasAuthor("WeihanLi")
                 .HasTitle("WeihanLi.Npoi test")
                 .HasSheetConfiguration(0, "NoticeList", 1)

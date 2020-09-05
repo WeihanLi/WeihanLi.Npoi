@@ -4,6 +4,8 @@ using EPPlus.Core.Extensions.Attributes;
 using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using WeihanLi.Document;
+using WeihanLi.Document.Excel;
 
 namespace WeihanLi.Npoi.Benchmark
 {
@@ -100,7 +102,6 @@ namespace WeihanLi.Npoi.Benchmark
         {
             var bytes = testData.ToCsvBytes();
         }
-
 
         [Benchmark]
         [MethodImpl(MethodImplOptions.NoInlining)]

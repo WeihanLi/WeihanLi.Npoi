@@ -1,6 +1,7 @@
 ﻿using BenchmarkDotNet.Attributes;
 using OfficeOpenXml;
 using System.Runtime.CompilerServices;
+using WeihanLi.Document.Excel;
 
 namespace WeihanLi.Npoi.Benchmark
 {

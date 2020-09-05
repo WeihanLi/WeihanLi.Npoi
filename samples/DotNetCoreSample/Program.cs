@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.IO;
 using WeihanLi.Common.Helpers;
+using WeihanLi.Document;
+using WeihanLi.Document.Attributes;
+using WeihanLi.Document.Attributes.Excel;
 using WeihanLi.Extensions;
 using WeihanLi.Npoi;
-using WeihanLi.Npoi.Attributes;
 
 // ReSharper disable All
 namespace DotNetCoreSample
@@ -136,7 +138,7 @@ namespace DotNetCoreSample
 
         private static void FluentSettingsForExcel()
         {
-            var setting = FluentSettings.For<TestEntity>();
+            var setting = FluentSettings.ExcelSettingsFor<TestEntity>();
             // ExcelSetting
             setting.HasAuthor("WeihanLi")
                 .HasTitle("WeihanLi.Npoi test")

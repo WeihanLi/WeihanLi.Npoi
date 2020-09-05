@@ -1,5 +1,5 @@
 ﻿using System;
-using WeihanLi.Npoi.Attributes;
+using WeihanLi.Document.Attributes;
 
 namespace DotNetSample
 {

@@ -1,18 +1,16 @@
 ﻿using JetBrains.Annotations;
-using NPOI.SS.UserModel;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using WeihanLi.Common.Helpers;
-using WeihanLi.Document;
+using WeihanLi.Document.Abstract.Excel;
 using WeihanLi.Extensions;
 
-namespace WeihanLi.Npoi
+namespace WeihanLi.Document.Excel
 {
-    internal static class NpoiTemplateHelper
+    internal class InternalExcelTemplateHelper
     {
-        // export via template
         public static ISheet EntityListToSheetByTemplate<TEntity>(
             [NotNull] ISheet sheet,
             IEnumerable<TEntity> entityList,

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using WeihanLi.Document;
 using WeihanLi.Extensions;
 using WeihanLi.Npoi.Test.Models;
 using Xunit;

@@ -3,7 +3,11 @@
 
   <ItemGroup>
     <PackageReference Include="NPOI" Version="2.4.1" />
-    <PackageReference Include="WeihanLi.Common" Version="1.0.41" />
+    
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\WeihanLi.Document\WeihanLi.Document.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Compile Update="Resource.Designer.cs">

@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using WeihanLi.Document;
+using WeihanLi.Document.Excel;
 using WeihanLi.Extensions;
 using WeihanLi.Npoi.Test.Models;
 using Xunit;
@@ -29,7 +31,7 @@ namespace WeihanLi.Npoi.Test
             }
             list.Add(new Notice() { Title = "nnnn" });
             list.Add(null);
-            var noticeSetting = FluentSettings.For<Notice>();
+            var noticeSetting = FluentSettings.ExcelSettingsFor<Notice>();
             lock (noticeSetting)
             {
                 var excelBytes = list.ToExcelBytes(excelFormat);
@@ -73,7 +75,7 @@ namespace WeihanLi.Npoi.Test
             }
             list.Add(new Notice() { Title = "nnnn" });
             list.Add(null);
-            var noticeSetting = FluentSettings.For<Notice>();
+            var noticeSetting = FluentSettings.ExcelSettingsFor<Notice>();
             lock (noticeSetting)
             {
                 var excelBytes = list.ToExcelBytes(excelFormat);
@@ -118,7 +120,7 @@ namespace WeihanLi.Npoi.Test
             list.Add(new Notice() { Title = "nnnn" });
             list.Add(null);
 
-            var noticeSetting = FluentSettings.For<Notice>();
+            var noticeSetting = FluentSettings.ExcelSettingsFor<Notice>();
             lock (noticeSetting)
             {
                 noticeSetting.HasSheetConfiguration(0, "test", 0);
@@ -161,7 +163,7 @@ namespace WeihanLi.Npoi.Test
                 Publisher = $"publisher_{i}"
             }).ToArray();
             //
-            var noticeSetting = FluentSettings.For<Notice>();
+            var noticeSetting = FluentSettings.ExcelSettingsFor<Notice>();
             lock (noticeSetting)
             {
                 var excelBytes = list.ToExcelBytes(excelFormat);
@@ -210,7 +212,7 @@ namespace WeihanLi.Npoi.Test
                 Publisher = $"publisher_{i}"
             }).ToArray();
 
-            var noticeSetting = FluentSettings.For<Notice>();
+            var noticeSetting = FluentSettings.ExcelSettingsFor<Notice>();
             lock (noticeSetting)
             {
                 noticeSetting.Property<string>("ShadowProperty")
@@ -254,7 +256,7 @@ namespace WeihanLi.Npoi.Test
                 Publisher = $"publisher_{i}"
             }).ToArray();
 
-            var settings = FluentSettings.For<Notice>();
+            var settings = FluentSettings.ExcelSettingsFor<Notice>();
             lock (settings)
             {
                 settings.Property(x => x.Id).Ignored();
@@ -301,7 +303,7 @@ namespace WeihanLi.Npoi.Test
 
             var excelBytes = list.ToExcelBytes(excelFormat);
 
-            var settings = FluentSettings.For<Notice>();
+            var settings = FluentSettings.ExcelSettingsFor<Notice>();
             lock (settings)
             {
                 settings.Property(x => x.Title).HasColumnInputFormatter(x => $"{x}_Test");
@@ -342,7 +344,7 @@ namespace WeihanLi.Npoi.Test
                 Publisher = $"publisher_{i}"
             }).ToArray();
 
-            var settings = FluentSettings.For<Notice>();
+            var settings = FluentSettings.ExcelSettingsFor<Notice>();
             lock (settings)
             {
                 settings.Property(x => x.Id)

@@ -7,8 +7,10 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using WeihanLi.Common.Helpers;
+using WeihanLi.Document;
+using WeihanLi.Document.Excel;
+using WeihanLi.Document.Settings.Excel;
 using WeihanLi.Extensions;
-using WeihanLi.Npoi.Settings;
 
 namespace WeihanLi.Npoi
 {

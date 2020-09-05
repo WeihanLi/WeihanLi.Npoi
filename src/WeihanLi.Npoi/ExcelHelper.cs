@@ -7,9 +7,9 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.IO;
+using WeihanLi.Document.Excel;
+using WeihanLi.Document.Settings.Excel;
 using WeihanLi.Extensions;
-using WeihanLi.Npoi.Configurations;
-using WeihanLi.Npoi.Settings;
 
 namespace WeihanLi.Npoi
 {
@@ -426,14 +426,5 @@ namespace WeihanLi.Npoi
         /// <param name="headerRowIndex">headerRowIndex</param>
         /// <returns></returns>
         public static DataSet ToDataSet([NotNull] string excelPath, int headerRowIndex) => LoadExcel(excelPath).ToDataSet(headerRowIndex);
-
-        /// <summary>
-        /// SettingFor
-        /// Fluent Settings
-        /// </summary>
-        /// <typeparam name="TEntity">TEntity</typeparam>
-        /// <returns></returns>
-        [Obsolete("Please use FluentSettings.For<TEntity>, this method will be removed in next release")]
-        public static IExcelConfiguration<TEntity> SettingFor<TEntity>() => FluentSettings.For<TEntity>();
     }
 }
