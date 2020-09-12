@@ -29,6 +29,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WeihanLi.Npoi.Test", "test\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WeihanLi.Document", "src\WeihanLi.Document\WeihanLi.Document.csproj", "{1AFE0F3E-127F-46F7-ABAF-4877E8D99958}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeihanLi.Epplus", "src\WeihanLi.Epplus\WeihanLi.Epplus.csproj", "{49C7DE61-4BBB-4BD6-B411-346CC3C6C901}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -59,6 +61,10 @@ Global
 		{1AFE0F3E-127F-46F7-ABAF-4877E8D99958}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1AFE0F3E-127F-46F7-ABAF-4877E8D99958}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1AFE0F3E-127F-46F7-ABAF-4877E8D99958}.Release|Any CPU.Build.0 = Release|Any CPU
+		{49C7DE61-4BBB-4BD6-B411-346CC3C6C901}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{49C7DE61-4BBB-4BD6-B411-346CC3C6C901}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{49C7DE61-4BBB-4BD6-B411-346CC3C6C901}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{49C7DE61-4BBB-4BD6-B411-346CC3C6C901}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -70,6 +76,7 @@ Global
 		{9E790B64-B646-41CD-8E98-DA7D2E097779} = {61D735CE-7B19-4503-B56C-141CF2ED8BB2}
 		{76E68314-5DB9-4AA0-81F3-9E8E35E54F66} = {B775CE38-3CDA-4488-B597-60B24495D439}
 		{1AFE0F3E-127F-46F7-ABAF-4877E8D99958} = {CA8788BB-993C-4811-9D0A-B9DEF3E2204A}
+		{49C7DE61-4BBB-4BD6-B411-346CC3C6C901} = {CA8788BB-993C-4811-9D0A-B9DEF3E2204A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {609AFF4A-50CC-4E6B-8EC4-D8CEE304D14E}
