@@ -12,8 +12,9 @@ namespace WeihanLi.Npoi.Configurations
         /// <param name="sheetName">sheetName</param>
         /// <param name="startRowIndex">startRowIndex</param>
         /// <param name="enableAutoColumnWidth">enable auto column width if true otherwise false</param>
+        /// <param name="endRowIndex">endRowIndex, set this if you wanna control where to end(inclueded)</param>
         /// <returns>current excel configuration<see cref="IExcelConfiguration"/></returns>
-        IExcelConfiguration HasSheetConfiguration(int sheetIndex, string sheetName, int startRowIndex, bool enableAutoColumnWidth);
+        IExcelConfiguration HasSheetConfiguration(int sheetIndex, string sheetName, int startRowIndex, bool enableAutoColumnWidth, int? endRowIndex = null);
 
         /// <summary>
         /// setting freeze pane

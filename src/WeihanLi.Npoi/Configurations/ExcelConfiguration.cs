@@ -162,7 +162,7 @@ namespace WeihanLi.Npoi.Configurations
         #region Sheet
 
         public IExcelConfiguration HasSheetConfiguration(int sheetIndex, string sheetName, int startRowIndex,
-            bool enableAutoColumnWidth)
+            bool enableAutoColumnWidth, int? endRowIndex = null)
         {
             if (sheetIndex >= 0)
             {
