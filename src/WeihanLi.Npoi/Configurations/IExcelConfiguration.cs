@@ -101,11 +101,18 @@ namespace WeihanLi.Npoi.Configurations
     public interface IExcelConfiguration<TEntity> : IExcelConfiguration
     {
         /// <summary>
+        /// register data validation func
+        /// </summary>
+        /// <param name="dataValidateFunc">data validate logic</param>
+        /// <returns>current excel configuration</returns>
+        IExcelConfiguration<TEntity> WithDataValidation(Func<TEntity, bool> dataValidateFunc);
+
+        /// <summary>
         /// property configuration
         /// </summary>
         /// <typeparam name="TProperty">PropertyType</typeparam>
         /// <param name="propertyExpression">propertyExpression to get property info</param>
-        /// <returns>current excel configuration</returns>
+        /// <returns>current property configuration</returns>
         IPropertyConfiguration<TEntity, TProperty> Property<TProperty>(Expression<Func<TEntity, TProperty>> propertyExpression);
 
         /// <summary>
@@ -113,7 +120,7 @@ namespace WeihanLi.Npoi.Configurations
         /// </summary>
         /// <typeparam name="TProperty">PropertyType</typeparam>
         /// <param name="propertyName">propertyName</param>
-        /// <returns>current excel configuration</returns>
+        /// <returns>current property configuration</returns>
         IPropertyConfiguration<TEntity, TProperty> Property<TProperty>(string propertyName);
     }
 }

@@ -186,6 +186,13 @@ namespace WeihanLi.Npoi
                                 }
                             }
                         }
+
+                        if (configuration.DataValidationFunc != null && !configuration.DataValidationFunc(entity))
+                        {
+                            // data invalid
+                            continue;
+                        }
+
                         entities.Add(entity);
                     }
                 }
