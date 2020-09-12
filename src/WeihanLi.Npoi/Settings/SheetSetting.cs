@@ -59,6 +59,11 @@ namespace WeihanLi.Npoi.Settings
         public int HeaderRowIndex => StartRowIndex - 1;
 
         /// <summary>
+        /// EndRowIndex, included
+        /// </summary>
+        public int? EndRowIndex { get; set; }
+
+        /// <summary>
         /// enable auto column width
         /// </summary>
         public bool AutoColumnWidthEnabled { get; set; }

@@ -12,8 +12,9 @@ namespace WeihanLi.Npoi.Configurations
         /// <param name="sheetName">sheetName</param>
         /// <param name="startRowIndex">startRowIndex</param>
         /// <param name="enableAutoColumnWidth">enable auto column width if true otherwise false</param>
+        /// <param name="endRowIndex">endRowIndex, set this if you wanna control where to end(inclueded)</param>
         /// <returns>current excel configuration<see cref="IExcelConfiguration"/></returns>
-        IExcelConfiguration HasSheetConfiguration(int sheetIndex, string sheetName, int startRowIndex, bool enableAutoColumnWidth);
+        IExcelConfiguration HasSheetConfiguration(int sheetIndex, string sheetName, int startRowIndex, bool enableAutoColumnWidth, int? endRowIndex = null);
 
         /// <summary>
         /// setting freeze pane
@@ -100,11 +101,18 @@ namespace WeihanLi.Npoi.Configurations
     public interface IExcelConfiguration<TEntity> : IExcelConfiguration
     {
         /// <summary>
+        /// register data validation func
+        /// </summary>
+        /// <param name="dataValidateFunc">data validate logic</param>
+        /// <returns>current excel configuration</returns>
+        IExcelConfiguration<TEntity> WithDataValidation(Func<TEntity, bool> dataValidateFunc);
+
+        /// <summary>
         /// property configuration
         /// </summary>
         /// <typeparam name="TProperty">PropertyType</typeparam>
         /// <param name="propertyExpression">propertyExpression to get property info</param>
-        /// <returns>current excel configuration</returns>
+        /// <returns>current property configuration</returns>
         IPropertyConfiguration<TEntity, TProperty> Property<TProperty>(Expression<Func<TEntity, TProperty>> propertyExpression);
 
         /// <summary>
@@ -112,7 +120,7 @@ namespace WeihanLi.Npoi.Configurations
         /// </summary>
         /// <typeparam name="TProperty">PropertyType</typeparam>
         /// <param name="propertyName">propertyName</param>
-        /// <returns>current excel configuration</returns>
+        /// <returns>current property configuration</returns>
         IPropertyConfiguration<TEntity, TProperty> Property<TProperty>(string propertyName);
     }
 }

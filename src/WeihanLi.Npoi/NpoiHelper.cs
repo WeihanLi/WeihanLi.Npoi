@@ -23,7 +23,7 @@ namespace WeihanLi.Npoi
                 : sheetSettings[0];
         }
 
-        public static List<TEntity> SheetToEntityList<TEntity>([NotNull]ISheet sheet, int sheetIndex) where TEntity : new()
+        public static List<TEntity> SheetToEntityList<TEntity>([NotNull] ISheet sheet, int sheetIndex) where TEntity : new()
         {
             if (sheet.FirstRowNum < 0)
                 return new List<TEntity>(0);
@@ -44,7 +44,7 @@ namespace WeihanLi.Npoi
                 })
                 : propertyColumnDictionary;
 
-            for (var rowIndex = sheet.FirstRowNum; rowIndex <= sheet.LastRowNum; rowIndex++)
+            for (var rowIndex = sheet.FirstRowNum; rowIndex <= (sheetSetting.EndRowIndex ?? sheet.LastRowNum); rowIndex++)
             {
                 var row = sheet.GetRow(rowIndex);
                 if (rowIndex == sheetSetting.HeaderRowIndex) // readerHeader
@@ -186,6 +186,13 @@ namespace WeihanLi.Npoi
                                 }
                             }
                         }
+
+                        if (configuration.DataValidationFunc != null && !configuration.DataValidationFunc(entity))
+                        {
+                            // data invalid
+                            continue;
+                        }
+
                         entities.Add(entity);
                     }
                 }
@@ -194,7 +201,7 @@ namespace WeihanLi.Npoi
             return entities;
         }
 
-        public static ISheet EntityListToSheet<TEntity>([NotNull]ISheet sheet, IEnumerable<TEntity> entityList, int sheetIndex)
+        public static ISheet EntityListToSheet<TEntity>([NotNull] ISheet sheet, IEnumerable<TEntity> entityList, int sheetIndex)
         {
             if (null == entityList)
             {
@@ -252,7 +259,7 @@ namespace WeihanLi.Npoi
             return sheet;
         }
 
-        public static ISheet DataTableToSheet<TEntity>([NotNull]ISheet sheet, DataTable dataTable, int sheetIndex)
+        public static ISheet DataTableToSheet<TEntity>([NotNull] ISheet sheet, DataTable dataTable, int sheetIndex)
         {
             if (null == dataTable || dataTable.Rows.Count == 0 || dataTable.Columns.Count == 0)
             {

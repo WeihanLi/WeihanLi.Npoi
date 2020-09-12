@@ -234,7 +234,6 @@ namespace WeihanLi.Npoi
                                 }
 
                                 isFirstLine = false;
-                                continue;
                             }
                             else
                             {

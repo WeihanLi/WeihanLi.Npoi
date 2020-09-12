@@ -377,6 +377,55 @@ namespace WeihanLi.Npoi.Test
         [Theory]
         [InlineData(ExcelFormat.Xls)]
         [InlineData(ExcelFormat.Xlsx)]
+        public void DataValidationTest(ExcelFormat excelFormat)
+        {
+            IReadOnlyList<Notice> list = Enumerable.Range(0, 10).Select(i => new Notice()
+            {
+                Id = i + 1,
+                Content = $"content_{i}",
+                Title = $"title_{i}",
+                PublishedAt = DateTime.UtcNow.AddDays(-i),
+                Publisher = $"publisher_{i}"
+            }).ToArray();
+            var excelBytes = list.ToExcelBytes(excelFormat);
+
+            var settings = FluentSettings.For<Notice>();
+            lock (settings)
+            {
+                settings.WithDataValidation(x => x.Id > 5);
+
+                var importedList = ExcelHelper.ToEntityList<Notice>(excelBytes, excelFormat);
+                Assert.Equal(list.Count(x => x.Id > 5), importedList.Count);
+
+                int i = 0, k = 0;
+                while (list[k].Id != importedList[i].Id)
+                {
+                    k++;
+                }
+
+                for (; i < importedList.Count; i++, k++)
+                {
+                    if (list[k] == null)
+                    {
+                        Assert.Null(importedList[i]);
+                    }
+                    else
+                    {
+                        Assert.Equal(list[k].Id, importedList[i].Id);
+                        Assert.Equal(list[k].Title, importedList[i].Title);
+                        Assert.Equal(list[k].Content, importedList[i].Content);
+                        Assert.Equal(list[k].Publisher, importedList[i].Publisher);
+                        Assert.Equal(list[k].PublishedAt.ToStandardTimeString(), importedList[i].PublishedAt.ToStandardTimeString());
+                    }
+                }
+
+                settings.WithDataValidation(null);
+            }
+        }
+
+        [Theory]
+        [InlineData(ExcelFormat.Xls)]
+        [InlineData(ExcelFormat.Xlsx)]
         public void DataTableImportExportTest(ExcelFormat excelFormat)
         {
             var dt = new DataTable();
