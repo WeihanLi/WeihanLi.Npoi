@@ -4,6 +4,7 @@
 
 - add `EndRowIndex` for `SheetSetting`(zero-based, included)
 - add FluentAPI `WithDataValidation` for excel setting, if set will ignore invalid data when import excel
+- remove `CSVHelper` `TEntity` `new()` constraint
 
 ## [1.9.6](https://www.nuget.org/packages/WeihanLi.Npoi/1.9.6)
 
