@@ -14,6 +14,8 @@ namespace WeihanLi.Npoi.Attributes
 
         public int HeaderRowIndex => SheetSetting.HeaderRowIndex;
 
+        public int? EndRowIndex { get => SheetSetting.EndRowIndex; set => SheetSetting.EndRowIndex = value; }
+
         public bool AutoColumnWidthEnabled
         {
             get => SheetSetting.AutoColumnWidthEnabled;

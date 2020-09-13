@@ -29,6 +29,8 @@ namespace WeihanLi.Npoi.Configurations
 
         internal IDictionary<int, SheetSetting> SheetSettings { get; set; }
 
+        internal Func<TEntity, bool> DataValidationFunc { get; private set; }
+
         public ExcelConfiguration() : this(null)
         {
         }
@@ -114,6 +116,12 @@ namespace WeihanLi.Npoi.Configurations
 
         #region Property
 
+        public IExcelConfiguration<TEntity> WithDataValidation(Func<TEntity, bool> dataValidateFunc)
+        {
+            DataValidationFunc = dataValidateFunc;
+            return this;
+        }
+
         /// <summary>
         /// Gets the property configuration by the specified property expression for the specified <typeparamref name="TEntity"/> and its <typeparamref name="TProperty"/>.
         /// </summary>
@@ -162,7 +170,7 @@ namespace WeihanLi.Npoi.Configurations
         #region Sheet
 
         public IExcelConfiguration HasSheetConfiguration(int sheetIndex, string sheetName, int startRowIndex,
-            bool enableAutoColumnWidth)
+            bool enableAutoColumnWidth, int? endRowIndex = null)
         {
             if (sheetIndex >= 0)
             {
@@ -171,6 +179,7 @@ namespace WeihanLi.Npoi.Configurations
                     sheetSetting.SheetName = sheetName;
                     sheetSetting.StartRowIndex = startRowIndex;
                     sheetSetting.AutoColumnWidthEnabled = enableAutoColumnWidth;
+                    sheetSetting.EndRowIndex = endRowIndex;
                 }
                 else
                 {
@@ -179,7 +188,8 @@ namespace WeihanLi.Npoi.Configurations
                         SheetIndex = sheetIndex,
                         SheetName = sheetName,
                         StartRowIndex = startRowIndex,
-                        AutoColumnWidthEnabled = enableAutoColumnWidth
+                        AutoColumnWidthEnabled = enableAutoColumnWidth,
+                        EndRowIndex = endRowIndex
                     };
                 }
             }

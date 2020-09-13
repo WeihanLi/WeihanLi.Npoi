@@ -22,7 +22,7 @@ namespace WeihanLi.Npoi
                 : sheetSettings[0];
         }
 
-        public static List<TEntity> SheetToEntityList<TEntity>([NotNull]ISheet sheet, int sheetIndex) where TEntity : new()
+        public static List<TEntity> SheetToEntityList<TEntity>([NotNull] ISheet sheet, int sheetIndex) where TEntity : new()
         {
             var entityType = typeof(TEntity);
             var configuration = InternalHelper.GetExcelConfigurationMapping<TEntity>();
@@ -179,6 +179,14 @@ namespace WeihanLi.Npoi
                                 }
                             }
                         }
+
+                        if (configuration.DataValidationFunc != null
+                            && !configuration.DataValidationFunc(entity))
+                        {
+                            // data invalid
+                            continue;
+                        }
+
                         entities.Add(entity);
                     }
                 }
@@ -187,13 +195,12 @@ namespace WeihanLi.Npoi
             return entities;
         }
 
-        public static ISheet EntityListToSheet<TEntity>([NotNull]ISheet sheet, IEnumerable<TEntity> entityList, int sheetIndex) where TEntity : new()
+        public static ISheet EntityListToSheet<TEntity>([NotNull] ISheet sheet, IEnumerable<TEntity> entityList, int sheetIndex) where TEntity : new()
         {
             if (null == entityList)
             {
                 return sheet;
             }
-            var entityType = typeof(TEntity);
             var configuration = InternalHelper.GetExcelConfigurationMapping<TEntity>();
             var propertyColumnDictionary = InternalHelper.GetPropertyColumnDictionary(configuration);
             if (propertyColumnDictionary.Keys.Count == 0)
@@ -247,7 +254,7 @@ namespace WeihanLi.Npoi
             return sheet;
         }
 
-        public static ISheet DataTableToSheet<TEntity>([NotNull]ISheet sheet, DataTable dataTable, int sheetIndex) where TEntity : new()
+        public static ISheet DataTableToSheet<TEntity>([NotNull] ISheet sheet, DataTable dataTable, int sheetIndex) where TEntity : new()
         {
             if (null == dataTable || dataTable.Rows.Count == 0 || dataTable.Columns.Count == 0)
             {
