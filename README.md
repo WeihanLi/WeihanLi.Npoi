@@ -259,7 +259,7 @@ more usage:
 
 ### More
 
-There's a NPOI developer group in telegram, you can apply by the link <https://t.me/npoidevs> if you want.
+There's a NPOI developer group on telegram created by the author of NPOI, you can apply by the link <https://t.me/npoidevs> if you want.
 
 ### Contact
 
