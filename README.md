@@ -257,6 +257,10 @@ more usage:
 - [dotnetcore sample](https://github.com/WeihanLi/WeihanLi.Npoi/blob/dev/samples/DotNetCoreSample/Program.cs)
 - [dotnet sample](https://github.com/WeihanLi/WeihanLi.Npoi/blob/dev/samples/DotNetSample/Program.cs)
 
+### More
+
+There's a NPOI developer group in telegram, you can apply by the link <https://t.me/npoidevs> if you want.
+
 ### Contact
 
 Contact me: weihanli@outlook.com
