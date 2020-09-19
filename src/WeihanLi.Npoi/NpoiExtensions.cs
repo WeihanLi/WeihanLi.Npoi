@@ -1,5 +1,8 @@
 ﻿using JetBrains.Annotations;
+using NPOI.HSSF.UserModel;
 using NPOI.SS.UserModel;
+using NPOI.XSSF.Streaming;
+using NPOI.XSSF.UserModel;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -780,8 +783,9 @@ namespace WeihanLi.Npoi
         /// </summary>
         /// <param name="cell">cell</param>
         /// <param name="propertyType">propertyType</param>
+        /// <param name="formulaEvaluator">formulaEvaluator</param>
         /// <returns>cellValue</returns>
-        public static object GetCellValue([CanBeNull] this ICell cell, Type propertyType)
+        public static object GetCellValue([CanBeNull] this ICell cell, Type propertyType, IFormulaEvaluator formulaEvaluator = null)
         {
             if (cell == null || cell.CellType == CellType.Blank || cell.CellType == CellType.Error)
             {
@@ -821,6 +825,18 @@ namespace WeihanLi.Npoi
                     }
                     return cell.BooleanCellValue.ToOrDefault(propertyType);
 
+                case CellType.Formula:
+                    var cellType = formulaEvaluator?.EvaluateFormulaCell(cell);
+                    if (cellType.HasValue)
+                    {
+                        if (cellType == CellType.Numeric)
+                        {
+                            return cell.NumericCellValue.ToOrDefault(propertyType);
+                        }
+                        return cell.StringCellValue.ToOrDefault(propertyType);
+                    }
+                    return cell.StringCellValue.ToOrDefault(propertyType);
+
                 default:
                     return cell.ToString().ToOrDefault(propertyType);
             }
@@ -831,8 +847,9 @@ namespace WeihanLi.Npoi
         /// </summary>
         /// <typeparam name="T">Type</typeparam>
         /// <param name="cell">cell</param>
+        /// <param name="formulaEvaluator"></param>
         /// <returns></returns>
-        public static T GetCellValue<T>([CanBeNull] this ICell cell) => (T)cell.GetCellValue(typeof(T));
+        public static T GetCellValue<T>([CanBeNull] this ICell cell, IFormulaEvaluator formulaEvaluator = null) => (T)cell.GetCellValue(typeof(T), formulaEvaluator);
 
         /// <summary>
         /// Get Sheet Row Collection
@@ -847,6 +864,28 @@ namespace WeihanLi.Npoi
         /// <param name="row">excel sheet row</param>
         /// <returns>row collection</returns>
         public static NpoiCellCollection GetCellCollection([NotNull] this IRow row) => new NpoiCellCollection(row);
+
+        /// <summary>
+        /// get workbook IFormulaEvaluator
+        /// </summary>
+        /// <param name="workbook">workbook</param>
+        /// <returns></returns>
+        public static IFormulaEvaluator GetFormulaEvaluator([NotNull] this IWorkbook workbook)
+        {
+            if (workbook is HSSFWorkbook)
+            {
+                return new HSSFFormulaEvaluator(workbook);
+            }
+            if (workbook is XSSFWorkbook)
+            {
+                return new XSSFFormulaEvaluator(workbook);
+            }
+            if (workbook is SXSSFWorkbook sBook)
+            {
+                return new SXSSFFormulaEvaluator(sBook);
+            }
+            throw new NotSupportedException();
+        }
 
         /// <summary>
         ///     Write workbook to excel file

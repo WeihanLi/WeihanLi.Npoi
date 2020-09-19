@@ -108,7 +108,7 @@ namespace WeihanLi.Npoi
                                         }
                                         if (valueApplied == false)
                                         {
-                                            columnValue = row.GetCell(colIndex).GetCellValue(key.PropertyType);
+                                            columnValue = row.GetCell(colIndex).GetCellValue(key.PropertyType, null);
                                         }
                                         key.GetValueSetter()?.Invoke(entity, columnValue);
                                     }
@@ -142,7 +142,7 @@ namespace WeihanLi.Npoi
                                         }
                                         if (valueApplied == false)
                                         {
-                                            columnValue = row.GetCell(colIndex).GetCellValue(key.PropertyType);
+                                            columnValue = row.GetCell(colIndex).GetCellValue(key.PropertyType, null);
                                         }
 
                                         key.GetValueSetter()?.Invoke(entity, columnValue);

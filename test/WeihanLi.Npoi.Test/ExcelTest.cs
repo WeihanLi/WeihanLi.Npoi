@@ -1,3 +1,4 @@
+using NPOI.SS.UserModel;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -493,6 +494,40 @@ namespace WeihanLi.Npoi.Test
                     Assert.Equal(dt.Rows[i].ItemArray[j], importedData.Rows[i].ItemArray[j]);
                 }
             }
+        }
+
+        [Theory]
+        [InlineData(ExcelFormat.Xls)]
+        [InlineData(ExcelFormat.Xlsx)]
+        public void ExcelImportWithFormula(ExcelFormat excelFormat)
+        {
+            var setting = FluentSettings.For<ExcelFormulaTestModel>();
+            setting.HasSheetConfiguration(0, "Test", 0);
+            setting.Property(x => x.Num1).HasColumnIndex(0);
+            setting.Property(x => x.Num2).HasColumnIndex(1);
+            setting.Property(x => x.Sum).HasColumnIndex(2);
+
+            var workbook = ExcelHelper.PrepareWorkbook(excelFormat);
+            var sheet = workbook.CreateSheet();
+            var row = sheet.CreateRow(0);
+            row.CreateCell(0, CellType.Numeric).SetCellValue(1);
+            row.CreateCell(1, CellType.Numeric).SetCellValue(2);
+            row.CreateCell(2, CellType.Formula).SetCellFormula("$A1+$B1");
+            var excelBytes = workbook.ToExcelBytes();
+            var list = ExcelHelper.ToEntityList<ExcelFormulaTestModel>(excelBytes, excelFormat);
+            Assert.NotNull(list);
+            Assert.NotEmpty(list);
+            Assert.Equal(1, list[0].Num1);
+            Assert.Equal(2, list[0].Num2);
+            Assert.Equal(3, list[0].Sum);
+        }
+
+        private class ExcelFormulaTestModel
+        {
+            public int Num1 { get; set; }
+            public int Num2 { get; set; }
+
+            public int Sum { get; set; }
         }
     }
 }
