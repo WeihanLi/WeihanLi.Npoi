@@ -1,4 +1,5 @@
 ﻿using JetBrains.Annotations;
+using NPOI.SS.UserModel;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -56,8 +57,9 @@ namespace WeihanLi.Npoi
         /// </summary>
         /// <param name="cell">cell</param>
         /// <param name="propertyType">propertyType</param>
+        /// <param name="formulaEvaluator">formulaEvaluator</param>
         /// <returns>cellValue</returns>
-        public static object GetCellValue([CanBeNull] this ICell cell, Type propertyType)
+        public static object GetCellValue([CanBeNull] this ICell cell, Type propertyType, IFormulaEvaluator formulaEvaluator)
         {
             if (cell == null || cell.CellType == CellType.Blank || cell.CellType == CellType.Error)
             {
@@ -146,7 +148,7 @@ namespace WeihanLi.Npoi
         /// <param name="mappingDictionary">mappingDictionary</param>
         /// <param name="columnTitle">columnTitle</param>
         /// <returns></returns>
-        internal static PropertyConfiguration GetPropertySetting([NotNull]this IDictionary<PropertyInfo, PropertyConfiguration> mappingDictionary, [NotNull]string columnTitle)
+        internal static PropertyConfiguration GetPropertySetting([NotNull] this IDictionary<PropertyInfo, PropertyConfiguration> mappingDictionary, [NotNull] string columnTitle)
         {
             return mappingDictionary.Values.FirstOrDefault(k => k.ColumnTitle.EqualsIgnoreCase(columnTitle)) ?? mappingDictionary.GetPropertySettingByPropertyName(columnTitle);
         }

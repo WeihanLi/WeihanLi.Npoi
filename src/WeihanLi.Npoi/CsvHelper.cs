@@ -152,7 +152,7 @@ namespace WeihanLi.Npoi
         /// convert csv file data to entity list
         /// </summary>
         /// <param name="filePath">csv file path</param>
-        public static List<TEntity> ToEntityList<TEntity>(string filePath) where TEntity : new()
+        public static List<TEntity> ToEntityList<TEntity>(string filePath)
         {
             if (!File.Exists(filePath))
             {
@@ -166,7 +166,7 @@ namespace WeihanLi.Npoi
         /// convert csv file data to entity list
         /// </summary>
         /// <param name="csvBytes">csv bytes</param>
-        public static List<TEntity> ToEntityList<TEntity>(byte[] csvBytes) where TEntity : new()
+        public static List<TEntity> ToEntityList<TEntity>(byte[] csvBytes)
         {
             if (null == csvBytes)
             {
@@ -198,6 +198,7 @@ namespace WeihanLi.Npoi
             }
             else
             {
+                var configuration = InternalHelper.GetExcelConfigurationMapping<TEntity>();
                 var propertyColumnDictionary = InternalHelper.GetPropertyColumnDictionary<TEntity>();
                 var propertyColumnDic = propertyColumnDictionary.ToDictionary(_ => _.Key, _ => new PropertyConfiguration()
                 {
@@ -237,7 +238,7 @@ namespace WeihanLi.Npoi
                             }
                             else
                             {
-                                var entity = new TEntity();
+                                var entity = NewFuncHelper<TEntity>.Instance();
                                 if (entityType.IsValueType)
                                 {
                                     var obj = (object)entity;// boxing for value types
@@ -335,6 +336,11 @@ namespace WeihanLi.Npoi
                                     }
                                 }
 
+                                if (configuration.DataValidationFunc != null && !configuration.DataValidationFunc(entity))
+                                {
+                                    // data invalid
+                                    continue;
+                                }
                                 entities.Add(entity);
                             }
                         }
@@ -349,7 +355,7 @@ namespace WeihanLi.Npoi
         /// convert csv file data to entity list
         /// </summary>
         /// <param name="csvStream">csv Stream</param>
-        public static List<TEntity> ToEntityList<TEntity>(Stream csvStream) where TEntity : new()
+        public static List<TEntity> ToEntityList<TEntity>(Stream csvStream)
         {
             if (null == csvStream)
             {

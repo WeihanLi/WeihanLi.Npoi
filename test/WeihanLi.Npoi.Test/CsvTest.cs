@@ -156,6 +156,20 @@ namespace WeihanLi.Npoi.Test
             Assert.Equal(expected, text);
         }
 
+        [Fact]
+        public void CsvStringListTest()
+        {
+            var arr = Enumerable.Range(1, 10)
+                .Select(x => $"str_{x}")
+                .ToArray();
+
+            var csvBytes = arr.ToCsvBytes();
+            Assert.NotNull(csvBytes);
+            var list = CsvHelper.ToEntityList<string>(csvBytes);
+            Assert.Equal(arr.Length, list.Count);
+            Assert.True(arr.SequenceEqual(list));
+        }
+
         private static string TrimQuotes(string str)
         {
             if (string.IsNullOrEmpty(str))

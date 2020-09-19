@@ -43,6 +43,7 @@ namespace WeihanLi.Npoi
                     IsIgnored = _.Value.IsIgnored
                 })
                 : propertyColumnDictionary;
+            var formulaEvaluator = sheet.Workbook.GetFormulaEvaluator();
 
             for (var rowIndex = sheet.FirstRowNum; rowIndex <= (sheetSetting.EndRowIndex ?? sheet.LastRowNum); rowIndex++)
             {
@@ -91,12 +92,12 @@ namespace WeihanLi.Npoi
                                     var colIndex = propertyColumnDic[key].ColumnIndex;
                                     if (colIndex >= 0 && key.CanWrite)
                                     {
-                                        var columnValue = key.PropertyType.GetDefaultValue();
+                                        object columnValue = null;
 
                                         var valueApplied = false;
                                         if (InternalCache.ColumnInputFormatterFuncCache.TryGetValue(key, out var formatterFunc) && formatterFunc?.Method != null)
                                         {
-                                            var cellValue = row.GetCell(colIndex).GetCellValue<string>();
+                                            var cellValue = row.GetCell(colIndex).GetCellValue<string>(formulaEvaluator);
                                             try
                                             {
                                                 // apply custom formatterFunc
@@ -111,7 +112,7 @@ namespace WeihanLi.Npoi
                                         }
                                         if (valueApplied == false)
                                         {
-                                            columnValue = row.GetCell(colIndex).GetCellValue(key.PropertyType);
+                                            columnValue = row.GetCell(colIndex).GetCellValue(key.PropertyType, formulaEvaluator);
                                         }
                                         key.GetValueSetter()?.Invoke(entity, columnValue);
                                     }
@@ -125,12 +126,12 @@ namespace WeihanLi.Npoi
                                     var colIndex = propertyColumnDic[key].ColumnIndex;
                                     if (colIndex >= 0 && key.CanWrite)
                                     {
-                                        var columnValue = key.PropertyType.GetDefaultValue();
+                                        object columnValue = null;
 
                                         var valueApplied = false;
                                         if (InternalCache.ColumnInputFormatterFuncCache.TryGetValue(key, out var formatterFunc) && formatterFunc?.Method != null)
                                         {
-                                            var cellValue = row.GetCell(colIndex).GetCellValue<string>();
+                                            var cellValue = row.GetCell(colIndex).GetCellValue<string>(formulaEvaluator);
                                             try
                                             {
                                                 // apply custom formatterFunc
@@ -145,7 +146,7 @@ namespace WeihanLi.Npoi
                                         }
                                         if (valueApplied == false)
                                         {
-                                            columnValue = row.GetCell(colIndex).GetCellValue(key.PropertyType);
+                                            columnValue = row.GetCell(colIndex).GetCellValue(key.PropertyType, formulaEvaluator);
                                         }
 
                                         key.GetValueSetter()?.Invoke(entity, columnValue);
