@@ -656,12 +656,12 @@ references:
   isSpec: "True"
   fullName: WeihanLi.Npoi.NpoiExtensions.GetCellCollection
   nameWithType: NpoiExtensions.GetCellCollection
-- uid: WeihanLi.Npoi.NpoiExtensions.GetCellValue(ICell,System.Type)
-  name: GetCellValue(ICell, Type)
-  href: docs/api/WeihanLi.Npoi.NpoiExtensions.html#WeihanLi_Npoi_NpoiExtensions_GetCellValue_ICell_System_Type_
-  commentId: M:WeihanLi.Npoi.NpoiExtensions.GetCellValue(ICell,System.Type)
-  fullName: WeihanLi.Npoi.NpoiExtensions.GetCellValue(ICell, System.Type)
-  nameWithType: NpoiExtensions.GetCellValue(ICell, Type)
+- uid: WeihanLi.Npoi.NpoiExtensions.GetCellValue(ICell,System.Type,IFormulaEvaluator)
+  name: GetCellValue(ICell, Type, IFormulaEvaluator)
+  href: docs/api/WeihanLi.Npoi.NpoiExtensions.html#WeihanLi_Npoi_NpoiExtensions_GetCellValue_ICell_System_Type_IFormulaEvaluator_
+  commentId: M:WeihanLi.Npoi.NpoiExtensions.GetCellValue(ICell,System.Type,IFormulaEvaluator)
+  fullName: WeihanLi.Npoi.NpoiExtensions.GetCellValue(ICell, System.Type, IFormulaEvaluator)
+  nameWithType: NpoiExtensions.GetCellValue(ICell, Type, IFormulaEvaluator)
 - uid: WeihanLi.Npoi.NpoiExtensions.GetCellValue*
   name: GetCellValue
   href: docs/api/WeihanLi.Npoi.NpoiExtensions.html#WeihanLi_Npoi_NpoiExtensions_GetCellValue_
@@ -669,15 +669,28 @@ references:
   isSpec: "True"
   fullName: WeihanLi.Npoi.NpoiExtensions.GetCellValue
   nameWithType: NpoiExtensions.GetCellValue
-- uid: WeihanLi.Npoi.NpoiExtensions.GetCellValue``1(ICell)
-  name: GetCellValue<T>(ICell)
-  href: docs/api/WeihanLi.Npoi.NpoiExtensions.html#WeihanLi_Npoi_NpoiExtensions_GetCellValue__1_ICell_
-  commentId: M:WeihanLi.Npoi.NpoiExtensions.GetCellValue``1(ICell)
-  name.vb: GetCellValue(Of T)(ICell)
-  fullName: WeihanLi.Npoi.NpoiExtensions.GetCellValue<T>(ICell)
-  fullName.vb: WeihanLi.Npoi.NpoiExtensions.GetCellValue(Of T)(ICell)
-  nameWithType: NpoiExtensions.GetCellValue<T>(ICell)
-  nameWithType.vb: NpoiExtensions.GetCellValue(Of T)(ICell)
+- uid: WeihanLi.Npoi.NpoiExtensions.GetCellValue``1(ICell,IFormulaEvaluator)
+  name: GetCellValue<T>(ICell, IFormulaEvaluator)
+  href: docs/api/WeihanLi.Npoi.NpoiExtensions.html#WeihanLi_Npoi_NpoiExtensions_GetCellValue__1_ICell_IFormulaEvaluator_
+  commentId: M:WeihanLi.Npoi.NpoiExtensions.GetCellValue``1(ICell,IFormulaEvaluator)
+  name.vb: GetCellValue(Of T)(ICell, IFormulaEvaluator)
+  fullName: WeihanLi.Npoi.NpoiExtensions.GetCellValue<T>(ICell, IFormulaEvaluator)
+  fullName.vb: WeihanLi.Npoi.NpoiExtensions.GetCellValue(Of T)(ICell, IFormulaEvaluator)
+  nameWithType: NpoiExtensions.GetCellValue<T>(ICell, IFormulaEvaluator)
+  nameWithType.vb: NpoiExtensions.GetCellValue(Of T)(ICell, IFormulaEvaluator)
+- uid: WeihanLi.Npoi.NpoiExtensions.GetFormulaEvaluator(IWorkbook)
+  name: GetFormulaEvaluator(IWorkbook)
+  href: docs/api/WeihanLi.Npoi.NpoiExtensions.html#WeihanLi_Npoi_NpoiExtensions_GetFormulaEvaluator_IWorkbook_
+  commentId: M:WeihanLi.Npoi.NpoiExtensions.GetFormulaEvaluator(IWorkbook)
+  fullName: WeihanLi.Npoi.NpoiExtensions.GetFormulaEvaluator(IWorkbook)
+  nameWithType: NpoiExtensions.GetFormulaEvaluator(IWorkbook)
+- uid: WeihanLi.Npoi.NpoiExtensions.GetFormulaEvaluator*
+  name: GetFormulaEvaluator
+  href: docs/api/WeihanLi.Npoi.NpoiExtensions.html#WeihanLi_Npoi_NpoiExtensions_GetFormulaEvaluator_
+  commentId: Overload:WeihanLi.Npoi.NpoiExtensions.GetFormulaEvaluator
+  isSpec: "True"
+  fullName: WeihanLi.Npoi.NpoiExtensions.GetFormulaEvaluator
+  nameWithType: NpoiExtensions.GetFormulaEvaluator
 - uid: WeihanLi.Npoi.NpoiExtensions.GetRowCollection(ISheet)
   name: GetRowCollection(ISheet)
   href: docs/api/WeihanLi.Npoi.NpoiExtensions.html#WeihanLi_Npoi_NpoiExtensions_GetRowCollection_ISheet_
