@@ -802,9 +802,7 @@ namespace WeihanLi.Npoi
                         {
                             return cell.DateCellValue;
                         }
-                        return DateTime.Parse(cell.DateCellValue == cell.DateCellValue.Date
-                            ? cell.DateCellValue.ToStandardDateString()
-                            : cell.DateCellValue.ToStandardTimeString());
+                        return cell.DateCellValue.ToOrDefault(propertyType);
                     }
 
                     if (propertyType == typeof(double))
@@ -814,10 +812,6 @@ namespace WeihanLi.Npoi
                     return cell.NumericCellValue.ToOrDefault(propertyType);
 
                 case CellType.String:
-                    if (propertyType == typeof(string))
-                    {
-                        return cell.StringCellValue;
-                    }
                     return cell.StringCellValue.ToOrDefault(propertyType);
 
                 case CellType.Boolean:
@@ -828,16 +822,52 @@ namespace WeihanLi.Npoi
                     return cell.BooleanCellValue.ToOrDefault(propertyType);
 
                 case CellType.Formula:
-                    var cellType = formulaEvaluator?.EvaluateFormulaCell(cell);
-                    if (cellType.HasValue)
+                    try
                     {
-                        if (cellType == CellType.Numeric)
+                        var evaluatedCellValue = formulaEvaluator?.Evaluate(cell);
+                        if (evaluatedCellValue != null)
                         {
-                            return cell.NumericCellValue.ToOrDefault(propertyType);
+                            if (evaluatedCellValue.CellType == CellType.Blank
+                                || evaluatedCellValue.CellType == CellType.Error)
+                            {
+                                return propertyType.GetDefaultValue();
+                            }
+                            if (evaluatedCellValue.CellType == CellType.Numeric)
+                            {
+                                if (DateUtil.IsCellDateFormatted(cell))
+                                {
+                                    if (propertyType == typeof(DateTime))
+                                    {
+                                        return cell.DateCellValue;
+                                    }
+                                    return cell.DateCellValue.ToOrDefault(propertyType);
+                                }
+                                if (propertyType == typeof(double))
+                                {
+                                    return cell.NumericCellValue;
+                                }
+                                return evaluatedCellValue.NumberValue.ToOrDefault(propertyType);
+                            }
+                            if (evaluatedCellValue.CellType == CellType.Boolean)
+                            {
+                                if (propertyType == typeof(bool))
+                                {
+                                    return cell.BooleanCellValue;
+                                }
+                                return evaluatedCellValue.BooleanValue.ToOrDefault(propertyType);
+                            }
+                            if (evaluatedCellValue.CellType == CellType.String)
+                            {
+                                return evaluatedCellValue.StringValue.ToOrDefault(propertyType);
+                            }
+                            return evaluatedCellValue.FormatAsString().ToOrDefault(propertyType);
                         }
-                        return cell.StringCellValue.ToOrDefault(propertyType);
                     }
-                    return cell.StringCellValue.ToOrDefault(propertyType);
+                    catch (Exception e)
+                    {
+                        InvokeHelper.OnInvokeException?.Invoke(e);
+                    }
+                    return cell.ToString().ToOrDefault(propertyType);
 
                 default:
                     return cell.ToString().ToOrDefault(propertyType);
