@@ -129,6 +129,8 @@ namespace WeihanLi.Npoi
                 throw new ArgumentOutOfRangeException(nameof(headerRowIndex),
                     string.Format(Resource.IndexOutOfRange, nameof(headerRowIndex), sheet.PhysicalNumberOfRows));
             }
+
+            var formulaEvaluator = sheet.Workbook.GetFormulaEvaluator();
             var dataTable = new DataTable(sheet.SheetName);
 
             foreach (var row in sheet.GetRowCollection())
@@ -154,7 +156,7 @@ namespace WeihanLi.Npoi
                     var dataRow = dataTable.NewRow();
 
                     dataRow.ItemArray = row.GetCellCollection()
-                        .Select(cell => cell.GetCellValue(typeof(string)))
+                        .Select(cell => cell.GetCellValue(typeof(string), formulaEvaluator))
                         .ToArray();
                     dataTable.Rows.Add(dataRow);
                 }
