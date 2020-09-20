@@ -15,7 +15,7 @@ namespace WeihanLi.Npoi
 
         // export via template
         public static ISheet EntityListToSheetByTemplate<TEntity>(
-            [NotNull]ISheet sheet,
+            [NotNull] ISheet sheet,
             IEnumerable<TEntity> entityList,
             object extraData = null)
         {
@@ -25,7 +25,7 @@ namespace WeihanLi.Npoi
             }
             var configuration = InternalHelper.GetExcelConfigurationMapping<TEntity>();
             var propertyColumnDictionary = InternalHelper.GetPropertyColumnDictionary(configuration);
-
+            var formulaEvaluator = sheet.Workbook.GetFormulaEvaluator();
             var globalDictionary = extraData.ParseParamInfo()
                 .ToDictionary(x => TemplateOptions.TemplateGlobalParamFormat.FormatWith(x.Key), x => x.Value);
             foreach (var propertyConfiguration in propertyColumnDictionary)
@@ -74,7 +74,7 @@ namespace WeihanLi.Npoi
                         continue;
                     }
 
-                    var cellValue = cell.GetCellValue<string>();
+                    var cellValue = cell.GetCellValue<string>(formulaEvaluator);
                     if (!string.IsNullOrEmpty(cellValue))
                     {
                         var beforeValue = cellValue;
@@ -131,7 +131,7 @@ namespace WeihanLi.Npoi
                                 var cell = row.GetCell(j);
                                 if (null != cell)
                                 {
-                                    var cellValue = cell.GetCellValue<string>();
+                                    var cellValue = cell.GetCellValue<string>(formulaEvaluator);
                                     if (!string.IsNullOrEmpty(cellValue) && cellValue.Contains(TemplateOptions.TemplateDataPrefix))
                                     {
                                         var beforeValue = cellValue;
