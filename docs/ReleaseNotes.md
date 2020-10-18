@@ -1,5 +1,9 @@
 # WeihanLi.Npoi Release Notes
 
+## [1.11.0](https://www.nuget.org/packages/WeihanLi.Npoi/1.11.0)
+
+- add support for formula value import
+
 ## [1.10.0](https://www.nuget.org/packages/WeihanLi.Npoi/1.10.0)
 
 - add `EndRowIndex` for `SheetSetting`(zero-based, included)
