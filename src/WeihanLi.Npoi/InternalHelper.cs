@@ -34,7 +34,7 @@ namespace WeihanLi.Npoi
                   excelConfiguration.FreezeSettings.Add(freezeAttribute.FreezeSetting);
               }
               var dic = new Dictionary<PropertyInfo, PropertyConfiguration>();
-              var propertyInfos = Common.CacheUtil.TypePropertyCache.GetOrAdd(type, t => t.GetProperties());
+              var propertyInfos = Common.CacheUtil.GetTypeProperties(type);
               foreach (var propertyInfo in propertyInfos)
               {
                   var column = propertyInfo.GetCustomAttribute<ColumnAttribute>() ?? new ColumnAttribute();

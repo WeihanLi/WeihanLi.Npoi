@@ -134,7 +134,7 @@ namespace WeihanLi.Npoi.Configurations
             var property = memberInfo as PropertyInfo;
             if (property == null || !PropertyConfigurationDictionary.ContainsKey(property))
             {
-                property = CacheUtil.TypePropertyCache.GetOrAdd(EntityType, t => t.GetProperties())
+                property = CacheUtil.GetTypeProperties(EntityType)
                     .FirstOrDefault(p => p.Name == memberInfo.Name);
                 if (null == property)
                 {
