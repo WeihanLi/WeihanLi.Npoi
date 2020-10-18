@@ -1,5 +1,8 @@
 ﻿using JetBrains.Annotations;
+using NPOI.HSSF.UserModel;
 using NPOI.SS.UserModel;
+using NPOI.XSSF.Streaming;
+using NPOI.XSSF.UserModel;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -126,6 +129,8 @@ namespace WeihanLi.Npoi
                 throw new ArgumentOutOfRangeException(nameof(headerRowIndex),
                     string.Format(Resource.IndexOutOfRange, nameof(headerRowIndex), sheet.PhysicalNumberOfRows));
             }
+
+            var formulaEvaluator = sheet.Workbook.GetFormulaEvaluator();
             var dataTable = new DataTable(sheet.SheetName);
 
             foreach (var row in sheet.GetRowCollection())
@@ -151,7 +156,7 @@ namespace WeihanLi.Npoi
                     var dataRow = dataTable.NewRow();
 
                     dataRow.ItemArray = row.GetCellCollection()
-                        .Select(cell => cell.GetCellValue(typeof(string)))
+                        .Select(cell => cell.GetCellValue(typeof(string), formulaEvaluator))
                         .ToArray();
                     dataTable.Rows.Add(dataRow);
                 }
@@ -780,8 +785,9 @@ namespace WeihanLi.Npoi
         /// </summary>
         /// <param name="cell">cell</param>
         /// <param name="propertyType">propertyType</param>
+        /// <param name="formulaEvaluator">formulaEvaluator</param>
         /// <returns>cellValue</returns>
-        public static object GetCellValue([CanBeNull] this ICell cell, Type propertyType)
+        public static object GetCellValue([CanBeNull] this ICell cell, Type propertyType, IFormulaEvaluator formulaEvaluator = null)
         {
             if (cell == null || cell.CellType == CellType.Blank || cell.CellType == CellType.Error)
             {
@@ -796,9 +802,7 @@ namespace WeihanLi.Npoi
                         {
                             return cell.DateCellValue;
                         }
-                        return DateTime.Parse(cell.DateCellValue == cell.DateCellValue.Date
-                            ? cell.DateCellValue.ToStandardDateString()
-                            : cell.DateCellValue.ToStandardTimeString());
+                        return cell.DateCellValue.ToOrDefault(propertyType);
                     }
 
                     if (propertyType == typeof(double))
@@ -808,10 +812,6 @@ namespace WeihanLi.Npoi
                     return cell.NumericCellValue.ToOrDefault(propertyType);
 
                 case CellType.String:
-                    if (propertyType == typeof(string))
-                    {
-                        return cell.StringCellValue;
-                    }
                     return cell.StringCellValue.ToOrDefault(propertyType);
 
                 case CellType.Boolean:
@@ -820,6 +820,54 @@ namespace WeihanLi.Npoi
                         return cell.BooleanCellValue;
                     }
                     return cell.BooleanCellValue.ToOrDefault(propertyType);
+
+                case CellType.Formula:
+                    try
+                    {
+                        var evaluatedCellValue = formulaEvaluator?.Evaluate(cell);
+                        if (evaluatedCellValue != null)
+                        {
+                            if (evaluatedCellValue.CellType == CellType.Blank
+                                || evaluatedCellValue.CellType == CellType.Error)
+                            {
+                                return propertyType.GetDefaultValue();
+                            }
+                            if (evaluatedCellValue.CellType == CellType.Numeric)
+                            {
+                                if (DateUtil.IsCellDateFormatted(cell))
+                                {
+                                    if (propertyType == typeof(DateTime))
+                                    {
+                                        return cell.DateCellValue;
+                                    }
+                                    return cell.DateCellValue.ToOrDefault(propertyType);
+                                }
+                                if (propertyType == typeof(double))
+                                {
+                                    return cell.NumericCellValue;
+                                }
+                                return evaluatedCellValue.NumberValue.ToOrDefault(propertyType);
+                            }
+                            if (evaluatedCellValue.CellType == CellType.Boolean)
+                            {
+                                if (propertyType == typeof(bool))
+                                {
+                                    return cell.BooleanCellValue;
+                                }
+                                return evaluatedCellValue.BooleanValue.ToOrDefault(propertyType);
+                            }
+                            if (evaluatedCellValue.CellType == CellType.String)
+                            {
+                                return evaluatedCellValue.StringValue.ToOrDefault(propertyType);
+                            }
+                            return evaluatedCellValue.FormatAsString().ToOrDefault(propertyType);
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        InvokeHelper.OnInvokeException?.Invoke(e);
+                    }
+                    return cell.ToString().ToOrDefault(propertyType);
 
                 default:
                     return cell.ToString().ToOrDefault(propertyType);
@@ -831,8 +879,9 @@ namespace WeihanLi.Npoi
         /// </summary>
         /// <typeparam name="T">Type</typeparam>
         /// <param name="cell">cell</param>
+        /// <param name="formulaEvaluator"></param>
         /// <returns></returns>
-        public static T GetCellValue<T>([CanBeNull] this ICell cell) => (T)cell.GetCellValue(typeof(T));
+        public static T GetCellValue<T>([CanBeNull] this ICell cell, IFormulaEvaluator formulaEvaluator = null) => (T)cell.GetCellValue(typeof(T), formulaEvaluator);
 
         /// <summary>
         /// Get Sheet Row Collection
@@ -847,6 +896,28 @@ namespace WeihanLi.Npoi
         /// <param name="row">excel sheet row</param>
         /// <returns>row collection</returns>
         public static NpoiCellCollection GetCellCollection([NotNull] this IRow row) => new NpoiCellCollection(row);
+
+        /// <summary>
+        /// get workbook IFormulaEvaluator
+        /// </summary>
+        /// <param name="workbook">workbook</param>
+        /// <returns></returns>
+        public static IFormulaEvaluator GetFormulaEvaluator([NotNull] this IWorkbook workbook)
+        {
+            if (workbook is HSSFWorkbook)
+            {
+                return new HSSFFormulaEvaluator(workbook);
+            }
+            if (workbook is XSSFWorkbook)
+            {
+                return new XSSFFormulaEvaluator(workbook);
+            }
+            if (workbook is SXSSFWorkbook sBook)
+            {
+                return new SXSSFFormulaEvaluator(sBook);
+            }
+            throw new NotSupportedException();
+        }
 
         /// <summary>
         ///     Write workbook to excel file

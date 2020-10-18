@@ -6,6 +6,7 @@
 # Cutom files
 localBuild/
 _site
+.vscode
 
 # User-specific files
 *.suo
