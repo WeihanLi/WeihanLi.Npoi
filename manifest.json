@@ -29,11 +29,131 @@
     },
     {
       "type": "ManagedReference",
+      "source_relative_path": "docs/api/WeihanLi.Npoi.Attributes.ColumnAttribute.yml",
+      "output": {
+        ".html": {
+          "relative_path": "docs/api/WeihanLi.Npoi.Attributes.ColumnAttribute.html",
+          "hash": "QGBORGDnQErbQmmjeINZ9A=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "docs/api/WeihanLi.Npoi.Attributes.FilterAttribute.yml",
+      "output": {
+        ".html": {
+          "relative_path": "docs/api/WeihanLi.Npoi.Attributes.FilterAttribute.html",
+          "hash": "/z/HNGG+W7a7A3fMEKZ3bA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "docs/api/WeihanLi.Npoi.Attributes.FreezeAttribute.yml",
+      "output": {
+        ".html": {
+          "relative_path": "docs/api/WeihanLi.Npoi.Attributes.FreezeAttribute.html",
+          "hash": "mIWuvpqQ7qafoR7QBfO7UA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "docs/api/WeihanLi.Npoi.Attributes.SheetAttribute.yml",
+      "output": {
+        ".html": {
+          "relative_path": "docs/api/WeihanLi.Npoi.Attributes.SheetAttribute.html",
+          "hash": "ayJ4vlwKHFH9DfD1EbcK5w=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "docs/api/WeihanLi.Npoi.Attributes.yml",
+      "output": {
+        ".html": {
+          "relative_path": "docs/api/WeihanLi.Npoi.Attributes.html",
+          "hash": "W0wJkXAPNiV/DZIDrcjirQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
       "source_relative_path": "docs/api/WeihanLi.Npoi.ConfigurationExtensions.yml",
       "output": {
         ".html": {
           "relative_path": "docs/api/WeihanLi.Npoi.ConfigurationExtensions.html",
-          "hash": "G50IS/SMGd44XWTtC9ad9Q=="
+          "hash": "e0JRaNMzWOJghOZVB97zWQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "docs/api/WeihanLi.Npoi.Configurations.IExcelConfiguration-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "docs/api/WeihanLi.Npoi.Configurations.IExcelConfiguration-1.html",
+          "hash": "g1UL54/i0sRtHkWTVEHi1w=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "docs/api/WeihanLi.Npoi.Configurations.IExcelConfiguration.yml",
+      "output": {
+        ".html": {
+          "relative_path": "docs/api/WeihanLi.Npoi.Configurations.IExcelConfiguration.html",
+          "hash": "som8n/sTdib9Z2WBC4qalQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "docs/api/WeihanLi.Npoi.Configurations.IPropertyConfiguration-2.yml",
+      "output": {
+        ".html": {
+          "relative_path": "docs/api/WeihanLi.Npoi.Configurations.IPropertyConfiguration-2.html",
+          "hash": "eXNgalXE1tj/WsPQZZOepQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "docs/api/WeihanLi.Npoi.Configurations.IPropertyConfiguration.yml",
+      "output": {
+        ".html": {
+          "relative_path": "docs/api/WeihanLi.Npoi.Configurations.IPropertyConfiguration.html",
+          "hash": "d57y7OUSjBo4haxXftuSTg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "docs/api/WeihanLi.Npoi.Configurations.yml",
+      "output": {
+        ".html": {
+          "relative_path": "docs/api/WeihanLi.Npoi.Configurations.html",
+          "hash": "u85zk7AKZxNjcI7r1HubKA=="
         }
       },
       "is_incremental": false,
@@ -69,7 +189,7 @@
       "output": {
         ".html": {
           "relative_path": "docs/api/WeihanLi.Npoi.ExcelHelper.html",
-          "hash": "qHsDkrK5njq5o1tektl0Cg=="
+          "hash": "sSta2JI3iBZA3bwVcb2f/A=="
         }
       },
       "is_incremental": false,
@@ -81,7 +201,7 @@
       "output": {
         ".html": {
           "relative_path": "docs/api/WeihanLi.Npoi.FluentSettings.html",
-          "hash": "k3gFz2NhPJvKj4M1Ez3zYw=="
+          "hash": "fv26hMAFnTlEOdHq9rKWLQ=="
         }
       },
       "is_incremental": false,
@@ -118,6 +238,30 @@
         ".html": {
           "relative_path": "docs/api/WeihanLi.Npoi.NpoiRowCollection.html",
           "hash": "SL8DU2xTrpZCy87wNcuK7g=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "docs/api/WeihanLi.Npoi.Settings.ExcelSetting.yml",
+      "output": {
+        ".html": {
+          "relative_path": "docs/api/WeihanLi.Npoi.Settings.ExcelSetting.html",
+          "hash": "DTXZ1gluaG4UEgUTIG4xsA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "docs/api/WeihanLi.Npoi.Settings.yml",
+      "output": {
+        ".html": {
+          "relative_path": "docs/api/WeihanLi.Npoi.Settings.html",
+          "hash": "1h+/lmdN35YosqTH/OGgug=="
         }
       },
       "is_incremental": false,
@@ -177,7 +321,7 @@
       "output": {
         ".html": {
           "relative_path": "docs/api/toc.html",
-          "hash": "RJdK27NJFJFY4p7xMJ3rAA=="
+          "hash": "9Mi5xxm+gGUyHqeTCiUmxw=="
         }
       },
       "is_incremental": false,
@@ -366,7 +510,7 @@
         "ManagedReferenceDocumentProcessor": {
           "can_incremental": false,
           "incrementalPhase": "build",
-          "total_file_count": 11,
+          "total_file_count": 23,
           "skipped_file_count": 0
         },
         "ResourceDocumentProcessor": {

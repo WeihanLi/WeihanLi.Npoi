@@ -7,6 +7,336 @@ references:
   commentId: N:WeihanLi.Npoi
   fullName: WeihanLi.Npoi
   nameWithType: WeihanLi.Npoi
+- uid: WeihanLi.Npoi.Attributes
+  name: WeihanLi.Npoi.Attributes
+  href: docs/api/WeihanLi.Npoi.Attributes.html
+  commentId: N:WeihanLi.Npoi.Attributes
+  fullName: WeihanLi.Npoi.Attributes
+  nameWithType: WeihanLi.Npoi.Attributes
+- uid: WeihanLi.Npoi.Attributes.ColumnAttribute
+  name: ColumnAttribute
+  href: docs/api/WeihanLi.Npoi.Attributes.ColumnAttribute.html
+  commentId: T:WeihanLi.Npoi.Attributes.ColumnAttribute
+  fullName: WeihanLi.Npoi.Attributes.ColumnAttribute
+  nameWithType: ColumnAttribute
+- uid: WeihanLi.Npoi.Attributes.ColumnAttribute.#ctor
+  name: ColumnAttribute()
+  href: docs/api/WeihanLi.Npoi.Attributes.ColumnAttribute.html#WeihanLi_Npoi_Attributes_ColumnAttribute__ctor
+  commentId: M:WeihanLi.Npoi.Attributes.ColumnAttribute.#ctor
+  fullName: WeihanLi.Npoi.Attributes.ColumnAttribute.ColumnAttribute()
+  nameWithType: ColumnAttribute.ColumnAttribute()
+- uid: WeihanLi.Npoi.Attributes.ColumnAttribute.#ctor(System.Int32)
+  name: ColumnAttribute(Int32)
+  href: docs/api/WeihanLi.Npoi.Attributes.ColumnAttribute.html#WeihanLi_Npoi_Attributes_ColumnAttribute__ctor_System_Int32_
+  commentId: M:WeihanLi.Npoi.Attributes.ColumnAttribute.#ctor(System.Int32)
+  fullName: WeihanLi.Npoi.Attributes.ColumnAttribute.ColumnAttribute(System.Int32)
+  nameWithType: ColumnAttribute.ColumnAttribute(Int32)
+- uid: WeihanLi.Npoi.Attributes.ColumnAttribute.#ctor(System.String)
+  name: ColumnAttribute(String)
+  href: docs/api/WeihanLi.Npoi.Attributes.ColumnAttribute.html#WeihanLi_Npoi_Attributes_ColumnAttribute__ctor_System_String_
+  commentId: M:WeihanLi.Npoi.Attributes.ColumnAttribute.#ctor(System.String)
+  fullName: WeihanLi.Npoi.Attributes.ColumnAttribute.ColumnAttribute(System.String)
+  nameWithType: ColumnAttribute.ColumnAttribute(String)
+- uid: WeihanLi.Npoi.Attributes.ColumnAttribute.#ctor*
+  name: ColumnAttribute
+  href: docs/api/WeihanLi.Npoi.Attributes.ColumnAttribute.html#WeihanLi_Npoi_Attributes_ColumnAttribute__ctor_
+  commentId: Overload:WeihanLi.Npoi.Attributes.ColumnAttribute.#ctor
+  isSpec: "True"
+  fullName: WeihanLi.Npoi.Attributes.ColumnAttribute.ColumnAttribute
+  nameWithType: ColumnAttribute.ColumnAttribute
+- uid: WeihanLi.Npoi.Attributes.ColumnAttribute.Formatter
+  name: Formatter
+  href: docs/api/WeihanLi.Npoi.Attributes.ColumnAttribute.html#WeihanLi_Npoi_Attributes_ColumnAttribute_Formatter
+  commentId: P:WeihanLi.Npoi.Attributes.ColumnAttribute.Formatter
+  fullName: WeihanLi.Npoi.Attributes.ColumnAttribute.Formatter
+  nameWithType: ColumnAttribute.Formatter
+- uid: WeihanLi.Npoi.Attributes.ColumnAttribute.Formatter*
+  name: Formatter
+  href: docs/api/WeihanLi.Npoi.Attributes.ColumnAttribute.html#WeihanLi_Npoi_Attributes_ColumnAttribute_Formatter_
+  commentId: Overload:WeihanLi.Npoi.Attributes.ColumnAttribute.Formatter
+  isSpec: "True"
+  fullName: WeihanLi.Npoi.Attributes.ColumnAttribute.Formatter
+  nameWithType: ColumnAttribute.Formatter
+- uid: WeihanLi.Npoi.Attributes.ColumnAttribute.Index
+  name: Index
+  href: docs/api/WeihanLi.Npoi.Attributes.ColumnAttribute.html#WeihanLi_Npoi_Attributes_ColumnAttribute_Index
+  commentId: P:WeihanLi.Npoi.Attributes.ColumnAttribute.Index
+  fullName: WeihanLi.Npoi.Attributes.ColumnAttribute.Index
+  nameWithType: ColumnAttribute.Index
+- uid: WeihanLi.Npoi.Attributes.ColumnAttribute.Index*
+  name: Index
+  href: docs/api/WeihanLi.Npoi.Attributes.ColumnAttribute.html#WeihanLi_Npoi_Attributes_ColumnAttribute_Index_
+  commentId: Overload:WeihanLi.Npoi.Attributes.ColumnAttribute.Index
+  isSpec: "True"
+  fullName: WeihanLi.Npoi.Attributes.ColumnAttribute.Index
+  nameWithType: ColumnAttribute.Index
+- uid: WeihanLi.Npoi.Attributes.ColumnAttribute.IsIgnored
+  name: IsIgnored
+  href: docs/api/WeihanLi.Npoi.Attributes.ColumnAttribute.html#WeihanLi_Npoi_Attributes_ColumnAttribute_IsIgnored
+  commentId: P:WeihanLi.Npoi.Attributes.ColumnAttribute.IsIgnored
+  fullName: WeihanLi.Npoi.Attributes.ColumnAttribute.IsIgnored
+  nameWithType: ColumnAttribute.IsIgnored
+- uid: WeihanLi.Npoi.Attributes.ColumnAttribute.IsIgnored*
+  name: IsIgnored
+  href: docs/api/WeihanLi.Npoi.Attributes.ColumnAttribute.html#WeihanLi_Npoi_Attributes_ColumnAttribute_IsIgnored_
+  commentId: Overload:WeihanLi.Npoi.Attributes.ColumnAttribute.IsIgnored
+  isSpec: "True"
+  fullName: WeihanLi.Npoi.Attributes.ColumnAttribute.IsIgnored
+  nameWithType: ColumnAttribute.IsIgnored
+- uid: WeihanLi.Npoi.Attributes.ColumnAttribute.Title
+  name: Title
+  href: docs/api/WeihanLi.Npoi.Attributes.ColumnAttribute.html#WeihanLi_Npoi_Attributes_ColumnAttribute_Title
+  commentId: P:WeihanLi.Npoi.Attributes.ColumnAttribute.Title
+  fullName: WeihanLi.Npoi.Attributes.ColumnAttribute.Title
+  nameWithType: ColumnAttribute.Title
+- uid: WeihanLi.Npoi.Attributes.ColumnAttribute.Title*
+  name: Title
+  href: docs/api/WeihanLi.Npoi.Attributes.ColumnAttribute.html#WeihanLi_Npoi_Attributes_ColumnAttribute_Title_
+  commentId: Overload:WeihanLi.Npoi.Attributes.ColumnAttribute.Title
+  isSpec: "True"
+  fullName: WeihanLi.Npoi.Attributes.ColumnAttribute.Title
+  nameWithType: ColumnAttribute.Title
+- uid: WeihanLi.Npoi.Attributes.ColumnAttribute.Width
+  name: Width
+  href: docs/api/WeihanLi.Npoi.Attributes.ColumnAttribute.html#WeihanLi_Npoi_Attributes_ColumnAttribute_Width
+  commentId: P:WeihanLi.Npoi.Attributes.ColumnAttribute.Width
+  fullName: WeihanLi.Npoi.Attributes.ColumnAttribute.Width
+  nameWithType: ColumnAttribute.Width
+- uid: WeihanLi.Npoi.Attributes.ColumnAttribute.Width*
+  name: Width
+  href: docs/api/WeihanLi.Npoi.Attributes.ColumnAttribute.html#WeihanLi_Npoi_Attributes_ColumnAttribute_Width_
+  commentId: Overload:WeihanLi.Npoi.Attributes.ColumnAttribute.Width
+  isSpec: "True"
+  fullName: WeihanLi.Npoi.Attributes.ColumnAttribute.Width
+  nameWithType: ColumnAttribute.Width
+- uid: WeihanLi.Npoi.Attributes.FilterAttribute
+  name: FilterAttribute
+  href: docs/api/WeihanLi.Npoi.Attributes.FilterAttribute.html
+  commentId: T:WeihanLi.Npoi.Attributes.FilterAttribute
+  fullName: WeihanLi.Npoi.Attributes.FilterAttribute
+  nameWithType: FilterAttribute
+- uid: WeihanLi.Npoi.Attributes.FilterAttribute.#ctor(System.Int32)
+  name: FilterAttribute(Int32)
+  href: docs/api/WeihanLi.Npoi.Attributes.FilterAttribute.html#WeihanLi_Npoi_Attributes_FilterAttribute__ctor_System_Int32_
+  commentId: M:WeihanLi.Npoi.Attributes.FilterAttribute.#ctor(System.Int32)
+  fullName: WeihanLi.Npoi.Attributes.FilterAttribute.FilterAttribute(System.Int32)
+  nameWithType: FilterAttribute.FilterAttribute(Int32)
+- uid: WeihanLi.Npoi.Attributes.FilterAttribute.#ctor(System.Int32,System.Nullable{System.Int32})
+  name: FilterAttribute(Int32, Nullable<Int32>)
+  href: docs/api/WeihanLi.Npoi.Attributes.FilterAttribute.html#WeihanLi_Npoi_Attributes_FilterAttribute__ctor_System_Int32_System_Nullable_System_Int32__
+  commentId: M:WeihanLi.Npoi.Attributes.FilterAttribute.#ctor(System.Int32,System.Nullable{System.Int32})
+  name.vb: FilterAttribute(Int32, Nullable(Of Int32))
+  fullName: WeihanLi.Npoi.Attributes.FilterAttribute.FilterAttribute(System.Int32, System.Nullable<System.Int32>)
+  fullName.vb: WeihanLi.Npoi.Attributes.FilterAttribute.FilterAttribute(System.Int32, System.Nullable(Of System.Int32))
+  nameWithType: FilterAttribute.FilterAttribute(Int32, Nullable<Int32>)
+  nameWithType.vb: FilterAttribute.FilterAttribute(Int32, Nullable(Of Int32))
+- uid: WeihanLi.Npoi.Attributes.FilterAttribute.#ctor*
+  name: FilterAttribute
+  href: docs/api/WeihanLi.Npoi.Attributes.FilterAttribute.html#WeihanLi_Npoi_Attributes_FilterAttribute__ctor_
+  commentId: Overload:WeihanLi.Npoi.Attributes.FilterAttribute.#ctor
+  isSpec: "True"
+  fullName: WeihanLi.Npoi.Attributes.FilterAttribute.FilterAttribute
+  nameWithType: FilterAttribute.FilterAttribute
+- uid: WeihanLi.Npoi.Attributes.FilterAttribute.FirstColumn
+  name: FirstColumn
+  href: docs/api/WeihanLi.Npoi.Attributes.FilterAttribute.html#WeihanLi_Npoi_Attributes_FilterAttribute_FirstColumn
+  commentId: P:WeihanLi.Npoi.Attributes.FilterAttribute.FirstColumn
+  fullName: WeihanLi.Npoi.Attributes.FilterAttribute.FirstColumn
+  nameWithType: FilterAttribute.FirstColumn
+- uid: WeihanLi.Npoi.Attributes.FilterAttribute.FirstColumn*
+  name: FirstColumn
+  href: docs/api/WeihanLi.Npoi.Attributes.FilterAttribute.html#WeihanLi_Npoi_Attributes_FilterAttribute_FirstColumn_
+  commentId: Overload:WeihanLi.Npoi.Attributes.FilterAttribute.FirstColumn
+  isSpec: "True"
+  fullName: WeihanLi.Npoi.Attributes.FilterAttribute.FirstColumn
+  nameWithType: FilterAttribute.FirstColumn
+- uid: WeihanLi.Npoi.Attributes.FilterAttribute.LastColumn
+  name: LastColumn
+  href: docs/api/WeihanLi.Npoi.Attributes.FilterAttribute.html#WeihanLi_Npoi_Attributes_FilterAttribute_LastColumn
+  commentId: P:WeihanLi.Npoi.Attributes.FilterAttribute.LastColumn
+  fullName: WeihanLi.Npoi.Attributes.FilterAttribute.LastColumn
+  nameWithType: FilterAttribute.LastColumn
+- uid: WeihanLi.Npoi.Attributes.FilterAttribute.LastColumn*
+  name: LastColumn
+  href: docs/api/WeihanLi.Npoi.Attributes.FilterAttribute.html#WeihanLi_Npoi_Attributes_FilterAttribute_LastColumn_
+  commentId: Overload:WeihanLi.Npoi.Attributes.FilterAttribute.LastColumn
+  isSpec: "True"
+  fullName: WeihanLi.Npoi.Attributes.FilterAttribute.LastColumn
+  nameWithType: FilterAttribute.LastColumn
+- uid: WeihanLi.Npoi.Attributes.FreezeAttribute
+  name: FreezeAttribute
+  href: docs/api/WeihanLi.Npoi.Attributes.FreezeAttribute.html
+  commentId: T:WeihanLi.Npoi.Attributes.FreezeAttribute
+  fullName: WeihanLi.Npoi.Attributes.FreezeAttribute
+  nameWithType: FreezeAttribute
+- uid: WeihanLi.Npoi.Attributes.FreezeAttribute.#ctor(System.Int32,System.Int32)
+  name: FreezeAttribute(Int32, Int32)
+  href: docs/api/WeihanLi.Npoi.Attributes.FreezeAttribute.html#WeihanLi_Npoi_Attributes_FreezeAttribute__ctor_System_Int32_System_Int32_
+  commentId: M:WeihanLi.Npoi.Attributes.FreezeAttribute.#ctor(System.Int32,System.Int32)
+  fullName: WeihanLi.Npoi.Attributes.FreezeAttribute.FreezeAttribute(System.Int32, System.Int32)
+  nameWithType: FreezeAttribute.FreezeAttribute(Int32, Int32)
+- uid: WeihanLi.Npoi.Attributes.FreezeAttribute.#ctor(System.Int32,System.Int32,System.Int32,System.Int32)
+  name: FreezeAttribute(Int32, Int32, Int32, Int32)
+  href: docs/api/WeihanLi.Npoi.Attributes.FreezeAttribute.html#WeihanLi_Npoi_Attributes_FreezeAttribute__ctor_System_Int32_System_Int32_System_Int32_System_Int32_
+  commentId: M:WeihanLi.Npoi.Attributes.FreezeAttribute.#ctor(System.Int32,System.Int32,System.Int32,System.Int32)
+  fullName: WeihanLi.Npoi.Attributes.FreezeAttribute.FreezeAttribute(System.Int32, System.Int32, System.Int32, System.Int32)
+  nameWithType: FreezeAttribute.FreezeAttribute(Int32, Int32, Int32, Int32)
+- uid: WeihanLi.Npoi.Attributes.FreezeAttribute.#ctor*
+  name: FreezeAttribute
+  href: docs/api/WeihanLi.Npoi.Attributes.FreezeAttribute.html#WeihanLi_Npoi_Attributes_FreezeAttribute__ctor_
+  commentId: Overload:WeihanLi.Npoi.Attributes.FreezeAttribute.#ctor
+  isSpec: "True"
+  fullName: WeihanLi.Npoi.Attributes.FreezeAttribute.FreezeAttribute
+  nameWithType: FreezeAttribute.FreezeAttribute
+- uid: WeihanLi.Npoi.Attributes.FreezeAttribute.ColSplit
+  name: ColSplit
+  href: docs/api/WeihanLi.Npoi.Attributes.FreezeAttribute.html#WeihanLi_Npoi_Attributes_FreezeAttribute_ColSplit
+  commentId: P:WeihanLi.Npoi.Attributes.FreezeAttribute.ColSplit
+  fullName: WeihanLi.Npoi.Attributes.FreezeAttribute.ColSplit
+  nameWithType: FreezeAttribute.ColSplit
+- uid: WeihanLi.Npoi.Attributes.FreezeAttribute.ColSplit*
+  name: ColSplit
+  href: docs/api/WeihanLi.Npoi.Attributes.FreezeAttribute.html#WeihanLi_Npoi_Attributes_FreezeAttribute_ColSplit_
+  commentId: Overload:WeihanLi.Npoi.Attributes.FreezeAttribute.ColSplit
+  isSpec: "True"
+  fullName: WeihanLi.Npoi.Attributes.FreezeAttribute.ColSplit
+  nameWithType: FreezeAttribute.ColSplit
+- uid: WeihanLi.Npoi.Attributes.FreezeAttribute.LeftMostColumn
+  name: LeftMostColumn
+  href: docs/api/WeihanLi.Npoi.Attributes.FreezeAttribute.html#WeihanLi_Npoi_Attributes_FreezeAttribute_LeftMostColumn
+  commentId: P:WeihanLi.Npoi.Attributes.FreezeAttribute.LeftMostColumn
+  fullName: WeihanLi.Npoi.Attributes.FreezeAttribute.LeftMostColumn
+  nameWithType: FreezeAttribute.LeftMostColumn
+- uid: WeihanLi.Npoi.Attributes.FreezeAttribute.LeftMostColumn*
+  name: LeftMostColumn
+  href: docs/api/WeihanLi.Npoi.Attributes.FreezeAttribute.html#WeihanLi_Npoi_Attributes_FreezeAttribute_LeftMostColumn_
+  commentId: Overload:WeihanLi.Npoi.Attributes.FreezeAttribute.LeftMostColumn
+  isSpec: "True"
+  fullName: WeihanLi.Npoi.Attributes.FreezeAttribute.LeftMostColumn
+  nameWithType: FreezeAttribute.LeftMostColumn
+- uid: WeihanLi.Npoi.Attributes.FreezeAttribute.RowSplit
+  name: RowSplit
+  href: docs/api/WeihanLi.Npoi.Attributes.FreezeAttribute.html#WeihanLi_Npoi_Attributes_FreezeAttribute_RowSplit
+  commentId: P:WeihanLi.Npoi.Attributes.FreezeAttribute.RowSplit
+  fullName: WeihanLi.Npoi.Attributes.FreezeAttribute.RowSplit
+  nameWithType: FreezeAttribute.RowSplit
+- uid: WeihanLi.Npoi.Attributes.FreezeAttribute.RowSplit*
+  name: RowSplit
+  href: docs/api/WeihanLi.Npoi.Attributes.FreezeAttribute.html#WeihanLi_Npoi_Attributes_FreezeAttribute_RowSplit_
+  commentId: Overload:WeihanLi.Npoi.Attributes.FreezeAttribute.RowSplit
+  isSpec: "True"
+  fullName: WeihanLi.Npoi.Attributes.FreezeAttribute.RowSplit
+  nameWithType: FreezeAttribute.RowSplit
+- uid: WeihanLi.Npoi.Attributes.FreezeAttribute.TopRow
+  name: TopRow
+  href: docs/api/WeihanLi.Npoi.Attributes.FreezeAttribute.html#WeihanLi_Npoi_Attributes_FreezeAttribute_TopRow
+  commentId: P:WeihanLi.Npoi.Attributes.FreezeAttribute.TopRow
+  fullName: WeihanLi.Npoi.Attributes.FreezeAttribute.TopRow
+  nameWithType: FreezeAttribute.TopRow
+- uid: WeihanLi.Npoi.Attributes.FreezeAttribute.TopRow*
+  name: TopRow
+  href: docs/api/WeihanLi.Npoi.Attributes.FreezeAttribute.html#WeihanLi_Npoi_Attributes_FreezeAttribute_TopRow_
+  commentId: Overload:WeihanLi.Npoi.Attributes.FreezeAttribute.TopRow
+  isSpec: "True"
+  fullName: WeihanLi.Npoi.Attributes.FreezeAttribute.TopRow
+  nameWithType: FreezeAttribute.TopRow
+- uid: WeihanLi.Npoi.Attributes.SheetAttribute
+  name: SheetAttribute
+  href: docs/api/WeihanLi.Npoi.Attributes.SheetAttribute.html
+  commentId: T:WeihanLi.Npoi.Attributes.SheetAttribute
+  fullName: WeihanLi.Npoi.Attributes.SheetAttribute
+  nameWithType: SheetAttribute
+- uid: WeihanLi.Npoi.Attributes.SheetAttribute.#ctor
+  name: SheetAttribute()
+  href: docs/api/WeihanLi.Npoi.Attributes.SheetAttribute.html#WeihanLi_Npoi_Attributes_SheetAttribute__ctor
+  commentId: M:WeihanLi.Npoi.Attributes.SheetAttribute.#ctor
+  fullName: WeihanLi.Npoi.Attributes.SheetAttribute.SheetAttribute()
+  nameWithType: SheetAttribute.SheetAttribute()
+- uid: WeihanLi.Npoi.Attributes.SheetAttribute.#ctor*
+  name: SheetAttribute
+  href: docs/api/WeihanLi.Npoi.Attributes.SheetAttribute.html#WeihanLi_Npoi_Attributes_SheetAttribute__ctor_
+  commentId: Overload:WeihanLi.Npoi.Attributes.SheetAttribute.#ctor
+  isSpec: "True"
+  fullName: WeihanLi.Npoi.Attributes.SheetAttribute.SheetAttribute
+  nameWithType: SheetAttribute.SheetAttribute
+- uid: WeihanLi.Npoi.Attributes.SheetAttribute.AutoColumnWidthEnabled
+  name: AutoColumnWidthEnabled
+  href: docs/api/WeihanLi.Npoi.Attributes.SheetAttribute.html#WeihanLi_Npoi_Attributes_SheetAttribute_AutoColumnWidthEnabled
+  commentId: P:WeihanLi.Npoi.Attributes.SheetAttribute.AutoColumnWidthEnabled
+  fullName: WeihanLi.Npoi.Attributes.SheetAttribute.AutoColumnWidthEnabled
+  nameWithType: SheetAttribute.AutoColumnWidthEnabled
+- uid: WeihanLi.Npoi.Attributes.SheetAttribute.AutoColumnWidthEnabled*
+  name: AutoColumnWidthEnabled
+  href: docs/api/WeihanLi.Npoi.Attributes.SheetAttribute.html#WeihanLi_Npoi_Attributes_SheetAttribute_AutoColumnWidthEnabled_
+  commentId: Overload:WeihanLi.Npoi.Attributes.SheetAttribute.AutoColumnWidthEnabled
+  isSpec: "True"
+  fullName: WeihanLi.Npoi.Attributes.SheetAttribute.AutoColumnWidthEnabled
+  nameWithType: SheetAttribute.AutoColumnWidthEnabled
+- uid: WeihanLi.Npoi.Attributes.SheetAttribute.EndRowIndex
+  name: EndRowIndex
+  href: docs/api/WeihanLi.Npoi.Attributes.SheetAttribute.html#WeihanLi_Npoi_Attributes_SheetAttribute_EndRowIndex
+  commentId: P:WeihanLi.Npoi.Attributes.SheetAttribute.EndRowIndex
+  fullName: WeihanLi.Npoi.Attributes.SheetAttribute.EndRowIndex
+  nameWithType: SheetAttribute.EndRowIndex
+- uid: WeihanLi.Npoi.Attributes.SheetAttribute.EndRowIndex*
+  name: EndRowIndex
+  href: docs/api/WeihanLi.Npoi.Attributes.SheetAttribute.html#WeihanLi_Npoi_Attributes_SheetAttribute_EndRowIndex_
+  commentId: Overload:WeihanLi.Npoi.Attributes.SheetAttribute.EndRowIndex
+  isSpec: "True"
+  fullName: WeihanLi.Npoi.Attributes.SheetAttribute.EndRowIndex
+  nameWithType: SheetAttribute.EndRowIndex
+- uid: WeihanLi.Npoi.Attributes.SheetAttribute.HeaderRowIndex
+  name: HeaderRowIndex
+  href: docs/api/WeihanLi.Npoi.Attributes.SheetAttribute.html#WeihanLi_Npoi_Attributes_SheetAttribute_HeaderRowIndex
+  commentId: P:WeihanLi.Npoi.Attributes.SheetAttribute.HeaderRowIndex
+  fullName: WeihanLi.Npoi.Attributes.SheetAttribute.HeaderRowIndex
+  nameWithType: SheetAttribute.HeaderRowIndex
+- uid: WeihanLi.Npoi.Attributes.SheetAttribute.HeaderRowIndex*
+  name: HeaderRowIndex
+  href: docs/api/WeihanLi.Npoi.Attributes.SheetAttribute.html#WeihanLi_Npoi_Attributes_SheetAttribute_HeaderRowIndex_
+  commentId: Overload:WeihanLi.Npoi.Attributes.SheetAttribute.HeaderRowIndex
+  isSpec: "True"
+  fullName: WeihanLi.Npoi.Attributes.SheetAttribute.HeaderRowIndex
+  nameWithType: SheetAttribute.HeaderRowIndex
+- uid: WeihanLi.Npoi.Attributes.SheetAttribute.SheetIndex
+  name: SheetIndex
+  href: docs/api/WeihanLi.Npoi.Attributes.SheetAttribute.html#WeihanLi_Npoi_Attributes_SheetAttribute_SheetIndex
+  commentId: P:WeihanLi.Npoi.Attributes.SheetAttribute.SheetIndex
+  fullName: WeihanLi.Npoi.Attributes.SheetAttribute.SheetIndex
+  nameWithType: SheetAttribute.SheetIndex
+- uid: WeihanLi.Npoi.Attributes.SheetAttribute.SheetIndex*
+  name: SheetIndex
+  href: docs/api/WeihanLi.Npoi.Attributes.SheetAttribute.html#WeihanLi_Npoi_Attributes_SheetAttribute_SheetIndex_
+  commentId: Overload:WeihanLi.Npoi.Attributes.SheetAttribute.SheetIndex
+  isSpec: "True"
+  fullName: WeihanLi.Npoi.Attributes.SheetAttribute.SheetIndex
+  nameWithType: SheetAttribute.SheetIndex
+- uid: WeihanLi.Npoi.Attributes.SheetAttribute.SheetName
+  name: SheetName
+  href: docs/api/WeihanLi.Npoi.Attributes.SheetAttribute.html#WeihanLi_Npoi_Attributes_SheetAttribute_SheetName
+  commentId: P:WeihanLi.Npoi.Attributes.SheetAttribute.SheetName
+  fullName: WeihanLi.Npoi.Attributes.SheetAttribute.SheetName
+  nameWithType: SheetAttribute.SheetName
+- uid: WeihanLi.Npoi.Attributes.SheetAttribute.SheetName*
+  name: SheetName
+  href: docs/api/WeihanLi.Npoi.Attributes.SheetAttribute.html#WeihanLi_Npoi_Attributes_SheetAttribute_SheetName_
+  commentId: Overload:WeihanLi.Npoi.Attributes.SheetAttribute.SheetName
+  isSpec: "True"
+  fullName: WeihanLi.Npoi.Attributes.SheetAttribute.SheetName
+  nameWithType: SheetAttribute.SheetName
+- uid: WeihanLi.Npoi.Attributes.SheetAttribute.StartRowIndex
+  name: StartRowIndex
+  href: docs/api/WeihanLi.Npoi.Attributes.SheetAttribute.html#WeihanLi_Npoi_Attributes_SheetAttribute_StartRowIndex
+  commentId: P:WeihanLi.Npoi.Attributes.SheetAttribute.StartRowIndex
+  fullName: WeihanLi.Npoi.Attributes.SheetAttribute.StartRowIndex
+  nameWithType: SheetAttribute.StartRowIndex
+- uid: WeihanLi.Npoi.Attributes.SheetAttribute.StartRowIndex*
+  name: StartRowIndex
+  href: docs/api/WeihanLi.Npoi.Attributes.SheetAttribute.html#WeihanLi_Npoi_Attributes_SheetAttribute_StartRowIndex_
+  commentId: Overload:WeihanLi.Npoi.Attributes.SheetAttribute.StartRowIndex
+  isSpec: "True"
+  fullName: WeihanLi.Npoi.Attributes.SheetAttribute.StartRowIndex
+  nameWithType: SheetAttribute.StartRowIndex
 - uid: WeihanLi.Npoi.ConfigurationExtensions
   name: ConfigurationExtensions
   href: docs/api/WeihanLi.Npoi.ConfigurationExtensions.html
@@ -20,32 +350,32 @@ references:
   isSpec: "True"
   fullName: WeihanLi.Npoi.ConfigurationExtensions.HasColumnOutputFormatter
   nameWithType: ConfigurationExtensions.HasColumnOutputFormatter
-- uid: WeihanLi.Npoi.ConfigurationExtensions.HasColumnOutputFormatter``2(IPropertyConfiguration{``0,``1},System.Func{``1,System.Object})
+- uid: WeihanLi.Npoi.ConfigurationExtensions.HasColumnOutputFormatter``2(WeihanLi.Npoi.Configurations.IPropertyConfiguration{``0,``1},System.Func{``1,System.Object})
   name: HasColumnOutputFormatter<TEntity, TProperty>(IPropertyConfiguration<TEntity, TProperty>, Func<TProperty, Object>)
-  href: docs/api/WeihanLi.Npoi.ConfigurationExtensions.html#WeihanLi_Npoi_ConfigurationExtensions_HasColumnOutputFormatter__2_IPropertyConfiguration___0___1__System_Func___1_System_Object__
-  commentId: M:WeihanLi.Npoi.ConfigurationExtensions.HasColumnOutputFormatter``2(IPropertyConfiguration{``0,``1},System.Func{``1,System.Object})
+  href: docs/api/WeihanLi.Npoi.ConfigurationExtensions.html#WeihanLi_Npoi_ConfigurationExtensions_HasColumnOutputFormatter__2_WeihanLi_Npoi_Configurations_IPropertyConfiguration___0___1__System_Func___1_System_Object__
+  commentId: M:WeihanLi.Npoi.ConfigurationExtensions.HasColumnOutputFormatter``2(WeihanLi.Npoi.Configurations.IPropertyConfiguration{``0,``1},System.Func{``1,System.Object})
   name.vb: HasColumnOutputFormatter(Of TEntity, TProperty)(IPropertyConfiguration(Of TEntity, TProperty), Func(Of TProperty, Object))
-  fullName: WeihanLi.Npoi.ConfigurationExtensions.HasColumnOutputFormatter<TEntity, TProperty>(IPropertyConfiguration<TEntity, TProperty>, System.Func<TProperty, System.Object>)
-  fullName.vb: WeihanLi.Npoi.ConfigurationExtensions.HasColumnOutputFormatter(Of TEntity, TProperty)(IPropertyConfiguration(Of TEntity, TProperty), System.Func(Of TProperty, System.Object))
+  fullName: WeihanLi.Npoi.ConfigurationExtensions.HasColumnOutputFormatter<TEntity, TProperty>(WeihanLi.Npoi.Configurations.IPropertyConfiguration<TEntity, TProperty>, System.Func<TProperty, System.Object>)
+  fullName.vb: WeihanLi.Npoi.ConfigurationExtensions.HasColumnOutputFormatter(Of TEntity, TProperty)(WeihanLi.Npoi.Configurations.IPropertyConfiguration(Of TEntity, TProperty), System.Func(Of TProperty, System.Object))
   nameWithType: ConfigurationExtensions.HasColumnOutputFormatter<TEntity, TProperty>(IPropertyConfiguration<TEntity, TProperty>, Func<TProperty, Object>)
   nameWithType.vb: ConfigurationExtensions.HasColumnOutputFormatter(Of TEntity, TProperty)(IPropertyConfiguration(Of TEntity, TProperty), Func(Of TProperty, Object))
-- uid: WeihanLi.Npoi.ConfigurationExtensions.HasSheetConfiguration(IExcelConfiguration,System.Int32,System.String)
+- uid: WeihanLi.Npoi.ConfigurationExtensions.HasSheetConfiguration(WeihanLi.Npoi.Configurations.IExcelConfiguration,System.Int32,System.String)
   name: HasSheetConfiguration(IExcelConfiguration, Int32, String)
-  href: docs/api/WeihanLi.Npoi.ConfigurationExtensions.html#WeihanLi_Npoi_ConfigurationExtensions_HasSheetConfiguration_IExcelConfiguration_System_Int32_System_String_
-  commentId: M:WeihanLi.Npoi.ConfigurationExtensions.HasSheetConfiguration(IExcelConfiguration,System.Int32,System.String)
-  fullName: WeihanLi.Npoi.ConfigurationExtensions.HasSheetConfiguration(IExcelConfiguration, System.Int32, System.String)
+  href: docs/api/WeihanLi.Npoi.ConfigurationExtensions.html#WeihanLi_Npoi_ConfigurationExtensions_HasSheetConfiguration_WeihanLi_Npoi_Configurations_IExcelConfiguration_System_Int32_System_String_
+  commentId: M:WeihanLi.Npoi.ConfigurationExtensions.HasSheetConfiguration(WeihanLi.Npoi.Configurations.IExcelConfiguration,System.Int32,System.String)
+  fullName: WeihanLi.Npoi.ConfigurationExtensions.HasSheetConfiguration(WeihanLi.Npoi.Configurations.IExcelConfiguration, System.Int32, System.String)
   nameWithType: ConfigurationExtensions.HasSheetConfiguration(IExcelConfiguration, Int32, String)
-- uid: WeihanLi.Npoi.ConfigurationExtensions.HasSheetConfiguration(IExcelConfiguration,System.Int32,System.String,System.Boolean)
+- uid: WeihanLi.Npoi.ConfigurationExtensions.HasSheetConfiguration(WeihanLi.Npoi.Configurations.IExcelConfiguration,System.Int32,System.String,System.Boolean)
   name: HasSheetConfiguration(IExcelConfiguration, Int32, String, Boolean)
-  href: docs/api/WeihanLi.Npoi.ConfigurationExtensions.html#WeihanLi_Npoi_ConfigurationExtensions_HasSheetConfiguration_IExcelConfiguration_System_Int32_System_String_System_Boolean_
-  commentId: M:WeihanLi.Npoi.ConfigurationExtensions.HasSheetConfiguration(IExcelConfiguration,System.Int32,System.String,System.Boolean)
-  fullName: WeihanLi.Npoi.ConfigurationExtensions.HasSheetConfiguration(IExcelConfiguration, System.Int32, System.String, System.Boolean)
+  href: docs/api/WeihanLi.Npoi.ConfigurationExtensions.html#WeihanLi_Npoi_ConfigurationExtensions_HasSheetConfiguration_WeihanLi_Npoi_Configurations_IExcelConfiguration_System_Int32_System_String_System_Boolean_
+  commentId: M:WeihanLi.Npoi.ConfigurationExtensions.HasSheetConfiguration(WeihanLi.Npoi.Configurations.IExcelConfiguration,System.Int32,System.String,System.Boolean)
+  fullName: WeihanLi.Npoi.ConfigurationExtensions.HasSheetConfiguration(WeihanLi.Npoi.Configurations.IExcelConfiguration, System.Int32, System.String, System.Boolean)
   nameWithType: ConfigurationExtensions.HasSheetConfiguration(IExcelConfiguration, Int32, String, Boolean)
-- uid: WeihanLi.Npoi.ConfigurationExtensions.HasSheetConfiguration(IExcelConfiguration,System.Int32,System.String,System.Int32)
+- uid: WeihanLi.Npoi.ConfigurationExtensions.HasSheetConfiguration(WeihanLi.Npoi.Configurations.IExcelConfiguration,System.Int32,System.String,System.Int32)
   name: HasSheetConfiguration(IExcelConfiguration, Int32, String, Int32)
-  href: docs/api/WeihanLi.Npoi.ConfigurationExtensions.html#WeihanLi_Npoi_ConfigurationExtensions_HasSheetConfiguration_IExcelConfiguration_System_Int32_System_String_System_Int32_
-  commentId: M:WeihanLi.Npoi.ConfigurationExtensions.HasSheetConfiguration(IExcelConfiguration,System.Int32,System.String,System.Int32)
-  fullName: WeihanLi.Npoi.ConfigurationExtensions.HasSheetConfiguration(IExcelConfiguration, System.Int32, System.String, System.Int32)
+  href: docs/api/WeihanLi.Npoi.ConfigurationExtensions.html#WeihanLi_Npoi_ConfigurationExtensions_HasSheetConfiguration_WeihanLi_Npoi_Configurations_IExcelConfiguration_System_Int32_System_String_System_Int32_
+  commentId: M:WeihanLi.Npoi.ConfigurationExtensions.HasSheetConfiguration(WeihanLi.Npoi.Configurations.IExcelConfiguration,System.Int32,System.String,System.Int32)
+  fullName: WeihanLi.Npoi.ConfigurationExtensions.HasSheetConfiguration(WeihanLi.Npoi.Configurations.IExcelConfiguration, System.Int32, System.String, System.Int32)
   nameWithType: ConfigurationExtensions.HasSheetConfiguration(IExcelConfiguration, Int32, String, Int32)
 - uid: WeihanLi.Npoi.ConfigurationExtensions.HasSheetConfiguration*
   name: HasSheetConfiguration
@@ -61,15 +391,370 @@ references:
   isSpec: "True"
   fullName: WeihanLi.Npoi.ConfigurationExtensions.Property
   nameWithType: ConfigurationExtensions.Property
-- uid: WeihanLi.Npoi.ConfigurationExtensions.Property``1(IExcelConfiguration{``0},System.String)
+- uid: WeihanLi.Npoi.ConfigurationExtensions.Property``1(WeihanLi.Npoi.Configurations.IExcelConfiguration{``0},System.String)
   name: Property<TEntity>(IExcelConfiguration<TEntity>, String)
-  href: docs/api/WeihanLi.Npoi.ConfigurationExtensions.html#WeihanLi_Npoi_ConfigurationExtensions_Property__1_IExcelConfiguration___0__System_String_
-  commentId: M:WeihanLi.Npoi.ConfigurationExtensions.Property``1(IExcelConfiguration{``0},System.String)
+  href: docs/api/WeihanLi.Npoi.ConfigurationExtensions.html#WeihanLi_Npoi_ConfigurationExtensions_Property__1_WeihanLi_Npoi_Configurations_IExcelConfiguration___0__System_String_
+  commentId: M:WeihanLi.Npoi.ConfigurationExtensions.Property``1(WeihanLi.Npoi.Configurations.IExcelConfiguration{``0},System.String)
   name.vb: Property(Of TEntity)(IExcelConfiguration(Of TEntity), String)
-  fullName: WeihanLi.Npoi.ConfigurationExtensions.Property<TEntity>(IExcelConfiguration<TEntity>, System.String)
-  fullName.vb: WeihanLi.Npoi.ConfigurationExtensions.Property(Of TEntity)(IExcelConfiguration(Of TEntity), System.String)
+  fullName: WeihanLi.Npoi.ConfigurationExtensions.Property<TEntity>(WeihanLi.Npoi.Configurations.IExcelConfiguration<TEntity>, System.String)
+  fullName.vb: WeihanLi.Npoi.ConfigurationExtensions.Property(Of TEntity)(WeihanLi.Npoi.Configurations.IExcelConfiguration(Of TEntity), System.String)
   nameWithType: ConfigurationExtensions.Property<TEntity>(IExcelConfiguration<TEntity>, String)
   nameWithType.vb: ConfigurationExtensions.Property(Of TEntity)(IExcelConfiguration(Of TEntity), String)
+- uid: WeihanLi.Npoi.Configurations
+  name: WeihanLi.Npoi.Configurations
+  href: docs/api/WeihanLi.Npoi.Configurations.html
+  commentId: N:WeihanLi.Npoi.Configurations
+  fullName: WeihanLi.Npoi.Configurations
+  nameWithType: WeihanLi.Npoi.Configurations
+- uid: WeihanLi.Npoi.Configurations.IExcelConfiguration
+  name: IExcelConfiguration
+  href: docs/api/WeihanLi.Npoi.Configurations.IExcelConfiguration.html
+  commentId: T:WeihanLi.Npoi.Configurations.IExcelConfiguration
+  fullName: WeihanLi.Npoi.Configurations.IExcelConfiguration
+  nameWithType: IExcelConfiguration
+- uid: WeihanLi.Npoi.Configurations.IExcelConfiguration.HasAuthor(System.String)
+  name: HasAuthor(String)
+  href: docs/api/WeihanLi.Npoi.Configurations.IExcelConfiguration.html#WeihanLi_Npoi_Configurations_IExcelConfiguration_HasAuthor_System_String_
+  commentId: M:WeihanLi.Npoi.Configurations.IExcelConfiguration.HasAuthor(System.String)
+  fullName: WeihanLi.Npoi.Configurations.IExcelConfiguration.HasAuthor(System.String)
+  nameWithType: IExcelConfiguration.HasAuthor(String)
+- uid: WeihanLi.Npoi.Configurations.IExcelConfiguration.HasAuthor*
+  name: HasAuthor
+  href: docs/api/WeihanLi.Npoi.Configurations.IExcelConfiguration.html#WeihanLi_Npoi_Configurations_IExcelConfiguration_HasAuthor_
+  commentId: Overload:WeihanLi.Npoi.Configurations.IExcelConfiguration.HasAuthor
+  isSpec: "True"
+  fullName: WeihanLi.Npoi.Configurations.IExcelConfiguration.HasAuthor
+  nameWithType: IExcelConfiguration.HasAuthor
+- uid: WeihanLi.Npoi.Configurations.IExcelConfiguration.HasCategory(System.String)
+  name: HasCategory(String)
+  href: docs/api/WeihanLi.Npoi.Configurations.IExcelConfiguration.html#WeihanLi_Npoi_Configurations_IExcelConfiguration_HasCategory_System_String_
+  commentId: M:WeihanLi.Npoi.Configurations.IExcelConfiguration.HasCategory(System.String)
+  fullName: WeihanLi.Npoi.Configurations.IExcelConfiguration.HasCategory(System.String)
+  nameWithType: IExcelConfiguration.HasCategory(String)
+- uid: WeihanLi.Npoi.Configurations.IExcelConfiguration.HasCategory*
+  name: HasCategory
+  href: docs/api/WeihanLi.Npoi.Configurations.IExcelConfiguration.html#WeihanLi_Npoi_Configurations_IExcelConfiguration_HasCategory_
+  commentId: Overload:WeihanLi.Npoi.Configurations.IExcelConfiguration.HasCategory
+  isSpec: "True"
+  fullName: WeihanLi.Npoi.Configurations.IExcelConfiguration.HasCategory
+  nameWithType: IExcelConfiguration.HasCategory
+- uid: WeihanLi.Npoi.Configurations.IExcelConfiguration.HasCompany(System.String)
+  name: HasCompany(String)
+  href: docs/api/WeihanLi.Npoi.Configurations.IExcelConfiguration.html#WeihanLi_Npoi_Configurations_IExcelConfiguration_HasCompany_System_String_
+  commentId: M:WeihanLi.Npoi.Configurations.IExcelConfiguration.HasCompany(System.String)
+  fullName: WeihanLi.Npoi.Configurations.IExcelConfiguration.HasCompany(System.String)
+  nameWithType: IExcelConfiguration.HasCompany(String)
+- uid: WeihanLi.Npoi.Configurations.IExcelConfiguration.HasCompany*
+  name: HasCompany
+  href: docs/api/WeihanLi.Npoi.Configurations.IExcelConfiguration.html#WeihanLi_Npoi_Configurations_IExcelConfiguration_HasCompany_
+  commentId: Overload:WeihanLi.Npoi.Configurations.IExcelConfiguration.HasCompany
+  isSpec: "True"
+  fullName: WeihanLi.Npoi.Configurations.IExcelConfiguration.HasCompany
+  nameWithType: IExcelConfiguration.HasCompany
+- uid: WeihanLi.Npoi.Configurations.IExcelConfiguration.HasDescription(System.String)
+  name: HasDescription(String)
+  href: docs/api/WeihanLi.Npoi.Configurations.IExcelConfiguration.html#WeihanLi_Npoi_Configurations_IExcelConfiguration_HasDescription_System_String_
+  commentId: M:WeihanLi.Npoi.Configurations.IExcelConfiguration.HasDescription(System.String)
+  fullName: WeihanLi.Npoi.Configurations.IExcelConfiguration.HasDescription(System.String)
+  nameWithType: IExcelConfiguration.HasDescription(String)
+- uid: WeihanLi.Npoi.Configurations.IExcelConfiguration.HasDescription*
+  name: HasDescription
+  href: docs/api/WeihanLi.Npoi.Configurations.IExcelConfiguration.html#WeihanLi_Npoi_Configurations_IExcelConfiguration_HasDescription_
+  commentId: Overload:WeihanLi.Npoi.Configurations.IExcelConfiguration.HasDescription
+  isSpec: "True"
+  fullName: WeihanLi.Npoi.Configurations.IExcelConfiguration.HasDescription
+  nameWithType: IExcelConfiguration.HasDescription
+- uid: WeihanLi.Npoi.Configurations.IExcelConfiguration.HasFilter(System.Int32)
+  name: HasFilter(Int32)
+  href: docs/api/WeihanLi.Npoi.Configurations.IExcelConfiguration.html#WeihanLi_Npoi_Configurations_IExcelConfiguration_HasFilter_System_Int32_
+  commentId: M:WeihanLi.Npoi.Configurations.IExcelConfiguration.HasFilter(System.Int32)
+  fullName: WeihanLi.Npoi.Configurations.IExcelConfiguration.HasFilter(System.Int32)
+  nameWithType: IExcelConfiguration.HasFilter(Int32)
+- uid: WeihanLi.Npoi.Configurations.IExcelConfiguration.HasFilter(System.Int32,System.Nullable{System.Int32})
+  name: HasFilter(Int32, Nullable<Int32>)
+  href: docs/api/WeihanLi.Npoi.Configurations.IExcelConfiguration.html#WeihanLi_Npoi_Configurations_IExcelConfiguration_HasFilter_System_Int32_System_Nullable_System_Int32__
+  commentId: M:WeihanLi.Npoi.Configurations.IExcelConfiguration.HasFilter(System.Int32,System.Nullable{System.Int32})
+  name.vb: HasFilter(Int32, Nullable(Of Int32))
+  fullName: WeihanLi.Npoi.Configurations.IExcelConfiguration.HasFilter(System.Int32, System.Nullable<System.Int32>)
+  fullName.vb: WeihanLi.Npoi.Configurations.IExcelConfiguration.HasFilter(System.Int32, System.Nullable(Of System.Int32))
+  nameWithType: IExcelConfiguration.HasFilter(Int32, Nullable<Int32>)
+  nameWithType.vb: IExcelConfiguration.HasFilter(Int32, Nullable(Of Int32))
+- uid: WeihanLi.Npoi.Configurations.IExcelConfiguration.HasFilter*
+  name: HasFilter
+  href: docs/api/WeihanLi.Npoi.Configurations.IExcelConfiguration.html#WeihanLi_Npoi_Configurations_IExcelConfiguration_HasFilter_
+  commentId: Overload:WeihanLi.Npoi.Configurations.IExcelConfiguration.HasFilter
+  isSpec: "True"
+  fullName: WeihanLi.Npoi.Configurations.IExcelConfiguration.HasFilter
+  nameWithType: IExcelConfiguration.HasFilter
+- uid: WeihanLi.Npoi.Configurations.IExcelConfiguration.HasFreezePane(System.Int32,System.Int32)
+  name: HasFreezePane(Int32, Int32)
+  href: docs/api/WeihanLi.Npoi.Configurations.IExcelConfiguration.html#WeihanLi_Npoi_Configurations_IExcelConfiguration_HasFreezePane_System_Int32_System_Int32_
+  commentId: M:WeihanLi.Npoi.Configurations.IExcelConfiguration.HasFreezePane(System.Int32,System.Int32)
+  fullName: WeihanLi.Npoi.Configurations.IExcelConfiguration.HasFreezePane(System.Int32, System.Int32)
+  nameWithType: IExcelConfiguration.HasFreezePane(Int32, Int32)
+- uid: WeihanLi.Npoi.Configurations.IExcelConfiguration.HasFreezePane(System.Int32,System.Int32,System.Int32,System.Int32)
+  name: HasFreezePane(Int32, Int32, Int32, Int32)
+  href: docs/api/WeihanLi.Npoi.Configurations.IExcelConfiguration.html#WeihanLi_Npoi_Configurations_IExcelConfiguration_HasFreezePane_System_Int32_System_Int32_System_Int32_System_Int32_
+  commentId: M:WeihanLi.Npoi.Configurations.IExcelConfiguration.HasFreezePane(System.Int32,System.Int32,System.Int32,System.Int32)
+  fullName: WeihanLi.Npoi.Configurations.IExcelConfiguration.HasFreezePane(System.Int32, System.Int32, System.Int32, System.Int32)
+  nameWithType: IExcelConfiguration.HasFreezePane(Int32, Int32, Int32, Int32)
+- uid: WeihanLi.Npoi.Configurations.IExcelConfiguration.HasFreezePane*
+  name: HasFreezePane
+  href: docs/api/WeihanLi.Npoi.Configurations.IExcelConfiguration.html#WeihanLi_Npoi_Configurations_IExcelConfiguration_HasFreezePane_
+  commentId: Overload:WeihanLi.Npoi.Configurations.IExcelConfiguration.HasFreezePane
+  isSpec: "True"
+  fullName: WeihanLi.Npoi.Configurations.IExcelConfiguration.HasFreezePane
+  nameWithType: IExcelConfiguration.HasFreezePane
+- uid: WeihanLi.Npoi.Configurations.IExcelConfiguration.HasSheetConfiguration(System.Int32,System.String,System.Int32,System.Boolean,System.Nullable{System.Int32})
+  name: HasSheetConfiguration(Int32, String, Int32, Boolean, Nullable<Int32>)
+  href: docs/api/WeihanLi.Npoi.Configurations.IExcelConfiguration.html#WeihanLi_Npoi_Configurations_IExcelConfiguration_HasSheetConfiguration_System_Int32_System_String_System_Int32_System_Boolean_System_Nullable_System_Int32__
+  commentId: M:WeihanLi.Npoi.Configurations.IExcelConfiguration.HasSheetConfiguration(System.Int32,System.String,System.Int32,System.Boolean,System.Nullable{System.Int32})
+  name.vb: HasSheetConfiguration(Int32, String, Int32, Boolean, Nullable(Of Int32))
+  fullName: WeihanLi.Npoi.Configurations.IExcelConfiguration.HasSheetConfiguration(System.Int32, System.String, System.Int32, System.Boolean, System.Nullable<System.Int32>)
+  fullName.vb: WeihanLi.Npoi.Configurations.IExcelConfiguration.HasSheetConfiguration(System.Int32, System.String, System.Int32, System.Boolean, System.Nullable(Of System.Int32))
+  nameWithType: IExcelConfiguration.HasSheetConfiguration(Int32, String, Int32, Boolean, Nullable<Int32>)
+  nameWithType.vb: IExcelConfiguration.HasSheetConfiguration(Int32, String, Int32, Boolean, Nullable(Of Int32))
+- uid: WeihanLi.Npoi.Configurations.IExcelConfiguration.HasSheetConfiguration*
+  name: HasSheetConfiguration
+  href: docs/api/WeihanLi.Npoi.Configurations.IExcelConfiguration.html#WeihanLi_Npoi_Configurations_IExcelConfiguration_HasSheetConfiguration_
+  commentId: Overload:WeihanLi.Npoi.Configurations.IExcelConfiguration.HasSheetConfiguration
+  isSpec: "True"
+  fullName: WeihanLi.Npoi.Configurations.IExcelConfiguration.HasSheetConfiguration
+  nameWithType: IExcelConfiguration.HasSheetConfiguration
+- uid: WeihanLi.Npoi.Configurations.IExcelConfiguration.HasSubject(System.String)
+  name: HasSubject(String)
+  href: docs/api/WeihanLi.Npoi.Configurations.IExcelConfiguration.html#WeihanLi_Npoi_Configurations_IExcelConfiguration_HasSubject_System_String_
+  commentId: M:WeihanLi.Npoi.Configurations.IExcelConfiguration.HasSubject(System.String)
+  fullName: WeihanLi.Npoi.Configurations.IExcelConfiguration.HasSubject(System.String)
+  nameWithType: IExcelConfiguration.HasSubject(String)
+- uid: WeihanLi.Npoi.Configurations.IExcelConfiguration.HasSubject*
+  name: HasSubject
+  href: docs/api/WeihanLi.Npoi.Configurations.IExcelConfiguration.html#WeihanLi_Npoi_Configurations_IExcelConfiguration_HasSubject_
+  commentId: Overload:WeihanLi.Npoi.Configurations.IExcelConfiguration.HasSubject
+  isSpec: "True"
+  fullName: WeihanLi.Npoi.Configurations.IExcelConfiguration.HasSubject
+  nameWithType: IExcelConfiguration.HasSubject
+- uid: WeihanLi.Npoi.Configurations.IExcelConfiguration.HasTitle(System.String)
+  name: HasTitle(String)
+  href: docs/api/WeihanLi.Npoi.Configurations.IExcelConfiguration.html#WeihanLi_Npoi_Configurations_IExcelConfiguration_HasTitle_System_String_
+  commentId: M:WeihanLi.Npoi.Configurations.IExcelConfiguration.HasTitle(System.String)
+  fullName: WeihanLi.Npoi.Configurations.IExcelConfiguration.HasTitle(System.String)
+  nameWithType: IExcelConfiguration.HasTitle(String)
+- uid: WeihanLi.Npoi.Configurations.IExcelConfiguration.HasTitle*
+  name: HasTitle
+  href: docs/api/WeihanLi.Npoi.Configurations.IExcelConfiguration.html#WeihanLi_Npoi_Configurations_IExcelConfiguration_HasTitle_
+  commentId: Overload:WeihanLi.Npoi.Configurations.IExcelConfiguration.HasTitle
+  isSpec: "True"
+  fullName: WeihanLi.Npoi.Configurations.IExcelConfiguration.HasTitle
+  nameWithType: IExcelConfiguration.HasTitle
+- uid: WeihanLi.Npoi.Configurations.IExcelConfiguration`1
+  name: IExcelConfiguration<TEntity>
+  href: docs/api/WeihanLi.Npoi.Configurations.IExcelConfiguration-1.html
+  commentId: T:WeihanLi.Npoi.Configurations.IExcelConfiguration`1
+  name.vb: IExcelConfiguration(Of TEntity)
+  fullName: WeihanLi.Npoi.Configurations.IExcelConfiguration<TEntity>
+  fullName.vb: WeihanLi.Npoi.Configurations.IExcelConfiguration(Of TEntity)
+  nameWithType: IExcelConfiguration<TEntity>
+  nameWithType.vb: IExcelConfiguration(Of TEntity)
+- uid: WeihanLi.Npoi.Configurations.IExcelConfiguration`1.Property*
+  name: Property
+  href: docs/api/WeihanLi.Npoi.Configurations.IExcelConfiguration-1.html#WeihanLi_Npoi_Configurations_IExcelConfiguration_1_Property_
+  commentId: Overload:WeihanLi.Npoi.Configurations.IExcelConfiguration`1.Property
+  isSpec: "True"
+  fullName: WeihanLi.Npoi.Configurations.IExcelConfiguration<TEntity>.Property
+  fullName.vb: WeihanLi.Npoi.Configurations.IExcelConfiguration(Of TEntity).Property
+  nameWithType: IExcelConfiguration<TEntity>.Property
+  nameWithType.vb: IExcelConfiguration(Of TEntity).Property
+- uid: WeihanLi.Npoi.Configurations.IExcelConfiguration`1.Property``1(Expression{System.Func{`0,``0}})
+  name: Property<TProperty>(Expression<Func<TEntity, TProperty>>)
+  href: docs/api/WeihanLi.Npoi.Configurations.IExcelConfiguration-1.html#WeihanLi_Npoi_Configurations_IExcelConfiguration_1_Property__1_Expression_System_Func__0___0___
+  commentId: M:WeihanLi.Npoi.Configurations.IExcelConfiguration`1.Property``1(Expression{System.Func{`0,``0}})
+  name.vb: Property(Of TProperty)(Expression(Of Func(Of TEntity, TProperty)))
+  fullName: WeihanLi.Npoi.Configurations.IExcelConfiguration<TEntity>.Property<TProperty>(Expression<System.Func<TEntity, TProperty>>)
+  fullName.vb: WeihanLi.Npoi.Configurations.IExcelConfiguration(Of TEntity).Property(Of TProperty)(Expression(Of System.Func(Of TEntity, TProperty)))
+  nameWithType: IExcelConfiguration<TEntity>.Property<TProperty>(Expression<Func<TEntity, TProperty>>)
+  nameWithType.vb: IExcelConfiguration(Of TEntity).Property(Of TProperty)(Expression(Of Func(Of TEntity, TProperty)))
+- uid: WeihanLi.Npoi.Configurations.IExcelConfiguration`1.Property``1(System.String)
+  name: Property<TProperty>(String)
+  href: docs/api/WeihanLi.Npoi.Configurations.IExcelConfiguration-1.html#WeihanLi_Npoi_Configurations_IExcelConfiguration_1_Property__1_System_String_
+  commentId: M:WeihanLi.Npoi.Configurations.IExcelConfiguration`1.Property``1(System.String)
+  name.vb: Property(Of TProperty)(String)
+  fullName: WeihanLi.Npoi.Configurations.IExcelConfiguration<TEntity>.Property<TProperty>(System.String)
+  fullName.vb: WeihanLi.Npoi.Configurations.IExcelConfiguration(Of TEntity).Property(Of TProperty)(System.String)
+  nameWithType: IExcelConfiguration<TEntity>.Property<TProperty>(String)
+  nameWithType.vb: IExcelConfiguration(Of TEntity).Property(Of TProperty)(String)
+- uid: WeihanLi.Npoi.Configurations.IExcelConfiguration`1.WithDataValidation(System.Func{`0,System.Boolean})
+  name: WithDataValidation(Func<TEntity, Boolean>)
+  href: docs/api/WeihanLi.Npoi.Configurations.IExcelConfiguration-1.html#WeihanLi_Npoi_Configurations_IExcelConfiguration_1_WithDataValidation_System_Func__0_System_Boolean__
+  commentId: M:WeihanLi.Npoi.Configurations.IExcelConfiguration`1.WithDataValidation(System.Func{`0,System.Boolean})
+  name.vb: WithDataValidation(Func(Of TEntity, Boolean))
+  fullName: WeihanLi.Npoi.Configurations.IExcelConfiguration<TEntity>.WithDataValidation(System.Func<TEntity, System.Boolean>)
+  fullName.vb: WeihanLi.Npoi.Configurations.IExcelConfiguration(Of TEntity).WithDataValidation(System.Func(Of TEntity, System.Boolean))
+  nameWithType: IExcelConfiguration<TEntity>.WithDataValidation(Func<TEntity, Boolean>)
+  nameWithType.vb: IExcelConfiguration(Of TEntity).WithDataValidation(Func(Of TEntity, Boolean))
+- uid: WeihanLi.Npoi.Configurations.IExcelConfiguration`1.WithDataValidation*
+  name: WithDataValidation
+  href: docs/api/WeihanLi.Npoi.Configurations.IExcelConfiguration-1.html#WeihanLi_Npoi_Configurations_IExcelConfiguration_1_WithDataValidation_
+  commentId: Overload:WeihanLi.Npoi.Configurations.IExcelConfiguration`1.WithDataValidation
+  isSpec: "True"
+  fullName: WeihanLi.Npoi.Configurations.IExcelConfiguration<TEntity>.WithDataValidation
+  fullName.vb: WeihanLi.Npoi.Configurations.IExcelConfiguration(Of TEntity).WithDataValidation
+  nameWithType: IExcelConfiguration<TEntity>.WithDataValidation
+  nameWithType.vb: IExcelConfiguration(Of TEntity).WithDataValidation
+- uid: WeihanLi.Npoi.Configurations.IPropertyConfiguration
+  name: IPropertyConfiguration
+  href: docs/api/WeihanLi.Npoi.Configurations.IPropertyConfiguration.html
+  commentId: T:WeihanLi.Npoi.Configurations.IPropertyConfiguration
+  fullName: WeihanLi.Npoi.Configurations.IPropertyConfiguration
+  nameWithType: IPropertyConfiguration
+- uid: WeihanLi.Npoi.Configurations.IPropertyConfiguration`2
+  name: IPropertyConfiguration<TEntity, TProperty>
+  href: docs/api/WeihanLi.Npoi.Configurations.IPropertyConfiguration-2.html
+  commentId: T:WeihanLi.Npoi.Configurations.IPropertyConfiguration`2
+  name.vb: IPropertyConfiguration(Of TEntity, TProperty)
+  fullName: WeihanLi.Npoi.Configurations.IPropertyConfiguration<TEntity, TProperty>
+  fullName.vb: WeihanLi.Npoi.Configurations.IPropertyConfiguration(Of TEntity, TProperty)
+  nameWithType: IPropertyConfiguration<TEntity, TProperty>
+  nameWithType.vb: IPropertyConfiguration(Of TEntity, TProperty)
+- uid: WeihanLi.Npoi.Configurations.IPropertyConfiguration`2.HasColumnFormatter(System.String)
+  name: HasColumnFormatter(String)
+  href: docs/api/WeihanLi.Npoi.Configurations.IPropertyConfiguration-2.html#WeihanLi_Npoi_Configurations_IPropertyConfiguration_2_HasColumnFormatter_System_String_
+  commentId: M:WeihanLi.Npoi.Configurations.IPropertyConfiguration`2.HasColumnFormatter(System.String)
+  fullName: WeihanLi.Npoi.Configurations.IPropertyConfiguration<TEntity, TProperty>.HasColumnFormatter(System.String)
+  fullName.vb: WeihanLi.Npoi.Configurations.IPropertyConfiguration(Of TEntity, TProperty).HasColumnFormatter(System.String)
+  nameWithType: IPropertyConfiguration<TEntity, TProperty>.HasColumnFormatter(String)
+  nameWithType.vb: IPropertyConfiguration(Of TEntity, TProperty).HasColumnFormatter(String)
+- uid: WeihanLi.Npoi.Configurations.IPropertyConfiguration`2.HasColumnFormatter*
+  name: HasColumnFormatter
+  href: docs/api/WeihanLi.Npoi.Configurations.IPropertyConfiguration-2.html#WeihanLi_Npoi_Configurations_IPropertyConfiguration_2_HasColumnFormatter_
+  commentId: Overload:WeihanLi.Npoi.Configurations.IPropertyConfiguration`2.HasColumnFormatter
+  isSpec: "True"
+  fullName: WeihanLi.Npoi.Configurations.IPropertyConfiguration<TEntity, TProperty>.HasColumnFormatter
+  fullName.vb: WeihanLi.Npoi.Configurations.IPropertyConfiguration(Of TEntity, TProperty).HasColumnFormatter
+  nameWithType: IPropertyConfiguration<TEntity, TProperty>.HasColumnFormatter
+  nameWithType.vb: IPropertyConfiguration(Of TEntity, TProperty).HasColumnFormatter
+- uid: WeihanLi.Npoi.Configurations.IPropertyConfiguration`2.HasColumnIndex(System.Int32)
+  name: HasColumnIndex(Int32)
+  href: docs/api/WeihanLi.Npoi.Configurations.IPropertyConfiguration-2.html#WeihanLi_Npoi_Configurations_IPropertyConfiguration_2_HasColumnIndex_System_Int32_
+  commentId: M:WeihanLi.Npoi.Configurations.IPropertyConfiguration`2.HasColumnIndex(System.Int32)
+  fullName: WeihanLi.Npoi.Configurations.IPropertyConfiguration<TEntity, TProperty>.HasColumnIndex(System.Int32)
+  fullName.vb: WeihanLi.Npoi.Configurations.IPropertyConfiguration(Of TEntity, TProperty).HasColumnIndex(System.Int32)
+  nameWithType: IPropertyConfiguration<TEntity, TProperty>.HasColumnIndex(Int32)
+  nameWithType.vb: IPropertyConfiguration(Of TEntity, TProperty).HasColumnIndex(Int32)
+- uid: WeihanLi.Npoi.Configurations.IPropertyConfiguration`2.HasColumnIndex*
+  name: HasColumnIndex
+  href: docs/api/WeihanLi.Npoi.Configurations.IPropertyConfiguration-2.html#WeihanLi_Npoi_Configurations_IPropertyConfiguration_2_HasColumnIndex_
+  commentId: Overload:WeihanLi.Npoi.Configurations.IPropertyConfiguration`2.HasColumnIndex
+  isSpec: "True"
+  fullName: WeihanLi.Npoi.Configurations.IPropertyConfiguration<TEntity, TProperty>.HasColumnIndex
+  fullName.vb: WeihanLi.Npoi.Configurations.IPropertyConfiguration(Of TEntity, TProperty).HasColumnIndex
+  nameWithType: IPropertyConfiguration<TEntity, TProperty>.HasColumnIndex
+  nameWithType.vb: IPropertyConfiguration(Of TEntity, TProperty).HasColumnIndex
+- uid: WeihanLi.Npoi.Configurations.IPropertyConfiguration`2.HasColumnInputFormatter(System.Func{System.String,`1})
+  name: HasColumnInputFormatter(Func<String, TProperty>)
+  href: docs/api/WeihanLi.Npoi.Configurations.IPropertyConfiguration-2.html#WeihanLi_Npoi_Configurations_IPropertyConfiguration_2_HasColumnInputFormatter_System_Func_System_String__1__
+  commentId: M:WeihanLi.Npoi.Configurations.IPropertyConfiguration`2.HasColumnInputFormatter(System.Func{System.String,`1})
+  name.vb: HasColumnInputFormatter(Func(Of String, TProperty))
+  fullName: WeihanLi.Npoi.Configurations.IPropertyConfiguration<TEntity, TProperty>.HasColumnInputFormatter(System.Func<System.String, TProperty>)
+  fullName.vb: WeihanLi.Npoi.Configurations.IPropertyConfiguration(Of TEntity, TProperty).HasColumnInputFormatter(System.Func(Of System.String, TProperty))
+  nameWithType: IPropertyConfiguration<TEntity, TProperty>.HasColumnInputFormatter(Func<String, TProperty>)
+  nameWithType.vb: IPropertyConfiguration(Of TEntity, TProperty).HasColumnInputFormatter(Func(Of String, TProperty))
+- uid: WeihanLi.Npoi.Configurations.IPropertyConfiguration`2.HasColumnInputFormatter*
+  name: HasColumnInputFormatter
+  href: docs/api/WeihanLi.Npoi.Configurations.IPropertyConfiguration-2.html#WeihanLi_Npoi_Configurations_IPropertyConfiguration_2_HasColumnInputFormatter_
+  commentId: Overload:WeihanLi.Npoi.Configurations.IPropertyConfiguration`2.HasColumnInputFormatter
+  isSpec: "True"
+  fullName: WeihanLi.Npoi.Configurations.IPropertyConfiguration<TEntity, TProperty>.HasColumnInputFormatter
+  fullName.vb: WeihanLi.Npoi.Configurations.IPropertyConfiguration(Of TEntity, TProperty).HasColumnInputFormatter
+  nameWithType: IPropertyConfiguration<TEntity, TProperty>.HasColumnInputFormatter
+  nameWithType.vb: IPropertyConfiguration(Of TEntity, TProperty).HasColumnInputFormatter
+- uid: WeihanLi.Npoi.Configurations.IPropertyConfiguration`2.HasColumnTitle(System.String)
+  name: HasColumnTitle(String)
+  href: docs/api/WeihanLi.Npoi.Configurations.IPropertyConfiguration-2.html#WeihanLi_Npoi_Configurations_IPropertyConfiguration_2_HasColumnTitle_System_String_
+  commentId: M:WeihanLi.Npoi.Configurations.IPropertyConfiguration`2.HasColumnTitle(System.String)
+  fullName: WeihanLi.Npoi.Configurations.IPropertyConfiguration<TEntity, TProperty>.HasColumnTitle(System.String)
+  fullName.vb: WeihanLi.Npoi.Configurations.IPropertyConfiguration(Of TEntity, TProperty).HasColumnTitle(System.String)
+  nameWithType: IPropertyConfiguration<TEntity, TProperty>.HasColumnTitle(String)
+  nameWithType.vb: IPropertyConfiguration(Of TEntity, TProperty).HasColumnTitle(String)
+- uid: WeihanLi.Npoi.Configurations.IPropertyConfiguration`2.HasColumnTitle*
+  name: HasColumnTitle
+  href: docs/api/WeihanLi.Npoi.Configurations.IPropertyConfiguration-2.html#WeihanLi_Npoi_Configurations_IPropertyConfiguration_2_HasColumnTitle_
+  commentId: Overload:WeihanLi.Npoi.Configurations.IPropertyConfiguration`2.HasColumnTitle
+  isSpec: "True"
+  fullName: WeihanLi.Npoi.Configurations.IPropertyConfiguration<TEntity, TProperty>.HasColumnTitle
+  fullName.vb: WeihanLi.Npoi.Configurations.IPropertyConfiguration(Of TEntity, TProperty).HasColumnTitle
+  nameWithType: IPropertyConfiguration<TEntity, TProperty>.HasColumnTitle
+  nameWithType.vb: IPropertyConfiguration(Of TEntity, TProperty).HasColumnTitle
+- uid: WeihanLi.Npoi.Configurations.IPropertyConfiguration`2.HasColumnWidth(System.Int32)
+  name: HasColumnWidth(Int32)
+  href: docs/api/WeihanLi.Npoi.Configurations.IPropertyConfiguration-2.html#WeihanLi_Npoi_Configurations_IPropertyConfiguration_2_HasColumnWidth_System_Int32_
+  commentId: M:WeihanLi.Npoi.Configurations.IPropertyConfiguration`2.HasColumnWidth(System.Int32)
+  fullName: WeihanLi.Npoi.Configurations.IPropertyConfiguration<TEntity, TProperty>.HasColumnWidth(System.Int32)
+  fullName.vb: WeihanLi.Npoi.Configurations.IPropertyConfiguration(Of TEntity, TProperty).HasColumnWidth(System.Int32)
+  nameWithType: IPropertyConfiguration<TEntity, TProperty>.HasColumnWidth(Int32)
+  nameWithType.vb: IPropertyConfiguration(Of TEntity, TProperty).HasColumnWidth(Int32)
+- uid: WeihanLi.Npoi.Configurations.IPropertyConfiguration`2.HasColumnWidth*
+  name: HasColumnWidth
+  href: docs/api/WeihanLi.Npoi.Configurations.IPropertyConfiguration-2.html#WeihanLi_Npoi_Configurations_IPropertyConfiguration_2_HasColumnWidth_
+  commentId: Overload:WeihanLi.Npoi.Configurations.IPropertyConfiguration`2.HasColumnWidth
+  isSpec: "True"
+  fullName: WeihanLi.Npoi.Configurations.IPropertyConfiguration<TEntity, TProperty>.HasColumnWidth
+  fullName.vb: WeihanLi.Npoi.Configurations.IPropertyConfiguration(Of TEntity, TProperty).HasColumnWidth
+  nameWithType: IPropertyConfiguration<TEntity, TProperty>.HasColumnWidth
+  nameWithType.vb: IPropertyConfiguration(Of TEntity, TProperty).HasColumnWidth
+- uid: WeihanLi.Npoi.Configurations.IPropertyConfiguration`2.HasInputFormatter(System.Func{`0,`1,`1})
+  name: HasInputFormatter(Func<TEntity, TProperty, TProperty>)
+  href: docs/api/WeihanLi.Npoi.Configurations.IPropertyConfiguration-2.html#WeihanLi_Npoi_Configurations_IPropertyConfiguration_2_HasInputFormatter_System_Func__0__1__1__
+  commentId: M:WeihanLi.Npoi.Configurations.IPropertyConfiguration`2.HasInputFormatter(System.Func{`0,`1,`1})
+  name.vb: HasInputFormatter(Func(Of TEntity, TProperty, TProperty))
+  fullName: WeihanLi.Npoi.Configurations.IPropertyConfiguration<TEntity, TProperty>.HasInputFormatter(System.Func<TEntity, TProperty, TProperty>)
+  fullName.vb: WeihanLi.Npoi.Configurations.IPropertyConfiguration(Of TEntity, TProperty).HasInputFormatter(System.Func(Of TEntity, TProperty, TProperty))
+  nameWithType: IPropertyConfiguration<TEntity, TProperty>.HasInputFormatter(Func<TEntity, TProperty, TProperty>)
+  nameWithType.vb: IPropertyConfiguration(Of TEntity, TProperty).HasInputFormatter(Func(Of TEntity, TProperty, TProperty))
+- uid: WeihanLi.Npoi.Configurations.IPropertyConfiguration`2.HasInputFormatter*
+  name: HasInputFormatter
+  href: docs/api/WeihanLi.Npoi.Configurations.IPropertyConfiguration-2.html#WeihanLi_Npoi_Configurations_IPropertyConfiguration_2_HasInputFormatter_
+  commentId: Overload:WeihanLi.Npoi.Configurations.IPropertyConfiguration`2.HasInputFormatter
+  isSpec: "True"
+  fullName: WeihanLi.Npoi.Configurations.IPropertyConfiguration<TEntity, TProperty>.HasInputFormatter
+  fullName.vb: WeihanLi.Npoi.Configurations.IPropertyConfiguration(Of TEntity, TProperty).HasInputFormatter
+  nameWithType: IPropertyConfiguration<TEntity, TProperty>.HasInputFormatter
+  nameWithType.vb: IPropertyConfiguration(Of TEntity, TProperty).HasInputFormatter
+- uid: WeihanLi.Npoi.Configurations.IPropertyConfiguration`2.HasOutputFormatter(System.Func{`0,`1,System.Object})
+  name: HasOutputFormatter(Func<TEntity, TProperty, Object>)
+  href: docs/api/WeihanLi.Npoi.Configurations.IPropertyConfiguration-2.html#WeihanLi_Npoi_Configurations_IPropertyConfiguration_2_HasOutputFormatter_System_Func__0__1_System_Object__
+  commentId: M:WeihanLi.Npoi.Configurations.IPropertyConfiguration`2.HasOutputFormatter(System.Func{`0,`1,System.Object})
+  name.vb: HasOutputFormatter(Func(Of TEntity, TProperty, Object))
+  fullName: WeihanLi.Npoi.Configurations.IPropertyConfiguration<TEntity, TProperty>.HasOutputFormatter(System.Func<TEntity, TProperty, System.Object>)
+  fullName.vb: WeihanLi.Npoi.Configurations.IPropertyConfiguration(Of TEntity, TProperty).HasOutputFormatter(System.Func(Of TEntity, TProperty, System.Object))
+  nameWithType: IPropertyConfiguration<TEntity, TProperty>.HasOutputFormatter(Func<TEntity, TProperty, Object>)
+  nameWithType.vb: IPropertyConfiguration(Of TEntity, TProperty).HasOutputFormatter(Func(Of TEntity, TProperty, Object))
+- uid: WeihanLi.Npoi.Configurations.IPropertyConfiguration`2.HasOutputFormatter*
+  name: HasOutputFormatter
+  href: docs/api/WeihanLi.Npoi.Configurations.IPropertyConfiguration-2.html#WeihanLi_Npoi_Configurations_IPropertyConfiguration_2_HasOutputFormatter_
+  commentId: Overload:WeihanLi.Npoi.Configurations.IPropertyConfiguration`2.HasOutputFormatter
+  isSpec: "True"
+  fullName: WeihanLi.Npoi.Configurations.IPropertyConfiguration<TEntity, TProperty>.HasOutputFormatter
+  fullName.vb: WeihanLi.Npoi.Configurations.IPropertyConfiguration(Of TEntity, TProperty).HasOutputFormatter
+  nameWithType: IPropertyConfiguration<TEntity, TProperty>.HasOutputFormatter
+  nameWithType.vb: IPropertyConfiguration(Of TEntity, TProperty).HasOutputFormatter
+- uid: WeihanLi.Npoi.Configurations.IPropertyConfiguration`2.Ignored(System.Boolean)
+  name: Ignored(Boolean)
+  href: docs/api/WeihanLi.Npoi.Configurations.IPropertyConfiguration-2.html#WeihanLi_Npoi_Configurations_IPropertyConfiguration_2_Ignored_System_Boolean_
+  commentId: M:WeihanLi.Npoi.Configurations.IPropertyConfiguration`2.Ignored(System.Boolean)
+  fullName: WeihanLi.Npoi.Configurations.IPropertyConfiguration<TEntity, TProperty>.Ignored(System.Boolean)
+  fullName.vb: WeihanLi.Npoi.Configurations.IPropertyConfiguration(Of TEntity, TProperty).Ignored(System.Boolean)
+  nameWithType: IPropertyConfiguration<TEntity, TProperty>.Ignored(Boolean)
+  nameWithType.vb: IPropertyConfiguration(Of TEntity, TProperty).Ignored(Boolean)
+- uid: WeihanLi.Npoi.Configurations.IPropertyConfiguration`2.Ignored*
+  name: Ignored
+  href: docs/api/WeihanLi.Npoi.Configurations.IPropertyConfiguration-2.html#WeihanLi_Npoi_Configurations_IPropertyConfiguration_2_Ignored_
+  commentId: Overload:WeihanLi.Npoi.Configurations.IPropertyConfiguration`2.Ignored
+  isSpec: "True"
+  fullName: WeihanLi.Npoi.Configurations.IPropertyConfiguration<TEntity, TProperty>.Ignored
+  fullName.vb: WeihanLi.Npoi.Configurations.IPropertyConfiguration(Of TEntity, TProperty).Ignored
+  nameWithType: IPropertyConfiguration<TEntity, TProperty>.Ignored
+  nameWithType.vb: IPropertyConfiguration(Of TEntity, TProperty).Ignored
 - uid: WeihanLi.Npoi.CsvHelper
   name: CsvHelper
   href: docs/api/WeihanLi.Npoi.CsvHelper.html
@@ -1186,6 +1871,96 @@ references:
   isSpec: "True"
   fullName: WeihanLi.Npoi.NpoiRowCollection.GetEnumerator
   nameWithType: NpoiRowCollection.GetEnumerator
+- uid: WeihanLi.Npoi.Settings
+  name: WeihanLi.Npoi.Settings
+  href: docs/api/WeihanLi.Npoi.Settings.html
+  commentId: N:WeihanLi.Npoi.Settings
+  fullName: WeihanLi.Npoi.Settings
+  nameWithType: WeihanLi.Npoi.Settings
+- uid: WeihanLi.Npoi.Settings.ExcelSetting
+  name: ExcelSetting
+  href: docs/api/WeihanLi.Npoi.Settings.ExcelSetting.html
+  commentId: T:WeihanLi.Npoi.Settings.ExcelSetting
+  fullName: WeihanLi.Npoi.Settings.ExcelSetting
+  nameWithType: ExcelSetting
+- uid: WeihanLi.Npoi.Settings.ExcelSetting.Author
+  name: Author
+  href: docs/api/WeihanLi.Npoi.Settings.ExcelSetting.html#WeihanLi_Npoi_Settings_ExcelSetting_Author
+  commentId: P:WeihanLi.Npoi.Settings.ExcelSetting.Author
+  fullName: WeihanLi.Npoi.Settings.ExcelSetting.Author
+  nameWithType: ExcelSetting.Author
+- uid: WeihanLi.Npoi.Settings.ExcelSetting.Author*
+  name: Author
+  href: docs/api/WeihanLi.Npoi.Settings.ExcelSetting.html#WeihanLi_Npoi_Settings_ExcelSetting_Author_
+  commentId: Overload:WeihanLi.Npoi.Settings.ExcelSetting.Author
+  isSpec: "True"
+  fullName: WeihanLi.Npoi.Settings.ExcelSetting.Author
+  nameWithType: ExcelSetting.Author
+- uid: WeihanLi.Npoi.Settings.ExcelSetting.Category
+  name: Category
+  href: docs/api/WeihanLi.Npoi.Settings.ExcelSetting.html#WeihanLi_Npoi_Settings_ExcelSetting_Category
+  commentId: P:WeihanLi.Npoi.Settings.ExcelSetting.Category
+  fullName: WeihanLi.Npoi.Settings.ExcelSetting.Category
+  nameWithType: ExcelSetting.Category
+- uid: WeihanLi.Npoi.Settings.ExcelSetting.Category*
+  name: Category
+  href: docs/api/WeihanLi.Npoi.Settings.ExcelSetting.html#WeihanLi_Npoi_Settings_ExcelSetting_Category_
+  commentId: Overload:WeihanLi.Npoi.Settings.ExcelSetting.Category
+  isSpec: "True"
+  fullName: WeihanLi.Npoi.Settings.ExcelSetting.Category
+  nameWithType: ExcelSetting.Category
+- uid: WeihanLi.Npoi.Settings.ExcelSetting.Company
+  name: Company
+  href: docs/api/WeihanLi.Npoi.Settings.ExcelSetting.html#WeihanLi_Npoi_Settings_ExcelSetting_Company
+  commentId: P:WeihanLi.Npoi.Settings.ExcelSetting.Company
+  fullName: WeihanLi.Npoi.Settings.ExcelSetting.Company
+  nameWithType: ExcelSetting.Company
+- uid: WeihanLi.Npoi.Settings.ExcelSetting.Company*
+  name: Company
+  href: docs/api/WeihanLi.Npoi.Settings.ExcelSetting.html#WeihanLi_Npoi_Settings_ExcelSetting_Company_
+  commentId: Overload:WeihanLi.Npoi.Settings.ExcelSetting.Company
+  isSpec: "True"
+  fullName: WeihanLi.Npoi.Settings.ExcelSetting.Company
+  nameWithType: ExcelSetting.Company
+- uid: WeihanLi.Npoi.Settings.ExcelSetting.Description
+  name: Description
+  href: docs/api/WeihanLi.Npoi.Settings.ExcelSetting.html#WeihanLi_Npoi_Settings_ExcelSetting_Description
+  commentId: P:WeihanLi.Npoi.Settings.ExcelSetting.Description
+  fullName: WeihanLi.Npoi.Settings.ExcelSetting.Description
+  nameWithType: ExcelSetting.Description
+- uid: WeihanLi.Npoi.Settings.ExcelSetting.Description*
+  name: Description
+  href: docs/api/WeihanLi.Npoi.Settings.ExcelSetting.html#WeihanLi_Npoi_Settings_ExcelSetting_Description_
+  commentId: Overload:WeihanLi.Npoi.Settings.ExcelSetting.Description
+  isSpec: "True"
+  fullName: WeihanLi.Npoi.Settings.ExcelSetting.Description
+  nameWithType: ExcelSetting.Description
+- uid: WeihanLi.Npoi.Settings.ExcelSetting.Subject
+  name: Subject
+  href: docs/api/WeihanLi.Npoi.Settings.ExcelSetting.html#WeihanLi_Npoi_Settings_ExcelSetting_Subject
+  commentId: P:WeihanLi.Npoi.Settings.ExcelSetting.Subject
+  fullName: WeihanLi.Npoi.Settings.ExcelSetting.Subject
+  nameWithType: ExcelSetting.Subject
+- uid: WeihanLi.Npoi.Settings.ExcelSetting.Subject*
+  name: Subject
+  href: docs/api/WeihanLi.Npoi.Settings.ExcelSetting.html#WeihanLi_Npoi_Settings_ExcelSetting_Subject_
+  commentId: Overload:WeihanLi.Npoi.Settings.ExcelSetting.Subject
+  isSpec: "True"
+  fullName: WeihanLi.Npoi.Settings.ExcelSetting.Subject
+  nameWithType: ExcelSetting.Subject
+- uid: WeihanLi.Npoi.Settings.ExcelSetting.Title
+  name: Title
+  href: docs/api/WeihanLi.Npoi.Settings.ExcelSetting.html#WeihanLi_Npoi_Settings_ExcelSetting_Title
+  commentId: P:WeihanLi.Npoi.Settings.ExcelSetting.Title
+  fullName: WeihanLi.Npoi.Settings.ExcelSetting.Title
+  nameWithType: ExcelSetting.Title
+- uid: WeihanLi.Npoi.Settings.ExcelSetting.Title*
+  name: Title
+  href: docs/api/WeihanLi.Npoi.Settings.ExcelSetting.html#WeihanLi_Npoi_Settings_ExcelSetting_Title_
+  commentId: Overload:WeihanLi.Npoi.Settings.ExcelSetting.Title
+  isSpec: "True"
+  fullName: WeihanLi.Npoi.Settings.ExcelSetting.Title
+  nameWithType: ExcelSetting.Title
 - uid: WeihanLi.Npoi.TemplateHelper
   name: TemplateHelper
   href: docs/api/WeihanLi.Npoi.TemplateHelper.html
