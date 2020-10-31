@@ -5,7 +5,6 @@ trigger:
   paths:
     exclude:
     - '*.md'
-    - /docs/
 
 pool:
   vmImage: 'windows-latest'
