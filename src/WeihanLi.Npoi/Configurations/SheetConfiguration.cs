@@ -1,12 +1,22 @@
-﻿using WeihanLi.Extensions;
+﻿using NPOI.SS.UserModel;
+using System;
+using WeihanLi.Extensions;
 
-namespace WeihanLi.Npoi.Settings
+namespace WeihanLi.Npoi.Configurations
 {
-    internal sealed class SheetSetting
+    public sealed class SheetConfiguration
     {
         private int _startRowIndex = 1;
         private string _sheetName = "Sheet0";
         private int _sheetIndex;
+        private Func<IRow, bool> _rowFilter;
+        private Func<ICell, bool> _cellFilter;
+
+        public SheetConfiguration()
+        {
+            _rowFilter = row => true;
+            _cellFilter = cell => true;
+        }
 
         /// <summary>
         /// SheetIndex
@@ -67,5 +77,23 @@ namespace WeihanLi.Npoi.Settings
         /// enable auto column width
         /// </summary>
         public bool AutoColumnWidthEnabled { get; set; }
+
+        /// <summary>
+        /// Cell Filter
+        /// </summary>
+        public Func<ICell, bool> CellFilter
+        {
+            get => _cellFilter;
+            set => _cellFilter = value ?? (cell => true);
+        }
+
+        /// <summary>
+        /// Row Filter
+        /// </summary>
+        public Func<IRow, bool> RowFilter
+        {
+            get => _rowFilter;
+            set => _rowFilter = value ?? (row => true);
+        }
     }
 }

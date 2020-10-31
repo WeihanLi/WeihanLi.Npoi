@@ -13,7 +13,10 @@ namespace WeihanLi.Npoi
         /// <param name="sheetName">sheetName</param>
         /// <returns>current excel configuration</returns>
         public static IExcelConfiguration HasSheetConfiguration(this IExcelConfiguration configuration, int sheetIndex,
-            string sheetName) => configuration.HasSheetConfiguration(sheetIndex, sheetName, 1, false);
+            string sheetName) => configuration.HasSheetConfiguration(config =>
+                {
+                    config.SheetName = sheetName;
+                }, sheetIndex);
 
         /// <summary>
         /// Sheet Configuration
@@ -24,7 +27,11 @@ namespace WeihanLi.Npoi
         /// <param name="enableAutoColumnWidth">enable auto column width if true otherwise false</param>
         /// <returns>current excel configuration</returns>
         public static IExcelConfiguration HasSheetConfiguration(this IExcelConfiguration configuration, int sheetIndex,
-            string sheetName, bool enableAutoColumnWidth) => configuration.HasSheetConfiguration(sheetIndex, sheetName, 1, enableAutoColumnWidth);
+            string sheetName, bool enableAutoColumnWidth) => configuration.HasSheetConfiguration(config =>
+        {
+            config.SheetName = sheetName;
+            config.AutoColumnWidthEnabled = enableAutoColumnWidth;
+        }, sheetIndex);
 
         /// <summary>
         /// Sheet Configuration
@@ -35,7 +42,11 @@ namespace WeihanLi.Npoi
         /// <param name="startRowIndex">startRowIndex</param>
         /// <returns>current excel configuration</returns>
         public static IExcelConfiguration HasSheetConfiguration(this IExcelConfiguration configuration, int sheetIndex,
-            string sheetName, int startRowIndex) => configuration.HasSheetConfiguration(sheetIndex, sheetName, startRowIndex, false);
+            string sheetName, int startRowIndex) => configuration.HasSheetConfiguration(config =>
+        {
+            config.SheetName = sheetName;
+            config.StartRowIndex = startRowIndex;
+        }, sheetIndex);
 
         /// <summary>
         /// property configuration

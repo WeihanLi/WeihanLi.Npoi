@@ -522,12 +522,61 @@ namespace WeihanLi.Npoi.Test
             Assert.Equal(3, list[0].Sum);
         }
 
+        // ReSharper disable UnusedAutoPropertyAccessor.Local
         private class ExcelFormulaTestModel
         {
             public int Num1 { get; set; }
             public int Num2 { get; set; }
 
             public int Sum { get; set; }
+        }
+
+        [Theory]
+        [InlineData(ExcelFormat.Xls)]
+        [InlineData(ExcelFormat.Xlsx)]
+        public void ExcelImportWithColumnFilter(ExcelFormat excelFormat)
+        {
+            IReadOnlyList<Notice> list = Enumerable.Range(0, 10).Select(i => new Notice()
+            {
+                Id = i + 1,
+                Content = $"content_{i}",
+                Title = $"title_{i}",
+                PublishedAt = DateTime.UtcNow.AddDays(-i),
+                Publisher = $"publisher_{i}"
+            }).ToArray();
+            var excelBytes = list.ToExcelBytes(excelFormat);
+
+            var settings = FluentSettings.For<Notice>();
+            lock (settings)
+            {
+                settings.HasSheetConfiguration(configuration =>
+                {
+                    configuration.CellFilter = cell => cell.ColumnIndex == 0;
+                });
+
+                var importedList = ExcelHelper.ToEntityList<Notice>(excelBytes, excelFormat);
+                Assert.Equal(list.Count, importedList.Count);
+                for (var i = 0; i < list.Count; i++)
+                {
+                    if (list[i] == null)
+                    {
+                        Assert.Null(importedList[i]);
+                    }
+                    else
+                    {
+                        Assert.Equal(list[i].Id, importedList[i].Id);
+                        Assert.Null(importedList[i].Title);
+                        Assert.Null(importedList[i].Content);
+                        Assert.Null(importedList[i].Publisher);
+                        Assert.Equal(default(DateTime).ToStandardTimeString(), importedList[i].PublishedAt.ToStandardTimeString());
+                    }
+                }
+
+                settings.HasSheetConfiguration(configuration =>
+                {
+                    configuration.CellFilter = null;
+                });
+            }
         }
     }
 }

@@ -27,7 +27,7 @@ namespace WeihanLi.Npoi.Configurations
 
         internal FilterSetting FilterSetting { get; set; }
 
-        internal IDictionary<int, SheetSetting> SheetSettings { get; set; }
+        internal IDictionary<int, SheetConfiguration> SheetSettings { get; set; }
 
         internal Func<TEntity, bool> DataValidationFunc { get; private set; }
 
@@ -39,9 +39,9 @@ namespace WeihanLi.Npoi.Configurations
         {
             PropertyConfigurationDictionary = new Dictionary<PropertyInfo, PropertyConfiguration>();
             ExcelSetting = (setting ?? ExcelHelper.DefaultExcelSetting) ?? new ExcelSetting();
-            SheetSettings = new Dictionary<int, SheetSetting>(4)
+            SheetSettings = new Dictionary<int, SheetConfiguration>(4)
             {
-                { 0, new SheetSetting() }
+                { 0, new SheetConfiguration() }
             };
             FreezeSettings = new List<FreezeSetting>(4);
         }
@@ -174,24 +174,37 @@ namespace WeihanLi.Npoi.Configurations
         {
             if (sheetIndex >= 0)
             {
-                if (SheetSettings.TryGetValue(sheetIndex, out var sheetSetting))
+                void ConfigAction(SheetConfiguration sheetSetting)
                 {
                     sheetSetting.SheetName = sheetName;
                     sheetSetting.StartRowIndex = startRowIndex;
                     sheetSetting.AutoColumnWidthEnabled = enableAutoColumnWidth;
                     sheetSetting.EndRowIndex = endRowIndex;
                 }
+
+                HasSheetConfiguration(ConfigAction, sheetIndex);
+            }
+            return this;
+        }
+
+        public IExcelConfiguration HasSheetConfiguration(Action<SheetConfiguration> configAction, int sheetIndex = 0)
+        {
+            if (sheetIndex >= 0 && configAction != null)
+            {
+                if (SheetSettings.TryGetValue(sheetIndex, out var sheetSetting))
+                {
+                    configAction.Invoke(sheetSetting);
+                }
                 else
                 {
-                    SheetSettings[sheetIndex] = new SheetSetting()
-                    {
-                        SheetIndex = sheetIndex,
-                        SheetName = sheetName,
-                        StartRowIndex = startRowIndex,
-                        AutoColumnWidthEnabled = enableAutoColumnWidth,
-                        EndRowIndex = endRowIndex
-                    };
+                    SheetSettings[sheetIndex]
+                        = sheetSetting
+                        = new SheetConfiguration()
+                        {
+                            SheetIndex = sheetIndex
+                        };
                 }
+                configAction.Invoke(sheetSetting);
             }
             return this;
         }
