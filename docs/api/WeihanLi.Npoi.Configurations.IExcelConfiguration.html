@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Interface IExcelConfiguration
    ">
-    <meta name="generator" content="docfx 2.56.2.0">
+    <meta name="generator" content="docfx 2.56.4.0">
     
     <link rel="shortcut icon" href="../../favicon.ico">
     <link rel="stylesheet" href="../../styles/docfx.vendor.css">
@@ -478,13 +478,65 @@ Creates a split (freeze pane). Any existing freeze pane or split pane is overwri
   
   
   <a id="WeihanLi_Npoi_Configurations_IExcelConfiguration_HasSheetConfiguration_" data-uid="WeihanLi.Npoi.Configurations.IExcelConfiguration.HasSheetConfiguration*"></a>
+  <h4 id="WeihanLi_Npoi_Configurations_IExcelConfiguration_HasSheetConfiguration_System_Action_WeihanLi_Npoi_Configurations_SheetConfiguration__System_Int32_" data-uid="WeihanLi.Npoi.Configurations.IExcelConfiguration.HasSheetConfiguration(System.Action{WeihanLi.Npoi.Configurations.SheetConfiguration},System.Int32)">HasSheetConfiguration(Action&lt;SheetConfiguration&gt;, Int32)</h4>
+  <div class="markdown level1 summary"><p>Sheet Configuration</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">IExcelConfiguration HasSheetConfiguration(Action&lt;SheetConfiguration&gt; configAction, int sheetIndex = 0)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Action</span>&lt;<a class="xref" href="WeihanLi.Npoi.Configurations.SheetConfiguration.html">SheetConfiguration</a>&gt;</td>
+        <td><span class="parametername">configAction</span></td>
+        <td><p>sheet config delegate</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">sheetIndex</span></td>
+        <td><p>sheetIndex, 0 is the default value</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="WeihanLi.Npoi.Configurations.IExcelConfiguration.html">IExcelConfiguration</a></td>
+        <td><p>current excel configuration<a class="xref" href="WeihanLi.Npoi.Configurations.IExcelConfiguration.html">IExcelConfiguration</a></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="WeihanLi_Npoi_Configurations_IExcelConfiguration_HasSheetConfiguration_" data-uid="WeihanLi.Npoi.Configurations.IExcelConfiguration.HasSheetConfiguration*"></a>
   <h4 id="WeihanLi_Npoi_Configurations_IExcelConfiguration_HasSheetConfiguration_System_Int32_System_String_System_Int32_System_Boolean_System_Nullable_System_Int32__" data-uid="WeihanLi.Npoi.Configurations.IExcelConfiguration.HasSheetConfiguration(System.Int32,System.String,System.Int32,System.Boolean,System.Nullable{System.Int32})">HasSheetConfiguration(Int32, String, Int32, Boolean, Nullable&lt;Int32&gt;)</h4>
   <div class="markdown level1 summary"><p>Sheet Configuration</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">IExcelConfiguration HasSheetConfiguration(int sheetIndex, string sheetName, int startRowIndex, bool enableAutoColumnWidth, int? endRowIndex = default(int? ))</code></pre>
+    <pre><code class="lang-csharp hljs">[Obsolete(&quot;Please use HasSheetConfiguration(int sheetIndex, Action&lt;SheetConfiguration&gt; configAction) override instead&quot;)]
+IExcelConfiguration HasSheetConfiguration(int sheetIndex, string sheetName, int startRowIndex, bool enableAutoColumnWidth, int? endRowIndex = default(int? ))</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -523,7 +575,7 @@ Creates a split (freeze pane). Any existing freeze pane or split pane is overwri
       <tr>
         <td><span class="xref">System.Nullable</span>&lt;<span class="xref">System.Int32</span>&gt;</td>
         <td><span class="parametername">endRowIndex</span></td>
-        <td><p>endRowIndex, set this if you wanna control where to end(inclueded)</p>
+        <td><p>endRowIndex, set this if you wanna control where to end(included)</p>
 </td>
       </tr>
     </tbody>
@@ -644,7 +696,8 @@ Creates a split (freeze pane). Any existing freeze pane or split pane is overwri
                 </ul>
               </div>
               <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
-              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+                <h5>In This Article</h5>
+                <div></div>
               </nav>
             </div>
           </div>

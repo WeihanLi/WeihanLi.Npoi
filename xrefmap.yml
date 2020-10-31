@@ -272,6 +272,19 @@ references:
   isSpec: "True"
   fullName: WeihanLi.Npoi.Attributes.SheetAttribute.AutoColumnWidthEnabled
   nameWithType: SheetAttribute.AutoColumnWidthEnabled
+- uid: WeihanLi.Npoi.Attributes.SheetAttribute.EndColumnIndex
+  name: EndColumnIndex
+  href: docs/api/WeihanLi.Npoi.Attributes.SheetAttribute.html#WeihanLi_Npoi_Attributes_SheetAttribute_EndColumnIndex
+  commentId: P:WeihanLi.Npoi.Attributes.SheetAttribute.EndColumnIndex
+  fullName: WeihanLi.Npoi.Attributes.SheetAttribute.EndColumnIndex
+  nameWithType: SheetAttribute.EndColumnIndex
+- uid: WeihanLi.Npoi.Attributes.SheetAttribute.EndColumnIndex*
+  name: EndColumnIndex
+  href: docs/api/WeihanLi.Npoi.Attributes.SheetAttribute.html#WeihanLi_Npoi_Attributes_SheetAttribute_EndColumnIndex_
+  commentId: Overload:WeihanLi.Npoi.Attributes.SheetAttribute.EndColumnIndex
+  isSpec: "True"
+  fullName: WeihanLi.Npoi.Attributes.SheetAttribute.EndColumnIndex
+  nameWithType: SheetAttribute.EndColumnIndex
 - uid: WeihanLi.Npoi.Attributes.SheetAttribute.EndRowIndex
   name: EndRowIndex
   href: docs/api/WeihanLi.Npoi.Attributes.SheetAttribute.html#WeihanLi_Npoi_Attributes_SheetAttribute_EndRowIndex
@@ -324,6 +337,19 @@ references:
   isSpec: "True"
   fullName: WeihanLi.Npoi.Attributes.SheetAttribute.SheetName
   nameWithType: SheetAttribute.SheetName
+- uid: WeihanLi.Npoi.Attributes.SheetAttribute.StartColumnIndex
+  name: StartColumnIndex
+  href: docs/api/WeihanLi.Npoi.Attributes.SheetAttribute.html#WeihanLi_Npoi_Attributes_SheetAttribute_StartColumnIndex
+  commentId: P:WeihanLi.Npoi.Attributes.SheetAttribute.StartColumnIndex
+  fullName: WeihanLi.Npoi.Attributes.SheetAttribute.StartColumnIndex
+  nameWithType: SheetAttribute.StartColumnIndex
+- uid: WeihanLi.Npoi.Attributes.SheetAttribute.StartColumnIndex*
+  name: StartColumnIndex
+  href: docs/api/WeihanLi.Npoi.Attributes.SheetAttribute.html#WeihanLi_Npoi_Attributes_SheetAttribute_StartColumnIndex_
+  commentId: Overload:WeihanLi.Npoi.Attributes.SheetAttribute.StartColumnIndex
+  isSpec: "True"
+  fullName: WeihanLi.Npoi.Attributes.SheetAttribute.StartColumnIndex
+  nameWithType: SheetAttribute.StartColumnIndex
 - uid: WeihanLi.Npoi.Attributes.SheetAttribute.StartRowIndex
   name: StartRowIndex
   href: docs/api/WeihanLi.Npoi.Attributes.SheetAttribute.html#WeihanLi_Npoi_Attributes_SheetAttribute_StartRowIndex
@@ -505,6 +531,15 @@ references:
   isSpec: "True"
   fullName: WeihanLi.Npoi.Configurations.IExcelConfiguration.HasFreezePane
   nameWithType: IExcelConfiguration.HasFreezePane
+- uid: WeihanLi.Npoi.Configurations.IExcelConfiguration.HasSheetConfiguration(System.Action{WeihanLi.Npoi.Configurations.SheetConfiguration},System.Int32)
+  name: HasSheetConfiguration(Action<SheetConfiguration>, Int32)
+  href: docs/api/WeihanLi.Npoi.Configurations.IExcelConfiguration.html#WeihanLi_Npoi_Configurations_IExcelConfiguration_HasSheetConfiguration_System_Action_WeihanLi_Npoi_Configurations_SheetConfiguration__System_Int32_
+  commentId: M:WeihanLi.Npoi.Configurations.IExcelConfiguration.HasSheetConfiguration(System.Action{WeihanLi.Npoi.Configurations.SheetConfiguration},System.Int32)
+  name.vb: HasSheetConfiguration(Action(Of SheetConfiguration), Int32)
+  fullName: WeihanLi.Npoi.Configurations.IExcelConfiguration.HasSheetConfiguration(System.Action<WeihanLi.Npoi.Configurations.SheetConfiguration>, System.Int32)
+  fullName.vb: WeihanLi.Npoi.Configurations.IExcelConfiguration.HasSheetConfiguration(System.Action(Of WeihanLi.Npoi.Configurations.SheetConfiguration), System.Int32)
+  nameWithType: IExcelConfiguration.HasSheetConfiguration(Action<SheetConfiguration>, Int32)
+  nameWithType.vb: IExcelConfiguration.HasSheetConfiguration(Action(Of SheetConfiguration), Int32)
 - uid: WeihanLi.Npoi.Configurations.IExcelConfiguration.HasSheetConfiguration(System.Int32,System.String,System.Int32,System.Boolean,System.Nullable{System.Int32})
   name: HasSheetConfiguration(Int32, String, Int32, Boolean, Nullable<Int32>)
   href: docs/api/WeihanLi.Npoi.Configurations.IExcelConfiguration.html#WeihanLi_Npoi_Configurations_IExcelConfiguration_HasSheetConfiguration_System_Int32_System_String_System_Int32_System_Boolean_System_Nullable_System_Int32__
@@ -755,6 +790,129 @@ references:
   fullName.vb: WeihanLi.Npoi.Configurations.IPropertyConfiguration(Of TEntity, TProperty).Ignored
   nameWithType: IPropertyConfiguration<TEntity, TProperty>.Ignored
   nameWithType.vb: IPropertyConfiguration(Of TEntity, TProperty).Ignored
+- uid: WeihanLi.Npoi.Configurations.SheetConfiguration
+  name: SheetConfiguration
+  href: docs/api/WeihanLi.Npoi.Configurations.SheetConfiguration.html
+  commentId: T:WeihanLi.Npoi.Configurations.SheetConfiguration
+  fullName: WeihanLi.Npoi.Configurations.SheetConfiguration
+  nameWithType: SheetConfiguration
+- uid: WeihanLi.Npoi.Configurations.SheetConfiguration.#ctor
+  name: SheetConfiguration()
+  href: docs/api/WeihanLi.Npoi.Configurations.SheetConfiguration.html#WeihanLi_Npoi_Configurations_SheetConfiguration__ctor
+  commentId: M:WeihanLi.Npoi.Configurations.SheetConfiguration.#ctor
+  fullName: WeihanLi.Npoi.Configurations.SheetConfiguration.SheetConfiguration()
+  nameWithType: SheetConfiguration.SheetConfiguration()
+- uid: WeihanLi.Npoi.Configurations.SheetConfiguration.#ctor*
+  name: SheetConfiguration
+  href: docs/api/WeihanLi.Npoi.Configurations.SheetConfiguration.html#WeihanLi_Npoi_Configurations_SheetConfiguration__ctor_
+  commentId: Overload:WeihanLi.Npoi.Configurations.SheetConfiguration.#ctor
+  isSpec: "True"
+  fullName: WeihanLi.Npoi.Configurations.SheetConfiguration.SheetConfiguration
+  nameWithType: SheetConfiguration.SheetConfiguration
+- uid: WeihanLi.Npoi.Configurations.SheetConfiguration.AutoColumnWidthEnabled
+  name: AutoColumnWidthEnabled
+  href: docs/api/WeihanLi.Npoi.Configurations.SheetConfiguration.html#WeihanLi_Npoi_Configurations_SheetConfiguration_AutoColumnWidthEnabled
+  commentId: P:WeihanLi.Npoi.Configurations.SheetConfiguration.AutoColumnWidthEnabled
+  fullName: WeihanLi.Npoi.Configurations.SheetConfiguration.AutoColumnWidthEnabled
+  nameWithType: SheetConfiguration.AutoColumnWidthEnabled
+- uid: WeihanLi.Npoi.Configurations.SheetConfiguration.AutoColumnWidthEnabled*
+  name: AutoColumnWidthEnabled
+  href: docs/api/WeihanLi.Npoi.Configurations.SheetConfiguration.html#WeihanLi_Npoi_Configurations_SheetConfiguration_AutoColumnWidthEnabled_
+  commentId: Overload:WeihanLi.Npoi.Configurations.SheetConfiguration.AutoColumnWidthEnabled
+  isSpec: "True"
+  fullName: WeihanLi.Npoi.Configurations.SheetConfiguration.AutoColumnWidthEnabled
+  nameWithType: SheetConfiguration.AutoColumnWidthEnabled
+- uid: WeihanLi.Npoi.Configurations.SheetConfiguration.CellFilter
+  name: CellFilter
+  href: docs/api/WeihanLi.Npoi.Configurations.SheetConfiguration.html#WeihanLi_Npoi_Configurations_SheetConfiguration_CellFilter
+  commentId: P:WeihanLi.Npoi.Configurations.SheetConfiguration.CellFilter
+  fullName: WeihanLi.Npoi.Configurations.SheetConfiguration.CellFilter
+  nameWithType: SheetConfiguration.CellFilter
+- uid: WeihanLi.Npoi.Configurations.SheetConfiguration.CellFilter*
+  name: CellFilter
+  href: docs/api/WeihanLi.Npoi.Configurations.SheetConfiguration.html#WeihanLi_Npoi_Configurations_SheetConfiguration_CellFilter_
+  commentId: Overload:WeihanLi.Npoi.Configurations.SheetConfiguration.CellFilter
+  isSpec: "True"
+  fullName: WeihanLi.Npoi.Configurations.SheetConfiguration.CellFilter
+  nameWithType: SheetConfiguration.CellFilter
+- uid: WeihanLi.Npoi.Configurations.SheetConfiguration.EndRowIndex
+  name: EndRowIndex
+  href: docs/api/WeihanLi.Npoi.Configurations.SheetConfiguration.html#WeihanLi_Npoi_Configurations_SheetConfiguration_EndRowIndex
+  commentId: P:WeihanLi.Npoi.Configurations.SheetConfiguration.EndRowIndex
+  fullName: WeihanLi.Npoi.Configurations.SheetConfiguration.EndRowIndex
+  nameWithType: SheetConfiguration.EndRowIndex
+- uid: WeihanLi.Npoi.Configurations.SheetConfiguration.EndRowIndex*
+  name: EndRowIndex
+  href: docs/api/WeihanLi.Npoi.Configurations.SheetConfiguration.html#WeihanLi_Npoi_Configurations_SheetConfiguration_EndRowIndex_
+  commentId: Overload:WeihanLi.Npoi.Configurations.SheetConfiguration.EndRowIndex
+  isSpec: "True"
+  fullName: WeihanLi.Npoi.Configurations.SheetConfiguration.EndRowIndex
+  nameWithType: SheetConfiguration.EndRowIndex
+- uid: WeihanLi.Npoi.Configurations.SheetConfiguration.HeaderRowIndex
+  name: HeaderRowIndex
+  href: docs/api/WeihanLi.Npoi.Configurations.SheetConfiguration.html#WeihanLi_Npoi_Configurations_SheetConfiguration_HeaderRowIndex
+  commentId: P:WeihanLi.Npoi.Configurations.SheetConfiguration.HeaderRowIndex
+  fullName: WeihanLi.Npoi.Configurations.SheetConfiguration.HeaderRowIndex
+  nameWithType: SheetConfiguration.HeaderRowIndex
+- uid: WeihanLi.Npoi.Configurations.SheetConfiguration.HeaderRowIndex*
+  name: HeaderRowIndex
+  href: docs/api/WeihanLi.Npoi.Configurations.SheetConfiguration.html#WeihanLi_Npoi_Configurations_SheetConfiguration_HeaderRowIndex_
+  commentId: Overload:WeihanLi.Npoi.Configurations.SheetConfiguration.HeaderRowIndex
+  isSpec: "True"
+  fullName: WeihanLi.Npoi.Configurations.SheetConfiguration.HeaderRowIndex
+  nameWithType: SheetConfiguration.HeaderRowIndex
+- uid: WeihanLi.Npoi.Configurations.SheetConfiguration.RowFilter
+  name: RowFilter
+  href: docs/api/WeihanLi.Npoi.Configurations.SheetConfiguration.html#WeihanLi_Npoi_Configurations_SheetConfiguration_RowFilter
+  commentId: P:WeihanLi.Npoi.Configurations.SheetConfiguration.RowFilter
+  fullName: WeihanLi.Npoi.Configurations.SheetConfiguration.RowFilter
+  nameWithType: SheetConfiguration.RowFilter
+- uid: WeihanLi.Npoi.Configurations.SheetConfiguration.RowFilter*
+  name: RowFilter
+  href: docs/api/WeihanLi.Npoi.Configurations.SheetConfiguration.html#WeihanLi_Npoi_Configurations_SheetConfiguration_RowFilter_
+  commentId: Overload:WeihanLi.Npoi.Configurations.SheetConfiguration.RowFilter
+  isSpec: "True"
+  fullName: WeihanLi.Npoi.Configurations.SheetConfiguration.RowFilter
+  nameWithType: SheetConfiguration.RowFilter
+- uid: WeihanLi.Npoi.Configurations.SheetConfiguration.SheetIndex
+  name: SheetIndex
+  href: docs/api/WeihanLi.Npoi.Configurations.SheetConfiguration.html#WeihanLi_Npoi_Configurations_SheetConfiguration_SheetIndex
+  commentId: P:WeihanLi.Npoi.Configurations.SheetConfiguration.SheetIndex
+  fullName: WeihanLi.Npoi.Configurations.SheetConfiguration.SheetIndex
+  nameWithType: SheetConfiguration.SheetIndex
+- uid: WeihanLi.Npoi.Configurations.SheetConfiguration.SheetIndex*
+  name: SheetIndex
+  href: docs/api/WeihanLi.Npoi.Configurations.SheetConfiguration.html#WeihanLi_Npoi_Configurations_SheetConfiguration_SheetIndex_
+  commentId: Overload:WeihanLi.Npoi.Configurations.SheetConfiguration.SheetIndex
+  isSpec: "True"
+  fullName: WeihanLi.Npoi.Configurations.SheetConfiguration.SheetIndex
+  nameWithType: SheetConfiguration.SheetIndex
+- uid: WeihanLi.Npoi.Configurations.SheetConfiguration.SheetName
+  name: SheetName
+  href: docs/api/WeihanLi.Npoi.Configurations.SheetConfiguration.html#WeihanLi_Npoi_Configurations_SheetConfiguration_SheetName
+  commentId: P:WeihanLi.Npoi.Configurations.SheetConfiguration.SheetName
+  fullName: WeihanLi.Npoi.Configurations.SheetConfiguration.SheetName
+  nameWithType: SheetConfiguration.SheetName
+- uid: WeihanLi.Npoi.Configurations.SheetConfiguration.SheetName*
+  name: SheetName
+  href: docs/api/WeihanLi.Npoi.Configurations.SheetConfiguration.html#WeihanLi_Npoi_Configurations_SheetConfiguration_SheetName_
+  commentId: Overload:WeihanLi.Npoi.Configurations.SheetConfiguration.SheetName
+  isSpec: "True"
+  fullName: WeihanLi.Npoi.Configurations.SheetConfiguration.SheetName
+  nameWithType: SheetConfiguration.SheetName
+- uid: WeihanLi.Npoi.Configurations.SheetConfiguration.StartRowIndex
+  name: StartRowIndex
+  href: docs/api/WeihanLi.Npoi.Configurations.SheetConfiguration.html#WeihanLi_Npoi_Configurations_SheetConfiguration_StartRowIndex
+  commentId: P:WeihanLi.Npoi.Configurations.SheetConfiguration.StartRowIndex
+  fullName: WeihanLi.Npoi.Configurations.SheetConfiguration.StartRowIndex
+  nameWithType: SheetConfiguration.StartRowIndex
+- uid: WeihanLi.Npoi.Configurations.SheetConfiguration.StartRowIndex*
+  name: StartRowIndex
+  href: docs/api/WeihanLi.Npoi.Configurations.SheetConfiguration.html#WeihanLi_Npoi_Configurations_SheetConfiguration_StartRowIndex_
+  commentId: Overload:WeihanLi.Npoi.Configurations.SheetConfiguration.StartRowIndex
+  isSpec: "True"
+  fullName: WeihanLi.Npoi.Configurations.SheetConfiguration.StartRowIndex
+  nameWithType: SheetConfiguration.StartRowIndex
 - uid: WeihanLi.Npoi.CsvHelper
   name: CsvHelper
   href: docs/api/WeihanLi.Npoi.CsvHelper.html

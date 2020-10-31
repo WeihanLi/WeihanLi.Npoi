@@ -5,10 +5,10 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Class TemplateOptions
+    <title>Class SheetConfiguration
    </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="title" content="Class TemplateOptions
+    <meta name="title" content="Class SheetConfiguration
    ">
     <meta name="generator" content="docfx 2.56.4.0">
     
@@ -68,17 +68,17 @@
         </div>
         <div class="article row grid-right">
           <div class="col-md-10">
-            <article class="content wrap" id="_content" data-uid="WeihanLi.Npoi.TemplateOptions">
+            <article class="content wrap" id="_content" data-uid="WeihanLi.Npoi.Configurations.SheetConfiguration">
   
   
-  <h1 id="WeihanLi_Npoi_TemplateOptions" data-uid="WeihanLi.Npoi.TemplateOptions" class="text-break">Class TemplateOptions
+  <h1 id="WeihanLi_Npoi_Configurations_SheetConfiguration" data-uid="WeihanLi.Npoi.Configurations.SheetConfiguration" class="text-break">Class SheetConfiguration
   </h1>
   <div class="markdown level0 summary"></div>
   <div class="markdown level0 conceptual"></div>
   <div class="inheritance">
     <h5>Inheritance</h5>
     <div class="level0"><span class="xref">System.Object</span></div>
-    <div class="level1"><span class="xref">TemplateOptions</span></div>
+    <div class="level1"><span class="xref">SheetConfiguration</span></div>
   </div>
   <div class="inheritedMembers">
     <h5>Inherited Members</h5>
@@ -104,24 +104,192 @@
       <span class="xref">System.Object.MemberwiseClone()</span>
     </div>
   </div>
-  <h6><strong>Namespace</strong>: <a class="xref" href="WeihanLi.Npoi.html">WeihanLi.Npoi</a></h6>
+  <h6><strong>Namespace</strong>: <a class="xref" href="WeihanLi.Npoi.Configurations.html">WeihanLi.Npoi.Configurations</a></h6>
   <h6><strong>Assembly</strong>: cs.temp.dll.dll</h6>
-  <h5 id="WeihanLi_Npoi_TemplateOptions_syntax">Syntax</h5>
+  <h5 id="WeihanLi_Npoi_Configurations_SheetConfiguration_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public sealed class TemplateOptions</code></pre>
+    <pre><code class="lang-csharp hljs">public sealed class SheetConfiguration</code></pre>
+  </div>
+  <h3 id="constructors">Constructors
+  </h3>
+  
+  
+  <a id="WeihanLi_Npoi_Configurations_SheetConfiguration__ctor_" data-uid="WeihanLi.Npoi.Configurations.SheetConfiguration.#ctor*"></a>
+  <h4 id="WeihanLi_Npoi_Configurations_SheetConfiguration__ctor" data-uid="WeihanLi.Npoi.Configurations.SheetConfiguration.#ctor">SheetConfiguration()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public SheetConfiguration()</code></pre>
   </div>
   <h3 id="properties">Properties
   </h3>
   
   
-  <a id="WeihanLi_Npoi_TemplateOptions_TemplateDataBegin_" data-uid="WeihanLi.Npoi.TemplateOptions.TemplateDataBegin*"></a>
-  <h4 id="WeihanLi_Npoi_TemplateOptions_TemplateDataBegin" data-uid="WeihanLi.Npoi.TemplateOptions.TemplateDataBegin">TemplateDataBegin</h4>
-  <div class="markdown level1 summary"><p>Data Begin markup</p>
+  <a id="WeihanLi_Npoi_Configurations_SheetConfiguration_AutoColumnWidthEnabled_" data-uid="WeihanLi.Npoi.Configurations.SheetConfiguration.AutoColumnWidthEnabled*"></a>
+  <h4 id="WeihanLi_Npoi_Configurations_SheetConfiguration_AutoColumnWidthEnabled" data-uid="WeihanLi.Npoi.Configurations.SheetConfiguration.AutoColumnWidthEnabled">AutoColumnWidthEnabled</h4>
+  <div class="markdown level1 summary"><p>enable auto column width</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public string TemplateDataBegin { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public bool AutoColumnWidthEnabled { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="WeihanLi_Npoi_Configurations_SheetConfiguration_CellFilter_" data-uid="WeihanLi.Npoi.Configurations.SheetConfiguration.CellFilter*"></a>
+  <h4 id="WeihanLi_Npoi_Configurations_SheetConfiguration_CellFilter" data-uid="WeihanLi.Npoi.Configurations.SheetConfiguration.CellFilter">CellFilter</h4>
+  <div class="markdown level1 summary"><p>Cell Filter</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Func&lt;ICell, bool&gt; CellFilter { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Func</span>&lt;<span class="xref">ICell</span>, <span class="xref">System.Boolean</span>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="WeihanLi_Npoi_Configurations_SheetConfiguration_EndRowIndex_" data-uid="WeihanLi.Npoi.Configurations.SheetConfiguration.EndRowIndex*"></a>
+  <h4 id="WeihanLi_Npoi_Configurations_SheetConfiguration_EndRowIndex" data-uid="WeihanLi.Npoi.Configurations.SheetConfiguration.EndRowIndex">EndRowIndex</h4>
+  <div class="markdown level1 summary"><p>EndRowIndex, included</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int? EndRowIndex { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">System.Int32</span>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="WeihanLi_Npoi_Configurations_SheetConfiguration_HeaderRowIndex_" data-uid="WeihanLi.Npoi.Configurations.SheetConfiguration.HeaderRowIndex*"></a>
+  <h4 id="WeihanLi_Npoi_Configurations_SheetConfiguration_HeaderRowIndex" data-uid="WeihanLi.Npoi.Configurations.SheetConfiguration.HeaderRowIndex">HeaderRowIndex</h4>
+  <div class="markdown level1 summary"><p>HeaderRowIndex</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int HeaderRowIndex { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="WeihanLi_Npoi_Configurations_SheetConfiguration_RowFilter_" data-uid="WeihanLi.Npoi.Configurations.SheetConfiguration.RowFilter*"></a>
+  <h4 id="WeihanLi_Npoi_Configurations_SheetConfiguration_RowFilter" data-uid="WeihanLi.Npoi.Configurations.SheetConfiguration.RowFilter">RowFilter</h4>
+  <div class="markdown level1 summary"><p>Row Filter</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Func&lt;IRow, bool&gt; RowFilter { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Func</span>&lt;<span class="xref">IRow</span>, <span class="xref">System.Boolean</span>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="WeihanLi_Npoi_Configurations_SheetConfiguration_SheetIndex_" data-uid="WeihanLi.Npoi.Configurations.SheetConfiguration.SheetIndex*"></a>
+  <h4 id="WeihanLi_Npoi_Configurations_SheetConfiguration_SheetIndex" data-uid="WeihanLi.Npoi.Configurations.SheetConfiguration.SheetIndex">SheetIndex</h4>
+  <div class="markdown level1 summary"><p>SheetIndex</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int SheetIndex { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="WeihanLi_Npoi_Configurations_SheetConfiguration_SheetName_" data-uid="WeihanLi.Npoi.Configurations.SheetConfiguration.SheetName*"></a>
+  <h4 id="WeihanLi_Npoi_Configurations_SheetConfiguration_SheetName" data-uid="WeihanLi.Npoi.Configurations.SheetConfiguration.SheetName">SheetName</h4>
+  <div class="markdown level1 summary"><p>SheetName</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string SheetName { get; set; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -140,14 +308,14 @@
   </table>
   
   
-  <a id="WeihanLi_Npoi_TemplateOptions_TemplateDataEnd_" data-uid="WeihanLi.Npoi.TemplateOptions.TemplateDataEnd*"></a>
-  <h4 id="WeihanLi_Npoi_TemplateOptions_TemplateDataEnd" data-uid="WeihanLi.Npoi.TemplateOptions.TemplateDataEnd">TemplateDataEnd</h4>
-  <div class="markdown level1 summary"><p>Data End markup</p>
+  <a id="WeihanLi_Npoi_Configurations_SheetConfiguration_StartRowIndex_" data-uid="WeihanLi.Npoi.Configurations.SheetConfiguration.StartRowIndex*"></a>
+  <h4 id="WeihanLi_Npoi_Configurations_SheetConfiguration_StartRowIndex" data-uid="WeihanLi.Npoi.Configurations.SheetConfiguration.StartRowIndex">StartRowIndex</h4>
+  <div class="markdown level1 summary"><p>StartRowIndex</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public string TemplateDataEnd { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public int StartRowIndex { get; set; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -159,111 +327,7 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.String</span></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  
-  
-  <a id="WeihanLi_Npoi_TemplateOptions_TemplateDataParamFormat_" data-uid="WeihanLi.Npoi.TemplateOptions.TemplateDataParamFormat*"></a>
-  <h4 id="WeihanLi_Npoi_TemplateOptions_TemplateDataParamFormat" data-uid="WeihanLi.Npoi.TemplateOptions.TemplateDataParamFormat">TemplateDataParamFormat</h4>
-  <div class="markdown level1 summary"><p>Data Param Format</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public string TemplateDataParamFormat { get; set; }</code></pre>
-  </div>
-  <h5 class="propertyValue">Property Value</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">System.String</span></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  
-  
-  <a id="WeihanLi_Npoi_TemplateOptions_TemplateDataPrefix_" data-uid="WeihanLi.Npoi.TemplateOptions.TemplateDataPrefix*"></a>
-  <h4 id="WeihanLi_Npoi_TemplateOptions_TemplateDataPrefix" data-uid="WeihanLi.Npoi.TemplateOptions.TemplateDataPrefix">TemplateDataPrefix</h4>
-  <div class="markdown level1 summary"><p>Data Param Prefix</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public string TemplateDataPrefix { get; set; }</code></pre>
-  </div>
-  <h5 class="propertyValue">Property Value</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">System.String</span></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  
-  
-  <a id="WeihanLi_Npoi_TemplateOptions_TemplateGlobalParamFormat_" data-uid="WeihanLi.Npoi.TemplateOptions.TemplateGlobalParamFormat*"></a>
-  <h4 id="WeihanLi_Npoi_TemplateOptions_TemplateGlobalParamFormat" data-uid="WeihanLi.Npoi.TemplateOptions.TemplateGlobalParamFormat">TemplateGlobalParamFormat</h4>
-  <div class="markdown level1 summary"><p>Global Param Format</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public string TemplateGlobalParamFormat { get; set; }</code></pre>
-  </div>
-  <h5 class="propertyValue">Property Value</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">System.String</span></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  
-  
-  <a id="WeihanLi_Npoi_TemplateOptions_TemplateHeaderParamFormat_" data-uid="WeihanLi.Npoi.TemplateOptions.TemplateHeaderParamFormat*"></a>
-  <h4 id="WeihanLi_Npoi_TemplateOptions_TemplateHeaderParamFormat" data-uid="WeihanLi.Npoi.TemplateOptions.TemplateHeaderParamFormat">TemplateHeaderParamFormat</h4>
-  <div class="markdown level1 summary"><p>Header Param Format</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public string TemplateHeaderParamFormat { get; set; }</code></pre>
-  </div>
-  <h5 class="propertyValue">Property Value</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">System.String</span></td>
+        <td><span class="xref">System.Int32</span></td>
         <td></td>
       </tr>
     </tbody>
