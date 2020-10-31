@@ -39,7 +39,7 @@ namespace WeihanLi.Npoi
                 }
                 else // get properties
                 {
-                    var properties = CacheUtil.TypePropertyCache.GetOrAdd(paramInfo.GetType(), t => t.GetProperties());
+                    var properties = CacheUtil.GetTypeProperties(paramInfo.GetType());
                     foreach (var property in properties)
                     {
                         if (property.CanRead)

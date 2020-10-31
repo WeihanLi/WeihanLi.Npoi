@@ -27,7 +27,7 @@ namespace WeihanLi.Npoi.Configurations
 
         internal FilterSetting FilterSetting { get; set; }
 
-        internal IDictionary<int, SheetSetting> SheetSettings { get; set; }
+        internal IDictionary<int, SheetConfiguration> SheetSettings { get; set; }
 
         internal Func<TEntity, bool> DataValidationFunc { get; private set; }
 
@@ -39,9 +39,9 @@ namespace WeihanLi.Npoi.Configurations
         {
             PropertyConfigurationDictionary = new Dictionary<PropertyInfo, PropertyConfiguration>();
             ExcelSetting = (setting ?? ExcelHelper.DefaultExcelSetting) ?? new ExcelSetting();
-            SheetSettings = new Dictionary<int, SheetSetting>(4)
+            SheetSettings = new Dictionary<int, SheetConfiguration>(4)
             {
-                { 0, new SheetSetting() }
+                { 0, new SheetConfiguration() }
             };
             FreezeSettings = new List<FreezeSetting>(4);
         }
@@ -134,7 +134,7 @@ namespace WeihanLi.Npoi.Configurations
             var property = memberInfo as PropertyInfo;
             if (property == null || !PropertyConfigurationDictionary.ContainsKey(property))
             {
-                property = CacheUtil.TypePropertyCache.GetOrAdd(EntityType, t => t.GetProperties())
+                property = CacheUtil.GetTypeProperties(EntityType)
                     .FirstOrDefault(p => p.Name == memberInfo.Name);
                 if (null == property)
                 {
@@ -169,29 +169,24 @@ namespace WeihanLi.Npoi.Configurations
 
         #region Sheet
 
-        public IExcelConfiguration HasSheetConfiguration(int sheetIndex, string sheetName, int startRowIndex,
-            bool enableAutoColumnWidth, int? endRowIndex = null)
+        public IExcelConfiguration HasSheetConfiguration(Action<SheetConfiguration> configAction, int sheetIndex = 0)
         {
-            if (sheetIndex >= 0)
+            if (sheetIndex >= 0 && configAction != null)
             {
                 if (SheetSettings.TryGetValue(sheetIndex, out var sheetSetting))
                 {
-                    sheetSetting.SheetName = sheetName;
-                    sheetSetting.StartRowIndex = startRowIndex;
-                    sheetSetting.AutoColumnWidthEnabled = enableAutoColumnWidth;
-                    sheetSetting.EndRowIndex = endRowIndex;
+                    configAction.Invoke(sheetSetting);
                 }
                 else
                 {
-                    SheetSettings[sheetIndex] = new SheetSetting()
-                    {
-                        SheetIndex = sheetIndex,
-                        SheetName = sheetName,
-                        StartRowIndex = startRowIndex,
-                        AutoColumnWidthEnabled = enableAutoColumnWidth,
-                        EndRowIndex = endRowIndex
-                    };
+                    SheetSettings[sheetIndex]
+                        = sheetSetting
+                        = new SheetConfiguration()
+                        {
+                            SheetIndex = sheetIndex
+                        };
                 }
+                configAction.Invoke(sheetSetting);
             }
             return this;
         }

@@ -34,7 +34,7 @@ namespace WeihanLi.Npoi
                   excelConfiguration.FreezeSettings.Add(freezeAttribute.FreezeSetting);
               }
               var dic = new Dictionary<PropertyInfo, PropertyConfiguration>();
-              var propertyInfos = Common.CacheUtil.TypePropertyCache.GetOrAdd(type, t => t.GetProperties());
+              var propertyInfos = Common.CacheUtil.GetTypeProperties(type);
               foreach (var propertyInfo in propertyInfos)
               {
                   var column = propertyInfo.GetCustomAttribute<ColumnAttribute>() ?? new ColumnAttribute();
@@ -74,10 +74,11 @@ namespace WeihanLi.Npoi
         /// <param name="excelConfiguration">excelConfiguration</param>
         private static void AdjustColumnIndex<TEntity>(ExcelConfiguration<TEntity> excelConfiguration)
         {
-            ICollection<int> validColumnIndex = excelConfiguration.PropertyConfigurationDictionary.Values.
-                Where(c => !c.IsIgnored)
+            ICollection<int> validColumnIndex = excelConfiguration.PropertyConfigurationDictionary.Values
+                .Where(c => !c.IsIgnored)
                 .Select(x => x.ColumnIndex)
                 .ToArray();
+            // return if already adjusted
             if (validColumnIndex.All(_ => _ >= 0) &&
                 validColumnIndex.Distinct().Count() == validColumnIndex.Count)
             {
@@ -88,7 +89,7 @@ namespace WeihanLi.Npoi
             foreach (var item in excelConfiguration.PropertyConfigurationDictionary
                 .Where(_ => !_.Value.IsIgnored)
                 .OrderBy(_ => _.Value.ColumnIndex >= 0 ? _.Value.ColumnIndex : int.MaxValue)
-                .ThenBy(_ => _.Key.Name)
+                .ThenBy(_ => _.Key)
                 .Select(_ => _.Value)
                 )
             {
