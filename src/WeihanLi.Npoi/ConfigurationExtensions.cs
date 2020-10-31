@@ -49,6 +49,25 @@ namespace WeihanLi.Npoi
         }, sheetIndex);
 
         /// <summary>
+        /// Sheet Configuration
+        /// </summary>
+        /// <param name="configuration">excel configuration</param>
+        /// <param name="sheetIndex">sheetIndex</param>
+        /// <param name="sheetName">sheetName</param>
+        /// <param name="startRowIndex">startRowIndex</param>
+        /// <param name="enableAutoColumnWidth">enable auto column width if true otherwise false</param>
+        /// <param name="endRowIndex">endRowIndex, set this if you wanna control where to end(included)</param>
+        /// <returns>current excel configuration<see cref="IExcelConfiguration"/></returns>
+        public static IExcelConfiguration HasSheetConfiguration(this IExcelConfiguration configuration, int sheetIndex, string sheetName, int startRowIndex,
+            bool enableAutoColumnWidth, int? endRowIndex = null) => configuration.HasSheetConfiguration(config =>
+        {
+            config.SheetName = sheetName;
+            config.StartRowIndex = startRowIndex;
+            config.AutoColumnWidthEnabled = enableAutoColumnWidth;
+            config.EndRowIndex = endRowIndex;
+        }, sheetIndex);
+
+        /// <summary>
         /// property configuration
         /// </summary>
         /// <typeparam name="TEntity">TEntity</typeparam>

@@ -8,18 +8,6 @@ namespace WeihanLi.Npoi.Configurations
         /// <summary>
         /// Sheet Configuration
         /// </summary>
-        /// <param name="sheetIndex">sheetIndex</param>
-        /// <param name="sheetName">sheetName</param>
-        /// <param name="startRowIndex">startRowIndex</param>
-        /// <param name="enableAutoColumnWidth">enable auto column width if true otherwise false</param>
-        /// <param name="endRowIndex">endRowIndex, set this if you wanna control where to end(included)</param>
-        /// <returns>current excel configuration<see cref="IExcelConfiguration"/></returns>
-        [Obsolete("Please use HasSheetConfiguration(int sheetIndex, Action<SheetConfiguration> configAction) override instead")]
-        IExcelConfiguration HasSheetConfiguration(int sheetIndex, string sheetName, int startRowIndex, bool enableAutoColumnWidth, int? endRowIndex = null);
-
-        /// <summary>
-        /// Sheet Configuration
-        /// </summary>
         /// <param name="configAction">sheet config delegate</param>
         /// <param name="sheetIndex">sheetIndex, 0 is the default value</param>
         /// <returns>current excel configuration<see cref="IExcelConfiguration"/></returns>
