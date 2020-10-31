@@ -403,6 +403,15 @@ references:
   commentId: M:WeihanLi.Npoi.ConfigurationExtensions.HasSheetConfiguration(WeihanLi.Npoi.Configurations.IExcelConfiguration,System.Int32,System.String,System.Int32)
   fullName: WeihanLi.Npoi.ConfigurationExtensions.HasSheetConfiguration(WeihanLi.Npoi.Configurations.IExcelConfiguration, System.Int32, System.String, System.Int32)
   nameWithType: ConfigurationExtensions.HasSheetConfiguration(IExcelConfiguration, Int32, String, Int32)
+- uid: WeihanLi.Npoi.ConfigurationExtensions.HasSheetConfiguration(WeihanLi.Npoi.Configurations.IExcelConfiguration,System.Int32,System.String,System.Int32,System.Boolean,System.Nullable{System.Int32})
+  name: HasSheetConfiguration(IExcelConfiguration, Int32, String, Int32, Boolean, Nullable<Int32>)
+  href: docs/api/WeihanLi.Npoi.ConfigurationExtensions.html#WeihanLi_Npoi_ConfigurationExtensions_HasSheetConfiguration_WeihanLi_Npoi_Configurations_IExcelConfiguration_System_Int32_System_String_System_Int32_System_Boolean_System_Nullable_System_Int32__
+  commentId: M:WeihanLi.Npoi.ConfigurationExtensions.HasSheetConfiguration(WeihanLi.Npoi.Configurations.IExcelConfiguration,System.Int32,System.String,System.Int32,System.Boolean,System.Nullable{System.Int32})
+  name.vb: HasSheetConfiguration(IExcelConfiguration, Int32, String, Int32, Boolean, Nullable(Of Int32))
+  fullName: WeihanLi.Npoi.ConfigurationExtensions.HasSheetConfiguration(WeihanLi.Npoi.Configurations.IExcelConfiguration, System.Int32, System.String, System.Int32, System.Boolean, System.Nullable<System.Int32>)
+  fullName.vb: WeihanLi.Npoi.ConfigurationExtensions.HasSheetConfiguration(WeihanLi.Npoi.Configurations.IExcelConfiguration, System.Int32, System.String, System.Int32, System.Boolean, System.Nullable(Of System.Int32))
+  nameWithType: ConfigurationExtensions.HasSheetConfiguration(IExcelConfiguration, Int32, String, Int32, Boolean, Nullable<Int32>)
+  nameWithType.vb: ConfigurationExtensions.HasSheetConfiguration(IExcelConfiguration, Int32, String, Int32, Boolean, Nullable(Of Int32))
 - uid: WeihanLi.Npoi.ConfigurationExtensions.HasSheetConfiguration*
   name: HasSheetConfiguration
   href: docs/api/WeihanLi.Npoi.ConfigurationExtensions.html#WeihanLi_Npoi_ConfigurationExtensions_HasSheetConfiguration_
@@ -540,15 +549,6 @@ references:
   fullName.vb: WeihanLi.Npoi.Configurations.IExcelConfiguration.HasSheetConfiguration(System.Action(Of WeihanLi.Npoi.Configurations.SheetConfiguration), System.Int32)
   nameWithType: IExcelConfiguration.HasSheetConfiguration(Action<SheetConfiguration>, Int32)
   nameWithType.vb: IExcelConfiguration.HasSheetConfiguration(Action(Of SheetConfiguration), Int32)
-- uid: WeihanLi.Npoi.Configurations.IExcelConfiguration.HasSheetConfiguration(System.Int32,System.String,System.Int32,System.Boolean,System.Nullable{System.Int32})
-  name: HasSheetConfiguration(Int32, String, Int32, Boolean, Nullable<Int32>)
-  href: docs/api/WeihanLi.Npoi.Configurations.IExcelConfiguration.html#WeihanLi_Npoi_Configurations_IExcelConfiguration_HasSheetConfiguration_System_Int32_System_String_System_Int32_System_Boolean_System_Nullable_System_Int32__
-  commentId: M:WeihanLi.Npoi.Configurations.IExcelConfiguration.HasSheetConfiguration(System.Int32,System.String,System.Int32,System.Boolean,System.Nullable{System.Int32})
-  name.vb: HasSheetConfiguration(Int32, String, Int32, Boolean, Nullable(Of Int32))
-  fullName: WeihanLi.Npoi.Configurations.IExcelConfiguration.HasSheetConfiguration(System.Int32, System.String, System.Int32, System.Boolean, System.Nullable<System.Int32>)
-  fullName.vb: WeihanLi.Npoi.Configurations.IExcelConfiguration.HasSheetConfiguration(System.Int32, System.String, System.Int32, System.Boolean, System.Nullable(Of System.Int32))
-  nameWithType: IExcelConfiguration.HasSheetConfiguration(Int32, String, Int32, Boolean, Nullable<Int32>)
-  nameWithType.vb: IExcelConfiguration.HasSheetConfiguration(Int32, String, Int32, Boolean, Nullable(Of Int32))
 - uid: WeihanLi.Npoi.Configurations.IExcelConfiguration.HasSheetConfiguration*
   name: HasSheetConfiguration
   href: docs/api/WeihanLi.Npoi.Configurations.IExcelConfiguration.html#WeihanLi_Npoi_Configurations_IExcelConfiguration_HasSheetConfiguration_
