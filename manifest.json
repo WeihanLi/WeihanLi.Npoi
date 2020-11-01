@@ -93,7 +93,7 @@
       "output": {
         ".html": {
           "relative_path": "docs/api/WeihanLi.Npoi.ConfigurationExtensions.html",
-          "hash": "jMsMmQjgOPm68PVYmy1yIA=="
+          "hash": "9MglkOH6vKCCg1c5+aj4Cw=="
         }
       },
       "is_incremental": false,
@@ -105,7 +105,7 @@
       "output": {
         ".html": {
           "relative_path": "docs/api/WeihanLi.Npoi.Configurations.IExcelConfiguration-1.html",
-          "hash": "/x4nmq6q8wGdNR3oiqpTYg=="
+          "hash": "BYa0shFeW+25M8oCRwakjA=="
         }
       },
       "is_incremental": false,
@@ -117,7 +117,7 @@
       "output": {
         ".html": {
           "relative_path": "docs/api/WeihanLi.Npoi.Configurations.IExcelConfiguration.html",
-          "hash": "wjieE+dHcV9r2F/U+VrL/Q=="
+          "hash": "4hIDrwqOWY+ou2UNLlhwJQ=="
         }
       },
       "is_incremental": false,
@@ -149,23 +149,11 @@
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "docs/api/WeihanLi.Npoi.Configurations.SheetConfiguration.yml",
-      "output": {
-        ".html": {
-          "relative_path": "docs/api/WeihanLi.Npoi.Configurations.SheetConfiguration.html",
-          "hash": "vrrvPG4EGS96ugGc9wDhrQ=="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
       "source_relative_path": "docs/api/WeihanLi.Npoi.Configurations.yml",
       "output": {
         ".html": {
           "relative_path": "docs/api/WeihanLi.Npoi.Configurations.html",
-          "hash": "F5lAZyAZNxqcxCPpfh2P2w=="
+          "hash": "fKQ1h0PwpovvZVPqzSvmqA=="
         }
       },
       "is_incremental": false,
@@ -261,7 +249,19 @@
       "output": {
         ".html": {
           "relative_path": "docs/api/WeihanLi.Npoi.Settings.ExcelSetting.html",
-          "hash": "kohKw4b1PibEOPpm5B3HBQ=="
+          "hash": "sgdERuitNxZfIl3sCN9zCQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "docs/api/WeihanLi.Npoi.Settings.SheetSetting.yml",
+      "output": {
+        ".html": {
+          "relative_path": "docs/api/WeihanLi.Npoi.Settings.SheetSetting.html",
+          "hash": "Ss7xmJ4tJ66xj6YH9+tNpg=="
         }
       },
       "is_incremental": false,
@@ -273,7 +273,7 @@
       "output": {
         ".html": {
           "relative_path": "docs/api/WeihanLi.Npoi.Settings.html",
-          "hash": "LNk+jJUgBQpyXzUDwkzCQQ=="
+          "hash": "wH9a3w6ZRXl0b/QzQ/Sgcw=="
         }
       },
       "is_incremental": false,
@@ -333,7 +333,7 @@
       "output": {
         ".html": {
           "relative_path": "docs/api/toc.html",
-          "hash": "8X8pwIiZXZzIzzCRjzSOmQ=="
+          "hash": "MxN/d1bC9pJaztEC/S/nDA=="
         }
       },
       "is_incremental": false,
