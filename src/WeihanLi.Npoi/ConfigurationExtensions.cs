@@ -13,7 +13,7 @@ namespace WeihanLi.Npoi
         /// <param name="sheetName">sheetName</param>
         /// <returns>current excel configuration</returns>
         public static IExcelConfiguration HasSheetConfiguration(this IExcelConfiguration configuration, int sheetIndex,
-            string sheetName) => configuration.HasSheetConfiguration(config =>
+            string sheetName) => configuration.HasSheetSetting(config =>
                 {
                     config.SheetName = sheetName;
                 }, sheetIndex);
@@ -27,7 +27,7 @@ namespace WeihanLi.Npoi
         /// <param name="enableAutoColumnWidth">enable auto column width if true otherwise false</param>
         /// <returns>current excel configuration</returns>
         public static IExcelConfiguration HasSheetConfiguration(this IExcelConfiguration configuration, int sheetIndex,
-            string sheetName, bool enableAutoColumnWidth) => configuration.HasSheetConfiguration(config =>
+            string sheetName, bool enableAutoColumnWidth) => configuration.HasSheetSetting(config =>
         {
             config.SheetName = sheetName;
             config.AutoColumnWidthEnabled = enableAutoColumnWidth;
@@ -42,7 +42,7 @@ namespace WeihanLi.Npoi
         /// <param name="startRowIndex">startRowIndex</param>
         /// <returns>current excel configuration</returns>
         public static IExcelConfiguration HasSheetConfiguration(this IExcelConfiguration configuration, int sheetIndex,
-            string sheetName, int startRowIndex) => configuration.HasSheetConfiguration(config =>
+            string sheetName, int startRowIndex) => configuration.HasSheetSetting(config =>
         {
             config.SheetName = sheetName;
             config.StartRowIndex = startRowIndex;
@@ -59,13 +59,97 @@ namespace WeihanLi.Npoi
         /// <param name="endRowIndex">endRowIndex, set this if you wanna control where to end(included)</param>
         /// <returns>current excel configuration<see cref="IExcelConfiguration"/></returns>
         public static IExcelConfiguration HasSheetConfiguration(this IExcelConfiguration configuration, int sheetIndex, string sheetName, int startRowIndex,
-            bool enableAutoColumnWidth, int? endRowIndex = null) => configuration.HasSheetConfiguration(config =>
+            bool enableAutoColumnWidth, int? endRowIndex = null) => configuration.HasSheetSetting(config =>
         {
             config.SheetName = sheetName;
             config.StartRowIndex = startRowIndex;
             config.AutoColumnWidthEnabled = enableAutoColumnWidth;
             config.EndRowIndex = endRowIndex;
         }, sheetIndex);
+
+        /// <summary>
+        /// Configure excel author
+        /// </summary>
+        /// <param name="configuration">excel configuration</param>
+        /// <param name="author">excel document author name</param>
+        /// <returns>current excel configuration<see cref="IExcelConfiguration"/></returns>
+        public static IExcelConfiguration HasAuthor(this IExcelConfiguration configuration, string author)
+        {
+            return configuration.HasExcelSetting(setting =>
+            {
+                setting.Author = author;
+            });
+        }
+
+        /// <summary>
+        /// Configure excel author
+        /// </summary>
+        /// <param name="configuration">excel configuration</param>
+        /// <param name="title">excel document title</param>
+        /// <returns>current excel configuration<see cref="IExcelConfiguration"/></returns>
+        public static IExcelConfiguration HasTitle(this IExcelConfiguration configuration, string title)
+        {
+            return configuration.HasExcelSetting(setting =>
+            {
+                setting.Title = title;
+            });
+        }
+
+        /// <summary>
+        /// Configure excel author
+        /// </summary>
+        /// <param name="configuration">excel configuration</param>
+        /// <param name="description">excel document description</param>
+        /// <returns>current excel configuration<see cref="IExcelConfiguration"/></returns>
+        public static IExcelConfiguration HasDescription(this IExcelConfiguration configuration, string description)
+        {
+            return configuration.HasExcelSetting(setting =>
+            {
+                setting.Description = description;
+            });
+        }
+
+        /// <summary>
+        /// Configure excel author
+        /// </summary>
+        /// <param name="configuration">excel configuration</param>
+        /// <param name="subject">excel document subject</param>
+        /// <returns>current excel configuration<see cref="IExcelConfiguration"/></returns>
+        public static IExcelConfiguration HasSubject(this IExcelConfiguration configuration, string subject)
+        {
+            return configuration.HasExcelSetting(setting =>
+            {
+                setting.Subject = subject;
+            });
+        }
+
+        /// <summary>
+        /// Configure excel author
+        /// </summary>
+        /// <param name="configuration">excel configuration</param>
+        /// <param name="company">excel document company</param>
+        /// <returns>current excel configuration<see cref="IExcelConfiguration"/></returns>
+        public static IExcelConfiguration HasCompany(this IExcelConfiguration configuration, string company)
+        {
+            return configuration.HasExcelSetting(setting =>
+            {
+                setting.Company = company;
+            });
+        }
+
+        /// <summary>
+        /// Configure excel author
+        /// </summary>
+        /// <param name="configuration">excel configuration</param>
+        /// <param name="category">excel document category</param>
+        /// <returns>current excel configuration<see cref="IExcelConfiguration"/></returns>
+        public static IExcelConfiguration HasCategory(this IExcelConfiguration configuration, string category)
+        {
+            return configuration.HasExcelSetting(setting =>
+            {
+                setting.Category = category;
+            });
+        }
 
         /// <summary>
         /// property configuration

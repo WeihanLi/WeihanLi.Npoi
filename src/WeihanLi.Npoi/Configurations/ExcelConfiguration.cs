@@ -27,7 +27,7 @@ namespace WeihanLi.Npoi.Configurations
 
         internal FilterSetting FilterSetting { get; set; }
 
-        internal IDictionary<int, SheetConfiguration> SheetSettings { get; set; }
+        internal IDictionary<int, SheetSetting> SheetSettings { get; set; }
 
         internal Func<TEntity, bool> DataValidationFunc { get; private set; }
 
@@ -39,48 +39,18 @@ namespace WeihanLi.Npoi.Configurations
         {
             PropertyConfigurationDictionary = new Dictionary<PropertyInfo, PropertyConfiguration>();
             ExcelSetting = (setting ?? ExcelHelper.DefaultExcelSetting) ?? new ExcelSetting();
-            SheetSettings = new Dictionary<int, SheetConfiguration>(4)
+            SheetSettings = new Dictionary<int, SheetSetting>(4)
             {
-                { 0, new SheetConfiguration() }
+                { 0, new SheetSetting() }
             };
             FreezeSettings = new List<FreezeSetting>(4);
         }
 
         #region ExcelSettings FluentAPI
 
-        public IExcelConfiguration HasAuthor(string author)
+        public IExcelConfiguration HasExcelSetting(Action<ExcelSetting> configAction)
         {
-            ExcelSetting.Author = author;
-            return this;
-        }
-
-        public IExcelConfiguration HasTitle(string title)
-        {
-            ExcelSetting.Title = title;
-            return this;
-        }
-
-        public IExcelConfiguration HasDescription(string description)
-        {
-            ExcelSetting.Description = description;
-            return this;
-        }
-
-        public IExcelConfiguration HasSubject(string subject)
-        {
-            ExcelSetting.Subject = subject;
-            return this;
-        }
-
-        public IExcelConfiguration HasCompany(string company)
-        {
-            ExcelSetting.Company = company;
-            return this;
-        }
-
-        public IExcelConfiguration HasCategory(string category)
-        {
-            ExcelSetting.Category = category;
+            configAction?.Invoke(ExcelSetting);
             return this;
         }
 
@@ -169,7 +139,7 @@ namespace WeihanLi.Npoi.Configurations
 
         #region Sheet
 
-        public IExcelConfiguration HasSheetConfiguration(Action<SheetConfiguration> configAction, int sheetIndex = 0)
+        public IExcelConfiguration HasSheetSetting(Action<SheetSetting> configAction, int sheetIndex = 0)
         {
             if (sheetIndex >= 0 && configAction != null)
             {
@@ -181,10 +151,7 @@ namespace WeihanLi.Npoi.Configurations
                 {
                     SheetSettings[sheetIndex]
                         = sheetSetting
-                        = new SheetConfiguration()
-                        {
-                            SheetIndex = sheetIndex
-                        };
+                        = new SheetSetting();
                 }
                 configAction.Invoke(sheetSetting);
             }
