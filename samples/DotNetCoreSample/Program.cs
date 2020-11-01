@@ -143,7 +143,7 @@ namespace DotNetCoreSample
                 .HasDescription("WeihanLi.Npoi test")
                 .HasSubject("WeihanLi.Npoi test");
 
-            setting.HasSheetConfiguration(config =>
+            setting.HasSheetSetting(config =>
             {
                 config.StartRowIndex = 1;
                 config.SheetName = "SystemSettingsList";

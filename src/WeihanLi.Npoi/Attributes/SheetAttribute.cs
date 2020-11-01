@@ -1,12 +1,12 @@
 ﻿using System;
-using WeihanLi.Npoi.Configurations;
+using WeihanLi.Npoi.Settings;
 
 namespace WeihanLi.Npoi.Attributes
 {
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
     public sealed class SheetAttribute : Attribute
     {
-        public int SheetIndex { get => SheetSetting.SheetIndex; set => SheetSetting.SheetIndex = value; }
+        public int SheetIndex { get; set; }
 
         public string SheetName { get => SheetSetting.SheetName; set => SheetSetting.SheetName = value; }
 
@@ -78,8 +78,8 @@ namespace WeihanLi.Npoi.Attributes
             set => SheetSetting.AutoColumnWidthEnabled = value;
         }
 
-        internal SheetConfiguration SheetSetting { get; }
+        internal SheetSetting SheetSetting { get; }
 
-        public SheetAttribute() => SheetSetting = new SheetConfiguration();
+        public SheetAttribute() => SheetSetting = new SheetSetting();
     }
 }

@@ -9,12 +9,13 @@ using WeihanLi.Common.Helpers;
 using WeihanLi.Extensions;
 using WeihanLi.Npoi.Abstract;
 using WeihanLi.Npoi.Configurations;
+using WeihanLi.Npoi.Settings;
 
 namespace WeihanLi.Npoi
 {
     internal static class InternalExcelHelper
     {
-        private static SheetConfiguration GetSheetSetting(IDictionary<int, SheetConfiguration> sheetSettings, int sheetIndex)
+        private static SheetSetting GetSheetSetting(IDictionary<int, SheetSetting> sheetSettings, int sheetIndex)
         {
             return sheetIndex >= 0 && sheetSettings.ContainsKey(sheetIndex)
                 ? sheetSettings[sheetIndex]
@@ -297,7 +298,7 @@ namespace WeihanLi.Npoi
             return sheet;
         }
 
-        private static void PostSheetProcess<TEntity>(ISheet sheet, SheetConfiguration sheetSetting, int rowsCount, ExcelConfiguration<TEntity> excelConfiguration, IDictionary<PropertyInfo, PropertyConfiguration> propertyColumnDictionary)
+        private static void PostSheetProcess<TEntity>(ISheet sheet, SheetSetting sheetSetting, int rowsCount, ExcelConfiguration<TEntity> excelConfiguration, IDictionary<PropertyInfo, PropertyConfiguration> propertyColumnDictionary)
         {
             if (rowsCount > 0)
             {

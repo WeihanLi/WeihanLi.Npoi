@@ -17,7 +17,7 @@ namespace WeihanLi.Npoi.Test
             var noticeSetting = FluentSettings.For<Notice>();
             noticeSetting.HasAuthor("WeihanLi")
                 .HasTitle("WeihanLi.Npoi test")
-                .HasSheetConfiguration(0, "NoticeList", 1)
+                .HasSheetConfiguration(0, "NoticeList")
                 ;
             noticeSetting.Property(_ => _.Id)
                 .HasColumnIndex(0);

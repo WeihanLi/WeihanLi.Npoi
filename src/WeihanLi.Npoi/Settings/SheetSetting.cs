@@ -2,35 +2,22 @@
 using System;
 using WeihanLi.Extensions;
 
-namespace WeihanLi.Npoi.Configurations
+namespace WeihanLi.Npoi.Settings
 {
-    public sealed class SheetConfiguration
+    /// <summary>
+    /// Excel Sheet Settings
+    /// </summary>
+    public sealed class SheetSetting
     {
         private int _startRowIndex = 1;
         private string _sheetName = "Sheet0";
-        private int _sheetIndex;
         private Func<IRow, bool> _rowFilter;
         private Func<ICell, bool> _cellFilter;
 
-        public SheetConfiguration()
+        public SheetSetting()
         {
             _rowFilter = row => true;
             _cellFilter = cell => true;
-        }
-
-        /// <summary>
-        /// SheetIndex
-        /// </summary>
-        public int SheetIndex
-        {
-            get => _sheetIndex;
-            set
-            {
-                if (value >= 0)
-                {
-                    _sheetIndex = value;
-                }
-            }
         }
 
         /// <summary>

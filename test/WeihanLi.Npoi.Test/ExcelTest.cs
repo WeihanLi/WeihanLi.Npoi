@@ -534,7 +534,7 @@ namespace WeihanLi.Npoi.Test
         [Theory]
         [InlineData(ExcelFormat.Xls)]
         [InlineData(ExcelFormat.Xlsx)]
-        public void ExcelImportWithColumnFilter(ExcelFormat excelFormat)
+        public void ExcelImportWithCellFilter(ExcelFormat excelFormat)
         {
             IReadOnlyList<Notice> list = Enumerable.Range(0, 10).Select(i => new Notice()
             {
@@ -549,9 +549,9 @@ namespace WeihanLi.Npoi.Test
             var settings = FluentSettings.For<Notice>();
             lock (settings)
             {
-                settings.HasSheetConfiguration(configuration =>
+                settings.HasSheetSetting(setting =>
                 {
-                    configuration.CellFilter = cell => cell.ColumnIndex == 0;
+                    setting.CellFilter = cell => cell.ColumnIndex == 0;
                 });
 
                 var importedList = ExcelHelper.ToEntityList<Notice>(excelBytes, excelFormat);
@@ -572,9 +572,9 @@ namespace WeihanLi.Npoi.Test
                     }
                 }
 
-                settings.HasSheetConfiguration(configuration =>
+                settings.HasSheetSetting(setting =>
                 {
-                    configuration.CellFilter = null;
+                    setting.CellFilter = null;
                 });
             }
         }
