@@ -60,7 +60,7 @@ namespace WeihanLi.Npoi
                 throw new ArgumentException(msg);
             }
 
-            using (var stream = File.OpenRead(excelPath))
+            using (var stream = new FileStream(excelPath, FileMode.Open, FileAccess.Read, FileShare.Read))
             {
                 return Path.GetExtension(excelPath).EqualsIgnoreCase(".xls") ? new HSSFWorkbook(stream) : (IWorkbook)new XSSFWorkbook(stream);
             }
@@ -433,7 +433,7 @@ namespace WeihanLi.Npoi
         /// </summary>
         /// <typeparam name="TEntity">TEntity</typeparam>
         /// <returns></returns>
-        [Obsolete("Please use FluentSettings.For<TEntity>, this method will be removed in next release")]
+        [Obsolete("Please use FluentSettings.For<TEntity>, this method will be removed in next release", true)]
         public static IExcelConfiguration<TEntity> SettingFor<TEntity>() => FluentSettings.For<TEntity>();
     }
 }

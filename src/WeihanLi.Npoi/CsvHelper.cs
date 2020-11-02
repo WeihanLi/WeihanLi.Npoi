@@ -142,7 +142,7 @@ namespace WeihanLi.Npoi
                 throw new ArgumentException(Resource.FileNotFound, nameof(filePath));
             }
 
-            using (var fs = new FileStream(filePath, FileMode.Open, FileAccess.Read))
+            using (var fs = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.Read))
             {
                 return ToDataTable(fs);
             }
