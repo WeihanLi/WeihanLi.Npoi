@@ -60,7 +60,7 @@ namespace WeihanLi.Npoi
                 throw new ArgumentException(msg);
             }
 
-            using (var stream = new FileStream(excelPath, FileMode.Open, FileAccess.Read, FileShare.Read))
+            using (var stream = new FileStream(excelPath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
             {
                 return Path.GetExtension(excelPath).EqualsIgnoreCase(".xls") ? new HSSFWorkbook(stream) : (IWorkbook)new XSSFWorkbook(stream);
             }
