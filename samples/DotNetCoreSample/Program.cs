@@ -16,7 +16,13 @@ namespace DotNetCoreSample
             FluentSettingsForExcel();
             var tempDirPath = $@"{Environment.GetEnvironmentVariable("USERPROFILE")}\Desktop\temp\test";
 
-            //var tempExcelPath = Path.Combine(tempDirPath, "test.xlsx");
+            //FluentSettings.For<ppDto>()
+            //    .HasSheetSetting(sheet =>
+            //    {
+            //        sheet.CellFilter = cell => cell.ColumnIndex <= 10;
+            //    });
+            var tempExcelPath = Path.Combine(tempDirPath, "testdata.xlsx");
+            var t_list = ExcelHelper.ToEntityList<ppDto>(tempExcelPath);
             //var tempTable = ExcelHelper.ToDataTable(tempExcelPath);
 
             //using (var conn = new SqlConnection("server=.;uid=liweihan;pwd=Admin888;database=Reservation"))

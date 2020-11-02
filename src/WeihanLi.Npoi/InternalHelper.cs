@@ -89,7 +89,7 @@ namespace WeihanLi.Npoi
             foreach (var item in excelConfiguration.PropertyConfigurationDictionary
                 .Where(_ => !_.Value.IsIgnored)
                 .OrderBy(_ => _.Value.ColumnIndex >= 0 ? _.Value.ColumnIndex : int.MaxValue)
-                .ThenBy(_ => _.Key)
+                .ThenBy(_ => _.Key.Name)
                 .Select(_ => _.Value)
                 )
             {

@@ -14,10 +14,10 @@ namespace WeihanLi.Npoi.Attributes
 
         public int HeaderRowIndex => SheetSetting.HeaderRowIndex;
 
-        public int? EndRowIndex { get => SheetSetting.EndRowIndex; set => SheetSetting.EndRowIndex = value; }
+        public int EndRowIndex { get => SheetSetting.EndRowIndex ?? -1; set => SheetSetting.EndRowIndex = value >= 0 ? value : -1; }
 
         private int _startColumnIndex;
-        private int? _endColumnIndex;
+        private int _endColumnIndex = -1;
 
         /// <summary>
         /// StartColumnIndex
@@ -30,17 +30,17 @@ namespace WeihanLi.Npoi.Attributes
             {
                 if (value >= 0)
                 {
-                    if (_endColumnIndex.HasValue && _endColumnIndex.Value >= value)
+                    _startColumnIndex = value;
+                    if (_endColumnIndex >= value)
                     {
                         SheetSetting.CellFilter = cell =>
-                            cell.ColumnIndex >= value && cell.ColumnIndex <= _endColumnIndex.Value
+                            cell.ColumnIndex >= _startColumnIndex && cell.ColumnIndex <= _endColumnIndex
                             ;
                     }
                     else
                     {
-                        SheetSetting.CellFilter = cell => cell.ColumnIndex >= value;
+                        SheetSetting.CellFilter = cell => cell.ColumnIndex >= _startColumnIndex;
                     }
-                    _startColumnIndex = value;
                 }
             }
         }
@@ -49,25 +49,22 @@ namespace WeihanLi.Npoi.Attributes
         /// EndColumnIndex
         /// End Column Index when import
         /// </summary>
-        public int? EndColumnIndex
+        public int EndColumnIndex
         {
             get => _endColumnIndex;
             set
             {
-                if (value.HasValue)
+                if (value >= _startColumnIndex)
                 {
-                    if (value.Value >= _startColumnIndex)
-                    {
-                        SheetSetting.CellFilter = cell =>
-                                cell.ColumnIndex >= value && cell.ColumnIndex <= _endColumnIndex.Value
-                            ;
-                        _endColumnIndex = value;
-                    }
+                    _endColumnIndex = value;
+                    SheetSetting.CellFilter = cell =>
+                            cell.ColumnIndex >= _startColumnIndex && cell.ColumnIndex <= _endColumnIndex
+                        ;
                 }
                 else
                 {
                     SheetSetting.CellFilter = cell => cell.ColumnIndex >= _startColumnIndex;
-                    _endColumnIndex = null;
+                    _endColumnIndex = -1;
                 }
             }
         }
