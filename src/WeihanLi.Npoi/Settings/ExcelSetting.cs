@@ -1,8 +1,7 @@
 ﻿namespace WeihanLi.Npoi.Settings
 {
     /// <summary>
-    /// Excel Settings
-    /// Excel文档属性设置
+    /// Excel Document Settings
     /// </summary>
     public sealed class ExcelSetting
     {
@@ -24,7 +23,7 @@
         /// <summary>
         /// Description
         /// </summary>
-        public string Description { get; set; } = "WeihanLi.Npoi";
+        public string Description { get; set; } = "WeihanLi.Npoi Generated";
 
         /// <summary>
         /// Subject

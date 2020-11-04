@@ -6,7 +6,7 @@ namespace WeihanLi.Npoi.Attributes
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
     public sealed class SheetAttribute : Attribute
     {
-        public int SheetIndex { get => SheetSetting.SheetIndex; set => SheetSetting.SheetIndex = value; }
+        public int SheetIndex { get; set; }
 
         public string SheetName { get => SheetSetting.SheetName; set => SheetSetting.SheetName = value; }
 
@@ -14,7 +14,60 @@ namespace WeihanLi.Npoi.Attributes
 
         public int HeaderRowIndex => SheetSetting.HeaderRowIndex;
 
-        public int? EndRowIndex { get => SheetSetting.EndRowIndex; set => SheetSetting.EndRowIndex = value; }
+        public int EndRowIndex { get => SheetSetting.EndRowIndex ?? -1; set => SheetSetting.EndRowIndex = value >= 0 ? value : -1; }
+
+        private int _startColumnIndex;
+        private int _endColumnIndex = -1;
+
+        /// <summary>
+        /// StartColumnIndex
+        /// Start Column Index when import
+        /// </summary>
+        public int StartColumnIndex
+        {
+            get => _startColumnIndex;
+            set
+            {
+                if (value >= 0)
+                {
+                    _startColumnIndex = value;
+                    if (_endColumnIndex >= value)
+                    {
+                        SheetSetting.CellFilter = cell =>
+                            cell.ColumnIndex >= _startColumnIndex && cell.ColumnIndex <= _endColumnIndex
+                            ;
+                    }
+                    else
+                    {
+                        SheetSetting.CellFilter = cell => cell.ColumnIndex >= _startColumnIndex;
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// EndColumnIndex
+        /// End Column Index when import
+        /// </summary>
+        public int EndColumnIndex
+        {
+            get => _endColumnIndex;
+            set
+            {
+                if (value >= _startColumnIndex)
+                {
+                    _endColumnIndex = value;
+                    SheetSetting.CellFilter = cell =>
+                            cell.ColumnIndex >= _startColumnIndex && cell.ColumnIndex <= _endColumnIndex
+                        ;
+                }
+                else
+                {
+                    SheetSetting.CellFilter = cell => cell.ColumnIndex >= _startColumnIndex;
+                    _endColumnIndex = -1;
+                }
+            }
+        }
 
         public bool AutoColumnWidthEnabled
         {

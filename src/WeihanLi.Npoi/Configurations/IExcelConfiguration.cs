@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq.Expressions;
+using WeihanLi.Npoi.Settings;
 
 namespace WeihanLi.Npoi.Configurations
 {
@@ -8,13 +9,17 @@ namespace WeihanLi.Npoi.Configurations
         /// <summary>
         /// Sheet Configuration
         /// </summary>
-        /// <param name="sheetIndex">sheetIndex</param>
-        /// <param name="sheetName">sheetName</param>
-        /// <param name="startRowIndex">startRowIndex</param>
-        /// <param name="enableAutoColumnWidth">enable auto column width if true otherwise false</param>
-        /// <param name="endRowIndex">endRowIndex, set this if you wanna control where to end(inclueded)</param>
+        /// <param name="configAction">sheet config delegate</param>
+        /// <param name="sheetIndex">sheetIndex, 0 is the default value</param>
         /// <returns>current excel configuration<see cref="IExcelConfiguration"/></returns>
-        IExcelConfiguration HasSheetConfiguration(int sheetIndex, string sheetName, int startRowIndex, bool enableAutoColumnWidth, int? endRowIndex = null);
+        IExcelConfiguration HasSheetSetting(Action<SheetSetting> configAction, int sheetIndex = 0);
+
+        /// <summary>
+        /// excel setting configure
+        /// </summary>
+        /// <param name="configAction">config delegate</param>
+        /// <returns>current excel configuration<see cref="IExcelConfiguration"/></returns>
+        IExcelConfiguration HasExcelSetting(Action<ExcelSetting> configAction);
 
         /// <summary>
         /// setting freeze pane
@@ -50,52 +55,6 @@ namespace WeihanLi.Npoi.Configurations
         /// <param name="lastColumn">lastCol Index of last column (inclusive), must be equal to or larger than {@code firstCol}</param>
         /// <returns>current excel configuration<see cref="IExcelConfiguration"/></returns>
         IExcelConfiguration HasFilter(int firstColumn, int? lastColumn);
-
-        #region ExcelSettings FluentAPI
-
-        /// <summary>
-        /// set excel Author
-        /// </summary>
-        /// <param name="author">author</param>
-        /// <returns>current excel configuration<see cref="IExcelConfiguration"/></returns>
-        IExcelConfiguration HasAuthor(string author);
-
-        /// <summary>
-        /// set excel title
-        /// </summary>
-        /// <param name="title">title</param>
-        /// <returns>current excel configuration<see cref="IExcelConfiguration"/></returns>
-        IExcelConfiguration HasTitle(string title);
-
-        /// <summary>
-        /// set excel description
-        /// </summary>
-        /// <param name="description">description</param>
-        /// <returns>current excel configuration<see cref="IExcelConfiguration"/></returns>
-        IExcelConfiguration HasDescription(string description);
-
-        /// <summary>
-        /// set excel subject
-        /// </summary>
-        /// <param name="subject">subject</param>
-        /// <returns>current excel configuration<see cref="IExcelConfiguration"/></returns>
-        IExcelConfiguration HasSubject(string subject);
-
-        /// <summary>
-        /// set excel company
-        /// </summary>
-        /// <param name="company">company</param>
-        /// <returns>current excel configuration<see cref="IExcelConfiguration"/></returns>
-        IExcelConfiguration HasCompany(string company);
-
-        /// <summary>
-        /// set excel category
-        /// </summary>
-        /// <param name="category">category</param>
-        /// <returns>current excel configuration<see cref="IExcelConfiguration"/></returns>
-        IExcelConfiguration HasCategory(string category);
-
-        #endregion ExcelSettings FluentAPI
     }
 
     public interface IExcelConfiguration<TEntity> : IExcelConfiguration

@@ -48,39 +48,9 @@ namespace WeihanLi.Npoi.Configurations
 
         #region ExcelSettings FluentAPI
 
-        public IExcelConfiguration HasAuthor(string author)
+        public IExcelConfiguration HasExcelSetting(Action<ExcelSetting> configAction)
         {
-            ExcelSetting.Author = author;
-            return this;
-        }
-
-        public IExcelConfiguration HasTitle(string title)
-        {
-            ExcelSetting.Title = title;
-            return this;
-        }
-
-        public IExcelConfiguration HasDescription(string description)
-        {
-            ExcelSetting.Description = description;
-            return this;
-        }
-
-        public IExcelConfiguration HasSubject(string subject)
-        {
-            ExcelSetting.Subject = subject;
-            return this;
-        }
-
-        public IExcelConfiguration HasCompany(string company)
-        {
-            ExcelSetting.Company = company;
-            return this;
-        }
-
-        public IExcelConfiguration HasCategory(string category)
-        {
-            ExcelSetting.Category = category;
+            configAction?.Invoke(ExcelSetting);
             return this;
         }
 
@@ -169,29 +139,21 @@ namespace WeihanLi.Npoi.Configurations
 
         #region Sheet
 
-        public IExcelConfiguration HasSheetConfiguration(int sheetIndex, string sheetName, int startRowIndex,
-            bool enableAutoColumnWidth, int? endRowIndex = null)
+        public IExcelConfiguration HasSheetSetting(Action<SheetSetting> configAction, int sheetIndex = 0)
         {
-            if (sheetIndex >= 0)
+            if (sheetIndex >= 0 && configAction != null)
             {
                 if (SheetSettings.TryGetValue(sheetIndex, out var sheetSetting))
                 {
-                    sheetSetting.SheetName = sheetName;
-                    sheetSetting.StartRowIndex = startRowIndex;
-                    sheetSetting.AutoColumnWidthEnabled = enableAutoColumnWidth;
-                    sheetSetting.EndRowIndex = endRowIndex;
+                    configAction.Invoke(sheetSetting);
                 }
                 else
                 {
-                    SheetSettings[sheetIndex] = new SheetSetting()
-                    {
-                        SheetIndex = sheetIndex,
-                        SheetName = sheetName,
-                        StartRowIndex = startRowIndex,
-                        AutoColumnWidthEnabled = enableAutoColumnWidth,
-                        EndRowIndex = endRowIndex
-                    };
+                    SheetSettings[sheetIndex]
+                        = sheetSetting
+                        = new SheetSetting();
                 }
+                configAction.Invoke(sheetSetting);
             }
             return this;
         }

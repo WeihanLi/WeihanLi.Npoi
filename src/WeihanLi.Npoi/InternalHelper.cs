@@ -74,10 +74,11 @@ namespace WeihanLi.Npoi
         /// <param name="excelConfiguration">excelConfiguration</param>
         private static void AdjustColumnIndex<TEntity>(ExcelConfiguration<TEntity> excelConfiguration)
         {
-            ICollection<int> validColumnIndex = excelConfiguration.PropertyConfigurationDictionary.Values.
-                Where(c => !c.IsIgnored)
+            ICollection<int> validColumnIndex = excelConfiguration.PropertyConfigurationDictionary.Values
+                .Where(c => !c.IsIgnored)
                 .Select(x => x.ColumnIndex)
                 .ToArray();
+            // return if already adjusted
             if (validColumnIndex.All(_ => _ >= 0) &&
                 validColumnIndex.Distinct().Count() == validColumnIndex.Count)
             {

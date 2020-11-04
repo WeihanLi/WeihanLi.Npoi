@@ -48,6 +48,7 @@ namespace WeihanLi.Npoi
             for (var rowIndex = sheet.FirstRowNum; rowIndex <= (sheetSetting.EndRowIndex ?? sheet.LastRowNum); rowIndex++)
             {
                 var row = sheet.GetRow(rowIndex);
+
                 if (rowIndex == sheetSetting.HeaderRowIndex) // readerHeader
                 {
                     if (row != null)
@@ -73,6 +74,11 @@ namespace WeihanLi.Npoi
                 }
                 else if (rowIndex >= sheetSetting.StartRowIndex)
                 {
+                    if (sheetSetting.RowFilter?.Invoke(row) == false)
+                    {
+                        continue;
+                    }
+
                     if (row == null)
                     {
                         entities.Add(default);
@@ -92,27 +98,31 @@ namespace WeihanLi.Npoi
                                     var colIndex = propertyColumnDic[key].ColumnIndex;
                                     if (colIndex >= 0 && key.CanWrite)
                                     {
-                                        object columnValue = null;
+                                        var columnValue = key.PropertyType.GetDefaultValue();
+                                        var cell = row.GetCell(colIndex);
 
-                                        var valueApplied = false;
-                                        if (InternalCache.ColumnInputFormatterFuncCache.TryGetValue(key, out var formatterFunc) && formatterFunc?.Method != null)
+                                        if (sheetSetting.CellFilter?.Invoke(cell) != false)
                                         {
-                                            var cellValue = row.GetCell(colIndex).GetCellValue<string>(formulaEvaluator);
-                                            try
+                                            var valueApplied = false;
+                                            if (InternalCache.ColumnInputFormatterFuncCache.TryGetValue(key, out var formatterFunc) && formatterFunc?.Method != null)
                                             {
-                                                // apply custom formatterFunc
-                                                columnValue = formatterFunc.DynamicInvoke(cellValue);
-                                                valueApplied = true;
+                                                var cellValue = cell.GetCellValue<string>(formulaEvaluator);
+                                                try
+                                                {
+                                                    // apply custom formatterFunc
+                                                    columnValue = formatterFunc.DynamicInvoke(cellValue);
+                                                    valueApplied = true;
+                                                }
+                                                catch (Exception e)
+                                                {
+                                                    Debug.WriteLine(e);
+                                                    InvokeHelper.OnInvokeException?.Invoke(e);
+                                                }
                                             }
-                                            catch (Exception e)
+                                            if (valueApplied == false)
                                             {
-                                                Debug.WriteLine(e);
-                                                InvokeHelper.OnInvokeException?.Invoke(e);
+                                                columnValue = cell.GetCellValue(key.PropertyType, formulaEvaluator);
                                             }
-                                        }
-                                        if (valueApplied == false)
-                                        {
-                                            columnValue = row.GetCell(colIndex).GetCellValue(key.PropertyType, formulaEvaluator);
                                         }
                                         key.GetValueSetter()?.Invoke(entity, columnValue);
                                     }
@@ -126,27 +136,31 @@ namespace WeihanLi.Npoi
                                     var colIndex = propertyColumnDic[key].ColumnIndex;
                                     if (colIndex >= 0 && key.CanWrite)
                                     {
-                                        object columnValue = null;
+                                        var columnValue = key.PropertyType.GetDefaultValue();
+                                        var cell = row.GetCell(colIndex);
 
-                                        var valueApplied = false;
-                                        if (InternalCache.ColumnInputFormatterFuncCache.TryGetValue(key, out var formatterFunc) && formatterFunc?.Method != null)
+                                        if (sheetSetting.CellFilter?.Invoke(cell) != false)
                                         {
-                                            var cellValue = row.GetCell(colIndex).GetCellValue<string>(formulaEvaluator);
-                                            try
+                                            var valueApplied = false;
+                                            if (InternalCache.ColumnInputFormatterFuncCache.TryGetValue(key, out var formatterFunc) && formatterFunc?.Method != null)
                                             {
-                                                // apply custom formatterFunc
-                                                columnValue = formatterFunc.DynamicInvoke(cellValue);
-                                                valueApplied = true;
+                                                var cellValue = cell.GetCellValue<string>(formulaEvaluator);
+                                                try
+                                                {
+                                                    // apply custom formatterFunc
+                                                    columnValue = formatterFunc.DynamicInvoke(cellValue);
+                                                    valueApplied = true;
+                                                }
+                                                catch (Exception e)
+                                                {
+                                                    Debug.WriteLine(e);
+                                                    InvokeHelper.OnInvokeException?.Invoke(e);
+                                                }
                                             }
-                                            catch (Exception e)
+                                            if (valueApplied == false)
                                             {
-                                                Debug.WriteLine(e);
-                                                InvokeHelper.OnInvokeException?.Invoke(e);
+                                                columnValue = cell.GetCellValue(key.PropertyType, formulaEvaluator);
                                             }
-                                        }
-                                        if (valueApplied == false)
-                                        {
-                                            columnValue = row.GetCell(colIndex).GetCellValue(key.PropertyType, formulaEvaluator);
                                         }
 
                                         key.GetValueSetter()?.Invoke(entity, columnValue);
@@ -188,13 +202,10 @@ namespace WeihanLi.Npoi
                             }
                         }
 
-                        if (configuration.DataValidationFunc != null && !configuration.DataValidationFunc(entity))
+                        if (configuration.DataValidationFunc?.Invoke(entity) != false)
                         {
-                            // data invalid
-                            continue;
+                            entities.Add(entity);
                         }
-
-                        entities.Add(entity);
                     }
                 }
             }
