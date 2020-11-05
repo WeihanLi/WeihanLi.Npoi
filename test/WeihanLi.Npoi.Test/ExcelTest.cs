@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using WeihanLi.Extensions;
+using WeihanLi.Npoi.Attributes;
 using WeihanLi.Npoi.Test.Models;
 using Xunit;
 
@@ -577,6 +578,42 @@ namespace WeihanLi.Npoi.Test
                     setting.CellFilter = null;
                 });
             }
+        }
+
+        [Theory]
+        [InlineData(ExcelFormat.Xls)]
+        [InlineData(ExcelFormat.Xlsx)]
+        public void ExcelImportWithCellFilterAttributeTest(ExcelFormat excelFormat)
+        {
+            IReadOnlyList<CellFilterAttributeTest> list = Enumerable.Range(0, 10).Select(i => new CellFilterAttributeTest()
+            {
+                Id = i + 1,
+                Description = $"content_{i}",
+                Name = $"title_{i}",
+            }).ToArray();
+            var excelBytes = list.ToExcelBytes(excelFormat);
+            var importedList = ExcelHelper.ToEntityList<CellFilterAttributeTest>(excelBytes, excelFormat);
+            Assert.NotNull(importedList);
+            Assert.Equal(list.Count, importedList.Count);
+            for (var i = 0; i < importedList.Count; i++)
+            {
+                Assert.Equal(list[i].Id, importedList[i].Id);
+                Assert.Equal(list[i].Name, importedList[i].Name);
+                Assert.Null(importedList[i].Description);
+            }
+        }
+
+        [Sheet(SheetName = "test", AutoColumnWidthEnabled = true, StartColumnIndex = 0, EndColumnIndex = 1)]
+        private class CellFilterAttributeTest
+        {
+            [Column(Index = 0)]
+            public int Id { get; set; }
+
+            [Column(Index = 1)]
+            public string Name { get; set; }
+
+            [Column(Index = 2)]
+            public string Description { get; set; }
         }
     }
 }
