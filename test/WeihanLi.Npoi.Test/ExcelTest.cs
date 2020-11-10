@@ -621,7 +621,7 @@ namespace WeihanLi.Npoi.Test
         [InlineData(ExcelFormat.Xls, 132_000, 3)]
         //[InlineData(ExcelFormat.Xls, 1_000_000, 16)]
         //[InlineData(ExcelFormat.Xlsx, 1_048_576)]
-        public void AutoSplitSheetsTest(ExcelFormat excelFormat, int rowsCount, int expectedSheetCount)
+        public void EntityListAutoSplitSheetsTest(ExcelFormat excelFormat, int rowsCount, int expectedSheetCount)
         {
             var list = Enumerable.Range(1, rowsCount)
                 .Select(x => new Notice()
