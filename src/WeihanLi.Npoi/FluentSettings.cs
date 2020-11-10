@@ -8,7 +8,7 @@ namespace WeihanLi.Npoi
         /// Fluent Setting For TEntity
         /// </summary>
         /// <typeparam name="TEntity">TEntity</typeparam>
-        /// <returns></returns>
+        /// <returns>excel configuration for entity</returns>
         public static IExcelConfiguration<TEntity> For<TEntity>() => InternalHelper.GetExcelConfigurationMapping<TEntity>();
     }
 }

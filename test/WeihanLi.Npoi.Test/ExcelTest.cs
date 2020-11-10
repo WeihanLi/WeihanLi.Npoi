@@ -10,7 +10,7 @@ using Xunit;
 
 namespace WeihanLi.Npoi.Test
 {
-    public class ExcelTest : TestBase
+    public class ExcelTest
     {
         [Theory]
         [InlineData(ExcelFormat.Xls)]
@@ -614,6 +614,28 @@ namespace WeihanLi.Npoi.Test
 
             [Column(Index = 2)]
             public string Description { get; set; }
+        }
+
+        [Theory]
+        [InlineData(ExcelFormat.Xls, 65536, 2)]
+        [InlineData(ExcelFormat.Xls, 132_000, 3)]
+        //[InlineData(ExcelFormat.Xls, 1_000_000, 16)]
+        //[InlineData(ExcelFormat.Xlsx, 1_048_576)]
+        public void AutoSplitSheetsTest(ExcelFormat excelFormat, int rowsCount, int expectedSheetCount)
+        {
+            var list = Enumerable.Range(1, rowsCount)
+                .Select(x => new Notice()
+                {
+                    Id = x,
+                    Content = $"content_{x}",
+                    Title = $"title_{x}",
+                    Publisher = $"publisher_{x}"
+                })
+                .ToArray();
+
+            var bytes = list.ToExcelBytes(excelFormat);
+            var workbook = ExcelHelper.LoadExcel(bytes, excelFormat);
+            Assert.Equal(expectedSheetCount, workbook.NumberOfSheets);
         }
     }
 }

@@ -185,11 +185,23 @@ namespace WeihanLi.Npoi
         public static int ImportData<TEntity>([NotNull] this IWorkbook workbook, IEnumerable<TEntity> list,
             int sheetIndex)
         {
-            if (sheetIndex >= InternalConstants.MaxSheetNum)
+            if (workbook is HSSFWorkbook)
             {
-                throw new ArgumentException(
-                    string.Format(Resource.IndexOutOfRange, nameof(sheetIndex), InternalConstants.MaxSheetNum),
-                    nameof(sheetIndex));
+                if (sheetIndex >= InternalConstants.MaxSheetCountXls)
+                {
+                    throw new ArgumentException(
+                        string.Format(Resource.IndexOutOfRange, nameof(sheetIndex), InternalConstants.MaxSheetCountXls),
+                        nameof(sheetIndex));
+                }
+            }
+            else
+            {
+                if (sheetIndex >= InternalConstants.MaxSheetCountXlsx)
+                {
+                    throw new ArgumentException(
+                        string.Format(Resource.IndexOutOfRange, nameof(sheetIndex), InternalConstants.MaxSheetCountXls),
+                        nameof(sheetIndex));
+                }
             }
 
             var configuration = InternalHelper.GetExcelConfigurationMapping<TEntity>();
@@ -254,11 +266,23 @@ namespace WeihanLi.Npoi
         public static int ImportData<TEntity>([NotNull] this IWorkbook workbook, [NotNull] DataTable dataTable,
             int sheetIndex)
         {
-            if (sheetIndex >= InternalConstants.MaxSheetNum)
+            if (workbook is HSSFWorkbook)
             {
-                throw new ArgumentException(
-                    string.Format(Resource.IndexOutOfRange, nameof(sheetIndex), InternalConstants.MaxSheetNum),
-                    nameof(sheetIndex));
+                if (sheetIndex >= InternalConstants.MaxSheetCountXls)
+                {
+                    throw new ArgumentException(
+                        string.Format(Resource.IndexOutOfRange, nameof(sheetIndex), InternalConstants.MaxSheetCountXls),
+                        nameof(sheetIndex));
+                }
+            }
+            else
+            {
+                if (sheetIndex >= InternalConstants.MaxSheetCountXlsx)
+                {
+                    throw new ArgumentException(
+                        string.Format(Resource.IndexOutOfRange, nameof(sheetIndex), InternalConstants.MaxSheetCountXls),
+                        nameof(sheetIndex));
+                }
             }
 
             var configuration = InternalHelper.GetExcelConfigurationMapping<TEntity>();
@@ -491,6 +515,21 @@ namespace WeihanLi.Npoi
         /// <typeparam name="TEntity">EntityType</typeparam>
         /// <param name="entityList">entityList</param>
         /// <param name="excelPath">excelPath</param>
+        public static void ToExcelFile<TEntity>([NotNull] this IList<TEntity> entityList,
+            [NotNull] string excelPath)
+        {
+            var workbook =
+                entityList.GetWorkbookWithAutoSplitSheet(
+                    excelPath.EndsWith(".xls") ? ExcelFormat.Xls : ExcelFormat.Xlsx);
+            workbook.WriteToFile(excelPath);
+        }
+
+        /// <summary>
+        ///     EntityList2ExcelFile
+        /// </summary>
+        /// <typeparam name="TEntity">EntityType</typeparam>
+        /// <param name="entityList">entityList</param>
+        /// <param name="excelPath">excelPath</param>
         public static void ToExcelFile<TEntity>([NotNull] this IEnumerable<TEntity> entityList,
             [NotNull] string excelPath) => ToExcelFile(entityList, excelPath, 0);
 
@@ -551,6 +590,20 @@ namespace WeihanLi.Npoi
             [NotNull] Stream stream, ExcelFormat excelFormat) => ToExcelStream(entityList, stream, excelFormat, 0);
 
         /// <summary>
+        ///     EntityList2ExcelStream
+        /// </summary>
+        /// <typeparam name="TEntity">EntityType</typeparam>
+        /// <param name="entityList">entityList</param>
+        /// <param name="stream">stream where to write</param>
+        /// <param name="excelFormat">excelFormat</param>
+        public static void ToExcelStream<TEntity>([NotNull] this IList<TEntity> entityList,
+            [NotNull] Stream stream, ExcelFormat excelFormat = ExcelFormat.Xls)
+        {
+            var workbook = entityList.GetWorkbookWithAutoSplitSheet(excelFormat);
+            workbook.Write(stream);
+        }
+
+        /// <summary>
         ///     EntityList2ExcelBytes(*.xls by default)
         /// </summary>
         /// <typeparam name="TEntity">EntityType</typeparam>
@@ -583,6 +636,50 @@ namespace WeihanLi.Npoi
             workbook.ImportData(entityList.ToArray(), sheetIndex);
 
             return workbook.ToExcelBytes();
+        }
+
+        /// <summary>
+        ///     EntityList2ExcelBytes
+        /// </summary>
+        /// <typeparam name="TEntity">EntityType</typeparam>
+        /// <param name="entityList">entityList</param>
+        /// <param name="excelFormat">excelFormat</param>
+        public static byte[] ToExcelBytes<TEntity>([NotNull] this IList<TEntity> entityList, ExcelFormat excelFormat = ExcelFormat.Xls)
+        {
+            var workbook = entityList.GetWorkbookWithAutoSplitSheet(excelFormat);
+            return workbook.ToExcelBytes();
+        }
+
+        /// <summary>
+        /// GetWorkbookWithAutoSplitSheet
+        /// </summary>
+        /// <typeparam name="TEntity">entity type</typeparam>
+        /// <param name="entityList">entity list</param>
+        /// <param name="excelFormat">excel format</param>
+        /// <returns>excel workbook with data</returns>
+        public static IWorkbook GetWorkbookWithAutoSplitSheet<TEntity>(this IList<TEntity> entityList, ExcelFormat excelFormat)
+        {
+            var configuration = InternalHelper.GetExcelConfigurationMapping<TEntity>();
+
+            var workbook = ExcelHelper.PrepareWorkbook(excelFormat, configuration.ExcelSetting);
+            var maxRowCount = workbook is HSSFWorkbook
+                ? InternalConstants.MaxRowCountXls
+                : InternalConstants.MaxRowCountXlsx;
+            maxRowCount -= configuration.SheetSettings[0].StartRowIndex;
+
+            var sheetCount = (entityList.Count + maxRowCount - 1) / maxRowCount;
+            while (workbook.NumberOfSheets < sheetCount)
+            {
+                workbook.CreateSheet();
+            }
+
+            for (var sheetIndex = 0; sheetIndex < sheetCount; sheetIndex++)
+            {
+                workbook.GetSheetAt(sheetIndex)
+                    .ImportData(entityList.Skip(sheetIndex * maxRowCount).Take(maxRowCount), 0);
+            }
+
+            return workbook;
         }
 
         /// <summary>
