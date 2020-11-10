@@ -1440,6 +1440,22 @@ references:
   isSpec: "True"
   fullName: WeihanLi.Npoi.NpoiExtensions.GetRowCollection
   nameWithType: NpoiExtensions.GetRowCollection
+- uid: WeihanLi.Npoi.NpoiExtensions.GetWorkbookWithAutoSplitSheet*
+  name: GetWorkbookWithAutoSplitSheet
+  href: docs/api/WeihanLi.Npoi.NpoiExtensions.html#WeihanLi_Npoi_NpoiExtensions_GetWorkbookWithAutoSplitSheet_
+  commentId: Overload:WeihanLi.Npoi.NpoiExtensions.GetWorkbookWithAutoSplitSheet
+  isSpec: "True"
+  fullName: WeihanLi.Npoi.NpoiExtensions.GetWorkbookWithAutoSplitSheet
+  nameWithType: NpoiExtensions.GetWorkbookWithAutoSplitSheet
+- uid: WeihanLi.Npoi.NpoiExtensions.GetWorkbookWithAutoSplitSheet``1(IList{``0},WeihanLi.Npoi.ExcelFormat)
+  name: GetWorkbookWithAutoSplitSheet<TEntity>(IList<TEntity>, ExcelFormat)
+  href: docs/api/WeihanLi.Npoi.NpoiExtensions.html#WeihanLi_Npoi_NpoiExtensions_GetWorkbookWithAutoSplitSheet__1_IList___0__WeihanLi_Npoi_ExcelFormat_
+  commentId: M:WeihanLi.Npoi.NpoiExtensions.GetWorkbookWithAutoSplitSheet``1(IList{``0},WeihanLi.Npoi.ExcelFormat)
+  name.vb: GetWorkbookWithAutoSplitSheet(Of TEntity)(IList(Of TEntity), ExcelFormat)
+  fullName: WeihanLi.Npoi.NpoiExtensions.GetWorkbookWithAutoSplitSheet<TEntity>(IList<TEntity>, WeihanLi.Npoi.ExcelFormat)
+  fullName.vb: WeihanLi.Npoi.NpoiExtensions.GetWorkbookWithAutoSplitSheet(Of TEntity)(IList(Of TEntity), WeihanLi.Npoi.ExcelFormat)
+  nameWithType: NpoiExtensions.GetWorkbookWithAutoSplitSheet<TEntity>(IList<TEntity>, ExcelFormat)
+  nameWithType.vb: NpoiExtensions.GetWorkbookWithAutoSplitSheet(Of TEntity)(IList(Of TEntity), ExcelFormat)
 - uid: WeihanLi.Npoi.NpoiExtensions.ImportData*
   name: ImportData
   href: docs/api/WeihanLi.Npoi.NpoiExtensions.html#WeihanLi_Npoi_NpoiExtensions_ImportData_
@@ -1689,6 +1705,15 @@ references:
   fullName.vb: WeihanLi.Npoi.NpoiExtensions.ToExcelBytes(Of TEntity)(IEnumerable(Of TEntity), WeihanLi.Npoi.ExcelFormat, System.Int32)
   nameWithType: NpoiExtensions.ToExcelBytes<TEntity>(IEnumerable<TEntity>, ExcelFormat, Int32)
   nameWithType.vb: NpoiExtensions.ToExcelBytes(Of TEntity)(IEnumerable(Of TEntity), ExcelFormat, Int32)
+- uid: WeihanLi.Npoi.NpoiExtensions.ToExcelBytes``1(IList{``0},WeihanLi.Npoi.ExcelFormat)
+  name: ToExcelBytes<TEntity>(IList<TEntity>, ExcelFormat)
+  href: docs/api/WeihanLi.Npoi.NpoiExtensions.html#WeihanLi_Npoi_NpoiExtensions_ToExcelBytes__1_IList___0__WeihanLi_Npoi_ExcelFormat_
+  commentId: M:WeihanLi.Npoi.NpoiExtensions.ToExcelBytes``1(IList{``0},WeihanLi.Npoi.ExcelFormat)
+  name.vb: ToExcelBytes(Of TEntity)(IList(Of TEntity), ExcelFormat)
+  fullName: WeihanLi.Npoi.NpoiExtensions.ToExcelBytes<TEntity>(IList<TEntity>, WeihanLi.Npoi.ExcelFormat)
+  fullName.vb: WeihanLi.Npoi.NpoiExtensions.ToExcelBytes(Of TEntity)(IList(Of TEntity), WeihanLi.Npoi.ExcelFormat)
+  nameWithType: NpoiExtensions.ToExcelBytes<TEntity>(IList<TEntity>, ExcelFormat)
+  nameWithType.vb: NpoiExtensions.ToExcelBytes(Of TEntity)(IList(Of TEntity), ExcelFormat)
 - uid: WeihanLi.Npoi.NpoiExtensions.ToExcelBytesByTemplate*
   name: ToExcelBytesByTemplate
   href: docs/api/WeihanLi.Npoi.NpoiExtensions.html#WeihanLi_Npoi_NpoiExtensions_ToExcelBytesByTemplate_
@@ -1778,6 +1803,15 @@ references:
   fullName.vb: WeihanLi.Npoi.NpoiExtensions.ToExcelFile(Of TEntity)(IEnumerable(Of TEntity), System.String, System.Int32)
   nameWithType: NpoiExtensions.ToExcelFile<TEntity>(IEnumerable<TEntity>, String, Int32)
   nameWithType.vb: NpoiExtensions.ToExcelFile(Of TEntity)(IEnumerable(Of TEntity), String, Int32)
+- uid: WeihanLi.Npoi.NpoiExtensions.ToExcelFile``1(IList{``0},System.String)
+  name: ToExcelFile<TEntity>(IList<TEntity>, String)
+  href: docs/api/WeihanLi.Npoi.NpoiExtensions.html#WeihanLi_Npoi_NpoiExtensions_ToExcelFile__1_IList___0__System_String_
+  commentId: M:WeihanLi.Npoi.NpoiExtensions.ToExcelFile``1(IList{``0},System.String)
+  name.vb: ToExcelFile(Of TEntity)(IList(Of TEntity), String)
+  fullName: WeihanLi.Npoi.NpoiExtensions.ToExcelFile<TEntity>(IList<TEntity>, System.String)
+  fullName.vb: WeihanLi.Npoi.NpoiExtensions.ToExcelFile(Of TEntity)(IList(Of TEntity), System.String)
+  nameWithType: NpoiExtensions.ToExcelFile<TEntity>(IList<TEntity>, String)
+  nameWithType.vb: NpoiExtensions.ToExcelFile(Of TEntity)(IList(Of TEntity), String)
 - uid: WeihanLi.Npoi.NpoiExtensions.ToExcelFileByTemplate*
   name: ToExcelFileByTemplate
   href: docs/api/WeihanLi.Npoi.NpoiExtensions.html#WeihanLi_Npoi_NpoiExtensions_ToExcelFileByTemplate_
@@ -1864,6 +1898,15 @@ references:
   fullName.vb: WeihanLi.Npoi.NpoiExtensions.ToExcelStream(Of TEntity)(IEnumerable(Of TEntity), Stream, WeihanLi.Npoi.ExcelFormat, System.Int32)
   nameWithType: NpoiExtensions.ToExcelStream<TEntity>(IEnumerable<TEntity>, Stream, ExcelFormat, Int32)
   nameWithType.vb: NpoiExtensions.ToExcelStream(Of TEntity)(IEnumerable(Of TEntity), Stream, ExcelFormat, Int32)
+- uid: WeihanLi.Npoi.NpoiExtensions.ToExcelStream``1(IList{``0},Stream,WeihanLi.Npoi.ExcelFormat)
+  name: ToExcelStream<TEntity>(IList<TEntity>, Stream, ExcelFormat)
+  href: docs/api/WeihanLi.Npoi.NpoiExtensions.html#WeihanLi_Npoi_NpoiExtensions_ToExcelStream__1_IList___0__Stream_WeihanLi_Npoi_ExcelFormat_
+  commentId: M:WeihanLi.Npoi.NpoiExtensions.ToExcelStream``1(IList{``0},Stream,WeihanLi.Npoi.ExcelFormat)
+  name.vb: ToExcelStream(Of TEntity)(IList(Of TEntity), Stream, ExcelFormat)
+  fullName: WeihanLi.Npoi.NpoiExtensions.ToExcelStream<TEntity>(IList<TEntity>, Stream, WeihanLi.Npoi.ExcelFormat)
+  fullName.vb: WeihanLi.Npoi.NpoiExtensions.ToExcelStream(Of TEntity)(IList(Of TEntity), Stream, WeihanLi.Npoi.ExcelFormat)
+  nameWithType: NpoiExtensions.ToExcelStream<TEntity>(IList<TEntity>, Stream, ExcelFormat)
+  nameWithType.vb: NpoiExtensions.ToExcelStream(Of TEntity)(IList(Of TEntity), Stream, ExcelFormat)
 - uid: WeihanLi.Npoi.NpoiExtensions.WriteToFile(IWorkbook,System.String)
   name: WriteToFile(IWorkbook, String)
   href: docs/api/WeihanLi.Npoi.NpoiExtensions.html#WeihanLi_Npoi_NpoiExtensions_WriteToFile_IWorkbook_System_String_
