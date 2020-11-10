@@ -4,6 +4,7 @@
 
 - refact `ExcelSetting` and `SheetSetting`
 - add support for `RowFilter` and `CellFilter`(mainly for import)
+- add support for reading file when file opened by another process
 
 ## [1.11.0](https://www.nuget.org/packages/WeihanLi.Npoi/1.11.0)
 

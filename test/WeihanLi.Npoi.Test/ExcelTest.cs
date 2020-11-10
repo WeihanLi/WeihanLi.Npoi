@@ -4,12 +4,13 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using WeihanLi.Extensions;
+using WeihanLi.Npoi.Attributes;
 using WeihanLi.Npoi.Test.Models;
 using Xunit;
 
 namespace WeihanLi.Npoi.Test
 {
-    public class ExcelTest : TestBase
+    public class ExcelTest
     {
         [Theory]
         [InlineData(ExcelFormat.Xls)]
@@ -577,6 +578,64 @@ namespace WeihanLi.Npoi.Test
                     setting.CellFilter = null;
                 });
             }
+        }
+
+        [Theory]
+        [InlineData(ExcelFormat.Xls)]
+        [InlineData(ExcelFormat.Xlsx)]
+        public void ExcelImportWithCellFilterAttributeTest(ExcelFormat excelFormat)
+        {
+            IReadOnlyList<CellFilterAttributeTest> list = Enumerable.Range(0, 10).Select(i => new CellFilterAttributeTest()
+            {
+                Id = i + 1,
+                Description = $"content_{i}",
+                Name = $"title_{i}",
+            }).ToArray();
+            var excelBytes = list.ToExcelBytes(excelFormat);
+            var importedList = ExcelHelper.ToEntityList<CellFilterAttributeTest>(excelBytes, excelFormat);
+            Assert.NotNull(importedList);
+            Assert.Equal(list.Count, importedList.Count);
+            for (var i = 0; i < importedList.Count; i++)
+            {
+                Assert.Equal(list[i].Id, importedList[i].Id);
+                Assert.Equal(list[i].Name, importedList[i].Name);
+                Assert.Null(importedList[i].Description);
+            }
+        }
+
+        [Sheet(SheetName = "test", AutoColumnWidthEnabled = true, StartColumnIndex = 0, EndColumnIndex = 1)]
+        private class CellFilterAttributeTest
+        {
+            [Column(Index = 0)]
+            public int Id { get; set; }
+
+            [Column(Index = 1)]
+            public string Name { get; set; }
+
+            [Column(Index = 2)]
+            public string Description { get; set; }
+        }
+
+        [Theory]
+        [InlineData(ExcelFormat.Xls, 65536, 2)]
+        [InlineData(ExcelFormat.Xls, 132_000, 3)]
+        //[InlineData(ExcelFormat.Xls, 1_000_000, 16)]
+        //[InlineData(ExcelFormat.Xlsx, 1_048_576)]
+        public void EntityListAutoSplitSheetsTest(ExcelFormat excelFormat, int rowsCount, int expectedSheetCount)
+        {
+            var list = Enumerable.Range(1, rowsCount)
+                .Select(x => new Notice()
+                {
+                    Id = x,
+                    Content = $"content_{x}",
+                    Title = $"title_{x}",
+                    Publisher = $"publisher_{x}"
+                })
+                .ToArray();
+
+            var bytes = list.ToExcelBytes(excelFormat);
+            var workbook = ExcelHelper.LoadExcel(bytes, excelFormat);
+            Assert.Equal(expectedSheetCount, workbook.NumberOfSheets);
         }
     }
 }

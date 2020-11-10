@@ -2,10 +2,11 @@
 {
     internal static class InternalConstants
     {
-        /// <summary>
-        /// Workbook中最多Sheet
-        /// </summary>
-        public const int MaxSheetNum = 256;
+        public const int MaxSheetCountXls = 256;
+        public const int MaxSheetCountXlsx = 16384;
+
+        public const int MaxRowCountXls = 65536;
+        public const int MaxRowCountXlsx = 1_048_576;
 
         /// <summary>
         /// DefaultPropertyNameForBasicType
