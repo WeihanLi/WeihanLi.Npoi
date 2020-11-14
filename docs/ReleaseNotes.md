@@ -1,5 +1,9 @@
 # WeihanLi.Npoi Release Notes
 
+## [1.13.0](https://www.nuget.org/packages/WeihanLi.Npoi/1.13.0)
+
+- add support for `EntityList`/`DataTable` export auto split sheets when needed
+
 ## [1.12.0](https://www.nuget.org/packages/WeihanLi.Npoi/1.12.0)
 
 - refact `ExcelSetting` and `SheetSetting`
