@@ -662,21 +662,81 @@ namespace WeihanLi.Npoi
             var configuration = InternalHelper.GetExcelConfigurationMapping<TEntity>();
 
             var workbook = ExcelHelper.PrepareWorkbook(excelFormat, configuration.ExcelSetting);
-            var maxRowCount = workbook is HSSFWorkbook
+            var maxRowCount = excelFormat == ExcelFormat.Xls
                 ? InternalConstants.MaxRowCountXls
                 : InternalConstants.MaxRowCountXlsx;
             maxRowCount -= configuration.SheetSettings[0].StartRowIndex;
 
             var sheetCount = (entityList.Count + maxRowCount - 1) / maxRowCount;
-            while (workbook.NumberOfSheets < sheetCount)
+            do
             {
                 workbook.CreateSheet();
+            } while (workbook.NumberOfSheets < sheetCount);
+
+            if (entityList.Count > maxRowCount)
+            {
+                for (var sheetIndex = 0; sheetIndex < sheetCount; sheetIndex++)
+                {
+                    workbook.GetSheetAt(sheetIndex)
+                        .ImportData(entityList.Skip(sheetIndex * maxRowCount).Take(maxRowCount), 0);
+                }
+            }
+            else
+            {
+                workbook.GetSheetAt(0).ImportData(entityList);
             }
 
-            for (var sheetIndex = 0; sheetIndex < sheetCount; sheetIndex++)
+            return workbook;
+        }
+
+        /// <summary>
+        /// GetWorkbookWithAutoSplitSheet
+        /// </summary>
+        /// <param name="dataTable">dataTable</param>
+        /// <param name="excelFormat">excel format</param>
+        /// <param name="startRowIndex">data startRowIndex</param>
+        /// <param name="excelSetting">excelSetting</param>
+        /// <returns>excel workbook with data</returns>
+        public static IWorkbook GetWorkbookWithAutoSplitSheet(this DataTable dataTable, ExcelFormat excelFormat, int startRowIndex = 1, ExcelSetting excelSetting = null)
+        {
+            var workbook = ExcelHelper.PrepareWorkbook(excelFormat, excelSetting ?? ExcelHelper.DefaultExcelSetting);
+            var maxRowCount = excelFormat == ExcelFormat.Xls
+                ? InternalConstants.MaxRowCountXls
+                : InternalConstants.MaxRowCountXlsx;
+            maxRowCount -= startRowIndex;
+
+            var sheetCount = (dataTable.Rows.Count + maxRowCount - 1) / maxRowCount;
+            do
             {
-                workbook.GetSheetAt(sheetIndex)
-                    .ImportData(entityList.Skip(sheetIndex * maxRowCount).Take(maxRowCount), 0);
+                workbook.CreateSheet();
+            } while (workbook.NumberOfSheets < sheetCount);
+
+            if (dataTable.Rows.Count > maxRowCount)
+            {
+                for (var sheetIndex = 0; sheetIndex < sheetCount; sheetIndex++)
+                {
+                    var dt = new DataTable();
+                    foreach (DataColumn col in dataTable.Columns)
+                    {
+                        dt.Columns.Add(new DataColumn(col.ColumnName, col.DataType));
+                    }
+                    for (var i = 0; i < maxRowCount; i++)
+                    {
+                        var rowIndex = sheetIndex * maxRowCount + i;
+                        if(rowIndex >= dataTable.Rows.Count)
+                        {
+                            break;
+                        }
+                        var row = dt.NewRow();
+                        row.ItemArray = dataTable.Rows[rowIndex].ItemArray;
+                        dt.Rows.Add(row);
+                    }
+                    workbook.GetSheetAt(sheetIndex).ImportData(dt);
+                }
+            }
+            else
+            {
+                workbook.GetSheetAt(0).ImportData(dataTable);
             }
 
             return workbook;
@@ -690,21 +750,9 @@ namespace WeihanLi.Npoi
         /// <returns></returns>
         public static void ToExcelFile([NotNull] this DataTable dataTable, [NotNull] string excelPath) => ToExcelFile(dataTable, excelPath, null);
 
-        /// <summary>
-        ///     export DataTable to excel file
-        /// </summary>
-        /// <param name="dataTable">dataTable</param>
-        /// <param name="excelPath">excelPath</param>
-        /// <param name="excelSetting">excelSetting</param>
-        /// <returns></returns>
-        public static void ToExcelFile([NotNull] this DataTable dataTable, [NotNull] string excelPath, ExcelSetting excelSetting)
+        public static void ImportData([NotNull] this ISheet sheet, DataTable dataTable)
         {
-            var workbook = ExcelHelper.PrepareWorkbook(excelPath, excelSetting);
-            var sheet = workbook.CreateSheet(
-                string.IsNullOrWhiteSpace(dataTable.TableName)
-                ? "Sheet0"
-                : dataTable.TableName);
-            if (dataTable.Columns.Count > 0)
+            if (dataTable?.Columns.Count > 0)
             {
                 var headerRow = sheet.CreateRow(0);
                 for (var i = 0; i < dataTable.Columns.Count; i++)
@@ -720,6 +768,18 @@ namespace WeihanLi.Npoi
                     }
                 }
             }
+        }
+
+        /// <summary>
+        ///     export DataTable to excel file
+        /// </summary>
+        /// <param name="dataTable">dataTable</param>
+        /// <param name="excelPath">excelPath</param>
+        /// <param name="excelSetting">excelSetting</param>
+        /// <returns></returns>
+        public static void ToExcelFile([NotNull] this DataTable dataTable, [NotNull] string excelPath, ExcelSetting excelSetting)
+        {
+            var workbook = dataTable.GetWorkbookWithAutoSplitSheet(excelPath.EndsWith("xls") ? ExcelFormat.Xls : ExcelFormat.Xlsx, 1, excelSetting);
             workbook.WriteToFile(excelPath);
         }
 
@@ -749,28 +809,8 @@ namespace WeihanLi.Npoi
         /// <param name="excelSetting">excelSetting</param>
         /// <returns></returns>
         public static void ToExcelStream([NotNull] this DataTable dataTable, [NotNull] Stream stream, ExcelFormat excelFormat, ExcelSetting excelSetting)
-
         {
-            var workbook = ExcelHelper.PrepareWorkbook(excelFormat);
-            var sheet = workbook.CreateSheet(
-                string.IsNullOrWhiteSpace(dataTable.TableName)
-                ? "Sheet0"
-                : dataTable.TableName);
-            var headerRow = sheet.CreateRow(0);
-            for (var i = 0; i < dataTable.Columns.Count; i++)
-            {
-                headerRow.CreateCell(i, CellType.String).SetCellValue(dataTable.Columns[i].ColumnName);
-            }
-
-            for (var i = 1; i <= dataTable.Rows.Count; i++)
-            {
-                var row = sheet.CreateRow(i);
-                for (var j = 0; j < dataTable.Columns.Count; j++)
-                {
-                    row.CreateCell(j, CellType.String).SetCellValue(dataTable.Rows[i - 1][j]);
-                }
-            }
-
+            var workbook = dataTable.GetWorkbookWithAutoSplitSheet(excelFormat, 1, excelSetting);
             workbook.Write(stream);
         }
 
@@ -795,28 +835,7 @@ namespace WeihanLi.Npoi
         /// <param name="excelSetting">excelSetting</param>
         public static byte[] ToExcelBytes([NotNull] this DataTable dataTable, ExcelFormat excelFormat, ExcelSetting excelSetting)
         {
-            var workbook = ExcelHelper.PrepareWorkbook(excelFormat, excelSetting);
-            var sheet = workbook.CreateSheet(
-                string.IsNullOrWhiteSpace(dataTable.TableName)
-                ? "Sheet0"
-                : dataTable.TableName);
-            var headerRow = sheet.CreateRow(0);
-            for (var i = 0; i < dataTable.Columns.Count; i++)
-            {
-                headerRow.CreateCell(i, CellType.String)
-                    .SetCellValue(dataTable.Columns[i].ColumnName);
-            }
-
-            for (var i = 1; i <= dataTable.Rows.Count; i++)
-            {
-                var row = sheet.CreateRow(i);
-                for (var j = 0; j < dataTable.Columns.Count; j++)
-                {
-                    row.CreateCell(j, CellType.String)
-                        .SetCellValue(dataTable.Rows[i - 1][j]);
-                }
-            }
-
+            var workbook = dataTable.GetWorkbookWithAutoSplitSheet(excelFormat, 1, excelSetting);
             return workbook.ToExcelBytes();
         }
 
