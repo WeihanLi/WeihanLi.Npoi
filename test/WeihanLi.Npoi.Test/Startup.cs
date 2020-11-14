@@ -1,23 +1,22 @@
 ﻿using WeihanLi.Extensions;
 using WeihanLi.Npoi.Test.Models;
-using Xunit;
 
 namespace WeihanLi.Npoi.Test
 {
-    public class TestFixture
+    public class Startup
     {
-        public TestFixture()
+        public void Configure()
         {
-            FluentSettingsConfigure();
-        }
-
-        private void FluentSettingsConfigure()
-        {
-            // ---------- notice npoi settings ----------------
+            // ---------- notice fluent excel settings ----------------
             var noticeSetting = FluentSettings.For<Notice>();
-            noticeSetting.HasAuthor("WeihanLi")
+            noticeSetting
+                .HasAuthor("WeihanLi")
                 .HasTitle("WeihanLi.Npoi test")
-                .HasSheetConfiguration(0, "NoticeList")
+                .HasSheetSetting(setting =>
+                {
+                    setting.SheetName = "NoticeList";
+                    setting.AutoColumnWidthEnabled = true;
+                })
                 ;
             noticeSetting.Property(_ => _.Id)
                 .HasColumnIndex(0);
@@ -31,15 +30,5 @@ namespace WeihanLi.Npoi.Test
                 .HasColumnIndex(4)
                 .HasOutputFormatter((entity, x) => x.ToStandardTimeString());
         }
-    }
-
-    [CollectionDefinition("Tests")]
-    public class NoneParallelTestCollection : ICollectionFixture<TestFixture>
-    {
-    }
-
-    [Collection("Tests")]
-    public class TestBase
-    {
     }
 }

@@ -8,7 +8,7 @@ using Xunit;
 
 namespace WeihanLi.Npoi.Test
 {
-    public class CsvTest : TestBase
+    public class CsvTest
     {
         [Fact]
         public void BasicImportExportTest()
