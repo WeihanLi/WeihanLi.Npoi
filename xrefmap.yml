@@ -1440,6 +1440,12 @@ references:
   isSpec: "True"
   fullName: WeihanLi.Npoi.NpoiExtensions.GetRowCollection
   nameWithType: NpoiExtensions.GetRowCollection
+- uid: WeihanLi.Npoi.NpoiExtensions.GetWorkbookWithAutoSplitSheet(DataTable,WeihanLi.Npoi.ExcelFormat,ExcelSetting)
+  name: GetWorkbookWithAutoSplitSheet(DataTable, ExcelFormat, ExcelSetting)
+  href: docs/api/WeihanLi.Npoi.NpoiExtensions.html#WeihanLi_Npoi_NpoiExtensions_GetWorkbookWithAutoSplitSheet_DataTable_WeihanLi_Npoi_ExcelFormat_ExcelSetting_
+  commentId: M:WeihanLi.Npoi.NpoiExtensions.GetWorkbookWithAutoSplitSheet(DataTable,WeihanLi.Npoi.ExcelFormat,ExcelSetting)
+  fullName: WeihanLi.Npoi.NpoiExtensions.GetWorkbookWithAutoSplitSheet(DataTable, WeihanLi.Npoi.ExcelFormat, ExcelSetting)
+  nameWithType: NpoiExtensions.GetWorkbookWithAutoSplitSheet(DataTable, ExcelFormat, ExcelSetting)
 - uid: WeihanLi.Npoi.NpoiExtensions.GetWorkbookWithAutoSplitSheet*
   name: GetWorkbookWithAutoSplitSheet
   href: docs/api/WeihanLi.Npoi.NpoiExtensions.html#WeihanLi_Npoi_NpoiExtensions_GetWorkbookWithAutoSplitSheet_
@@ -1456,6 +1462,12 @@ references:
   fullName.vb: WeihanLi.Npoi.NpoiExtensions.GetWorkbookWithAutoSplitSheet(Of TEntity)(IList(Of TEntity), WeihanLi.Npoi.ExcelFormat)
   nameWithType: NpoiExtensions.GetWorkbookWithAutoSplitSheet<TEntity>(IList<TEntity>, ExcelFormat)
   nameWithType.vb: NpoiExtensions.GetWorkbookWithAutoSplitSheet(Of TEntity)(IList(Of TEntity), ExcelFormat)
+- uid: WeihanLi.Npoi.NpoiExtensions.ImportData(ISheet,DataTable)
+  name: ImportData(ISheet, DataTable)
+  href: docs/api/WeihanLi.Npoi.NpoiExtensions.html#WeihanLi_Npoi_NpoiExtensions_ImportData_ISheet_DataTable_
+  commentId: M:WeihanLi.Npoi.NpoiExtensions.ImportData(ISheet,DataTable)
+  fullName: WeihanLi.Npoi.NpoiExtensions.ImportData(ISheet, DataTable)
+  nameWithType: NpoiExtensions.ImportData(ISheet, DataTable)
 - uid: WeihanLi.Npoi.NpoiExtensions.ImportData*
   name: ImportData
   href: docs/api/WeihanLi.Npoi.NpoiExtensions.html#WeihanLi_Npoi_NpoiExtensions_ImportData_
