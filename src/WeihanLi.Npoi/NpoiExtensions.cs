@@ -694,16 +694,15 @@ namespace WeihanLi.Npoi
         /// </summary>
         /// <param name="dataTable">dataTable</param>
         /// <param name="excelFormat">excel format</param>
-        /// <param name="startRowIndex">data startRowIndex</param>
         /// <param name="excelSetting">excelSetting</param>
         /// <returns>excel workbook with data</returns>
-        public static IWorkbook GetWorkbookWithAutoSplitSheet(this DataTable dataTable, ExcelFormat excelFormat, int startRowIndex = 1, ExcelSetting excelSetting = null)
+        public static IWorkbook GetWorkbookWithAutoSplitSheet(this DataTable dataTable, ExcelFormat excelFormat, ExcelSetting excelSetting = null)
         {
             var workbook = ExcelHelper.PrepareWorkbook(excelFormat, excelSetting ?? ExcelHelper.DefaultExcelSetting);
             var maxRowCount = excelFormat == ExcelFormat.Xls
                 ? InternalConstants.MaxRowCountXls
                 : InternalConstants.MaxRowCountXlsx;
-            maxRowCount -= startRowIndex;
+            maxRowCount -= 1;
 
             var sheetCount = (dataTable.Rows.Count + maxRowCount - 1) / maxRowCount;
             do
@@ -779,7 +778,7 @@ namespace WeihanLi.Npoi
         /// <returns></returns>
         public static void ToExcelFile([NotNull] this DataTable dataTable, [NotNull] string excelPath, ExcelSetting excelSetting)
         {
-            var workbook = dataTable.GetWorkbookWithAutoSplitSheet(excelPath.EndsWith("xls") ? ExcelFormat.Xls : ExcelFormat.Xlsx, 1, excelSetting);
+            var workbook = dataTable.GetWorkbookWithAutoSplitSheet(excelPath.EndsWith("xls") ? ExcelFormat.Xls : ExcelFormat.Xlsx, excelSetting);
             workbook.WriteToFile(excelPath);
         }
 
@@ -810,7 +809,7 @@ namespace WeihanLi.Npoi
         /// <returns></returns>
         public static void ToExcelStream([NotNull] this DataTable dataTable, [NotNull] Stream stream, ExcelFormat excelFormat, ExcelSetting excelSetting)
         {
-            var workbook = dataTable.GetWorkbookWithAutoSplitSheet(excelFormat, 1, excelSetting);
+            var workbook = dataTable.GetWorkbookWithAutoSplitSheet(excelFormat, excelSetting);
             workbook.Write(stream);
         }
 
@@ -835,7 +834,7 @@ namespace WeihanLi.Npoi
         /// <param name="excelSetting">excelSetting</param>
         public static byte[] ToExcelBytes([NotNull] this DataTable dataTable, ExcelFormat excelFormat, ExcelSetting excelSetting)
         {
-            var workbook = dataTable.GetWorkbookWithAutoSplitSheet(excelFormat, 1, excelSetting);
+            var workbook = dataTable.GetWorkbookWithAutoSplitSheet(excelFormat, excelSetting);
             return workbook.ToExcelBytes();
         }
 
