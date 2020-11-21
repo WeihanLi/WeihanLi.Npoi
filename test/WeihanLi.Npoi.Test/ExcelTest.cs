@@ -621,7 +621,7 @@ namespace WeihanLi.Npoi.Test
         [InlineData(ExcelFormat.Xls, 65536, 2)]
         [InlineData(ExcelFormat.Xls, 132_000, 3)]
         //[InlineData(ExcelFormat.Xls, 1_000_000, 16)]
-        //[InlineData(ExcelFormat.Xlsx, 1_048_576)]
+        //[InlineData(ExcelFormat.Xlsx, 1_048_576, 2)]
         public void EntityListAutoSplitSheetsTest(ExcelFormat excelFormat, int rowsCount, int expectedSheetCount)
         {
             var list = Enumerable.Range(1, rowsCount)
@@ -638,14 +638,13 @@ namespace WeihanLi.Npoi.Test
             var workbook = ExcelHelper.LoadExcel(bytes, excelFormat);
             Assert.Equal(expectedSheetCount, workbook.NumberOfSheets);
         }
-   
-        
+
         [Theory]
         [InlineData(ExcelFormat.Xls, 1000, 1)]
         [InlineData(ExcelFormat.Xls, 65536, 2)]
         [InlineData(ExcelFormat.Xls, 132_000, 3)]
         //[InlineData(ExcelFormat.Xls, 1_000_000, 16)]
-        //[InlineData(ExcelFormat.Xlsx, 1_048_576)]
+        //[InlineData(ExcelFormat.Xlsx, 1_048_576, 2)]
         public void DataTableAutoSplitSheetsTest(ExcelFormat excelFormat, int rowsCount, int expectedSheetCount)
         {
             var dataTable = new DataTable();
