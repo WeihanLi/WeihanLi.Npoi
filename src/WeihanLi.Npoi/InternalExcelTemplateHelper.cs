@@ -12,11 +12,11 @@ namespace WeihanLi.Npoi
     internal class InternalExcelTemplateHelper
     {
         public static ISheet EntityListToSheetByTemplate<TEntity>(
-            [NotNull]ISheet sheet,
+            [NotNull] ISheet sheet,
             IEnumerable<TEntity> entityList,
             object extraData = null)
         {
-            if (null == entityList)
+            if (entityList is null)
             {
                 return sheet;
             }
@@ -59,14 +59,14 @@ namespace WeihanLi.Npoi
             for (var rowIndex = sheet.FirstRowNum; rowIndex <= sheet.LastRowNum; rowIndex++)
             {
                 var row = sheet.GetRow(rowIndex);
-                if (row == null)
+                if (row is null)
                 {
                     continue;
                 }
                 for (var cellIndex = row.FirstCellNum; cellIndex < row.LastCellNum; cellIndex++)
                 {
                     var cell = row.GetCell(cellIndex);
-                    if (cell == null)
+                    if (cell is null)
                     {
                         continue;
                     }

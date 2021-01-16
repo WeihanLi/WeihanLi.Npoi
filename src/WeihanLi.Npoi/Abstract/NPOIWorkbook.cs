@@ -69,7 +69,7 @@ namespace WeihanLi.Npoi.Abstract
         public ICell GetCell(int cellIndex)
         {
             var nCell = _row.GetCell(cellIndex);
-            if (nCell == null) return null;
+            if (nCell is null) return null;
             return new NPOICell(nCell);
         }
 
@@ -104,7 +104,7 @@ namespace WeihanLi.Npoi.Abstract
         {
             get
             {
-                if (_cell == null || _cell.CellType == NModel.CellType.Blank || _cell.CellType == NModel.CellType.Error)
+                if (_cell is null || _cell.CellType == NModel.CellType.Blank || _cell.CellType == NModel.CellType.Error)
                 {
                     return null;
                 }

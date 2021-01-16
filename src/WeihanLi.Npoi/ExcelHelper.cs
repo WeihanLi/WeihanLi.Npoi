@@ -21,7 +21,7 @@ namespace WeihanLi.Npoi
         /// <summary>
         /// Default excel setting for export excel files
         /// </summary>
-        public static ExcelSetting DefaultExcelSetting = new ExcelSetting();
+        public static ExcelSetting DefaultExcelSetting = new();
 
         /// <summary>
         /// Validate is a excel path valid
@@ -81,10 +81,8 @@ namespace WeihanLi.Npoi
         /// <returns>workbook</returns>
         public static IWorkbook LoadExcel([NotNull] byte[] excelBytes, ExcelFormat excelFormat)
         {
-            using (var stream = new MemoryStream(excelBytes))
-            {
-                return LoadExcel(stream, excelFormat);
-            }
+            using var stream = new MemoryStream(excelBytes);
+            return LoadExcel(stream, excelFormat);
         }
 
         /// <summary>

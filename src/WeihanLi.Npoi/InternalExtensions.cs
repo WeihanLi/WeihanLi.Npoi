@@ -23,29 +23,31 @@ namespace WeihanLi.Npoi
         public static IDictionary<string, object> ParseParamInfo(this object paramInfo)
         {
             var paramDic = new Dictionary<string, object>();
-            if (null != paramInfo)
+            if (paramInfo is null)
             {
-                if (paramInfo.IsValueTuple())// Tuple
+                return paramDic;
+            }
+
+            if (paramInfo.IsValueTuple())// Tuple
+            {
+                var fields = paramInfo.GetFields();
+                foreach (var field in fields)
                 {
-                    var fields = paramInfo.GetFields();
-                    foreach (var field in fields)
-                    {
-                        paramDic.Add(field.Name, field.GetValue(paramInfo));
-                    }
+                    paramDic[field.Name] = field.GetValue(paramInfo);
                 }
-                else if (paramInfo is IDictionary<string, object> paramDictionary)
+            }
+            else if (paramInfo is IDictionary<string, object> paramDictionary)
+            {
+                return paramDictionary;
+            }
+            else // get properties
+            {
+                var properties = CacheUtil.GetTypeProperties(paramInfo.GetType());
+                foreach (var property in properties)
                 {
-                    return paramDictionary;
-                }
-                else // get properties
-                {
-                    var properties = CacheUtil.GetTypeProperties(paramInfo.GetType());
-                    foreach (var property in properties)
+                    if (property.CanRead)
                     {
-                        if (property.CanRead)
-                        {
-                            paramDic.Add(property.Name, property.GetValueGetter().Invoke(paramInfo));
-                        }
+                        paramDic[property.Name] = property.GetValueGetter().Invoke(paramInfo);
                     }
                 }
             }
@@ -61,7 +63,7 @@ namespace WeihanLi.Npoi
         /// <returns>cellValue</returns>
         public static object GetCellValue([CanBeNull] this ICell cell, Type propertyType, IFormulaEvaluator formulaEvaluator)
         {
-            if (cell == null || cell.CellType == CellType.Blank || cell.CellType == CellType.Error)
+            if (cell is null || cell.CellType == CellType.Blank || cell.CellType == CellType.Error)
             {
                 return propertyType.GetDefaultValue();
             }
@@ -91,7 +93,7 @@ namespace WeihanLi.Npoi
         /// <param name="formatter">formatter</param>
         public static void SetCellValue([NotNull] this ICell cell, object value, string formatter)
         {
-            if (null == value)
+            if (value is null)
             {
                 cell.CellType = CellType.Blank;
                 return;

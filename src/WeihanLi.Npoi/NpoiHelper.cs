@@ -26,7 +26,7 @@ namespace WeihanLi.Npoi
         public static List<TEntity> SheetToEntityList<TEntity>([NotNull] ISheet sheet, int sheetIndex) where TEntity : new()
         {
             if (sheet.FirstRowNum < 0)
-                return new List<TEntity>(0);
+                return new List<TEntity>();
 
             var configuration = InternalHelper.GetExcelConfigurationMapping<TEntity>();
             var sheetSetting = GetSheetSetting(configuration.SheetSettings, sheetIndex);
@@ -55,7 +55,7 @@ namespace WeihanLi.Npoi
                     {
                         for (var i = row.FirstCellNum; i < row.LastCellNum; i++)
                         {
-                            if (row.GetCell(i) == null)
+                            if (row.GetCell(i) is null)
                             {
                                 continue;
                             }
@@ -79,7 +79,7 @@ namespace WeihanLi.Npoi
                         continue;
                     }
 
-                    if (row == null)
+                    if (row is null)
                     {
                         entities.Add(default);
                     }
@@ -215,7 +215,7 @@ namespace WeihanLi.Npoi
 
         public static ISheet EntityListToSheet<TEntity>([NotNull] ISheet sheet, IEnumerable<TEntity> entityList, int sheetIndex)
         {
-            if (null == entityList)
+            if (entityList is null)
             {
                 return sheet;
             }
@@ -273,7 +273,7 @@ namespace WeihanLi.Npoi
 
         public static ISheet DataTableToSheet<TEntity>([NotNull] ISheet sheet, DataTable dataTable, int sheetIndex)
         {
-            if (null == dataTable || dataTable.Rows.Count == 0 || dataTable.Columns.Count == 0)
+            if (dataTable is null || dataTable.Rows.Count == 0 || dataTable.Columns.Count == 0)
             {
                 return sheet;
             }

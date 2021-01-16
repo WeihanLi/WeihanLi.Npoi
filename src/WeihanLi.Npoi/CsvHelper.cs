@@ -37,7 +37,7 @@ namespace WeihanLi.Npoi
         public static bool ToCsvFile(this DataTable dataTable, string filePath, bool includeHeader)
         {
             var dir = Path.GetDirectoryName(filePath);
-            if (dir == null)
+            if (dir is null)
             {
                 throw new ArgumentException(Resource.InvalidFilePath);
             }
@@ -456,7 +456,7 @@ namespace WeihanLi.Npoi
         public static bool ToCsvFile<TEntity>(this IEnumerable<TEntity> entities, string filePath, bool includeHeader)
         {
             var dir = Path.GetDirectoryName(filePath);
-            if (dir == null)
+            if (dir is null)
             {
                 throw new ArgumentException(Resource.InvalidFilePath);
             }
@@ -490,7 +490,7 @@ namespace WeihanLi.Npoi
         /// </summary>
         public static string GetCsvText<TEntity>(this IEnumerable<TEntity> entities, bool includeHeader)
         {
-            if (entities == null)
+            if (entities is null)
             {
                 return string.Empty;
             }
@@ -567,7 +567,7 @@ namespace WeihanLi.Npoi
         /// </summary>
         public static string GetCsvText(this DataTable dataTable, bool includeHeader)
         {
-            if (dataTable == null || dataTable.Rows.Count == 0 || dataTable.Columns.Count == 0)
+            if (dataTable is null || dataTable.Rows.Count == 0 || dataTable.Columns.Count == 0)
             {
                 return string.Empty;
             }

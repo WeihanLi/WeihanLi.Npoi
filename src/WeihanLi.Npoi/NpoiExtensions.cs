@@ -135,7 +135,7 @@ namespace WeihanLi.Npoi
 
             foreach (var row in sheet.GetRowCollection())
             {
-                if (row == null || row.RowNum < headerRowIndex)
+                if (row is null || row.RowNum < headerRowIndex)
                 {
                     continue;
                 }
@@ -144,7 +144,7 @@ namespace WeihanLi.Npoi
                 {
                     foreach (var cell in row.GetCellCollection())
                     {
-                        if (cell == null)
+                        if (cell is null)
                         {
                             continue;
                         }
@@ -340,11 +340,11 @@ namespace WeihanLi.Npoi
         /// <returns>exported excel bytes</returns>
         public static void ToExcelFileByTemplate<TEntity>([NotNull] this IEnumerable<TEntity> entities, string templatePath, string excelPath, int sheetIndex = 0, object extraData = null)
         {
-            if (templatePath == null)
+            if (templatePath is null)
             {
                 throw new ArgumentNullException(nameof(templatePath));
             }
-            if (excelPath == null)
+            if (excelPath is null)
             {
                 throw new ArgumentNullException(nameof(excelPath));
             }
@@ -366,11 +366,11 @@ namespace WeihanLi.Npoi
         /// <returns>exported excel bytes</returns>
         public static void ToExcelFileByTemplate<TEntity>([NotNull] this IEnumerable<TEntity> entities, byte[] templateBytes, string excelPath, ExcelFormat excelFormat = ExcelFormat.Xls, int sheetIndex = 0, object extraData = null)
         {
-            if (templateBytes == null)
+            if (templateBytes is null)
             {
                 throw new ArgumentNullException(nameof(templateBytes));
             }
-            if (excelPath == null)
+            if (excelPath is null)
             {
                 throw new ArgumentNullException(nameof(excelPath));
             }
@@ -434,7 +434,7 @@ namespace WeihanLi.Npoi
         /// <returns>exported excel bytes</returns>
         public static byte[] ToExcelBytesByTemplate<TEntity>([NotNull] this IEnumerable<TEntity> entities, byte[] templateBytes, ExcelFormat excelFormat = ExcelFormat.Xls, int sheetIndex = 0, object extraData = null)
         {
-            if (templateBytes == null)
+            if (templateBytes is null)
             {
                 throw new ArgumentNullException(nameof(templateBytes));
             }
@@ -455,7 +455,7 @@ namespace WeihanLi.Npoi
         /// <returns>exported excel bytes</returns>
         public static byte[] ToExcelBytesByTemplate<TEntity>([NotNull] this IEnumerable<TEntity> entities, Stream templateStream, ExcelFormat excelFormat = ExcelFormat.Xls, int sheetIndex = 0, object extraData = null)
         {
-            if (templateStream == null)
+            if (templateStream is null)
             {
                 throw new ArgumentNullException(nameof(templateStream));
             }
@@ -520,7 +520,7 @@ namespace WeihanLi.Npoi
         {
             var workbook =
                 entityList.GetWorkbookWithAutoSplitSheet(
-                    excelPath.EndsWith(".xls") ? ExcelFormat.Xls : ExcelFormat.Xlsx);
+                    excelPath.EndsWith(".xls", StringComparison.OrdinalIgnoreCase) ? ExcelFormat.Xls : ExcelFormat.Xlsx);
             workbook.WriteToFile(excelPath);
         }
 
@@ -722,7 +722,7 @@ namespace WeihanLi.Npoi
                     for (var i = 0; i < maxRowCount; i++)
                     {
                         var rowIndex = sheetIndex * maxRowCount + i;
-                        if(rowIndex >= dataTable.Rows.Count)
+                        if (rowIndex >= dataTable.Rows.Count)
                         {
                             break;
                         }
@@ -904,7 +904,7 @@ namespace WeihanLi.Npoi
         /// <returns>cellValue</returns>
         public static object GetCellValue([CanBeNull] this ICell cell, Type propertyType, IFormulaEvaluator formulaEvaluator = null)
         {
-            if (cell == null || cell.CellType == CellType.Blank || cell.CellType == CellType.Error)
+            if (cell is null || cell.CellType == CellType.Blank || cell.CellType == CellType.Error)
             {
                 return propertyType.GetDefaultValue();
             }
@@ -995,7 +995,7 @@ namespace WeihanLi.Npoi
         /// <typeparam name="T">Type</typeparam>
         /// <param name="cell">cell</param>
         /// <param name="formulaEvaluator"></param>
-        /// <returns></returns>
+        /// <returns>typed cell value</returns>
         public static T GetCellValue<T>([CanBeNull] this ICell cell, IFormulaEvaluator formulaEvaluator = null) => (T)cell.GetCellValue(typeof(T), formulaEvaluator);
 
         /// <summary>
@@ -1003,14 +1003,14 @@ namespace WeihanLi.Npoi
         /// </summary>
         /// <param name="sheet">excel sheet</param>
         /// <returns>row collection</returns>
-        public static NpoiRowCollection GetRowCollection([NotNull] this ISheet sheet) => new NpoiRowCollection(sheet);
+        public static NpoiRowCollection GetRowCollection([NotNull] this ISheet sheet) => new(sheet);
 
         /// <summary>
         /// Get Row Cell Collection
         /// </summary>
         /// <param name="row">excel sheet row</param>
         /// <returns>row collection</returns>
-        public static NpoiCellCollection GetCellCollection([NotNull] this IRow row) => new NpoiCellCollection(row);
+        public static NpoiCellCollection GetCellCollection([NotNull] this IRow row) => new(row);
 
         /// <summary>
         /// get workbook IFormulaEvaluator
@@ -1019,19 +1019,13 @@ namespace WeihanLi.Npoi
         /// <returns></returns>
         public static IFormulaEvaluator GetFormulaEvaluator([NotNull] this IWorkbook workbook)
         {
-            if (workbook is HSSFWorkbook)
+            return workbook switch
             {
-                return new HSSFFormulaEvaluator(workbook);
-            }
-            if (workbook is XSSFWorkbook)
-            {
-                return new XSSFFormulaEvaluator(workbook);
-            }
-            if (workbook is SXSSFWorkbook sBook)
-            {
-                return new SXSSFFormulaEvaluator(sBook);
-            }
-            throw new NotSupportedException();
+                HSSFWorkbook => new HSSFFormulaEvaluator(workbook),
+                XSSFWorkbook => new XSSFFormulaEvaluator(workbook),
+                SXSSFWorkbook sBook => new SXSSFFormulaEvaluator(sBook),
+                _ => throw new NotSupportedException()
+            };
         }
 
         /// <summary>
@@ -1042,7 +1036,7 @@ namespace WeihanLi.Npoi
         public static void WriteToFile([NotNull] this IWorkbook workbook, string filePath)
         {
             var dir = Path.GetDirectoryName(filePath);
-            if (null == dir)
+            if (dir is null)
             {
                 filePath = ApplicationHelper.MapPath(filePath);
             }
@@ -1054,23 +1048,20 @@ namespace WeihanLi.Npoi
                 }
             }
 
-            using (var fileStream = File.Create(filePath))
-            {
-                workbook.Write(fileStream);
-            }
+            using var fileStream = File.Create(filePath);
+            workbook.Write(fileStream);
         }
 
         /// <summary>
         ///     ToExcelBytes
         /// </summary>
         /// <param name="workbook">workbook</param>
+        /// <returns>excel bytes</returns>
         public static byte[] ToExcelBytes([NotNull] this IWorkbook workbook)
         {
-            using (var ms = new MemoryStream())
-            {
-                workbook.Write(ms);
-                return ms.ToArray();
-            }
+            using var ms = new MemoryStream();
+            workbook.Write(ms);
+            return ms.ToArray();
         }
     }
 }

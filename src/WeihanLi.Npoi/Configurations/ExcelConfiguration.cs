@@ -102,7 +102,7 @@ namespace WeihanLi.Npoi.Configurations
         {
             var memberInfo = propertyExpression.GetMemberInfo();
             var property = memberInfo as PropertyInfo;
-            if (property == null || !PropertyConfigurationDictionary.ContainsKey(property))
+            if (property is null || !PropertyConfigurationDictionary.ContainsKey(property))
             {
                 property = CacheUtil.GetTypeProperties(EntityType)
                     .FirstOrDefault(p => p.Name == memberInfo.Name);

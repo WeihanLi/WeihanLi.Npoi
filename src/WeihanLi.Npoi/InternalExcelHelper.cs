@@ -50,7 +50,7 @@ namespace WeihanLi.Npoi
                     {
                         for (var i = 0; i < row.LastCellNum; i++)
                         {
-                            if (row.GetCell(i) == null)
+                            if (row.GetCell(i) is null)
                             {
                                 continue;
                             }
@@ -69,7 +69,7 @@ namespace WeihanLi.Npoi
                 }
                 else if (rowIndex >= sheetSetting.StartRowIndex)
                 {
-                    if (row == null)
+                    if (row is null)
                     {
                         entities.Add(default);
                     }
