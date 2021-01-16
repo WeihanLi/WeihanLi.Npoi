@@ -824,12 +824,6 @@ references:
   commentId: F:WeihanLi.Npoi.CsvHelper.CsvSeparatorCharacter
   fullName: WeihanLi.Npoi.CsvHelper.CsvSeparatorCharacter
   nameWithType: CsvHelper.CsvSeparatorCharacter
-- uid: WeihanLi.Npoi.CsvHelper.GetCsvText(DataTable,System.Boolean)
-  name: GetCsvText(DataTable, Boolean)
-  href: docs/api/WeihanLi.Npoi.CsvHelper.html#WeihanLi_Npoi_CsvHelper_GetCsvText_DataTable_System_Boolean_
-  commentId: M:WeihanLi.Npoi.CsvHelper.GetCsvText(DataTable,System.Boolean)
-  fullName: WeihanLi.Npoi.CsvHelper.GetCsvText(DataTable, System.Boolean)
-  nameWithType: CsvHelper.GetCsvText(DataTable, Boolean)
 - uid: WeihanLi.Npoi.CsvHelper.GetCsvText*
   name: GetCsvText
   href: docs/api/WeihanLi.Npoi.CsvHelper.html#WeihanLi_Npoi_CsvHelper_GetCsvText_
@@ -1009,7 +1003,14 @@ references:
 - uid: WeihanLi.Npoi.ExcelHelper.DefaultExcelSetting
   name: DefaultExcelSetting
   href: docs/api/WeihanLi.Npoi.ExcelHelper.html#WeihanLi_Npoi_ExcelHelper_DefaultExcelSetting
-  commentId: F:WeihanLi.Npoi.ExcelHelper.DefaultExcelSetting
+  commentId: P:WeihanLi.Npoi.ExcelHelper.DefaultExcelSetting
+  fullName: WeihanLi.Npoi.ExcelHelper.DefaultExcelSetting
+  nameWithType: ExcelHelper.DefaultExcelSetting
+- uid: WeihanLi.Npoi.ExcelHelper.DefaultExcelSetting*
+  name: DefaultExcelSetting
+  href: docs/api/WeihanLi.Npoi.ExcelHelper.html#WeihanLi_Npoi_ExcelHelper_DefaultExcelSetting_
+  commentId: Overload:WeihanLi.Npoi.ExcelHelper.DefaultExcelSetting
+  isSpec: "True"
   fullName: WeihanLi.Npoi.ExcelHelper.DefaultExcelSetting
   nameWithType: ExcelHelper.DefaultExcelSetting
 - uid: WeihanLi.Npoi.ExcelHelper.LoadExcel(Stream)
@@ -1067,36 +1068,45 @@ references:
   commentId: M:WeihanLi.Npoi.ExcelHelper.PrepareWorkbook(System.Boolean)
   fullName: WeihanLi.Npoi.ExcelHelper.PrepareWorkbook(System.Boolean)
   nameWithType: ExcelHelper.PrepareWorkbook(Boolean)
-- uid: WeihanLi.Npoi.ExcelHelper.PrepareWorkbook(System.Boolean,ExcelSetting)
-  name: PrepareWorkbook(Boolean, ExcelSetting)
-  href: docs/api/WeihanLi.Npoi.ExcelHelper.html#WeihanLi_Npoi_ExcelHelper_PrepareWorkbook_System_Boolean_ExcelSetting_
-  commentId: M:WeihanLi.Npoi.ExcelHelper.PrepareWorkbook(System.Boolean,ExcelSetting)
-  fullName: WeihanLi.Npoi.ExcelHelper.PrepareWorkbook(System.Boolean, ExcelSetting)
-  nameWithType: ExcelHelper.PrepareWorkbook(Boolean, ExcelSetting)
+- uid: WeihanLi.Npoi.ExcelHelper.PrepareWorkbook(System.Boolean,System.Nullable{ExcelSetting})
+  name: PrepareWorkbook(Boolean, Nullable<ExcelSetting>)
+  href: docs/api/WeihanLi.Npoi.ExcelHelper.html#WeihanLi_Npoi_ExcelHelper_PrepareWorkbook_System_Boolean_System_Nullable_ExcelSetting__
+  commentId: M:WeihanLi.Npoi.ExcelHelper.PrepareWorkbook(System.Boolean,System.Nullable{ExcelSetting})
+  name.vb: PrepareWorkbook(Boolean, Nullable(Of ExcelSetting))
+  fullName: WeihanLi.Npoi.ExcelHelper.PrepareWorkbook(System.Boolean, System.Nullable<ExcelSetting>)
+  fullName.vb: WeihanLi.Npoi.ExcelHelper.PrepareWorkbook(System.Boolean, System.Nullable(Of ExcelSetting))
+  nameWithType: ExcelHelper.PrepareWorkbook(Boolean, Nullable<ExcelSetting>)
+  nameWithType.vb: ExcelHelper.PrepareWorkbook(Boolean, Nullable(Of ExcelSetting))
 - uid: WeihanLi.Npoi.ExcelHelper.PrepareWorkbook(System.String)
   name: PrepareWorkbook(String)
   href: docs/api/WeihanLi.Npoi.ExcelHelper.html#WeihanLi_Npoi_ExcelHelper_PrepareWorkbook_System_String_
   commentId: M:WeihanLi.Npoi.ExcelHelper.PrepareWorkbook(System.String)
   fullName: WeihanLi.Npoi.ExcelHelper.PrepareWorkbook(System.String)
   nameWithType: ExcelHelper.PrepareWorkbook(String)
-- uid: WeihanLi.Npoi.ExcelHelper.PrepareWorkbook(System.String,ExcelSetting)
-  name: PrepareWorkbook(String, ExcelSetting)
-  href: docs/api/WeihanLi.Npoi.ExcelHelper.html#WeihanLi_Npoi_ExcelHelper_PrepareWorkbook_System_String_ExcelSetting_
-  commentId: M:WeihanLi.Npoi.ExcelHelper.PrepareWorkbook(System.String,ExcelSetting)
-  fullName: WeihanLi.Npoi.ExcelHelper.PrepareWorkbook(System.String, ExcelSetting)
-  nameWithType: ExcelHelper.PrepareWorkbook(String, ExcelSetting)
+- uid: WeihanLi.Npoi.ExcelHelper.PrepareWorkbook(System.String,System.Nullable{ExcelSetting})
+  name: PrepareWorkbook(String, Nullable<ExcelSetting>)
+  href: docs/api/WeihanLi.Npoi.ExcelHelper.html#WeihanLi_Npoi_ExcelHelper_PrepareWorkbook_System_String_System_Nullable_ExcelSetting__
+  commentId: M:WeihanLi.Npoi.ExcelHelper.PrepareWorkbook(System.String,System.Nullable{ExcelSetting})
+  name.vb: PrepareWorkbook(String, Nullable(Of ExcelSetting))
+  fullName: WeihanLi.Npoi.ExcelHelper.PrepareWorkbook(System.String, System.Nullable<ExcelSetting>)
+  fullName.vb: WeihanLi.Npoi.ExcelHelper.PrepareWorkbook(System.String, System.Nullable(Of ExcelSetting))
+  nameWithType: ExcelHelper.PrepareWorkbook(String, Nullable<ExcelSetting>)
+  nameWithType.vb: ExcelHelper.PrepareWorkbook(String, Nullable(Of ExcelSetting))
 - uid: WeihanLi.Npoi.ExcelHelper.PrepareWorkbook(WeihanLi.Npoi.ExcelFormat)
   name: PrepareWorkbook(ExcelFormat)
   href: docs/api/WeihanLi.Npoi.ExcelHelper.html#WeihanLi_Npoi_ExcelHelper_PrepareWorkbook_WeihanLi_Npoi_ExcelFormat_
   commentId: M:WeihanLi.Npoi.ExcelHelper.PrepareWorkbook(WeihanLi.Npoi.ExcelFormat)
   fullName: WeihanLi.Npoi.ExcelHelper.PrepareWorkbook(WeihanLi.Npoi.ExcelFormat)
   nameWithType: ExcelHelper.PrepareWorkbook(ExcelFormat)
-- uid: WeihanLi.Npoi.ExcelHelper.PrepareWorkbook(WeihanLi.Npoi.ExcelFormat,ExcelSetting)
-  name: PrepareWorkbook(ExcelFormat, ExcelSetting)
-  href: docs/api/WeihanLi.Npoi.ExcelHelper.html#WeihanLi_Npoi_ExcelHelper_PrepareWorkbook_WeihanLi_Npoi_ExcelFormat_ExcelSetting_
-  commentId: M:WeihanLi.Npoi.ExcelHelper.PrepareWorkbook(WeihanLi.Npoi.ExcelFormat,ExcelSetting)
-  fullName: WeihanLi.Npoi.ExcelHelper.PrepareWorkbook(WeihanLi.Npoi.ExcelFormat, ExcelSetting)
-  nameWithType: ExcelHelper.PrepareWorkbook(ExcelFormat, ExcelSetting)
+- uid: WeihanLi.Npoi.ExcelHelper.PrepareWorkbook(WeihanLi.Npoi.ExcelFormat,System.Nullable{ExcelSetting})
+  name: PrepareWorkbook(ExcelFormat, Nullable<ExcelSetting>)
+  href: docs/api/WeihanLi.Npoi.ExcelHelper.html#WeihanLi_Npoi_ExcelHelper_PrepareWorkbook_WeihanLi_Npoi_ExcelFormat_System_Nullable_ExcelSetting__
+  commentId: M:WeihanLi.Npoi.ExcelHelper.PrepareWorkbook(WeihanLi.Npoi.ExcelFormat,System.Nullable{ExcelSetting})
+  name.vb: PrepareWorkbook(ExcelFormat, Nullable(Of ExcelSetting))
+  fullName: WeihanLi.Npoi.ExcelHelper.PrepareWorkbook(WeihanLi.Npoi.ExcelFormat, System.Nullable<ExcelSetting>)
+  fullName.vb: WeihanLi.Npoi.ExcelHelper.PrepareWorkbook(WeihanLi.Npoi.ExcelFormat, System.Nullable(Of ExcelSetting))
+  nameWithType: ExcelHelper.PrepareWorkbook(ExcelFormat, Nullable<ExcelSetting>)
+  nameWithType.vb: ExcelHelper.PrepareWorkbook(ExcelFormat, Nullable(Of ExcelSetting))
 - uid: WeihanLi.Npoi.ExcelHelper.PrepareWorkbook*
   name: PrepareWorkbook
   href: docs/api/WeihanLi.Npoi.ExcelHelper.html#WeihanLi_Npoi_ExcelHelper_PrepareWorkbook_
@@ -1104,22 +1114,6 @@ references:
   isSpec: "True"
   fullName: WeihanLi.Npoi.ExcelHelper.PrepareWorkbook
   nameWithType: ExcelHelper.PrepareWorkbook
-- uid: WeihanLi.Npoi.ExcelHelper.SettingFor*
-  name: SettingFor
-  href: docs/api/WeihanLi.Npoi.ExcelHelper.html#WeihanLi_Npoi_ExcelHelper_SettingFor_
-  commentId: Overload:WeihanLi.Npoi.ExcelHelper.SettingFor
-  isSpec: "True"
-  fullName: WeihanLi.Npoi.ExcelHelper.SettingFor
-  nameWithType: ExcelHelper.SettingFor
-- uid: WeihanLi.Npoi.ExcelHelper.SettingFor``1
-  name: SettingFor<TEntity>()
-  href: docs/api/WeihanLi.Npoi.ExcelHelper.html#WeihanLi_Npoi_ExcelHelper_SettingFor__1
-  commentId: M:WeihanLi.Npoi.ExcelHelper.SettingFor``1
-  name.vb: SettingFor(Of TEntity)()
-  fullName: WeihanLi.Npoi.ExcelHelper.SettingFor<TEntity>()
-  fullName.vb: WeihanLi.Npoi.ExcelHelper.SettingFor(Of TEntity)()
-  nameWithType: ExcelHelper.SettingFor<TEntity>()
-  nameWithType.vb: ExcelHelper.SettingFor(Of TEntity)()
 - uid: WeihanLi.Npoi.ExcelHelper.ToDataSet(System.String)
   name: ToDataSet(String)
   href: docs/api/WeihanLi.Npoi.ExcelHelper.html#WeihanLi_Npoi_ExcelHelper_ToDataSet_System_String_
@@ -1392,12 +1386,15 @@ references:
   isSpec: "True"
   fullName: WeihanLi.Npoi.NpoiExtensions.GetCellCollection
   nameWithType: NpoiExtensions.GetCellCollection
-- uid: WeihanLi.Npoi.NpoiExtensions.GetCellValue(ICell,System.Type,IFormulaEvaluator)
-  name: GetCellValue(ICell, Type, IFormulaEvaluator)
-  href: docs/api/WeihanLi.Npoi.NpoiExtensions.html#WeihanLi_Npoi_NpoiExtensions_GetCellValue_ICell_System_Type_IFormulaEvaluator_
-  commentId: M:WeihanLi.Npoi.NpoiExtensions.GetCellValue(ICell,System.Type,IFormulaEvaluator)
-  fullName: WeihanLi.Npoi.NpoiExtensions.GetCellValue(ICell, System.Type, IFormulaEvaluator)
-  nameWithType: NpoiExtensions.GetCellValue(ICell, Type, IFormulaEvaluator)
+- uid: WeihanLi.Npoi.NpoiExtensions.GetCellValue(System.Nullable{ICell},System.Type,System.Nullable{IFormulaEvaluator})
+  name: GetCellValue(Nullable<ICell>, Type, Nullable<IFormulaEvaluator>)
+  href: docs/api/WeihanLi.Npoi.NpoiExtensions.html#WeihanLi_Npoi_NpoiExtensions_GetCellValue_System_Nullable_ICell__System_Type_System_Nullable_IFormulaEvaluator__
+  commentId: M:WeihanLi.Npoi.NpoiExtensions.GetCellValue(System.Nullable{ICell},System.Type,System.Nullable{IFormulaEvaluator})
+  name.vb: GetCellValue(Nullable(Of ICell), Type, Nullable(Of IFormulaEvaluator))
+  fullName: WeihanLi.Npoi.NpoiExtensions.GetCellValue(System.Nullable<ICell>, System.Type, System.Nullable<IFormulaEvaluator>)
+  fullName.vb: WeihanLi.Npoi.NpoiExtensions.GetCellValue(System.Nullable(Of ICell), System.Type, System.Nullable(Of IFormulaEvaluator))
+  nameWithType: NpoiExtensions.GetCellValue(Nullable<ICell>, Type, Nullable<IFormulaEvaluator>)
+  nameWithType.vb: NpoiExtensions.GetCellValue(Nullable(Of ICell), Type, Nullable(Of IFormulaEvaluator))
 - uid: WeihanLi.Npoi.NpoiExtensions.GetCellValue*
   name: GetCellValue
   href: docs/api/WeihanLi.Npoi.NpoiExtensions.html#WeihanLi_Npoi_NpoiExtensions_GetCellValue_
@@ -1405,15 +1402,15 @@ references:
   isSpec: "True"
   fullName: WeihanLi.Npoi.NpoiExtensions.GetCellValue
   nameWithType: NpoiExtensions.GetCellValue
-- uid: WeihanLi.Npoi.NpoiExtensions.GetCellValue``1(ICell,IFormulaEvaluator)
-  name: GetCellValue<T>(ICell, IFormulaEvaluator)
-  href: docs/api/WeihanLi.Npoi.NpoiExtensions.html#WeihanLi_Npoi_NpoiExtensions_GetCellValue__1_ICell_IFormulaEvaluator_
-  commentId: M:WeihanLi.Npoi.NpoiExtensions.GetCellValue``1(ICell,IFormulaEvaluator)
-  name.vb: GetCellValue(Of T)(ICell, IFormulaEvaluator)
-  fullName: WeihanLi.Npoi.NpoiExtensions.GetCellValue<T>(ICell, IFormulaEvaluator)
-  fullName.vb: WeihanLi.Npoi.NpoiExtensions.GetCellValue(Of T)(ICell, IFormulaEvaluator)
-  nameWithType: NpoiExtensions.GetCellValue<T>(ICell, IFormulaEvaluator)
-  nameWithType.vb: NpoiExtensions.GetCellValue(Of T)(ICell, IFormulaEvaluator)
+- uid: WeihanLi.Npoi.NpoiExtensions.GetCellValue``1(System.Nullable{ICell},System.Nullable{IFormulaEvaluator})
+  name: GetCellValue<T>(Nullable<ICell>, Nullable<IFormulaEvaluator>)
+  href: docs/api/WeihanLi.Npoi.NpoiExtensions.html#WeihanLi_Npoi_NpoiExtensions_GetCellValue__1_System_Nullable_ICell__System_Nullable_IFormulaEvaluator__
+  commentId: M:WeihanLi.Npoi.NpoiExtensions.GetCellValue``1(System.Nullable{ICell},System.Nullable{IFormulaEvaluator})
+  name.vb: GetCellValue(Of T)(Nullable(Of ICell), Nullable(Of IFormulaEvaluator))
+  fullName: WeihanLi.Npoi.NpoiExtensions.GetCellValue<T>(System.Nullable<ICell>, System.Nullable<IFormulaEvaluator>)
+  fullName.vb: WeihanLi.Npoi.NpoiExtensions.GetCellValue(Of T)(System.Nullable(Of ICell), System.Nullable(Of IFormulaEvaluator))
+  nameWithType: NpoiExtensions.GetCellValue<T>(Nullable<ICell>, Nullable<IFormulaEvaluator>)
+  nameWithType.vb: NpoiExtensions.GetCellValue(Of T)(Nullable(Of ICell), Nullable(Of IFormulaEvaluator))
 - uid: WeihanLi.Npoi.NpoiExtensions.GetFormulaEvaluator(IWorkbook)
   name: GetFormulaEvaluator(IWorkbook)
   href: docs/api/WeihanLi.Npoi.NpoiExtensions.html#WeihanLi_Npoi_NpoiExtensions_GetFormulaEvaluator_IWorkbook_
@@ -1440,12 +1437,15 @@ references:
   isSpec: "True"
   fullName: WeihanLi.Npoi.NpoiExtensions.GetRowCollection
   nameWithType: NpoiExtensions.GetRowCollection
-- uid: WeihanLi.Npoi.NpoiExtensions.GetWorkbookWithAutoSplitSheet(DataTable,WeihanLi.Npoi.ExcelFormat,ExcelSetting)
-  name: GetWorkbookWithAutoSplitSheet(DataTable, ExcelFormat, ExcelSetting)
-  href: docs/api/WeihanLi.Npoi.NpoiExtensions.html#WeihanLi_Npoi_NpoiExtensions_GetWorkbookWithAutoSplitSheet_DataTable_WeihanLi_Npoi_ExcelFormat_ExcelSetting_
-  commentId: M:WeihanLi.Npoi.NpoiExtensions.GetWorkbookWithAutoSplitSheet(DataTable,WeihanLi.Npoi.ExcelFormat,ExcelSetting)
-  fullName: WeihanLi.Npoi.NpoiExtensions.GetWorkbookWithAutoSplitSheet(DataTable, WeihanLi.Npoi.ExcelFormat, ExcelSetting)
-  nameWithType: NpoiExtensions.GetWorkbookWithAutoSplitSheet(DataTable, ExcelFormat, ExcelSetting)
+- uid: WeihanLi.Npoi.NpoiExtensions.GetWorkbookWithAutoSplitSheet(DataTable,WeihanLi.Npoi.ExcelFormat,System.Nullable{ExcelSetting})
+  name: GetWorkbookWithAutoSplitSheet(DataTable, ExcelFormat, Nullable<ExcelSetting>)
+  href: docs/api/WeihanLi.Npoi.NpoiExtensions.html#WeihanLi_Npoi_NpoiExtensions_GetWorkbookWithAutoSplitSheet_DataTable_WeihanLi_Npoi_ExcelFormat_System_Nullable_ExcelSetting__
+  commentId: M:WeihanLi.Npoi.NpoiExtensions.GetWorkbookWithAutoSplitSheet(DataTable,WeihanLi.Npoi.ExcelFormat,System.Nullable{ExcelSetting})
+  name.vb: GetWorkbookWithAutoSplitSheet(DataTable, ExcelFormat, Nullable(Of ExcelSetting))
+  fullName: WeihanLi.Npoi.NpoiExtensions.GetWorkbookWithAutoSplitSheet(DataTable, WeihanLi.Npoi.ExcelFormat, System.Nullable<ExcelSetting>)
+  fullName.vb: WeihanLi.Npoi.NpoiExtensions.GetWorkbookWithAutoSplitSheet(DataTable, WeihanLi.Npoi.ExcelFormat, System.Nullable(Of ExcelSetting))
+  nameWithType: NpoiExtensions.GetWorkbookWithAutoSplitSheet(DataTable, ExcelFormat, Nullable<ExcelSetting>)
+  nameWithType.vb: NpoiExtensions.GetWorkbookWithAutoSplitSheet(DataTable, ExcelFormat, Nullable(Of ExcelSetting))
 - uid: WeihanLi.Npoi.NpoiExtensions.GetWorkbookWithAutoSplitSheet*
   name: GetWorkbookWithAutoSplitSheet
   href: docs/api/WeihanLi.Npoi.NpoiExtensions.html#WeihanLi_Npoi_NpoiExtensions_GetWorkbookWithAutoSplitSheet_
@@ -1462,12 +1462,15 @@ references:
   fullName.vb: WeihanLi.Npoi.NpoiExtensions.GetWorkbookWithAutoSplitSheet(Of TEntity)(IList(Of TEntity), WeihanLi.Npoi.ExcelFormat)
   nameWithType: NpoiExtensions.GetWorkbookWithAutoSplitSheet<TEntity>(IList<TEntity>, ExcelFormat)
   nameWithType.vb: NpoiExtensions.GetWorkbookWithAutoSplitSheet(Of TEntity)(IList(Of TEntity), ExcelFormat)
-- uid: WeihanLi.Npoi.NpoiExtensions.ImportData(ISheet,DataTable)
-  name: ImportData(ISheet, DataTable)
-  href: docs/api/WeihanLi.Npoi.NpoiExtensions.html#WeihanLi_Npoi_NpoiExtensions_ImportData_ISheet_DataTable_
-  commentId: M:WeihanLi.Npoi.NpoiExtensions.ImportData(ISheet,DataTable)
-  fullName: WeihanLi.Npoi.NpoiExtensions.ImportData(ISheet, DataTable)
-  nameWithType: NpoiExtensions.ImportData(ISheet, DataTable)
+- uid: WeihanLi.Npoi.NpoiExtensions.ImportData(ISheet,System.Nullable{DataTable})
+  name: ImportData(ISheet, Nullable<DataTable>)
+  href: docs/api/WeihanLi.Npoi.NpoiExtensions.html#WeihanLi_Npoi_NpoiExtensions_ImportData_ISheet_System_Nullable_DataTable__
+  commentId: M:WeihanLi.Npoi.NpoiExtensions.ImportData(ISheet,System.Nullable{DataTable})
+  name.vb: ImportData(ISheet, Nullable(Of DataTable))
+  fullName: WeihanLi.Npoi.NpoiExtensions.ImportData(ISheet, System.Nullable<DataTable>)
+  fullName.vb: WeihanLi.Npoi.NpoiExtensions.ImportData(ISheet, System.Nullable(Of DataTable))
+  nameWithType: NpoiExtensions.ImportData(ISheet, Nullable<DataTable>)
+  nameWithType.vb: NpoiExtensions.ImportData(ISheet, Nullable(Of DataTable))
 - uid: WeihanLi.Npoi.NpoiExtensions.ImportData*
   name: ImportData
   href: docs/api/WeihanLi.Npoi.NpoiExtensions.html#WeihanLi_Npoi_NpoiExtensions_ImportData_
@@ -1671,12 +1674,15 @@ references:
   commentId: M:WeihanLi.Npoi.NpoiExtensions.ToExcelBytes(DataTable,WeihanLi.Npoi.ExcelFormat)
   fullName: WeihanLi.Npoi.NpoiExtensions.ToExcelBytes(DataTable, WeihanLi.Npoi.ExcelFormat)
   nameWithType: NpoiExtensions.ToExcelBytes(DataTable, ExcelFormat)
-- uid: WeihanLi.Npoi.NpoiExtensions.ToExcelBytes(DataTable,WeihanLi.Npoi.ExcelFormat,ExcelSetting)
-  name: ToExcelBytes(DataTable, ExcelFormat, ExcelSetting)
-  href: docs/api/WeihanLi.Npoi.NpoiExtensions.html#WeihanLi_Npoi_NpoiExtensions_ToExcelBytes_DataTable_WeihanLi_Npoi_ExcelFormat_ExcelSetting_
-  commentId: M:WeihanLi.Npoi.NpoiExtensions.ToExcelBytes(DataTable,WeihanLi.Npoi.ExcelFormat,ExcelSetting)
-  fullName: WeihanLi.Npoi.NpoiExtensions.ToExcelBytes(DataTable, WeihanLi.Npoi.ExcelFormat, ExcelSetting)
-  nameWithType: NpoiExtensions.ToExcelBytes(DataTable, ExcelFormat, ExcelSetting)
+- uid: WeihanLi.Npoi.NpoiExtensions.ToExcelBytes(DataTable,WeihanLi.Npoi.ExcelFormat,System.Nullable{ExcelSetting})
+  name: ToExcelBytes(DataTable, ExcelFormat, Nullable<ExcelSetting>)
+  href: docs/api/WeihanLi.Npoi.NpoiExtensions.html#WeihanLi_Npoi_NpoiExtensions_ToExcelBytes_DataTable_WeihanLi_Npoi_ExcelFormat_System_Nullable_ExcelSetting__
+  commentId: M:WeihanLi.Npoi.NpoiExtensions.ToExcelBytes(DataTable,WeihanLi.Npoi.ExcelFormat,System.Nullable{ExcelSetting})
+  name.vb: ToExcelBytes(DataTable, ExcelFormat, Nullable(Of ExcelSetting))
+  fullName: WeihanLi.Npoi.NpoiExtensions.ToExcelBytes(DataTable, WeihanLi.Npoi.ExcelFormat, System.Nullable<ExcelSetting>)
+  fullName.vb: WeihanLi.Npoi.NpoiExtensions.ToExcelBytes(DataTable, WeihanLi.Npoi.ExcelFormat, System.Nullable(Of ExcelSetting))
+  nameWithType: NpoiExtensions.ToExcelBytes(DataTable, ExcelFormat, Nullable<ExcelSetting>)
+  nameWithType.vb: NpoiExtensions.ToExcelBytes(DataTable, ExcelFormat, Nullable(Of ExcelSetting))
 - uid: WeihanLi.Npoi.NpoiExtensions.ToExcelBytes(IWorkbook)
   name: ToExcelBytes(IWorkbook)
   href: docs/api/WeihanLi.Npoi.NpoiExtensions.html#WeihanLi_Npoi_NpoiExtensions_ToExcelBytes_IWorkbook_
@@ -1784,12 +1790,15 @@ references:
   commentId: M:WeihanLi.Npoi.NpoiExtensions.ToExcelFile(DataTable,System.String)
   fullName: WeihanLi.Npoi.NpoiExtensions.ToExcelFile(DataTable, System.String)
   nameWithType: NpoiExtensions.ToExcelFile(DataTable, String)
-- uid: WeihanLi.Npoi.NpoiExtensions.ToExcelFile(DataTable,System.String,ExcelSetting)
-  name: ToExcelFile(DataTable, String, ExcelSetting)
-  href: docs/api/WeihanLi.Npoi.NpoiExtensions.html#WeihanLi_Npoi_NpoiExtensions_ToExcelFile_DataTable_System_String_ExcelSetting_
-  commentId: M:WeihanLi.Npoi.NpoiExtensions.ToExcelFile(DataTable,System.String,ExcelSetting)
-  fullName: WeihanLi.Npoi.NpoiExtensions.ToExcelFile(DataTable, System.String, ExcelSetting)
-  nameWithType: NpoiExtensions.ToExcelFile(DataTable, String, ExcelSetting)
+- uid: WeihanLi.Npoi.NpoiExtensions.ToExcelFile(DataTable,System.String,System.Nullable{ExcelSetting})
+  name: ToExcelFile(DataTable, String, Nullable<ExcelSetting>)
+  href: docs/api/WeihanLi.Npoi.NpoiExtensions.html#WeihanLi_Npoi_NpoiExtensions_ToExcelFile_DataTable_System_String_System_Nullable_ExcelSetting__
+  commentId: M:WeihanLi.Npoi.NpoiExtensions.ToExcelFile(DataTable,System.String,System.Nullable{ExcelSetting})
+  name.vb: ToExcelFile(DataTable, String, Nullable(Of ExcelSetting))
+  fullName: WeihanLi.Npoi.NpoiExtensions.ToExcelFile(DataTable, System.String, System.Nullable<ExcelSetting>)
+  fullName.vb: WeihanLi.Npoi.NpoiExtensions.ToExcelFile(DataTable, System.String, System.Nullable(Of ExcelSetting))
+  nameWithType: NpoiExtensions.ToExcelFile(DataTable, String, Nullable<ExcelSetting>)
+  nameWithType.vb: NpoiExtensions.ToExcelFile(DataTable, String, Nullable(Of ExcelSetting))
 - uid: WeihanLi.Npoi.NpoiExtensions.ToExcelFile*
   name: ToExcelFile
   href: docs/api/WeihanLi.Npoi.NpoiExtensions.html#WeihanLi_Npoi_NpoiExtensions_ToExcelFile_
@@ -1870,12 +1879,15 @@ references:
   commentId: M:WeihanLi.Npoi.NpoiExtensions.ToExcelStream(DataTable,Stream,WeihanLi.Npoi.ExcelFormat)
   fullName: WeihanLi.Npoi.NpoiExtensions.ToExcelStream(DataTable, Stream, WeihanLi.Npoi.ExcelFormat)
   nameWithType: NpoiExtensions.ToExcelStream(DataTable, Stream, ExcelFormat)
-- uid: WeihanLi.Npoi.NpoiExtensions.ToExcelStream(DataTable,Stream,WeihanLi.Npoi.ExcelFormat,ExcelSetting)
-  name: ToExcelStream(DataTable, Stream, ExcelFormat, ExcelSetting)
-  href: docs/api/WeihanLi.Npoi.NpoiExtensions.html#WeihanLi_Npoi_NpoiExtensions_ToExcelStream_DataTable_Stream_WeihanLi_Npoi_ExcelFormat_ExcelSetting_
-  commentId: M:WeihanLi.Npoi.NpoiExtensions.ToExcelStream(DataTable,Stream,WeihanLi.Npoi.ExcelFormat,ExcelSetting)
-  fullName: WeihanLi.Npoi.NpoiExtensions.ToExcelStream(DataTable, Stream, WeihanLi.Npoi.ExcelFormat, ExcelSetting)
-  nameWithType: NpoiExtensions.ToExcelStream(DataTable, Stream, ExcelFormat, ExcelSetting)
+- uid: WeihanLi.Npoi.NpoiExtensions.ToExcelStream(DataTable,Stream,WeihanLi.Npoi.ExcelFormat,System.Nullable{ExcelSetting})
+  name: ToExcelStream(DataTable, Stream, ExcelFormat, Nullable<ExcelSetting>)
+  href: docs/api/WeihanLi.Npoi.NpoiExtensions.html#WeihanLi_Npoi_NpoiExtensions_ToExcelStream_DataTable_Stream_WeihanLi_Npoi_ExcelFormat_System_Nullable_ExcelSetting__
+  commentId: M:WeihanLi.Npoi.NpoiExtensions.ToExcelStream(DataTable,Stream,WeihanLi.Npoi.ExcelFormat,System.Nullable{ExcelSetting})
+  name.vb: ToExcelStream(DataTable, Stream, ExcelFormat, Nullable(Of ExcelSetting))
+  fullName: WeihanLi.Npoi.NpoiExtensions.ToExcelStream(DataTable, Stream, WeihanLi.Npoi.ExcelFormat, System.Nullable<ExcelSetting>)
+  fullName.vb: WeihanLi.Npoi.NpoiExtensions.ToExcelStream(DataTable, Stream, WeihanLi.Npoi.ExcelFormat, System.Nullable(Of ExcelSetting))
+  nameWithType: NpoiExtensions.ToExcelStream(DataTable, Stream, ExcelFormat, Nullable<ExcelSetting>)
+  nameWithType.vb: NpoiExtensions.ToExcelStream(DataTable, Stream, ExcelFormat, Nullable(Of ExcelSetting))
 - uid: WeihanLi.Npoi.NpoiExtensions.ToExcelStream*
   name: ToExcelStream
   href: docs/api/WeihanLi.Npoi.NpoiExtensions.html#WeihanLi_Npoi_NpoiExtensions_ToExcelStream_
@@ -2073,19 +2085,6 @@ references:
   commentId: T:WeihanLi.Npoi.Settings.SheetSetting
   fullName: WeihanLi.Npoi.Settings.SheetSetting
   nameWithType: SheetSetting
-- uid: WeihanLi.Npoi.Settings.SheetSetting.#ctor
-  name: SheetSetting()
-  href: docs/api/WeihanLi.Npoi.Settings.SheetSetting.html#WeihanLi_Npoi_Settings_SheetSetting__ctor
-  commentId: M:WeihanLi.Npoi.Settings.SheetSetting.#ctor
-  fullName: WeihanLi.Npoi.Settings.SheetSetting.SheetSetting()
-  nameWithType: SheetSetting.SheetSetting()
-- uid: WeihanLi.Npoi.Settings.SheetSetting.#ctor*
-  name: SheetSetting
-  href: docs/api/WeihanLi.Npoi.Settings.SheetSetting.html#WeihanLi_Npoi_Settings_SheetSetting__ctor_
-  commentId: Overload:WeihanLi.Npoi.Settings.SheetSetting.#ctor
-  isSpec: "True"
-  fullName: WeihanLi.Npoi.Settings.SheetSetting.SheetSetting
-  nameWithType: SheetSetting.SheetSetting
 - uid: WeihanLi.Npoi.Settings.SheetSetting.AutoColumnWidthEnabled
   name: AutoColumnWidthEnabled
   href: docs/api/WeihanLi.Npoi.Settings.SheetSetting.html#WeihanLi_Npoi_Settings_SheetSetting_AutoColumnWidthEnabled

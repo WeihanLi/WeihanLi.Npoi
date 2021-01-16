@@ -111,19 +111,20 @@
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">public static class ExcelHelper</code></pre>
   </div>
-  <h3 id="fields">Fields
+  <h3 id="properties">Properties
   </h3>
   
   
+  <a id="WeihanLi_Npoi_ExcelHelper_DefaultExcelSetting_" data-uid="WeihanLi.Npoi.ExcelHelper.DefaultExcelSetting*"></a>
   <h4 id="WeihanLi_Npoi_ExcelHelper_DefaultExcelSetting" data-uid="WeihanLi.Npoi.ExcelHelper.DefaultExcelSetting">DefaultExcelSetting</h4>
   <div class="markdown level1 summary"><p>Default excel setting for export excel files</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static ExcelSetting DefaultExcelSetting</code></pre>
+    <pre><code class="lang-csharp hljs">public static ExcelSetting DefaultExcelSetting { get; set; }</code></pre>
   </div>
-  <h5 class="fieldValue">Field Value</h5>
+  <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
     <thead>
       <tr>
@@ -450,13 +451,13 @@
   
   
   <a id="WeihanLi_Npoi_ExcelHelper_PrepareWorkbook_" data-uid="WeihanLi.Npoi.ExcelHelper.PrepareWorkbook*"></a>
-  <h4 id="WeihanLi_Npoi_ExcelHelper_PrepareWorkbook_System_Boolean_ExcelSetting_" data-uid="WeihanLi.Npoi.ExcelHelper.PrepareWorkbook(System.Boolean,ExcelSetting)">PrepareWorkbook(Boolean, ExcelSetting)</h4>
+  <h4 id="WeihanLi_Npoi_ExcelHelper_PrepareWorkbook_System_Boolean_System_Nullable_ExcelSetting__" data-uid="WeihanLi.Npoi.ExcelHelper.PrepareWorkbook(System.Boolean,System.Nullable{ExcelSetting})">PrepareWorkbook(Boolean, Nullable&lt;ExcelSetting&gt;)</h4>
   <div class="markdown level1 summary"><p>get a excel workbook</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static IWorkbook PrepareWorkbook(bool isXlsx, ExcelSetting excelSetting)</code></pre>
+    <pre><code class="lang-csharp hljs">public static IWorkbook PrepareWorkbook(bool isXlsx, ExcelSetting? excelSetting)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -475,7 +476,7 @@
 </td>
       </tr>
       <tr>
-        <td><span class="xref">ExcelSetting</span></td>
+        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">ExcelSetting</span>&gt;</td>
         <td><span class="parametername">excelSetting</span></td>
         <td><p>excelSettings</p>
 </td>
@@ -544,13 +545,13 @@
   
   
   <a id="WeihanLi_Npoi_ExcelHelper_PrepareWorkbook_" data-uid="WeihanLi.Npoi.ExcelHelper.PrepareWorkbook*"></a>
-  <h4 id="WeihanLi_Npoi_ExcelHelper_PrepareWorkbook_System_String_ExcelSetting_" data-uid="WeihanLi.Npoi.ExcelHelper.PrepareWorkbook(System.String,ExcelSetting)">PrepareWorkbook(String, ExcelSetting)</h4>
+  <h4 id="WeihanLi_Npoi_ExcelHelper_PrepareWorkbook_System_String_System_Nullable_ExcelSetting__" data-uid="WeihanLi.Npoi.ExcelHelper.PrepareWorkbook(System.String,System.Nullable{ExcelSetting})">PrepareWorkbook(String, Nullable&lt;ExcelSetting&gt;)</h4>
   <div class="markdown level1 summary"><p>prepare a workbook for export</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static IWorkbook PrepareWorkbook(string excelPath, ExcelSetting excelSetting)</code></pre>
+    <pre><code class="lang-csharp hljs">public static IWorkbook PrepareWorkbook(string excelPath, ExcelSetting? excelSetting)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -569,7 +570,7 @@
 </td>
       </tr>
       <tr>
-        <td><span class="xref">ExcelSetting</span></td>
+        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">ExcelSetting</span>&gt;</td>
         <td><span class="parametername">excelSetting</span></td>
         <td><p>excelSetting</p>
 </td>
@@ -638,13 +639,13 @@
   
   
   <a id="WeihanLi_Npoi_ExcelHelper_PrepareWorkbook_" data-uid="WeihanLi.Npoi.ExcelHelper.PrepareWorkbook*"></a>
-  <h4 id="WeihanLi_Npoi_ExcelHelper_PrepareWorkbook_WeihanLi_Npoi_ExcelFormat_ExcelSetting_" data-uid="WeihanLi.Npoi.ExcelHelper.PrepareWorkbook(WeihanLi.Npoi.ExcelFormat,ExcelSetting)">PrepareWorkbook(ExcelFormat, ExcelSetting)</h4>
+  <h4 id="WeihanLi_Npoi_ExcelHelper_PrepareWorkbook_WeihanLi_Npoi_ExcelFormat_System_Nullable_ExcelSetting__" data-uid="WeihanLi.Npoi.ExcelHelper.PrepareWorkbook(WeihanLi.Npoi.ExcelFormat,System.Nullable{ExcelSetting})">PrepareWorkbook(ExcelFormat, Nullable&lt;ExcelSetting&gt;)</h4>
   <div class="markdown level1 summary"><p>prepare a workbook for export</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static IWorkbook PrepareWorkbook(ExcelFormat excelFormat, ExcelSetting excelSetting)</code></pre>
+    <pre><code class="lang-csharp hljs">public static IWorkbook PrepareWorkbook(ExcelFormat excelFormat, ExcelSetting? excelSetting)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -663,7 +664,7 @@
 </td>
       </tr>
       <tr>
-        <td><span class="xref">ExcelSetting</span></td>
+        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">ExcelSetting</span>&gt;</td>
         <td><span class="parametername">excelSetting</span></td>
         <td><p>excelSetting</p>
 </td>
@@ -682,50 +683,6 @@
       <tr>
         <td><span class="xref">IWorkbook</span></td>
         <td></td>
-      </tr>
-    </tbody>
-  </table>
-  
-  
-  <a id="WeihanLi_Npoi_ExcelHelper_SettingFor_" data-uid="WeihanLi.Npoi.ExcelHelper.SettingFor*"></a>
-  <h4 id="WeihanLi_Npoi_ExcelHelper_SettingFor__1" data-uid="WeihanLi.Npoi.ExcelHelper.SettingFor``1">SettingFor&lt;TEntity&gt;()</h4>
-  <div class="markdown level1 summary"><p>SettingFor
-Fluent Settings</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">[Obsolete(&quot;Please use FluentSettings.For&lt;TEntity&gt;, this method will be removed in next release&quot;, true)]
-public static IExcelConfiguration&lt;TEntity&gt; SettingFor&lt;TEntity&gt;()</code></pre>
-  </div>
-  <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="WeihanLi.Npoi.Configurations.IExcelConfiguration-1.html">IExcelConfiguration</a>&lt;TEntity&gt;</td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  <h5 class="typeParameters">Type Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="parametername">TEntity</span></td>
-        <td><p>TEntity</p>
-</td>
       </tr>
     </tbody>
   </table>

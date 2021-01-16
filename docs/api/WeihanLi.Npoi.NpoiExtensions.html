@@ -160,13 +160,13 @@
   
   
   <a id="WeihanLi_Npoi_NpoiExtensions_GetCellValue_" data-uid="WeihanLi.Npoi.NpoiExtensions.GetCellValue*"></a>
-  <h4 id="WeihanLi_Npoi_NpoiExtensions_GetCellValue_ICell_System_Type_IFormulaEvaluator_" data-uid="WeihanLi.Npoi.NpoiExtensions.GetCellValue(ICell,System.Type,IFormulaEvaluator)">GetCellValue(ICell, Type, IFormulaEvaluator)</h4>
+  <h4 id="WeihanLi_Npoi_NpoiExtensions_GetCellValue_System_Nullable_ICell__System_Type_System_Nullable_IFormulaEvaluator__" data-uid="WeihanLi.Npoi.NpoiExtensions.GetCellValue(System.Nullable{ICell},System.Type,System.Nullable{IFormulaEvaluator})">GetCellValue(Nullable&lt;ICell&gt;, Type, Nullable&lt;IFormulaEvaluator&gt;)</h4>
   <div class="markdown level1 summary"><p>GetCellValue</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static object GetCellValue(this ICell cell, Type propertyType, IFormulaEvaluator formulaEvaluator = null)</code></pre>
+    <pre><code class="lang-csharp hljs">public static object GetCellValue(this ICell? cell, Type propertyType, IFormulaEvaluator? formulaEvaluator = default(IFormulaEvaluator? ))</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -179,7 +179,7 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">ICell</span></td>
+        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">ICell</span>&gt;</td>
         <td><span class="parametername">cell</span></td>
         <td><p>cell</p>
 </td>
@@ -191,7 +191,7 @@
 </td>
       </tr>
       <tr>
-        <td><span class="xref">IFormulaEvaluator</span></td>
+        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">IFormulaEvaluator</span>&gt;</td>
         <td><span class="parametername">formulaEvaluator</span></td>
         <td><p>formulaEvaluator</p>
 </td>
@@ -217,13 +217,13 @@
   
   
   <a id="WeihanLi_Npoi_NpoiExtensions_GetCellValue_" data-uid="WeihanLi.Npoi.NpoiExtensions.GetCellValue*"></a>
-  <h4 id="WeihanLi_Npoi_NpoiExtensions_GetCellValue__1_ICell_IFormulaEvaluator_" data-uid="WeihanLi.Npoi.NpoiExtensions.GetCellValue``1(ICell,IFormulaEvaluator)">GetCellValue&lt;T&gt;(ICell, IFormulaEvaluator)</h4>
+  <h4 id="WeihanLi_Npoi_NpoiExtensions_GetCellValue__1_System_Nullable_ICell__System_Nullable_IFormulaEvaluator__" data-uid="WeihanLi.Npoi.NpoiExtensions.GetCellValue``1(System.Nullable{ICell},System.Nullable{IFormulaEvaluator})">GetCellValue&lt;T&gt;(Nullable&lt;ICell&gt;, Nullable&lt;IFormulaEvaluator&gt;)</h4>
   <div class="markdown level1 summary"><p>GetCellValue</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static T GetCellValue&lt;T&gt;(this ICell cell, IFormulaEvaluator formulaEvaluator = null)</code></pre>
+    <pre><code class="lang-csharp hljs">public static T GetCellValue&lt;T&gt;(this ICell? cell, IFormulaEvaluator? formulaEvaluator = default(IFormulaEvaluator? ))</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -236,13 +236,13 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">ICell</span></td>
+        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">ICell</span>&gt;</td>
         <td><span class="parametername">cell</span></td>
         <td><p>cell</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">IFormulaEvaluator</span></td>
+        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">IFormulaEvaluator</span>&gt;</td>
         <td><span class="parametername">formulaEvaluator</span></td>
         <td></td>
       </tr>
@@ -259,7 +259,8 @@
     <tbody>
       <tr>
         <td><span class="xref">T</span></td>
-        <td></td>
+        <td><p>typed cell value</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -371,13 +372,13 @@
   
   
   <a id="WeihanLi_Npoi_NpoiExtensions_GetWorkbookWithAutoSplitSheet_" data-uid="WeihanLi.Npoi.NpoiExtensions.GetWorkbookWithAutoSplitSheet*"></a>
-  <h4 id="WeihanLi_Npoi_NpoiExtensions_GetWorkbookWithAutoSplitSheet_DataTable_WeihanLi_Npoi_ExcelFormat_ExcelSetting_" data-uid="WeihanLi.Npoi.NpoiExtensions.GetWorkbookWithAutoSplitSheet(DataTable,WeihanLi.Npoi.ExcelFormat,ExcelSetting)">GetWorkbookWithAutoSplitSheet(DataTable, ExcelFormat, ExcelSetting)</h4>
+  <h4 id="WeihanLi_Npoi_NpoiExtensions_GetWorkbookWithAutoSplitSheet_DataTable_WeihanLi_Npoi_ExcelFormat_System_Nullable_ExcelSetting__" data-uid="WeihanLi.Npoi.NpoiExtensions.GetWorkbookWithAutoSplitSheet(DataTable,WeihanLi.Npoi.ExcelFormat,System.Nullable{ExcelSetting})">GetWorkbookWithAutoSplitSheet(DataTable, ExcelFormat, Nullable&lt;ExcelSetting&gt;)</h4>
   <div class="markdown level1 summary"><p>GetWorkbookWithAutoSplitSheet</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static IWorkbook GetWorkbookWithAutoSplitSheet(this DataTable dataTable, ExcelFormat excelFormat, ExcelSetting excelSetting = null)</code></pre>
+    <pre><code class="lang-csharp hljs">public static IWorkbook GetWorkbookWithAutoSplitSheet(this DataTable dataTable, ExcelFormat excelFormat, ExcelSetting? excelSetting = default(ExcelSetting? ))</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -402,7 +403,7 @@
 </td>
       </tr>
       <tr>
-        <td><span class="xref">ExcelSetting</span></td>
+        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">ExcelSetting</span>&gt;</td>
         <td><span class="parametername">excelSetting</span></td>
         <td><p>excelSetting</p>
 </td>
@@ -495,12 +496,12 @@
   
   
   <a id="WeihanLi_Npoi_NpoiExtensions_ImportData_" data-uid="WeihanLi.Npoi.NpoiExtensions.ImportData*"></a>
-  <h4 id="WeihanLi_Npoi_NpoiExtensions_ImportData_ISheet_DataTable_" data-uid="WeihanLi.Npoi.NpoiExtensions.ImportData(ISheet,DataTable)">ImportData(ISheet, DataTable)</h4>
+  <h4 id="WeihanLi_Npoi_NpoiExtensions_ImportData_ISheet_System_Nullable_DataTable__" data-uid="WeihanLi.Npoi.NpoiExtensions.ImportData(ISheet,System.Nullable{DataTable})">ImportData(ISheet, Nullable&lt;DataTable&gt;)</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static void ImportData(this ISheet sheet, DataTable dataTable)</code></pre>
+    <pre><code class="lang-csharp hljs">public static void ImportData(this ISheet sheet, DataTable? dataTable)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -518,7 +519,7 @@
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">DataTable</span></td>
+        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">DataTable</span>&gt;</td>
         <td><span class="parametername">dataTable</span></td>
         <td></td>
       </tr>
@@ -1805,13 +1806,13 @@
   
   
   <a id="WeihanLi_Npoi_NpoiExtensions_ToExcelBytes_" data-uid="WeihanLi.Npoi.NpoiExtensions.ToExcelBytes*"></a>
-  <h4 id="WeihanLi_Npoi_NpoiExtensions_ToExcelBytes_DataTable_WeihanLi_Npoi_ExcelFormat_ExcelSetting_" data-uid="WeihanLi.Npoi.NpoiExtensions.ToExcelBytes(DataTable,WeihanLi.Npoi.ExcelFormat,ExcelSetting)">ToExcelBytes(DataTable, ExcelFormat, ExcelSetting)</h4>
+  <h4 id="WeihanLi_Npoi_NpoiExtensions_ToExcelBytes_DataTable_WeihanLi_Npoi_ExcelFormat_System_Nullable_ExcelSetting__" data-uid="WeihanLi.Npoi.NpoiExtensions.ToExcelBytes(DataTable,WeihanLi.Npoi.ExcelFormat,System.Nullable{ExcelSetting})">ToExcelBytes(DataTable, ExcelFormat, Nullable&lt;ExcelSetting&gt;)</h4>
   <div class="markdown level1 summary"><p>DataTable2ExcelBytes</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static byte[] ToExcelBytes(this DataTable dataTable, ExcelFormat excelFormat, ExcelSetting excelSetting)</code></pre>
+    <pre><code class="lang-csharp hljs">public static byte[] ToExcelBytes(this DataTable dataTable, ExcelFormat excelFormat, ExcelSetting? excelSetting)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1836,7 +1837,7 @@
 </td>
       </tr>
       <tr>
-        <td><span class="xref">ExcelSetting</span></td>
+        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">ExcelSetting</span>&gt;</td>
         <td><span class="parametername">excelSetting</span></td>
         <td><p>excelSetting</p>
 </td>
@@ -1898,7 +1899,8 @@
     <tbody>
       <tr>
         <td><span class="xref">System.Byte</span>[]</td>
-        <td></td>
+        <td><p>excel bytes</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -2604,13 +2606,13 @@
   
   
   <a id="WeihanLi_Npoi_NpoiExtensions_ToExcelFile_" data-uid="WeihanLi.Npoi.NpoiExtensions.ToExcelFile*"></a>
-  <h4 id="WeihanLi_Npoi_NpoiExtensions_ToExcelFile_DataTable_System_String_ExcelSetting_" data-uid="WeihanLi.Npoi.NpoiExtensions.ToExcelFile(DataTable,System.String,ExcelSetting)">ToExcelFile(DataTable, String, ExcelSetting)</h4>
+  <h4 id="WeihanLi_Npoi_NpoiExtensions_ToExcelFile_DataTable_System_String_System_Nullable_ExcelSetting__" data-uid="WeihanLi.Npoi.NpoiExtensions.ToExcelFile(DataTable,System.String,System.Nullable{ExcelSetting})">ToExcelFile(DataTable, String, Nullable&lt;ExcelSetting&gt;)</h4>
   <div class="markdown level1 summary"><p>export DataTable to excel file</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static void ToExcelFile(this DataTable dataTable, string excelPath, ExcelSetting excelSetting)</code></pre>
+    <pre><code class="lang-csharp hljs">public static void ToExcelFile(this DataTable dataTable, string excelPath, ExcelSetting? excelSetting)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -2635,7 +2637,7 @@
 </td>
       </tr>
       <tr>
-        <td><span class="xref">ExcelSetting</span></td>
+        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">ExcelSetting</span>&gt;</td>
         <td><span class="parametername">excelSetting</span></td>
         <td><p>excelSetting</p>
 </td>
@@ -3091,13 +3093,13 @@
   
   
   <a id="WeihanLi_Npoi_NpoiExtensions_ToExcelStream_" data-uid="WeihanLi.Npoi.NpoiExtensions.ToExcelStream*"></a>
-  <h4 id="WeihanLi_Npoi_NpoiExtensions_ToExcelStream_DataTable_Stream_WeihanLi_Npoi_ExcelFormat_ExcelSetting_" data-uid="WeihanLi.Npoi.NpoiExtensions.ToExcelStream(DataTable,Stream,WeihanLi.Npoi.ExcelFormat,ExcelSetting)">ToExcelStream(DataTable, Stream, ExcelFormat, ExcelSetting)</h4>
+  <h4 id="WeihanLi_Npoi_NpoiExtensions_ToExcelStream_DataTable_Stream_WeihanLi_Npoi_ExcelFormat_System_Nullable_ExcelSetting__" data-uid="WeihanLi.Npoi.NpoiExtensions.ToExcelStream(DataTable,Stream,WeihanLi.Npoi.ExcelFormat,System.Nullable{ExcelSetting})">ToExcelStream(DataTable, Stream, ExcelFormat, Nullable&lt;ExcelSetting&gt;)</h4>
   <div class="markdown level1 summary"><p>DataTable2ExcelStream</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static void ToExcelStream(this DataTable dataTable, Stream stream, ExcelFormat excelFormat, ExcelSetting excelSetting)</code></pre>
+    <pre><code class="lang-csharp hljs">public static void ToExcelStream(this DataTable dataTable, Stream stream, ExcelFormat excelFormat, ExcelSetting? excelSetting)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -3128,7 +3130,7 @@
 </td>
       </tr>
       <tr>
-        <td><span class="xref">ExcelSetting</span></td>
+        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">ExcelSetting</span>&gt;</td>
         <td><span class="parametername">excelSetting</span></td>
         <td><p>excelSetting</p>
 </td>
