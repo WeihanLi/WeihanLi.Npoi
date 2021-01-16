@@ -1,5 +1,4 @@
-﻿using JetBrains.Annotations;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics;
@@ -22,12 +21,12 @@ namespace WeihanLi.Npoi
                 : sheetSettings[0];
         }
 
-        public static List<TEntity> SheetToEntityList<TEntity>([NotNull] ISheet sheet, int sheetIndex) where TEntity : new()
+        public static List<TEntity?> SheetToEntityList<TEntity>(ISheet sheet, int sheetIndex) where TEntity : new()
         {
             var entityType = typeof(TEntity);
             var configuration = InternalHelper.GetExcelConfigurationMapping<TEntity>();
             var sheetSetting = GetSheetSetting(configuration.SheetSettings, sheetIndex);
-            var entities = new List<TEntity>(sheet.LastRowNum - sheetSetting.HeaderRowIndex);
+            var entities = new List<TEntity?>(sheet.LastRowNum - sheetSetting.HeaderRowIndex);
 
             var propertyColumnDictionary = InternalHelper.GetPropertyColumnDictionary(configuration);
             var propertyColumnDic = sheetSetting.HeaderRowIndex >= 0
@@ -54,7 +53,7 @@ namespace WeihanLi.Npoi
                             {
                                 continue;
                             }
-                            var col = propertyColumnDic.GetPropertySetting(row.GetCell(i).Value.ToString().Trim());
+                            var col = propertyColumnDic.GetPropertySetting(row.GetCell(i)!.Value!.ToString().Trim());
                             if (null != col)
                             {
                                 col.ColumnIndex = i;
@@ -195,12 +194,8 @@ namespace WeihanLi.Npoi
             return entities;
         }
 
-        public static ISheet EntityListToSheet<TEntity>([NotNull] ISheet sheet, IEnumerable<TEntity> entityList, int sheetIndex) where TEntity : new()
+        public static ISheet EntityListToSheet<TEntity>(ISheet sheet, IEnumerable<TEntity> entityList, int sheetIndex) where TEntity : new()
         {
-            if (null == entityList)
-            {
-                return sheet;
-            }
             var configuration = InternalHelper.GetExcelConfigurationMapping<TEntity>();
             var propertyColumnDictionary = InternalHelper.GetPropertyColumnDictionary(configuration);
             if (propertyColumnDictionary.Keys.Count == 0)
@@ -254,9 +249,9 @@ namespace WeihanLi.Npoi
             return sheet;
         }
 
-        public static ISheet DataTableToSheet<TEntity>([NotNull] ISheet sheet, DataTable dataTable, int sheetIndex) where TEntity : new()
+        public static ISheet DataTableToSheet<TEntity>(ISheet sheet, DataTable dataTable, int sheetIndex) where TEntity : new()
         {
-            if (null == dataTable || dataTable.Rows.Count == 0 || dataTable.Columns.Count == 0)
+            if (dataTable.Rows.Count == 0 || dataTable.Columns.Count == 0)
             {
                 return sheet;
             }
@@ -288,7 +283,7 @@ namespace WeihanLi.Npoi
                 var row = sheet.CreateRow(sheetSetting.StartRowIndex + i);
                 for (var j = 0; j < dataTable.Columns.Count; j++)
                 {
-                    var col = propertyColumnDictionary.GetPropertySettingByPropertyName(dataTable.Columns[j].ColumnName);
+                    var col = propertyColumnDictionary.GetPropertySettingByPropertyName(dataTable.Columns[j].ColumnName)!;
                     row.CreateCell(col.ColumnIndex).SetCellValue(dataTable.Rows[i][j], col.ColumnFormatter);
                 }
             }

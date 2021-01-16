@@ -1,5 +1,4 @@
-﻿using JetBrains.Annotations;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -12,14 +11,10 @@ namespace WeihanLi.Npoi
     internal class InternalExcelTemplateHelper
     {
         public static ISheet EntityListToSheetByTemplate<TEntity>(
-            [NotNull] ISheet sheet,
+            ISheet sheet,
             IEnumerable<TEntity> entityList,
-            object extraData = null)
+            object? extraData = null)
         {
-            if (entityList is null)
-            {
-                return sheet;
-            }
             var configuration = InternalHelper.GetExcelConfigurationMapping<TEntity>();
             var propertyColumnDictionary = InternalHelper.GetPropertyColumnDictionary(configuration);
 
@@ -27,7 +22,7 @@ namespace WeihanLi.Npoi
                 .ToDictionary(x => NpoiTemplateHelper.TemplateOptions.TemplateGlobalParamFormat.FormatWith(x.Key), x => x.Value);
             foreach (var propertyConfiguration in propertyColumnDictionary)
             {
-                globalDictionary.Add(NpoiTemplateHelper.TemplateOptions.TemplateHeaderParamFormat.FormatWith(propertyConfiguration.Key.Name), propertyConfiguration.Value.ColumnTitle);
+                globalDictionary.Add(NpoiTemplateHelper.TemplateOptions.TemplateHeaderParamFormat.FormatWith(propertyConfiguration.Key.Name), propertyConfiguration.Value.ColumnTitle!);
             }
 
             var dataFuncDictionary = propertyColumnDictionary
@@ -121,31 +116,28 @@ namespace WeihanLi.Npoi
                     for (var i = 0; i < dataRowsCount; i++)
                     {
                         var row = sheet.CopyRow(dataStartRow + dataRowsCount + i, dataStartRow + i);
-                        if (null != row)
+                        for (var j = 0; j < row.LastCellNum; j++)
                         {
-                            for (var j = 0; j < row.LastCellNum; j++)
+                            var cell = row.GetCell(j);
+                            if (null != cell)
                             {
-                                var cell = row.GetCell(j);
-                                if (null != cell)
+                                var cellValue = cell.GetCellValue<string>();
+                                if (!string.IsNullOrEmpty(cellValue) && cellValue.Contains(NpoiTemplateHelper.TemplateOptions.TemplateDataPrefix))
                                 {
-                                    var cellValue = cell.GetCellValue<string>();
-                                    if (!string.IsNullOrEmpty(cellValue) && cellValue.Contains(NpoiTemplateHelper.TemplateOptions.TemplateDataPrefix))
+                                    var beforeValue = cellValue;
+
+                                    foreach (var param in dataFuncDictionary.Keys)
                                     {
-                                        var beforeValue = cellValue;
-
-                                        foreach (var param in dataFuncDictionary.Keys)
+                                        if (cellValue.Contains(param))
                                         {
-                                            if (cellValue.Contains(param))
-                                            {
-                                                cellValue = cellValue.Replace(param,
-                                                    dataFuncDictionary[param]?.Invoke(entity)?.ToString() ?? string.Empty);
-                                            }
+                                            cellValue = cellValue.Replace(param,
+                                                dataFuncDictionary[param]?.Invoke(entity)?.ToString() ?? string.Empty);
                                         }
+                                    }
 
-                                        if (beforeValue != cellValue)
-                                        {
-                                            cell.SetCellValue(cellValue);
-                                        }
+                                    if (beforeValue != cellValue)
+                                    {
+                                        cell.SetCellValue(cellValue);
                                     }
                                 }
                             }

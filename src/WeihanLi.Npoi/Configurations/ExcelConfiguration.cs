@@ -25,20 +25,20 @@ namespace WeihanLi.Npoi.Configurations
 
         internal IList<FreezeSetting> FreezeSettings { get; set; }
 
-        internal FilterSetting FilterSetting { get; set; }
+        internal FilterSetting? FilterSetting { get; set; }
 
         internal IDictionary<int, SheetSetting> SheetSettings { get; set; }
 
-        internal Func<TEntity, bool> DataValidationFunc { get; private set; }
+        internal Func<TEntity?, bool>? DataValidationFunc { get; private set; }
 
         public ExcelConfiguration() : this(null)
         {
         }
 
-        public ExcelConfiguration(ExcelSetting setting)
+        public ExcelConfiguration(ExcelSetting? setting)
         {
             PropertyConfigurationDictionary = new Dictionary<PropertyInfo, PropertyConfiguration>();
-            ExcelSetting = (setting ?? ExcelHelper.DefaultExcelSetting) ?? new ExcelSetting();
+            ExcelSetting = setting ?? ExcelHelper.DefaultExcelSetting;
             SheetSettings = new Dictionary<int, SheetSetting>(4)
             {
                 { 0, new SheetSetting() }
@@ -50,7 +50,7 @@ namespace WeihanLi.Npoi.Configurations
 
         public IExcelConfiguration HasExcelSetting(Action<ExcelSetting> configAction)
         {
-            configAction?.Invoke(ExcelSetting);
+            configAction.Invoke(ExcelSetting);
             return this;
         }
 
@@ -86,7 +86,7 @@ namespace WeihanLi.Npoi.Configurations
 
         #region Property
 
-        public IExcelConfiguration<TEntity> WithDataValidation(Func<TEntity, bool> dataValidateFunc)
+        public IExcelConfiguration<TEntity> WithDataValidation(Func<TEntity?, bool>? dataValidateFunc)
         {
             DataValidationFunc = dataValidateFunc;
             return this;
@@ -141,7 +141,7 @@ namespace WeihanLi.Npoi.Configurations
 
         public IExcelConfiguration HasSheetSetting(Action<SheetSetting> configAction, int sheetIndex = 0)
         {
-            if (sheetIndex >= 0 && configAction != null)
+            if (sheetIndex >= 0)
             {
                 if (SheetSettings.TryGetValue(sheetIndex, out var sheetSetting))
                 {

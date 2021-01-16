@@ -1,5 +1,4 @@
-﻿using JetBrains.Annotations;
-using NPOI.SS.UserModel;
+﻿using NPOI.SS.UserModel;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -15,9 +14,9 @@ namespace WeihanLi.Npoi
 
         // export via template
         public static ISheet EntityListToSheetByTemplate<TEntity>(
-            [NotNull] ISheet sheet,
-            IEnumerable<TEntity> entityList,
-            object extraData = null)
+            ISheet sheet,
+            IEnumerable<TEntity>? entityList,
+            object? extraData = null)
         {
             if (entityList is null)
             {

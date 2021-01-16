@@ -31,7 +31,7 @@ namespace WeihanLi.Npoi.Attributes
         /// <summary>
         /// Formatter
         /// </summary>
-        public string Formatter { get => PropertyConfiguration.ColumnFormatter; set => PropertyConfiguration.ColumnFormatter = value; }
+        public string? Formatter { get => PropertyConfiguration.ColumnFormatter; set => PropertyConfiguration.ColumnFormatter = value; }
 
         /// <summary>
         /// IsIgnored
@@ -61,7 +61,7 @@ namespace WeihanLi.Npoi.Attributes
 
         public ColumnAttribute(string title) => PropertyConfiguration = new PropertyConfiguration
         {
-            ColumnTitle = title
+            ColumnTitle = title ?? throw new ArgumentNullException(nameof(title))
         };
     }
 }

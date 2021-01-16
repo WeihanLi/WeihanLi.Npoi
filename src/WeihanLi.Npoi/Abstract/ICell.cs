@@ -4,7 +4,7 @@
     {
         CellType CellType { get; set; }
 
-        object Value { get; set; }
+        object? Value { get; set; }
     }
 
     internal enum CellType

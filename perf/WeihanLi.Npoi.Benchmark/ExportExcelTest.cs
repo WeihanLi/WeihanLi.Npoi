@@ -18,16 +18,16 @@ namespace WeihanLi.Npoi.Benchmark
             public int PKID { get; set; }
 
             [ExcelTableColumn("UserName")]
-            public string Username { get; set; }
+            public string? Username { get; set; }
 
             [ExcelTableColumn("PasswordHash")]
-            public string PasswordHash { get; set; }
+            public string? PasswordHash { get; set; }
 
             [ExcelTableColumn("Amount")]
             public decimal Amount { get; set; }
 
             [ExcelTableColumn("WechatOpenId")]
-            public string WechatOpenId { get; set; }
+            public string? WechatOpenId { get; set; }
 
             [ExcelTableColumn("IsActive")]
             public bool IsActive { get; set; }
@@ -42,16 +42,16 @@ namespace WeihanLi.Npoi.Benchmark
             public int PKID { get; set; }
 
             [ExcelTableColumn("UserName")]
-            public string Username { get; set; }
+            public string? Username { get; set; }
 
             [ExcelTableColumn("PasswordHash")]
-            public string PasswordHash { get; set; }
+            public string? PasswordHash { get; set; }
 
             [ExcelTableColumn("Amount")]
             public decimal Amount { get; set; }
 
             [ExcelTableColumn("WechatOpenId")]
-            public string WechatOpenId { get; set; }
+            public string? WechatOpenId { get; set; }
 
             [ExcelTableColumn("IsActive")]
             public bool IsActive { get; set; }
@@ -60,8 +60,8 @@ namespace WeihanLi.Npoi.Benchmark
             public DateTime CreateTime => DateTime.Now;
         }
 
-        private readonly List<TestEntity> testData = new List<TestEntity>(51200);
-        private readonly List<TestStruct> testStructData = new List<TestStruct>(51200);
+        private readonly List<TestEntity> testData = new(51200);
+        private readonly List<TestStruct> testStructData = new(51200);
 
         [Params(10000, 30000, 50000, 65535)]
         public int RowsCount;
@@ -96,59 +96,58 @@ namespace WeihanLi.Npoi.Benchmark
 
         [Benchmark]
         [MethodImpl(MethodImplOptions.NoInlining)]
-        public void ExportToCsvBytesTest()
+        public byte[] ExportToCsvBytesTest()
         {
-            var bytes = testData.ToCsvBytes();
-        }
-
-
-        [Benchmark]
-        [MethodImpl(MethodImplOptions.NoInlining)]
-        public void NpoiExportToXlsBytesTest()
-        {
-            var excelBytes = testData.ToExcelBytes(ExcelFormat.Xls);
+            return testData.ToCsvBytes();
         }
 
         [Benchmark]
         [MethodImpl(MethodImplOptions.NoInlining)]
-        public void NpoiExportToXlsxBytesTest()
+        public byte[] NpoiExportToXlsBytesTest()
         {
-            var excelBytes = testData.ToExcelBytes(ExcelFormat.Xlsx);
+            return testData.ToExcelBytes();
         }
 
         [Benchmark]
         [MethodImpl(MethodImplOptions.NoInlining)]
-        public void EpplusExportToBytesTest()
+        public byte[] NpoiExportToXlsxBytesTest()
         {
-            var excelBytes = testData.ToExcelPackage().GetAsByteArray();
+            return testData.ToExcelBytes(ExcelFormat.Xlsx);
         }
 
         [Benchmark]
         [MethodImpl(MethodImplOptions.NoInlining)]
-        public void StructExportToCsvBytesTest()
+        public byte[] EpplusExportToBytesTest()
         {
-            var bytes = testStructData.ToCsvBytes();
+            return testData.ToExcelPackage().GetAsByteArray();
         }
 
         [Benchmark]
         [MethodImpl(MethodImplOptions.NoInlining)]
-        public void NpoiStructExportToXlsBytesTest()
+        public byte[] StructExportToCsvBytesTest()
         {
-            var excelBytes = testStructData.ToExcelBytes(ExcelFormat.Xls);
+            return testStructData.ToCsvBytes();
         }
 
         [Benchmark]
         [MethodImpl(MethodImplOptions.NoInlining)]
-        public void NpoiStructExportToXlsxBytesTest()
+        public byte[] NpoiStructExportToXlsBytesTest()
         {
-            var excelBytes = testStructData.ToExcelBytes(ExcelFormat.Xlsx);
+            return testStructData.ToExcelBytes();
         }
 
         [Benchmark]
         [MethodImpl(MethodImplOptions.NoInlining)]
-        public void EpplusStructExportToBytesTest()
+        public byte[] NpoiStructExportToXlsxBytesTest()
         {
-            var excelBytes = testStructData.ToExcelPackage().GetAsByteArray();
+            return testStructData.ToExcelBytes(ExcelFormat.Xlsx);
+        }
+
+        [Benchmark]
+        [MethodImpl(MethodImplOptions.NoInlining)]
+        public byte[] EpplusStructExportToBytesTest()
+        {
+            return testStructData.ToExcelPackage().GetAsByteArray();
         }
     }
 }

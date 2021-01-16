@@ -171,7 +171,7 @@ namespace WeihanLi.Npoi
         /// <param name="formatter">column output formatter</param>
         /// <returns>property configuration</returns>
         public static IPropertyConfiguration<TEntity, TProperty> HasColumnOutputFormatter<TEntity, TProperty>(
-            this IPropertyConfiguration<TEntity, TProperty> configuration, Func<TProperty, object> formatter)
+            this IPropertyConfiguration<TEntity, TProperty> configuration, Func<TProperty, object>? formatter)
         {
             if (formatter is null)
             {

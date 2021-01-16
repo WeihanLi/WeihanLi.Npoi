@@ -17,7 +17,7 @@ namespace WeihanLi.Npoi.Test
         [InlineData(ExcelFormat.Xlsx)]
         public void BasicImportExportTest(ExcelFormat excelFormat)
         {
-            var list = new List<Notice>();
+            var list = new List<Notice?>();
             for (var i = 0; i < 10; i++)
             {
                 list.Add(new Notice()
@@ -46,6 +46,7 @@ namespace WeihanLi.Npoi.Test
                     }
                     else
                     {
+                        Assert.NotNull(importedList[i]);
                         Assert.Equal(list[i].Id, importedList[i].Id);
                         Assert.Equal(list[i].Title, importedList[i].Title);
                         Assert.Equal(list[i].Content, importedList[i].Content);
@@ -61,7 +62,7 @@ namespace WeihanLi.Npoi.Test
         [InlineData(ExcelFormat.Xlsx)]
         public void BasicImportExportTestWithEmptyValue(ExcelFormat excelFormat)
         {
-            var list = new List<Notice>();
+            var list = new List<Notice?>();
             for (var i = 0; i < 10; i++)
             {
                 list.Add(new Notice()
@@ -90,6 +91,7 @@ namespace WeihanLi.Npoi.Test
                     }
                     else
                     {
+                        Assert.NotNull(importedList[i]);
                         Assert.Equal(list[i].Id, importedList[i].Id);
                         Assert.Equal(list[i].Title, importedList[i].Title);
                         Assert.Equal(list[i].Content, importedList[i].Content);
@@ -105,7 +107,7 @@ namespace WeihanLi.Npoi.Test
         [InlineData(ExcelFormat.Xlsx)]
         public void BasicImportExportWithoutHeaderTest(ExcelFormat excelFormat)
         {
-            var list = new List<Notice>();
+            var list = new List<Notice?>();
             for (var i = 0; i < 10; i++)
             {
                 list.Add(new Notice()
@@ -137,6 +139,7 @@ namespace WeihanLi.Npoi.Test
                     }
                     else
                     {
+                        Assert.NotNull(importedList[i]);
                         Assert.Equal(list[i].Id, importedList[i].Id);
                         Assert.Equal(list[i].Title, importedList[i].Title);
                         Assert.Equal(list[i].Content, importedList[i].Content);
@@ -183,6 +186,7 @@ namespace WeihanLi.Npoi.Test
                     }
                     else
                     {
+                        Assert.NotNull(importedList[i]);
                         Assert.Equal(list[i].Id, importedList[i].Id);
                         Assert.Equal(list[i].Title, importedList[i].Title);
                         Assert.Equal(list[i].Content, importedList[i].Content);
@@ -216,7 +220,7 @@ namespace WeihanLi.Npoi.Test
             lock (noticeSetting)
             {
                 noticeSetting.Property<string>("ShadowProperty")
-                    .HasOutputFormatter((x, val) => $"{x.Id}...")
+                    .HasOutputFormatter((x, _) => $"{x.Id}...")
                     ;
 
                 var excelBytes = list.ToExcelBytes(excelFormat);
@@ -232,6 +236,7 @@ namespace WeihanLi.Npoi.Test
                     }
                     else
                     {
+                        Assert.NotNull(importedList[i]);
                         Assert.Equal(list[i].Id, importedList[i].Id);
                         Assert.Equal(list[i].Title, importedList[i].Title);
                         Assert.Equal(list[i].Content, importedList[i].Content);
@@ -273,6 +278,7 @@ namespace WeihanLi.Npoi.Test
                     }
                     else
                     {
+                        Assert.NotNull(importedList[i]);
                         // Assert.Equal(list[i].Id, importedList[i].Id);
                         Assert.Equal(list[i].Title, importedList[i].Title);
                         Assert.Equal(list[i].Content, importedList[i].Content);
@@ -318,6 +324,7 @@ namespace WeihanLi.Npoi.Test
                     }
                     else
                     {
+                        Assert.NotNull(importedList[i]);
                         Assert.Equal(list[i].Id, importedList[i].Id);
                         Assert.Equal(list[i].Title + "_Test", importedList[i].Title);
                         Assert.Equal(list[i].Content, importedList[i].Content);
@@ -362,6 +369,7 @@ namespace WeihanLi.Npoi.Test
                     }
                     else
                     {
+                        Assert.NotNull(importedList[i]);
                         Assert.Equal(list[i].Id, importedList[i].Id);
                         Assert.Equal(list[i].Title, importedList[i].Title);
                         Assert.Equal(list[i].Content, importedList[i].Content);
@@ -400,7 +408,7 @@ namespace WeihanLi.Npoi.Test
                 Assert.Equal(list.Count(x => x.Id > 5), importedList.Count);
 
                 int i = 0, k = 0;
-                while (list[k].Id != importedList[i].Id)
+                while (list[k].Id != importedList[i]?.Id)
                 {
                     k++;
                 }
@@ -413,6 +421,7 @@ namespace WeihanLi.Npoi.Test
                     }
                     else
                     {
+                        Assert.NotNull(importedList[i]);
                         Assert.Equal(list[k].Id, importedList[i].Id);
                         Assert.Equal(list[k].Title, importedList[i].Title);
                         Assert.Equal(list[k].Content, importedList[i].Content);
@@ -473,7 +482,7 @@ namespace WeihanLi.Npoi.Test
             for (var i = 0; i < 10; i++)
             {
                 var row = dt.NewRow();
-                row.ItemArray = new object[]
+                row.ItemArray = new object?[]
                 {
                     i < 4 ? $"Test_{i}" : null,
                     i + 10,
@@ -518,6 +527,7 @@ namespace WeihanLi.Npoi.Test
             var list = ExcelHelper.ToEntityList<ExcelFormulaTestModel>(excelBytes, excelFormat);
             Assert.NotNull(list);
             Assert.NotEmpty(list);
+            Assert.NotNull(list[0]);
             Assert.Equal(1, list[0].Num1);
             Assert.Equal(2, list[0].Num2);
             Assert.Equal(3, list[0].Sum);
@@ -565,6 +575,7 @@ namespace WeihanLi.Npoi.Test
                     }
                     else
                     {
+                        Assert.NotNull(importedList[i]);
                         Assert.Equal(list[i].Id, importedList[i].Id);
                         Assert.Null(importedList[i].Title);
                         Assert.Null(importedList[i].Content);
@@ -575,7 +586,7 @@ namespace WeihanLi.Npoi.Test
 
                 settings.HasSheetSetting(setting =>
                 {
-                    setting.CellFilter = null;
+                    setting.CellFilter = _ => true;
                 });
             }
         }
@@ -597,6 +608,7 @@ namespace WeihanLi.Npoi.Test
             Assert.Equal(list.Count, importedList.Count);
             for (var i = 0; i < importedList.Count; i++)
             {
+                Assert.NotNull(importedList[i]);
                 Assert.Equal(list[i].Id, importedList[i].Id);
                 Assert.Equal(list[i].Name, importedList[i].Name);
                 Assert.Null(importedList[i].Description);
@@ -610,10 +622,10 @@ namespace WeihanLi.Npoi.Test
             public int Id { get; set; }
 
             [Column(Index = 1)]
-            public string Name { get; set; }
+            public string? Name { get; set; }
 
             [Column(Index = 2)]
-            public string Description { get; set; }
+            public string? Description { get; set; }
         }
 
         [Theory]
@@ -663,6 +675,5 @@ namespace WeihanLi.Npoi.Test
             var workbook = ExcelHelper.LoadExcel(bytes, excelFormat);
             Assert.Equal(expectedSheetCount, workbook.NumberOfSheets);
         }
-   
     }
 }

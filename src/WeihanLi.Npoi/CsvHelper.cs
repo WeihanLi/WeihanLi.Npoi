@@ -36,6 +36,10 @@ namespace WeihanLi.Npoi
         /// </summary>
         public static bool ToCsvFile(this DataTable dataTable, string filePath, bool includeHeader)
         {
+            if (dataTable is null)
+            {
+                throw new ArgumentNullException(nameof(dataTable));
+            }
             var dir = Path.GetDirectoryName(filePath);
             if (dir is null)
             {
@@ -72,15 +76,13 @@ namespace WeihanLi.Npoi
         /// <param name="csvBytes">csv bytes</param>
         public static DataTable ToDataTable(byte[] csvBytes)
         {
-            if (null == csvBytes)
+            if (csvBytes is null)
             {
                 throw new ArgumentNullException(nameof(csvBytes));
             }
 
-            using (var ms = new MemoryStream(csvBytes))
-            {
-                return ToDataTable(ms);
-            }
+            using var ms = new MemoryStream(csvBytes);
+            return ToDataTable(ms);
         }
 
         /// <summary>
@@ -89,7 +91,7 @@ namespace WeihanLi.Npoi
         /// <param name="stream">stream</param>
         public static DataTable ToDataTable(Stream stream)
         {
-            if (null == stream)
+            if (stream is null)
             {
                 throw new ArgumentNullException(nameof(stream));
             }
@@ -97,33 +99,29 @@ namespace WeihanLi.Npoi
 
             if (stream.CanRead)
             {
-                using (var sr = new StreamReader(stream, Encoding.UTF8))
+                using var sr = new StreamReader(stream, Encoding.UTF8);
+                string strLine;
+                var isFirst = true;
+                while ((strLine = sr.ReadLine()!).IsNotNullOrEmpty())
                 {
-                    string strLine;
-                    var isFirst = true;
-                    while ((strLine = sr.ReadLine()).IsNotNullOrEmpty())
+                    var rowData = ParseLine(strLine);
+                    var dtColumns = rowData.Count;
+                    if (isFirst)
                     {
-                        Debug.Assert(strLine != null, nameof(strLine) + " is null");
-
-                        var rowData = ParseLine(strLine);
-                        var dtColumns = rowData.Count;
-                        if (isFirst)
+                        for (var i = 0; i < dtColumns; i++)
                         {
-                            for (var i = 0; i < dtColumns; i++)
-                            {
-                                dt.Columns.Add(rowData[i]);
-                            }
-                            isFirst = false;
+                            dt.Columns.Add(rowData[i]);
                         }
-                        else
+                        isFirst = false;
+                    }
+                    else
+                    {
+                        var dataRow = dt.NewRow();
+                        for (var j = 0; j < dt.Columns.Count; j++)
                         {
-                            var dataRow = dt.NewRow();
-                            for (var j = 0; j < dt.Columns.Count; j++)
-                            {
-                                dataRow[j] = rowData[j];
-                            }
-                            dt.Rows.Add(dataRow);
+                            dataRow[j] = rowData[j];
                         }
+                        dt.Rows.Add(dataRow);
                     }
                 }
             }
@@ -137,63 +135,63 @@ namespace WeihanLi.Npoi
         /// <param name="filePath">csv file path</param>
         public static DataTable ToDataTable(string filePath)
         {
+            if (filePath is null)
+            {
+                throw new ArgumentNullException(nameof(filePath));
+            }
             if (!File.Exists(filePath))
             {
                 throw new ArgumentException(Resource.FileNotFound, nameof(filePath));
             }
 
-            using (var fs = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
-            {
-                return ToDataTable(fs);
-            }
+            using var fs = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+            return ToDataTable(fs);
         }
 
         /// <summary>
         /// convert csv file data to entity list
         /// </summary>
         /// <param name="filePath">csv file path</param>
-        public static List<TEntity> ToEntityList<TEntity>(string filePath)
+        public static List<TEntity?> ToEntityList<TEntity>(string filePath)
         {
+            if (filePath is null)
+            {
+                throw new ArgumentNullException(nameof(filePath));
+            }
             if (!File.Exists(filePath))
             {
                 throw new ArgumentException(Resource.FileNotFound, nameof(filePath));
             }
 
-            return ToEntityList<TEntity>(File.ReadAllBytes(filePath));
+            return ToEntityList<TEntity?>(File.ReadAllBytes(filePath));
         }
 
         /// <summary>
         /// convert csv file data to entity list
         /// </summary>
         /// <param name="csvBytes">csv bytes</param>
-        public static List<TEntity> ToEntityList<TEntity>(byte[] csvBytes)
+        public static List<TEntity?> ToEntityList<TEntity>(byte[] csvBytes)
         {
-            if (null == csvBytes)
+            if (csvBytes is null)
             {
                 throw new ArgumentNullException(nameof(csvBytes));
             }
-            var entities = new List<TEntity>();
-
+            var entities = new List<TEntity?>();
             if (typeof(TEntity).IsBasicType())
             {
-                using (var ms = new MemoryStream(csvBytes))
+                using var ms = new MemoryStream(csvBytes);
+                using var sr = new StreamReader(ms, Encoding.UTF8);
+                string strLine;
+                var isFirstLine = true;
+                while ((strLine = sr.ReadLine()!).IsNotNullOrEmpty())
                 {
-                    using (var sr = new StreamReader(ms, Encoding.UTF8))
+                    if (isFirstLine)
                     {
-                        string strLine;
-                        var isFirstLine = true;
-                        while ((strLine = sr.ReadLine()).IsNotNullOrEmpty())
-                        {
-                            if (isFirstLine)
-                            {
-                                isFirstLine = false;
-                                continue;
-                            }
-                            //
-                            Debug.Assert(strLine != null, nameof(strLine) + " is null");
-                            entities.Add(strLine.Trim().To<TEntity>());
-                        }
+                        isFirstLine = false;
+                        continue;
                     }
+                    //
+                    entities.Add(strLine.Trim().To<TEntity>());
                 }
             }
             else
@@ -208,142 +206,138 @@ namespace WeihanLi.Npoi
                     ColumnWidth = _.Value.ColumnWidth,
                     IsIgnored = _.Value.IsIgnored
                 });
-                using (var ms = new MemoryStream(csvBytes))
+                using var ms = new MemoryStream(csvBytes);
+                using var sr = new StreamReader(ms, Encoding.UTF8);
+                string strLine;
+                var isFirstLine = true;
+                while ((strLine = sr.ReadLine()!).IsNotNullOrEmpty())
                 {
-                    using (var sr = new StreamReader(ms, Encoding.UTF8))
+                    var entityType = typeof(TEntity);
+                    var cols = ParseLine(strLine);
+                    if (isFirstLine)
                     {
-                        string strLine;
-                        var isFirstLine = true;
-                        while ((strLine = sr.ReadLine()).IsNotNullOrEmpty())
+                        for (var index = 0; index < cols.Count; index++)
                         {
-                            var entityType = typeof(TEntity);
-                            var cols = ParseLine(strLine);
-                            if (isFirstLine)
+                            var setting = propertyColumnDic.GetPropertySetting(cols[index]);
+                            if (setting != null)
                             {
-                                for (var index = 0; index < cols.Count; index++)
-                                {
-                                    var setting = propertyColumnDic.GetPropertySetting(cols[index]);
-                                    if (setting != null)
-                                    {
-                                        setting.ColumnIndex = index;
-                                    }
-                                }
-
-                                if (propertyColumnDic.Values.All(_ => _.ColumnIndex < 0))
-                                {
-                                    propertyColumnDic = propertyColumnDictionary;
-                                }
-
-                                isFirstLine = false;
-                            }
-                            else
-                            {
-                                var entity = NewFuncHelper<TEntity>.Instance();
-                                if (entityType.IsValueType)
-                                {
-                                    var obj = (object)entity;// boxing for value types
-
-                                    foreach (var key in propertyColumnDic.Keys)
-                                    {
-                                        var colIndex = propertyColumnDic[key].ColumnIndex;
-                                        if (colIndex >= 0 && colIndex < cols.Count && key.CanWrite)
-                                        {
-                                            var columnValue = key.PropertyType.GetDefaultValue();
-                                            var valueApplied = false;
-                                            if (InternalCache.ColumnInputFormatterFuncCache.TryGetValue(key, out var formatterFunc) && formatterFunc?.Method != null)
-                                            {
-                                                var cellValue = cols[colIndex];
-                                                try
-                                                {
-                                                    // apply custom formatterFunc
-                                                    columnValue = formatterFunc.DynamicInvoke(cellValue);
-                                                    valueApplied = true;
-                                                }
-                                                catch (Exception e)
-                                                {
-                                                    Debug.WriteLine(e);
-                                                    InvokeHelper.OnInvokeException?.Invoke(e);
-                                                }
-                                            }
-                                            if (valueApplied == false)
-                                            {
-                                                columnValue = cols[colIndex].ToOrDefault(key.PropertyType);
-                                            }
-
-                                            key.GetValueSetter()?.Invoke(entity, columnValue);
-                                        }
-                                    }
-
-                                    entity = (TEntity)obj;// unboxing
-                                }
-                                else
-                                {
-                                    foreach (var key in propertyColumnDic.Keys)
-                                    {
-                                        var colIndex = propertyColumnDic[key].ColumnIndex;
-                                        if (colIndex >= 0 && colIndex < cols.Count && key.CanWrite)
-                                        {
-                                            var columnValue = key.PropertyType.GetDefaultValue();
-
-                                            var valueApplied = false;
-                                            if (InternalCache.ColumnInputFormatterFuncCache.TryGetValue(key, out var formatterFunc) && formatterFunc?.Method != null)
-                                            {
-                                                var cellValue = cols[colIndex];
-                                                try
-                                                {
-                                                    // apply custom formatterFunc
-                                                    columnValue = formatterFunc.DynamicInvoke(cellValue);
-                                                    valueApplied = true;
-                                                }
-                                                catch (Exception e)
-                                                {
-                                                    Debug.WriteLine(e);
-                                                    InvokeHelper.OnInvokeException?.Invoke(e);
-                                                }
-                                            }
-                                            if (valueApplied == false)
-                                            {
-                                                columnValue = cols[colIndex].ToOrDefault(key.PropertyType);
-                                            }
-
-                                            key.GetValueSetter()?.Invoke(entity, columnValue);
-                                        }
-                                    }
-                                }
-
-                                if (null != entity)
-                                {
-                                    foreach (var propertyInfo in propertyColumnDic.Keys)
-                                    {
-                                        if (propertyInfo.CanWrite)
-                                        {
-                                            var propertyValue = propertyInfo.GetValueGetter()?.Invoke(entity);
-                                            if (InternalCache.InputFormatterFuncCache.TryGetValue(propertyInfo, out var formatterFunc) && formatterFunc?.Method != null)
-                                            {
-                                                try
-                                                {
-                                                    // apply custom formatterFunc
-                                                    var formattedValue = formatterFunc.DynamicInvoke(entity, propertyValue);
-                                                    propertyInfo.GetValueSetter()?.Invoke(entity, formattedValue);
-                                                }
-                                                catch (Exception e)
-                                                {
-                                                    Debug.WriteLine(e);
-                                                    InvokeHelper.OnInvokeException?.Invoke(e);
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-
-                                if (configuration.DataValidationFunc != null && !configuration.DataValidationFunc(entity))
-                                {
-                                    // data invalid
-                                    continue;
-                                }
-                                entities.Add(entity);
+                                setting.ColumnIndex = index;
                             }
                         }
+
+                        if (propertyColumnDic.Values.All(_ => _.ColumnIndex < 0))
+                        {
+                            propertyColumnDic = propertyColumnDictionary;
+                        }
+
+                        isFirstLine = false;
+                    }
+                    else
+                    {
+                        var entity = NewFuncHelper<TEntity>.Instance();
+                        if (entityType.IsValueType)
+                        {
+                            var obj = (object)entity!;// boxing for value types
+
+                            foreach (var key in propertyColumnDic.Keys)
+                            {
+                                var colIndex = propertyColumnDic[key].ColumnIndex;
+                                if (colIndex >= 0 && colIndex < cols.Count && key.CanWrite)
+                                {
+                                    var columnValue = key.PropertyType.GetDefaultValue();
+                                    var valueApplied = false;
+                                    if (InternalCache.ColumnInputFormatterFuncCache.TryGetValue(key, out var formatterFunc) && formatterFunc?.Method != null)
+                                    {
+                                        var cellValue = cols[colIndex];
+                                        try
+                                        {
+                                            // apply custom formatterFunc
+                                            columnValue = formatterFunc.DynamicInvoke(cellValue);
+                                            valueApplied = true;
+                                        }
+                                        catch (Exception e)
+                                        {
+                                            Debug.WriteLine(e);
+                                            InvokeHelper.OnInvokeException?.Invoke(e);
+                                        }
+                                    }
+                                    if (valueApplied == false)
+                                    {
+                                        columnValue = cols[colIndex].ToOrDefault(key.PropertyType);
+                                    }
+
+                                    key.GetValueSetter()?.Invoke(entity, columnValue);
+                                }
+                            }
+
+                            entity = (TEntity)obj;// unboxing
+                        }
+                        else
+                        {
+                            foreach (var key in propertyColumnDic.Keys)
+                            {
+                                var colIndex = propertyColumnDic[key].ColumnIndex;
+                                if (colIndex >= 0 && colIndex < cols.Count && key.CanWrite)
+                                {
+                                    var columnValue = key.PropertyType.GetDefaultValue();
+
+                                    var valueApplied = false;
+                                    if (InternalCache.ColumnInputFormatterFuncCache.TryGetValue(key, out var formatterFunc) && formatterFunc?.Method != null)
+                                    {
+                                        var cellValue = cols[colIndex];
+                                        try
+                                        {
+                                            // apply custom formatterFunc
+                                            columnValue = formatterFunc.DynamicInvoke(cellValue);
+                                            valueApplied = true;
+                                        }
+                                        catch (Exception e)
+                                        {
+                                            Debug.WriteLine(e);
+                                            InvokeHelper.OnInvokeException?.Invoke(e);
+                                        }
+                                    }
+                                    if (valueApplied == false)
+                                    {
+                                        columnValue = cols[colIndex].ToOrDefault(key.PropertyType);
+                                    }
+
+                                    key.GetValueSetter()?.Invoke(entity, columnValue);
+                                }
+                            }
+                        }
+
+                        if (null != entity)
+                        {
+                            foreach (var propertyInfo in propertyColumnDic.Keys)
+                            {
+                                if (propertyInfo.CanWrite)
+                                {
+                                    var propertyValue = propertyInfo.GetValueGetter()?.Invoke(entity);
+                                    if (InternalCache.InputFormatterFuncCache.TryGetValue(propertyInfo, out var formatterFunc) && formatterFunc?.Method != null)
+                                    {
+                                        try
+                                        {
+                                            // apply custom formatterFunc
+                                            var formattedValue = formatterFunc.DynamicInvoke(entity, propertyValue);
+                                            propertyInfo.GetValueSetter()?.Invoke(entity, formattedValue);
+                                        }
+                                        catch (Exception e)
+                                        {
+                                            Debug.WriteLine(e);
+                                            InvokeHelper.OnInvokeException?.Invoke(e);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                        if (configuration.DataValidationFunc != null && !configuration.DataValidationFunc(entity))
+                        {
+                            // data invalid
+                            continue;
+                        }
+                        entities.Add(entity);
                     }
                 }
             }
@@ -355,9 +349,9 @@ namespace WeihanLi.Npoi
         /// convert csv file data to entity list
         /// </summary>
         /// <param name="csvStream">csv Stream</param>
-        public static List<TEntity> ToEntityList<TEntity>(Stream csvStream)
+        public static List<TEntity?> ToEntityList<TEntity>(Stream csvStream)
         {
-            if (null == csvStream)
+            if (csvStream is null)
             {
                 throw new ArgumentNullException(nameof(csvStream));
             }
@@ -455,6 +449,10 @@ namespace WeihanLi.Npoi
         /// </summary>
         public static bool ToCsvFile<TEntity>(this IEnumerable<TEntity> entities, string filePath, bool includeHeader)
         {
+            if (entities is null)
+            {
+                throw new ArgumentNullException(nameof(entities));
+            }
             var dir = Path.GetDirectoryName(filePath);
             if (dir is null)
             {
@@ -466,7 +464,7 @@ namespace WeihanLi.Npoi
             }
 
             var csvTextData = GetCsvText(entities, includeHeader);
-            if (csvTextData.IsNullOrWhiteSpace())
+            if (csvTextData.IsNullOrEmpty())
             {
                 return false;
             }
@@ -492,7 +490,7 @@ namespace WeihanLi.Npoi
         {
             if (entities is null)
             {
-                return string.Empty;
+                throw new ArgumentNullException(nameof(entities));
             }
 
             var data = new StringBuilder();
@@ -550,7 +548,7 @@ namespace WeihanLi.Npoi
                         }
                         // https://stackoverflow.com/questions/4617935/is-there-a-way-to-include-commas-in-csv-columns-without-breaking-the-formatting
                         var val = propertyValue?.ToString().Replace("\"", "\"\"");
-                        if (!string.IsNullOrEmpty(val))
+                        if (val is not null and { Length: > 0 })
                         {
                             data.Append(val.IndexOf(CsvSeparatorCharacter) > -1 ? $"\"{val}\"" : val);
                         }
@@ -565,7 +563,7 @@ namespace WeihanLi.Npoi
         /// <summary>
         /// Get csv text
         /// </summary>
-        public static string GetCsvText(this DataTable dataTable, bool includeHeader)
+        public static string GetCsvText(this DataTable? dataTable, bool includeHeader)
         {
             if (dataTable is null || dataTable.Rows.Count == 0 || dataTable.Columns.Count == 0)
             {
@@ -596,7 +594,7 @@ namespace WeihanLi.Npoi
                     }
                     // https://stackoverflow.com/questions/4617935/is-there-a-way-to-include-commas-in-csv-columns-without-breaking-the-formatting
                     var val = dataTable.Rows[i][j]?.ToString().Replace("\"", "\"\"");
-                    if (!string.IsNullOrEmpty(val))
+                    if (val is not null and { Length: > 0 })
                     {
                         data.Append(val.IndexOf(CsvSeparatorCharacter) > -1 ? $"\"{val}\"" : val);
                     }

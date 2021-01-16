@@ -99,7 +99,11 @@ namespace WeihanLi.Npoi
         /// <param name="optionsAction">optionsAction</param>
         public static void ConfigureTemplateOptions(Action<TemplateOptions> optionsAction)
         {
-            optionsAction?.Invoke(NpoiTemplateHelper.TemplateOptions);
+            if (optionsAction is null)
+            {
+                throw new ArgumentNullException(nameof(optionsAction));
+            }
+            optionsAction.Invoke(NpoiTemplateHelper.TemplateOptions);
         }
     }
 }
