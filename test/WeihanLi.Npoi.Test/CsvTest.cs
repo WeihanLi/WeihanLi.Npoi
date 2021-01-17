@@ -40,6 +40,7 @@ namespace WeihanLi.Npoi.Test
                 Assert.Equal(list.Count, importedList.Count);
                 for (var i = 0; i < list.Count; i++)
                 {
+                    Assert.NotNull(importedList[i]);
                     Assert.Equal(list[i].Id, importedList[i].Id);
                     Assert.Equal(list[i].Title ?? "", importedList[i].Title);
                     Assert.Equal(list[i].Content ?? "", importedList[i].Content);
@@ -75,6 +76,7 @@ namespace WeihanLi.Npoi.Test
                 Assert.Equal(list.Count, importedList.Count);
                 for (var i = 0; i < list.Count; i++)
                 {
+                    Assert.NotNull(importedList[i]);
                     Assert.Equal(list[i].Id, importedList[i].Id);
                     Assert.Equal(list[i].Title ?? "", importedList[i].Title);
                     Assert.Equal(list[i].Content ?? "", importedList[i].Content);
@@ -170,7 +172,7 @@ namespace WeihanLi.Npoi.Test
             Assert.True(arr.SequenceEqual(list));
         }
 
-        private static string TrimQuotes(string str)
+        private static string TrimQuotes(string? str)
         {
             if (string.IsNullOrEmpty(str))
             {

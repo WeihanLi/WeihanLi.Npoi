@@ -11,14 +11,8 @@ namespace WeihanLi.Npoi.Settings
     {
         private int _startRowIndex = 1;
         private string _sheetName = "Sheet0";
-        private Func<IRow, bool> _rowFilter;
-        private Func<ICell, bool> _cellFilter;
-
-        public SheetSetting()
-        {
-            _rowFilter = row => true;
-            _cellFilter = cell => true;
-        }
+        private Func<ICell, bool> _cellFilter = _ => true;
+        private Func<IRow, bool>? _rowFilter = _ => true;
 
         /// <summary>
         /// SheetName
@@ -68,19 +62,19 @@ namespace WeihanLi.Npoi.Settings
         /// <summary>
         /// Cell Filter
         /// </summary>
-        public Func<ICell, bool> CellFilter
+        public Func<ICell, bool>? CellFilter
         {
             get => _cellFilter;
-            set => _cellFilter = value ?? (cell => true);
+            set => _cellFilter = value ?? (_ => true);
         }
 
         /// <summary>
         /// Row Filter
         /// </summary>
-        public Func<IRow, bool> RowFilter
+        public Func<IRow, bool>? RowFilter
         {
             get => _rowFilter;
-            set => _rowFilter = value ?? (row => true);
+            set => _rowFilter = value ?? (_ => true);
         }
     }
 }

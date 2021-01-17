@@ -19,7 +19,7 @@
         /// </summary>
         int LastCellNum { get; }
 
-        ICell GetCell(int cellIndex);
+        ICell? GetCell(int cellIndex);
 
         /// <summary>
         /// Create a cell
@@ -33,6 +33,6 @@
         /// <summary>
         /// UnderlyingValue
         /// </summary>
-        object UnderlyingValue { get; }
+        object? UnderlyingValue { get; }
     }
 }

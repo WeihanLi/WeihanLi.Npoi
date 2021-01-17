@@ -1,5 +1,4 @@
-﻿using JetBrains.Annotations;
-using NPOI.SS.UserModel;
+﻿using NPOI.SS.UserModel;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -11,15 +10,19 @@ namespace WeihanLi.Npoi
 {
     internal static class NpoiTemplateHelper
     {
-        public static readonly TemplateOptions TemplateOptions = new TemplateOptions();
+        public static readonly TemplateOptions TemplateOptions = new();
 
         // export via template
         public static ISheet EntityListToSheetByTemplate<TEntity>(
-            [NotNull] ISheet sheet,
-            IEnumerable<TEntity> entityList,
-            object extraData = null)
+            ISheet sheet,
+            IEnumerable<TEntity>? entityList,
+            object? extraData = null)
         {
-            if (null == entityList)
+            if (sheet is null)
+            {
+                throw new ArgumentNullException(nameof(sheet));
+            }
+            if (entityList is null)
             {
                 return sheet;
             }
@@ -62,14 +65,14 @@ namespace WeihanLi.Npoi
             for (var rowIndex = sheet.FirstRowNum; rowIndex <= sheet.LastRowNum; rowIndex++)
             {
                 var row = sheet.GetRow(rowIndex);
-                if (row == null)
+                if (row is null)
                 {
                     continue;
                 }
                 for (var cellIndex = row.FirstCellNum; cellIndex < row.LastCellNum; cellIndex++)
                 {
                     var cell = row.GetCell(cellIndex);
-                    if (cell == null)
+                    if (cell is null)
                     {
                         continue;
                     }

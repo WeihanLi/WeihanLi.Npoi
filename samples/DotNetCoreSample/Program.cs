@@ -55,7 +55,7 @@ namespace DotNetCoreSample
 
             //Console.WriteLine("Press Enter to continue...");
             //Console.ReadLine();
-            var list2 = new List<TestEntity2>();
+            var list2 = new List<TestEntity2?>();
             list2.Add(null);
             for (var i = 0; i < 100_000; i++)
             {
@@ -121,8 +121,9 @@ namespace DotNetCoreSample
             var dt = CsvHelper.ToDataTable(csvFilePath.Replace(".csv", ".datatable.csv"));
             Console.WriteLine(dt.Columns.Count);
             var entities1 = CsvHelper.ToEntityList<TestEntity>(csvFilePath);
-            entities1[1].DisplayName = ",tadadada";
-            entities1[0].SettingValue = "value2,345";
+
+            entities1[1]!.DisplayName = ",tadadada";
+            entities1[0]!.SettingValue = "value2,345";
             entities1.ToCsvFile(csvFilePath.Replace(".csv", ".1.csv"));
             entities1.ToDataTable().ToCsvFile(csvFilePath.Replace(".csv", ".1.datatable.csv"));
 
@@ -168,8 +169,8 @@ namespace DotNetCoreSample
                 .HasColumnIndex(1);
 
             setting.Property(_ => _.DisplayName)
-                .HasOutputFormatter((entity, displayName) => $"AAA_{entity.SettingName}_{displayName}")
-                .HasInputFormatter((entity, originVal) => originVal.Split(new[] { '_' })[2])
+                .HasOutputFormatter((entity, displayName) => $"AAA_{entity?.SettingName}_{displayName}")
+                .HasInputFormatter((entity, originVal) => originVal?.Split(new[] { '_' })[2])
                 .HasColumnTitle("DisplayName")
                 .HasColumnIndex(2);
 
@@ -193,7 +194,7 @@ namespace DotNetCoreSample
                 .HasColumnOutputFormatter(v => v ? "Enabled" : "Disabled");
 
             setting.Property("HiddenProp")
-                .HasOutputFormatter((entity, val) => $"HiddenProp_{entity.PKID}");
+                .HasOutputFormatter((entity, val) => $"HiddenProp_{entity?.PKID}");
 
             setting.Property(_ => _.PKID).Ignored();
             setting.Property(_ => _.UpdatedBy).Ignored();
@@ -210,16 +211,16 @@ namespace DotNetCoreSample
     {
         public Guid SettingId { get; set; }
 
-        public string SettingName { get; set; }
+        public string? SettingName { get; set; }
 
-        public string DisplayName { get; set; }
-        public string SettingValue { get; set; }
+        public string? DisplayName { get; set; }
+        public string? SettingValue { get; set; }
 
         public string CreatedBy { get; set; } = "liweihan";
 
         public DateTime CreatedTime { get; set; } = DateTime.Now;
 
-        public string UpdatedBy { get; set; }
+        public string? UpdatedBy { get; set; }
 
         public DateTime UpdatedTime { get; set; }
 
@@ -233,12 +234,12 @@ namespace DotNetCoreSample
         public int Id { get; set; }
 
         [Column(Index = 1)]
-        public string Title { get; set; }
+        public string? Title { get; set; }
 
         [Column(Index = 2, Width = 50)]
-        public string Description { get; set; }
+        public string? Description { get; set; }
 
         [Column(Index = 3, Width = 20)]
-        public string Extra { get; set; } = "{}";
+        public string? Extra { get; set; } = "{}";
     }
 }

@@ -2,7 +2,7 @@
 
 namespace WeihanLi.Npoi
 {
-    public class FluentSettings
+    public sealed class FluentSettings
     {
         /// <summary>
         /// Fluent Setting For TEntity

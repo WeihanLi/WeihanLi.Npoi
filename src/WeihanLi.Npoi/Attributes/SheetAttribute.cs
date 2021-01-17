@@ -8,7 +8,7 @@ namespace WeihanLi.Npoi.Attributes
     {
         public int SheetIndex { get; set; }
 
-        public string SheetName { get => SheetSetting.SheetName; set => SheetSetting.SheetName = value; }
+        public string SheetName { get => SheetSetting.SheetName; set => SheetSetting.SheetName = value ?? throw new ArgumentNullException(nameof(value)); }
 
         public int StartRowIndex { get => SheetSetting.StartRowIndex; set => SheetSetting.StartRowIndex = value; }
 

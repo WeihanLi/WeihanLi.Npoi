@@ -1,5 +1,4 @@
-﻿using JetBrains.Annotations;
-using NPOI.HPSF;
+﻿using NPOI.HPSF;
 using NPOI.HSSF.UserModel;
 using NPOI.SS.UserModel;
 using NPOI.XSSF.UserModel;
@@ -8,7 +7,6 @@ using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using WeihanLi.Extensions;
-using WeihanLi.Npoi.Configurations;
 using WeihanLi.Npoi.Settings;
 
 namespace WeihanLi.Npoi
@@ -18,10 +16,17 @@ namespace WeihanLi.Npoi
     /// </summary>
     public static class ExcelHelper
     {
+        private static readonly Version _appVersion = typeof(ExcelHelper).Assembly.GetName().Version;
+        private static ExcelSetting _defaultExcelSetting = new();
+
         /// <summary>
         /// Default excel setting for export excel files
         /// </summary>
-        public static ExcelSetting DefaultExcelSetting = new ExcelSetting();
+        public static ExcelSetting DefaultExcelSetting
+        {
+            get => _defaultExcelSetting;
+            set => _defaultExcelSetting = value ?? throw new ArgumentNullException(nameof(value));
+        }
 
         /// <summary>
         /// Validate is a excel path valid
@@ -32,6 +37,10 @@ namespace WeihanLi.Npoi
         /// <returns>is valid excel path</returns>
         private static bool ValidateExcelFilePath(string excelPath, out string msg, bool isExport = false)
         {
+            if (string.IsNullOrWhiteSpace(excelPath))
+            {
+                throw new ArgumentNullException(nameof(excelPath));
+            }
             if (isExport || File.Exists(excelPath))
             {
                 var ext = Path.GetExtension(excelPath);
@@ -53,17 +62,15 @@ namespace WeihanLi.Npoi
         /// </summary>
         /// <param name="excelPath">excel file path</param>
         /// <returns>workbook</returns>
-        public static IWorkbook LoadExcel([NotNull] string excelPath)
+        public static IWorkbook LoadExcel(string excelPath)
         {
             if (!ValidateExcelFilePath(excelPath, out var msg))
             {
                 throw new ArgumentException(msg);
             }
 
-            using (var stream = new FileStream(excelPath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
-            {
-                return Path.GetExtension(excelPath).EqualsIgnoreCase(".xls") ? new HSSFWorkbook(stream) : (IWorkbook)new XSSFWorkbook(stream);
-            }
+            using var stream = new FileStream(excelPath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+            return Path.GetExtension(excelPath).EqualsIgnoreCase(".xls") ? new HSSFWorkbook(stream) : (IWorkbook)new XSSFWorkbook(stream);
         }
 
         /// <summary>
@@ -71,7 +78,7 @@ namespace WeihanLi.Npoi
         /// </summary>
         /// <param name="excelBytes">excel file bytes</param>
         /// <returns>workbook</returns>
-        public static IWorkbook LoadExcel([NotNull] byte[] excelBytes) => LoadExcel(excelBytes, ExcelFormat.Xls);
+        public static IWorkbook LoadExcel(byte[] excelBytes) => LoadExcel(excelBytes, ExcelFormat.Xls);
 
         /// <summary>
         /// load excel from excelBytes
@@ -79,12 +86,14 @@ namespace WeihanLi.Npoi
         /// <param name="excelBytes">excel file bytes</param>
         /// <param name="excelFormat">excelFormat</param>
         /// <returns>workbook</returns>
-        public static IWorkbook LoadExcel([NotNull] byte[] excelBytes, ExcelFormat excelFormat)
+        public static IWorkbook LoadExcel(byte[] excelBytes, ExcelFormat excelFormat)
         {
-            using (var stream = new MemoryStream(excelBytes))
+            if (excelBytes is null)
             {
-                return LoadExcel(stream, excelFormat);
+                throw new ArgumentNullException(nameof(excelBytes));
             }
+            using var stream = new MemoryStream(excelBytes);
+            return LoadExcel(stream, excelFormat);
         }
 
         /// <summary>
@@ -92,7 +101,7 @@ namespace WeihanLi.Npoi
         /// </summary>
         /// <param name="excelStream">excel file stream</param>
         /// <returns>workbook</returns>
-        public static IWorkbook LoadExcel([NotNull] Stream excelStream) => LoadExcel(excelStream, ExcelFormat.Xls);
+        public static IWorkbook LoadExcel(Stream excelStream) => LoadExcel(excelStream, ExcelFormat.Xls);
 
         /// <summary>
         /// load excel from excelBytes
@@ -100,17 +109,18 @@ namespace WeihanLi.Npoi
         /// <param name="excelStream">excel file stream</param>
         /// <param name="excelFormat">excelFormat</param>
         /// <returns>workbook</returns>
-        public static IWorkbook LoadExcel([NotNull] Stream excelStream, ExcelFormat excelFormat)
+        public static IWorkbook LoadExcel(Stream excelStream, ExcelFormat excelFormat)
         {
-            switch (excelFormat)
+            if (excelStream is null)
             {
-                case ExcelFormat.Xls:
-                    return new HSSFWorkbook(excelStream);
-
-                // case ExcelFormat.Xlsx:
-                default:
-                    return new XSSFWorkbook(excelStream);
+                throw new ArgumentNullException(nameof(excelStream));
             }
+
+            return excelFormat switch
+            {
+                ExcelFormat.Xls => new HSSFWorkbook(excelStream),
+                _ => new XSSFWorkbook(excelStream)
+            };
         }
 
         /// <summary>
@@ -118,7 +128,7 @@ namespace WeihanLi.Npoi
         /// </summary>
         /// <param name="excelPath">excelPath</param>
         /// <returns></returns>
-        public static IWorkbook PrepareWorkbook([NotNull] string excelPath) => PrepareWorkbook(excelPath, null);
+        public static IWorkbook PrepareWorkbook(string excelPath) => PrepareWorkbook(excelPath, null);
 
         /// <summary>
         /// prepare a workbook for export
@@ -126,13 +136,13 @@ namespace WeihanLi.Npoi
         /// <param name="excelPath">excelPath</param>
         /// <param name="excelSetting">excelSetting</param>
         /// <returns></returns>
-        public static IWorkbook PrepareWorkbook([NotNull] string excelPath, ExcelSetting excelSetting)
+        public static IWorkbook PrepareWorkbook(string excelPath, ExcelSetting? excelSetting)
         {
             if (!ValidateExcelFilePath(excelPath, out var msg, true))
             {
                 throw new ArgumentException(msg);
             }
-            return PrepareWorkbook(!Path.GetExtension(excelPath).EqualsIgnoreCase(".xls"), excelSetting);
+            return PrepareWorkbook(!excelPath.EqualsIgnoreCase(".xls"), excelSetting);
         }
 
         /// <summary>
@@ -141,7 +151,7 @@ namespace WeihanLi.Npoi
         /// <param name="excelFormat">excelFormat</param>
         /// <param name="excelSetting">excelSetting</param>
         /// <returns></returns>
-        public static IWorkbook PrepareWorkbook(ExcelFormat excelFormat, ExcelSetting excelSetting)
+        public static IWorkbook PrepareWorkbook(ExcelFormat excelFormat, ExcelSetting? excelSetting)
         {
             return PrepareWorkbook(excelFormat == ExcelFormat.Xlsx, excelSetting);
         }
@@ -166,17 +176,15 @@ namespace WeihanLi.Npoi
         /// <returns></returns>
         public static IWorkbook PrepareWorkbook(bool isXlsx) => PrepareWorkbook(isXlsx, null);
 
-        private static readonly Version _appVersion = typeof(ExcelHelper).Assembly.GetName().Version;
-
         /// <summary>
         /// get a excel workbook
         /// </summary>
         /// <param name="isXlsx">is for *.xlsx file</param>
         /// <param name="excelSetting">excelSettings</param>
         /// <returns></returns>
-        public static IWorkbook PrepareWorkbook(bool isXlsx, ExcelSetting excelSetting)
+        public static IWorkbook PrepareWorkbook(bool isXlsx, ExcelSetting? excelSetting)
         {
-            var setting = (excelSetting ?? DefaultExcelSetting) ?? new ExcelSetting();
+            var setting = excelSetting ?? DefaultExcelSetting;
 
             if (isXlsx)
             {
@@ -221,7 +229,7 @@ namespace WeihanLi.Npoi
         /// <typeparam name="TEntity">EntityType</typeparam>
         /// <param name="excelBytes">excelBytes</param>
         /// <returns>List</returns>
-        public static List<TEntity> ToEntityList<TEntity>([NotNull] byte[] excelBytes) where TEntity : new()
+        public static List<TEntity?> ToEntityList<TEntity>(byte[] excelBytes) where TEntity : new()
             => ToEntityList<TEntity>(excelBytes, ExcelFormat.Xls, 0);
 
         /// <summary>
@@ -231,7 +239,7 @@ namespace WeihanLi.Npoi
         /// <param name="excelBytes">excelBytes</param>
         /// <param name="sheetIndex">sheetIndex</param>
         /// <returns>List</returns>
-        public static List<TEntity> ToEntityList<TEntity>([NotNull] byte[] excelBytes, int sheetIndex)
+        public static List<TEntity?> ToEntityList<TEntity>(byte[] excelBytes, int sheetIndex)
             where TEntity : new()
             => ToEntityList<TEntity>(excelBytes, ExcelFormat.Xls, sheetIndex);
 
@@ -242,7 +250,7 @@ namespace WeihanLi.Npoi
         /// <param name="excelBytes">excelBytes</param>
         /// <param name="excelFormat">excelFormat</param>
         /// <returns>List</returns>
-        public static List<TEntity> ToEntityList<TEntity>([NotNull] byte[] excelBytes, ExcelFormat excelFormat)
+        public static List<TEntity?> ToEntityList<TEntity>(byte[] excelBytes, ExcelFormat excelFormat)
             where TEntity : new() => ToEntityList<TEntity>(excelBytes, excelFormat, 0);
 
         /// <summary>
@@ -253,7 +261,7 @@ namespace WeihanLi.Npoi
         /// <param name="excelFormat">excelFormat</param>
         /// <param name="sheetIndex">sheetIndex</param>
         /// <returns>List</returns>
-        public static List<TEntity> ToEntityList<TEntity>([NotNull] byte[] excelBytes, ExcelFormat excelFormat, int sheetIndex) where TEntity : new()
+        public static List<TEntity?> ToEntityList<TEntity>(byte[] excelBytes, ExcelFormat excelFormat, int sheetIndex) where TEntity : new()
         {
             var workbook = LoadExcel(excelBytes, excelFormat);
             return workbook.ToEntityList<TEntity>(sheetIndex);
@@ -265,7 +273,7 @@ namespace WeihanLi.Npoi
         /// <typeparam name="TEntity">EntityType</typeparam>
         /// <param name="excelStream">excelStream</param>
         /// <returns>List</returns>
-        public static List<TEntity> ToEntityList<TEntity>([NotNull] Stream excelStream) where TEntity : new()
+        public static List<TEntity?> ToEntityList<TEntity>(Stream excelStream) where TEntity : new()
             => ToEntityList<TEntity>(excelStream, ExcelFormat.Xls, 0);
 
         /// <summary>
@@ -275,7 +283,7 @@ namespace WeihanLi.Npoi
         /// <param name="excelStream">excelStream</param>
         /// <param name="sheetIndex">sheetIndex</param>
         /// <returns>List</returns>
-        public static List<TEntity> ToEntityList<TEntity>([NotNull] Stream excelStream, int sheetIndex)
+        public static List<TEntity?> ToEntityList<TEntity>(Stream excelStream, int sheetIndex)
             where TEntity : new()
             => ToEntityList<TEntity>(excelStream, ExcelFormat.Xls, sheetIndex);
 
@@ -286,7 +294,7 @@ namespace WeihanLi.Npoi
         /// <param name="excelStream">excelStream</param>
         /// <param name="excelFormat">excelFormat</param>
         /// <returns>List</returns>
-        public static List<TEntity> ToEntityList<TEntity>([NotNull] Stream excelStream, ExcelFormat excelFormat)
+        public static List<TEntity?> ToEntityList<TEntity>(Stream excelStream, ExcelFormat excelFormat)
             where TEntity : new()
             => ToEntityList<TEntity>(excelStream, excelFormat, 0);
 
@@ -298,7 +306,7 @@ namespace WeihanLi.Npoi
         /// <param name="excelFormat">excelFormat</param>
         /// <param name="sheetIndex">sheetIndex</param>
         /// <returns>List</returns>
-        public static List<TEntity> ToEntityList<TEntity>([NotNull] Stream excelStream, ExcelFormat excelFormat, int sheetIndex) where TEntity : new()
+        public static List<TEntity?> ToEntityList<TEntity>(Stream excelStream, ExcelFormat excelFormat, int sheetIndex) where TEntity : new()
         {
             var workbook = LoadExcel(excelStream, excelFormat);
             return workbook.ToEntityList<TEntity>(sheetIndex);
@@ -310,7 +318,7 @@ namespace WeihanLi.Npoi
         /// <typeparam name="TEntity">EntityType</typeparam>
         /// <param name="excelPath">excelPath</param>
         /// <returns>List</returns>
-        public static List<TEntity> ToEntityList<TEntity>([NotNull] string excelPath) where TEntity : new() => ToEntityList<TEntity>(excelPath, 0);
+        public static List<TEntity?> ToEntityList<TEntity>(string excelPath) where TEntity : new() => ToEntityList<TEntity>(excelPath, 0);
 
         /// <summary>
         /// read (sheetIndex) sheet of excel from excel file path to a list
@@ -319,7 +327,7 @@ namespace WeihanLi.Npoi
         /// <param name="excelPath">excelPath</param>
         /// <param name="sheetIndex">sheetIndex</param>
         /// <returns>List</returns>
-        public static List<TEntity> ToEntityList<TEntity>([NotNull] string excelPath, int sheetIndex) where TEntity : new()
+        public static List<TEntity?> ToEntityList<TEntity>(string excelPath, int sheetIndex) where TEntity : new()
         {
             var workbook = LoadExcel(excelPath);
             return workbook.ToEntityList<TEntity>(sheetIndex);
@@ -331,7 +339,7 @@ namespace WeihanLi.Npoi
         /// <typeparam name="TEntity">EntityType</typeparam>
         /// <param name="excelPath">excelPath</param>
         /// <returns>DataTable</returns>
-        public static DataTable ToDataTable<TEntity>([NotNull] string excelPath) where TEntity : new() => ToDataTable<TEntity>(excelPath, 0);
+        public static DataTable ToDataTable<TEntity>(string excelPath) where TEntity : new() => ToDataTable<TEntity>(excelPath, 0);
 
         /// <summary>
         /// read (sheetIndex) sheet of excel from excel file path to a list(for specific class type)
@@ -340,7 +348,7 @@ namespace WeihanLi.Npoi
         /// <param name="excelPath">excelPath</param>
         /// <param name="sheetIndex">sheetIndex</param>
         /// <returns>DataTable</returns>
-        public static DataTable ToDataTable<TEntity>([NotNull] string excelPath, int sheetIndex) where TEntity : new()
+        public static DataTable ToDataTable<TEntity>(string excelPath, int sheetIndex) where TEntity : new()
             => ToEntityList<TEntity>(excelPath, sheetIndex).ToDataTable();
 
         /// <summary>
@@ -348,7 +356,7 @@ namespace WeihanLi.Npoi
         /// </summary>
         /// <param name="excelPath">excelPath</param>
         /// <returns>DataTable</returns>
-        public static DataTable ToDataTable([NotNull] string excelPath) => ToDataTable(excelPath, 0, 0);
+        public static DataTable ToDataTable(string excelPath) => ToDataTable(excelPath, 0, 0);
 
         /// <summary>
         /// read first sheet of excel from excel file path to a data table
@@ -356,7 +364,7 @@ namespace WeihanLi.Npoi
         /// <param name="excelPath">excelPath</param>
         /// <param name="sheetIndex">sheetIndex</param>
         /// <returns>DataTable</returns>
-        public static DataTable ToDataTable([NotNull] string excelPath, int sheetIndex) =>
+        public static DataTable ToDataTable(string excelPath, int sheetIndex) =>
             ToDataTable(excelPath, sheetIndex, 0);
 
         /// <summary>
@@ -366,7 +374,7 @@ namespace WeihanLi.Npoi
         /// <param name="sheetIndex">sheetIndex</param>
         /// <param name="headerRowIndex">headerRowIndex</param>
         /// <returns>DataTable</returns>
-        public static DataTable ToDataTable([NotNull] string excelPath, int sheetIndex, int headerRowIndex)
+        public static DataTable ToDataTable(string excelPath, int sheetIndex, int headerRowIndex)
         {
             var workbook = LoadExcel(excelPath);
             if (workbook.NumberOfSheets <= sheetIndex)
@@ -382,7 +390,7 @@ namespace WeihanLi.Npoi
         /// <param name="excelBytes">excelBytes</param>
         /// <param name="excelFormat"></param>
         /// <returns>DataTable</returns>
-        public static DataTable ToDataTable([NotNull] byte[] excelBytes, ExcelFormat excelFormat) => ToDataTable(excelBytes, excelFormat, 0);
+        public static DataTable ToDataTable(byte[] excelBytes, ExcelFormat excelFormat) => ToDataTable(excelBytes, excelFormat, 0);
 
         /// <summary>
         /// read (sheetIndex) sheet of excel from excelBytes to a data table
@@ -391,7 +399,7 @@ namespace WeihanLi.Npoi
         /// <param name="excelFormat"></param>
         /// <param name="sheetIndex">sheetIndex</param>
         /// <returns>DataTable</returns>
-        public static DataTable ToDataTable([NotNull] byte[] excelBytes, ExcelFormat excelFormat, int sheetIndex) =>
+        public static DataTable ToDataTable(byte[] excelBytes, ExcelFormat excelFormat, int sheetIndex) =>
             ToDataTable(excelBytes, excelFormat, sheetIndex, 0);
 
         /// <summary>
@@ -402,7 +410,7 @@ namespace WeihanLi.Npoi
         /// <param name="sheetIndex">sheetIndex</param>
         /// <param name="headerRowIndex">headerRowIndex</param>
         /// <returns>DataTable</returns>
-        public static DataTable ToDataTable([NotNull] byte[] excelBytes, ExcelFormat excelFormat, int sheetIndex, int headerRowIndex)
+        public static DataTable ToDataTable(byte[] excelBytes, ExcelFormat excelFormat, int sheetIndex, int headerRowIndex)
         {
             var workbook = LoadExcel(excelBytes, excelFormat);
             if (workbook.NumberOfSheets <= sheetIndex)
@@ -417,7 +425,7 @@ namespace WeihanLi.Npoi
         /// </summary>
         /// <param name="excelPath">excelPath</param>
         /// <returns></returns>
-        public static DataSet ToDataSet([NotNull] string excelPath) => ToDataSet(excelPath, 0);
+        public static DataSet ToDataSet(string excelPath) => ToDataSet(excelPath, 0);
 
         /// <summary>
         /// read first sheet of excel from excel file path to a DataSet from (headerRowIndex+1) row
@@ -425,15 +433,6 @@ namespace WeihanLi.Npoi
         /// <param name="excelPath">excelPath</param>
         /// <param name="headerRowIndex">headerRowIndex</param>
         /// <returns></returns>
-        public static DataSet ToDataSet([NotNull] string excelPath, int headerRowIndex) => LoadExcel(excelPath).ToDataSet(headerRowIndex);
-
-        /// <summary>
-        /// SettingFor
-        /// Fluent Settings
-        /// </summary>
-        /// <typeparam name="TEntity">TEntity</typeparam>
-        /// <returns></returns>
-        [Obsolete("Please use FluentSettings.For<TEntity>, this method will be removed in next release", true)]
-        public static IExcelConfiguration<TEntity> SettingFor<TEntity>() => FluentSettings.For<TEntity>();
+        public static DataSet ToDataSet(string excelPath, int headerRowIndex) => LoadExcel(excelPath).ToDataSet(headerRowIndex);
     }
 }

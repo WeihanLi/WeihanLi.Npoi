@@ -14,7 +14,7 @@
         /// </summary>
         int LastRowNum { get; }
 
-        IRow GetRow(int rowIndex);
+        IRow? GetRow(int rowIndex);
 
         IRow CreateRow(int rowIndex);
 

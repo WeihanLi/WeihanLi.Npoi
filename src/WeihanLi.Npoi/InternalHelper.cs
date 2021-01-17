@@ -52,7 +52,7 @@ namespace WeihanLi.Npoi
                   propertyConfigurationType.GetProperty(nameof(column.PropertyConfiguration.ColumnIndex))?.GetSetMethod()?
                       .Invoke(propertyConfiguration, new object[] { column.PropertyConfiguration.ColumnIndex });
                   propertyConfigurationType.GetProperty(nameof(column.PropertyConfiguration.ColumnFormatter))?.GetSetMethod()?
-                      .Invoke(propertyConfiguration, new object[] { column.PropertyConfiguration.ColumnFormatter });
+                      .Invoke(propertyConfiguration, new object?[] { column.PropertyConfiguration.ColumnFormatter });
                   propertyConfigurationType.GetProperty(nameof(column.PropertyConfiguration.IsIgnored))?.GetSetMethod()?
                       .Invoke(propertyConfiguration, new object[] { column.PropertyConfiguration.IsIgnored });
                   propertyConfigurationType.GetProperty(nameof(column.PropertyConfiguration.ColumnWidth))?.GetSetMethod()?

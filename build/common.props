@@ -2,7 +2,7 @@
   <Import Project="document.props" />
   <Import Project="sign.props" />
   <PropertyGroup>        
-    <TargetFrameworks>netstandard2.0;net45</TargetFrameworks>  
+    <TargetFramework>netstandard2.0</TargetFramework>  
     <Title>WeihanLi.Npoi</Title>
     <PackageId>WeihanLi.Npoi</PackageId>
     <Authors>WeihanLi</Authors>
@@ -15,8 +15,8 @@
     <RepositoryType>git</RepositoryType>
     <PackageTags>npoi excel csv</PackageTags>
     <Description>
-      NPOI Extensions for .net45 and .netstandard2.0
-      import/export excel or csv to/from entity list or DataTable(DataSet)	
+      Amazing NPOI Extensions
+      Import/Export excel or csv to/from entity list or DataTable(DataSet)	
       Custom configuration and mappings via Attribute/FluentAPI
     </Description>
     <PackageReleaseNotes>

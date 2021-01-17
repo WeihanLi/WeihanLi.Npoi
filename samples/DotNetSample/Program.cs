@@ -1,9 +1,9 @@
-﻿using System;
+﻿using EPPlus.Core.Extensions;
+using EPPlus.Core.Extensions.Attributes;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using EPPlus.Core.Extensions;
-using EPPlus.Core.Extensions.Attributes;
 using WeihanLi.Common.Helpers;
 using WeihanLi.Npoi;
 using WeihanLi.Npoi.Attributes;
@@ -229,11 +229,11 @@ namespace DotNetSample
         /// </summary>
         [Column("Username")]
         [ExcelTableColumn("UserName")]
-        public string Username { get; set; }
+        public string? Username { get; set; }
 
         [Column("PasswordHash")]
         [ExcelTableColumn("PasswordHash")]
-        public string PasswordHash { get; set; }
+        public string? PasswordHash { get; set; }
 
         [Column("Amount")]
         [ExcelTableColumn("Amount")]
@@ -241,7 +241,7 @@ namespace DotNetSample
 
         [Column("WechatOpenId")]
         [ExcelTableColumn("WechatOpenId")]
-        public string WechatOpenId { get; set; }
+        public string? WechatOpenId { get; set; }
 
         [Column("IsActive")]
         [ExcelTableColumn("IsActive")]
@@ -257,13 +257,13 @@ namespace DotNetSample
         public int PKID { get; set; }
 
         [Column("BillTitle")]
-        public string BillTitle { get; set; }
+        public string? BillTitle { get; set; }
 
         [Column("BillDetails")]
-        public string BillDetails { get; set; }
+        public string? BillDetails { get; set; }
 
         [Column("CreatedBy")]
-        public string CreatedBy { get; set; }
+        public string? CreatedBy { get; set; }
 
         [Column("CreatedTime", Formatter = "yyyy-MM-dd HH:mm:ss")]
         public DateTime CreatedTime { get; set; }
