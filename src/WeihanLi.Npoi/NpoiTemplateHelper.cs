@@ -18,6 +18,10 @@ namespace WeihanLi.Npoi
             IEnumerable<TEntity>? entityList,
             object? extraData = null)
         {
+            if (sheet is null)
+            {
+                throw new ArgumentNullException(nameof(sheet));
+            }
             if (entityList is null)
             {
                 return sheet;

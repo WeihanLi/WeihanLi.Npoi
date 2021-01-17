@@ -24,7 +24,7 @@ namespace WeihanLi.Npoi
 
         public static List<TEntity?> SheetToEntityList<TEntity>(ISheet? sheet, int sheetIndex) where TEntity : new()
         {
-            if (sheet is null || sheet.FirstRowNum < 0)
+            if (sheet is null || sheet.PhysicalNumberOfRows <= 0)
                 return new List<TEntity?>();
 
             var configuration = InternalHelper.GetExcelConfigurationMapping<TEntity>();
@@ -214,6 +214,10 @@ namespace WeihanLi.Npoi
 
         public static ISheet EntityListToSheet<TEntity>(ISheet sheet, IEnumerable<TEntity>? entityList, int sheetIndex)
         {
+            if (sheet is null)
+            {
+                throw new ArgumentNullException(nameof(sheet));
+            }
             if (entityList is null)
             {
                 return sheet;
@@ -272,6 +276,10 @@ namespace WeihanLi.Npoi
 
         public static ISheet DataTableToSheet<TEntity>(ISheet sheet, DataTable? dataTable, int sheetIndex)
         {
+            if (sheet is null)
+            {
+                throw new ArgumentNullException(nameof(sheet));
+            }
             if (dataTable is null || dataTable.Rows.Count == 0 || dataTable.Columns.Count == 0)
             {
                 return sheet;

@@ -87,6 +87,10 @@ namespace WeihanLi.Npoi
         /// <returns>DataSet</returns>
         public static DataSet ToDataSet(this IWorkbook workbook, int headerRowIndex)
         {
+            if (workbook is null)
+            {
+                throw new ArgumentNullException(nameof(workbook));
+            }
             var ds = new DataSet();
             for (var i = 0; i < workbook.NumberOfSheets; i++)
             {
@@ -104,6 +108,10 @@ namespace WeihanLi.Npoi
         /// <returns>DataTable</returns>
         public static DataTable ToDataTable(this IWorkbook workbook, int sheetIndex, int headerRowIndex)
         {
+            if (workbook is null)
+            {
+                throw new ArgumentNullException(nameof(workbook));
+            }
             if (workbook.NumberOfSheets <= sheetIndex)
             {
                 throw new ArgumentOutOfRangeException(nameof(sheetIndex),
@@ -127,6 +135,10 @@ namespace WeihanLi.Npoi
         /// <returns>DataTable</returns>
         public static DataTable ToDataTable(this ISheet sheet, int headerRowIndex)
         {
+            if (sheet is null)
+            {
+                throw new ArgumentNullException(nameof(sheet));
+            }
             if (sheet.LastRowNum <= headerRowIndex)
             {
                 throw new ArgumentOutOfRangeException(nameof(headerRowIndex),
@@ -188,6 +200,10 @@ namespace WeihanLi.Npoi
         public static int ImportData<TEntity>(this IWorkbook workbook, IEnumerable<TEntity> list,
             int sheetIndex)
         {
+            if (workbook is null)
+            {
+                throw new ArgumentNullException(nameof(workbook));
+            }
             if (workbook is HSSFWorkbook)
             {
                 if (sheetIndex >= InternalConstants.MaxSheetCountXls)
@@ -269,6 +285,10 @@ namespace WeihanLi.Npoi
         public static int ImportData<TEntity>(this IWorkbook workbook, DataTable dataTable,
             int sheetIndex)
         {
+            if (workbook is null)
+            {
+                throw new ArgumentNullException(nameof(workbook));
+            }
             if (workbook is HSSFWorkbook)
             {
                 if (sheetIndex >= InternalConstants.MaxSheetCountXls)
@@ -394,7 +414,11 @@ namespace WeihanLi.Npoi
         /// <returns>exported excel bytes</returns>
         public static void ToExcelFileByTemplate<TEntity>(this IEnumerable<TEntity> entities, IWorkbook templateWorkbook, string excelPath, int sheetIndex = 0, object? extraData = null)
         {
-            if (null == templateWorkbook)
+            if (entities is null)
+            {
+                throw new ArgumentNullException(nameof(entities));
+            }
+            if (templateWorkbook is null)
             {
                 throw new ArgumentNullException(nameof(templateWorkbook));
             }
@@ -437,6 +461,10 @@ namespace WeihanLi.Npoi
         /// <returns>exported excel bytes</returns>
         public static byte[] ToExcelBytesByTemplate<TEntity>(this IEnumerable<TEntity> entities, byte[] templateBytes, ExcelFormat excelFormat = ExcelFormat.Xls, int sheetIndex = 0, object? extraData = null)
         {
+            if (entities is null)
+            {
+                throw new ArgumentNullException(nameof(entities));
+            }
             if (templateBytes is null)
             {
                 throw new ArgumentNullException(nameof(templateBytes));
@@ -478,7 +506,11 @@ namespace WeihanLi.Npoi
         /// <returns>exported excel bytes</returns>
         public static byte[] ToExcelBytesByTemplate<TEntity>(this IEnumerable<TEntity> entities, IWorkbook templateWorkbook, int sheetIndex = 0, object? extraData = null)
         {
-            if (null == templateWorkbook)
+            if (entities is null)
+            {
+                throw new ArgumentNullException(nameof(entities));
+            }
+            if (templateWorkbook is null)
             {
                 throw new ArgumentNullException(nameof(templateWorkbook));
             }
@@ -504,6 +536,10 @@ namespace WeihanLi.Npoi
         /// <returns>exported excel bytes</returns>
         public static byte[] ToExcelBytesByTemplate<TEntity>(this IEnumerable<TEntity> entities, ISheet templateSheet, object? extraData = null)
         {
+            if (entities is null)
+            {
+                throw new ArgumentNullException(nameof(entities));
+            }
             NpoiTemplateHelper.EntityListToSheetByTemplate(
                 templateSheet, entities, extraData
             );
@@ -521,6 +557,10 @@ namespace WeihanLi.Npoi
         public static void ToExcelFile<TEntity>(this IList<TEntity> entityList,
             string excelPath)
         {
+            if (entityList is null)
+            {
+                throw new ArgumentNullException(nameof(entityList));
+            }
             var workbook =
                 entityList.GetWorkbookWithAutoSplitSheet(
                     excelPath.EndsWith(".xls", StringComparison.OrdinalIgnoreCase) ? ExcelFormat.Xls : ExcelFormat.Xlsx);
@@ -545,8 +585,12 @@ namespace WeihanLi.Npoi
         /// <param name="sheetIndex">sheetIndex</param>
         public static void ToExcelFile<TEntity>(this IEnumerable<TEntity> entityList,
             string excelPath, int sheetIndex)
-
         {
+            if (entityList is null)
+            {
+                throw new ArgumentNullException(nameof(entityList));
+            }
+
             var configuration = InternalHelper.GetExcelConfigurationMapping<TEntity>();
 
             var workbook = ExcelHelper.PrepareWorkbook(excelPath, configuration.ExcelSetting);
@@ -575,6 +619,11 @@ namespace WeihanLi.Npoi
         public static void ToExcelStream<TEntity>(this IEnumerable<TEntity> entityList,
             Stream stream, ExcelFormat excelFormat, int sheetIndex)
         {
+            if (entityList is null)
+            {
+                throw new ArgumentNullException(nameof(entityList));
+            }
+
             var configuration = InternalHelper.GetExcelConfigurationMapping<TEntity>();
 
             var workbook = ExcelHelper.PrepareWorkbook(excelFormat, configuration.ExcelSetting);
@@ -602,6 +651,11 @@ namespace WeihanLi.Npoi
         public static void ToExcelStream<TEntity>(this IList<TEntity> entityList,
             Stream stream, ExcelFormat excelFormat = ExcelFormat.Xls)
         {
+            if (entityList is null)
+            {
+                throw new ArgumentNullException(nameof(entityList));
+            }
+
             var workbook = entityList.GetWorkbookWithAutoSplitSheet(excelFormat);
             workbook.Write(stream);
         }
@@ -631,8 +685,12 @@ namespace WeihanLi.Npoi
         /// <param name="excelFormat">excelFormat</param>
         /// <param name="sheetIndex">sheetIndex</param>
         public static byte[] ToExcelBytes<TEntity>(this IEnumerable<TEntity> entityList, ExcelFormat excelFormat, int sheetIndex)
-
         {
+            if (entityList is null)
+            {
+                throw new ArgumentNullException(nameof(entityList));
+            }
+
             var configuration = InternalHelper.GetExcelConfigurationMapping<TEntity>();
 
             var workbook = ExcelHelper.PrepareWorkbook(excelFormat, configuration.ExcelSetting);
@@ -649,6 +707,11 @@ namespace WeihanLi.Npoi
         /// <param name="excelFormat">excelFormat</param>
         public static byte[] ToExcelBytes<TEntity>(this IList<TEntity> entityList, ExcelFormat excelFormat = ExcelFormat.Xls)
         {
+            if (entityList is null)
+            {
+                throw new ArgumentNullException(nameof(entityList));
+            }
+
             var workbook = entityList.GetWorkbookWithAutoSplitSheet(excelFormat);
             return workbook.ToExcelBytes();
         }
@@ -662,6 +725,11 @@ namespace WeihanLi.Npoi
         /// <returns>excel workbook with data</returns>
         public static IWorkbook GetWorkbookWithAutoSplitSheet<TEntity>(this IList<TEntity> entityList, ExcelFormat excelFormat)
         {
+            if (entityList is null)
+            {
+                throw new ArgumentNullException(nameof(entityList));
+            }
+
             var configuration = InternalHelper.GetExcelConfigurationMapping<TEntity>();
 
             var workbook = ExcelHelper.PrepareWorkbook(excelFormat, configuration.ExcelSetting);
@@ -701,6 +769,11 @@ namespace WeihanLi.Npoi
         /// <returns>excel workbook with data</returns>
         public static IWorkbook GetWorkbookWithAutoSplitSheet(this DataTable dataTable, ExcelFormat excelFormat, ExcelSetting? excelSetting = null)
         {
+            if (dataTable is null)
+            {
+                throw new ArgumentNullException(nameof(dataTable));
+            }
+
             var workbook = ExcelHelper.PrepareWorkbook(excelFormat, excelSetting ?? ExcelHelper.DefaultExcelSetting);
             var maxRowCount = excelFormat == ExcelFormat.Xls
                 ? InternalConstants.MaxRowCountXls
@@ -754,6 +827,11 @@ namespace WeihanLi.Npoi
 
         public static void ImportData(this ISheet sheet, DataTable? dataTable)
         {
+            if (sheet is null)
+            {
+                throw new ArgumentNullException(nameof(sheet));
+            }
+
             if (dataTable is null) return;
 
             if (dataTable.Columns.Count > 0)
@@ -783,6 +861,11 @@ namespace WeihanLi.Npoi
         /// <returns></returns>
         public static void ToExcelFile(this DataTable dataTable, string excelPath, ExcelSetting? excelSetting)
         {
+            if (dataTable is null)
+            {
+                throw new ArgumentNullException(nameof(dataTable));
+            }
+
             var workbook = dataTable.GetWorkbookWithAutoSplitSheet(excelPath.EndsWith(".xls", StringComparison.OrdinalIgnoreCase) ? ExcelFormat.Xls : ExcelFormat.Xlsx, excelSetting);
             workbook.WriteToFile(excelPath);
         }
@@ -814,6 +897,11 @@ namespace WeihanLi.Npoi
         /// <returns></returns>
         public static void ToExcelStream(this DataTable dataTable, Stream stream, ExcelFormat excelFormat, ExcelSetting? excelSetting)
         {
+            if (dataTable is null)
+            {
+                throw new ArgumentNullException(nameof(dataTable));
+            }
+
             var workbook = dataTable.GetWorkbookWithAutoSplitSheet(excelFormat, excelSetting);
             workbook.Write(stream);
         }
@@ -839,6 +927,11 @@ namespace WeihanLi.Npoi
         /// <param name="excelSetting">excelSetting</param>
         public static byte[] ToExcelBytes(this DataTable dataTable, ExcelFormat excelFormat, ExcelSetting? excelSetting)
         {
+            if (dataTable is null)
+            {
+                throw new ArgumentNullException(nameof(dataTable));
+            }
+
             var workbook = dataTable.GetWorkbookWithAutoSplitSheet(excelFormat, excelSetting);
             return workbook.ToExcelBytes();
         }
@@ -848,7 +941,7 @@ namespace WeihanLi.Npoi
         /// </summary>
         /// <param name="cell">ICell</param>
         /// <param name="value">value</param>
-        public static void SetCellValue(this ICell cell, object value) => cell.SetCellValue(value, null);
+        public static void SetCellValue(this ICell cell, object? value) => cell.SetCellValue(value, null);
 
         /// <summary>
         ///     SetCellValue
@@ -858,7 +951,11 @@ namespace WeihanLi.Npoi
         /// <param name="formatter">formatter</param>
         public static void SetCellValue(this ICell cell, object? value, string? formatter)
         {
-            if (null == value || DBNull.Value == value)
+            if (cell is null)
+            {
+                throw new ArgumentNullException(nameof(cell));
+            }
+            if (value is null || DBNull.Value == value)
             {
                 cell.SetCellType(CellType.Blank);
                 return;
@@ -1024,6 +1121,10 @@ namespace WeihanLi.Npoi
         /// <returns></returns>
         public static IFormulaEvaluator GetFormulaEvaluator(this IWorkbook workbook)
         {
+            if (workbook is null)
+            {
+                throw new ArgumentNullException(nameof(workbook));
+            }
             return workbook switch
             {
                 HSSFWorkbook => new HSSFFormulaEvaluator(workbook),
@@ -1040,6 +1141,10 @@ namespace WeihanLi.Npoi
         /// <param name="filePath">file path</param>
         public static void WriteToFile(this IWorkbook workbook, string filePath)
         {
+            if (workbook is null)
+            {
+                throw new ArgumentNullException(nameof(workbook));
+            }
             var dir = Path.GetDirectoryName(filePath);
             if (dir is null)
             {
@@ -1064,6 +1169,10 @@ namespace WeihanLi.Npoi
         /// <returns>excel bytes</returns>
         public static byte[] ToExcelBytes(this IWorkbook workbook)
         {
+            if (workbook is null)
+            {
+                throw new ArgumentNullException(nameof(workbook));
+            }
             using var ms = new MemoryStream();
             workbook.Write(ms);
             return ms.ToArray();

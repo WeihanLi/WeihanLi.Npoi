@@ -43,7 +43,7 @@ namespace WeihanLi.Npoi
             var dir = Path.GetDirectoryName(filePath);
             if (dir is null)
             {
-                throw new ArgumentException(Resource.InvalidFilePath);
+                throw new ArgumentException(Resource.InvalidFilePath, nameof(filePath));
             }
             if (!Directory.Exists(dir))
             {
@@ -368,7 +368,7 @@ namespace WeihanLi.Npoi
             static IReadOnlyList<string> ParseLine(string line)
         {
             if (string.IsNullOrEmpty(line))
-                return new[] { string.Empty };
+                return Array.Empty<string>();
 
             var columnBuilder = new StringBuilder();
             var fields = new List<string>();
