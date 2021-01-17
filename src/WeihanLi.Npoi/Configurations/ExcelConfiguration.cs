@@ -48,11 +48,15 @@ namespace WeihanLi.Npoi.Configurations
 
         #region ExcelSettings FluentAPI
 
+#nullable disable
+
         public IExcelConfiguration HasExcelSetting(Action<ExcelSetting> configAction)
         {
-            configAction.Invoke(ExcelSetting);
+            configAction?.Invoke(ExcelSetting);
             return this;
         }
+
+#nullable restore
 
         #endregion ExcelSettings FluentAPI
 
@@ -141,6 +145,10 @@ namespace WeihanLi.Npoi.Configurations
 
         public IExcelConfiguration HasSheetSetting(Action<SheetSetting> configAction, int sheetIndex = 0)
         {
+            if (configAction is null)
+            {
+                throw new ArgumentNullException(nameof(configAction));
+            }
             if (sheetIndex >= 0)
             {
                 if (SheetSettings.TryGetValue(sheetIndex, out var sheetSetting))

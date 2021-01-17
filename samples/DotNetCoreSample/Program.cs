@@ -169,7 +169,7 @@ namespace DotNetCoreSample
                 .HasColumnIndex(1);
 
             setting.Property(_ => _.DisplayName)
-                .HasOutputFormatter((entity, displayName) => $"AAA_{entity.SettingName}_{displayName}")
+                .HasOutputFormatter((entity, displayName) => $"AAA_{entity?.SettingName}_{displayName}")
                 .HasInputFormatter((entity, originVal) => originVal?.Split(new[] { '_' })[2])
                 .HasColumnTitle("DisplayName")
                 .HasColumnIndex(2);
@@ -194,7 +194,7 @@ namespace DotNetCoreSample
                 .HasColumnOutputFormatter(v => v ? "Enabled" : "Disabled");
 
             setting.Property("HiddenProp")
-                .HasOutputFormatter((entity, val) => $"HiddenProp_{entity.PKID}");
+                .HasOutputFormatter((entity, val) => $"HiddenProp_{entity?.PKID}");
 
             setting.Property(_ => _.PKID).Ignored();
             setting.Property(_ => _.UpdatedBy).Ignored();

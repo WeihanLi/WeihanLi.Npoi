@@ -81,20 +81,20 @@ namespace WeihanLi.Npoi.Configurations
             return this;
         }
 
-        public IPropertyConfiguration<TEntity, TProperty> HasOutputFormatter(Func<TEntity, TProperty, object>? formatterFunc)
+        public IPropertyConfiguration<TEntity, TProperty> HasOutputFormatter(Func<TEntity?, TProperty?, object?>? formatterFunc)
         {
             InternalCache.OutputFormatterFuncCache.AddOrUpdate(_propertyInfo, formatterFunc);
             return this;
         }
 
         public IPropertyConfiguration<TEntity, TProperty> HasInputFormatter(
-            Func<TEntity, TProperty, TProperty>? formatterFunc)
+            Func<TEntity?, TProperty?, TProperty?>? formatterFunc)
         {
             InternalCache.InputFormatterFuncCache.AddOrUpdate(_propertyInfo, formatterFunc);
             return this;
         }
 
-        public IPropertyConfiguration<TEntity, TProperty> HasColumnInputFormatter(Func<string, TProperty>? formatterFunc)
+        public IPropertyConfiguration<TEntity, TProperty> HasColumnInputFormatter(Func<string?, TProperty?>? formatterFunc)
         {
             InternalCache.ColumnInputFormatterFuncCache.AddOrUpdate(_propertyInfo, formatterFunc);
             return this;

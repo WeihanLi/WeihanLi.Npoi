@@ -50,20 +50,20 @@ namespace WeihanLi.Npoi.Configurations
         /// </summary>
         /// <param name="formatterFunc">formatterFunc</param>
         /// <returns></returns>
-        IPropertyConfiguration<TEntity, TProperty> HasColumnInputFormatter(Func<string, TProperty>? formatterFunc);
+        IPropertyConfiguration<TEntity, TProperty> HasColumnInputFormatter(Func<string?, TProperty?>? formatterFunc);
 
         /// <summary>
         /// HasOutputFormatter
         /// </summary>
         /// <param name="formatterFunc">columnFormatter</param>
         /// <returns></returns>
-        IPropertyConfiguration<TEntity, TProperty> HasOutputFormatter(Func<TEntity, TProperty, object>? formatterFunc);
+        IPropertyConfiguration<TEntity, TProperty> HasOutputFormatter(Func<TEntity?, TProperty?, object?>? formatterFunc);
 
         /// <summary>
         /// HasInputFormatter
         /// </summary>
         /// <param name="formatterFunc">columnFormatter</param>
         /// <returns></returns>
-        IPropertyConfiguration<TEntity, TProperty> HasInputFormatter(Func<TEntity, TProperty, TProperty>? formatterFunc);
+        IPropertyConfiguration<TEntity, TProperty> HasInputFormatter(Func<TEntity?, TProperty?, TProperty>? formatterFunc);
     }
 }
