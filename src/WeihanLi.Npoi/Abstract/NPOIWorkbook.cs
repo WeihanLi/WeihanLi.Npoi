@@ -27,7 +27,7 @@ namespace WeihanLi.Npoi.Abstract
         public int FirstRowNum => _sheet.FirstRowNum + 1;
         public int LastRowNum => _sheet.LastRowNum + 1;
 
-        public IRow GetRow(int rowIndex)
+        public IRow? GetRow(int rowIndex)
         {
             var nRow = _sheet.GetRow(rowIndex);
             if (null == nRow)
@@ -66,10 +66,10 @@ namespace WeihanLi.Npoi.Abstract
         public int FirstCellNum => _row.FirstCellNum + 1;
         public int LastCellNum => _row.LastCellNum;
 
-        public ICell GetCell(int cellIndex)
+        public ICell? GetCell(int cellIndex)
         {
             var nCell = _row.GetCell(cellIndex);
-            if (nCell == null) return null;
+            if (nCell is null) return null;
             return new NPOICell(nCell);
         }
 
@@ -100,11 +100,11 @@ namespace WeihanLi.Npoi.Abstract
             set => _cell.SetCellType((NModel.CellType)Enum.Parse(typeof(NModel.CellType), value.ToString()));
         }
 
-        public object Value
+        public object? Value
         {
             get
             {
-                if (_cell == null || _cell.CellType == NModel.CellType.Blank || _cell.CellType == NModel.CellType.Error)
+                if (_cell.CellType == NModel.CellType.Blank || _cell.CellType == NModel.CellType.Error)
                 {
                     return null;
                 }
@@ -128,7 +128,7 @@ namespace WeihanLi.Npoi.Abstract
                 }
             }
 
-            set => _cell.SetCellValue(value);
+            set => _cell.SetCellValue(value ?? string.Empty);
         }
     }
 }

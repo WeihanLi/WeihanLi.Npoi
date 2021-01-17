@@ -6,19 +6,19 @@ namespace DotNetSample
     internal class Model
     {
         [Column("酒店编号", Index = 0)]
-        public string HotelId { get; set; }
+        public string? HotelId { get; set; }
 
         [Column("订单号", Index = 1)]
-        public string OrderNo { get; set; }
+        public string? OrderNo { get; set; }
 
         [Column("酒店名称", Index = 2)]
-        public string HotelName { get; set; }
+        public string? HotelName { get; set; }
 
         [Column("客户名称", Index = 3)]
-        public string CustomerName { get; set; }
+        public string? CustomerName { get; set; }
 
         [Column(nameof(房型名称), Index = 4)]
-        public string 房型名称 { get; set; }
+        public string? 房型名称 { get; set; }
 
         [Column(nameof(入住日期), Index = 5, Formatter = "yyyy/M/d")]
         public DateTime 入住日期 { get; set; }
@@ -30,7 +30,7 @@ namespace DotNetSample
         public int 间夜 { get; set; }
 
         [Column(nameof(支付类型), Index = 8)]
-        public string 支付类型 { get; set; }
+        public string? 支付类型 { get; set; }
 
         [Column(nameof(订单金额), Index = 9)]
         public decimal 订单金额 { get; set; }

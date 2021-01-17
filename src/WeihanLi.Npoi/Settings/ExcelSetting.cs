@@ -8,31 +8,31 @@
         /// <summary>
         /// Author
         /// </summary>
-        public string Author { get; set; } = "WeihanLi";
+        public string? Author { get; set; } = "WeihanLi";
 
         /// <summary>
         /// Company
         /// </summary>
-        public string Company { get; set; } = "WeihanLi";
+        public string? Company { get; set; } = "WeihanLi";
 
         /// <summary>
         /// Title
         /// </summary>
-        public string Title { get; set; } = "WeihanLi.Npoi";
+        public string? Title { get; set; } = "WeihanLi.Npoi";
 
         /// <summary>
         /// Description
         /// </summary>
-        public string Description { get; set; } = "WeihanLi.Npoi Generated";
+        public string? Description { get; set; } = "WeihanLi.Npoi Generated";
 
         /// <summary>
         /// Subject
         /// </summary>
-        public string Subject { get; set; } = "WeihanLi.Npoi";
+        public string? Subject { get; set; } = "WeihanLi.Npoi";
 
         /// <summary>
         /// Category
         /// </summary>
-        public string Category { get; set; } = "WeihanLi.Npoi";
+        public string? Category { get; set; } = "WeihanLi.Npoi";
     }
 }

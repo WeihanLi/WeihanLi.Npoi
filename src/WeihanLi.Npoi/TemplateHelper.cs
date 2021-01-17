@@ -99,7 +99,7 @@ namespace WeihanLi.Npoi
         /// <param name="optionsAction">optionsAction</param>
         public static void ConfigureTemplateOptions(Action<TemplateOptions> optionsAction)
         {
-            if (null == optionsAction)
+            if (optionsAction is null)
             {
                 throw new ArgumentNullException(nameof(optionsAction));
             }

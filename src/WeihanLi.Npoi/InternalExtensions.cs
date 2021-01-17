@@ -1,5 +1,4 @@
-﻿using JetBrains.Annotations;
-using NPOI.SS.UserModel;
+﻿using NPOI.SS.UserModel;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -20,32 +19,34 @@ namespace WeihanLi.Npoi
         /// </summary>
         /// <param name="paramInfo">param object</param>
         /// <returns></returns>
-        public static IDictionary<string, object> ParseParamInfo(this object paramInfo)
+        public static IDictionary<string, object?> ParseParamInfo(this object? paramInfo)
         {
-            var paramDic = new Dictionary<string, object>();
-            if (null != paramInfo)
+            var paramDic = new Dictionary<string, object?>();
+            if (paramInfo is null)
             {
-                if (paramInfo.IsValueTuple())// Tuple
+                return paramDic;
+            }
+
+            if (paramInfo.IsValueTuple())// Tuple
+            {
+                var fields = paramInfo.GetFields();
+                foreach (var field in fields)
                 {
-                    var fields = paramInfo.GetFields();
-                    foreach (var field in fields)
-                    {
-                        paramDic.Add(field.Name, field.GetValue(paramInfo));
-                    }
+                    paramDic[field.Name] = field.GetValue(paramInfo);
                 }
-                else if (paramInfo is IDictionary<string, object> paramDictionary)
+            }
+            else if (paramInfo is IDictionary<string, object?> paramDictionary)
+            {
+                return paramDictionary;
+            }
+            else // get properties
+            {
+                var properties = CacheUtil.GetTypeProperties(paramInfo.GetType());
+                foreach (var property in properties)
                 {
-                    return paramDictionary;
-                }
-                else // get properties
-                {
-                    var properties = CacheUtil.GetTypeProperties(paramInfo.GetType());
-                    foreach (var property in properties)
+                    if (property.CanRead)
                     {
-                        if (property.CanRead)
-                        {
-                            paramDic.Add(property.Name, property.GetValueGetter().Invoke(paramInfo));
-                        }
+                        paramDic[property.Name] = property.GetValueGetter().Invoke(paramInfo);
                     }
                 }
             }
@@ -59,9 +60,9 @@ namespace WeihanLi.Npoi
         /// <param name="propertyType">propertyType</param>
         /// <param name="formulaEvaluator">formulaEvaluator</param>
         /// <returns>cellValue</returns>
-        public static object GetCellValue([CanBeNull] this ICell cell, Type propertyType, IFormulaEvaluator formulaEvaluator)
+        public static object GetCellValue(this ICell? cell, Type propertyType, IFormulaEvaluator? formulaEvaluator)
         {
-            if (cell == null || cell.CellType == CellType.Blank || cell.CellType == CellType.Error)
+            if (cell is null || cell.CellType == CellType.Blank || cell.CellType == CellType.Error)
             {
                 return propertyType.GetDefaultValue();
             }
@@ -74,14 +75,14 @@ namespace WeihanLi.Npoi
         /// <typeparam name="T">Type</typeparam>
         /// <param name="cell">cell</param>
         /// <returns></returns>
-        public static T GetCellValue<T>([CanBeNull] this ICell cell) => (cell?.Value).ToOrDefault<T>();
+        public static T GetCellValue<T>(this ICell? cell) => (cell?.Value).ToOrDefault<T>();
 
         /// <summary>
         ///     SetCellValue
         /// </summary>
         /// <param name="cell">ICell</param>
         /// <param name="value">value</param>
-        public static void SetCellValue([NotNull] this ICell cell, object value) => cell.SetCellValue(value, null);
+        public static void SetCellValue(this ICell? cell, object? value) => cell?.SetCellValue(value, null);
 
         /// <summary>
         ///     SetCellValue
@@ -89,9 +90,9 @@ namespace WeihanLi.Npoi
         /// <param name="cell">ICell</param>
         /// <param name="value">value</param>
         /// <param name="formatter">formatter</param>
-        public static void SetCellValue([NotNull] this ICell cell, object value, string formatter)
+        public static void SetCellValue(this ICell cell, object? value, string? formatter)
         {
-            if (null == value)
+            if (value is null)
             {
                 cell.CellType = CellType.Blank;
                 return;
@@ -139,7 +140,7 @@ namespace WeihanLi.Npoi
         /// <param name="mappingDictionary">mappingDictionary</param>
         /// <param name="propertyName">propertyName</param>
         /// <returns></returns>
-        internal static PropertyConfiguration GetPropertySettingByPropertyName([NotNull] this IDictionary<PropertyInfo, PropertyConfiguration> mappingDictionary, [NotNull] string propertyName)
+        internal static PropertyConfiguration? GetPropertySettingByPropertyName(this IDictionary<PropertyInfo, PropertyConfiguration> mappingDictionary, string propertyName)
             => mappingDictionary.Values.FirstOrDefault(_ => _.PropertyName.EqualsIgnoreCase(propertyName));
 
         /// <summary>
@@ -148,7 +149,7 @@ namespace WeihanLi.Npoi
         /// <param name="mappingDictionary">mappingDictionary</param>
         /// <param name="columnTitle">columnTitle</param>
         /// <returns></returns>
-        internal static PropertyConfiguration GetPropertySetting([NotNull] this IDictionary<PropertyInfo, PropertyConfiguration> mappingDictionary, [NotNull] string columnTitle)
+        internal static PropertyConfiguration? GetPropertySetting(this IDictionary<PropertyInfo, PropertyConfiguration> mappingDictionary, string columnTitle)
         {
             return mappingDictionary.Values.FirstOrDefault(k => k.ColumnTitle.EqualsIgnoreCase(columnTitle)) ?? mappingDictionary.GetPropertySettingByPropertyName(columnTitle);
         }

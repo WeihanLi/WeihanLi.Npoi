@@ -25,20 +25,20 @@ namespace WeihanLi.Npoi.Configurations
 
         internal IList<FreezeSetting> FreezeSettings { get; set; }
 
-        internal FilterSetting FilterSetting { get; set; }
+        internal FilterSetting? FilterSetting { get; set; }
 
         internal IDictionary<int, SheetSetting> SheetSettings { get; set; }
 
-        internal Func<TEntity, bool> DataValidationFunc { get; private set; }
+        internal Func<TEntity?, bool>? DataValidationFunc { get; private set; }
 
         public ExcelConfiguration() : this(null)
         {
         }
 
-        public ExcelConfiguration(ExcelSetting setting)
+        public ExcelConfiguration(ExcelSetting? setting)
         {
             PropertyConfigurationDictionary = new Dictionary<PropertyInfo, PropertyConfiguration>();
-            ExcelSetting = (setting ?? ExcelHelper.DefaultExcelSetting) ?? new ExcelSetting();
+            ExcelSetting = setting ?? ExcelHelper.DefaultExcelSetting;
             SheetSettings = new Dictionary<int, SheetSetting>(4)
             {
                 { 0, new SheetSetting() }
@@ -48,11 +48,15 @@ namespace WeihanLi.Npoi.Configurations
 
         #region ExcelSettings FluentAPI
 
+#nullable disable
+
         public IExcelConfiguration HasExcelSetting(Action<ExcelSetting> configAction)
         {
             configAction?.Invoke(ExcelSetting);
             return this;
         }
+
+#nullable restore
 
         #endregion ExcelSettings FluentAPI
 
@@ -86,7 +90,7 @@ namespace WeihanLi.Npoi.Configurations
 
         #region Property
 
-        public IExcelConfiguration<TEntity> WithDataValidation(Func<TEntity, bool> dataValidateFunc)
+        public IExcelConfiguration<TEntity> WithDataValidation(Func<TEntity?, bool>? dataValidateFunc)
         {
             DataValidationFunc = dataValidateFunc;
             return this;
@@ -102,7 +106,7 @@ namespace WeihanLi.Npoi.Configurations
         {
             var memberInfo = propertyExpression.GetMemberInfo();
             var property = memberInfo as PropertyInfo;
-            if (property == null || !PropertyConfigurationDictionary.ContainsKey(property))
+            if (property is null || !PropertyConfigurationDictionary.ContainsKey(property))
             {
                 property = CacheUtil.GetTypeProperties(EntityType)
                     .FirstOrDefault(p => p.Name == memberInfo.Name);
@@ -141,7 +145,11 @@ namespace WeihanLi.Npoi.Configurations
 
         public IExcelConfiguration HasSheetSetting(Action<SheetSetting> configAction, int sheetIndex = 0)
         {
-            if (sheetIndex >= 0 && configAction != null)
+            if (configAction is null)
+            {
+                throw new ArgumentNullException(nameof(configAction));
+            }
+            if (sheetIndex >= 0)
             {
                 if (SheetSettings.TryGetValue(sheetIndex, out var sheetSetting))
                 {

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using WeihanLi.Common.Helpers;
 using WeihanLi.Extensions;
 using WeihanLi.Npoi;
@@ -21,8 +23,8 @@ namespace DotNetCoreSample
             //    {
             //        sheet.CellFilter = cell => cell.ColumnIndex <= 10;
             //    });
-            var tempExcelPath = Path.Combine(tempDirPath, "testdata.xlsx");
-            var t_list = ExcelHelper.ToEntityList<ppDto>(tempExcelPath);
+            //var tempExcelPath = Path.Combine(tempDirPath, "testdata.xlsx");
+            //var t_list = ExcelHelper.ToEntityList<ppDto>(tempExcelPath);
             //var tempTable = ExcelHelper.ToDataTable(tempExcelPath);
 
             //using (var conn = new SqlConnection("server=.;uid=liweihan;pwd=Admin888;database=Reservation"))
@@ -53,32 +55,32 @@ namespace DotNetCoreSample
 
             //Console.WriteLine("Press Enter to continue...");
             //Console.ReadLine();
-
-            //var list2 = new List<TestEntity2>();
-            //list2.Add(null);
-            //for (var i = 0; i < 10; i++)
-            //{
-            //    list2.Add(new TestEntity2
-            //    {
-            //        Id = i + 1,
-            //        Title = $"Title_{i}",
-            //        Description = $"{Enumerable.Range(1, 200).StringJoin(",")}__{i}",
-            //    });
-            //}
-            //list2.Add(new TestEntity2()
-            //{
-            //    Id = 999,
-            //    Title = $"{Enumerable.Repeat(1, 10).StringJoin(",")}",
-            //    Description = null
-            //});
-
-            //list2.ToExcelFile($@"{tempDirPath}\testEntity2.xlsx");
-
+            var list2 = new List<TestEntity2?>();
+            list2.Add(null);
+            for (var i = 0; i < 100_000; i++)
+            {
+                list2.Add(new TestEntity2
+                {
+                    Id = i + 1,
+                    Title = $"Title_{i}",
+                    Description = $"{Enumerable.Range(1, 200).StringJoin(",")}__{i}",
+                });
+            }
+            list2.Add(new TestEntity2()
+            {
+                Id = 999,
+                Title = $"{Enumerable.Repeat(1, 10).StringJoin(",")}",
+                Description = null
+            });
+            var watch = Stopwatch.StartNew();
+            list2.ToExcelFile($@"{tempDirPath}\testEntity2.xls");
+            watch.Stop();
+            Console.WriteLine($"ElapsedMilliseconds: {watch.ElapsedMilliseconds}ms");
             //var listTemp = ExcelHelper.ToEntityList<TestEntity2>($@"{tempDirPath}\testEntity2.xlsx");
             //var dataTableTemp = ExcelHelper.ToDataTable($@"{tempDirPath}\testEntity2.xlsx");
 
-            //Console.WriteLine("Press Enter to continue...");
-            //Console.ReadLine();
+            Console.WriteLine("Press Enter to continue...");
+            Console.ReadLine();
 
             var entities = new List<TestEntity>()
             {
@@ -119,8 +121,9 @@ namespace DotNetCoreSample
             var dt = CsvHelper.ToDataTable(csvFilePath.Replace(".csv", ".datatable.csv"));
             Console.WriteLine(dt.Columns.Count);
             var entities1 = CsvHelper.ToEntityList<TestEntity>(csvFilePath);
-            entities1[1].DisplayName = ",tadadada";
-            entities1[0].SettingValue = "value2,345";
+
+            entities1[1]!.DisplayName = ",tadadada";
+            entities1[0]!.SettingValue = "value2,345";
             entities1.ToCsvFile(csvFilePath.Replace(".csv", ".1.csv"));
             entities1.ToDataTable().ToCsvFile(csvFilePath.Replace(".csv", ".1.datatable.csv"));
 
@@ -166,8 +169,8 @@ namespace DotNetCoreSample
                 .HasColumnIndex(1);
 
             setting.Property(_ => _.DisplayName)
-                .HasOutputFormatter((entity, displayName) => $"AAA_{entity.SettingName}_{displayName}")
-                .HasInputFormatter((entity, originVal) => originVal.Split(new[] { '_' })[2])
+                .HasOutputFormatter((entity, displayName) => $"AAA_{entity?.SettingName}_{displayName}")
+                .HasInputFormatter((entity, originVal) => originVal?.Split(new[] { '_' })[2])
                 .HasColumnTitle("DisplayName")
                 .HasColumnIndex(2);
 
@@ -191,7 +194,7 @@ namespace DotNetCoreSample
                 .HasColumnOutputFormatter(v => v ? "Enabled" : "Disabled");
 
             setting.Property("HiddenProp")
-                .HasOutputFormatter((entity, val) => $"HiddenProp_{entity.PKID}");
+                .HasOutputFormatter((entity, val) => $"HiddenProp_{entity?.PKID}");
 
             setting.Property(_ => _.PKID).Ignored();
             setting.Property(_ => _.UpdatedBy).Ignored();
@@ -208,16 +211,16 @@ namespace DotNetCoreSample
     {
         public Guid SettingId { get; set; }
 
-        public string SettingName { get; set; }
+        public string? SettingName { get; set; }
 
-        public string DisplayName { get; set; }
-        public string SettingValue { get; set; }
+        public string? DisplayName { get; set; }
+        public string? SettingValue { get; set; }
 
         public string CreatedBy { get; set; } = "liweihan";
 
         public DateTime CreatedTime { get; set; } = DateTime.Now;
 
-        public string UpdatedBy { get; set; }
+        public string? UpdatedBy { get; set; }
 
         public DateTime UpdatedTime { get; set; }
 
@@ -231,12 +234,12 @@ namespace DotNetCoreSample
         public int Id { get; set; }
 
         [Column(Index = 1)]
-        public string Title { get; set; }
+        public string? Title { get; set; }
 
         [Column(Index = 2, Width = 50)]
-        public string Description { get; set; }
+        public string? Description { get; set; }
 
         [Column(Index = 3, Width = 20)]
-        public string Extra { get; set; } = "{}";
+        public string? Extra { get; set; } = "{}";
     }
 }

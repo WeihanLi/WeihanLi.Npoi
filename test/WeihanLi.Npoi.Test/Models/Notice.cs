@@ -9,12 +9,12 @@ namespace WeihanLi.Npoi.Test.Models
 
     internal class Notice : BaseModel
     {
-        public string Title { get; set; }
+        public string? Title { get; set; }
 
-        public string Content { get; set; }
+        public string? Content { get; set; }
 
         public DateTime PublishedAt { get; set; }
 
-        public string Publisher { get; set; }
+        public string? Publisher { get; set; }
     }
 }

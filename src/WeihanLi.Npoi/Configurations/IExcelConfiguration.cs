@@ -64,7 +64,7 @@ namespace WeihanLi.Npoi.Configurations
         /// </summary>
         /// <param name="dataValidateFunc">data validate logic</param>
         /// <returns>current excel configuration</returns>
-        IExcelConfiguration<TEntity> WithDataValidation(Func<TEntity, bool> dataValidateFunc);
+        IExcelConfiguration<TEntity> WithDataValidation(Func<TEntity?, bool>? dataValidateFunc);
 
         /// <summary>
         /// property configuration

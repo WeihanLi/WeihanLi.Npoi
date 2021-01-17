@@ -4,7 +4,7 @@
     {
         int SheetCount { get; }
 
-        ISheet GetSheet(int sheetIndex);
+        ISheet? GetSheet(int sheetIndex);
 
         ISheet CreateSheet(string sheetName);
 

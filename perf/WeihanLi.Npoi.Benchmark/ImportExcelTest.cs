@@ -14,22 +14,21 @@ namespace WeihanLi.Npoi.Benchmark
         {
             public int PKID { get; set; }
 
-            public string Username { get; set; }
+            public string? Username { get; set; }
 
-            public string PasswordHash { get; set; }
+            public string? PasswordHash { get; set; }
 
             public decimal Amount { get; set; }
 
-            public string WechatOpenId { get; set; }
+            public string? WechatOpenId { get; set; }
 
             public bool IsActive { get; set; }
 
             public DateTime CreateTime { get; set; } = DateTime.Now;
         }
 
-        private readonly List<TestEntity> testData = new List<TestEntity>(51200);
-        private byte[] xlsBytes, xlsxBytes, csvBytes;
-
+        private readonly List<TestEntity> testData = new(51200);
+        private byte[] xlsBytes = Array.Empty<byte>(), xlsxBytes = Array.Empty<byte>(), csvBytes = Array.Empty<byte>();
 
         [Params(10000, 30000, 50000, 65535)]
         public int RowsCount;
@@ -47,7 +46,7 @@ namespace WeihanLi.Npoi.Benchmark
                 });
             }
 
-            xlsBytes = testData.ToExcelBytes(ExcelFormat.Xls);
+            xlsBytes = testData.ToExcelBytes();
             xlsxBytes = testData.ToExcelBytes(ExcelFormat.Xlsx);
             csvBytes = testData.ToCsvBytes();
         }
@@ -57,8 +56,6 @@ namespace WeihanLi.Npoi.Benchmark
         {
             // Disposing logic
             testData.Clear();
-            xlsBytes = null;
-            xlsxBytes = null;
         }
 
         [Benchmark]

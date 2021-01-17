@@ -31,7 +31,7 @@ namespace WeihanLi.Npoi
 
         public override MethodInfo GetGetMethod(bool nonPublic) => _getValueFunc.Method;
 
-        public override MethodInfo GetSetMethod(bool nonPublic) => null;
+        public override MethodInfo? GetSetMethod(bool nonPublic) => null;
 
         public override string ToString() => $"{PropertyType.Name}, {Name}";
 
