@@ -1004,7 +1004,7 @@ namespace WeihanLi.Npoi
         /// <param name="propertyType">propertyType</param>
         /// <param name="formulaEvaluator">formulaEvaluator</param>
         /// <returns>cellValue</returns>
-        public static object GetCellValue(this ICell? cell, Type propertyType, IFormulaEvaluator? formulaEvaluator = null)
+        public static object? GetCellValue(this ICell? cell, Type propertyType, IFormulaEvaluator? formulaEvaluator = null)
         {
             if (cell is null || cell.CellType == CellType.Blank || cell.CellType == CellType.Error)
             {
@@ -1098,7 +1098,7 @@ namespace WeihanLi.Npoi
         /// <param name="cell">cell</param>
         /// <param name="formulaEvaluator"></param>
         /// <returns>typed cell value</returns>
-        public static T GetCellValue<T>(this ICell? cell, IFormulaEvaluator? formulaEvaluator = null) => (T)cell.GetCellValue(typeof(T), formulaEvaluator);
+        public static T? GetCellValue<T>(this ICell? cell, IFormulaEvaluator? formulaEvaluator = null) => (T)cell.GetCellValue(typeof(T), formulaEvaluator)!;
 
         /// <summary>
         /// Get Sheet Row Collection

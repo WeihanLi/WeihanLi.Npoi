@@ -266,7 +266,7 @@ namespace WeihanLi.Npoi
                                         columnValue = cols[colIndex].ToOrDefault(key.PropertyType);
                                     }
 
-                                    key.GetValueSetter()?.Invoke(entity, columnValue);
+                                    key.GetValueSetter()?.Invoke(entity!, columnValue);
                                 }
                             }
 
@@ -302,7 +302,7 @@ namespace WeihanLi.Npoi
                                         columnValue = cols[colIndex].ToOrDefault(key.PropertyType);
                                     }
 
-                                    key.GetValueSetter()?.Invoke(entity, columnValue);
+                                    key.GetValueSetter()?.Invoke(entity!, columnValue);
                                 }
                             }
                         }

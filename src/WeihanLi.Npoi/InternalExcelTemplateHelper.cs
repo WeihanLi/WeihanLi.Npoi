@@ -74,7 +74,7 @@ namespace WeihanLi.Npoi
                         {
                             if (dataStartRow >= 0)
                             {
-                                if (cellValue.Contains(NpoiTemplateHelper.TemplateOptions.TemplateDataEnd))
+                                if (cellValue!.Contains(NpoiTemplateHelper.TemplateOptions.TemplateDataEnd))
                                 {
                                     dataRowsCount = rowIndex - dataStartRow + 1;
                                     cellValue = cellValue.Replace(NpoiTemplateHelper.TemplateOptions.TemplateDataEnd, string.Empty);
@@ -82,7 +82,7 @@ namespace WeihanLi.Npoi
                             }
                             else
                             {
-                                if (cellValue.Contains(NpoiTemplateHelper.TemplateOptions.TemplateDataBegin))
+                                if (cellValue!.Contains(NpoiTemplateHelper.TemplateOptions.TemplateDataBegin))
                                 {
                                     dataStartRow = rowIndex;
                                     cellValue = cellValue.Replace(NpoiTemplateHelper.TemplateOptions.TemplateDataBegin, string.Empty);
@@ -92,7 +92,7 @@ namespace WeihanLi.Npoi
 
                         foreach (var param in globalDictionary.Keys)
                         {
-                            if (cellValue.Contains(param))
+                            if (cellValue!.Contains(param))
                             {
                                 cellValue = cellValue
                                     .Replace(param,
@@ -122,7 +122,7 @@ namespace WeihanLi.Npoi
                             if (null != cell)
                             {
                                 var cellValue = cell.GetCellValue<string>();
-                                if (!string.IsNullOrEmpty(cellValue) && cellValue.Contains(NpoiTemplateHelper.TemplateOptions.TemplateDataPrefix))
+                                if (!string.IsNullOrEmpty(cellValue) && cellValue!.Contains(NpoiTemplateHelper.TemplateOptions.TemplateDataPrefix))
                                 {
                                     var beforeValue = cellValue;
 

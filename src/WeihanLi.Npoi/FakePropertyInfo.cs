@@ -7,8 +7,8 @@ namespace WeihanLi.Npoi
 {
     internal sealed class FakePropertyInfo : PropertyInfo
     {
-        private readonly object _value;
-        private readonly Func<object> _getValueFunc;
+        private readonly object? _value;
+        private readonly Func<object?> _getValueFunc;
 
         public FakePropertyInfo(Type entityType, Type propertyType, string propertyName)
         {
@@ -45,9 +45,9 @@ namespace WeihanLi.Npoi
 
         public override ParameterInfo[] GetIndexParameters() => throw new NotSupportedException();
 
-        public override object GetValue(object obj, BindingFlags invokeAttr, Binder binder, object[] index, CultureInfo culture) => _value;
+        public override object? GetValue(object obj, BindingFlags invokeAttr, Binder binder, object[] index, CultureInfo culture) => _value;
 
-        public override void SetValue(object obj, object value, BindingFlags invokeAttr, Binder binder, object[] index, CultureInfo culture) => throw new NotSupportedException();
+        public override void SetValue(object obj, object? value, BindingFlags invokeAttr, Binder binder, object[] index, CultureInfo culture) => throw new NotSupportedException();
 
         public override PropertyAttributes Attributes { get; }
     }

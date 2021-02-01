@@ -74,7 +74,7 @@ namespace WeihanLi.Npoi
                     }
                     else
                     {
-                        TEntity entity;
+                        TEntity? entity;
                         if (row.CellsCount > 0)
                         {
                             entity = new TEntity();
@@ -167,7 +167,7 @@ namespace WeihanLi.Npoi
                                         {
                                             // apply custom formatterFunc
                                             var formattedValue = formatterFunc.DynamicInvoke(entity, propertyValue);
-                                            propertyInfo.GetValueSetter().Invoke(entity, formattedValue);
+                                            propertyInfo.GetValueSetter()?.Invoke(entity, formattedValue);
                                         }
                                         catch (Exception e)
                                         {

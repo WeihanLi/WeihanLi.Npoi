@@ -85,7 +85,7 @@ namespace WeihanLi.Npoi
                         {
                             if (dataStartRow >= 0)
                             {
-                                if (cellValue.Contains(TemplateOptions.TemplateDataEnd))
+                                if (cellValue!.Contains(TemplateOptions.TemplateDataEnd))
                                 {
                                     dataRowsCount = rowIndex - dataStartRow + 1;
                                     cellValue = cellValue.Replace(TemplateOptions.TemplateDataEnd, string.Empty);
@@ -93,7 +93,7 @@ namespace WeihanLi.Npoi
                             }
                             else
                             {
-                                if (cellValue.Contains(TemplateOptions.TemplateDataBegin))
+                                if (cellValue!.Contains(TemplateOptions.TemplateDataBegin))
                                 {
                                     dataStartRow = rowIndex;
                                     cellValue = cellValue.Replace(TemplateOptions.TemplateDataBegin, string.Empty);
@@ -103,7 +103,7 @@ namespace WeihanLi.Npoi
 
                         foreach (var param in globalDictionary.Keys)
                         {
-                            if (cellValue.Contains(param))
+                            if (cellValue!.Contains(param))
                             {
                                 cellValue = cellValue
                                     .Replace(param,
@@ -135,7 +135,7 @@ namespace WeihanLi.Npoi
                                 if (null != cell)
                                 {
                                     var cellValue = cell.GetCellValue<string>(formulaEvaluator);
-                                    if (!string.IsNullOrEmpty(cellValue) && cellValue.Contains(TemplateOptions.TemplateDataPrefix))
+                                    if (!string.IsNullOrEmpty(cellValue) && cellValue!.Contains(TemplateOptions.TemplateDataPrefix))
                                     {
                                         var beforeValue = cellValue;
 

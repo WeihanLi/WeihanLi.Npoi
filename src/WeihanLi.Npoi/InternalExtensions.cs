@@ -46,7 +46,7 @@ namespace WeihanLi.Npoi
                 {
                     if (property.CanRead)
                     {
-                        paramDic[property.Name] = property.GetValueGetter().Invoke(paramInfo);
+                        paramDic[property.Name] = property.GetValueGetter()?.Invoke(paramInfo);
                     }
                 }
             }
@@ -60,13 +60,13 @@ namespace WeihanLi.Npoi
         /// <param name="propertyType">propertyType</param>
         /// <param name="formulaEvaluator">formulaEvaluator</param>
         /// <returns>cellValue</returns>
-        public static object GetCellValue(this ICell? cell, Type propertyType, IFormulaEvaluator? formulaEvaluator)
+        public static object? GetCellValue(this ICell? cell, Type propertyType, IFormulaEvaluator? formulaEvaluator)
         {
             if (cell is null || cell.CellType == CellType.Blank || cell.CellType == CellType.Error)
             {
                 return propertyType.GetDefaultValue();
             }
-            return cell.Value.ToOrDefault(propertyType);
+            return cell.Value?.ToOrDefault(propertyType);
         }
 
         /// <summary>
@@ -75,7 +75,7 @@ namespace WeihanLi.Npoi
         /// <typeparam name="T">Type</typeparam>
         /// <param name="cell">cell</param>
         /// <returns></returns>
-        public static T GetCellValue<T>(this ICell? cell) => (cell?.Value).ToOrDefault<T>();
+        public static T? GetCellValue<T>(this ICell? cell) => (cell?.Value).ToOrDefault<T>();
 
         /// <summary>
         ///     SetCellValue
