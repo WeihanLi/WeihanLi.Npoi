@@ -266,10 +266,6 @@ more usage:
 - Thanks for the contributors and users for this project
 - Thanks JetBrains for the open source Resharper license
 
-### More
-
-There's a NPOI developer group on telegram created by the author of NPOI, you can apply by the link <https://t.me/npoidevs> if you want.
-
 ### Contact
 
 Contact me: weihanli@outlook.com
