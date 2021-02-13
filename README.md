@@ -264,7 +264,7 @@ more usage:
 ### Acknowledgements
 
 - Thanks for the contributors and users for this project
-- Thanks JetBrains for the open source Resharper license
+- Thanks JetBrains for the open source ReSharper license
 
 ### Contact
 
