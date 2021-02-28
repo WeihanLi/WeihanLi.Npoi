@@ -5,6 +5,7 @@ using NPOI.XSSF.UserModel;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -987,6 +988,10 @@ namespace WeihanLi.Npoi
                     cell.SetCellValue((bool)value);
                     cell.SetCellType(CellType.Boolean);
                 }
+                else if (type == typeof(byte[]) && value is byte[] bytes)
+                {
+                    cell.Sheet.TryAddPicture(cell.RowIndex, cell.ColumnIndex, bytes);
+                }
                 else
                 {
                     cell.SetCellValue(value is IFormattable val && formatter.IsNotNullOrWhiteSpace()
@@ -1010,6 +1015,7 @@ namespace WeihanLi.Npoi
             {
                 return propertyType.GetDefaultValue();
             }
+
             switch (cell.CellType)
             {
                 case CellType.Numeric:
@@ -1132,6 +1138,75 @@ namespace WeihanLi.Npoi
                 SXSSFWorkbook sBook => new SXSSFFormulaEvaluator(sBook),
                 _ => throw new NotSupportedException()
             };
+        }
+
+        /// <summary>
+        /// get workbook IFormulaEvaluator
+        /// </summary>
+        /// <param name="sheet">sheet</param>
+        /// <returns></returns>
+        public static Dictionary<CellPosition, IPictureData> GetPicturesAndPosition(this ISheet sheet)
+        {
+            if (sheet is null)
+            {
+                throw new ArgumentNullException(nameof(sheet));
+            }
+
+            var dictionary = new Dictionary<CellPosition, IPictureData>();
+            if (sheet.Workbook is HSSFWorkbook)
+            {
+                foreach (var shape in ((HSSFPatriarch)sheet.DrawingPatriarch).Children)
+                {
+                    if (shape is HSSFPicture picture)
+                    {
+                        var position = new CellPosition(picture.ClientAnchor.Row1, picture.ClientAnchor.Col1);
+                        dictionary[position] = picture.PictureData;
+                    }
+                }
+            }
+            else if (sheet.Workbook is XSSFWorkbook)
+            {
+                foreach (var shape in ((XSSFDrawing)sheet.DrawingPatriarch).GetShapes())
+                {
+                    if (shape is XSSFPicture picture)
+                    {
+                        var position = new CellPosition(picture.ClientAnchor.Row1, picture.ClientAnchor.Col1);
+                        dictionary[position] = picture.PictureData;
+                    }
+                }
+            }
+            return dictionary;
+        }
+
+        public static bool TryAddPicture(this ISheet sheet, int row, int col, IPictureData pictureData)
+            => TryAddPicture(sheet, row, col, pictureData.Data, pictureData.PictureType);
+
+        public static bool TryAddPicture(this ISheet sheet, int row, int col, byte[] pictureBytes, PictureType pictureType = PictureType.PNG)
+        {
+            if (sheet is null)
+            {
+                throw new ArgumentNullException(nameof(sheet));
+            }
+
+            try
+            {
+                var pictureIndex = sheet.Workbook.AddPicture(pictureBytes, pictureType);
+
+                var clientAnchor = sheet.Workbook.GetCreationHelper().CreateClientAnchor();
+                clientAnchor.Row1 = row;
+                clientAnchor.Col1 = col;
+
+                var picture = (sheet.DrawingPatriarch ?? sheet.CreateDrawingPatriarch())
+                    .CreatePicture(clientAnchor, pictureIndex);
+                picture.Resize();
+                return true;
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e);
+            }
+
+            return false;
         }
 
         /// <summary>
