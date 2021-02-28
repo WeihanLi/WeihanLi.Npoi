@@ -3,9 +3,21 @@ name: default
 on: [push, pull_request]
 
 jobs:
+  mac-build:
+    runs-on: macos-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 5.0.x
+    - name: dotnet info
+      run: dotnet --info
+    - name: build
+      run: bash build.sh --target=build
+  
   linux-build:
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v1
     - name: Setup .NET Core
@@ -28,4 +40,5 @@ jobs:
     - name: dotnet info
       run: dotnet --info
     - name: build
-      run: build.ps1
+      shell: pwsh
+      run: .\build.ps1
