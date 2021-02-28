@@ -1104,7 +1104,7 @@ namespace WeihanLi.Npoi
         /// <param name="cell">cell</param>
         /// <param name="formulaEvaluator"></param>
         /// <returns>typed cell value</returns>
-        public static T? GetCellValue<T>(this ICell? cell, IFormulaEvaluator? formulaEvaluator = null) => (T)cell.GetCellValue(typeof(T), formulaEvaluator)!;
+        public static T GetCellValue<T>(this ICell? cell, IFormulaEvaluator? formulaEvaluator = null) => (T)cell.GetCellValue(typeof(T), formulaEvaluator)!;
 
         /// <summary>
         /// Get Sheet Row Collection

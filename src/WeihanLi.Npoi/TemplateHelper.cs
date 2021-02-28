@@ -103,7 +103,7 @@ namespace WeihanLi.Npoi
             {
                 throw new ArgumentNullException(nameof(optionsAction));
             }
-            optionsAction.Invoke(NpoiTemplateHelper.TemplateOptions);
+            optionsAction.Invoke(NpoiTemplateHelper.s_templateOptions);
         }
     }
 }

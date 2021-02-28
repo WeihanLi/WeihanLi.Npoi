@@ -19,19 +19,19 @@ namespace WeihanLi.Npoi
             var propertyColumnDictionary = InternalHelper.GetPropertyColumnDictionary(configuration);
 
             var globalDictionary = extraData.ParseParamInfo()
-                .ToDictionary(x => NpoiTemplateHelper.TemplateOptions.TemplateGlobalParamFormat.FormatWith(x.Key), x => x.Value);
+                .ToDictionary(x => NpoiTemplateHelper.s_templateOptions.TemplateGlobalParamFormat.FormatWith(x.Key), x => x.Value);
             foreach (var propertyConfiguration in propertyColumnDictionary)
             {
-                globalDictionary.Add(NpoiTemplateHelper.TemplateOptions.TemplateHeaderParamFormat.FormatWith(propertyConfiguration.Key.Name), propertyConfiguration.Value.ColumnTitle!);
+                globalDictionary.Add(NpoiTemplateHelper.s_templateOptions.TemplateHeaderParamFormat.FormatWith(propertyConfiguration.Key.Name), propertyConfiguration.Value.ColumnTitle!);
             }
 
             var dataFuncDictionary = propertyColumnDictionary
-                .ToDictionary(x => NpoiTemplateHelper.TemplateOptions.TemplateDataParamFormat.FormatWith(x.Key.Name), x => x.Key.GetValueGetter<TEntity>());
+                .ToDictionary(x => NpoiTemplateHelper.s_templateOptions.TemplateDataParamFormat.FormatWith(x.Key.Name), x => x.Key.GetValueGetter<TEntity>());
             foreach (var key in propertyColumnDictionary.Keys)
             {
                 if (InternalCache.OutputFormatterFuncCache.TryGetValue(key, out var formatterFunc) && formatterFunc?.Method != null)
                 {
-                    dataFuncDictionary[NpoiTemplateHelper.TemplateOptions.TemplateDataParamFormat.FormatWith(key.Name)] = entity =>
+                    dataFuncDictionary[NpoiTemplateHelper.s_templateOptions.TemplateDataParamFormat.FormatWith(key.Name)] = entity =>
                     {
                         var val = key.GetValueGetter<TEntity>()?.Invoke(entity);
                         try
@@ -74,18 +74,18 @@ namespace WeihanLi.Npoi
                         {
                             if (dataStartRow >= 0)
                             {
-                                if (cellValue!.Contains(NpoiTemplateHelper.TemplateOptions.TemplateDataEnd))
+                                if (cellValue!.Contains(NpoiTemplateHelper.s_templateOptions.TemplateDataEnd))
                                 {
                                     dataRowsCount = rowIndex - dataStartRow + 1;
-                                    cellValue = cellValue.Replace(NpoiTemplateHelper.TemplateOptions.TemplateDataEnd, string.Empty);
+                                    cellValue = cellValue.Replace(NpoiTemplateHelper.s_templateOptions.TemplateDataEnd, string.Empty);
                                 }
                             }
                             else
                             {
-                                if (cellValue!.Contains(NpoiTemplateHelper.TemplateOptions.TemplateDataBegin))
+                                if (cellValue!.Contains(NpoiTemplateHelper.s_templateOptions.TemplateDataBegin))
                                 {
                                     dataStartRow = rowIndex;
-                                    cellValue = cellValue.Replace(NpoiTemplateHelper.TemplateOptions.TemplateDataBegin, string.Empty);
+                                    cellValue = cellValue.Replace(NpoiTemplateHelper.s_templateOptions.TemplateDataBegin, string.Empty);
                                 }
                             }
                         }
@@ -122,7 +122,7 @@ namespace WeihanLi.Npoi
                             if (null != cell)
                             {
                                 var cellValue = cell.GetCellValue<string>();
-                                if (!string.IsNullOrEmpty(cellValue) && cellValue!.Contains(NpoiTemplateHelper.TemplateOptions.TemplateDataPrefix))
+                                if (!string.IsNullOrEmpty(cellValue) && cellValue!.Contains(NpoiTemplateHelper.s_templateOptions.TemplateDataPrefix))
                                 {
                                     var beforeValue = cellValue;
 
