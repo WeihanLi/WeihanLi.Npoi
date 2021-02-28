@@ -1,10 +1,9 @@
-name: dotnetcore
+name: default
 
-on: [push]
+on: [push, pull_request]
 
 jobs:
-  build:
-
+  linux-build:
     runs-on: ubuntu-latest
 
     steps:
@@ -17,3 +16,16 @@ jobs:
       run: dotnet --info
     - name: build
       run: bash build.sh --target=build
+  
+  windows-build:
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 5.0.x
+    - name: dotnet info
+      run: dotnet --info
+    - name: build
+      run: build.ps1
