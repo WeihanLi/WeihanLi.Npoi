@@ -89,7 +89,7 @@ namespace WeihanLi.Npoi
                     }
                     else
                     {
-                        TEntity entity;
+                        TEntity? entity;
                         if (row.Cells.Count > 0)
                         {
                             entity = new TEntity();
@@ -114,7 +114,7 @@ namespace WeihanLi.Npoi
                             entity = default;
                         }
 
-                        if (null != entity)
+                        if (entity is not null)
                         {
                             foreach (var propertyInfo in propertyColumnDic.Keys)
                             {
