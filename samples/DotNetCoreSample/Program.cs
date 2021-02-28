@@ -23,7 +23,7 @@ namespace DotNetCoreSample
             Console.WriteLine(imgaeModelList.Count(x => x?.Image != null));
             imgaeModelList.ToExcelFile(imageExcelPath + ".1.xls");
             var imgModeList2 = ExcelHelper.ToEntityList<ImportImageTestModel>(imageExcelPath + ".1.xls");
-            Console.WriteLine($"{imgaeModelList[0]?.Image.Length},{imgModeList2[0]?.Image.Length}");
+            Console.WriteLine($"{imgaeModelList[0]?.Image?.Length},{imgModeList2[0]?.Image?.Length}");
 
             imgaeModelList.ToExcelFile(imageExcelPath + ".1.xlsx");
             Console.ReadLine();
