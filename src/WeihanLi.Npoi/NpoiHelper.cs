@@ -24,7 +24,7 @@ namespace WeihanLi.Npoi
 
         public static List<TEntity?> SheetToEntityList<TEntity>(ISheet? sheet, int sheetIndex) where TEntity : new()
         {
-            if (sheet is null || sheet.FirstRowNum < 0)
+            if (sheet is null || sheet.PhysicalNumberOfRows <= 0)
                 return new List<TEntity?>();
 
             var configuration = InternalHelper.GetExcelConfigurationMapping<TEntity>();
@@ -43,6 +43,11 @@ namespace WeihanLi.Npoi
                 })
                 : propertyColumnDictionary;
             var formulaEvaluator = sheet.Workbook.GetFormulaEvaluator();
+
+            var pictures = propertyColumnDic
+                  .Any(p => p.Key.CanWrite && p.Key.PropertyType == typeof(byte[]))
+                ? sheet.GetPicturesAndPosition()
+                : new Dictionary<CellPosition, IPictureData>();
 
             for (var rowIndex = sheet.FirstRowNum; rowIndex <= (sheetSetting.EndRowIndex ?? sheet.LastRowNum); rowIndex++)
             {
@@ -84,7 +89,7 @@ namespace WeihanLi.Npoi
                     }
                     else
                     {
-                        TEntity entity;
+                        TEntity? entity;
                         if (row.Cells.Count > 0)
                         {
                             entity = new TEntity();
@@ -92,79 +97,16 @@ namespace WeihanLi.Npoi
                             if (configuration.EntityType.IsValueType)
                             {
                                 var obj = (object)entity;// boxing for value types
-                                foreach (var key in propertyColumnDic.Keys)
-                                {
-                                    var colIndex = propertyColumnDic[key].ColumnIndex;
-                                    if (colIndex >= 0 && key.CanWrite)
-                                    {
-                                        var columnValue = key.PropertyType.GetDefaultValue();
-                                        var cell = row.GetCell(colIndex);
 
-                                        if (sheetSetting.CellFilter?.Invoke(cell) != false)
-                                        {
-                                            var valueApplied = false;
-                                            if (InternalCache.ColumnInputFormatterFuncCache.TryGetValue(key, out var formatterFunc) && formatterFunc?.Method != null)
-                                            {
-                                                var cellValue = cell.GetCellValue<string>(formulaEvaluator);
-                                                try
-                                                {
-                                                    // apply custom formatterFunc
-                                                    columnValue = formatterFunc.DynamicInvoke(cellValue);
-                                                    valueApplied = true;
-                                                }
-                                                catch (Exception e)
-                                                {
-                                                    Debug.WriteLine(e);
-                                                    InvokeHelper.OnInvokeException?.Invoke(e);
-                                                }
-                                            }
-                                            if (valueApplied == false)
-                                            {
-                                                columnValue = cell.GetCellValue(key.PropertyType, formulaEvaluator);
-                                            }
-                                        }
-                                        key.GetValueSetter()?.Invoke(entity, columnValue);
-                                    }
-                                }
+                                ProcessImport(obj, row, rowIndex, propertyColumnDic, sheetSetting, formulaEvaluator,
+                                    pictures);
+
                                 entity = (TEntity)obj;// unboxing
                             }
                             else
                             {
-                                foreach (var key in propertyColumnDic.Keys)
-                                {
-                                    var colIndex = propertyColumnDic[key].ColumnIndex;
-                                    if (colIndex >= 0 && key.CanWrite)
-                                    {
-                                        var columnValue = key.PropertyType.GetDefaultValue();
-                                        var cell = row.GetCell(colIndex);
-
-                                        if (sheetSetting.CellFilter?.Invoke(cell) != false)
-                                        {
-                                            var valueApplied = false;
-                                            if (InternalCache.ColumnInputFormatterFuncCache.TryGetValue(key, out var formatterFunc) && formatterFunc?.Method != null)
-                                            {
-                                                var cellValue = cell.GetCellValue<string>(formulaEvaluator);
-                                                try
-                                                {
-                                                    // apply custom formatterFunc
-                                                    columnValue = formatterFunc.DynamicInvoke(cellValue);
-                                                    valueApplied = true;
-                                                }
-                                                catch (Exception e)
-                                                {
-                                                    Debug.WriteLine(e);
-                                                    InvokeHelper.OnInvokeException?.Invoke(e);
-                                                }
-                                            }
-                                            if (valueApplied == false)
-                                            {
-                                                columnValue = cell.GetCellValue(key.PropertyType, formulaEvaluator);
-                                            }
-                                        }
-
-                                        key.GetValueSetter()?.Invoke(entity, columnValue);
-                                    }
-                                }
+                                ProcessImport(entity, row, rowIndex, propertyColumnDic, sheetSetting, formulaEvaluator,
+                                    pictures);
                             }
                         }
                         else
@@ -172,7 +114,7 @@ namespace WeihanLi.Npoi
                             entity = default;
                         }
 
-                        if (null != entity)
+                        if (entity is not null)
                         {
                             foreach (var propertyInfo in propertyColumnDic.Keys)
                             {
@@ -212,8 +154,68 @@ namespace WeihanLi.Npoi
             return entities;
         }
 
+        private static void ProcessImport(object entity, IRow row, int rowIndex,
+            Dictionary<PropertyInfo, PropertyConfiguration> propertyColumnDic, SheetSetting sheetSetting,
+            IFormulaEvaluator formulaEvaluator,
+            Dictionary<CellPosition, IPictureData> pictures)
+        {
+            foreach (var key in propertyColumnDic.Keys)
+            {
+                var colIndex = propertyColumnDic[key].ColumnIndex;
+                if (colIndex >= 0 && key.CanWrite)
+                {
+                    var columnValue = key.PropertyType.GetDefaultValue();
+                    var cell = row.GetCell(colIndex);
+
+                    if (sheetSetting.CellFilter?.Invoke(cell) != false)
+                    {
+                        var valueSetter = key.GetValueSetter();
+                        if (valueSetter != null)
+                        {
+                            if (key.PropertyType == typeof(byte[])
+                                || key.PropertyType == typeof(IPictureData))
+                            {
+                                if (pictures.TryGetValue(new CellPosition(rowIndex, colIndex), out var pic))
+                                {
+                                    valueSetter.Invoke(entity, key.PropertyType == typeof(IPictureData) ? pic : pic.Data);
+                                }
+                            }
+                            else
+                            {
+                                var valueApplied = false;
+                                if (InternalCache.ColumnInputFormatterFuncCache.TryGetValue(key, out var formatterFunc) && formatterFunc?.Method != null)
+                                {
+                                    var cellValue = cell.GetCellValue<string>(formulaEvaluator);
+                                    try
+                                    {
+                                        // apply custom formatterFunc
+                                        columnValue = formatterFunc.DynamicInvoke(cellValue);
+                                        valueApplied = true;
+                                    }
+                                    catch (Exception e)
+                                    {
+                                        Debug.WriteLine(e);
+                                        InvokeHelper.OnInvokeException?.Invoke(e);
+                                    }
+                                }
+                                if (valueApplied == false)
+                                {
+                                    columnValue = cell.GetCellValue(key.PropertyType, formulaEvaluator);
+                                }
+                                valueSetter.Invoke(entity, columnValue);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
         public static ISheet EntityListToSheet<TEntity>(ISheet sheet, IEnumerable<TEntity>? entityList, int sheetIndex)
         {
+            if (sheet is null)
+            {
+                throw new ArgumentNullException(nameof(sheet));
+            }
             if (entityList is null)
             {
                 return sheet;
@@ -258,7 +260,8 @@ namespace WeihanLi.Npoi
                             }
                         }
 
-                        row.CreateCell(propertyColumnDictionary[key].ColumnIndex).SetCellValue(propertyValue, propertyColumnDictionary[key].ColumnFormatter);
+                        row.CreateCell(propertyColumnDictionary[key].ColumnIndex)
+                            .SetCellValue(propertyValue, propertyColumnDictionary[key].ColumnFormatter);
                     }
                 }
 
@@ -272,6 +275,10 @@ namespace WeihanLi.Npoi
 
         public static ISheet DataTableToSheet<TEntity>(ISheet sheet, DataTable? dataTable, int sheetIndex)
         {
+            if (sheet is null)
+            {
+                throw new ArgumentNullException(nameof(sheet));
+            }
             if (dataTable is null || dataTable.Rows.Count == 0 || dataTable.Columns.Count == 0)
             {
                 return sheet;

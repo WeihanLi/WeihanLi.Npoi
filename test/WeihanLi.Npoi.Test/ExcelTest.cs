@@ -47,11 +47,13 @@ namespace WeihanLi.Npoi.Test
                     else
                     {
                         Assert.NotNull(importedList[i]);
-                        Assert.Equal(list[i].Id, importedList[i].Id);
-                        Assert.Equal(list[i].Title, importedList[i].Title);
-                        Assert.Equal(list[i].Content, importedList[i].Content);
-                        Assert.Equal(list[i].Publisher, importedList[i].Publisher);
-                        Assert.Equal(list[i].PublishedAt.ToStandardTimeString(), importedList[i].PublishedAt.ToStandardTimeString());
+                        var sourceItem = list[i]!;
+                        var item = importedList[i]!;
+                        Assert.Equal(sourceItem.Id, item.Id);
+                        Assert.Equal(sourceItem.Title, item.Title);
+                        Assert.Equal(sourceItem.Content, item.Content);
+                        Assert.Equal(sourceItem.Publisher, item.Publisher);
+                        Assert.Equal(sourceItem.PublishedAt.ToStandardTimeString(), item.PublishedAt.ToStandardTimeString());
                     }
                 }
             }
@@ -92,11 +94,13 @@ namespace WeihanLi.Npoi.Test
                     else
                     {
                         Assert.NotNull(importedList[i]);
-                        Assert.Equal(list[i].Id, importedList[i].Id);
-                        Assert.Equal(list[i].Title, importedList[i].Title);
-                        Assert.Equal(list[i].Content, importedList[i].Content);
-                        Assert.Equal(list[i].Publisher, importedList[i].Publisher);
-                        Assert.Equal(list[i].PublishedAt.ToStandardTimeString(), importedList[i].PublishedAt.ToStandardTimeString());
+                        var sourceItem = list[i]!;
+                        var item = importedList[i]!;
+                        Assert.Equal(sourceItem.Id, item.Id);
+                        Assert.Equal(sourceItem.Title, item.Title);
+                        Assert.Equal(sourceItem.Content, item.Content);
+                        Assert.Equal(sourceItem.Publisher, item.Publisher);
+                        Assert.Equal(sourceItem.PublishedAt.ToStandardTimeString(), item.PublishedAt.ToStandardTimeString());
                     }
                 }
             }
@@ -140,11 +144,13 @@ namespace WeihanLi.Npoi.Test
                     else
                     {
                         Assert.NotNull(importedList[i]);
-                        Assert.Equal(list[i].Id, importedList[i].Id);
-                        Assert.Equal(list[i].Title, importedList[i].Title);
-                        Assert.Equal(list[i].Content, importedList[i].Content);
-                        Assert.Equal(list[i].Publisher, importedList[i].Publisher);
-                        Assert.Equal(list[i].PublishedAt.ToStandardTimeString(), importedList[i].PublishedAt.ToStandardTimeString());
+                        var sourceItem = list[i]!;
+                        var item = importedList[i]!;
+                        Assert.Equal(sourceItem.Id, item.Id);
+                        Assert.Equal(sourceItem.Title, item.Title);
+                        Assert.Equal(sourceItem.Content, item.Content);
+                        Assert.Equal(sourceItem.Publisher, item.Publisher);
+                        Assert.Equal(sourceItem.PublishedAt.ToStandardTimeString(), item.PublishedAt.ToStandardTimeString());
                     }
                 }
 
@@ -187,11 +193,13 @@ namespace WeihanLi.Npoi.Test
                     else
                     {
                         Assert.NotNull(importedList[i]);
-                        Assert.Equal(list[i].Id, importedList[i].Id);
-                        Assert.Equal(list[i].Title, importedList[i].Title);
-                        Assert.Equal(list[i].Content, importedList[i].Content);
-                        Assert.Equal(list[i].Publisher, importedList[i].Publisher);
-                        Assert.Equal(list[i].PublishedAt.ToStandardTimeString(), importedList[i].PublishedAt.ToStandardTimeString());
+                        var sourceItem = list[i]!;
+                        var item = importedList[i]!;
+                        Assert.Equal(sourceItem.Id, item.Id);
+                        Assert.Equal(sourceItem.Title, item.Title);
+                        Assert.Equal(sourceItem.Content, item.Content);
+                        Assert.Equal(sourceItem.Publisher, item.Publisher);
+                        Assert.Equal(sourceItem.PublishedAt.ToStandardTimeString(), item.PublishedAt.ToStandardTimeString());
                     }
                 }
 
@@ -220,7 +228,7 @@ namespace WeihanLi.Npoi.Test
             lock (noticeSetting)
             {
                 noticeSetting.Property<string>("ShadowProperty")
-                    .HasOutputFormatter((x, _) => $"{x.Id}...")
+                    .HasOutputFormatter((x, _) => $"{x?.Id}...")
                     ;
 
                 var excelBytes = list.ToExcelBytes(excelFormat);
@@ -237,11 +245,13 @@ namespace WeihanLi.Npoi.Test
                     else
                     {
                         Assert.NotNull(importedList[i]);
-                        Assert.Equal(list[i].Id, importedList[i].Id);
-                        Assert.Equal(list[i].Title, importedList[i].Title);
-                        Assert.Equal(list[i].Content, importedList[i].Content);
-                        Assert.Equal(list[i].Publisher, importedList[i].Publisher);
-                        Assert.Equal(list[i].PublishedAt.ToStandardTimeString(), importedList[i].PublishedAt.ToStandardTimeString());
+                        var sourceItem = list[i]!;
+                        var item = importedList[i]!;
+                        Assert.Equal(sourceItem.Id, item.Id);
+                        Assert.Equal(sourceItem.Title, item.Title);
+                        Assert.Equal(sourceItem.Content, item.Content);
+                        Assert.Equal(sourceItem.Publisher, item.Publisher);
+                        Assert.Equal(sourceItem.PublishedAt.ToStandardTimeString(), item.PublishedAt.ToStandardTimeString());
                     }
                 }
             }
@@ -279,11 +289,13 @@ namespace WeihanLi.Npoi.Test
                     else
                     {
                         Assert.NotNull(importedList[i]);
-                        // Assert.Equal(list[i].Id, importedList[i].Id);
-                        Assert.Equal(list[i].Title, importedList[i].Title);
-                        Assert.Equal(list[i].Content, importedList[i].Content);
-                        Assert.Equal(list[i].Publisher, importedList[i].Publisher);
-                        Assert.Equal(list[i].PublishedAt.ToStandardTimeString(), importedList[i].PublishedAt.ToStandardTimeString());
+                        var sourceItem = list[i]!;
+                        var item = importedList[i]!;
+                        //Assert.Equal(sourceItem.Id, item.Id);
+                        Assert.Equal(sourceItem.Title, item.Title);
+                        Assert.Equal(sourceItem.Content, item.Content);
+                        Assert.Equal(sourceItem.Publisher, item.Publisher);
+                        Assert.Equal(sourceItem.PublishedAt.ToStandardTimeString(), item.PublishedAt.ToStandardTimeString());
                     }
                 }
 
@@ -325,11 +337,12 @@ namespace WeihanLi.Npoi.Test
                     else
                     {
                         Assert.NotNull(importedList[i]);
-                        Assert.Equal(list[i].Id, importedList[i].Id);
-                        Assert.Equal(list[i].Title + "_Test", importedList[i].Title);
-                        Assert.Equal(list[i].Content, importedList[i].Content);
-                        Assert.Equal(list[i].Publisher, importedList[i].Publisher);
-                        Assert.Equal(list[i].PublishedAt.ToStandardTimeString(), importedList[i].PublishedAt.ToStandardTimeString());
+                        var item = importedList[i]!;
+                        Assert.Equal(list[i].Id, item.Id);
+                        Assert.Equal(list[i].Title + "_Test", item.Title);
+                        Assert.Equal(list[i].Content, item.Content);
+                        Assert.Equal(list[i].Publisher, item.Publisher);
+                        Assert.Equal(list[i].PublishedAt.ToStandardTimeString(), item.PublishedAt.ToStandardTimeString());
                     }
                 }
 
@@ -356,7 +369,7 @@ namespace WeihanLi.Npoi.Test
             {
                 settings.Property(x => x.Id)
                     .HasColumnOutputFormatter(x => $"{x}_Test")
-                    .HasColumnInputFormatter(x => Convert.ToInt32(x.Split(new[] { '_' }, StringSplitOptions.RemoveEmptyEntries)[0]));
+                    .HasColumnInputFormatter(x => Convert.ToInt32(x?.Split(new[] { '_' }, StringSplitOptions.RemoveEmptyEntries)[0]));
                 var excelBytes = list.ToExcelBytes(excelFormat);
 
                 var importedList = ExcelHelper.ToEntityList<Notice>(excelBytes, excelFormat);
@@ -370,11 +383,13 @@ namespace WeihanLi.Npoi.Test
                     else
                     {
                         Assert.NotNull(importedList[i]);
-                        Assert.Equal(list[i].Id, importedList[i].Id);
-                        Assert.Equal(list[i].Title, importedList[i].Title);
-                        Assert.Equal(list[i].Content, importedList[i].Content);
-                        Assert.Equal(list[i].Publisher, importedList[i].Publisher);
-                        Assert.Equal(list[i].PublishedAt.ToStandardTimeString(), importedList[i].PublishedAt.ToStandardTimeString());
+                        var sourceItem = list[i]!;
+                        var item = importedList[i]!;
+                        Assert.Equal(sourceItem.Id, item.Id);
+                        Assert.Equal(sourceItem.Title, item.Title);
+                        Assert.Equal(sourceItem.Content, item.Content);
+                        Assert.Equal(sourceItem.Publisher, item.Publisher);
+                        Assert.Equal(sourceItem.PublishedAt.ToStandardTimeString(), item.PublishedAt.ToStandardTimeString());
                     }
                 }
 
@@ -402,7 +417,7 @@ namespace WeihanLi.Npoi.Test
             var settings = FluentSettings.For<Notice>();
             lock (settings)
             {
-                settings.WithDataValidation(x => x.Id > 5);
+                settings.WithDataValidation(x => x?.Id > 5);
 
                 var importedList = ExcelHelper.ToEntityList<Notice>(excelBytes, excelFormat);
                 Assert.Equal(list.Count(x => x.Id > 5), importedList.Count);
@@ -422,11 +437,13 @@ namespace WeihanLi.Npoi.Test
                     else
                     {
                         Assert.NotNull(importedList[i]);
-                        Assert.Equal(list[k].Id, importedList[i].Id);
-                        Assert.Equal(list[k].Title, importedList[i].Title);
-                        Assert.Equal(list[k].Content, importedList[i].Content);
-                        Assert.Equal(list[k].Publisher, importedList[i].Publisher);
-                        Assert.Equal(list[k].PublishedAt.ToStandardTimeString(), importedList[i].PublishedAt.ToStandardTimeString());
+                        var sourceItem = list[k]!;
+                        var item = importedList[i]!;
+                        Assert.Equal(sourceItem.Id, item.Id);
+                        Assert.Equal(sourceItem.Title, item.Title);
+                        Assert.Equal(sourceItem.Content, item.Content);
+                        Assert.Equal(sourceItem.Publisher, item.Publisher);
+                        Assert.Equal(sourceItem.PublishedAt.ToStandardTimeString(), item.PublishedAt.ToStandardTimeString());
                     }
                 }
 
@@ -528,9 +545,9 @@ namespace WeihanLi.Npoi.Test
             Assert.NotNull(list);
             Assert.NotEmpty(list);
             Assert.NotNull(list[0]);
-            Assert.Equal(1, list[0].Num1);
-            Assert.Equal(2, list[0].Num2);
-            Assert.Equal(3, list[0].Sum);
+            Assert.Equal(1, list[0]!.Num1);
+            Assert.Equal(2, list[0]!.Num2);
+            Assert.Equal(3, list[0]!.Sum);
         }
 
         // ReSharper disable UnusedAutoPropertyAccessor.Local
@@ -576,11 +593,13 @@ namespace WeihanLi.Npoi.Test
                     else
                     {
                         Assert.NotNull(importedList[i]);
-                        Assert.Equal(list[i].Id, importedList[i].Id);
-                        Assert.Null(importedList[i].Title);
-                        Assert.Null(importedList[i].Content);
-                        Assert.Null(importedList[i].Publisher);
-                        Assert.Equal(default(DateTime).ToStandardTimeString(), importedList[i].PublishedAt.ToStandardTimeString());
+                        var item = importedList[i]!;
+
+                        Assert.Equal(list[i].Id, item.Id);
+                        Assert.Null(item.Title);
+                        Assert.Null(item.Content);
+                        Assert.Null(item.Publisher);
+                        Assert.Equal(default(DateTime).ToStandardTimeString(), item.PublishedAt.ToStandardTimeString());
                     }
                 }
 
@@ -609,9 +628,10 @@ namespace WeihanLi.Npoi.Test
             for (var i = 0; i < importedList.Count; i++)
             {
                 Assert.NotNull(importedList[i]);
-                Assert.Equal(list[i].Id, importedList[i].Id);
-                Assert.Equal(list[i].Name, importedList[i].Name);
-                Assert.Null(importedList[i].Description);
+                var item = importedList[i]!;
+                Assert.Equal(list[i].Id, item.Id);
+                Assert.Equal(list[i].Name, item.Name);
+                Assert.Null(item.Description);
             }
         }
 

@@ -184,7 +184,7 @@ namespace WeihanLi.Npoi
         /// <returns></returns>
         public static IWorkbook PrepareWorkbook(bool isXlsx, ExcelSetting? excelSetting)
         {
-            var setting = (excelSetting ?? DefaultExcelSetting);
+            var setting = excelSetting ?? DefaultExcelSetting;
 
             if (isXlsx)
             {

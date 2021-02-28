@@ -1,12 +1,17 @@
 # WeihanLi.Npoi Release Notes
 
+## [1.14.0](https://www.nuget.org/packages/WeihanLi.Npoi/1.14.0)
+
+- enable nullable reference
+- remove `net45` target
+
 ## [1.13.0](https://www.nuget.org/packages/WeihanLi.Npoi/1.13.0)
 
 - add support for `EntityList`/`DataTable` export auto split sheets when needed
 
 ## [1.12.0](https://www.nuget.org/packages/WeihanLi.Npoi/1.12.0)
 
-- refact `ExcelSetting` and `SheetSetting`
+- refactor `ExcelSetting` and `SheetSetting`
 - add support for `RowFilter` and `CellFilter`(mainly for import)
 - add support for reading file when file opened by another process
 

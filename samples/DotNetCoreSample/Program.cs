@@ -18,6 +18,15 @@ namespace DotNetCoreSample
             FluentSettingsForExcel();
             var tempDirPath = $@"{Environment.GetEnvironmentVariable("USERPROFILE")}\Desktop\temp\test";
 
+            var imageExcelPath = @"C:\Users\Weiha\Desktop\temp\test\imageTest.xls";
+            var imgaeModelList = ExcelHelper.ToEntityList<ImportImageTestModel>(imageExcelPath);
+            Console.WriteLine(imgaeModelList.Count(x => x?.Image != null));
+            imgaeModelList.ToExcelFile(imageExcelPath + ".1.xls");
+            var imgModeList2 = ExcelHelper.ToEntityList<ImportImageTestModel>(imageExcelPath + ".1.xls");
+            Console.WriteLine($"{imgaeModelList[0]?.Image.Length},{imgModeList2[0]?.Image.Length}");
+
+            imgaeModelList.ToExcelFile(imageExcelPath + ".1.xlsx");
+            Console.ReadLine();
             //FluentSettings.For<ppDto>()
             //    .HasSheetSetting(sheet =>
             //    {
