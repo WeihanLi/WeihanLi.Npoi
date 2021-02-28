@@ -326,6 +326,50 @@
   </table>
   
   
+  <a id="WeihanLi_Npoi_NpoiExtensions_GetPicturesAndPosition_" data-uid="WeihanLi.Npoi.NpoiExtensions.GetPicturesAndPosition*"></a>
+  <h4 id="WeihanLi_Npoi_NpoiExtensions_GetPicturesAndPosition_ISheet_" data-uid="WeihanLi.Npoi.NpoiExtensions.GetPicturesAndPosition(ISheet)">GetPicturesAndPosition(ISheet)</h4>
+  <div class="markdown level1 summary"><p>get workbook IFormulaEvaluator</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Dictionary&lt;CellPosition, IPictureData&gt; GetPicturesAndPosition(this ISheet sheet)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">ISheet</span></td>
+        <td><span class="parametername">sheet</span></td>
+        <td><p>sheet</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Dictionary</span>&lt;<a class="xref" href="WeihanLi.Npoi.CellPosition.html">CellPosition</a>, <span class="xref">IPictureData</span>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
   <a id="WeihanLi_Npoi_NpoiExtensions_GetRowCollection_" data-uid="WeihanLi.Npoi.NpoiExtensions.GetRowCollection*"></a>
   <h4 id="WeihanLi_Npoi_NpoiExtensions_GetRowCollection_ISheet_" data-uid="WeihanLi.Npoi.NpoiExtensions.GetRowCollection(ISheet)">GetRowCollection(ISheet)</h4>
   <div class="markdown level1 summary"><p>Get Sheet Row Collection</p>
@@ -3362,6 +3406,125 @@
         <td><span class="parametername">TEntity</span></td>
         <td><p>EntityType</p>
 </td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="WeihanLi_Npoi_NpoiExtensions_TryAddPicture_" data-uid="WeihanLi.Npoi.NpoiExtensions.TryAddPicture*"></a>
+  <h4 id="WeihanLi_Npoi_NpoiExtensions_TryAddPicture_ISheet_System_Int32_System_Int32_IPictureData_" data-uid="WeihanLi.Npoi.NpoiExtensions.TryAddPicture(ISheet,System.Int32,System.Int32,IPictureData)">TryAddPicture(ISheet, Int32, Int32, IPictureData)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool TryAddPicture(this ISheet sheet, int row, int col, IPictureData pictureData)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">ISheet</span></td>
+        <td><span class="parametername">sheet</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">row</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">col</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">IPictureData</span></td>
+        <td><span class="parametername">pictureData</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="WeihanLi_Npoi_NpoiExtensions_TryAddPicture_" data-uid="WeihanLi.Npoi.NpoiExtensions.TryAddPicture*"></a>
+  <h4 id="WeihanLi_Npoi_NpoiExtensions_TryAddPicture_ISheet_System_Int32_System_Int32_System_Byte___PictureType_" data-uid="WeihanLi.Npoi.NpoiExtensions.TryAddPicture(ISheet,System.Int32,System.Int32,System.Byte[],PictureType)">TryAddPicture(ISheet, Int32, Int32, Byte[], PictureType)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool TryAddPicture(this ISheet sheet, int row, int col, byte[] pictureBytes, PictureType pictureType = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">ISheet</span></td>
+        <td><span class="parametername">sheet</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">row</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">col</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Byte</span>[]</td>
+        <td><span class="parametername">pictureBytes</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">PictureType</span></td>
+        <td><span class="parametername">pictureType</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
       </tr>
     </tbody>
   </table>
