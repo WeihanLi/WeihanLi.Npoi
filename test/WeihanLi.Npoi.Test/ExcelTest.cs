@@ -3,6 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Net.Http;
+using System.Threading.Tasks;
 using WeihanLi.Extensions;
 using WeihanLi.Npoi.Attributes;
 using WeihanLi.Npoi.Test.Models;
@@ -694,6 +696,36 @@ namespace WeihanLi.Npoi.Test
             var bytes = dataTable.ToExcelBytes(excelFormat);
             var workbook = ExcelHelper.LoadExcel(bytes, excelFormat);
             Assert.Equal(expectedSheetCount, workbook.NumberOfSheets);
+        }
+
+        [Theory]
+        [InlineData(ExcelFormat.Xls)]
+        [InlineData(ExcelFormat.Xlsx)]
+        public async Task ImageImportExportTest(ExcelFormat excelFormat)
+        {
+            using var httpClient = new HttpClient();
+            var imageBytes = await httpClient.GetByteArrayAsync("https://weihanli.xyz/assets/avator.jpg");
+            var list = Enumerable.Range(1, 5)
+                .Select(x => new ImageTest() { Id = x, Image = imageBytes })
+                .ToList();
+            var excelBytes = list.ToExcelBytes(excelFormat);
+            var importResult = ExcelHelper.ToEntityList<ImageTest>(excelBytes, excelFormat);
+            Assert.NotNull(importResult);
+            Assert.Equal(list.Count, importResult.Count);
+            for (var i = 0; i < list.Count; i++)
+            {
+                Assert.NotNull(importResult[i]);
+                var result = importResult[i]!;
+                Assert.Equal(list[i].Id, result.Id);
+                Assert.True(list[i].Image.SequenceEqual(result.Image));
+            }
+        }
+
+        private class ImageTest
+        {
+            public int Id { get; set; }
+
+            public byte[] Image { get; set; } = null!;
         }
     }
 }
