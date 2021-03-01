@@ -45,7 +45,8 @@ namespace WeihanLi.Npoi
             var formulaEvaluator = sheet.Workbook.GetFormulaEvaluator();
 
             var pictures = propertyColumnDic
-                  .Any(p => p.Key.CanWrite && p.Key.PropertyType == typeof(byte[]))
+                  .Any(p => p.Key.CanWrite &&
+                            (p.Key.PropertyType == typeof(byte[]) || p.Key.PropertyType == typeof(IPictureData)))
                 ? sheet.GetPicturesAndPosition()
                 : new Dictionary<CellPosition, IPictureData>();
 
