@@ -28,7 +28,7 @@ namespace WeihanLi.Npoi.Test
                 .HasColumnIndex(3);
             noticeSetting.Property(_ => _.PublishedAt)
                 .HasColumnIndex(4)
-                .HasOutputFormatter((entity, x) => x.ToStandardTimeString());
+                .HasColumnOutputFormatter(x => x.ToStandardTimeString());
         }
     }
 }

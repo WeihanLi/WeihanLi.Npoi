@@ -41,11 +41,12 @@ namespace WeihanLi.Npoi.Test
                 for (var i = 0; i < list.Count; i++)
                 {
                     Assert.NotNull(importedList[i]);
-                    Assert.Equal(list[i].Id, importedList[i].Id);
-                    Assert.Equal(list[i].Title ?? "", importedList[i].Title);
-                    Assert.Equal(list[i].Content ?? "", importedList[i].Content);
-                    Assert.Equal(list[i].Publisher ?? "", importedList[i].Publisher);
-                    Assert.Equal(list[i].PublishedAt.ToStandardTimeString(), importedList[i].PublishedAt.ToStandardTimeString());
+                    var item = importedList[i]!;
+                    Assert.Equal(list[i].Id, item.Id);
+                    Assert.Equal(list[i].Title ?? "", item.Title);
+                    Assert.Equal(list[i].Content ?? "", item.Content);
+                    Assert.Equal(list[i].Publisher ?? "", item.Publisher);
+                    Assert.Equal(list[i].PublishedAt.ToStandardTimeString(), item.PublishedAt.ToStandardTimeString());
                 }
             }
         }
@@ -77,11 +78,12 @@ namespace WeihanLi.Npoi.Test
                 for (var i = 0; i < list.Count; i++)
                 {
                     Assert.NotNull(importedList[i]);
-                    Assert.Equal(list[i].Id, importedList[i].Id);
-                    Assert.Equal(list[i].Title ?? "", importedList[i].Title);
-                    Assert.Equal(list[i].Content ?? "", importedList[i].Content);
-                    Assert.Equal(list[i].Publisher ?? "", importedList[i].Publisher);
-                    Assert.Equal(list[i].PublishedAt.ToStandardTimeString(), importedList[i].PublishedAt.ToStandardTimeString());
+                    var item = importedList[i]!;
+                    Assert.Equal(list[i].Id, item.Id);
+                    Assert.Equal(list[i].Title ?? "", item.Title);
+                    Assert.Equal(list[i].Content ?? "", item.Content);
+                    Assert.Equal(list[i].Publisher ?? "", item.Publisher);
+                    Assert.Equal(list[i].PublishedAt.ToStandardTimeString(), item.PublishedAt.ToStandardTimeString());
                 }
 
                 noticeSetting.Property(_ => _.Publisher)
@@ -143,7 +145,7 @@ namespace WeihanLi.Npoi.Test
 
             for (var i = 0; i < cols.Count; i++)
             {
-                Assert.Equal(TrimQuotes(data[i]?.ToString()), cols[i]);
+                Assert.Equal(TrimQuotes(data[i].ToString()), cols[i]);
             }
         }
 

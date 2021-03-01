@@ -1,5 +1,9 @@
 # WeihanLi.Npoi Release Notes
 
+## [1.15.0](https://www.nuget.org/packages/WeihanLi.Npoi/1.15.0)
+
+- add support for image import/export
+
 ## [1.14.0](https://www.nuget.org/packages/WeihanLi.Npoi/1.14.0)
 
 - enable nullable reference
