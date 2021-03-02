@@ -1141,7 +1141,7 @@ namespace WeihanLi.Npoi
         }
 
         /// <summary>
-        /// get workbook IFormulaEvaluator
+        /// get pictures with position in current sheet
         /// </summary>
         /// <param name="sheet">sheet</param>
         /// <returns></returns>
@@ -1151,7 +1151,6 @@ namespace WeihanLi.Npoi
             {
                 throw new ArgumentNullException(nameof(sheet));
             }
-
             var dictionary = new Dictionary<CellPosition, IPictureData>();
             if (sheet.Workbook is HSSFWorkbook)
             {
@@ -1178,9 +1177,26 @@ namespace WeihanLi.Npoi
             return dictionary;
         }
 
+        /// <summary>
+        /// TryAddPicture in specific cell
+        /// </summary>
+        /// <param name="sheet">sheet</param>
+        /// <param name="row">cell rowIndex</param>
+        /// <param name="col">cell columnIndex</param>
+        /// <param name="pictureData">pictureData</param>
+        /// <returns>whether add success</returns>
         public static bool TryAddPicture(this ISheet sheet, int row, int col, IPictureData pictureData)
             => TryAddPicture(sheet, row, col, pictureData.Data, pictureData.PictureType);
 
+        /// <summary>
+        /// TryAddPicture in specific cell
+        /// </summary>
+        /// <param name="sheet">sheet</param>
+        /// <param name="row">cell rowIndex</param>
+        /// <param name="col">cell columnIndex</param>
+        /// <param name="pictureBytes">picture bytes</param>
+        /// <param name="pictureType">picture type</param>
+        /// <returns>whether add success</returns>
         public static bool TryAddPicture(this ISheet sheet, int row, int col, byte[] pictureBytes, PictureType pictureType = PictureType.PNG)
         {
             if (sheet is null)
@@ -1204,6 +1220,7 @@ namespace WeihanLi.Npoi
             catch (Exception e)
             {
                 Debug.WriteLine(e);
+                InvokeHelper.OnInvokeException?.Invoke(e);
             }
 
             return false;
