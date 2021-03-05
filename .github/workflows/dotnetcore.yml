@@ -31,7 +31,7 @@ jobs:
     - name: Run Infer#      
       uses: microsoft/infersharpaction@v1.0
       with:
-        binary-path: './artifacts/packages'
+        binary-path: './src/WeihanLi.Npoi/bin/Release/netstandard2.0'
     - name: Infer# analysis results
       run: echo "${{ steps.runinfersharp.outputs.results }}"
       
