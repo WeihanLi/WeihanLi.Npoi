@@ -10,7 +10,7 @@ namespace WeihanLi.Npoi
 {
     internal static class NpoiTemplateHelper
     {
-        public static readonly TemplateOptions TemplateOptions = new();
+        public static readonly TemplateOptions s_templateOptions = new();
 
         // export via template
         public static ISheet EntityListToSheetByTemplate<TEntity>(
@@ -30,19 +30,19 @@ namespace WeihanLi.Npoi
             var propertyColumnDictionary = InternalHelper.GetPropertyColumnDictionary(configuration);
             var formulaEvaluator = sheet.Workbook.GetFormulaEvaluator();
             var globalDictionary = extraData.ParseParamInfo()
-                .ToDictionary(x => TemplateOptions.TemplateGlobalParamFormat.FormatWith(x.Key), x => x.Value);
+                .ToDictionary(x => s_templateOptions.TemplateGlobalParamFormat.FormatWith(x.Key), x => x.Value);
             foreach (var propertyConfiguration in propertyColumnDictionary)
             {
-                globalDictionary.Add(TemplateOptions.TemplateHeaderParamFormat.FormatWith(propertyConfiguration.Key.Name), propertyConfiguration.Value.ColumnTitle);
+                globalDictionary.Add(s_templateOptions.TemplateHeaderParamFormat.FormatWith(propertyConfiguration.Key.Name), propertyConfiguration.Value.ColumnTitle);
             }
 
             var dataFuncDictionary = propertyColumnDictionary
-                .ToDictionary(x => TemplateOptions.TemplateDataParamFormat.FormatWith(x.Key.Name), x => x.Key.GetValueGetter<TEntity>());
+                .ToDictionary(x => s_templateOptions.TemplateDataParamFormat.FormatWith(x.Key.Name), x => x.Key.GetValueGetter<TEntity>());
             foreach (var key in propertyColumnDictionary.Keys)
             {
                 if (InternalCache.OutputFormatterFuncCache.TryGetValue(key, out var formatterFunc) && formatterFunc?.Method != null)
                 {
-                    dataFuncDictionary[TemplateOptions.TemplateDataParamFormat.FormatWith(key.Name)] = entity =>
+                    dataFuncDictionary[s_templateOptions.TemplateDataParamFormat.FormatWith(key.Name)] = entity =>
                     {
                         var val = key.GetValueGetter<TEntity>()?.Invoke(entity);
                         try
@@ -85,18 +85,18 @@ namespace WeihanLi.Npoi
                         {
                             if (dataStartRow >= 0)
                             {
-                                if (cellValue!.Contains(TemplateOptions.TemplateDataEnd))
+                                if (cellValue!.Contains(s_templateOptions.TemplateDataEnd))
                                 {
                                     dataRowsCount = rowIndex - dataStartRow + 1;
-                                    cellValue = cellValue.Replace(TemplateOptions.TemplateDataEnd, string.Empty);
+                                    cellValue = cellValue.Replace(s_templateOptions.TemplateDataEnd, string.Empty);
                                 }
                             }
                             else
                             {
-                                if (cellValue!.Contains(TemplateOptions.TemplateDataBegin))
+                                if (cellValue!.Contains(s_templateOptions.TemplateDataBegin))
                                 {
                                     dataStartRow = rowIndex;
-                                    cellValue = cellValue.Replace(TemplateOptions.TemplateDataBegin, string.Empty);
+                                    cellValue = cellValue.Replace(s_templateOptions.TemplateDataBegin, string.Empty);
                                 }
                             }
                         }
@@ -135,7 +135,7 @@ namespace WeihanLi.Npoi
                                 if (null != cell)
                                 {
                                     var cellValue = cell.GetCellValue<string>(formulaEvaluator);
-                                    if (!string.IsNullOrEmpty(cellValue) && cellValue!.Contains(TemplateOptions.TemplateDataPrefix))
+                                    if (!string.IsNullOrEmpty(cellValue) && cellValue!.Contains(s_templateOptions.TemplateDataPrefix))
                                     {
                                         var beforeValue = cellValue;
 

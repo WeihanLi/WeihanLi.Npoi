@@ -10,8 +10,8 @@
     internal enum CellType
     {
         Unknown = -1, // 0xFFFFFFFF
-        Numeric = 0,
-        String = 1,
+        String = 0,
+        Numeric = 1,
         Formula = 2,
         Blank = 3,
         Boolean = 4,

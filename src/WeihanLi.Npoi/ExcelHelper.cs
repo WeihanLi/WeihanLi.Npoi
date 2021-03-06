@@ -16,16 +16,16 @@ namespace WeihanLi.Npoi
     /// </summary>
     public static class ExcelHelper
     {
-        private static readonly Version _appVersion = typeof(ExcelHelper).Assembly.GetName().Version;
-        private static ExcelSetting _defaultExcelSetting = new();
+        private static readonly Version s_appVersion = typeof(ExcelHelper).Assembly.GetName().Version;
+        private static ExcelSetting s_defaultExcelSetting = new();
 
         /// <summary>
         /// Default excel setting for export excel files
         /// </summary>
         public static ExcelSetting DefaultExcelSetting
         {
-            get => _defaultExcelSetting;
-            set => _defaultExcelSetting = value ?? throw new ArgumentNullException(nameof(value));
+            get => s_defaultExcelSetting;
+            set => s_defaultExcelSetting = value ?? throw new ArgumentNullException(nameof(value));
         }
 
         /// <summary>
@@ -199,7 +199,7 @@ namespace WeihanLi.Npoi
                 props.CoreProperties.Description = setting.Description;
                 props.ExtendedProperties.GetUnderlyingProperties().Company = setting.Company;
                 props.ExtendedProperties.GetUnderlyingProperties().Application = InternalConstants.ApplicationName;
-                props.ExtendedProperties.GetUnderlyingProperties().AppVersion = _appVersion.ToString(3);
+                props.ExtendedProperties.GetUnderlyingProperties().AppVersion = s_appVersion.ToString(3);
                 return workbook;
             }
             else

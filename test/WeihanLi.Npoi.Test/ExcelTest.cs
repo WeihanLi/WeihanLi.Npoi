@@ -3,6 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Net.Http;
+using System.Threading.Tasks;
 using WeihanLi.Extensions;
 using WeihanLi.Npoi.Attributes;
 using WeihanLi.Npoi.Test.Models;
@@ -13,8 +15,7 @@ namespace WeihanLi.Npoi.Test
     public class ExcelTest
     {
         [Theory]
-        [InlineData(ExcelFormat.Xls)]
-        [InlineData(ExcelFormat.Xlsx)]
+        [ExcelFormatData]
         public void BasicImportExportTest(ExcelFormat excelFormat)
         {
             var list = new List<Notice?>();
@@ -60,8 +61,7 @@ namespace WeihanLi.Npoi.Test
         }
 
         [Theory]
-        [InlineData(ExcelFormat.Xls)]
-        [InlineData(ExcelFormat.Xlsx)]
+        [ExcelFormatData]
         public void BasicImportExportTestWithEmptyValue(ExcelFormat excelFormat)
         {
             var list = new List<Notice?>();
@@ -107,8 +107,7 @@ namespace WeihanLi.Npoi.Test
         }
 
         [Theory]
-        [InlineData(ExcelFormat.Xls)]
-        [InlineData(ExcelFormat.Xlsx)]
+        [ExcelFormatData]
         public void BasicImportExportWithoutHeaderTest(ExcelFormat excelFormat)
         {
             var list = new List<Notice?>();
@@ -159,8 +158,7 @@ namespace WeihanLi.Npoi.Test
         }
 
         [Theory]
-        [InlineData(ExcelFormat.Xls)]
-        [InlineData(ExcelFormat.Xlsx)]
+        [ExcelFormatData]
         public void ImportWithNotSpecificColumnIndex(ExcelFormat excelFormat)
         {
             IReadOnlyList<Notice> list = Enumerable.Range(0, 10).Select(i => new Notice()
@@ -211,8 +209,7 @@ namespace WeihanLi.Npoi.Test
         }
 
         [Theory]
-        [InlineData(ExcelFormat.Xls)]
-        [InlineData(ExcelFormat.Xlsx)]
+        [ExcelFormatData]
         public void ShadowPropertyTest(ExcelFormat excelFormat)
         {
             IReadOnlyList<Notice> list = Enumerable.Range(0, 10).Select(i => new Notice()
@@ -258,8 +255,7 @@ namespace WeihanLi.Npoi.Test
         }
 
         [Theory]
-        [InlineData(ExcelFormat.Xls)]
-        [InlineData(ExcelFormat.Xlsx)]
+        [ExcelFormatData]
         public void IgnoreInheritPropertyTest(ExcelFormat excelFormat)
         {
             IReadOnlyList<Notice> list = Enumerable.Range(0, 10).Select(i => new Notice()
@@ -306,8 +302,7 @@ namespace WeihanLi.Npoi.Test
         }
 
         [Theory]
-        [InlineData(ExcelFormat.Xls)]
-        [InlineData(ExcelFormat.Xlsx)]
+        [ExcelFormatData]
         public void ColumnInputFormatterTest(ExcelFormat excelFormat)
         {
             IReadOnlyList<Notice> list = Enumerable.Range(0, 10).Select(i => new Notice()
@@ -351,8 +346,7 @@ namespace WeihanLi.Npoi.Test
         }
 
         [Theory]
-        [InlineData(ExcelFormat.Xls)]
-        [InlineData(ExcelFormat.Xlsx)]
+        [ExcelFormatData]
         public void InputOutputColumnFormatterTest(ExcelFormat excelFormat)
         {
             IReadOnlyList<Notice> list = Enumerable.Range(0, 10).Select(i => new Notice()
@@ -400,8 +394,7 @@ namespace WeihanLi.Npoi.Test
         }
 
         [Theory]
-        [InlineData(ExcelFormat.Xls)]
-        [InlineData(ExcelFormat.Xlsx)]
+        [ExcelFormatData]
         public void DataValidationTest(ExcelFormat excelFormat)
         {
             IReadOnlyList<Notice> list = Enumerable.Range(0, 10).Select(i => new Notice()
@@ -452,8 +445,7 @@ namespace WeihanLi.Npoi.Test
         }
 
         [Theory]
-        [InlineData(ExcelFormat.Xls)]
-        [InlineData(ExcelFormat.Xlsx)]
+        [ExcelFormatData]
         public void DataTableImportExportTest(ExcelFormat excelFormat)
         {
             var dt = new DataTable();
@@ -485,8 +477,7 @@ namespace WeihanLi.Npoi.Test
         }
 
         [Theory]
-        [InlineData(ExcelFormat.Xls)]
-        [InlineData(ExcelFormat.Xlsx)]
+        [ExcelFormatData]
         public void DataTableImportExportWithEmptyValueTest(ExcelFormat excelFormat)
         {
             var dt = new DataTable();
@@ -524,8 +515,7 @@ namespace WeihanLi.Npoi.Test
         }
 
         [Theory]
-        [InlineData(ExcelFormat.Xls)]
-        [InlineData(ExcelFormat.Xlsx)]
+        [ExcelFormatData]
         public void ExcelImportWithFormula(ExcelFormat excelFormat)
         {
             var setting = FluentSettings.For<ExcelFormulaTestModel>();
@@ -560,8 +550,7 @@ namespace WeihanLi.Npoi.Test
         }
 
         [Theory]
-        [InlineData(ExcelFormat.Xls)]
-        [InlineData(ExcelFormat.Xlsx)]
+        [ExcelFormatData]
         public void ExcelImportWithCellFilter(ExcelFormat excelFormat)
         {
             IReadOnlyList<Notice> list = Enumerable.Range(0, 10).Select(i => new Notice()
@@ -611,8 +600,7 @@ namespace WeihanLi.Npoi.Test
         }
 
         [Theory]
-        [InlineData(ExcelFormat.Xls)]
-        [InlineData(ExcelFormat.Xlsx)]
+        [ExcelFormatData]
         public void ExcelImportWithCellFilterAttributeTest(ExcelFormat excelFormat)
         {
             IReadOnlyList<CellFilterAttributeTest> list = Enumerable.Range(0, 10).Select(i => new CellFilterAttributeTest()
@@ -694,6 +682,66 @@ namespace WeihanLi.Npoi.Test
             var bytes = dataTable.ToExcelBytes(excelFormat);
             var workbook = ExcelHelper.LoadExcel(bytes, excelFormat);
             Assert.Equal(expectedSheetCount, workbook.NumberOfSheets);
+        }
+
+        [Theory]
+        [ExcelFormatData]
+        public async Task ImageImportExportTest(ExcelFormat excelFormat)
+        {
+            using var httpClient = new HttpClient();
+            var imageBytes = await httpClient.GetByteArrayAsync("https://weihanli.xyz/assets/avator.jpg");
+            var list = Enumerable.Range(1, 5)
+                .Select(x => new ImageTest() { Id = x, Image = imageBytes })
+                .ToList();
+            var excelBytes = list.ToExcelBytes(excelFormat);
+            var importResult = ExcelHelper.ToEntityList<ImageTest>(excelBytes, excelFormat);
+            Assert.NotNull(importResult);
+            Assert.Equal(list.Count, importResult.Count);
+            for (var i = 0; i < list.Count; i++)
+            {
+                Assert.NotNull(importResult[i]);
+                var result = importResult[i]!;
+                Assert.Equal(list[i].Id, result.Id);
+                Assert.True(list[i].Image.SequenceEqual(result.Image));
+            }
+        }
+
+        [Theory]
+        [ExcelFormatData]
+        public async Task ImageImportExportPictureDataTest(ExcelFormat excelFormat)
+        {
+            using var httpClient = new HttpClient();
+            var imageBytes = await httpClient.GetByteArrayAsync("https://weihanli.xyz/assets/avator.jpg");
+            var list = Enumerable.Range(1, 5)
+                .Select(x => new ImageTest() { Id = x, Image = imageBytes })
+                .ToList();
+            var excelBytes = list.ToExcelBytes(excelFormat);
+            var importResult = ExcelHelper.ToEntityList<ImageTestPicData>(excelBytes, excelFormat);
+            Assert.NotNull(importResult);
+            Assert.Equal(list.Count, importResult.Count);
+            for (var i = 0; i < list.Count; i++)
+            {
+                Assert.NotNull(importResult[i]);
+                var result = importResult[i]!;
+                Assert.Equal(list[i].Id, result.Id);
+                Assert.NotNull(result.Image);
+                Assert.True(list[i].Image.SequenceEqual(result.Image.Data));
+                Assert.Equal(PictureType.PNG, result.Image.PictureType);
+            }
+        }
+
+        private class ImageTest
+        {
+            public int Id { get; set; }
+
+            public byte[] Image { get; set; } = null!;
+        }
+
+        private class ImageTestPicData
+        {
+            public int Id { get; set; }
+
+            public IPictureData Image { get; set; } = null!;
         }
     }
 }
