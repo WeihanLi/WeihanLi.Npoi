@@ -1,9 +1,8 @@
-﻿using System;
+﻿using NPOI.SS.UserModel;
+using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
 using WeihanLi.Common.Helpers;
+using WeihanLi.Common.Logging;
 using WeihanLi.Extensions;
 using WeihanLi.Npoi;
 using WeihanLi.Npoi.Attributes;
@@ -15,18 +14,21 @@ namespace DotNetCoreSample
     {
         public static void Main(string[] args)
         {
+            LogHelper.ConfigureLogging(x => x.WithMinimumLevel(LogHelperLogLevel.Info).AddConsole());
+
             FluentSettingsForExcel();
             var tempDirPath = $@"{Environment.GetEnvironmentVariable("USERPROFILE")}\Desktop\temp\test";
 
-            var imageExcelPath = @"C:\Users\Weiha\Desktop\temp\test\imageTest.xls";
-            var imgaeModelList = ExcelHelper.ToEntityList<ImportImageTestModel>(imageExcelPath);
-            Console.WriteLine(imgaeModelList.Count(x => x?.Image != null));
-            imgaeModelList.ToExcelFile(imageExcelPath + ".1.xls");
-            var imgModeList2 = ExcelHelper.ToEntityList<ImportImageTestModel>(imageExcelPath + ".1.xls");
-            Console.WriteLine($"{imgaeModelList[0]?.Image?.Length},{imgModeList2[0]?.Image?.Length}");
+            // image export/import test
+            //var imageExcelPath = @"C:\Users\Weiha\Desktop\temp\test\imageTest.xls";
+            //var imgaeModelList = ExcelHelper.ToEntityList<ImportImageTestModel>(imageExcelPath);
+            //Console.WriteLine(imgaeModelList.Count(x => x?.Image != null));
+            //imgaeModelList.ToExcelFile(imageExcelPath + ".1.xls");
+            //var imgModeList2 = ExcelHelper.ToEntityList<ImportImageTestModel>(imageExcelPath + ".1.xls");
+            //Console.WriteLine($"{imgaeModelList[0]?.Image?.Length},{imgModeList2[0]?.Image?.Length}");
+            //imgaeModelList.ToExcelFile(imageExcelPath + ".1.xlsx");
+            //Console.ReadLine();
 
-            imgaeModelList.ToExcelFile(imageExcelPath + ".1.xlsx");
-            Console.ReadLine();
             //FluentSettings.For<ppDto>()
             //    .HasSheetSetting(sheet =>
             //    {
@@ -64,32 +66,32 @@ namespace DotNetCoreSample
 
             //Console.WriteLine("Press Enter to continue...");
             //Console.ReadLine();
-            var list2 = new List<TestEntity2?>();
-            list2.Add(null);
-            for (var i = 0; i < 100_000; i++)
-            {
-                list2.Add(new TestEntity2
-                {
-                    Id = i + 1,
-                    Title = $"Title_{i}",
-                    Description = $"{Enumerable.Range(1, 200).StringJoin(",")}__{i}",
-                });
-            }
-            list2.Add(new TestEntity2()
-            {
-                Id = 999,
-                Title = $"{Enumerable.Repeat(1, 10).StringJoin(",")}",
-                Description = null
-            });
-            var watch = Stopwatch.StartNew();
-            list2.ToExcelFile($@"{tempDirPath}\testEntity2.xls");
-            watch.Stop();
-            Console.WriteLine($"ElapsedMilliseconds: {watch.ElapsedMilliseconds}ms");
-            //var listTemp = ExcelHelper.ToEntityList<TestEntity2>($@"{tempDirPath}\testEntity2.xlsx");
+            //var list2 = new List<TestEntity2?>();
+            //list2.Add(null);
+            //for (var i = 0; i < 100_000; i++)
+            //{
+            //    list2.Add(new TestEntity2
+            //    {
+            //        Id = i + 1,
+            //        Title = $"Title_{i}",
+            //        Description = $"{Enumerable.Range(1, 200).StringJoin(",")}__{i}",
+            //    });
+            //}
+            //list2.Add(new TestEntity2()
+            //{
+            //    Id = 999,
+            //    Title = $"{Enumerable.Repeat(1, 10).StringJoin(",")}",
+            //    Description = null
+            //});
+            //var watch = Stopwatch.StartNew();
+            //list2.ToExcelFile($@"{tempDirPath}\testEntity2.xls");
+            //watch.Stop();
+            //Console.WriteLine($"ElapsedMilliseconds: {watch.ElapsedMilliseconds}ms");
+            ////var listTemp = ExcelHelper.ToEntityList<TestEntity2>($@"{tempDirPath}\testEntity2.xlsx");
             //var dataTableTemp = ExcelHelper.ToDataTable($@"{tempDirPath}\testEntity2.xlsx");
 
-            Console.WriteLine("Press Enter to continue...");
-            Console.ReadLine();
+            //Console.WriteLine("Press Enter to continue...");
+            //Console.ReadLine();
 
             var entities = new List<TestEntity>()
             {
@@ -112,15 +114,15 @@ namespace DotNetCoreSample
                 },
             };
             var csvFilePath = $@"{tempDirPath}\test.csv";
-            entities.ToExcelFileByTemplate(
-                Path.Combine(ApplicationHelper.AppRoot, "Templates", "testTemplate.xlsx"),
-                ApplicationHelper.MapPath("templateTestEntities.xlsx"),
-                extraData: new
-                {
-                    Author = "WeihanLi",
-                    Title = "Export Result"
-                }
-            );
+            //entities.ToExcelFileByTemplate(
+            //    Path.Combine(ApplicationHelper.AppRoot, "Templates", "testTemplate.xlsx"),
+            //    ApplicationHelper.MapPath("templateTestEntities.xlsx"),
+            //    extraData: new
+            //    {
+            //        Author = "WeihanLi",
+            //        Title = "Export Result"
+            //    }
+            //);
             entities.ToExcelFile(csvFilePath.Replace(".csv", ".xlsx"));
             entities.ToCsvFile(csvFilePath);
             var entitiesT0 = ExcelHelper.ToEntityList<TestEntity>(csvFilePath.Replace(".csv", ".xlsx"));
@@ -166,6 +168,21 @@ namespace DotNetCoreSample
                 config.StartRowIndex = 1;
                 config.SheetName = "SystemSettingsList";
                 config.AutoColumnWidthEnabled = true;
+
+                config.RowAction = row =>
+                {
+                    if (row.RowNum == 0)
+                    {
+                        var style = row.Sheet.Workbook.CreateCellStyle();
+                        style.Alignment = HorizontalAlignment.Center;
+                        var font = row.Sheet.Workbook.CreateFont();
+                        font.FontName = "JetBrains Mono";
+                        font.IsBold = true;
+                        font.FontHeight = 200;
+                        style.SetFont(font);
+                        row.Cells.ForEach(c => c.CellStyle = style);
+                    }
+                };
             });
 
             // setting.HasFilter(0, 1).HasFreezePane(0, 1, 2, 1);
