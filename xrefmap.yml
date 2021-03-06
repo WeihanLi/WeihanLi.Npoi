@@ -2210,6 +2210,19 @@ references:
   isSpec: "True"
   fullName: WeihanLi.Npoi.Settings.SheetSetting.AutoColumnWidthEnabled
   nameWithType: SheetSetting.AutoColumnWidthEnabled
+- uid: WeihanLi.Npoi.Settings.SheetSetting.CellAction
+  name: CellAction
+  href: docs/api/WeihanLi.Npoi.Settings.SheetSetting.html#WeihanLi_Npoi_Settings_SheetSetting_CellAction
+  commentId: P:WeihanLi.Npoi.Settings.SheetSetting.CellAction
+  fullName: WeihanLi.Npoi.Settings.SheetSetting.CellAction
+  nameWithType: SheetSetting.CellAction
+- uid: WeihanLi.Npoi.Settings.SheetSetting.CellAction*
+  name: CellAction
+  href: docs/api/WeihanLi.Npoi.Settings.SheetSetting.html#WeihanLi_Npoi_Settings_SheetSetting_CellAction_
+  commentId: Overload:WeihanLi.Npoi.Settings.SheetSetting.CellAction
+  isSpec: "True"
+  fullName: WeihanLi.Npoi.Settings.SheetSetting.CellAction
+  nameWithType: SheetSetting.CellAction
 - uid: WeihanLi.Npoi.Settings.SheetSetting.CellFilter
   name: CellFilter
   href: docs/api/WeihanLi.Npoi.Settings.SheetSetting.html#WeihanLi_Npoi_Settings_SheetSetting_CellFilter
@@ -2249,6 +2262,19 @@ references:
   isSpec: "True"
   fullName: WeihanLi.Npoi.Settings.SheetSetting.HeaderRowIndex
   nameWithType: SheetSetting.HeaderRowIndex
+- uid: WeihanLi.Npoi.Settings.SheetSetting.RowAction
+  name: RowAction
+  href: docs/api/WeihanLi.Npoi.Settings.SheetSetting.html#WeihanLi_Npoi_Settings_SheetSetting_RowAction
+  commentId: P:WeihanLi.Npoi.Settings.SheetSetting.RowAction
+  fullName: WeihanLi.Npoi.Settings.SheetSetting.RowAction
+  nameWithType: SheetSetting.RowAction
+- uid: WeihanLi.Npoi.Settings.SheetSetting.RowAction*
+  name: RowAction
+  href: docs/api/WeihanLi.Npoi.Settings.SheetSetting.html#WeihanLi_Npoi_Settings_SheetSetting_RowAction_
+  commentId: Overload:WeihanLi.Npoi.Settings.SheetSetting.RowAction
+  isSpec: "True"
+  fullName: WeihanLi.Npoi.Settings.SheetSetting.RowAction
+  nameWithType: SheetSetting.RowAction
 - uid: WeihanLi.Npoi.Settings.SheetSetting.RowFilter
   name: RowFilter
   href: docs/api/WeihanLi.Npoi.Settings.SheetSetting.html#WeihanLi_Npoi_Settings_SheetSetting_RowFilter
@@ -2262,6 +2288,19 @@ references:
   isSpec: "True"
   fullName: WeihanLi.Npoi.Settings.SheetSetting.RowFilter
   nameWithType: SheetSetting.RowFilter
+- uid: WeihanLi.Npoi.Settings.SheetSetting.SheetAction
+  name: SheetAction
+  href: docs/api/WeihanLi.Npoi.Settings.SheetSetting.html#WeihanLi_Npoi_Settings_SheetSetting_SheetAction
+  commentId: P:WeihanLi.Npoi.Settings.SheetSetting.SheetAction
+  fullName: WeihanLi.Npoi.Settings.SheetSetting.SheetAction
+  nameWithType: SheetSetting.SheetAction
+- uid: WeihanLi.Npoi.Settings.SheetSetting.SheetAction*
+  name: SheetAction
+  href: docs/api/WeihanLi.Npoi.Settings.SheetSetting.html#WeihanLi_Npoi_Settings_SheetSetting_SheetAction_
+  commentId: Overload:WeihanLi.Npoi.Settings.SheetSetting.SheetAction
+  isSpec: "True"
+  fullName: WeihanLi.Npoi.Settings.SheetSetting.SheetAction
+  nameWithType: SheetSetting.SheetAction
 - uid: WeihanLi.Npoi.Settings.SheetSetting.SheetName
   name: SheetName
   href: docs/api/WeihanLi.Npoi.Settings.SheetSetting.html#WeihanLi_Npoi_Settings_SheetSetting_SheetName
