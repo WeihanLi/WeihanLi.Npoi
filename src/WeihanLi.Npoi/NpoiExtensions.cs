@@ -826,6 +826,11 @@ namespace WeihanLi.Npoi
         /// <returns></returns>
         public static void ToExcelFile(this DataTable dataTable, string excelPath) => ToExcelFile(dataTable, excelPath, null);
 
+        /// <summary>
+        /// Import dataTable data
+        /// </summary>
+        /// <param name="sheet">sheet</param>
+        /// <param name="dataTable">dataTable</param>
         public static void ImportData(this ISheet sheet, DataTable? dataTable)
         {
             if (sheet is null)

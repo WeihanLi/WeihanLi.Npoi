@@ -1,5 +1,9 @@
 # WeihanLi.Npoi Release Notes
 
+## [1.16.0](https://www.nuget.org/packages/WeihanLi.Npoi/1.16.0)
+
+- add `CellAction`/`RowAction`/`SheetAction` for more flexible export
+
 ## [1.15.0](https://www.nuget.org/packages/WeihanLi.Npoi/1.15.0)
 
 - add support for image import/export
