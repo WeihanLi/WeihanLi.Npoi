@@ -76,5 +76,20 @@ namespace WeihanLi.Npoi.Settings
             get => _rowFilter;
             set => _rowFilter = value ?? (_ => true);
         }
+
+        /// <summary>
+        /// Cell Action on export
+        /// </summary>
+        public Action<ICell>? CellAction { get; set; }
+
+        /// <summary>
+        /// Row Action on export
+        /// </summary>
+        public Action<IRow>? RowAction { get; set; }
+
+        /// <summary>
+        /// Sheet Action on export
+        /// </summary>
+        public Action<ISheet>? SheetAction { get; set; }
     }
 }

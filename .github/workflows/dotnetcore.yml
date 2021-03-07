@@ -28,7 +28,13 @@ jobs:
       run: dotnet --info
     - name: build
       run: bash build.sh --target=build
-  
+    - name: Run Infer#      
+      uses: microsoft/infersharpaction@v1.0
+      with:
+        binary-path: './src/WeihanLi.Npoi/bin/Release/netstandard2.0'
+    - name: Infer# analysis results
+      run: echo "${{ steps.runinfersharp.outputs.results }}"
+      
   windows-build:
     runs-on: windows-latest
     steps:
