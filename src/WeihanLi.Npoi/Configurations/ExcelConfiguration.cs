@@ -151,11 +151,7 @@ namespace WeihanLi.Npoi.Configurations
             }
             if (sheetIndex >= 0)
             {
-                if (SheetSettings.TryGetValue(sheetIndex, out var sheetSetting))
-                {
-                    configAction.Invoke(sheetSetting);
-                }
-                else
+                if (!SheetSettings.TryGetValue(sheetIndex, out var sheetSetting))
                 {
                     SheetSettings[sheetIndex]
                         = sheetSetting
