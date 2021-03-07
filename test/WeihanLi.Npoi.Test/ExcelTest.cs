@@ -689,7 +689,7 @@ namespace WeihanLi.Npoi.Test
         public async Task ImageImportExportTest(ExcelFormat excelFormat)
         {
             using var httpClient = new HttpClient();
-            var imageBytes = await httpClient.GetByteArrayAsync("https://pic.cnblogs.com/avatar/489462/20150609121835.png");
+            var imageBytes = await httpClient.GetByteArrayAsync("https://www.nuget.org/profiles/weihanli/avatar?imageSize=64");
             var list = Enumerable.Range(1, 5)
                 .Select(x => new ImageTest() { Id = x, Image = imageBytes })
                 .ToList();
@@ -711,7 +711,7 @@ namespace WeihanLi.Npoi.Test
         public async Task ImageImportExportPictureDataTest(ExcelFormat excelFormat)
         {
             using var httpClient = new HttpClient();
-            var imageBytes = await httpClient.GetByteArrayAsync("https://pic.cnblogs.com/avatar/489462/20150609121835.png");
+            var imageBytes = await httpClient.GetByteArrayAsync("https://www.nuget.org/profiles/weihanli/avatar?imageSize=64");
             var list = Enumerable.Range(1, 5)
                 .Select(x => new ImageTest() { Id = x, Image = imageBytes })
                 .ToList();
