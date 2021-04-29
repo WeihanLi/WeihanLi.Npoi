@@ -1,5 +1,9 @@
 # WeihanLi.Npoi Release Notes
 
+## [1.17.0](https://www.nuget.org/packages/WeihanLi.Npoi/1.17.0)
+
+- add `DrawingPatriarch` null check for `GetPicturesAndPosition`
+
 ## [1.16.0](https://www.nuget.org/packages/WeihanLi.Npoi/1.16.0)
 
 - add `CellAction`/`RowAction`/`SheetAction` for more flexible export

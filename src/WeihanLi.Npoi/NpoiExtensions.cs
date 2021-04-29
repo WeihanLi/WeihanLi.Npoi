@@ -1157,6 +1157,10 @@ namespace WeihanLi.Npoi
                 throw new ArgumentNullException(nameof(sheet));
             }
             var dictionary = new Dictionary<CellPosition, IPictureData>();
+            if (sheet.DrawingPatriarch is null)
+            {
+                return dictionary;
+            }
             if (sheet.Workbook is HSSFWorkbook)
             {
                 foreach (var shape in ((HSSFPatriarch)sheet.DrawingPatriarch).Children)

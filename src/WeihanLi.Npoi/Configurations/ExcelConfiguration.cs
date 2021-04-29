@@ -19,7 +19,7 @@ namespace WeihanLi.Npoi.Configurations
         /// <summary>
         /// PropertyConfigurationDictionary
         /// </summary>
-        public IDictionary<PropertyInfo, PropertyConfiguration> PropertyConfigurationDictionary { get; internal set; }
+        public IDictionary<PropertyInfo, PropertyConfiguration> PropertyConfigurationDictionary { get; set; }
 
         public ExcelSetting ExcelSetting { get; }
 
@@ -39,11 +39,11 @@ namespace WeihanLi.Npoi.Configurations
         {
             PropertyConfigurationDictionary = new Dictionary<PropertyInfo, PropertyConfiguration>();
             ExcelSetting = setting ?? ExcelHelper.DefaultExcelSetting;
-            SheetSettings = new Dictionary<int, SheetSetting>(4)
+            SheetSettings = new Dictionary<int, SheetSetting>()
             {
                 { 0, new SheetSetting() }
             };
-            FreezeSettings = new List<FreezeSetting>(4);
+            FreezeSettings = new List<FreezeSetting>();
         }
 
         #region ExcelSettings FluentAPI
@@ -151,11 +151,7 @@ namespace WeihanLi.Npoi.Configurations
             }
             if (sheetIndex >= 0)
             {
-                if (SheetSettings.TryGetValue(sheetIndex, out var sheetSetting))
-                {
-                    configAction.Invoke(sheetSetting);
-                }
-                else
+                if (!SheetSettings.TryGetValue(sheetIndex, out var sheetSetting))
                 {
                     SheetSettings[sheetIndex]
                         = sheetSetting
