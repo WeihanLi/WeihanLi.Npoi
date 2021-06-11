@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using WeihanLi.Common;
 using WeihanLi.Npoi.Attributes;
 using WeihanLi.Npoi.Configurations;
 
@@ -9,66 +10,74 @@ namespace WeihanLi.Npoi
 {
     internal static class InternalHelper
     {
-        /// <summary>
-        /// GetExcelConfigurationMapping
-        /// </summary>
-        /// <typeparam name="TEntity">TEntity</typeparam>
-        /// <returns>IExcelConfiguration</returns>
-        public static ExcelConfiguration<TEntity> GetExcelConfigurationMapping<TEntity>()
+        public static IExcelConfiguration GetExcelConfigurationMapping(Type entityType)
         {
-            var configuration = (ExcelConfiguration<TEntity>)InternalCache.TypeExcelConfigurationDictionary.GetOrAdd(typeof(TEntity), type =>
-          {
-              var excelConfiguration = new ExcelConfiguration<TEntity>
-              {
-                  FilterSetting = type.GetCustomAttribute<FilterAttribute>()?.FilterSetting
-              };
-              foreach (var sheetAttribute in type.GetCustomAttributes<SheetAttribute>())
-              {
-                  if (sheetAttribute.SheetIndex >= 0)
-                  {
-                      excelConfiguration.SheetSettings[sheetAttribute.SheetIndex] = sheetAttribute.SheetSetting;
-                  }
-              }
-              foreach (var freezeAttribute in type.GetCustomAttributes<FreezeAttribute>())
-              {
-                  excelConfiguration.FreezeSettings.Add(freezeAttribute.FreezeSetting);
-              }
-              var dic = new Dictionary<PropertyInfo, PropertyConfiguration>();
-              var propertyInfos = Common.CacheUtil.GetTypeProperties(type);
-              foreach (var propertyInfo in propertyInfos)
-              {
-                  var column = propertyInfo.GetCustomAttribute<ColumnAttribute>() ?? new ColumnAttribute();
-                  if (string.IsNullOrWhiteSpace(column.Title))
-                  {
-                      column.Title = propertyInfo.Name;
-                  }
+            return InternalCache.TypeExcelConfigurationDictionary.GetOrAdd(entityType, type =>
+            {
+                var excelConfiguration =
+                    (ExcelConfiguration)Activator.CreateInstance(
+                        typeof(ExcelConfiguration<>).MakeGenericType(entityType));
+                excelConfiguration.FilterSetting = type.GetCustomAttribute<FilterAttribute>()?.FilterSetting;
+                foreach (var sheetAttribute in type.GetCustomAttributes<SheetAttribute>())
+                {
+                    if (sheetAttribute.SheetIndex >= 0)
+                    {
+                        excelConfiguration.SheetSettings[sheetAttribute.SheetIndex] = sheetAttribute.SheetSetting;
+                    }
+                }
 
-                  var propertyConfigurationType =
-                      typeof(PropertyConfiguration<,>).MakeGenericType(type, propertyInfo.PropertyType);
-                  var propertyConfiguration = Activator.CreateInstance(propertyConfigurationType, new object[] { propertyInfo });
+                foreach (var freezeAttribute in type.GetCustomAttributes<FreezeAttribute>())
+                {
+                    excelConfiguration.FreezeSettings.Add(freezeAttribute.FreezeSetting);
+                }
 
-                  propertyConfigurationType.GetProperty(nameof(column.PropertyConfiguration.ColumnTitle))?.GetSetMethod()?
-                      .Invoke(propertyConfiguration, new object[] { column.PropertyConfiguration.ColumnTitle });
-                  propertyConfigurationType.GetProperty(nameof(column.PropertyConfiguration.ColumnIndex))?.GetSetMethod()?
-                      .Invoke(propertyConfiguration, new object[] { column.PropertyConfiguration.ColumnIndex });
-                  propertyConfigurationType.GetProperty(nameof(column.PropertyConfiguration.ColumnFormatter))?.GetSetMethod()?
-                      .Invoke(propertyConfiguration, new object?[] { column.PropertyConfiguration.ColumnFormatter });
-                  propertyConfigurationType.GetProperty(nameof(column.PropertyConfiguration.IsIgnored))?.GetSetMethod()?
-                      .Invoke(propertyConfiguration, new object[] { column.PropertyConfiguration.IsIgnored });
-                  propertyConfigurationType.GetProperty(nameof(column.PropertyConfiguration.ColumnWidth))?.GetSetMethod()?
-                      .Invoke(propertyConfiguration, new object[] { column.PropertyConfiguration.ColumnWidth });
+                var propertyInfos = CacheUtil.GetTypeProperties(type);
+                foreach (var propertyInfo in propertyInfos)
+                {
+                    var column = propertyInfo.GetCustomAttribute<ColumnAttribute>() ?? new ColumnAttribute();
+                    if (string.IsNullOrWhiteSpace(column.Title))
+                    {
+                        column.Title = propertyInfo.Name;
+                    }
 
-                  dic.Add(propertyInfo, (PropertyConfiguration)propertyConfiguration);
-              }
-              excelConfiguration.PropertyConfigurationDictionary = dic;
+                    var propertyConfigurationType =
+                        typeof(PropertyConfiguration<,>).MakeGenericType(type, propertyInfo.PropertyType);
+                    var propertyConfiguration = Activator.CreateInstance(propertyConfigurationType, propertyInfo);
 
-              return excelConfiguration;
-          });
-            return configuration;
+                    propertyConfigurationType.GetProperty(nameof(column.PropertyConfiguration.ColumnTitle))
+                        ?.GetSetMethod()?
+                        .Invoke(propertyConfiguration, new object[] {column.PropertyConfiguration.ColumnTitle});
+                    propertyConfigurationType.GetProperty(nameof(column.PropertyConfiguration.ColumnIndex))
+                        ?.GetSetMethod()?
+                        .Invoke(propertyConfiguration, new object[] {column.PropertyConfiguration.ColumnIndex});
+                    propertyConfigurationType.GetProperty(nameof(column.PropertyConfiguration.ColumnFormatter))
+                        ?.GetSetMethod()?
+                        .Invoke(propertyConfiguration, new object?[] {column.PropertyConfiguration.ColumnFormatter});
+                    propertyConfigurationType.GetProperty(nameof(column.PropertyConfiguration.IsIgnored))
+                        ?.GetSetMethod()?
+                        .Invoke(propertyConfiguration, new object[] {column.PropertyConfiguration.IsIgnored});
+                    propertyConfigurationType.GetProperty(nameof(column.PropertyConfiguration.ColumnWidth))
+                        ?.GetSetMethod()?
+                        .Invoke(propertyConfiguration, new object[] {column.PropertyConfiguration.ColumnWidth});
+
+                    excelConfiguration.PropertyConfigurationDictionary.Add(propertyInfo,
+                        (PropertyConfiguration)propertyConfiguration);
+                }
+
+                return excelConfiguration;
+            });
         }
 
         /// <summary>
-        /// Adjust Column Index
+        ///     GetExcelConfigurationMapping
+        /// </summary>
+        /// <typeparam name="TEntity">TEntity</typeparam>
+        /// <returns>IExcelConfiguration</returns>
+        public static ExcelConfiguration<TEntity> GetExcelConfigurationMapping<TEntity>() =>
+            (ExcelConfiguration<TEntity>)GetExcelConfigurationMapping(typeof(TEntity));
+
+        /// <summary>
+        ///     Adjust Column Index
         /// </summary>
         /// <typeparam name="TEntity">TEntity</typeparam>
         /// <param name="excelConfiguration">excelConfiguration</param>
@@ -91,7 +100,7 @@ namespace WeihanLi.Npoi
                 .OrderBy(_ => _.Value.ColumnIndex >= 0 ? _.Value.ColumnIndex : int.MaxValue)
                 .ThenBy(_ => _.Key.Name)
                 .Select(_ => _.Value)
-                )
+            )
             {
                 while (colIndexList.Contains(item.ColumnIndex) || item.ColumnIndex < 0)
                 {
@@ -104,23 +113,26 @@ namespace WeihanLi.Npoi
                         item.ColumnIndex++;
                     }
                 }
+
                 colIndexList.Add(item.ColumnIndex);
             }
         }
 
         /// <summary>
-        /// GetPropertyColumnDictionary
+        ///     GetPropertyColumnDictionary
         /// </summary>
         /// <typeparam name="TEntity">TEntity Type</typeparam>
         /// <returns></returns>
-        public static Dictionary<PropertyInfo, PropertyConfiguration> GetPropertyColumnDictionary<TEntity>() => GetPropertyColumnDictionary(GetExcelConfigurationMapping<TEntity>());
+        public static Dictionary<PropertyInfo, PropertyConfiguration> GetPropertyColumnDictionary<TEntity>() =>
+            GetPropertyColumnDictionary(GetExcelConfigurationMapping<TEntity>());
 
         /// <summary>
-        /// GetPropertyColumnDictionary
+        ///     GetPropertyColumnDictionary
         /// </summary>
         /// <typeparam name="TEntity">TEntity Type</typeparam>
         /// <returns></returns>
-        public static Dictionary<PropertyInfo, PropertyConfiguration> GetPropertyColumnDictionary<TEntity>(ExcelConfiguration<TEntity> configuration)
+        public static Dictionary<PropertyInfo, PropertyConfiguration> GetPropertyColumnDictionary<TEntity>(
+            ExcelConfiguration<TEntity> configuration)
         {
             AdjustColumnIndex(configuration);
 
@@ -130,7 +142,7 @@ namespace WeihanLi.Npoi
         }
 
         /// <summary>
-        /// GetProperties
+        ///     GetProperties
         /// </summary>
         /// <typeparam name="TEntity">TEntity Type</typeparam>
         /// <returns></returns>
