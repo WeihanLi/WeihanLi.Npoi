@@ -1,5 +1,9 @@
 # WeihanLi.Npoi Release Notes
 
+## [1.18.0](https://www.nuget.org/packages/WeihanLi.Npoi/1.18.0)
+
+- add `MappingProfile` support so that we could split mappings into separate mapping profiles
+
 ## [1.17.0](https://www.nuget.org/packages/WeihanLi.Npoi/1.17.0)
 
 - add `DrawingPatriarch` null check for `GetPicturesAndPosition`
