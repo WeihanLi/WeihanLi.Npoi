@@ -10,71 +10,86 @@ namespace WeihanLi.Npoi
 {
     internal static class InternalHelper
     {
-        public static IExcelConfiguration GetExcelConfigurationMapping(Type entityType)
-        {
-            return InternalCache.TypeExcelConfigurationDictionary.GetOrAdd(entityType, type =>
+        /// <summary>
+        ///     Get ExcelConfigurationMapping by type
+        /// </summary>
+        /// <param name="entityType">entityType</param>
+        /// <returns>excel configuration</returns>
+        public static IExcelConfiguration GetExcelConfigurationMapping(Type entityType) =>
+            InternalCache.TypeExcelConfigurationDictionary.GetOrAdd(entityType, type =>
             {
                 var excelConfiguration =
-                    (ExcelConfiguration)Activator.CreateInstance(
-                        typeof(ExcelConfiguration<>).MakeGenericType(entityType));
-                excelConfiguration.FilterSetting = type.GetCustomAttribute<FilterAttribute>()?.FilterSetting;
-                foreach (var sheetAttribute in type.GetCustomAttributes<SheetAttribute>())
-                {
-                    if (sheetAttribute.SheetIndex >= 0)
-                    {
-                        excelConfiguration.SheetSettings[sheetAttribute.SheetIndex] = sheetAttribute.SheetSetting;
-                    }
-                }
-
-                foreach (var freezeAttribute in type.GetCustomAttributes<FreezeAttribute>())
-                {
-                    excelConfiguration.FreezeSettings.Add(freezeAttribute.FreezeSetting);
-                }
-
-                var propertyInfos = CacheUtil.GetTypeProperties(type);
-                foreach (var propertyInfo in propertyInfos)
-                {
-                    var column = propertyInfo.GetCustomAttribute<ColumnAttribute>() ?? new ColumnAttribute();
-                    if (string.IsNullOrWhiteSpace(column.Title))
-                    {
-                        column.Title = propertyInfo.Name;
-                    }
-
-                    var propertyConfigurationType =
-                        typeof(PropertyConfiguration<,>).MakeGenericType(type, propertyInfo.PropertyType);
-                    var propertyConfiguration = Activator.CreateInstance(propertyConfigurationType, propertyInfo);
-
-                    propertyConfigurationType.GetProperty(nameof(column.PropertyConfiguration.ColumnTitle))
-                        ?.GetSetMethod()?
-                        .Invoke(propertyConfiguration, new object[] {column.PropertyConfiguration.ColumnTitle});
-                    propertyConfigurationType.GetProperty(nameof(column.PropertyConfiguration.ColumnIndex))
-                        ?.GetSetMethod()?
-                        .Invoke(propertyConfiguration, new object[] {column.PropertyConfiguration.ColumnIndex});
-                    propertyConfigurationType.GetProperty(nameof(column.PropertyConfiguration.ColumnFormatter))
-                        ?.GetSetMethod()?
-                        .Invoke(propertyConfiguration, new object?[] {column.PropertyConfiguration.ColumnFormatter});
-                    propertyConfigurationType.GetProperty(nameof(column.PropertyConfiguration.IsIgnored))
-                        ?.GetSetMethod()?
-                        .Invoke(propertyConfiguration, new object[] {column.PropertyConfiguration.IsIgnored});
-                    propertyConfigurationType.GetProperty(nameof(column.PropertyConfiguration.ColumnWidth))
-                        ?.GetSetMethod()?
-                        .Invoke(propertyConfiguration, new object[] {column.PropertyConfiguration.ColumnWidth});
-
-                    excelConfiguration.PropertyConfigurationDictionary.Add(propertyInfo,
-                        (PropertyConfiguration)propertyConfiguration);
-                }
-
+                    CreateExcelConfiguration(type, () => (ExcelConfiguration)Activator.CreateInstance(
+                        typeof(ExcelConfiguration<>).MakeGenericType(entityType)));
                 return excelConfiguration;
             });
-        }
 
         /// <summary>
-        ///     GetExcelConfigurationMapping
+        ///     Get GenericType ExcelConfigurationMapping
         /// </summary>
         /// <typeparam name="TEntity">TEntity</typeparam>
         /// <returns>IExcelConfiguration</returns>
         public static ExcelConfiguration<TEntity> GetExcelConfigurationMapping<TEntity>() =>
-            (ExcelConfiguration<TEntity>)GetExcelConfigurationMapping(typeof(TEntity));
+            (ExcelConfiguration<TEntity>)InternalCache.TypeExcelConfigurationDictionary.GetOrAdd(typeof(TEntity),
+                type =>
+                {
+                    var excelConfiguration =
+                        CreateExcelConfiguration(type, () => new ExcelConfiguration<TEntity>());
+                    return excelConfiguration;
+                });
+
+        private static ExcelConfiguration CreateExcelConfiguration(Type type,
+            Func<ExcelConfiguration> newConfigurationFunc)
+        {
+            var excelConfiguration = newConfigurationFunc();
+            excelConfiguration.FilterSetting = type.GetCustomAttribute<FilterAttribute>()?.FilterSetting;
+            foreach (var sheetAttribute in type.GetCustomAttributes<SheetAttribute>())
+            {
+                if (sheetAttribute.SheetIndex >= 0)
+                {
+                    excelConfiguration.SheetSettings[sheetAttribute.SheetIndex] = sheetAttribute.SheetSetting;
+                }
+            }
+            foreach (var freezeAttribute in type.GetCustomAttributes<FreezeAttribute>())
+            {
+                excelConfiguration.FreezeSettings.Add(freezeAttribute.FreezeSetting);
+            }
+
+            var propertyInfos = CacheUtil.GetTypeProperties(type);
+            foreach (var propertyInfo in propertyInfos)
+            {
+                var column = propertyInfo.GetCustomAttribute<ColumnAttribute>() ?? new ColumnAttribute();
+                if (string.IsNullOrWhiteSpace(column.Title))
+                {
+                    column.Title = propertyInfo.Name;
+                }
+
+                var propertyConfigurationType =
+                    typeof(PropertyConfiguration<,>).MakeGenericType(type, propertyInfo.PropertyType);
+                var propertyConfiguration = Activator.CreateInstance(propertyConfigurationType, propertyInfo);
+
+                propertyConfigurationType.GetProperty(nameof(column.PropertyConfiguration.ColumnTitle))
+                    ?.GetSetMethod()?
+                    .Invoke(propertyConfiguration, new object[] {column.PropertyConfiguration.ColumnTitle});
+                propertyConfigurationType.GetProperty(nameof(column.PropertyConfiguration.ColumnIndex))
+                    ?.GetSetMethod()?
+                    .Invoke(propertyConfiguration, new object[] {column.PropertyConfiguration.ColumnIndex});
+                propertyConfigurationType.GetProperty(nameof(column.PropertyConfiguration.ColumnFormatter))
+                    ?.GetSetMethod()?
+                    .Invoke(propertyConfiguration, new object?[] {column.PropertyConfiguration.ColumnFormatter});
+                propertyConfigurationType.GetProperty(nameof(column.PropertyConfiguration.IsIgnored))
+                    ?.GetSetMethod()?
+                    .Invoke(propertyConfiguration, new object[] {column.PropertyConfiguration.IsIgnored});
+                propertyConfigurationType.GetProperty(nameof(column.PropertyConfiguration.ColumnWidth))
+                    ?.GetSetMethod()?
+                    .Invoke(propertyConfiguration, new object[] {column.PropertyConfiguration.ColumnWidth});
+
+                excelConfiguration.PropertyConfigurationDictionary.Add(propertyInfo,
+                    (PropertyConfiguration)propertyConfiguration);
+            }
+
+            return excelConfiguration;
+        }
 
         /// <summary>
         ///     Adjust Column Index
