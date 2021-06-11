@@ -1,6 +1,4 @@
-﻿using WeihanLi.Extensions;
-using WeihanLi.Npoi.Test.MappingProfiles;
-using WeihanLi.Npoi.Test.Models;
+﻿using WeihanLi.Npoi.Test.MappingProfiles;
 
 namespace WeihanLi.Npoi.Test
 {
