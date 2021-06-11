@@ -9,43 +9,25 @@ using WeihanLi.Npoi.Settings;
 
 namespace WeihanLi.Npoi.Configurations
 {
-    internal sealed class ExcelConfiguration<TEntity> : IExcelConfiguration<TEntity>
+    internal abstract class ExcelConfiguration : IExcelConfiguration
     {
-        /// <summary>
-        /// EntityType
-        /// </summary>
-        public Type EntityType => typeof(TEntity);
-
         /// <summary>
         /// PropertyConfigurationDictionary
         /// </summary>
-        public IDictionary<PropertyInfo, PropertyConfiguration> PropertyConfigurationDictionary { get; internal set; }
+        public IDictionary<PropertyInfo, PropertyConfiguration> PropertyConfigurationDictionary { get; set; } =
+            new Dictionary<PropertyInfo, PropertyConfiguration>();
 
-        public ExcelSetting ExcelSetting { get; }
+        public ExcelSetting ExcelSetting { get; set; } = ExcelHelper.DefaultExcelSetting;
 
-        internal IList<FreezeSetting> FreezeSettings { get; set; }
+        public IList<FreezeSetting> FreezeSettings { get; set; } = new List<FreezeSetting>();
 
-        internal FilterSetting? FilterSetting { get; set; }
+        public FilterSetting? FilterSetting { get; set; }
 
-        internal IDictionary<int, SheetSetting> SheetSettings { get; set; }
-
-        internal Func<TEntity?, bool>? DataValidationFunc { get; private set; }
-
-        public ExcelConfiguration() : this(null)
+        public IDictionary<int, SheetSetting> SheetSettings { get; set; } = new Dictionary<int, SheetSetting>()
         {
-        }
-
-        public ExcelConfiguration(ExcelSetting? setting)
-        {
-            PropertyConfigurationDictionary = new Dictionary<PropertyInfo, PropertyConfiguration>();
-            ExcelSetting = setting ?? ExcelHelper.DefaultExcelSetting;
-            SheetSettings = new Dictionary<int, SheetSetting>(4)
-            {
-                { 0, new SheetSetting() }
-            };
-            FreezeSettings = new List<FreezeSetting>(4);
-        }
-
+            { 0, new SheetSetting() }
+        };
+        
         #region ExcelSettings FluentAPI
 
 #nullable disable
@@ -87,7 +69,41 @@ namespace WeihanLi.Npoi.Configurations
         }
 
         #endregion Filter
+        
+        
+        #region Sheet
 
+        public IExcelConfiguration HasSheetSetting(Action<SheetSetting> configAction, int sheetIndex = 0)
+        {
+            if (configAction is null)
+            {
+                throw new ArgumentNullException(nameof(configAction));
+            }
+            if (sheetIndex >= 0)
+            {
+                if (!SheetSettings.TryGetValue(sheetIndex, out var sheetSetting))
+                {
+                    SheetSettings[sheetIndex]
+                        = sheetSetting
+                            = new SheetSetting();
+                }
+                configAction.Invoke(sheetSetting);
+            }
+            return this;
+        }
+
+        #endregion Sheet
+    }
+    
+    internal sealed class ExcelConfiguration<TEntity> : ExcelConfiguration, IExcelConfiguration<TEntity>
+    {
+        /// <summary>
+        /// EntityType
+        /// </summary>
+        public Type EntityType => typeof(TEntity);
+        
+        internal Func<TEntity?, bool>? DataValidationFunc { get; private set; }
+        
         #region Property
 
         public IExcelConfiguration<TEntity> WithDataValidation(Func<TEntity?, bool>? dataValidateFunc)
@@ -140,32 +156,5 @@ namespace WeihanLi.Npoi.Configurations
         }
 
         #endregion Property
-
-        #region Sheet
-
-        public IExcelConfiguration HasSheetSetting(Action<SheetSetting> configAction, int sheetIndex = 0)
-        {
-            if (configAction is null)
-            {
-                throw new ArgumentNullException(nameof(configAction));
-            }
-            if (sheetIndex >= 0)
-            {
-                if (SheetSettings.TryGetValue(sheetIndex, out var sheetSetting))
-                {
-                    configAction.Invoke(sheetSetting);
-                }
-                else
-                {
-                    SheetSettings[sheetIndex]
-                        = sheetSetting
-                        = new SheetSetting();
-                }
-                configAction.Invoke(sheetSetting);
-            }
-            return this;
-        }
-
-        #endregion Sheet
     }
 }

@@ -2,12 +2,12 @@
 
 namespace WeihanLi.Npoi.Test.Models
 {
-    internal class BaseModel
+    public class BaseModel
     {
         public int Id { get; set; }
     }
 
-    internal class Notice : BaseModel
+    public class Notice : BaseModel
     {
         public string? Title { get; set; }
 

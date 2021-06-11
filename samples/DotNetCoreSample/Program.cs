@@ -6,6 +6,7 @@ using WeihanLi.Common.Logging;
 using WeihanLi.Extensions;
 using WeihanLi.Npoi;
 using WeihanLi.Npoi.Attributes;
+using WeihanLi.Npoi.Configurations;
 
 // ReSharper disable All
 namespace DotNetCoreSample
@@ -15,8 +16,8 @@ namespace DotNetCoreSample
         public static void Main(string[] args)
         {
             LogHelper.ConfigureLogging(x => x.WithMinimumLevel(LogHelperLogLevel.Info).AddConsole());
+            FluentSettings.LoadMappingProfiles(typeof(TestEntityExcelMappingProfile));
 
-            FluentSettingsForExcel();
             var tempDirPath = $@"{Environment.GetEnvironmentVariable("USERPROFILE")}\Desktop\temp\test";
 
             // image export/import test
@@ -154,9 +155,10 @@ namespace DotNetCoreSample
             Console.ReadLine();
         }
 
-        private static void FluentSettingsForExcel()
+        private class TestEntityExcelMappingProfile: IMappingProfile<TestEntity>
         {
-            var setting = FluentSettings.For<TestEntity>();
+          public void Configure(IExcelConfiguration<TestEntity> setting)
+          {
             // ExcelSetting
             setting.HasAuthor("WeihanLi")
                 .HasTitle("WeihanLi.Npoi test")
@@ -225,6 +227,7 @@ namespace DotNetCoreSample
             setting.Property(_ => _.PKID).Ignored();
             setting.Property(_ => _.UpdatedBy).Ignored();
             setting.Property(_ => _.UpdatedTime).Ignored();
+          }
         }
     }
 

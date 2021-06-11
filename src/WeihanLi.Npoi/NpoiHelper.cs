@@ -331,6 +331,7 @@ namespace WeihanLi.Npoi
                         sheetSetting.CellAction?.Invoke(cell);
                     }
                 }
+                sheetSetting.RowAction?.Invoke(headerRow);
             }
 
             for (var i = 0; i < dataTable.Rows.Count; i++)
