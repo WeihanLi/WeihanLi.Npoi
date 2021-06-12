@@ -43,8 +43,7 @@ namespace WeihanLi.Npoi
         public static void LoadMappingProfiles(params Type[] types)
         {
             Guard.NotNull(types, nameof(types));
-            var profileTypes = types.Where(x => x.IsAssignableTo<IMappingProfile>()).ToArray();
-            foreach (var type in profileTypes)
+            foreach (var type in types.Where(x => x.IsAssignableTo<IMappingProfile>()))
             {
                 var profileInterfaceType = type.GetImplementedInterfaces()
                     .FirstOrDefault(
@@ -61,6 +60,17 @@ namespace WeihanLi.Npoi
                     new[] {typeof(IExcelConfiguration<>).MakeGenericType(entityType)});
                 method?.Invoke(profile, new object[] {configuration});
             }
+        }
+
+        /// <summary>
+        ///     Load mapping profile for TEntity
+        /// </summary>
+        /// <param name="profile">profile</param>
+        /// <typeparam name="TEntity">entity type</typeparam>
+        public static void LoadMappingProfile<TEntity>(IMappingProfile<TEntity> profile)
+        {
+            Guard.NotNull(profile, nameof(profile));
+            profile.Configure(InternalHelper.GetExcelConfigurationMapping<TEntity>());
         }
     }
 }
