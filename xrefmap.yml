@@ -1399,6 +1399,64 @@ references:
   fullName.vb: WeihanLi.Npoi.FluentSettings.For(Of TEntity)()
   nameWithType: FluentSettings.For<TEntity>()
   nameWithType.vb: FluentSettings.For(Of TEntity)()
+- uid: WeihanLi.Npoi.FluentSettings.LoadMappingProfiles(Assembly[])
+  name: LoadMappingProfiles(Assembly[])
+  href: docs/api/WeihanLi.Npoi.FluentSettings.html#WeihanLi_Npoi_FluentSettings_LoadMappingProfiles_Assembly___
+  commentId: M:WeihanLi.Npoi.FluentSettings.LoadMappingProfiles(Assembly[])
+  name.vb: LoadMappingProfiles(Assembly())
+  fullName: WeihanLi.Npoi.FluentSettings.LoadMappingProfiles(Assembly[])
+  fullName.vb: WeihanLi.Npoi.FluentSettings.LoadMappingProfiles(Assembly())
+  nameWithType: FluentSettings.LoadMappingProfiles(Assembly[])
+  nameWithType.vb: FluentSettings.LoadMappingProfiles(Assembly())
+- uid: WeihanLi.Npoi.FluentSettings.LoadMappingProfiles(System.Type[])
+  name: LoadMappingProfiles(Type[])
+  href: docs/api/WeihanLi.Npoi.FluentSettings.html#WeihanLi_Npoi_FluentSettings_LoadMappingProfiles_System_Type___
+  commentId: M:WeihanLi.Npoi.FluentSettings.LoadMappingProfiles(System.Type[])
+  name.vb: LoadMappingProfiles(Type())
+  fullName: WeihanLi.Npoi.FluentSettings.LoadMappingProfiles(System.Type[])
+  fullName.vb: WeihanLi.Npoi.FluentSettings.LoadMappingProfiles(System.Type())
+  nameWithType: FluentSettings.LoadMappingProfiles(Type[])
+  nameWithType.vb: FluentSettings.LoadMappingProfiles(Type())
+- uid: WeihanLi.Npoi.FluentSettings.LoadMappingProfiles*
+  name: LoadMappingProfiles
+  href: docs/api/WeihanLi.Npoi.FluentSettings.html#WeihanLi_Npoi_FluentSettings_LoadMappingProfiles_
+  commentId: Overload:WeihanLi.Npoi.FluentSettings.LoadMappingProfiles
+  isSpec: "True"
+  fullName: WeihanLi.Npoi.FluentSettings.LoadMappingProfiles
+  nameWithType: FluentSettings.LoadMappingProfiles
+- uid: WeihanLi.Npoi.IMappingProfile
+  name: IMappingProfile
+  href: docs/api/WeihanLi.Npoi.IMappingProfile.html
+  commentId: T:WeihanLi.Npoi.IMappingProfile
+  fullName: WeihanLi.Npoi.IMappingProfile
+  nameWithType: IMappingProfile
+- uid: WeihanLi.Npoi.IMappingProfile`1
+  name: IMappingProfile<T>
+  href: docs/api/WeihanLi.Npoi.IMappingProfile-1.html
+  commentId: T:WeihanLi.Npoi.IMappingProfile`1
+  name.vb: IMappingProfile(Of T)
+  fullName: WeihanLi.Npoi.IMappingProfile<T>
+  fullName.vb: WeihanLi.Npoi.IMappingProfile(Of T)
+  nameWithType: IMappingProfile<T>
+  nameWithType.vb: IMappingProfile(Of T)
+- uid: WeihanLi.Npoi.IMappingProfile`1.Configure(IExcelConfiguration{`0})
+  name: Configure(IExcelConfiguration<T>)
+  href: docs/api/WeihanLi.Npoi.IMappingProfile-1.html#WeihanLi_Npoi_IMappingProfile_1_Configure_IExcelConfiguration__0__
+  commentId: M:WeihanLi.Npoi.IMappingProfile`1.Configure(IExcelConfiguration{`0})
+  name.vb: Configure(IExcelConfiguration(Of T))
+  fullName: WeihanLi.Npoi.IMappingProfile<T>.Configure(IExcelConfiguration<T>)
+  fullName.vb: WeihanLi.Npoi.IMappingProfile(Of T).Configure(IExcelConfiguration(Of T))
+  nameWithType: IMappingProfile<T>.Configure(IExcelConfiguration<T>)
+  nameWithType.vb: IMappingProfile(Of T).Configure(IExcelConfiguration(Of T))
+- uid: WeihanLi.Npoi.IMappingProfile`1.Configure*
+  name: Configure
+  href: docs/api/WeihanLi.Npoi.IMappingProfile-1.html#WeihanLi_Npoi_IMappingProfile_1_Configure_
+  commentId: Overload:WeihanLi.Npoi.IMappingProfile`1.Configure
+  isSpec: "True"
+  fullName: WeihanLi.Npoi.IMappingProfile<T>.Configure
+  fullName.vb: WeihanLi.Npoi.IMappingProfile(Of T).Configure
+  nameWithType: IMappingProfile<T>.Configure
+  nameWithType.vb: IMappingProfile(Of T).Configure
 - uid: WeihanLi.Npoi.NpoiCellCollection
   name: NpoiCellCollection
   href: docs/api/WeihanLi.Npoi.NpoiCellCollection.html
