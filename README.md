@@ -14,7 +14,7 @@
 
 ## Intro
 
-[NPOI](https://github.com/tonyqus/npoi) extensions for target framework net45 and netstandard2.0.
+[NPOI](https://github.com/tonyqus/npoi) extensions based on target framework `netstandard2.0`.
 
 There' a lot of userful extensions for you, core fetures are as follows:
 
