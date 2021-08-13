@@ -171,9 +171,11 @@ namespace WeihanLi.Npoi
                 {
                     var dataRow = dataTable.NewRow();
 
-                    dataRow.ItemArray = row.GetCellCollection()
-                        .Select(cell => cell.GetCellValue(typeof(string), formulaEvaluator))
-                        .ToArray();
+                    foreach (var cell in row)
+                    {
+                        dataRow[cell.ColumnIndex] = cell.GetCellValue(typeof(string), formulaEvaluator);
+                    }
+
                     dataTable.Rows.Add(dataRow);
                 }
             }
