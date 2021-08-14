@@ -730,7 +730,7 @@ namespace WeihanLi.Npoi.Test
             {
                 for (var colIndex = 0; colIndex < dt.Rows[rowIndex].ItemArray.Length; colIndex++)
                 {
-                    var expectedValue = dt.Rows[rowIndex]?.ItemArray[colIndex]?.ToString();
+                    var expectedValue = dt.Rows[rowIndex].ItemArray[colIndex]?.ToString();
                     var excelValue = importedData.Rows[rowIndex][colIndex].ToString();
                     Assert.Equal(expectedValue, excelValue);
                 }

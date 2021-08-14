@@ -24,10 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="TestData\emptyColumns.xls">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="TestData\emptyColumns.xlsx">
+    <None Update="TestData\*">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
