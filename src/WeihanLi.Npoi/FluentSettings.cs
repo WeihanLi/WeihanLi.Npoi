@@ -45,20 +45,7 @@ namespace WeihanLi.Npoi
             Guard.NotNull(types, nameof(types));
             foreach (var type in types.Where(x => x.IsAssignableTo<IMappingProfile>()))
             {
-                var profileInterfaceType = type.GetImplementedInterfaces()
-                    .FirstOrDefault(
-                        x => x.IsGenericType && x.GetGenericTypeDefinition() == s_profileGenericTypeDefinition);
-                if (profileInterfaceType is null)
-                {
-                    continue;
-                }
-
-                var profile = Activator.CreateInstance(type);
-                var entityType = profileInterfaceType.GetGenericArguments()[0];
-                var configuration = InternalHelper.GetExcelConfigurationMapping(entityType);
-                var method = profileInterfaceType.GetMethod(MappingProfileConfigureMethodName,
-                    new[] {typeof(IExcelConfiguration<>).MakeGenericType(entityType)});
-                method?.Invoke(profile, new object[] {configuration});
+                LoadMappingProfile((IMappingProfile)Activator.CreateInstance(type));
             }
         }
 
@@ -82,6 +69,36 @@ namespace WeihanLi.Npoi
         {
             Guard.NotNull(profile, nameof(profile));
             profile.Configure(InternalHelper.GetExcelConfigurationMapping<TEntity>());
+        }
+
+        /// <summary>
+        ///     Load mapping profile for TEntity
+        /// </summary>
+        /// <typeparam name="TMappingProfile">entity type mapping profile</typeparam>
+        public static void LoadMappingProfile<TMappingProfile>() where TMappingProfile : IMappingProfile, new()
+        {
+            LoadMappingProfile(new TMappingProfile());
+        }
+        /// <summary>
+        ///     Load mapping profile for TEntity
+        /// </summary>
+        /// <param name="profile">profile</param>
+        private static void LoadMappingProfile(IMappingProfile profile)
+        {
+            Guard.NotNull(profile, nameof(profile));
+            var profileInterfaceType = profile.GetType()
+                .GetImplementedInterfaces()
+                .FirstOrDefault(x => x.IsGenericType && x.GetGenericTypeDefinition() == s_profileGenericTypeDefinition);
+            if (profileInterfaceType is null)
+            {
+                return;
+            }
+
+            var entityType = profileInterfaceType.GetGenericArguments()[0];
+            var configuration = InternalHelper.GetExcelConfigurationMapping(entityType);
+            var method = profileInterfaceType.GetMethod(MappingProfileConfigureMethodName,
+                new[] { typeof(IExcelConfiguration<>).MakeGenericType(entityType) });
+            method?.Invoke(profile, new object[] { configuration });
         }
     }
 }
