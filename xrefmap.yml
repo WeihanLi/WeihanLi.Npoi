@@ -901,6 +901,15 @@ references:
   commentId: F:WeihanLi.Npoi.CsvHelper.CsvSeparatorCharacter
   fullName: WeihanLi.Npoi.CsvHelper.CsvSeparatorCharacter
   nameWithType: CsvHelper.CsvSeparatorCharacter
+- uid: WeihanLi.Npoi.CsvHelper.GetCsvText(System.Nullable{DataTable},System.Boolean)
+  name: GetCsvText(Nullable<DataTable>, Boolean)
+  href: docs/api/WeihanLi.Npoi.CsvHelper.html#WeihanLi_Npoi_CsvHelper_GetCsvText_System_Nullable_DataTable__System_Boolean_
+  commentId: M:WeihanLi.Npoi.CsvHelper.GetCsvText(System.Nullable{DataTable},System.Boolean)
+  name.vb: GetCsvText(Nullable(Of DataTable), Boolean)
+  fullName: WeihanLi.Npoi.CsvHelper.GetCsvText(System.Nullable<DataTable>, System.Boolean)
+  fullName.vb: WeihanLi.Npoi.CsvHelper.GetCsvText(System.Nullable(Of DataTable), System.Boolean)
+  nameWithType: CsvHelper.GetCsvText(Nullable<DataTable>, Boolean)
+  nameWithType.vb: CsvHelper.GetCsvText(Nullable(Of DataTable), Boolean)
 - uid: WeihanLi.Npoi.CsvHelper.GetCsvText*
   name: GetCsvText
   href: docs/api/WeihanLi.Npoi.CsvHelper.html#WeihanLi_Npoi_CsvHelper_GetCsvText_
@@ -1399,6 +1408,40 @@ references:
   fullName.vb: WeihanLi.Npoi.FluentSettings.For(Of TEntity)()
   nameWithType: FluentSettings.For<TEntity>()
   nameWithType.vb: FluentSettings.For(Of TEntity)()
+- uid: WeihanLi.Npoi.FluentSettings.LoadMappingProfile*
+  name: LoadMappingProfile
+  href: docs/api/WeihanLi.Npoi.FluentSettings.html#WeihanLi_Npoi_FluentSettings_LoadMappingProfile_
+  commentId: Overload:WeihanLi.Npoi.FluentSettings.LoadMappingProfile
+  isSpec: "True"
+  fullName: WeihanLi.Npoi.FluentSettings.LoadMappingProfile
+  nameWithType: FluentSettings.LoadMappingProfile
+- uid: WeihanLi.Npoi.FluentSettings.LoadMappingProfile``1
+  name: LoadMappingProfile<TMappingProfile>()
+  href: docs/api/WeihanLi.Npoi.FluentSettings.html#WeihanLi_Npoi_FluentSettings_LoadMappingProfile__1
+  commentId: M:WeihanLi.Npoi.FluentSettings.LoadMappingProfile``1
+  name.vb: LoadMappingProfile(Of TMappingProfile)()
+  fullName: WeihanLi.Npoi.FluentSettings.LoadMappingProfile<TMappingProfile>()
+  fullName.vb: WeihanLi.Npoi.FluentSettings.LoadMappingProfile(Of TMappingProfile)()
+  nameWithType: FluentSettings.LoadMappingProfile<TMappingProfile>()
+  nameWithType.vb: FluentSettings.LoadMappingProfile(Of TMappingProfile)()
+- uid: WeihanLi.Npoi.FluentSettings.LoadMappingProfile``1(WeihanLi.Npoi.IMappingProfile{``0})
+  name: LoadMappingProfile<TEntity>(IMappingProfile<TEntity>)
+  href: docs/api/WeihanLi.Npoi.FluentSettings.html#WeihanLi_Npoi_FluentSettings_LoadMappingProfile__1_WeihanLi_Npoi_IMappingProfile___0__
+  commentId: M:WeihanLi.Npoi.FluentSettings.LoadMappingProfile``1(WeihanLi.Npoi.IMappingProfile{``0})
+  name.vb: LoadMappingProfile(Of TEntity)(IMappingProfile(Of TEntity))
+  fullName: WeihanLi.Npoi.FluentSettings.LoadMappingProfile<TEntity>(WeihanLi.Npoi.IMappingProfile<TEntity>)
+  fullName.vb: WeihanLi.Npoi.FluentSettings.LoadMappingProfile(Of TEntity)(WeihanLi.Npoi.IMappingProfile(Of TEntity))
+  nameWithType: FluentSettings.LoadMappingProfile<TEntity>(IMappingProfile<TEntity>)
+  nameWithType.vb: FluentSettings.LoadMappingProfile(Of TEntity)(IMappingProfile(Of TEntity))
+- uid: WeihanLi.Npoi.FluentSettings.LoadMappingProfile``2
+  name: LoadMappingProfile<TEntity, TMappingProfile>()
+  href: docs/api/WeihanLi.Npoi.FluentSettings.html#WeihanLi_Npoi_FluentSettings_LoadMappingProfile__2
+  commentId: M:WeihanLi.Npoi.FluentSettings.LoadMappingProfile``2
+  name.vb: LoadMappingProfile(Of TEntity, TMappingProfile)()
+  fullName: WeihanLi.Npoi.FluentSettings.LoadMappingProfile<TEntity, TMappingProfile>()
+  fullName.vb: WeihanLi.Npoi.FluentSettings.LoadMappingProfile(Of TEntity, TMappingProfile)()
+  nameWithType: FluentSettings.LoadMappingProfile<TEntity, TMappingProfile>()
+  nameWithType.vb: FluentSettings.LoadMappingProfile(Of TEntity, TMappingProfile)()
 - uid: WeihanLi.Npoi.FluentSettings.LoadMappingProfiles(Assembly[])
   name: LoadMappingProfiles(Assembly[])
   href: docs/api/WeihanLi.Npoi.FluentSettings.html#WeihanLi_Npoi_FluentSettings_LoadMappingProfiles_Assembly___
