@@ -158,7 +158,7 @@ namespace WeihanLi.Npoi
 
                 if (row.RowNum == headerRowIndex)
                 {
-                    foreach (var cell in row.GetCellCollection())
+                    foreach (var cell in row)
                     {
                         if (cell is null)
                         {
