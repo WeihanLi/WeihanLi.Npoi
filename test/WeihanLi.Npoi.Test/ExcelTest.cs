@@ -2,6 +2,7 @@ using NPOI.SS.UserModel;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -682,6 +683,58 @@ namespace WeihanLi.Npoi.Test
             var bytes = dataTable.ToExcelBytes(excelFormat);
             var workbook = ExcelHelper.LoadExcel(bytes, excelFormat);
             Assert.Equal(expectedSheetCount, workbook.NumberOfSheets);
+        }
+
+        [Theory]
+        [InlineData(@"TestData\emptyColumns.xls", ExcelFormat.Xls)]
+        [InlineData(@"TestData\emptyColumns.xlsx", ExcelFormat.Xlsx)]
+        public void DataTableImportExportTestWithFirstColumnsEmpty(string file, ExcelFormat excelFormat)
+        {
+            // Arrange
+            var excelBytes = File.ReadAllBytes(file);
+
+            // Act
+            var importedData = ExcelHelper.ToDataTable(excelBytes, excelFormat);
+
+            // Assert
+            var dt = new DataTable();
+            dt.Columns.AddRange(new[]
+            {
+                new DataColumn("A"),
+                new DataColumn("B"),
+                new DataColumn("C"),
+                new DataColumn("D"),
+            });
+
+            var row = dt.NewRow();
+            row.ItemArray = new object[] { "", "", "3", "4" };
+            dt.Rows.Add(row);
+
+            row = dt.NewRow();
+            row.ItemArray = new object[] { "", "2", "3", "" };
+            dt.Rows.Add(row);
+
+            row = dt.NewRow();
+            row.ItemArray = new object[] { "1", "2", "", "" };
+            dt.Rows.Add(row);
+
+            row = dt.NewRow();
+            row.ItemArray = new object[] { "1", "2", "3", "4" };
+            dt.Rows.Add(row);
+
+            Assert.NotNull(importedData);
+
+            Assert.Equal(4, importedData.Rows.Count);
+
+            for (var rowIndex = 0; rowIndex < dt.Rows.Count; rowIndex++)
+            {
+                for (var colIndex = 0; colIndex < dt.Rows[rowIndex].ItemArray.Length; colIndex++)
+                {
+                    var expectedValue = dt.Rows[rowIndex].ItemArray[colIndex]?.ToString();
+                    var excelValue = importedData.Rows[rowIndex][colIndex].ToString();
+                    Assert.Equal(expectedValue, excelValue);
+                }
+            }
         }
 
         [Theory]

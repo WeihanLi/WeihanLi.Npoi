@@ -158,7 +158,7 @@ namespace WeihanLi.Npoi
 
                 if (row.RowNum == headerRowIndex)
                 {
-                    foreach (var cell in row.GetCellCollection())
+                    foreach (var cell in row)
                     {
                         if (cell is null)
                         {
@@ -171,9 +171,11 @@ namespace WeihanLi.Npoi
                 {
                     var dataRow = dataTable.NewRow();
 
-                    dataRow.ItemArray = row.GetCellCollection()
-                        .Select(cell => cell.GetCellValue(typeof(string), formulaEvaluator))
-                        .ToArray();
+                    foreach (var cell in row)
+                    {
+                        dataRow[cell.ColumnIndex] = cell.GetCellValue(typeof(string), formulaEvaluator);
+                    }
+
                     dataTable.Rows.Add(dataRow);
                 }
             }

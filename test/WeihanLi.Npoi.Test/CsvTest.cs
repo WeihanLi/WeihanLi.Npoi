@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.IO;
 using System.Linq;
 using WeihanLi.Extensions;
 using WeihanLi.Npoi.Test.Models;
@@ -120,6 +121,52 @@ namespace WeihanLi.Npoi.Test
                 for (var j = 0; j < dt.Rows[i].ItemArray.Length; j++)
                 {
                     Assert.Equal(dt.Rows[i].ItemArray[j], importedData.Rows[i].ItemArray[j]);
+                }
+            }
+        }
+
+        [Theory]
+        [InlineData(@"TestData/emptyColumns.csv")]
+        public void DataTableWithFirstLineEmpty(string testDataFilePath)
+        {
+            var bytes = File.ReadAllBytes(testDataFilePath);
+            var importedData = CsvHelper.ToDataTable(bytes);
+            var dt = new DataTable();
+            dt.Columns.AddRange(new[]
+            {
+                new DataColumn("A"),
+                new DataColumn("B"),
+                new DataColumn("C"),
+                new DataColumn("D"),
+            });
+
+            var row = dt.NewRow();
+            row.ItemArray = new object[] { "", "", "3", "4" };
+            dt.Rows.Add(row);
+
+            row = dt.NewRow();
+            row.ItemArray = new object[] { "", "2", "3", "" };
+            dt.Rows.Add(row);
+
+            row = dt.NewRow();
+            row.ItemArray = new object[] { "1", "2", "", "" };
+            dt.Rows.Add(row);
+
+            row = dt.NewRow();
+            row.ItemArray = new object[] { "1", "2", "3", "4" };
+            dt.Rows.Add(row);
+            
+            Assert.NotNull(importedData);
+
+            Assert.Equal(4, importedData.Rows.Count);
+
+            for (var rowIndex = 0; rowIndex < dt.Rows.Count; rowIndex++)
+            {
+                for (var colIndex = 0; colIndex < dt.Rows[rowIndex].ItemArray.Length; colIndex++)
+                {
+                    var expectedValue = dt.Rows[rowIndex].ItemArray[colIndex]?.ToString();
+                    var excelValue = importedData.Rows[rowIndex][colIndex].ToString();
+                    Assert.Equal(expectedValue, excelValue);
                 }
             }
         }
