@@ -23,4 +23,13 @@
     <ProjectReference Include="..\..\src\WeihanLi.Npoi\WeihanLi.Npoi.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="TestData\emptyColumns.xls">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="TestData\emptyColumns.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
