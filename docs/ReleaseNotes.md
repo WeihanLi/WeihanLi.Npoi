@@ -3,6 +3,7 @@
 ## [1.19.0](https://www.nuget.org/packages/WeihanLi.Npoi/1.19.0)
 
 - Fix `ExcelHelper.ToDataTable` bug when the imported excel file first column is empty, thanks for @Ninjanaut's contribution
+- `FluentSettings.LoadMappingProfile` enhancement
 
 ## [1.18.0](https://www.nuget.org/packages/WeihanLi.Npoi/1.18.0)
 
