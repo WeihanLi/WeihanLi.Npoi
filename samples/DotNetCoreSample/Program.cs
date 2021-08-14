@@ -16,7 +16,7 @@ namespace DotNetCoreSample
         public static void Main(string[] args)
         {
             LogHelper.ConfigureLogging(x => x.WithMinimumLevel(LogHelperLogLevel.Info).AddConsole());
-            FluentSettings.LoadMappingProfile(new TestEntityExcelMappingProfile());
+            FluentSettings.LoadMappingProfile<TestEntity, TestEntityExcelMappingProfile>();
             var tempDirPath = $@"{Environment.GetEnvironmentVariable("USERPROFILE")}\Desktop\temp\test";
 
             // image export/import test
