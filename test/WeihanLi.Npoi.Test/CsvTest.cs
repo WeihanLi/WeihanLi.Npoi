@@ -185,8 +185,8 @@ namespace WeihanLi.Npoi.Test
             {
                 new DataColumn("A"),
                 new DataColumn("1000"),
-                new DataColumn("TRUE"), // Excel value will loaded as "True".
-                new DataColumn(DateTime.ParseExact("15/08/2021", "dd/MM/yyyy", CultureInfo.InvariantCulture).ToShortDateString()),
+                new DataColumn("TRUE"),
+                new DataColumn("15/08/2021")
             });
 
             var row = dt.NewRow();
@@ -202,10 +202,7 @@ namespace WeihanLi.Npoi.Test
             {
                 var expectedValue = dt.Columns[headerIndex]?.ToString();
                 var excelValue = importedData.Columns[headerIndex].ToString();
-
-                // "TRUE" from header column is translated to "True".
-                // I don't know how to load display value of boolean, therefore I ignore letter casing.
-                Assert.Equal(expectedValue, excelValue, ignoreCase: true);
+                Assert.Equal(expectedValue, excelValue);
             }
 
             // Check rows
