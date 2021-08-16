@@ -2,9 +2,9 @@
 
 ## Intro
 
-[NPOI](https://github.com/tonyqus/npoi) extensions for target framework net45 and netstandard2.0, mainly for import and export
+[NPOI](https://github.com/tonyqus/npoi) extensions based on `netstandard2.0`, mainly for import and export
 
-There' a lot of userful extensions for you, core fetures are as follows:
+There' a lot of useful extensions for you, core features are as follows:
 
 - mapping a excel file data to a `DataTable` or `List<TEntity>`
 - export `IEnumerable<TEntity>` or `DataTable` data to Excel file or Excel file bytes or even write excel file stream to your stream
