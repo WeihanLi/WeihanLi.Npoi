@@ -1,5 +1,9 @@
 # WeihanLi.Npoi Release Notes
 
+## [1.19.1](https://www.nuget.org/packages/WeihanLi.Npoi/1.19.1)
+
+- Fix `ExcelHelper.ToDataTable` bug when the imported excel column value is not the string value, thanks for @Ninjanaut's contribution
+
 ## [1.19.0](https://www.nuget.org/packages/WeihanLi.Npoi/1.19.0)
 
 - Fix `ExcelHelper.ToDataTable` bug when the imported excel file first column is empty, thanks for @Ninjanaut's contribution

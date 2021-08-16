@@ -2,6 +2,7 @@ using NPOI.SS.UserModel;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
@@ -686,8 +687,8 @@ namespace WeihanLi.Npoi.Test
         }
 
         [Theory]
-        [InlineData(@"TestData\emptyColumns.xls", ExcelFormat.Xls)]
-        [InlineData(@"TestData\emptyColumns.xlsx", ExcelFormat.Xlsx)]
+        [InlineData(@"TestData\EmptyColumns\emptyColumns.xls", ExcelFormat.Xls)]
+        [InlineData(@"TestData\EmptyColumns\emptyColumns.xlsx", ExcelFormat.Xlsx)]
         public void DataTableImportExportTestWithFirstColumnsEmpty(string file, ExcelFormat excelFormat)
         {
             // Arrange
@@ -726,6 +727,58 @@ namespace WeihanLi.Npoi.Test
 
             Assert.Equal(4, importedData.Rows.Count);
 
+            for (var rowIndex = 0; rowIndex < dt.Rows.Count; rowIndex++)
+            {
+                for (var colIndex = 0; colIndex < dt.Rows[rowIndex].ItemArray.Length; colIndex++)
+                {
+                    var expectedValue = dt.Rows[rowIndex].ItemArray[colIndex]?.ToString();
+                    var excelValue = importedData.Rows[rowIndex][colIndex].ToString();
+                    Assert.Equal(expectedValue, excelValue);
+                }
+            }
+        }
+
+        [Theory]
+        [InlineData(@"TestData\NonStringColumns\nonStringColumns.xls", ExcelFormat.Xls)]
+        [InlineData(@"TestData\NonStringColumns\nonStringColumns.xlsx", ExcelFormat.Xlsx)]
+        public void DataTableImportExportTestWithNonStringColumns(string file, ExcelFormat excelFormat)
+        {
+            // Arrange
+            var excelBytes = File.ReadAllBytes(file);
+
+            // Act
+            var importedData = ExcelHelper.ToDataTable(excelBytes, excelFormat);
+
+            // Assert
+            var dt = new DataTable();
+            dt.Columns.AddRange(new[]
+            {
+                new DataColumn("A"),
+                new DataColumn("1000"),
+                new DataColumn("TRUE"), // Excel value will loaded as "True".
+                new DataColumn(DateTime.ParseExact("15/08/2021", "dd/MM/yyyy", CultureInfo.InvariantCulture).ToShortDateString()),
+            });
+
+            var row = dt.NewRow();
+            row.ItemArray = new object[] { "1", "2", "3", "4" };
+            dt.Rows.Add(row);
+
+            Assert.NotNull(importedData);
+
+            Assert.Equal(1, importedData.Rows.Count);
+
+            // Check columns
+            for (var headerIndex = 0; headerIndex < dt.Columns.Count; headerIndex++)
+            {
+                var expectedValue = dt.Columns[headerIndex]?.ToString();
+                var excelValue = importedData.Columns[headerIndex].ToString();
+
+                // "TRUE" from header column is translated to "True".
+                // I don't know how to load display value of boolean, therefore I ignore letter casing.
+                Assert.Equal(expectedValue, excelValue, ignoreCase: true);
+            }
+
+            // Check rows
             for (var rowIndex = 0; rowIndex < dt.Rows.Count; rowIndex++)
             {
                 for (var colIndex = 0; colIndex < dt.Rows[rowIndex].ItemArray.Length; colIndex++)

@@ -164,7 +164,7 @@ namespace WeihanLi.Npoi
                         {
                             continue;
                         }
-                        dataTable.Columns.Add(cell.StringCellValue.Trim());
+                        dataTable.Columns.Add(cell.GetCellValue(typeof(string), formulaEvaluator)?.ToString().Trim());
                     }
                 }
                 else
