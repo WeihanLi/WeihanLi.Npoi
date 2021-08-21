@@ -70,23 +70,31 @@ namespace WeihanLi.Npoi
         ///     Workbook2ToDataTable
         /// </summary>
         /// <param name="workbook">excel workbook</param>
+        /// <param name="removeEmptyRows">removeEmptyRows</param>
+        /// <param name="maxColumns">maxColumns</param>
         /// <returns>DataTable</returns>
-        public static DataTable ToDataTable(this IWorkbook workbook) => workbook.ToDataTable(0, 0);
+        public static DataTable ToDataTable(this IWorkbook workbook, bool removeEmptyRows = false, int? maxColumns = null) 
+            => workbook.ToDataTable(0, 0, removeEmptyRows, maxColumns);
 
         /// <summary>
         ///     Workbook2ToDataSet
         /// </summary>
         /// <param name="workbook">excel workbook</param>
+        /// <param name="removeEmptyRows">removeEmptyRows</param>
+        /// <param name="maxColumns">maxColumns</param>
         /// <returns>DataSet</returns>
-        public static DataSet ToDataSet(this IWorkbook workbook) => workbook.ToDataSet(0);
+        public static DataSet ToDataSet(this IWorkbook workbook, bool removeEmptyRows = false, int? maxColumns = null) 
+            => workbook.ToDataSet(0, removeEmptyRows, maxColumns);
 
         /// <summary>
         ///     Workbook2ToDataSet
         /// </summary>
         /// <param name="workbook">excel workbook</param>
         /// <param name="headerRowIndex">headerRowIndex</param>
+        /// <param name="removeEmptyRows">removeEmptyRows</param>
+        /// <param name="maxColumns">maxColumns</param>
         /// <returns>DataSet</returns>
-        public static DataSet ToDataSet(this IWorkbook workbook, int headerRowIndex)
+        public static DataSet ToDataSet(this IWorkbook workbook, int headerRowIndex, bool removeEmptyRows = false, int? maxColumns = null)
         {
             if (workbook is null)
             {
@@ -95,7 +103,7 @@ namespace WeihanLi.Npoi
             var ds = new DataSet();
             for (var i = 0; i < workbook.NumberOfSheets; i++)
             {
-                ds.Tables.Add(workbook.GetSheetAt(i).ToDataTable(headerRowIndex));
+                ds.Tables.Add(workbook.GetSheetAt(i).ToDataTable(headerRowIndex, removeEmptyRows, maxColumns));
             }
             return ds;
         }
@@ -106,8 +114,10 @@ namespace WeihanLi.Npoi
         /// <param name="workbook">excel workbook</param>
         /// <param name="sheetIndex">sheetIndex</param>
         /// <param name="headerRowIndex">headerRowIndex</param>
+        /// <param name="removeEmptyRows">removeEmptyRows</param>
+        /// <param name="maxColumns">maxColumns</param>
         /// <returns>DataTable</returns>
-        public static DataTable ToDataTable(this IWorkbook workbook, int sheetIndex, int headerRowIndex)
+        public static DataTable ToDataTable(this IWorkbook workbook, int sheetIndex, int headerRowIndex, bool removeEmptyRows = false, int? maxColumns = null)
         {
             if (workbook is null)
             {
@@ -118,23 +128,28 @@ namespace WeihanLi.Npoi
                 throw new ArgumentOutOfRangeException(nameof(sheetIndex),
                     string.Format(Resource.IndexOutOfRange, nameof(sheetIndex), workbook.NumberOfSheets));
             }
-            return workbook.GetSheetAt(sheetIndex).ToDataTable(headerRowIndex);
+            return workbook.GetSheetAt(sheetIndex).ToDataTable(headerRowIndex, removeEmptyRows, maxColumns);
         }
 
         /// <summary>
         ///     Sheet2DataTable
         /// </summary>
         /// <param name="sheet">excel sheet</param>
+        /// <param name="removeEmptyRows">removeEmptyRows</param>
+        /// <param name="maxColumns">maxColumns</param>
         /// <returns>DataTable</returns>
-        public static DataTable ToDataTable(this ISheet sheet) => sheet.ToDataTable(0);
+        public static DataTable ToDataTable(this ISheet sheet, bool removeEmptyRows = false, int? maxColumns = null) 
+            => sheet.ToDataTable(0, removeEmptyRows, maxColumns);
 
         /// <summary>
         ///     Sheet2DataTable
         /// </summary>
         /// <param name="sheet">excel sheet</param>
         /// <param name="headerRowIndex">headerRowIndex</param>
+        /// <param name="removeEmptyRows">removeEmptyRows</param>
+        /// <param name="maxColumns">maxColumns</param>
         /// <returns>DataTable</returns>
-        public static DataTable ToDataTable(this ISheet sheet, int headerRowIndex)
+        public static DataTable ToDataTable(this ISheet sheet, int headerRowIndex, bool removeEmptyRows = false, int? maxColumns = null)
         {
             if (sheet is null)
             {
@@ -158,29 +173,64 @@ namespace WeihanLi.Npoi
 
                 if (row.RowNum == headerRowIndex)
                 {
-                    foreach (var cell in row)
-                    {
-                        if (cell is null)
-                        {
-                            continue;
-                        }
-                        dataTable.Columns.Add(cell.GetCellValue(typeof(string), formulaEvaluator)?.ToString().Trim());
-                    }
+                    LoadHeader(formulaEvaluator, dataTable, row, maxColumns);
                 }
                 else
                 {
-                    var dataRow = dataTable.NewRow();
-
-                    foreach (var cell in row)
-                    {
-                        dataRow[cell.ColumnIndex] = cell.GetCellValue(typeof(string), formulaEvaluator);
-                    }
-
-                    dataTable.Rows.Add(dataRow);
+                    LoadRow(formulaEvaluator, dataTable, row, removeEmptyRows, maxColumns);
                 }
             }
 
             return dataTable;
+
+            static void LoadHeader(IFormulaEvaluator formulaEvaluator, DataTable dataTable, IRow row, int? maxColumns)
+            {
+                foreach (var cell in row)
+                {
+                    if (cell is null)
+                    {
+                        continue;
+                    }
+
+                    dataTable.Columns.Add(cell.GetCellValue(typeof(string), formulaEvaluator)?.ToString().Trim());
+
+                    if (maxColumns != null && cell.ColumnIndex + 1 == maxColumns)
+                    {
+                        break;
+                    }
+                }
+            }
+
+            static void LoadRow(IFormulaEvaluator formulaEvaluator, DataTable dataTable, IRow row, bool removeEmptyRows, int? maxColumns)
+            {
+                var dataRow = dataTable.NewRow();
+
+                for (var columnIndex = 0; columnIndex < dataTable.Columns.Count; columnIndex++)
+                {
+                    var cell = row.GetCell(columnIndex, MissingCellPolicy.CREATE_NULL_AS_BLANK);
+                    dataRow[columnIndex] = cell.GetCellValue(typeof(string), formulaEvaluator);
+
+                    if (maxColumns != null && cell.ColumnIndex + 1 == maxColumns)
+                    {
+                        break;
+                    }
+                }
+
+                if (removeEmptyRows)
+                {
+                    var rowContainsData = dataRow.ItemArray.Any(value 
+                        => value != DBNull.Value && !string.IsNullOrEmpty((string)value));
+
+                    if (rowContainsData)
+                    {
+                        dataTable.Rows.Add(dataRow);
+                    }
+                }
+                else
+                {
+                    dataTable.Rows.Add(dataRow);
+                }
+            }
         }
 
         /// <summary>

@@ -373,15 +373,17 @@ namespace WeihanLi.Npoi
         /// <param name="excelPath">excelPath</param>
         /// <param name="sheetIndex">sheetIndex</param>
         /// <param name="headerRowIndex">headerRowIndex</param>
+        /// <param name="removeEmptyRows">removeEmptyRows</param>
+        /// <param name="maxColumns">maxColumns</param>
         /// <returns>DataTable</returns>
-        public static DataTable ToDataTable(string excelPath, int sheetIndex, int headerRowIndex)
+        public static DataTable ToDataTable(string excelPath, int sheetIndex, int headerRowIndex, bool removeEmptyRows = false, int? maxColumns = null)
         {
             var workbook = LoadExcel(excelPath);
             if (workbook.NumberOfSheets <= sheetIndex)
             {
                 throw new ArgumentOutOfRangeException(nameof(sheetIndex), string.Format(Resource.IndexOutOfRange, nameof(sheetIndex), workbook.NumberOfSheets));
             }
-            return workbook.GetSheetAt(sheetIndex).ToDataTable(headerRowIndex);
+            return workbook.GetSheetAt(sheetIndex).ToDataTable(headerRowIndex, removeEmptyRows, maxColumns);
         }
 
         /// <summary>
@@ -389,8 +391,11 @@ namespace WeihanLi.Npoi
         /// </summary>
         /// <param name="excelBytes">excelBytes</param>
         /// <param name="excelFormat"></param>
+        /// <param name="removeEmptyRows">removeEmptyRows</param>
+        /// <param name="maxColumns">maxColumns</param>
         /// <returns>DataTable</returns>
-        public static DataTable ToDataTable(byte[] excelBytes, ExcelFormat excelFormat) => ToDataTable(excelBytes, excelFormat, 0);
+        public static DataTable ToDataTable(byte[] excelBytes, ExcelFormat excelFormat, bool removeEmptyRows = false, int? maxColumns = null) 
+            => ToDataTable(excelBytes, excelFormat, 0, removeEmptyRows, maxColumns);
 
         /// <summary>
         /// read (sheetIndex) sheet of excel from excelBytes to a data table
@@ -398,9 +403,11 @@ namespace WeihanLi.Npoi
         /// <param name="excelBytes">excelBytes</param>
         /// <param name="excelFormat"></param>
         /// <param name="sheetIndex">sheetIndex</param>
+        /// <param name="removeEmptyRows">removeEmptyRows</param>
+        /// <param name="maxColumns">maxColumns</param>
         /// <returns>DataTable</returns>
-        public static DataTable ToDataTable(byte[] excelBytes, ExcelFormat excelFormat, int sheetIndex) =>
-            ToDataTable(excelBytes, excelFormat, sheetIndex, 0);
+        public static DataTable ToDataTable(byte[] excelBytes, ExcelFormat excelFormat, int sheetIndex, bool removeEmptyRows = false, int? maxColumns = null) 
+            => ToDataTable(excelBytes, excelFormat, sheetIndex, 0, removeEmptyRows, maxColumns);
 
         /// <summary>
         /// read (sheetIndex) sheet of excel from excelBytes to a data table
@@ -409,15 +416,17 @@ namespace WeihanLi.Npoi
         /// <param name="excelFormat"></param>
         /// <param name="sheetIndex">sheetIndex</param>
         /// <param name="headerRowIndex">headerRowIndex</param>
+        /// <param name="removeEmptyRows">removeEmptyRows</param>
+        /// <param name="maxColumns">maxColumns</param>
         /// <returns>DataTable</returns>
-        public static DataTable ToDataTable(byte[] excelBytes, ExcelFormat excelFormat, int sheetIndex, int headerRowIndex)
+        public static DataTable ToDataTable(byte[] excelBytes, ExcelFormat excelFormat, int sheetIndex, int headerRowIndex, bool removeEmptyRows = false, int? maxColumns = null)
         {
             var workbook = LoadExcel(excelBytes, excelFormat);
             if (workbook.NumberOfSheets <= sheetIndex)
             {
                 throw new ArgumentOutOfRangeException(nameof(sheetIndex), string.Format(Resource.IndexOutOfRange, nameof(sheetIndex), workbook.NumberOfSheets));
             }
-            return workbook.GetSheetAt(sheetIndex).ToDataTable(headerRowIndex);
+            return workbook.GetSheetAt(sheetIndex).ToDataTable(headerRowIndex, removeEmptyRows, maxColumns);
         }
 
         /// <summary>
