@@ -209,11 +209,6 @@ namespace WeihanLi.Npoi
                 {
                     var cell = row.GetCell(columnIndex, MissingCellPolicy.CREATE_NULL_AS_BLANK);
                     dataRow[columnIndex] = cell.GetCellValue(typeof(string), formulaEvaluator);
-
-                    if (maxColumns != null && cell.ColumnIndex + 1 == maxColumns)
-                    {
-                        break;
-                    }
                 }
 
                 if (removeEmptyRows)
