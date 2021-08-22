@@ -707,10 +707,10 @@ namespace WeihanLi.Npoi.Test
                 new DataColumn("D"),
             });
 
-            AddRow(dt, new object[] { "", "", "3", "4" });
-            AddRow(dt, new object[] { "", "2", "3", "" });
-            AddRow(dt, new object[] { "1", "2", "", "" });
-            AddRow(dt, new object[] { "1", "2", "3", "4" });
+            dt.AddNewRow(new object[] { "", "", "3", "4" });
+            dt.AddNewRow(new object[] { "", "2", "3", "" });
+            dt.AddNewRow(new object[] { "1", "2", "", "" });
+            dt.AddNewRow(new object[] { "1", "2", "3", "4" });
 
             Assert.NotNull(importedData);
 
@@ -740,7 +740,7 @@ namespace WeihanLi.Npoi.Test
                 new DataColumn(DateTime.ParseExact("15/08/2021", "dd/MM/yyyy", CultureInfo.InvariantCulture).ToShortDateString()),
             });
 
-            AddRow(dt, new object[] { "1", "2", "3", "4" });
+            dt.AddNewRow(new object[] { "1", "2", "3", "4" });
 
             Assert.NotNull(importedData);
 
@@ -769,10 +769,10 @@ namespace WeihanLi.Npoi.Test
                 new DataColumn("C"),
             });
 
-            AddRow(dt, new object[] { "1", "2", "3" });
-            AddRow(dt, new object[] { "1", "", "" });
-            AddRow(dt, new object[] { "1", "2", "3" });
-            AddRow(dt, new object[] { "", "2", "3" });
+            dt.AddNewRow(new object[] { "1", "2", "3" });
+            dt.AddNewRow(new object[] { "1", "", "" });
+            dt.AddNewRow(new object[] { "1", "2", "3" });
+            dt.AddNewRow(new object[] { "", "2", "3" });
 
             Assert.NotNull(importedData);
 
@@ -827,11 +827,21 @@ namespace WeihanLi.Npoi.Test
             }
         }
 
-        private static void AddRow(DataTable datatable, object[] rowData)
+        [Fact]
+        public void DataTableDefaultValueTest()
         {
-            var row = datatable.NewRow();
-            row.ItemArray = rowData;
-            datatable.Rows.Add(row);
+            var table = new DataTable();
+            table.Columns.Add(new DataColumn("Name"));
+            table.Columns.Add(new DataColumn("Value"));
+            table.Columns.Add(new DataColumn("Description"));
+            var row = table.AddNewRow();
+            row["Value"] = null;
+            row["Description"] = "test";
+
+            Assert.Equal(DBNull.Value, table.Rows[0]["Name"]);
+            Assert.Equal(DBNull.Value, table.Rows[0]["Value"]);
+            Assert.NotNull(table.Rows[0][0]);
+            Assert.Equal("test", table.Rows[0]["Description"]);
         }
 
         private static void AssertDataTable(DataTable actual, DataTable expected)
