@@ -707,35 +707,16 @@ namespace WeihanLi.Npoi.Test
                 new DataColumn("D"),
             });
 
-            var row = dt.NewRow();
-            row.ItemArray = new object[] { "", "", "3", "4" };
-            dt.Rows.Add(row);
-
-            row = dt.NewRow();
-            row.ItemArray = new object[] { "", "2", "3", "" };
-            dt.Rows.Add(row);
-
-            row = dt.NewRow();
-            row.ItemArray = new object[] { "1", "2", "", "" };
-            dt.Rows.Add(row);
-
-            row = dt.NewRow();
-            row.ItemArray = new object[] { "1", "2", "3", "4" };
-            dt.Rows.Add(row);
+            AddRow(dt, new object[] { "", "", "3", "4" });
+            AddRow(dt, new object[] { "", "2", "3", "" });
+            AddRow(dt, new object[] { "1", "2", "", "" });
+            AddRow(dt, new object[] { "1", "2", "3", "4" });
 
             Assert.NotNull(importedData);
 
             Assert.Equal(4, importedData.Rows.Count);
 
-            for (var rowIndex = 0; rowIndex < dt.Rows.Count; rowIndex++)
-            {
-                for (var colIndex = 0; colIndex < dt.Rows[rowIndex].ItemArray.Length; colIndex++)
-                {
-                    var expectedValue = dt.Rows[rowIndex].ItemArray[colIndex]?.ToString();
-                    var excelValue = importedData.Rows[rowIndex][colIndex].ToString();
-                    Assert.Equal(expectedValue, excelValue);
-                }
-            }
+            AssertDataTable(importedData, dt);
         }
 
         [Theory]
@@ -759,35 +740,45 @@ namespace WeihanLi.Npoi.Test
                 new DataColumn(DateTime.ParseExact("15/08/2021", "dd/MM/yyyy", CultureInfo.InvariantCulture).ToShortDateString()),
             });
 
-            var row = dt.NewRow();
-            row.ItemArray = new object[] { "1", "2", "3", "4" };
-            dt.Rows.Add(row);
+            AddRow(dt, new object[] { "1", "2", "3", "4" });
 
             Assert.NotNull(importedData);
 
             Assert.Equal(1, importedData.Rows.Count);
 
-            // Check columns
-            for (var headerIndex = 0; headerIndex < dt.Columns.Count; headerIndex++)
-            {
-                var expectedValue = dt.Columns[headerIndex]?.ToString();
-                var excelValue = importedData.Columns[headerIndex].ToString();
+            AssertDataTable(importedData, dt);
+        }
 
-                // "TRUE" from header column is translated to "True".
-                // I don't know how to load display value of boolean, therefore I ignore letter casing.
-                Assert.Equal(expectedValue, excelValue, ignoreCase: true);
-            }
+        [Theory]
+        [InlineData(@"TestData\EmptyRows\emptyRows.xls", ExcelFormat.Xls)]
+        [InlineData(@"TestData\EmptyRows\emptyRows.xlsx", ExcelFormat.Xlsx)]
+        public void DataTableImportExportTestWithoutEmptyRowsAndAdditionalColumns(string file, ExcelFormat excelFormat)
+        {
+            // Arrange
+            var excelBytes = File.ReadAllBytes(file);
 
-            // Check rows
-            for (var rowIndex = 0; rowIndex < dt.Rows.Count; rowIndex++)
+            // Act
+            var importedData = ExcelHelper.ToDataTable(excelBytes, excelFormat, removeEmptyRows: true, maxColumns: 3);
+
+            // Assert
+            var dt = new DataTable();
+            dt.Columns.AddRange(new[]
             {
-                for (var colIndex = 0; colIndex < dt.Rows[rowIndex].ItemArray.Length; colIndex++)
-                {
-                    var expectedValue = dt.Rows[rowIndex].ItemArray[colIndex]?.ToString();
-                    var excelValue = importedData.Rows[rowIndex][colIndex].ToString();
-                    Assert.Equal(expectedValue, excelValue);
-                }
-            }
+                new DataColumn("A"),
+                new DataColumn("B"),
+                new DataColumn("C"),
+            });
+
+            AddRow(dt, new object[] { "1", "2", "3" });
+            AddRow(dt, new object[] { "1", "", "" });
+            AddRow(dt, new object[] { "1", "2", "3" });
+            AddRow(dt, new object[] { "", "2", "3" });
+
+            Assert.NotNull(importedData);
+
+            Assert.Equal(4, importedData.Rows.Count);
+
+            AssertDataTable(importedData, dt);
         }
 
         [Theory]
@@ -833,6 +824,38 @@ namespace WeihanLi.Npoi.Test
                 Assert.NotNull(result.Image);
                 Assert.True(list[i].Image.SequenceEqual(result.Image.Data));
                 Assert.Equal(PictureType.PNG, result.Image.PictureType);
+            }
+        }
+
+        private static void AddRow(DataTable datatable, object[] rowData)
+        {
+            var row = datatable.NewRow();
+            row.ItemArray = rowData;
+            datatable.Rows.Add(row);
+        }
+
+        private static void AssertDataTable(DataTable actual, DataTable expected)
+        {
+            // Check columns
+            for (var headerIndex = 0; headerIndex < expected.Columns.Count; headerIndex++)
+            {
+                var expectedValue = expected.Columns[headerIndex]?.ToString();
+                var excelValue = actual.Columns[headerIndex].ToString();
+
+                // "TRUE" from header column is translated to "True".
+                // I don't know how to load display value of boolean, therefore I ignore letter casing.
+                Assert.Equal(expectedValue, excelValue, ignoreCase: true);
+            }
+
+            // Check rows
+            for (var rowIndex = 0; rowIndex < expected.Rows.Count; rowIndex++)
+            {
+                for (var colIndex = 0; colIndex < expected.Rows[rowIndex].ItemArray.Length; colIndex++)
+                {
+                    var expectedValue = expected.Rows[rowIndex].ItemArray[colIndex]?.ToString();
+                    var excelValue = actual.Rows[rowIndex][colIndex].ToString();
+                    Assert.Equal(expectedValue, excelValue);
+                }
             }
         }
 
