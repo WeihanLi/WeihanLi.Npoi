@@ -1205,13 +1205,13 @@
   
   
   <a id="WeihanLi_Npoi_NpoiExtensions_ToDataSet_" data-uid="WeihanLi.Npoi.NpoiExtensions.ToDataSet*"></a>
-  <h4 id="WeihanLi_Npoi_NpoiExtensions_ToDataSet_IWorkbook_" data-uid="WeihanLi.Npoi.NpoiExtensions.ToDataSet(IWorkbook)">ToDataSet(IWorkbook)</h4>
+  <h4 id="WeihanLi_Npoi_NpoiExtensions_ToDataSet_IWorkbook_System_Boolean_System_Nullable_System_Int32__" data-uid="WeihanLi.Npoi.NpoiExtensions.ToDataSet(IWorkbook,System.Boolean,System.Nullable{System.Int32})">ToDataSet(IWorkbook, Boolean, Nullable&lt;Int32&gt;)</h4>
   <div class="markdown level1 summary"><p>Workbook2ToDataSet</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static DataSet ToDataSet(this IWorkbook workbook)</code></pre>
+    <pre><code class="lang-csharp hljs">public static DataSet ToDataSet(this IWorkbook workbook, bool removeEmptyRows = false, int? maxColumns = default(int? ))</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1227,6 +1227,18 @@
         <td><span class="xref">IWorkbook</span></td>
         <td><span class="parametername">workbook</span></td>
         <td><p>excel workbook</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">removeEmptyRows</span></td>
+        <td><p>removeEmptyRows</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">System.Int32</span>&gt;</td>
+        <td><span class="parametername">maxColumns</span></td>
+        <td><p>maxColumns</p>
 </td>
       </tr>
     </tbody>
@@ -1250,13 +1262,13 @@
   
   
   <a id="WeihanLi_Npoi_NpoiExtensions_ToDataSet_" data-uid="WeihanLi.Npoi.NpoiExtensions.ToDataSet*"></a>
-  <h4 id="WeihanLi_Npoi_NpoiExtensions_ToDataSet_IWorkbook_System_Int32_" data-uid="WeihanLi.Npoi.NpoiExtensions.ToDataSet(IWorkbook,System.Int32)">ToDataSet(IWorkbook, Int32)</h4>
+  <h4 id="WeihanLi_Npoi_NpoiExtensions_ToDataSet_IWorkbook_System_Int32_System_Boolean_System_Nullable_System_Int32__" data-uid="WeihanLi.Npoi.NpoiExtensions.ToDataSet(IWorkbook,System.Int32,System.Boolean,System.Nullable{System.Int32})">ToDataSet(IWorkbook, Int32, Boolean, Nullable&lt;Int32&gt;)</h4>
   <div class="markdown level1 summary"><p>Workbook2ToDataSet</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static DataSet ToDataSet(this IWorkbook workbook, int headerRowIndex)</code></pre>
+    <pre><code class="lang-csharp hljs">public static DataSet ToDataSet(this IWorkbook workbook, int headerRowIndex, bool removeEmptyRows = false, int? maxColumns = default(int? ))</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1278,6 +1290,18 @@
         <td><span class="xref">System.Int32</span></td>
         <td><span class="parametername">headerRowIndex</span></td>
         <td><p>headerRowIndex</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">removeEmptyRows</span></td>
+        <td><p>removeEmptyRows</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">System.Int32</span>&gt;</td>
+        <td><span class="parametername">maxColumns</span></td>
+        <td><p>maxColumns</p>
 </td>
       </tr>
     </tbody>
@@ -1301,13 +1325,13 @@
   
   
   <a id="WeihanLi_Npoi_NpoiExtensions_ToDataTable_" data-uid="WeihanLi.Npoi.NpoiExtensions.ToDataTable*"></a>
-  <h4 id="WeihanLi_Npoi_NpoiExtensions_ToDataTable_ISheet_" data-uid="WeihanLi.Npoi.NpoiExtensions.ToDataTable(ISheet)">ToDataTable(ISheet)</h4>
+  <h4 id="WeihanLi_Npoi_NpoiExtensions_ToDataTable_ISheet_System_Boolean_System_Nullable_System_Int32__" data-uid="WeihanLi.Npoi.NpoiExtensions.ToDataTable(ISheet,System.Boolean,System.Nullable{System.Int32})">ToDataTable(ISheet, Boolean, Nullable&lt;Int32&gt;)</h4>
   <div class="markdown level1 summary"><p>Sheet2DataTable</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static DataTable ToDataTable(this ISheet sheet)</code></pre>
+    <pre><code class="lang-csharp hljs">public static DataTable ToDataTable(this ISheet sheet, bool removeEmptyRows = false, int? maxColumns = default(int? ))</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1323,6 +1347,18 @@
         <td><span class="xref">ISheet</span></td>
         <td><span class="parametername">sheet</span></td>
         <td><p>excel sheet</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">removeEmptyRows</span></td>
+        <td><p>removeEmptyRows</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">System.Int32</span>&gt;</td>
+        <td><span class="parametername">maxColumns</span></td>
+        <td><p>maxColumns</p>
 </td>
       </tr>
     </tbody>
@@ -1346,13 +1382,13 @@
   
   
   <a id="WeihanLi_Npoi_NpoiExtensions_ToDataTable_" data-uid="WeihanLi.Npoi.NpoiExtensions.ToDataTable*"></a>
-  <h4 id="WeihanLi_Npoi_NpoiExtensions_ToDataTable_ISheet_System_Int32_" data-uid="WeihanLi.Npoi.NpoiExtensions.ToDataTable(ISheet,System.Int32)">ToDataTable(ISheet, Int32)</h4>
+  <h4 id="WeihanLi_Npoi_NpoiExtensions_ToDataTable_ISheet_System_Int32_System_Boolean_System_Nullable_System_Int32__" data-uid="WeihanLi.Npoi.NpoiExtensions.ToDataTable(ISheet,System.Int32,System.Boolean,System.Nullable{System.Int32})">ToDataTable(ISheet, Int32, Boolean, Nullable&lt;Int32&gt;)</h4>
   <div class="markdown level1 summary"><p>Sheet2DataTable</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static DataTable ToDataTable(this ISheet sheet, int headerRowIndex)</code></pre>
+    <pre><code class="lang-csharp hljs">public static DataTable ToDataTable(this ISheet sheet, int headerRowIndex, bool removeEmptyRows = false, int? maxColumns = default(int? ))</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1376,6 +1412,18 @@
         <td><p>headerRowIndex</p>
 </td>
       </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">removeEmptyRows</span></td>
+        <td><p>removeEmptyRows</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">System.Int32</span>&gt;</td>
+        <td><span class="parametername">maxColumns</span></td>
+        <td><p>maxColumns</p>
+</td>
+      </tr>
     </tbody>
   </table>
   <h5 class="returns">Returns</h5>
@@ -1397,13 +1445,13 @@
   
   
   <a id="WeihanLi_Npoi_NpoiExtensions_ToDataTable_" data-uid="WeihanLi.Npoi.NpoiExtensions.ToDataTable*"></a>
-  <h4 id="WeihanLi_Npoi_NpoiExtensions_ToDataTable_IWorkbook_" data-uid="WeihanLi.Npoi.NpoiExtensions.ToDataTable(IWorkbook)">ToDataTable(IWorkbook)</h4>
+  <h4 id="WeihanLi_Npoi_NpoiExtensions_ToDataTable_IWorkbook_System_Boolean_System_Nullable_System_Int32__" data-uid="WeihanLi.Npoi.NpoiExtensions.ToDataTable(IWorkbook,System.Boolean,System.Nullable{System.Int32})">ToDataTable(IWorkbook, Boolean, Nullable&lt;Int32&gt;)</h4>
   <div class="markdown level1 summary"><p>Workbook2ToDataTable</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static DataTable ToDataTable(this IWorkbook workbook)</code></pre>
+    <pre><code class="lang-csharp hljs">public static DataTable ToDataTable(this IWorkbook workbook, bool removeEmptyRows = false, int? maxColumns = default(int? ))</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1421,6 +1469,18 @@
         <td><p>excel workbook</p>
 </td>
       </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">removeEmptyRows</span></td>
+        <td><p>removeEmptyRows</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">System.Int32</span>&gt;</td>
+        <td><span class="parametername">maxColumns</span></td>
+        <td><p>maxColumns</p>
+</td>
+      </tr>
     </tbody>
   </table>
   <h5 class="returns">Returns</h5>
@@ -1442,13 +1502,13 @@
   
   
   <a id="WeihanLi_Npoi_NpoiExtensions_ToDataTable_" data-uid="WeihanLi.Npoi.NpoiExtensions.ToDataTable*"></a>
-  <h4 id="WeihanLi_Npoi_NpoiExtensions_ToDataTable_IWorkbook_System_Int32_System_Int32_" data-uid="WeihanLi.Npoi.NpoiExtensions.ToDataTable(IWorkbook,System.Int32,System.Int32)">ToDataTable(IWorkbook, Int32, Int32)</h4>
+  <h4 id="WeihanLi_Npoi_NpoiExtensions_ToDataTable_IWorkbook_System_Int32_System_Int32_System_Boolean_System_Nullable_System_Int32__" data-uid="WeihanLi.Npoi.NpoiExtensions.ToDataTable(IWorkbook,System.Int32,System.Int32,System.Boolean,System.Nullable{System.Int32})">ToDataTable(IWorkbook, Int32, Int32, Boolean, Nullable&lt;Int32&gt;)</h4>
   <div class="markdown level1 summary"><p>Workbook2ToDataTable</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static DataTable ToDataTable(this IWorkbook workbook, int sheetIndex, int headerRowIndex)</code></pre>
+    <pre><code class="lang-csharp hljs">public static DataTable ToDataTable(this IWorkbook workbook, int sheetIndex, int headerRowIndex, bool removeEmptyRows = false, int? maxColumns = default(int? ))</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1476,6 +1536,18 @@
         <td><span class="xref">System.Int32</span></td>
         <td><span class="parametername">headerRowIndex</span></td>
         <td><p>headerRowIndex</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">removeEmptyRows</span></td>
+        <td><p>removeEmptyRows</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">System.Int32</span>&gt;</td>
+        <td><span class="parametername">maxColumns</span></td>
+        <td><p>maxColumns</p>
 </td>
       </tr>
     </tbody>

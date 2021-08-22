@@ -62,6 +62,11 @@
             <article class="content wrap" id="_content" data-uid="">
 <h1 id="weihanlinpoi-release-notes">WeihanLi.Npoi Release Notes</h1>
 
+<h2 id="1200"><a href="https://www.nuget.org/packages/WeihanLi.Npoi/1.19.2">1.20.0</a></h2>
+<ul>
+<li>The <code>ExcelHelper.ToDataTable</code> was extended with two arguments <code>bool removeEmptyRows = false, int? maxColumns = null</code></li>
+<li>Fix possible <code>IndexOutOfRangeException</code> when loading rows</li>
+</ul>
 <h2 id="1191"><a href="https://www.nuget.org/packages/WeihanLi.Npoi/1.19.1">1.19.1</a></h2>
 <ul>
 <li>Fix <code>ExcelHelper.ToDataTable</code> bug when the imported excel column value is not the string value, thanks for @Ninjanaut's contribution</li>

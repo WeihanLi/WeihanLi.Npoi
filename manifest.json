@@ -33,7 +33,7 @@
       "output": {
         ".html": {
           "relative_path": "docs/ReleaseNotes.html",
-          "hash": "Wv1Lshvo7KI+eYCduOyCZz2OVk5Txqn73Cc8th0R4BU="
+          "hash": "IhiNrsY5GX93bYCxEPkuiyQhjvVhcHbLUBiWkjpF7cM="
         }
       },
       "is_incremental": false,
@@ -213,7 +213,7 @@
       "output": {
         ".html": {
           "relative_path": "docs/api/WeihanLi.Npoi.ExcelHelper.html",
-          "hash": "sqpSCflXxFz2FVI5aJAnCIQlc4Xu9vYbvr5Bpj8RiGg="
+          "hash": "FRASiCBZIGL5RCKYhNr32ZTfI9IHMOdtNXjgV9w2Ssk="
         }
       },
       "is_incremental": false,
@@ -273,7 +273,7 @@
       "output": {
         ".html": {
           "relative_path": "docs/api/WeihanLi.Npoi.NpoiExtensions.html",
-          "hash": "Jz5cMrDq7SpT9J+d53Z2N7Nef8T610OIyefdJhzkLB4="
+          "hash": "bNeuZgusy7F8NE46YjeQ/Yyaw5ln+wmO8XUWmj+zgE4="
         }
       },
       "is_incremental": false,

@@ -783,13 +783,13 @@
   
   
   <a id="WeihanLi_Npoi_ExcelHelper_ToDataTable_" data-uid="WeihanLi.Npoi.ExcelHelper.ToDataTable*"></a>
-  <h4 id="WeihanLi_Npoi_ExcelHelper_ToDataTable_System_Byte___WeihanLi_Npoi_ExcelFormat_" data-uid="WeihanLi.Npoi.ExcelHelper.ToDataTable(System.Byte[],WeihanLi.Npoi.ExcelFormat)">ToDataTable(Byte[], ExcelFormat)</h4>
+  <h4 id="WeihanLi_Npoi_ExcelHelper_ToDataTable_System_Byte___WeihanLi_Npoi_ExcelFormat_System_Boolean_System_Nullable_System_Int32__" data-uid="WeihanLi.Npoi.ExcelHelper.ToDataTable(System.Byte[],WeihanLi.Npoi.ExcelFormat,System.Boolean,System.Nullable{System.Int32})">ToDataTable(Byte[], ExcelFormat, Boolean, Nullable&lt;Int32&gt;)</h4>
   <div class="markdown level1 summary"><p>read first sheet of excel from excelBytes to a data table</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static DataTable ToDataTable(byte[] excelBytes, ExcelFormat excelFormat)</code></pre>
+    <pre><code class="lang-csharp hljs">public static DataTable ToDataTable(byte[] excelBytes, ExcelFormat excelFormat, bool removeEmptyRows = false, int? maxColumns = default(int? ))</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -812,6 +812,18 @@
         <td><span class="parametername">excelFormat</span></td>
         <td></td>
       </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">removeEmptyRows</span></td>
+        <td><p>removeEmptyRows</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">System.Int32</span>&gt;</td>
+        <td><span class="parametername">maxColumns</span></td>
+        <td><p>maxColumns</p>
+</td>
+      </tr>
     </tbody>
   </table>
   <h5 class="returns">Returns</h5>
@@ -833,13 +845,13 @@
   
   
   <a id="WeihanLi_Npoi_ExcelHelper_ToDataTable_" data-uid="WeihanLi.Npoi.ExcelHelper.ToDataTable*"></a>
-  <h4 id="WeihanLi_Npoi_ExcelHelper_ToDataTable_System_Byte___WeihanLi_Npoi_ExcelFormat_System_Int32_" data-uid="WeihanLi.Npoi.ExcelHelper.ToDataTable(System.Byte[],WeihanLi.Npoi.ExcelFormat,System.Int32)">ToDataTable(Byte[], ExcelFormat, Int32)</h4>
+  <h4 id="WeihanLi_Npoi_ExcelHelper_ToDataTable_System_Byte___WeihanLi_Npoi_ExcelFormat_System_Int32_System_Boolean_System_Nullable_System_Int32__" data-uid="WeihanLi.Npoi.ExcelHelper.ToDataTable(System.Byte[],WeihanLi.Npoi.ExcelFormat,System.Int32,System.Boolean,System.Nullable{System.Int32})">ToDataTable(Byte[], ExcelFormat, Int32, Boolean, Nullable&lt;Int32&gt;)</h4>
   <div class="markdown level1 summary"><p>read (sheetIndex) sheet of excel from excelBytes to a data table</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static DataTable ToDataTable(byte[] excelBytes, ExcelFormat excelFormat, int sheetIndex)</code></pre>
+    <pre><code class="lang-csharp hljs">public static DataTable ToDataTable(byte[] excelBytes, ExcelFormat excelFormat, int sheetIndex, bool removeEmptyRows = false, int? maxColumns = default(int? ))</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -868,6 +880,18 @@
         <td><p>sheetIndex</p>
 </td>
       </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">removeEmptyRows</span></td>
+        <td><p>removeEmptyRows</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">System.Int32</span>&gt;</td>
+        <td><span class="parametername">maxColumns</span></td>
+        <td><p>maxColumns</p>
+</td>
+      </tr>
     </tbody>
   </table>
   <h5 class="returns">Returns</h5>
@@ -889,13 +913,13 @@
   
   
   <a id="WeihanLi_Npoi_ExcelHelper_ToDataTable_" data-uid="WeihanLi.Npoi.ExcelHelper.ToDataTable*"></a>
-  <h4 id="WeihanLi_Npoi_ExcelHelper_ToDataTable_System_Byte___WeihanLi_Npoi_ExcelFormat_System_Int32_System_Int32_" data-uid="WeihanLi.Npoi.ExcelHelper.ToDataTable(System.Byte[],WeihanLi.Npoi.ExcelFormat,System.Int32,System.Int32)">ToDataTable(Byte[], ExcelFormat, Int32, Int32)</h4>
+  <h4 id="WeihanLi_Npoi_ExcelHelper_ToDataTable_System_Byte___WeihanLi_Npoi_ExcelFormat_System_Int32_System_Int32_System_Boolean_System_Nullable_System_Int32__" data-uid="WeihanLi.Npoi.ExcelHelper.ToDataTable(System.Byte[],WeihanLi.Npoi.ExcelFormat,System.Int32,System.Int32,System.Boolean,System.Nullable{System.Int32})">ToDataTable(Byte[], ExcelFormat, Int32, Int32, Boolean, Nullable&lt;Int32&gt;)</h4>
   <div class="markdown level1 summary"><p>read (sheetIndex) sheet of excel from excelBytes to a data table</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static DataTable ToDataTable(byte[] excelBytes, ExcelFormat excelFormat, int sheetIndex, int headerRowIndex)</code></pre>
+    <pre><code class="lang-csharp hljs">public static DataTable ToDataTable(byte[] excelBytes, ExcelFormat excelFormat, int sheetIndex, int headerRowIndex, bool removeEmptyRows = false, int? maxColumns = default(int? ))</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -928,6 +952,18 @@
         <td><span class="xref">System.Int32</span></td>
         <td><span class="parametername">headerRowIndex</span></td>
         <td><p>headerRowIndex</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">removeEmptyRows</span></td>
+        <td><p>removeEmptyRows</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">System.Int32</span>&gt;</td>
+        <td><span class="parametername">maxColumns</span></td>
+        <td><p>maxColumns</p>
 </td>
       </tr>
     </tbody>
@@ -1047,13 +1083,13 @@
   
   
   <a id="WeihanLi_Npoi_ExcelHelper_ToDataTable_" data-uid="WeihanLi.Npoi.ExcelHelper.ToDataTable*"></a>
-  <h4 id="WeihanLi_Npoi_ExcelHelper_ToDataTable_System_String_System_Int32_System_Int32_" data-uid="WeihanLi.Npoi.ExcelHelper.ToDataTable(System.String,System.Int32,System.Int32)">ToDataTable(String, Int32, Int32)</h4>
+  <h4 id="WeihanLi_Npoi_ExcelHelper_ToDataTable_System_String_System_Int32_System_Int32_System_Boolean_System_Nullable_System_Int32__" data-uid="WeihanLi.Npoi.ExcelHelper.ToDataTable(System.String,System.Int32,System.Int32,System.Boolean,System.Nullable{System.Int32})">ToDataTable(String, Int32, Int32, Boolean, Nullable&lt;Int32&gt;)</h4>
   <div class="markdown level1 summary"><p>read (sheetIndex) sheet of excel from excel file path to a data table</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static DataTable ToDataTable(string excelPath, int sheetIndex, int headerRowIndex)</code></pre>
+    <pre><code class="lang-csharp hljs">public static DataTable ToDataTable(string excelPath, int sheetIndex, int headerRowIndex, bool removeEmptyRows = false, int? maxColumns = default(int? ))</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1081,6 +1117,18 @@
         <td><span class="xref">System.Int32</span></td>
         <td><span class="parametername">headerRowIndex</span></td>
         <td><p>headerRowIndex</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">removeEmptyRows</span></td>
+        <td><p>removeEmptyRows</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">System.Int32</span>&gt;</td>
+        <td><span class="parametername">maxColumns</span></td>
+        <td><p>maxColumns</p>
 </td>
       </tr>
     </tbody>

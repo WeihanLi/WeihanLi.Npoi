@@ -1219,33 +1219,33 @@ references:
   isSpec: "True"
   fullName: WeihanLi.Npoi.ExcelHelper.ToDataSet
   nameWithType: ExcelHelper.ToDataSet
-- uid: WeihanLi.Npoi.ExcelHelper.ToDataTable(System.Byte[],WeihanLi.Npoi.ExcelFormat)
-  name: ToDataTable(Byte[], ExcelFormat)
-  href: docs/api/WeihanLi.Npoi.ExcelHelper.html#WeihanLi_Npoi_ExcelHelper_ToDataTable_System_Byte___WeihanLi_Npoi_ExcelFormat_
-  commentId: M:WeihanLi.Npoi.ExcelHelper.ToDataTable(System.Byte[],WeihanLi.Npoi.ExcelFormat)
-  name.vb: ToDataTable(Byte(), ExcelFormat)
-  fullName: WeihanLi.Npoi.ExcelHelper.ToDataTable(System.Byte[], WeihanLi.Npoi.ExcelFormat)
-  fullName.vb: WeihanLi.Npoi.ExcelHelper.ToDataTable(System.Byte(), WeihanLi.Npoi.ExcelFormat)
-  nameWithType: ExcelHelper.ToDataTable(Byte[], ExcelFormat)
-  nameWithType.vb: ExcelHelper.ToDataTable(Byte(), ExcelFormat)
-- uid: WeihanLi.Npoi.ExcelHelper.ToDataTable(System.Byte[],WeihanLi.Npoi.ExcelFormat,System.Int32)
-  name: ToDataTable(Byte[], ExcelFormat, Int32)
-  href: docs/api/WeihanLi.Npoi.ExcelHelper.html#WeihanLi_Npoi_ExcelHelper_ToDataTable_System_Byte___WeihanLi_Npoi_ExcelFormat_System_Int32_
-  commentId: M:WeihanLi.Npoi.ExcelHelper.ToDataTable(System.Byte[],WeihanLi.Npoi.ExcelFormat,System.Int32)
-  name.vb: ToDataTable(Byte(), ExcelFormat, Int32)
-  fullName: WeihanLi.Npoi.ExcelHelper.ToDataTable(System.Byte[], WeihanLi.Npoi.ExcelFormat, System.Int32)
-  fullName.vb: WeihanLi.Npoi.ExcelHelper.ToDataTable(System.Byte(), WeihanLi.Npoi.ExcelFormat, System.Int32)
-  nameWithType: ExcelHelper.ToDataTable(Byte[], ExcelFormat, Int32)
-  nameWithType.vb: ExcelHelper.ToDataTable(Byte(), ExcelFormat, Int32)
-- uid: WeihanLi.Npoi.ExcelHelper.ToDataTable(System.Byte[],WeihanLi.Npoi.ExcelFormat,System.Int32,System.Int32)
-  name: ToDataTable(Byte[], ExcelFormat, Int32, Int32)
-  href: docs/api/WeihanLi.Npoi.ExcelHelper.html#WeihanLi_Npoi_ExcelHelper_ToDataTable_System_Byte___WeihanLi_Npoi_ExcelFormat_System_Int32_System_Int32_
-  commentId: M:WeihanLi.Npoi.ExcelHelper.ToDataTable(System.Byte[],WeihanLi.Npoi.ExcelFormat,System.Int32,System.Int32)
-  name.vb: ToDataTable(Byte(), ExcelFormat, Int32, Int32)
-  fullName: WeihanLi.Npoi.ExcelHelper.ToDataTable(System.Byte[], WeihanLi.Npoi.ExcelFormat, System.Int32, System.Int32)
-  fullName.vb: WeihanLi.Npoi.ExcelHelper.ToDataTable(System.Byte(), WeihanLi.Npoi.ExcelFormat, System.Int32, System.Int32)
-  nameWithType: ExcelHelper.ToDataTable(Byte[], ExcelFormat, Int32, Int32)
-  nameWithType.vb: ExcelHelper.ToDataTable(Byte(), ExcelFormat, Int32, Int32)
+- uid: WeihanLi.Npoi.ExcelHelper.ToDataTable(System.Byte[],WeihanLi.Npoi.ExcelFormat,System.Boolean,System.Nullable{System.Int32})
+  name: ToDataTable(Byte[], ExcelFormat, Boolean, Nullable<Int32>)
+  href: docs/api/WeihanLi.Npoi.ExcelHelper.html#WeihanLi_Npoi_ExcelHelper_ToDataTable_System_Byte___WeihanLi_Npoi_ExcelFormat_System_Boolean_System_Nullable_System_Int32__
+  commentId: M:WeihanLi.Npoi.ExcelHelper.ToDataTable(System.Byte[],WeihanLi.Npoi.ExcelFormat,System.Boolean,System.Nullable{System.Int32})
+  name.vb: ToDataTable(Byte(), ExcelFormat, Boolean, Nullable(Of Int32))
+  fullName: WeihanLi.Npoi.ExcelHelper.ToDataTable(System.Byte[], WeihanLi.Npoi.ExcelFormat, System.Boolean, System.Nullable<System.Int32>)
+  fullName.vb: WeihanLi.Npoi.ExcelHelper.ToDataTable(System.Byte(), WeihanLi.Npoi.ExcelFormat, System.Boolean, System.Nullable(Of System.Int32))
+  nameWithType: ExcelHelper.ToDataTable(Byte[], ExcelFormat, Boolean, Nullable<Int32>)
+  nameWithType.vb: ExcelHelper.ToDataTable(Byte(), ExcelFormat, Boolean, Nullable(Of Int32))
+- uid: WeihanLi.Npoi.ExcelHelper.ToDataTable(System.Byte[],WeihanLi.Npoi.ExcelFormat,System.Int32,System.Boolean,System.Nullable{System.Int32})
+  name: ToDataTable(Byte[], ExcelFormat, Int32, Boolean, Nullable<Int32>)
+  href: docs/api/WeihanLi.Npoi.ExcelHelper.html#WeihanLi_Npoi_ExcelHelper_ToDataTable_System_Byte___WeihanLi_Npoi_ExcelFormat_System_Int32_System_Boolean_System_Nullable_System_Int32__
+  commentId: M:WeihanLi.Npoi.ExcelHelper.ToDataTable(System.Byte[],WeihanLi.Npoi.ExcelFormat,System.Int32,System.Boolean,System.Nullable{System.Int32})
+  name.vb: ToDataTable(Byte(), ExcelFormat, Int32, Boolean, Nullable(Of Int32))
+  fullName: WeihanLi.Npoi.ExcelHelper.ToDataTable(System.Byte[], WeihanLi.Npoi.ExcelFormat, System.Int32, System.Boolean, System.Nullable<System.Int32>)
+  fullName.vb: WeihanLi.Npoi.ExcelHelper.ToDataTable(System.Byte(), WeihanLi.Npoi.ExcelFormat, System.Int32, System.Boolean, System.Nullable(Of System.Int32))
+  nameWithType: ExcelHelper.ToDataTable(Byte[], ExcelFormat, Int32, Boolean, Nullable<Int32>)
+  nameWithType.vb: ExcelHelper.ToDataTable(Byte(), ExcelFormat, Int32, Boolean, Nullable(Of Int32))
+- uid: WeihanLi.Npoi.ExcelHelper.ToDataTable(System.Byte[],WeihanLi.Npoi.ExcelFormat,System.Int32,System.Int32,System.Boolean,System.Nullable{System.Int32})
+  name: ToDataTable(Byte[], ExcelFormat, Int32, Int32, Boolean, Nullable<Int32>)
+  href: docs/api/WeihanLi.Npoi.ExcelHelper.html#WeihanLi_Npoi_ExcelHelper_ToDataTable_System_Byte___WeihanLi_Npoi_ExcelFormat_System_Int32_System_Int32_System_Boolean_System_Nullable_System_Int32__
+  commentId: M:WeihanLi.Npoi.ExcelHelper.ToDataTable(System.Byte[],WeihanLi.Npoi.ExcelFormat,System.Int32,System.Int32,System.Boolean,System.Nullable{System.Int32})
+  name.vb: ToDataTable(Byte(), ExcelFormat, Int32, Int32, Boolean, Nullable(Of Int32))
+  fullName: WeihanLi.Npoi.ExcelHelper.ToDataTable(System.Byte[], WeihanLi.Npoi.ExcelFormat, System.Int32, System.Int32, System.Boolean, System.Nullable<System.Int32>)
+  fullName.vb: WeihanLi.Npoi.ExcelHelper.ToDataTable(System.Byte(), WeihanLi.Npoi.ExcelFormat, System.Int32, System.Int32, System.Boolean, System.Nullable(Of System.Int32))
+  nameWithType: ExcelHelper.ToDataTable(Byte[], ExcelFormat, Int32, Int32, Boolean, Nullable<Int32>)
+  nameWithType.vb: ExcelHelper.ToDataTable(Byte(), ExcelFormat, Int32, Int32, Boolean, Nullable(Of Int32))
 - uid: WeihanLi.Npoi.ExcelHelper.ToDataTable(System.String)
   name: ToDataTable(String)
   href: docs/api/WeihanLi.Npoi.ExcelHelper.html#WeihanLi_Npoi_ExcelHelper_ToDataTable_System_String_
@@ -1258,12 +1258,15 @@ references:
   commentId: M:WeihanLi.Npoi.ExcelHelper.ToDataTable(System.String,System.Int32)
   fullName: WeihanLi.Npoi.ExcelHelper.ToDataTable(System.String, System.Int32)
   nameWithType: ExcelHelper.ToDataTable(String, Int32)
-- uid: WeihanLi.Npoi.ExcelHelper.ToDataTable(System.String,System.Int32,System.Int32)
-  name: ToDataTable(String, Int32, Int32)
-  href: docs/api/WeihanLi.Npoi.ExcelHelper.html#WeihanLi_Npoi_ExcelHelper_ToDataTable_System_String_System_Int32_System_Int32_
-  commentId: M:WeihanLi.Npoi.ExcelHelper.ToDataTable(System.String,System.Int32,System.Int32)
-  fullName: WeihanLi.Npoi.ExcelHelper.ToDataTable(System.String, System.Int32, System.Int32)
-  nameWithType: ExcelHelper.ToDataTable(String, Int32, Int32)
+- uid: WeihanLi.Npoi.ExcelHelper.ToDataTable(System.String,System.Int32,System.Int32,System.Boolean,System.Nullable{System.Int32})
+  name: ToDataTable(String, Int32, Int32, Boolean, Nullable<Int32>)
+  href: docs/api/WeihanLi.Npoi.ExcelHelper.html#WeihanLi_Npoi_ExcelHelper_ToDataTable_System_String_System_Int32_System_Int32_System_Boolean_System_Nullable_System_Int32__
+  commentId: M:WeihanLi.Npoi.ExcelHelper.ToDataTable(System.String,System.Int32,System.Int32,System.Boolean,System.Nullable{System.Int32})
+  name.vb: ToDataTable(String, Int32, Int32, Boolean, Nullable(Of Int32))
+  fullName: WeihanLi.Npoi.ExcelHelper.ToDataTable(System.String, System.Int32, System.Int32, System.Boolean, System.Nullable<System.Int32>)
+  fullName.vb: WeihanLi.Npoi.ExcelHelper.ToDataTable(System.String, System.Int32, System.Int32, System.Boolean, System.Nullable(Of System.Int32))
+  nameWithType: ExcelHelper.ToDataTable(String, Int32, Int32, Boolean, Nullable<Int32>)
+  nameWithType.vb: ExcelHelper.ToDataTable(String, Int32, Int32, Boolean, Nullable(Of Int32))
 - uid: WeihanLi.Npoi.ExcelHelper.ToDataTable*
   name: ToDataTable
   href: docs/api/WeihanLi.Npoi.ExcelHelper.html#WeihanLi_Npoi_ExcelHelper_ToDataTable_
@@ -1760,18 +1763,24 @@ references:
   isSpec: "True"
   fullName: WeihanLi.Npoi.NpoiExtensions.SetCellValue
   nameWithType: NpoiExtensions.SetCellValue
-- uid: WeihanLi.Npoi.NpoiExtensions.ToDataSet(IWorkbook)
-  name: ToDataSet(IWorkbook)
-  href: docs/api/WeihanLi.Npoi.NpoiExtensions.html#WeihanLi_Npoi_NpoiExtensions_ToDataSet_IWorkbook_
-  commentId: M:WeihanLi.Npoi.NpoiExtensions.ToDataSet(IWorkbook)
-  fullName: WeihanLi.Npoi.NpoiExtensions.ToDataSet(IWorkbook)
-  nameWithType: NpoiExtensions.ToDataSet(IWorkbook)
-- uid: WeihanLi.Npoi.NpoiExtensions.ToDataSet(IWorkbook,System.Int32)
-  name: ToDataSet(IWorkbook, Int32)
-  href: docs/api/WeihanLi.Npoi.NpoiExtensions.html#WeihanLi_Npoi_NpoiExtensions_ToDataSet_IWorkbook_System_Int32_
-  commentId: M:WeihanLi.Npoi.NpoiExtensions.ToDataSet(IWorkbook,System.Int32)
-  fullName: WeihanLi.Npoi.NpoiExtensions.ToDataSet(IWorkbook, System.Int32)
-  nameWithType: NpoiExtensions.ToDataSet(IWorkbook, Int32)
+- uid: WeihanLi.Npoi.NpoiExtensions.ToDataSet(IWorkbook,System.Boolean,System.Nullable{System.Int32})
+  name: ToDataSet(IWorkbook, Boolean, Nullable<Int32>)
+  href: docs/api/WeihanLi.Npoi.NpoiExtensions.html#WeihanLi_Npoi_NpoiExtensions_ToDataSet_IWorkbook_System_Boolean_System_Nullable_System_Int32__
+  commentId: M:WeihanLi.Npoi.NpoiExtensions.ToDataSet(IWorkbook,System.Boolean,System.Nullable{System.Int32})
+  name.vb: ToDataSet(IWorkbook, Boolean, Nullable(Of Int32))
+  fullName: WeihanLi.Npoi.NpoiExtensions.ToDataSet(IWorkbook, System.Boolean, System.Nullable<System.Int32>)
+  fullName.vb: WeihanLi.Npoi.NpoiExtensions.ToDataSet(IWorkbook, System.Boolean, System.Nullable(Of System.Int32))
+  nameWithType: NpoiExtensions.ToDataSet(IWorkbook, Boolean, Nullable<Int32>)
+  nameWithType.vb: NpoiExtensions.ToDataSet(IWorkbook, Boolean, Nullable(Of Int32))
+- uid: WeihanLi.Npoi.NpoiExtensions.ToDataSet(IWorkbook,System.Int32,System.Boolean,System.Nullable{System.Int32})
+  name: ToDataSet(IWorkbook, Int32, Boolean, Nullable<Int32>)
+  href: docs/api/WeihanLi.Npoi.NpoiExtensions.html#WeihanLi_Npoi_NpoiExtensions_ToDataSet_IWorkbook_System_Int32_System_Boolean_System_Nullable_System_Int32__
+  commentId: M:WeihanLi.Npoi.NpoiExtensions.ToDataSet(IWorkbook,System.Int32,System.Boolean,System.Nullable{System.Int32})
+  name.vb: ToDataSet(IWorkbook, Int32, Boolean, Nullable(Of Int32))
+  fullName: WeihanLi.Npoi.NpoiExtensions.ToDataSet(IWorkbook, System.Int32, System.Boolean, System.Nullable<System.Int32>)
+  fullName.vb: WeihanLi.Npoi.NpoiExtensions.ToDataSet(IWorkbook, System.Int32, System.Boolean, System.Nullable(Of System.Int32))
+  nameWithType: NpoiExtensions.ToDataSet(IWorkbook, Int32, Boolean, Nullable<Int32>)
+  nameWithType.vb: NpoiExtensions.ToDataSet(IWorkbook, Int32, Boolean, Nullable(Of Int32))
 - uid: WeihanLi.Npoi.NpoiExtensions.ToDataSet*
   name: ToDataSet
   href: docs/api/WeihanLi.Npoi.NpoiExtensions.html#WeihanLi_Npoi_NpoiExtensions_ToDataSet_
@@ -1779,30 +1788,42 @@ references:
   isSpec: "True"
   fullName: WeihanLi.Npoi.NpoiExtensions.ToDataSet
   nameWithType: NpoiExtensions.ToDataSet
-- uid: WeihanLi.Npoi.NpoiExtensions.ToDataTable(ISheet)
-  name: ToDataTable(ISheet)
-  href: docs/api/WeihanLi.Npoi.NpoiExtensions.html#WeihanLi_Npoi_NpoiExtensions_ToDataTable_ISheet_
-  commentId: M:WeihanLi.Npoi.NpoiExtensions.ToDataTable(ISheet)
-  fullName: WeihanLi.Npoi.NpoiExtensions.ToDataTable(ISheet)
-  nameWithType: NpoiExtensions.ToDataTable(ISheet)
-- uid: WeihanLi.Npoi.NpoiExtensions.ToDataTable(ISheet,System.Int32)
-  name: ToDataTable(ISheet, Int32)
-  href: docs/api/WeihanLi.Npoi.NpoiExtensions.html#WeihanLi_Npoi_NpoiExtensions_ToDataTable_ISheet_System_Int32_
-  commentId: M:WeihanLi.Npoi.NpoiExtensions.ToDataTable(ISheet,System.Int32)
-  fullName: WeihanLi.Npoi.NpoiExtensions.ToDataTable(ISheet, System.Int32)
-  nameWithType: NpoiExtensions.ToDataTable(ISheet, Int32)
-- uid: WeihanLi.Npoi.NpoiExtensions.ToDataTable(IWorkbook)
-  name: ToDataTable(IWorkbook)
-  href: docs/api/WeihanLi.Npoi.NpoiExtensions.html#WeihanLi_Npoi_NpoiExtensions_ToDataTable_IWorkbook_
-  commentId: M:WeihanLi.Npoi.NpoiExtensions.ToDataTable(IWorkbook)
-  fullName: WeihanLi.Npoi.NpoiExtensions.ToDataTable(IWorkbook)
-  nameWithType: NpoiExtensions.ToDataTable(IWorkbook)
-- uid: WeihanLi.Npoi.NpoiExtensions.ToDataTable(IWorkbook,System.Int32,System.Int32)
-  name: ToDataTable(IWorkbook, Int32, Int32)
-  href: docs/api/WeihanLi.Npoi.NpoiExtensions.html#WeihanLi_Npoi_NpoiExtensions_ToDataTable_IWorkbook_System_Int32_System_Int32_
-  commentId: M:WeihanLi.Npoi.NpoiExtensions.ToDataTable(IWorkbook,System.Int32,System.Int32)
-  fullName: WeihanLi.Npoi.NpoiExtensions.ToDataTable(IWorkbook, System.Int32, System.Int32)
-  nameWithType: NpoiExtensions.ToDataTable(IWorkbook, Int32, Int32)
+- uid: WeihanLi.Npoi.NpoiExtensions.ToDataTable(ISheet,System.Boolean,System.Nullable{System.Int32})
+  name: ToDataTable(ISheet, Boolean, Nullable<Int32>)
+  href: docs/api/WeihanLi.Npoi.NpoiExtensions.html#WeihanLi_Npoi_NpoiExtensions_ToDataTable_ISheet_System_Boolean_System_Nullable_System_Int32__
+  commentId: M:WeihanLi.Npoi.NpoiExtensions.ToDataTable(ISheet,System.Boolean,System.Nullable{System.Int32})
+  name.vb: ToDataTable(ISheet, Boolean, Nullable(Of Int32))
+  fullName: WeihanLi.Npoi.NpoiExtensions.ToDataTable(ISheet, System.Boolean, System.Nullable<System.Int32>)
+  fullName.vb: WeihanLi.Npoi.NpoiExtensions.ToDataTable(ISheet, System.Boolean, System.Nullable(Of System.Int32))
+  nameWithType: NpoiExtensions.ToDataTable(ISheet, Boolean, Nullable<Int32>)
+  nameWithType.vb: NpoiExtensions.ToDataTable(ISheet, Boolean, Nullable(Of Int32))
+- uid: WeihanLi.Npoi.NpoiExtensions.ToDataTable(ISheet,System.Int32,System.Boolean,System.Nullable{System.Int32})
+  name: ToDataTable(ISheet, Int32, Boolean, Nullable<Int32>)
+  href: docs/api/WeihanLi.Npoi.NpoiExtensions.html#WeihanLi_Npoi_NpoiExtensions_ToDataTable_ISheet_System_Int32_System_Boolean_System_Nullable_System_Int32__
+  commentId: M:WeihanLi.Npoi.NpoiExtensions.ToDataTable(ISheet,System.Int32,System.Boolean,System.Nullable{System.Int32})
+  name.vb: ToDataTable(ISheet, Int32, Boolean, Nullable(Of Int32))
+  fullName: WeihanLi.Npoi.NpoiExtensions.ToDataTable(ISheet, System.Int32, System.Boolean, System.Nullable<System.Int32>)
+  fullName.vb: WeihanLi.Npoi.NpoiExtensions.ToDataTable(ISheet, System.Int32, System.Boolean, System.Nullable(Of System.Int32))
+  nameWithType: NpoiExtensions.ToDataTable(ISheet, Int32, Boolean, Nullable<Int32>)
+  nameWithType.vb: NpoiExtensions.ToDataTable(ISheet, Int32, Boolean, Nullable(Of Int32))
+- uid: WeihanLi.Npoi.NpoiExtensions.ToDataTable(IWorkbook,System.Boolean,System.Nullable{System.Int32})
+  name: ToDataTable(IWorkbook, Boolean, Nullable<Int32>)
+  href: docs/api/WeihanLi.Npoi.NpoiExtensions.html#WeihanLi_Npoi_NpoiExtensions_ToDataTable_IWorkbook_System_Boolean_System_Nullable_System_Int32__
+  commentId: M:WeihanLi.Npoi.NpoiExtensions.ToDataTable(IWorkbook,System.Boolean,System.Nullable{System.Int32})
+  name.vb: ToDataTable(IWorkbook, Boolean, Nullable(Of Int32))
+  fullName: WeihanLi.Npoi.NpoiExtensions.ToDataTable(IWorkbook, System.Boolean, System.Nullable<System.Int32>)
+  fullName.vb: WeihanLi.Npoi.NpoiExtensions.ToDataTable(IWorkbook, System.Boolean, System.Nullable(Of System.Int32))
+  nameWithType: NpoiExtensions.ToDataTable(IWorkbook, Boolean, Nullable<Int32>)
+  nameWithType.vb: NpoiExtensions.ToDataTable(IWorkbook, Boolean, Nullable(Of Int32))
+- uid: WeihanLi.Npoi.NpoiExtensions.ToDataTable(IWorkbook,System.Int32,System.Int32,System.Boolean,System.Nullable{System.Int32})
+  name: ToDataTable(IWorkbook, Int32, Int32, Boolean, Nullable<Int32>)
+  href: docs/api/WeihanLi.Npoi.NpoiExtensions.html#WeihanLi_Npoi_NpoiExtensions_ToDataTable_IWorkbook_System_Int32_System_Int32_System_Boolean_System_Nullable_System_Int32__
+  commentId: M:WeihanLi.Npoi.NpoiExtensions.ToDataTable(IWorkbook,System.Int32,System.Int32,System.Boolean,System.Nullable{System.Int32})
+  name.vb: ToDataTable(IWorkbook, Int32, Int32, Boolean, Nullable(Of Int32))
+  fullName: WeihanLi.Npoi.NpoiExtensions.ToDataTable(IWorkbook, System.Int32, System.Int32, System.Boolean, System.Nullable<System.Int32>)
+  fullName.vb: WeihanLi.Npoi.NpoiExtensions.ToDataTable(IWorkbook, System.Int32, System.Int32, System.Boolean, System.Nullable(Of System.Int32))
+  nameWithType: NpoiExtensions.ToDataTable(IWorkbook, Int32, Int32, Boolean, Nullable<Int32>)
+  nameWithType.vb: NpoiExtensions.ToDataTable(IWorkbook, Int32, Int32, Boolean, Nullable(Of Int32))
 - uid: WeihanLi.Npoi.NpoiExtensions.ToDataTable*
   name: ToDataTable
   href: docs/api/WeihanLi.Npoi.NpoiExtensions.html#WeihanLi_Npoi_NpoiExtensions_ToDataTable_
