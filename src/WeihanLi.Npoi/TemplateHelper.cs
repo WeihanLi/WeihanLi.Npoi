@@ -5,15 +5,15 @@ namespace WeihanLi.Npoi
 {
     public sealed class TemplateOptions
     {
-        private string _templateGlobalParamFormat = InternalConstants.TemplateGlobalParamFormat;
-        private string _templateHeaderParamFormat = InternalConstants.TemplateHeaderParamFormat;
-        private string _templateDataParamFormat = InternalConstants.TemplateDataParamFormat;
-        private string _templateDataPrefix = InternalConstants.TemplateDataPrefix;
         private string _templateDataBegin = InternalConstants.TemplateDataBegin;
         private string _templateDataEnd = InternalConstants.TemplateDataEnd;
+        private string _templateDataParamFormat = InternalConstants.TemplateDataParamFormat;
+        private string _templateDataPrefix = InternalConstants.TemplateDataPrefix;
+        private string _templateGlobalParamFormat = InternalConstants.TemplateGlobalParamFormat;
+        private string _templateHeaderParamFormat = InternalConstants.TemplateHeaderParamFormat;
 
         /// <summary>
-        /// Global Param Format
+        ///     Global Param Format
         /// </summary>
         public string TemplateGlobalParamFormat
         {
@@ -21,12 +21,14 @@ namespace WeihanLi.Npoi
             set
             {
                 if (value.IsNotNullOrWhiteSpace())
+                {
                     _templateGlobalParamFormat = value;
+                }
             }
         }
 
         /// <summary>
-        /// Header Param Format
+        ///     Header Param Format
         /// </summary>
         public string TemplateHeaderParamFormat
         {
@@ -34,12 +36,14 @@ namespace WeihanLi.Npoi
             set
             {
                 if (value.IsNotNullOrWhiteSpace())
+                {
                     _templateHeaderParamFormat = value;
+                }
             }
         }
 
         /// <summary>
-        /// Data Param Format
+        ///     Data Param Format
         /// </summary>
         public string TemplateDataParamFormat
         {
@@ -47,12 +51,14 @@ namespace WeihanLi.Npoi
             set
             {
                 if (value.IsNotNullOrWhiteSpace())
+                {
                     _templateDataParamFormat = value;
+                }
             }
         }
 
         /// <summary>
-        /// Data Param Prefix
+        ///     Data Param Prefix
         /// </summary>
         public string TemplateDataPrefix
         {
@@ -60,12 +66,14 @@ namespace WeihanLi.Npoi
             set
             {
                 if (value.IsNotNullOrWhiteSpace())
+                {
                     _templateDataPrefix = value;
+                }
             }
         }
 
         /// <summary>
-        /// Data Begin markup
+        ///     Data Begin markup
         /// </summary>
         public string TemplateDataBegin
         {
@@ -73,12 +81,14 @@ namespace WeihanLi.Npoi
             set
             {
                 if (value.IsNotNullOrWhiteSpace())
+                {
                     _templateDataBegin = value;
+                }
             }
         }
 
         /// <summary>
-        /// Data End markup
+        ///     Data End markup
         /// </summary>
         public string TemplateDataEnd
         {
@@ -86,7 +96,9 @@ namespace WeihanLi.Npoi
             set
             {
                 if (value.IsNotNullOrWhiteSpace())
+                {
                     _templateDataEnd = value;
+                }
             }
         }
     }
@@ -94,7 +106,7 @@ namespace WeihanLi.Npoi
     public static class TemplateHelper
     {
         /// <summary>
-        /// Configure TemplateOptions
+        ///     Configure TemplateOptions
         /// </summary>
         /// <param name="optionsAction">optionsAction</param>
         public static void ConfigureTemplateOptions(Action<TemplateOptions> optionsAction)
@@ -103,6 +115,7 @@ namespace WeihanLi.Npoi
             {
                 throw new ArgumentNullException(nameof(optionsAction));
             }
+
             optionsAction.Invoke(NpoiTemplateHelper.s_templateOptions);
         }
     }

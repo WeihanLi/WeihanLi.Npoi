@@ -1,37 +1,37 @@
 ﻿namespace WeihanLi.Npoi.Settings
 {
     /// <summary>
-    /// Excel Document Settings
+    ///     Excel Document Settings
     /// </summary>
     public sealed class ExcelSetting
     {
         /// <summary>
-        /// Author
+        ///     Author
         /// </summary>
         public string? Author { get; set; } = "WeihanLi";
 
         /// <summary>
-        /// Company
+        ///     Company
         /// </summary>
         public string? Company { get; set; } = "WeihanLi";
 
         /// <summary>
-        /// Title
+        ///     Title
         /// </summary>
         public string? Title { get; set; } = "WeihanLi.Npoi";
 
         /// <summary>
-        /// Description
+        ///     Description
         /// </summary>
         public string? Description { get; set; } = "WeihanLi.Npoi Generated";
 
         /// <summary>
-        /// Subject
+        ///     Subject
         /// </summary>
         public string? Subject { get; set; } = "WeihanLi.Npoi";
 
         /// <summary>
-        /// Category
+        ///     Category
         /// </summary>
         public string? Category { get; set; } = "WeihanLi.Npoi";
     }

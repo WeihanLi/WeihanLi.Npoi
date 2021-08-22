@@ -3,14 +3,14 @@
     internal interface ISheet
     {
         /// <summary>
-        /// FirstRowNum, 1 based rowNum
-        /// 0 if no rows here
+        ///     FirstRowNum, 1 based rowNum
+        ///     0 if no rows here
         /// </summary>
         int FirstRowNum { get; }
 
         /// <summary>
-        /// lastRowIndex +1, 1 based rowNum
-        /// 0 if no rows here
+        ///     lastRowIndex +1, 1 based rowNum
+        ///     0 if no rows here
         /// </summary>
         int LastRowNum { get; }
 

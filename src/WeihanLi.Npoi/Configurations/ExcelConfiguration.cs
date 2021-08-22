@@ -12,7 +12,7 @@ namespace WeihanLi.Npoi.Configurations
     internal abstract class ExcelConfiguration : IExcelConfiguration
     {
         /// <summary>
-        /// PropertyConfigurationDictionary
+        ///     PropertyConfigurationDictionary
         /// </summary>
         public IDictionary<PropertyInfo, PropertyConfiguration> PropertyConfigurationDictionary { get; set; } =
             new Dictionary<PropertyInfo, PropertyConfiguration>();
@@ -23,11 +23,9 @@ namespace WeihanLi.Npoi.Configurations
 
         public FilterSetting? FilterSetting { get; set; }
 
-        public IDictionary<int, SheetSetting> SheetSettings { get; set; } = new Dictionary<int, SheetSetting>()
-        {
-            { 0, new SheetSetting() }
-        };
-        
+        public IDictionary<int, SheetSetting> SheetSettings { get; set; } =
+            new Dictionary<int, SheetSetting> { { 0, new SheetSetting() } };
+
         #region ExcelSettings FluentAPI
 
 #nullable disable
@@ -41,6 +39,33 @@ namespace WeihanLi.Npoi.Configurations
 #nullable restore
 
         #endregion ExcelSettings FluentAPI
+
+
+        #region Sheet
+
+        public IExcelConfiguration HasSheetSetting(Action<SheetSetting> configAction, int sheetIndex = 0)
+        {
+            if (configAction is null)
+            {
+                throw new ArgumentNullException(nameof(configAction));
+            }
+
+            if (sheetIndex >= 0)
+            {
+                if (!SheetSettings.TryGetValue(sheetIndex, out var sheetSetting))
+                {
+                    SheetSettings[sheetIndex]
+                        = sheetSetting
+                            = new SheetSetting();
+                }
+
+                configAction.Invoke(sheetSetting);
+            }
+
+            return this;
+        }
+
+        #endregion Sheet
 
         #region FreezePane
 
@@ -69,41 +94,17 @@ namespace WeihanLi.Npoi.Configurations
         }
 
         #endregion Filter
-        
-        
-        #region Sheet
-
-        public IExcelConfiguration HasSheetSetting(Action<SheetSetting> configAction, int sheetIndex = 0)
-        {
-            if (configAction is null)
-            {
-                throw new ArgumentNullException(nameof(configAction));
-            }
-            if (sheetIndex >= 0)
-            {
-                if (!SheetSettings.TryGetValue(sheetIndex, out var sheetSetting))
-                {
-                    SheetSettings[sheetIndex]
-                        = sheetSetting
-                            = new SheetSetting();
-                }
-                configAction.Invoke(sheetSetting);
-            }
-            return this;
-        }
-
-        #endregion Sheet
     }
-    
+
     internal sealed class ExcelConfiguration<TEntity> : ExcelConfiguration, IExcelConfiguration<TEntity>
     {
         /// <summary>
-        /// EntityType
+        ///     EntityType
         /// </summary>
         public Type EntityType => typeof(TEntity);
-        
+
         internal Func<TEntity?, bool>? DataValidationFunc { get; private set; }
-        
+
         #region Property
 
         public IExcelConfiguration<TEntity> WithDataValidation(Func<TEntity?, bool>? dataValidateFunc)
@@ -113,12 +114,14 @@ namespace WeihanLi.Npoi.Configurations
         }
 
         /// <summary>
-        /// Gets the property configuration by the specified property expression for the specified <typeparamref name="TEntity"/> and its <typeparamref name="TProperty"/>.
+        ///     Gets the property configuration by the specified property expression for the specified
+        ///     <typeparamref name="TEntity" /> and its <typeparamref name="TProperty" />.
         /// </summary>
-        /// <returns>The <see cref="IPropertyConfiguration"/>.</returns>
+        /// <returns>The <see cref="IPropertyConfiguration" />.</returns>
         /// <param name="propertyExpression">The property expression.</param>
         /// <typeparam name="TProperty">The type of parameter.</typeparam>
-        public IPropertyConfiguration<TEntity, TProperty> Property<TProperty>(Expression<Func<TEntity, TProperty>> propertyExpression)
+        public IPropertyConfiguration<TEntity, TProperty> Property<TProperty>(
+            Expression<Func<TEntity, TProperty>> propertyExpression)
         {
             var memberInfo = propertyExpression.GetMemberInfo();
             var property = memberInfo as PropertyInfo;
@@ -131,6 +134,7 @@ namespace WeihanLi.Npoi.Configurations
                     throw new InvalidOperationException($"the property [{memberInfo.Name}] does not exists");
                 }
             }
+
             return (IPropertyConfiguration<TEntity, TProperty>)PropertyConfigurationDictionary[property];
         }
 
@@ -148,7 +152,8 @@ namespace WeihanLi.Npoi.Configurations
 
             var propertyConfigurationType =
                 typeof(PropertyConfiguration<,>).MakeGenericType(EntityType, propertyType);
-            var propertyConfiguration = (PropertyConfiguration)Activator.CreateInstance(propertyConfigurationType, new object[] { property });
+            var propertyConfiguration =
+                (PropertyConfiguration)Activator.CreateInstance(propertyConfigurationType, property);
 
             PropertyConfigurationDictionary[property] = propertyConfiguration;
 

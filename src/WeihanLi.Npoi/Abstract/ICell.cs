@@ -15,6 +15,6 @@
         Formula = 2,
         Blank = 3,
         Boolean = 4,
-        Error = 5,
+        Error = 5
     }
 }

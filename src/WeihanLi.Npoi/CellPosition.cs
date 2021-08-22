@@ -13,10 +13,7 @@ namespace WeihanLi.Npoi
         public int Row { get; }
         public int Column { get; }
 
-        public bool Equals(CellPosition other)
-        {
-            return Row == other.Row && Column == other.Column;
-        }
+        public bool Equals(CellPosition other) => Row == other.Row && Column == other.Column;
 
         public override bool Equals(object? obj) => obj is CellPosition other && Equals(other);
 

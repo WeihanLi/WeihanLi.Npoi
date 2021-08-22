@@ -1,5 +1,5 @@
 <Project>
-  <Import Project="./build/version.props" />  
+  <Import Project="./build/version.props"/>
   <PropertyGroup>
     <LangVersion>latest</LangVersion>
     <Nullable>enable</Nullable>
