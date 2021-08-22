@@ -7,37 +7,38 @@ namespace WeihanLi.Npoi.Configurations
     internal class PropertyConfiguration : IPropertyConfiguration
     {
         /// <summary>
-        /// ColumnIndex
+        ///     ColumnIndex
         /// </summary>
         public int ColumnIndex { get; set; } = -1;
 
         /// <summary>
-        /// ColumnWidth
+        ///     ColumnWidth
         /// </summary>
         public int ColumnWidth { get; set; }
 
         /// <summary>
-        /// Title
+        ///     Title
         /// </summary>
         public string ColumnTitle { get; set; } = string.Empty;
 
         /// <summary>
-        /// Formatter
+        ///     Formatter
         /// </summary>
         public string? ColumnFormatter { get; set; }
 
         /// <summary>
-        /// the property is ignored.
+        ///     the property is ignored.
         /// </summary>
         public bool IsIgnored { get; set; }
 
         /// <summary>
-        /// PropertyName
+        ///     PropertyName
         /// </summary>
         public string? PropertyName { get; set; }
     }
 
-    internal sealed class PropertyConfiguration<TEntity, TProperty> : PropertyConfiguration, IPropertyConfiguration<TEntity, TProperty>
+    internal sealed class PropertyConfiguration<TEntity, TProperty> : PropertyConfiguration,
+        IPropertyConfiguration<TEntity, TProperty>
     {
         private readonly PropertyInfo _propertyInfo;
 
@@ -54,6 +55,7 @@ namespace WeihanLi.Npoi.Configurations
             {
                 ColumnIndex = index;
             }
+
             return this;
         }
 
@@ -81,7 +83,8 @@ namespace WeihanLi.Npoi.Configurations
             return this;
         }
 
-        public IPropertyConfiguration<TEntity, TProperty> HasOutputFormatter(Func<TEntity?, TProperty?, object?>? formatterFunc)
+        public IPropertyConfiguration<TEntity, TProperty> HasOutputFormatter(
+            Func<TEntity?, TProperty?, object?>? formatterFunc)
         {
             InternalCache.OutputFormatterFuncCache.AddOrUpdate(_propertyInfo, formatterFunc);
             return this;
@@ -94,7 +97,8 @@ namespace WeihanLi.Npoi.Configurations
             return this;
         }
 
-        public IPropertyConfiguration<TEntity, TProperty> HasColumnInputFormatter(Func<string?, TProperty?>? formatterFunc)
+        public IPropertyConfiguration<TEntity, TProperty> HasColumnInputFormatter(
+            Func<string?, TProperty?>? formatterFunc)
         {
             InternalCache.ColumnInputFormatterFuncCache.AddOrUpdate(_propertyInfo, formatterFunc);
             return this;

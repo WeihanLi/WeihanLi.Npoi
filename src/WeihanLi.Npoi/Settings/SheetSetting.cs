@@ -1,21 +1,21 @@
-﻿using NPOI.SS.UserModel;
-using System;
+﻿using System;
+using NPOI.SS.UserModel;
 using WeihanLi.Extensions;
 
 namespace WeihanLi.Npoi.Settings
 {
     /// <summary>
-    /// Excel Sheet Settings
+    ///     Excel Sheet Settings
     /// </summary>
     public sealed class SheetSetting
     {
-        private int _startRowIndex = 1;
-        private string _sheetName = "Sheet0";
         private Func<ICell, bool> _cellFilter = _ => true;
         private Func<IRow, bool>? _rowFilter = _ => true;
+        private string _sheetName = "Sheet0";
+        private int _startRowIndex = 1;
 
         /// <summary>
-        /// SheetName
+        ///     SheetName
         /// </summary>
         public string SheetName
         {
@@ -30,7 +30,7 @@ namespace WeihanLi.Npoi.Settings
         }
 
         /// <summary>
-        /// StartRowIndex
+        ///     StartRowIndex
         /// </summary>
         public int StartRowIndex
         {
@@ -45,22 +45,22 @@ namespace WeihanLi.Npoi.Settings
         }
 
         /// <summary>
-        /// HeaderRowIndex
+        ///     HeaderRowIndex
         /// </summary>
         public int HeaderRowIndex => StartRowIndex - 1;
 
         /// <summary>
-        /// EndRowIndex, included
+        ///     EndRowIndex, included
         /// </summary>
         public int? EndRowIndex { get; set; }
 
         /// <summary>
-        /// enable auto column width
+        ///     enable auto column width
         /// </summary>
         public bool AutoColumnWidthEnabled { get; set; }
 
         /// <summary>
-        /// Cell Filter
+        ///     Cell Filter
         /// </summary>
         public Func<ICell, bool>? CellFilter
         {
@@ -69,7 +69,7 @@ namespace WeihanLi.Npoi.Settings
         }
 
         /// <summary>
-        /// Row Filter
+        ///     Row Filter
         /// </summary>
         public Func<IRow, bool>? RowFilter
         {
@@ -78,17 +78,17 @@ namespace WeihanLi.Npoi.Settings
         }
 
         /// <summary>
-        /// Cell Action on export
+        ///     Cell Action on export
         /// </summary>
         public Action<ICell>? CellAction { get; set; }
 
         /// <summary>
-        /// Row Action on export
+        ///     Row Action on export
         /// </summary>
         public Action<IRow>? RowAction { get; set; }
 
         /// <summary>
-        /// Sheet Action on export
+        ///     Sheet Action on export
         /// </summary>
         public Action<ISheet>? SheetAction { get; set; }
     }

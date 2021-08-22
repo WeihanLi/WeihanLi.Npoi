@@ -1,9 +1,9 @@
-﻿using NPOI.SS.UserModel;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Reflection;
+using NPOI.SS.UserModel;
 using WeihanLi.Common;
 using WeihanLi.Extensions;
 using WeihanLi.Npoi.Configurations;
@@ -15,7 +15,7 @@ namespace WeihanLi.Npoi
     internal static class InternalExtensions
     {
         /// <summary>
-        /// Parse obj to paramDictionary
+        ///     Parse obj to paramDictionary
         /// </summary>
         /// <param name="paramInfo">param object</param>
         /// <returns></returns>
@@ -27,7 +27,7 @@ namespace WeihanLi.Npoi
                 return paramDic;
             }
 
-            if (paramInfo.IsValueTuple())// Tuple
+            if (paramInfo.IsValueTuple()) // Tuple
             {
                 var fields = paramInfo.GetFields();
                 foreach (var field in fields)
@@ -50,6 +50,7 @@ namespace WeihanLi.Npoi
                     }
                 }
             }
+
             return paramDic;
         }
 
@@ -66,6 +67,7 @@ namespace WeihanLi.Npoi
             {
                 return propertyType.GetDefaultValue();
             }
+
             return cell.Value?.ToOrDefault(propertyType);
         }
 
@@ -100,9 +102,9 @@ namespace WeihanLi.Npoi
 
             if (value is DateTime time)
             {
-                cell.Value = (string.IsNullOrWhiteSpace(formatter)
-                    ? (time.Date == time ? time.ToStandardDateString() : time.ToStandardTimeString())
-                    : time.ToString(formatter));
+                cell.Value = string.IsNullOrWhiteSpace(formatter)
+                    ? time.Date == time ? time.ToStandardDateString() : time.ToStandardTimeString()
+                    : time.ToString(formatter);
                 cell.CellType = CellType.String;
             }
             else
@@ -126,32 +128,33 @@ namespace WeihanLi.Npoi
                 }
                 else
                 {
-                    cell.Value = (value is IFormattable val && formatter.IsNotNullOrWhiteSpace()
+                    cell.Value = value is IFormattable val && formatter.IsNotNullOrWhiteSpace()
                         ? val.ToString(formatter, CultureInfo.CurrentCulture)
-                        : value.ToString());
+                        : value.ToString();
                     cell.CellType = CellType.String;
                 }
             }
         }
 
         /// <summary>
-        /// GetPropertySettingByPropertyName
+        ///     GetPropertySettingByPropertyName
         /// </summary>
         /// <param name="mappingDictionary">mappingDictionary</param>
         /// <param name="propertyName">propertyName</param>
         /// <returns></returns>
-        internal static PropertyConfiguration? GetPropertySettingByPropertyName(this IDictionary<PropertyInfo, PropertyConfiguration> mappingDictionary, string propertyName)
+        internal static PropertyConfiguration? GetPropertySettingByPropertyName(
+            this IDictionary<PropertyInfo, PropertyConfiguration> mappingDictionary, string propertyName)
             => mappingDictionary.Values.FirstOrDefault(_ => _.PropertyName.EqualsIgnoreCase(propertyName));
 
         /// <summary>
-        /// GetPropertyConfigurationByColumnName
+        ///     GetPropertyConfigurationByColumnName
         /// </summary>
         /// <param name="mappingDictionary">mappingDictionary</param>
         /// <param name="columnTitle">columnTitle</param>
         /// <returns></returns>
-        internal static PropertyConfiguration? GetPropertySetting(this IDictionary<PropertyInfo, PropertyConfiguration> mappingDictionary, string columnTitle)
-        {
-            return mappingDictionary.Values.FirstOrDefault(k => k.ColumnTitle.EqualsIgnoreCase(columnTitle)) ?? mappingDictionary.GetPropertySettingByPropertyName(columnTitle);
-        }
+        internal static PropertyConfiguration? GetPropertySetting(
+            this IDictionary<PropertyInfo, PropertyConfiguration> mappingDictionary, string columnTitle) =>
+            mappingDictionary.Values.FirstOrDefault(k => k.ColumnTitle.EqualsIgnoreCase(columnTitle)) ??
+            mappingDictionary.GetPropertySettingByPropertyName(columnTitle);
     }
 }

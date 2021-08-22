@@ -12,27 +12,27 @@ using WeihanLi.Npoi.Configurations;
 namespace WeihanLi.Npoi
 {
     /// <summary>
-    /// CsvHelper
+    ///     CsvHelper
     /// </summary>
     public static class CsvHelper
     {
         /// <summary>
-        /// CsvSeparatorCharacter, ',' by default
+        ///     CsvSeparatorCharacter, ',' by default
         /// </summary>
         public static char CsvSeparatorCharacter = ',';
 
         /// <summary>
-        /// CsvQuoteCharacter, '"' by default
+        ///     CsvQuoteCharacter, '"' by default
         /// </summary>
         public static char CsvQuoteCharacter = '"';
 
         /// <summary>
-        /// save to csv file
+        ///     save to csv file
         /// </summary>
         public static bool ToCsvFile(this DataTable dt, string filePath) => ToCsvFile(dt, filePath, true);
 
         /// <summary>
-        /// save to csv file
+        ///     save to csv file
         /// </summary>
         public static bool ToCsvFile(this DataTable dataTable, string filePath, bool includeHeader)
         {
@@ -40,11 +40,13 @@ namespace WeihanLi.Npoi
             {
                 throw new ArgumentNullException(nameof(dataTable));
             }
+
             var dir = Path.GetDirectoryName(filePath);
             if (dir is null)
             {
                 throw new ArgumentException(Resource.InvalidFilePath, nameof(filePath));
             }
+
             if (!Directory.Exists(dir))
             {
                 Directory.CreateDirectory(dir);
@@ -61,17 +63,18 @@ namespace WeihanLi.Npoi
         }
 
         /// <summary>
-        /// to csv bytes
+        ///     to csv bytes
         /// </summary>
         public static byte[] ToCsvBytes(this DataTable dt) => ToCsvBytes(dt, true);
 
         /// <summary>
-        /// to csv bytes
+        ///     to csv bytes
         /// </summary>
-        public static byte[] ToCsvBytes(this DataTable dataTable, bool includeHeader) => GetCsvText(dataTable, includeHeader).GetBytes();
+        public static byte[] ToCsvBytes(this DataTable dataTable, bool includeHeader) =>
+            GetCsvText(dataTable, includeHeader).GetBytes();
 
         /// <summary>
-        /// convert csv file data to dataTable
+        ///     convert csv file data to dataTable
         /// </summary>
         /// <param name="csvBytes">csv bytes</param>
         public static DataTable ToDataTable(byte[] csvBytes)
@@ -86,7 +89,7 @@ namespace WeihanLi.Npoi
         }
 
         /// <summary>
-        /// convert csv stream data to dataTable
+        ///     convert csv stream data to dataTable
         /// </summary>
         /// <param name="stream">stream</param>
         public static DataTable ToDataTable(Stream stream)
@@ -95,6 +98,7 @@ namespace WeihanLi.Npoi
             {
                 throw new ArgumentNullException(nameof(stream));
             }
+
             var dt = new DataTable();
 
             if (stream.CanRead)
@@ -112,6 +116,7 @@ namespace WeihanLi.Npoi
                         {
                             dt.Columns.Add(rowData[i]);
                         }
+
                         isFirst = false;
                     }
                     else
@@ -121,6 +126,7 @@ namespace WeihanLi.Npoi
                         {
                             dataRow[j] = rowData[j];
                         }
+
                         dt.Rows.Add(dataRow);
                     }
                 }
@@ -130,7 +136,7 @@ namespace WeihanLi.Npoi
         }
 
         /// <summary>
-        /// convert csv file data to dataTable
+        ///     convert csv file data to dataTable
         /// </summary>
         /// <param name="filePath">csv file path</param>
         public static DataTable ToDataTable(string filePath)
@@ -139,6 +145,7 @@ namespace WeihanLi.Npoi
             {
                 throw new ArgumentNullException(nameof(filePath));
             }
+
             if (!File.Exists(filePath))
             {
                 throw new ArgumentException(Resource.FileNotFound, nameof(filePath));
@@ -149,7 +156,7 @@ namespace WeihanLi.Npoi
         }
 
         /// <summary>
-        /// convert csv file data to entity list
+        ///     convert csv file data to entity list
         /// </summary>
         /// <param name="filePath">csv file path</param>
         public static List<TEntity?> ToEntityList<TEntity>(string filePath)
@@ -158,6 +165,7 @@ namespace WeihanLi.Npoi
             {
                 throw new ArgumentNullException(nameof(filePath));
             }
+
             if (!File.Exists(filePath))
             {
                 throw new ArgumentException(Resource.FileNotFound, nameof(filePath));
@@ -167,7 +175,7 @@ namespace WeihanLi.Npoi
         }
 
         /// <summary>
-        /// convert csv file data to entity list
+        ///     convert csv file data to entity list
         /// </summary>
         /// <param name="csvBytes">csv bytes</param>
         public static List<TEntity?> ToEntityList<TEntity>(byte[] csvBytes)
@@ -176,6 +184,7 @@ namespace WeihanLi.Npoi
             {
                 throw new ArgumentNullException(nameof(csvBytes));
             }
+
             var entities = new List<TEntity?>();
             if (typeof(TEntity).IsBasicType())
             {
@@ -190,6 +199,7 @@ namespace WeihanLi.Npoi
                         isFirstLine = false;
                         continue;
                     }
+
                     //
                     entities.Add(strLine.Trim().To<TEntity>());
                 }
@@ -198,14 +208,15 @@ namespace WeihanLi.Npoi
             {
                 var configuration = InternalHelper.GetExcelConfigurationMapping<TEntity>();
                 var propertyColumnDictionary = InternalHelper.GetPropertyColumnDictionary<TEntity>();
-                var propertyColumnDic = propertyColumnDictionary.ToDictionary(_ => _.Key, _ => new PropertyConfiguration()
-                {
-                    ColumnIndex = -1,
-                    ColumnFormatter = _.Value.ColumnFormatter,
-                    ColumnTitle = _.Value.ColumnTitle,
-                    ColumnWidth = _.Value.ColumnWidth,
-                    IsIgnored = _.Value.IsIgnored
-                });
+                var propertyColumnDic = propertyColumnDictionary.ToDictionary(_ => _.Key,
+                    _ => new PropertyConfiguration
+                    {
+                        ColumnIndex = -1,
+                        ColumnFormatter = _.Value.ColumnFormatter,
+                        ColumnTitle = _.Value.ColumnTitle,
+                        ColumnWidth = _.Value.ColumnWidth,
+                        IsIgnored = _.Value.IsIgnored
+                    });
                 using var ms = new MemoryStream(csvBytes);
                 using var sr = new StreamReader(ms, Encoding.UTF8);
                 string strLine;
@@ -237,7 +248,7 @@ namespace WeihanLi.Npoi
                         var entity = NewFuncHelper<TEntity>.Instance();
                         if (entityType.IsValueType)
                         {
-                            var obj = (object)entity!;// boxing for value types
+                            var obj = (object)entity!; // boxing for value types
 
                             foreach (var key in propertyColumnDic.Keys)
                             {
@@ -246,7 +257,8 @@ namespace WeihanLi.Npoi
                                 {
                                     var columnValue = key.PropertyType.GetDefaultValue();
                                     var valueApplied = false;
-                                    if (InternalCache.ColumnInputFormatterFuncCache.TryGetValue(key, out var formatterFunc) && formatterFunc?.Method != null)
+                                    if (InternalCache.ColumnInputFormatterFuncCache.TryGetValue(key,
+                                        out var formatterFunc) && formatterFunc?.Method != null)
                                     {
                                         var cellValue = cols[colIndex];
                                         try
@@ -261,6 +273,7 @@ namespace WeihanLi.Npoi
                                             InvokeHelper.OnInvokeException?.Invoke(e);
                                         }
                                     }
+
                                     if (valueApplied == false)
                                     {
                                         columnValue = cols[colIndex].ToOrDefault(key.PropertyType);
@@ -270,7 +283,7 @@ namespace WeihanLi.Npoi
                                 }
                             }
 
-                            entity = (TEntity)obj;// unboxing
+                            entity = (TEntity)obj; // unboxing
                         }
                         else
                         {
@@ -282,7 +295,8 @@ namespace WeihanLi.Npoi
                                     var columnValue = key.PropertyType.GetDefaultValue();
 
                                     var valueApplied = false;
-                                    if (InternalCache.ColumnInputFormatterFuncCache.TryGetValue(key, out var formatterFunc) && formatterFunc?.Method != null)
+                                    if (InternalCache.ColumnInputFormatterFuncCache.TryGetValue(key,
+                                        out var formatterFunc) && formatterFunc?.Method != null)
                                     {
                                         var cellValue = cols[colIndex];
                                         try
@@ -297,6 +311,7 @@ namespace WeihanLi.Npoi
                                             InvokeHelper.OnInvokeException?.Invoke(e);
                                         }
                                     }
+
                                     if (valueApplied == false)
                                     {
                                         columnValue = cols[colIndex].ToOrDefault(key.PropertyType);
@@ -314,7 +329,8 @@ namespace WeihanLi.Npoi
                                 if (propertyInfo.CanWrite)
                                 {
                                     var propertyValue = propertyInfo.GetValueGetter()?.Invoke(entity);
-                                    if (InternalCache.InputFormatterFuncCache.TryGetValue(propertyInfo, out var formatterFunc) && formatterFunc?.Method != null)
+                                    if (InternalCache.InputFormatterFuncCache.TryGetValue(propertyInfo,
+                                        out var formatterFunc) && formatterFunc?.Method != null)
                                     {
                                         try
                                         {
@@ -337,6 +353,7 @@ namespace WeihanLi.Npoi
                             // data invalid
                             continue;
                         }
+
                         entities.Add(entity);
                     }
                 }
@@ -346,7 +363,7 @@ namespace WeihanLi.Npoi
         }
 
         /// <summary>
-        /// convert csv file data to entity list
+        ///     convert csv file data to entity list
         /// </summary>
         /// <param name="csvStream">csv Stream</param>
         public static List<TEntity?> ToEntityList<TEntity>(Stream csvStream)
@@ -355,6 +372,7 @@ namespace WeihanLi.Npoi
             {
                 throw new ArgumentNullException(nameof(csvStream));
             }
+
             return ToEntityList<TEntity>(csvStream.ToByteArray());
         }
 
@@ -363,12 +381,13 @@ namespace WeihanLi.Npoi
         public
 #else
         private
-
 #endif
             static IReadOnlyList<string> ParseLine(string line)
         {
             if (string.IsNullOrEmpty(line))
+            {
                 return Array.Empty<string>();
+            }
 
             var columnBuilder = new StringBuilder();
             var fields = new List<string>();
@@ -440,12 +459,13 @@ namespace WeihanLi.Npoi
         }
 
         /// <summary>
-        /// save to csv file
+        ///     save to csv file
         /// </summary>
-        public static bool ToCsvFile<TEntity>(this IEnumerable<TEntity> entities, string filePath) => ToCsvFile(entities, filePath, true);
+        public static bool ToCsvFile<TEntity>(this IEnumerable<TEntity> entities, string filePath) =>
+            ToCsvFile(entities, filePath, true);
 
         /// <summary>
-        /// save to csv file
+        ///     save to csv file
         /// </summary>
         public static bool ToCsvFile<TEntity>(this IEnumerable<TEntity> entities, string filePath, bool includeHeader)
         {
@@ -453,11 +473,13 @@ namespace WeihanLi.Npoi
             {
                 throw new ArgumentNullException(nameof(entities));
             }
+
             var dir = Path.GetDirectoryName(filePath);
             if (dir is null)
             {
                 throw new ArgumentException(Resource.InvalidFilePath);
             }
+
             if (!Directory.Exists(dir))
             {
                 Directory.CreateDirectory(dir);
@@ -474,17 +496,18 @@ namespace WeihanLi.Npoi
         }
 
         /// <summary>
-        /// to csv bytes
+        ///     to csv bytes
         /// </summary>
         public static byte[] ToCsvBytes<TEntity>(this IEnumerable<TEntity> entities) => ToCsvBytes(entities, true);
 
         /// <summary>
-        /// to csv bytes
+        ///     to csv bytes
         /// </summary>
-        public static byte[] ToCsvBytes<TEntity>(this IEnumerable<TEntity> entities, bool includeHeader) => GetCsvText(entities, includeHeader).GetBytes();
+        public static byte[] ToCsvBytes<TEntity>(this IEnumerable<TEntity> entities, bool includeHeader) =>
+            GetCsvText(entities, includeHeader).GetBytes();
 
         /// <summary>
-        /// Get csv text
+        ///     Get csv text
         /// </summary>
         public static string GetCsvText<TEntity>(this IEnumerable<TEntity> entities, bool includeHeader)
         {
@@ -501,6 +524,7 @@ namespace WeihanLi.Npoi
                 {
                     data.AppendLine(InternalConstants.DefaultPropertyNameForBasicType);
                 }
+
                 foreach (var entity in entities)
                 {
                     data.AppendLine(Convert.ToString(entity));
@@ -518,17 +542,20 @@ namespace WeihanLi.Npoi
                         {
                             data.Append(CsvSeparatorCharacter);
                         }
+
                         data.Append(dic[props[i]].ColumnTitle);
                     }
 
                     data.AppendLine();
                 }
+
                 foreach (var entity in entities)
                 {
                     for (var i = 0; i < props.Count; i++)
                     {
                         var propertyValue = props[i].GetValueGetter<TEntity>()?.Invoke(entity);
-                        if (InternalCache.OutputFormatterFuncCache.TryGetValue(props[i], out var formatterFunc) && formatterFunc?.Method != null)
+                        if (InternalCache.OutputFormatterFuncCache.TryGetValue(props[i], out var formatterFunc) &&
+                            formatterFunc?.Method != null)
                         {
                             try
                             {
@@ -546,6 +573,7 @@ namespace WeihanLi.Npoi
                         {
                             data.Append(CsvSeparatorCharacter);
                         }
+
                         // https://stackoverflow.com/questions/4617935/is-there-a-way-to-include-commas-in-csv-columns-without-breaking-the-formatting
                         var val = propertyValue?.ToString().Replace("\"", "\"\"");
                         if (val is not null and { Length: > 0 })
@@ -553,6 +581,7 @@ namespace WeihanLi.Npoi
                             data.Append(val.IndexOf(CsvSeparatorCharacter) > -1 ? $"\"{val}\"" : val);
                         }
                     }
+
                     data.AppendLine();
                 }
             }
@@ -561,7 +590,7 @@ namespace WeihanLi.Npoi
         }
 
         /// <summary>
-        /// Get csv text
+        ///     Get csv text
         /// </summary>
         public static string GetCsvText(this DataTable? dataTable, bool includeHeader)
         {
@@ -580,10 +609,13 @@ namespace WeihanLi.Npoi
                     {
                         data.Append(CsvSeparatorCharacter);
                     }
+
                     data.Append(dataTable.Columns[i].ColumnName);
                 }
+
                 data.AppendLine();
             }
+
             for (var i = 0; i < dataTable.Rows.Count; i++)
             {
                 for (var j = 0; j < dataTable.Columns.Count; j++)
@@ -592,6 +624,7 @@ namespace WeihanLi.Npoi
                     {
                         data.Append(CsvSeparatorCharacter);
                     }
+
                     // https://stackoverflow.com/questions/4617935/is-there-a-way-to-include-commas-in-csv-columns-without-breaking-the-formatting
                     var val = dataTable.Rows[i][j]?.ToString().Replace("\"", "\"\"");
                     if (val is not null and { Length: > 0 })
@@ -599,8 +632,10 @@ namespace WeihanLi.Npoi
                         data.Append(val.IndexOf(CsvSeparatorCharacter) > -1 ? $"\"{val}\"" : val);
                     }
                 }
+
                 data.AppendLine();
             }
+
             return data.ToString();
         }
     }

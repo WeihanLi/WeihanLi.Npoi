@@ -1,18 +1,18 @@
 ﻿namespace WeihanLi.Npoi
 {
     /// <summary>
-    /// ExcelFormat
+    ///     ExcelFormat
     /// </summary>
     public enum ExcelFormat : byte
     {
         /// <summary>
-        /// xls by default
+        ///     xls by default
         /// </summary>
         Xls = 0,
 
         /// <summary>
-        /// xlsx
+        ///     xlsx
         /// </summary>
-        Xlsx = 1,
+        Xlsx = 1
     }
 }

@@ -9,12 +9,12 @@
         public const int MaxRowCountXlsx = 1_048_576;
 
         /// <summary>
-        /// DefaultPropertyNameForBasicType
+        ///     DefaultPropertyNameForBasicType
         /// </summary>
         public const string DefaultPropertyNameForBasicType = "Value";
 
         /// <summary>
-        /// ApplicationName
+        ///     ApplicationName
         /// </summary>
         public const string ApplicationName = "WeihanLi.Npoi";
 

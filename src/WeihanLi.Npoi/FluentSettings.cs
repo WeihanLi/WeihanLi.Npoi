@@ -54,7 +54,8 @@ namespace WeihanLi.Npoi
         /// </summary>
         /// <typeparam name="TEntity">entity type</typeparam>
         /// <typeparam name="TMappingProfile">entity type mapping profile</typeparam>
-        public static void LoadMappingProfile<TEntity,TMappingProfile>() where TMappingProfile : IMappingProfile<TEntity>, new()
+        public static void LoadMappingProfile<TEntity, TMappingProfile>()
+            where TMappingProfile : IMappingProfile<TEntity>, new()
         {
             var profile = new TMappingProfile();
             profile.Configure(InternalHelper.GetExcelConfigurationMapping<TEntity>());
@@ -75,10 +76,9 @@ namespace WeihanLi.Npoi
         ///     Load mapping profile for TEntity
         /// </summary>
         /// <typeparam name="TMappingProfile">entity type mapping profile</typeparam>
-        public static void LoadMappingProfile<TMappingProfile>() where TMappingProfile : IMappingProfile, new()
-        {
+        public static void LoadMappingProfile<TMappingProfile>() where TMappingProfile : IMappingProfile, new() =>
             LoadMappingProfile(new TMappingProfile());
-        }
+
         /// <summary>
         ///     Load mapping profile for TEntity
         /// </summary>

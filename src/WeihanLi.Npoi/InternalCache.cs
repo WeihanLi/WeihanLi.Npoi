@@ -8,7 +8,7 @@ namespace WeihanLi.Npoi
     internal static class InternalCache
     {
         /// <summary>
-        /// TypeExcelConfigurationCache
+        ///     TypeExcelConfigurationCache
         /// </summary>
         public static readonly ConcurrentDictionary<Type, IExcelConfiguration> TypeExcelConfigurationDictionary = new();
 

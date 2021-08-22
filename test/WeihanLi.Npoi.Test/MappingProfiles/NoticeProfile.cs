@@ -4,7 +4,7 @@ using WeihanLi.Npoi.Test.Models;
 
 namespace WeihanLi.Npoi.Test.MappingProfiles
 {
-    public class NoticeProfile: IMappingProfile<Notice>
+    public class NoticeProfile : IMappingProfile<Notice>
     {
         public void Configure(IExcelConfiguration<Notice> noticeSetting)
         {

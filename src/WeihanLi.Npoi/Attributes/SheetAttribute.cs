@@ -6,22 +6,36 @@ namespace WeihanLi.Npoi.Attributes
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
     public sealed class SheetAttribute : Attribute
     {
+        private int _endColumnIndex = -1;
+
+        private int _startColumnIndex;
+
+        public SheetAttribute() => SheetSetting = new SheetSetting();
         public int SheetIndex { get; set; }
 
-        public string SheetName { get => SheetSetting.SheetName; set => SheetSetting.SheetName = value ?? throw new ArgumentNullException(nameof(value)); }
+        public string SheetName
+        {
+            get => SheetSetting.SheetName;
+            set => SheetSetting.SheetName = value ?? throw new ArgumentNullException(nameof(value));
+        }
 
-        public int StartRowIndex { get => SheetSetting.StartRowIndex; set => SheetSetting.StartRowIndex = value; }
+        public int StartRowIndex
+        {
+            get => SheetSetting.StartRowIndex;
+            set => SheetSetting.StartRowIndex = value;
+        }
 
         public int HeaderRowIndex => SheetSetting.HeaderRowIndex;
 
-        public int EndRowIndex { get => SheetSetting.EndRowIndex ?? -1; set => SheetSetting.EndRowIndex = value >= 0 ? value : -1; }
-
-        private int _startColumnIndex;
-        private int _endColumnIndex = -1;
+        public int EndRowIndex
+        {
+            get => SheetSetting.EndRowIndex ?? -1;
+            set => SheetSetting.EndRowIndex = value >= 0 ? value : -1;
+        }
 
         /// <summary>
-        /// StartColumnIndex
-        /// Start Column Index when import
+        ///     StartColumnIndex
+        ///     Start Column Index when import
         /// </summary>
         public int StartColumnIndex
         {
@@ -34,7 +48,7 @@ namespace WeihanLi.Npoi.Attributes
                     if (_endColumnIndex >= value)
                     {
                         SheetSetting.CellFilter = cell =>
-                            cell.ColumnIndex >= _startColumnIndex && cell.ColumnIndex <= _endColumnIndex
+                                cell.ColumnIndex >= _startColumnIndex && cell.ColumnIndex <= _endColumnIndex
                             ;
                     }
                     else
@@ -46,8 +60,8 @@ namespace WeihanLi.Npoi.Attributes
         }
 
         /// <summary>
-        /// EndColumnIndex
-        /// End Column Index when import
+        ///     EndColumnIndex
+        ///     End Column Index when import
         /// </summary>
         public int EndColumnIndex
         {
@@ -76,7 +90,5 @@ namespace WeihanLi.Npoi.Attributes
         }
 
         internal SheetSetting SheetSetting { get; }
-
-        public SheetAttribute() => SheetSetting = new SheetSetting();
     }
 }
