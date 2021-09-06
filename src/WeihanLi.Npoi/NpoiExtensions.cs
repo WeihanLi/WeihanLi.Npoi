@@ -204,13 +204,15 @@ namespace WeihanLi.Npoi
                     {
                         continue;
                     }
+
                     var columnName = cell.GetCellValue(typeof(string), formulaEvaluator)!.ToString().Trim();
-                    if(dataTable.Columns.Contains(columnName))
+                    if (dataTable.Columns.Contains(columnName))
                     {
                         columnName = InternalHelper.GetEncodedColumnName(columnName);
                     }
+
                     dataTable.Columns.Add(columnName);
-                    
+
                     if (maxColumns != null && cell.ColumnIndex + 1 == maxColumns)
                     {
                         break;
@@ -730,7 +732,7 @@ namespace WeihanLi.Npoi
                 var headerRow = sheet.CreateRow(0);
                 for (var i = 0; i < dataTable.Columns.Count; i++)
                 {
-                    var columnName = InternalHelper.GetDecodeColumnName(dataTable.Columns[i].ColumnName); ;
+                    var columnName = InternalHelper.GetDecodeColumnName(dataTable.Columns[i].ColumnName);
                     headerRow.CreateCell(i, CellType.String).SetCellValue(columnName);
                 }
 

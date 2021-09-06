@@ -57,6 +57,7 @@ namespace WeihanLi.Npoi
             {
                 return false;
             }
+
             File.WriteAllText(filePath, csvText, Encoding.UTF8);
             return true;
         }
@@ -113,12 +114,13 @@ namespace WeihanLi.Npoi
                     {
                         for (var i = 0; i < dtColumns; i++)
                         {
-                            var columeName = rowData[i];
-                            if(dt.Columns.Contains(columeName))
+                            var columnName = rowData[i];
+                            if (dt.Columns.Contains(columnName))
                             {
-                                columeName = InternalHelper.GetEncodedColumnName(columeName);
+                                columnName = InternalHelper.GetEncodedColumnName(columnName);
                             }
-                            dt.Columns.Add(columeName);
+
+                            dt.Columns.Add(columnName);
                         }
 
                         isFirst = false;
@@ -513,7 +515,7 @@ namespace WeihanLi.Npoi
         /// <summary>
         ///     Get csv text
         /// </summary>
-        public static string GetCsvText<TEntity>(this IEnumerable<TEntity> entities, bool includeHeader=true)
+        public static string GetCsvText<TEntity>(this IEnumerable<TEntity> entities, bool includeHeader = true)
         {
             if (entities is null)
             {
@@ -596,7 +598,7 @@ namespace WeihanLi.Npoi
         /// <summary>
         ///     Get csv text
         /// </summary>
-        public static string GetCsvText(this DataTable? dataTable, bool includeHeader=true)
+        public static string GetCsvText(this DataTable? dataTable, bool includeHeader = true)
         {
             if (dataTable is null || dataTable.Rows.Count == 0 || dataTable.Columns.Count == 0)
             {
@@ -613,6 +615,7 @@ namespace WeihanLi.Npoi
                     {
                         data.Append(CsvSeparatorCharacter);
                     }
+
                     var columnName = InternalHelper.GetDecodeColumnName(dataTable.Columns[i].ColumnName);
                     data.Append(columnName);
                 }
