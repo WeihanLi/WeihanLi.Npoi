@@ -846,7 +846,42 @@ namespace WeihanLi.Npoi.Test
 
         [Theory]
         [ExcelFormatData]
-        public void SheetNameTest(ExcelFormat excelFormat)
+        public void SheetNameTest_ToExcelFile(ExcelFormat excelFormat)
+        {
+            IReadOnlyList<Notice> list = Enumerable.Range(0, 10).Select(i => new Notice()
+            {
+                Id = i + 1,
+                Content = $"content_{i}",
+                Title = $"title_{i}",
+                PublishedAt = DateTime.UtcNow.AddDays(-i),
+                Publisher = $"publisher_{i}"
+            }).ToArray();
+            var settings = FluentSettings.For<Notice>();
+            lock (settings)
+            {
+                settings.HasSheetSetting(s =>
+                {
+                    s.SheetName = "Test";
+                });
+
+                var filePath = $"{Path.GetTempFileName()}.{excelFormat.ToString().ToLower()}";
+                list.ToExcelFile(filePath);
+
+                var excel = ExcelHelper.LoadExcel(filePath);
+                Assert.Equal("Test", excel.GetSheetAt(0).SheetName);
+
+                settings.HasSheetSetting(s =>
+                {
+                    s.SheetName = "NoticeList";
+                });
+            }
+
+
+        }
+
+        [Theory]
+        [ExcelFormatData]
+        public void SheetNameTest_ToExcelBytes(ExcelFormat excelFormat)
         {
             IReadOnlyList<Notice> list = Enumerable.Range(0, 10).Select(i => new Notice()
             {

@@ -450,7 +450,7 @@ namespace WeihanLi.Npoi
             var configuration = InternalHelper.GetExcelConfigurationMapping<TEntity>();
 
             var workbook = ExcelHelper.PrepareWorkbook(excelPath, configuration.ExcelSetting);
-            workbook.ImportData(entityList.ToArray(), sheetIndex);
+            workbook.ImportData(entityList, sheetIndex);
 
             workbook.WriteToFile(excelPath);
         }
