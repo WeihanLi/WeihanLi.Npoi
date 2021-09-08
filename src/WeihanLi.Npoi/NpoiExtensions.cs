@@ -286,19 +286,25 @@ namespace WeihanLi.Npoi
                 }
             }
 
-            var configuration = InternalHelper.GetExcelConfigurationMapping<TEntity>();
+            workbook.CreateSheets<TEntity>(sheetIndex);
+            var sheet = NpoiHelper.EntityListToSheet(workbook.GetSheetAt(sheetIndex), list, sheetIndex);
+            return sheet.LastRowNum;
+        }
 
+        /// <summary>
+        /// CreateSheets
+        /// </summary>
+        /// <typeparam name="TEntity">TEntity</typeparam>
+        /// <param name="workbook">workbook</param>
+        /// <param name="sheetIndex">max sheetIndex</param>
+        private static void CreateSheets<TEntity>(this IWorkbook workbook, int sheetIndex)
+        {
+            var configuration = InternalHelper.GetExcelConfigurationMapping<TEntity>();
             while (workbook.NumberOfSheets <= sheetIndex)
             {
-                if (workbook.NumberOfSheets == sheetIndex)
+                if (configuration.SheetSettings.TryGetValue(sheetIndex, out var sheetSetting))
                 {
-                    var sheetName = typeof(TEntity).Name;
-                    if (configuration.SheetSettings.TryGetValue(sheetIndex, out var sheetSetting))
-                    {
-                        sheetName = sheetSetting.SheetName;
-                    }
-
-                    workbook.CreateSheet(sheetName);
+                    workbook.CreateSheet(sheetSetting.SheetName);
                 }
                 else
                 {
@@ -306,8 +312,6 @@ namespace WeihanLi.Npoi
                 }
             }
 
-            var sheet = NpoiHelper.EntityListToSheet(workbook.GetSheetAt(sheetIndex), list, sheetIndex);
-            return sheet.LastRowNum;
         }
 
         /// <summary>
@@ -373,26 +377,7 @@ namespace WeihanLi.Npoi
                 }
             }
 
-            var configuration = InternalHelper.GetExcelConfigurationMapping<TEntity>();
-
-            while (workbook.NumberOfSheets <= sheetIndex)
-            {
-                if (workbook.NumberOfSheets == sheetIndex)
-                {
-                    var sheetName = typeof(TEntity).Name;
-                    if (configuration.SheetSettings.TryGetValue(sheetIndex, out var sheetSetting))
-                    {
-                        sheetName = sheetSetting.SheetName;
-                    }
-
-                    workbook.CreateSheet(sheetName);
-                }
-                else
-                {
-                    workbook.CreateSheet();
-                }
-            }
-
+            workbook.CreateSheets<TEntity>(sheetIndex);
             var sheet = NpoiHelper.DataTableToSheet<TEntity>(workbook.GetSheetAt(sheetIndex), dataTable, sheetIndex);
             return sheet.LastRowNum;
         }
@@ -613,10 +598,7 @@ namespace WeihanLi.Npoi
             maxRowCount -= configuration.SheetSettings[0].StartRowIndex;
 
             var sheetCount = (entityList.Count + maxRowCount - 1) / maxRowCount;
-            do
-            {
-                workbook.CreateSheet();
-            } while (workbook.NumberOfSheets < sheetCount);
+            workbook.CreateSheets<TEntity>(sheetCount - 1);
 
             if (entityList.Count > maxRowCount)
             {
