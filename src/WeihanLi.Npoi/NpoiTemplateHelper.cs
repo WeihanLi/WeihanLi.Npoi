@@ -1,8 +1,8 @@
-﻿using NPOI.SS.UserModel;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using NPOI.SS.UserModel;
 using WeihanLi.Common.Helpers;
 using WeihanLi.Extensions;
 
@@ -22,10 +22,12 @@ namespace WeihanLi.Npoi
             {
                 throw new ArgumentNullException(nameof(sheet));
             }
+
             if (entityList is null)
             {
                 return sheet;
             }
+
             var configuration = InternalHelper.GetExcelConfigurationMapping<TEntity>();
             var propertyColumnDictionary = InternalHelper.GetPropertyColumnDictionary(configuration);
             var formulaEvaluator = sheet.Workbook.GetFormulaEvaluator();
@@ -33,14 +35,18 @@ namespace WeihanLi.Npoi
                 .ToDictionary(x => s_templateOptions.TemplateGlobalParamFormat.FormatWith(x.Key), x => x.Value);
             foreach (var propertyConfiguration in propertyColumnDictionary)
             {
-                globalDictionary.Add(s_templateOptions.TemplateHeaderParamFormat.FormatWith(propertyConfiguration.Key.Name), propertyConfiguration.Value.ColumnTitle);
+                globalDictionary.Add(
+                    s_templateOptions.TemplateHeaderParamFormat.FormatWith(propertyConfiguration.Key.Name),
+                    propertyConfiguration.Value.ColumnTitle);
             }
 
             var dataFuncDictionary = propertyColumnDictionary
-                .ToDictionary(x => s_templateOptions.TemplateDataParamFormat.FormatWith(x.Key.Name), x => x.Key.GetValueGetter<TEntity>());
+                .ToDictionary(x => s_templateOptions.TemplateDataParamFormat.FormatWith(x.Key.Name),
+                    x => x.Key.GetValueGetter<TEntity>());
             foreach (var key in propertyColumnDictionary.Keys)
             {
-                if (InternalCache.OutputFormatterFuncCache.TryGetValue(key, out var formatterFunc) && formatterFunc?.Method != null)
+                if (InternalCache.OutputFormatterFuncCache.TryGetValue(key, out var formatterFunc) &&
+                    formatterFunc?.Method != null)
                 {
                     dataFuncDictionary[s_templateOptions.TemplateDataParamFormat.FormatWith(key.Name)] = entity =>
                     {
@@ -55,6 +61,7 @@ namespace WeihanLi.Npoi
                             Debug.WriteLine(e);
                             InvokeHelper.OnInvokeException?.Invoke(e);
                         }
+
                         return val;
                     };
                 }
@@ -69,6 +76,7 @@ namespace WeihanLi.Npoi
                 {
                     continue;
                 }
+
                 for (var cellIndex = row.FirstCellNum; cellIndex < row.LastCellNum; cellIndex++)
                 {
                     var cell = row.GetCell(cellIndex);
@@ -107,7 +115,7 @@ namespace WeihanLi.Npoi
                             {
                                 cellValue = cellValue
                                     .Replace(param,
-                                    globalDictionary[param]?.ToString() ?? string.Empty);
+                                        globalDictionary[param]?.ToString() ?? string.Empty);
                             }
                         }
 
@@ -135,7 +143,8 @@ namespace WeihanLi.Npoi
                                 if (null != cell)
                                 {
                                     var cellValue = cell.GetCellValue<string>(formulaEvaluator);
-                                    if (!string.IsNullOrEmpty(cellValue) && cellValue!.Contains(s_templateOptions.TemplateDataPrefix))
+                                    if (!string.IsNullOrEmpty(cellValue) &&
+                                        cellValue!.Contains(s_templateOptions.TemplateDataPrefix))
                                     {
                                         var beforeValue = cellValue;
 
@@ -144,7 +153,8 @@ namespace WeihanLi.Npoi
                                             if (cellValue.Contains(param))
                                             {
                                                 cellValue = cellValue.Replace(param,
-                                                    dataFuncDictionary[param]?.Invoke(entity)?.ToString() ?? string.Empty);
+                                                    dataFuncDictionary[param]?.Invoke(entity)?.ToString() ??
+                                                    string.Empty);
                                             }
                                         }
 
@@ -157,6 +167,7 @@ namespace WeihanLi.Npoi
                             }
                         }
                     }
+
                     //
                     dataStartRow += dataRowsCount;
                 }
@@ -170,6 +181,7 @@ namespace WeihanLi.Npoi
                         sheet.RemoveRow(row);
                     }
                 }
+
                 sheet.ShiftRows(dataStartRow + dataRowsCount, sheet.LastRowNum, -dataRowsCount);
             }
 

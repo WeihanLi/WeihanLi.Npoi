@@ -1,11 +1,15 @@
-﻿using NPOI.SS.Util;
-using System;
+﻿using System;
+using NPOI.SS.Util;
 using NModel = NPOI.SS.UserModel;
 
 namespace WeihanLi.Npoi.Abstract
 {
     internal class NPOIWorkbook : IWorkbook
     {
+        private readonly NModel.IWorkbook _workbook;
+
+        public NPOIWorkbook(NModel.IWorkbook workbook) => _workbook = workbook;
+
         public int SheetCount => _workbook.NumberOfSheets;
 
         public ISheet GetSheet(int sheetIndex) => new NPOISheet(_workbook.GetSheetAt(sheetIndex));
@@ -13,17 +17,14 @@ namespace WeihanLi.Npoi.Abstract
         public ISheet CreateSheet(string sheetName) => new NPOISheet(_workbook.CreateSheet(sheetName));
 
         public byte[] ToBytes() => _workbook.ToExcelBytes();
-
-        private readonly NModel.IWorkbook _workbook;
-
-        public NPOIWorkbook(NModel.IWorkbook workbook)
-        {
-            _workbook = workbook;
-        }
     }
 
     internal class NPOISheet : ISheet
     {
+        private readonly NModel.ISheet _sheet;
+
+        public NPOISheet(NModel.ISheet sheet) => _sheet = sheet;
+
         public int FirstRowNum => _sheet.FirstRowNum + 1;
         public int LastRowNum => _sheet.LastRowNum + 1;
 
@@ -31,7 +32,9 @@ namespace WeihanLi.Npoi.Abstract
         {
             var nRow = _sheet.GetRow(rowIndex);
             if (null == nRow)
+            {
                 return null;
+            }
 
             return new NPOIRow(nRow);
         }
@@ -42,26 +45,25 @@ namespace WeihanLi.Npoi.Abstract
 
         public void AutoSizeColumn(int columnIndex) => _sheet.AutoSizeColumn(columnIndex);
 
-        public void CreateFreezePane(int colSplit, int rowSplit, int leftMostCol, int topRow) => _sheet.CreateFreezePane(colSplit, rowSplit, leftMostCol, topRow);
+        public void CreateFreezePane(int colSplit, int rowSplit, int leftMostCol, int topRow) =>
+            _sheet.CreateFreezePane(colSplit, rowSplit, leftMostCol, topRow);
 
-        public void SetAutoFilter(int firstRowIndex, int lastRowIndex, int firstColumnIndex, int lastColumnIndex) => _sheet.SetAutoFilter(new CellRangeAddress(firstRowIndex, lastRowIndex, firstColumnIndex, lastColumnIndex));
+        public void SetAutoFilter(int firstRowIndex, int lastRowIndex, int firstColumnIndex, int lastColumnIndex) =>
+            _sheet.SetAutoFilter(new CellRangeAddress(firstRowIndex, lastRowIndex, firstColumnIndex, lastColumnIndex));
 
         public void ShiftRows(int startRow, int endRow, int n) => _sheet.ShiftRows(startRow, endRow, n);
 
         public IRow CopyRow(int sourceIndex, int targetIndex) => new NPOIRow(_sheet.CopyRow(sourceIndex, targetIndex));
 
         public void RemoveRow(IRow row) => _sheet.RemoveRow(row.UnderlyingValue as NModel.IRow);
-
-        private readonly NModel.ISheet _sheet;
-
-        public NPOISheet(NModel.ISheet sheet)
-        {
-            _sheet = sheet;
-        }
     }
 
     internal class NPOIRow : IRow
     {
+        private readonly NModel.IRow _row;
+
+        public NPOIRow(NModel.IRow row) => _row = row;
+
         public int CellsCount => _row.PhysicalNumberOfCells;
         public int FirstCellNum => _row.FirstCellNum + 1;
         public int LastCellNum => _row.LastCellNum;
@@ -69,30 +71,24 @@ namespace WeihanLi.Npoi.Abstract
         public ICell? GetCell(int cellIndex)
         {
             var nCell = _row.GetCell(cellIndex);
-            if (nCell is null) return null;
+            if (nCell is null)
+            {
+                return null;
+            }
+
             return new NPOICell(nCell);
         }
 
         public ICell CreateCell(int cellIndex) => new NPOICell(_row.CreateCell(cellIndex));
 
         public object UnderlyingValue => _row;
-
-        private readonly NModel.IRow _row;
-
-        public NPOIRow(NModel.IRow row)
-        {
-            _row = row;
-        }
     }
 
     internal class NPOICell : ICell
     {
         private readonly NModel.ICell _cell;
 
-        public NPOICell(NModel.ICell cell)
-        {
-            _cell = cell;
-        }
+        public NPOICell(NModel.ICell cell) => _cell = cell;
 
         public CellType CellType
         {
@@ -108,6 +104,7 @@ namespace WeihanLi.Npoi.Abstract
                 {
                     return null;
                 }
+
                 switch (_cell.CellType)
                 {
                     case NModel.CellType.Numeric:
@@ -115,6 +112,7 @@ namespace WeihanLi.Npoi.Abstract
                         {
                             return _cell.DateCellValue;
                         }
+
                         return _cell.NumericCellValue;
 
                     case NModel.CellType.String:

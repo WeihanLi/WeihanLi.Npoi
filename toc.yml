@@ -7,3 +7,5 @@
 - name: Articles
   href: docs/articles/
   homepage: docs/articles/intro.md
+- name: Github
+  href: https://github.com/WeihanLi/WeihanLi.Npoi

@@ -2,6 +2,8 @@ using NPOI.SS.UserModel;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -685,6 +687,101 @@ namespace WeihanLi.Npoi.Test
         }
 
         [Theory]
+        [InlineData(@"TestData\EmptyColumns\emptyColumns.xls", ExcelFormat.Xls)]
+        [InlineData(@"TestData\EmptyColumns\emptyColumns.xlsx", ExcelFormat.Xlsx)]
+        public void DataTableImportExportTestWithFirstColumnsEmpty(string file, ExcelFormat excelFormat)
+        {
+            // Arrange
+            var excelBytes = File.ReadAllBytes(file);
+
+            // Act
+            var importedData = ExcelHelper.ToDataTable(excelBytes, excelFormat);
+
+            // Assert
+            var dt = new DataTable();
+            dt.Columns.AddRange(new[]
+            {
+                new DataColumn("A"),
+                new DataColumn("B"),
+                new DataColumn("C"),
+                new DataColumn("D"),
+            });
+
+            dt.AddNewRow(new object[] { "", "", "3", "4" });
+            dt.AddNewRow(new object[] { "", "2", "3", "" });
+            dt.AddNewRow(new object[] { "1", "2", "", "" });
+            dt.AddNewRow(new object[] { "1", "2", "3", "4" });
+
+            Assert.NotNull(importedData);
+
+            Assert.Equal(4, importedData.Rows.Count);
+
+            AssertDataTable(importedData, dt);
+        }
+
+        [Theory]
+        [InlineData(@"TestData\NonStringColumns\nonStringColumns.xls", ExcelFormat.Xls)]
+        [InlineData(@"TestData\NonStringColumns\nonStringColumns.xlsx", ExcelFormat.Xlsx)]
+        public void DataTableImportExportTestWithNonStringColumns(string file, ExcelFormat excelFormat)
+        {
+            // Arrange
+            var excelBytes = File.ReadAllBytes(file);
+
+            // Act
+            var importedData = ExcelHelper.ToDataTable(excelBytes, excelFormat);
+
+            // Assert
+            var dt = new DataTable();
+            dt.Columns.AddRange(new[]
+            {
+                new DataColumn("A"),
+                new DataColumn("1000"),
+                new DataColumn("TRUE"), // Excel value will loaded as "True".
+                new DataColumn(DateTime.ParseExact("15/08/2021", "dd/MM/yyyy", CultureInfo.InvariantCulture).ToShortDateString()),
+            });
+
+            dt.AddNewRow(new object[] { "1", "2", "3", "4" });
+
+            Assert.NotNull(importedData);
+
+            Assert.Equal(1, importedData.Rows.Count);
+
+            AssertDataTable(importedData, dt);
+        }
+
+        [Theory]
+        [InlineData(@"TestData\EmptyRows\emptyRows.xls", ExcelFormat.Xls)]
+        [InlineData(@"TestData\EmptyRows\emptyRows.xlsx", ExcelFormat.Xlsx)]
+        public void DataTableImportExportTestWithoutEmptyRowsAndAdditionalColumns(string file, ExcelFormat excelFormat)
+        {
+            // Arrange
+            var excelBytes = File.ReadAllBytes(file);
+
+            // Act
+            var importedData = ExcelHelper.ToDataTable(excelBytes, excelFormat, removeEmptyRows: true, maxColumns: 3);
+
+            // Assert
+            var dt = new DataTable();
+            dt.Columns.AddRange(new[]
+            {
+                new DataColumn("A"),
+                new DataColumn("B"),
+                new DataColumn("C"),
+            });
+
+            dt.AddNewRow(new object[] { "1", "2", "3" });
+            dt.AddNewRow(new object[] { "1", "", "" });
+            dt.AddNewRow(new object[] { "1", "2", "3" });
+            dt.AddNewRow(new object[] { "", "2", "3" });
+
+            Assert.NotNull(importedData);
+
+            Assert.Equal(4, importedData.Rows.Count);
+
+            AssertDataTable(importedData, dt);
+        }
+
+        [Theory]
         [ExcelFormatData]
         public async Task ImageImportExportTest(ExcelFormat excelFormat)
         {
@@ -727,6 +824,116 @@ namespace WeihanLi.Npoi.Test
                 Assert.NotNull(result.Image);
                 Assert.True(list[i].Image.SequenceEqual(result.Image.Data));
                 Assert.Equal(PictureType.PNG, result.Image.PictureType);
+            }
+        }
+
+        [Fact]
+        public void DataTableDefaultValueTest()
+        {
+            var table = new DataTable();
+            table.Columns.Add(new DataColumn("Name"));
+            table.Columns.Add(new DataColumn("Value"));
+            table.Columns.Add(new DataColumn("Description"));
+            var row = table.AddNewRow();
+            row["Value"] = null;
+            row["Description"] = "test";
+
+            Assert.Equal(DBNull.Value, table.Rows[0]["Name"]);
+            Assert.Equal(DBNull.Value, table.Rows[0]["Value"]);
+            Assert.NotNull(table.Rows[0][0]);
+            Assert.Equal("test", table.Rows[0]["Description"]);
+        }
+
+        [Theory]
+        [ExcelFormatData]
+        public void SheetNameTest_ToExcelFile(ExcelFormat excelFormat)
+        {
+            IReadOnlyList<Notice> list = Enumerable.Range(0, 10).Select(i => new Notice()
+            {
+                Id = i + 1,
+                Content = $"content_{i}",
+                Title = $"title_{i}",
+                PublishedAt = DateTime.UtcNow.AddDays(-i),
+                Publisher = $"publisher_{i}"
+            }).ToArray();
+            var settings = FluentSettings.For<Notice>();
+            lock (settings)
+            {
+                settings.HasSheetSetting(s =>
+                {
+                    s.SheetName = "Test";
+                });
+
+                var filePath = $"{Path.GetTempFileName()}.{excelFormat.ToString().ToLower()}";
+                list.ToExcelFile(filePath);
+
+                var excel = ExcelHelper.LoadExcel(filePath);
+                Assert.Equal("Test", excel.GetSheetAt(0).SheetName);
+
+                settings.HasSheetSetting(s =>
+                {
+                    s.SheetName = "NoticeList";
+                });
+            }
+
+
+        }
+
+        [Theory]
+        [ExcelFormatData]
+        public void SheetNameTest_ToExcelBytes(ExcelFormat excelFormat)
+        {
+            IReadOnlyList<Notice> list = Enumerable.Range(0, 10).Select(i => new Notice()
+            {
+                Id = i + 1,
+                Content = $"content_{i}",
+                Title = $"title_{i}",
+                PublishedAt = DateTime.UtcNow.AddDays(-i),
+                Publisher = $"publisher_{i}"
+            }).ToArray();
+            var settings = FluentSettings.For<Notice>();
+            lock (settings)
+            {
+                settings.HasSheetSetting(s =>
+                {
+                    s.SheetName = "Test";
+                });
+
+                var excelBytes = list.ToExcelBytes(excelFormat);
+                var excel = ExcelHelper.LoadExcel(excelBytes, excelFormat);
+                Assert.Equal("Test", excel.GetSheetAt(0).SheetName);
+
+                settings.HasSheetSetting(s =>
+                {
+                    s.SheetName = "NoticeList";
+                });
+            }
+            
+
+        }
+
+        private static void AssertDataTable(DataTable actual, DataTable expected)
+        {
+            // Check columns
+            for (var headerIndex = 0; headerIndex < expected.Columns.Count; headerIndex++)
+            {
+                var expectedValue = expected.Columns[headerIndex]?.ToString();
+                var excelValue = actual.Columns[headerIndex].ToString();
+
+                // "TRUE" from header column is translated to "True".
+                // I don't know how to load display value of boolean, therefore I ignore letter casing.
+                Assert.Equal(expectedValue, excelValue, ignoreCase: true);
+            }
+
+            // Check rows
+            for (var rowIndex = 0; rowIndex < expected.Rows.Count; rowIndex++)
+            {
+                for (var colIndex = 0; colIndex < expected.Rows[rowIndex].ItemArray.Length; colIndex++)
+                {
+                    var expectedValue = expected.Rows[rowIndex].ItemArray[colIndex]?.ToString();
+                    var excelValue = actual.Rows[rowIndex][colIndex].ToString();
+                    Assert.Equal(expectedValue, excelValue);
+                }
             }
         }
 

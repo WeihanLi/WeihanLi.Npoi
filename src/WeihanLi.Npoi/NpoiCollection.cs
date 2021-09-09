@@ -1,12 +1,12 @@
-﻿using NPOI.SS.UserModel;
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using NPOI.SS.UserModel;
 
 namespace WeihanLi.Npoi
 {
     /// <summary>
-    /// npoi sheet row collection
+    ///     npoi sheet row collection
     /// </summary>
     public sealed class NpoiRowCollection : IReadOnlyCollection<IRow>
     {
@@ -24,23 +24,17 @@ namespace WeihanLi.Npoi
             }
         }
 
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetEnumerator();
-        }
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 
     /// <summary>
-    /// npoi row cell collection
+    ///     npoi row cell collection
     /// </summary>
     public sealed class NpoiCellCollection : IReadOnlyCollection<ICell>
     {
         private readonly IRow _row;
 
-        public NpoiCellCollection(IRow row)
-        {
-            _row = row;
-        }
+        public NpoiCellCollection(IRow row) => _row = row;
 
         public int Count => _row.LastCellNum - _row.FirstCellNum;
 

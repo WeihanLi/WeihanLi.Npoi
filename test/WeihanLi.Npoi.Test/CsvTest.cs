@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Globalization;
+using System.IO;
 using System.Linq;
 using WeihanLi.Extensions;
 using WeihanLi.Npoi.Test.Models;
@@ -120,6 +122,97 @@ namespace WeihanLi.Npoi.Test
                 for (var j = 0; j < dt.Rows[i].ItemArray.Length; j++)
                 {
                     Assert.Equal(dt.Rows[i].ItemArray[j], importedData.Rows[i].ItemArray[j]);
+                }
+            }
+        }
+
+        [Theory]
+        [InlineData(@"TestData/EmptyColumns/emptyColumns.csv")]
+        public void DataTableWithFirstLineEmpty(string testDataFilePath)
+        {
+            var bytes = File.ReadAllBytes(testDataFilePath);
+            var importedData = CsvHelper.ToDataTable(bytes);
+            var dt = new DataTable();
+            dt.Columns.AddRange(new[]
+            {
+                new DataColumn("A"),
+                new DataColumn("B"),
+                new DataColumn("C"),
+                new DataColumn("D"),
+            });
+
+            var row = dt.NewRow();
+            row.ItemArray = new object[] { "", "", "3", "4" };
+            dt.Rows.Add(row);
+
+            row = dt.NewRow();
+            row.ItemArray = new object[] { "", "2", "3", "" };
+            dt.Rows.Add(row);
+
+            row = dt.NewRow();
+            row.ItemArray = new object[] { "1", "2", "", "" };
+            dt.Rows.Add(row);
+
+            row = dt.NewRow();
+            row.ItemArray = new object[] { "1", "2", "3", "4" };
+            dt.Rows.Add(row);
+            
+            Assert.NotNull(importedData);
+
+            Assert.Equal(4, importedData.Rows.Count);
+
+            for (var rowIndex = 0; rowIndex < dt.Rows.Count; rowIndex++)
+            {
+                for (var colIndex = 0; colIndex < dt.Rows[rowIndex].ItemArray.Length; colIndex++)
+                {
+                    var expectedValue = dt.Rows[rowIndex].ItemArray[colIndex]?.ToString();
+                    var excelValue = importedData.Rows[rowIndex][colIndex].ToString();
+                    Assert.Equal(expectedValue, excelValue);
+                }
+            }
+        }
+
+        [Theory]
+        [InlineData(@"TestData\NonStringColumns\nonStringColumns.csv")]
+        public void DataTableImportExportTestWithNonStringColumns(string testDataFilePath)
+        {
+            // Act
+            var importedData = CsvHelper.ToDataTable(testDataFilePath);
+
+            // Assert
+            var dt = new DataTable();
+            dt.Columns.AddRange(new[]
+            {
+                new DataColumn("A"),
+                new DataColumn("1000"),
+                new DataColumn("TRUE"),
+                new DataColumn("15/08/2021")
+            });
+
+            var row = dt.NewRow();
+            row.ItemArray = new object[] { "1", "2", "3", "4" };
+            dt.Rows.Add(row);
+
+            Assert.NotNull(importedData);
+
+            Assert.Equal(1, importedData.Rows.Count);
+
+            // Check columns
+            for (var headerIndex = 0; headerIndex < dt.Columns.Count; headerIndex++)
+            {
+                var expectedValue = dt.Columns[headerIndex]?.ToString();
+                var excelValue = importedData.Columns[headerIndex].ToString();
+                Assert.Equal(expectedValue, excelValue);
+            }
+
+            // Check rows
+            for (var rowIndex = 0; rowIndex < dt.Rows.Count; rowIndex++)
+            {
+                for (var colIndex = 0; colIndex < dt.Rows[rowIndex].ItemArray.Length; colIndex++)
+                {
+                    var expectedValue = dt.Rows[rowIndex].ItemArray[colIndex]?.ToString();
+                    var excelValue = importedData.Rows[rowIndex][colIndex].ToString();
+                    Assert.Equal(expectedValue, excelValue);
                 }
             }
         }

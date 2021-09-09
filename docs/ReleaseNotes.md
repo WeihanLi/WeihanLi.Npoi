@@ -1,5 +1,19 @@
 # WeihanLi.Npoi Release Notes
 
+## [1.20.0](https://www.nuget.org/packages/WeihanLi.Npoi/1.19.2)
+
+- The `ExcelHelper.ToDataTable` was extended with two arguments `bool removeEmptyRows = false, int? maxColumns = null`
+- Fix possible `IndexOutOfRangeException` when loading rows
+
+## [1.19.1](https://www.nuget.org/packages/WeihanLi.Npoi/1.19.1)
+
+- Fix `ExcelHelper.ToDataTable` bug when the imported excel column value is not the string value, thanks for @Ninjanaut's contribution
+
+## [1.19.0](https://www.nuget.org/packages/WeihanLi.Npoi/1.19.0)
+
+- Fix `ExcelHelper.ToDataTable` bug when the imported excel file first column is empty, thanks for @Ninjanaut's contribution
+- `FluentSettings.LoadMappingProfile` enhancement
+
 ## [1.18.0](https://www.nuget.org/packages/WeihanLi.Npoi/1.18.0)
 
 - add `MappingProfile` support so that we could split mappings into separate mapping profiles

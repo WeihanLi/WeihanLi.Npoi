@@ -1,11 +1,11 @@
-﻿using NPOI.SS.UserModel;
-using NPOI.SS.Util;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
+using NPOI.SS.UserModel;
+using NPOI.SS.Util;
 using WeihanLi.Common;
 using WeihanLi.Common.Helpers;
 using WeihanLi.Extensions;
@@ -16,15 +16,13 @@ namespace WeihanLi.Npoi
 {
     internal static class NpoiHelper
     {
-        private static SheetSetting GetSheetSetting(IDictionary<int, SheetSetting> sheetSettings, int sheetIndex)
-        {
-            return sheetIndex > 0 && sheetSettings.ContainsKey(sheetIndex)
+        private static SheetSetting GetSheetSetting(IDictionary<int, SheetSetting> sheetSettings, int sheetIndex) =>
+            sheetIndex > 0 && sheetSettings.ContainsKey(sheetIndex)
                 ? sheetSettings[sheetIndex]
                 : sheetSettings[0];
-        }
 
         /// <summary>
-        /// Import sheet data to entity list
+        ///     Import sheet data to entity list
         /// </summary>
         /// <typeparam name="TEntity">entity type</typeparam>
         /// <param name="sheet">excel sheet</param>
@@ -33,7 +31,9 @@ namespace WeihanLi.Npoi
         public static List<TEntity?> SheetToEntityList<TEntity>(ISheet? sheet, int sheetIndex) where TEntity : new()
         {
             if (sheet is null || sheet.PhysicalNumberOfRows <= 0)
+            {
                 return new List<TEntity?>();
+            }
 
             var configuration = InternalHelper.GetExcelConfigurationMapping<TEntity>();
             var sheetSetting = GetSheetSetting(configuration.SheetSettings, sheetIndex);
@@ -41,24 +41,27 @@ namespace WeihanLi.Npoi
 
             var propertyColumnDictionary = InternalHelper.GetPropertyColumnDictionary(configuration);
             var propertyColumnDic = sheetSetting.HeaderRowIndex >= 0
-                ? propertyColumnDictionary.ToDictionary(_ => _.Key, _ => new PropertyConfiguration()
-                {
-                    ColumnIndex = -1,
-                    ColumnFormatter = _.Value.ColumnFormatter,
-                    ColumnTitle = _.Value.ColumnTitle,
-                    ColumnWidth = _.Value.ColumnWidth,
-                    IsIgnored = _.Value.IsIgnored
-                })
+                ? propertyColumnDictionary.ToDictionary(_ => _.Key,
+                    _ => new PropertyConfiguration
+                    {
+                        ColumnIndex = -1,
+                        ColumnFormatter = _.Value.ColumnFormatter,
+                        ColumnTitle = _.Value.ColumnTitle,
+                        ColumnWidth = _.Value.ColumnWidth,
+                        IsIgnored = _.Value.IsIgnored
+                    })
                 : propertyColumnDictionary;
             var formulaEvaluator = sheet.Workbook.GetFormulaEvaluator();
 
             var pictures = propertyColumnDic
-                  .Any(p => p.Key.CanWrite &&
-                            (p.Key.PropertyType == typeof(byte[]) || p.Key.PropertyType == typeof(IPictureData)))
+                .Any(p => p.Key.CanWrite &&
+                          (p.Key.PropertyType == typeof(byte[]) || p.Key.PropertyType == typeof(IPictureData)))
                 ? sheet.GetPicturesAndPosition()
                 : new Dictionary<CellPosition, IPictureData>();
 
-            for (var rowIndex = sheet.FirstRowNum; rowIndex <= (sheetSetting.EndRowIndex ?? sheet.LastRowNum); rowIndex++)
+            for (var rowIndex = sheet.FirstRowNum;
+                rowIndex <= (sheetSetting.EndRowIndex ?? sheet.LastRowNum);
+                rowIndex++)
             {
                 var row = sheet.GetRow(rowIndex);
 
@@ -73,6 +76,7 @@ namespace WeihanLi.Npoi
                             {
                                 continue;
                             }
+
                             var col = propertyColumnDic.GetPropertySetting(row.GetCell(i).StringCellValue.Trim());
                             if (null != col)
                             {
@@ -80,6 +84,7 @@ namespace WeihanLi.Npoi
                             }
                         }
                     }
+
                     // use default column index if no headers
                     if (propertyColumnDic.Values.All(_ => _.ColumnIndex < 0))
                     {
@@ -106,12 +111,12 @@ namespace WeihanLi.Npoi
 
                             if (configuration.EntityType.IsValueType)
                             {
-                                var obj = (object)entity;// boxing for value types
+                                var obj = (object)entity; // boxing for value types
 
                                 ProcessImport(obj, row, rowIndex, propertyColumnDic, sheetSetting, formulaEvaluator,
                                     pictures);
 
-                                entity = (TEntity)obj;// unboxing
+                                entity = (TEntity)obj; // unboxing
                             }
                             else
                             {
@@ -131,7 +136,8 @@ namespace WeihanLi.Npoi
                                 if (propertyInfo.CanWrite)
                                 {
                                     var propertyValue = propertyInfo.GetValueGetter()?.Invoke(entity);
-                                    if (InternalCache.InputFormatterFuncCache.TryGetValue(propertyInfo, out var formatterFunc) && formatterFunc?.Method != null)
+                                    if (InternalCache.InputFormatterFuncCache.TryGetValue(propertyInfo,
+                                        out var formatterFunc) && formatterFunc?.Method != null)
                                     {
                                         var valueSetter = propertyInfo.GetValueSetter();
                                         if (valueSetter != null)
@@ -187,13 +193,15 @@ namespace WeihanLi.Npoi
                             {
                                 if (pictures.TryGetValue(new CellPosition(rowIndex, colIndex), out var pic))
                                 {
-                                    valueSetter.Invoke(entity, key.PropertyType == typeof(IPictureData) ? pic : pic.Data);
+                                    valueSetter.Invoke(entity,
+                                        key.PropertyType == typeof(IPictureData) ? pic : pic.Data);
                                 }
                             }
                             else
                             {
                                 var valueApplied = false;
-                                if (InternalCache.ColumnInputFormatterFuncCache.TryGetValue(key, out var formatterFunc) && formatterFunc?.Method != null)
+                                if (InternalCache.ColumnInputFormatterFuncCache.TryGetValue(key,
+                                    out var formatterFunc) && formatterFunc?.Method != null)
                                 {
                                     var cellValue = cell.GetCellValue<string>(formulaEvaluator);
                                     try
@@ -208,10 +216,12 @@ namespace WeihanLi.Npoi
                                         InvokeHelper.OnInvokeException?.Invoke(e);
                                     }
                                 }
+
                                 if (valueApplied == false)
                                 {
                                     columnValue = cell.GetCellValue(key.PropertyType, formulaEvaluator);
                                 }
+
                                 valueSetter.Invoke(entity, columnValue);
                             }
                         }
@@ -221,7 +231,7 @@ namespace WeihanLi.Npoi
         }
 
         /// <summary>
-        /// Export entity list to excel sheet
+        ///     Export entity list to excel sheet
         /// </summary>
         /// <typeparam name="TEntity">entity type</typeparam>
         /// <param name="sheet">sheet</param>
@@ -235,6 +245,7 @@ namespace WeihanLi.Npoi
             {
                 return sheet;
             }
+
             var configuration = InternalHelper.GetExcelConfigurationMapping<TEntity>();
             var propertyColumnDictionary = InternalHelper.GetPropertyColumnDictionary(configuration);
             if (propertyColumnDictionary.Keys.Count == 0)
@@ -252,6 +263,7 @@ namespace WeihanLi.Npoi
                     cell.SetCellValue(propertyColumnDictionary[key].ColumnTitle);
                     sheetSetting.CellAction?.Invoke(cell);
                 }
+
                 sheetSetting.RowAction?.Invoke(headerRow);
             }
 
@@ -264,7 +276,8 @@ namespace WeihanLi.Npoi
                     foreach (var key in propertyColumnDictionary.Keys)
                     {
                         var propertyValue = key.GetValueGetter<TEntity>()?.Invoke(entity);
-                        if (InternalCache.OutputFormatterFuncCache.TryGetValue(key, out var formatterFunc) && formatterFunc?.Method != null)
+                        if (InternalCache.OutputFormatterFuncCache.TryGetValue(key, out var formatterFunc) &&
+                            formatterFunc?.Method != null)
                         {
                             try
                             {
@@ -294,7 +307,7 @@ namespace WeihanLi.Npoi
         }
 
         /// <summary>
-        /// Generic type data table to excel sheet
+        ///     Generic type data table to excel sheet
         /// </summary>
         /// <typeparam name="TEntity">entity type</typeparam>
         /// <param name="sheet">sheet</param>
@@ -323,7 +336,8 @@ namespace WeihanLi.Npoi
                 var headerRow = sheet.CreateRow(sheetSetting.HeaderRowIndex);
                 for (var i = 0; i < dataTable.Columns.Count; i++)
                 {
-                    var col = propertyColumnDictionary.GetPropertySettingByPropertyName(dataTable.Columns[i].ColumnName);
+                    var col = propertyColumnDictionary.GetPropertySettingByPropertyName(dataTable.Columns[i]
+                        .ColumnName);
                     if (null != col)
                     {
                         var cell = headerRow.CreateCell(col.ColumnIndex);
@@ -331,6 +345,7 @@ namespace WeihanLi.Npoi
                         sheetSetting.CellAction?.Invoke(cell);
                     }
                 }
+
                 sheetSetting.RowAction?.Invoke(headerRow);
             }
 
@@ -339,11 +354,13 @@ namespace WeihanLi.Npoi
                 var row = sheet.CreateRow(sheetSetting.StartRowIndex + i);
                 for (var j = 0; j < dataTable.Columns.Count; j++)
                 {
-                    var col = propertyColumnDictionary.GetPropertySettingByPropertyName(dataTable.Columns[j].ColumnName);
+                    var col = propertyColumnDictionary.GetPropertySettingByPropertyName(dataTable.Columns[j]
+                        .ColumnName);
                     var cell = row.CreateCell(col!.ColumnIndex);
                     cell.SetCellValue(dataTable.Rows[i][j], col.ColumnFormatter);
                     sheetSetting.CellAction?.Invoke(cell);
                 }
+
                 sheetSetting.RowAction?.Invoke(row);
             }
 
@@ -352,7 +369,9 @@ namespace WeihanLi.Npoi
             return sheet;
         }
 
-        private static void PostSheetProcess<TEntity>(ISheet sheet, SheetSetting sheetSetting, int rowsCount, ExcelConfiguration<TEntity> excelConfiguration, IDictionary<PropertyInfo, PropertyConfiguration> propertyColumnDictionary)
+        private static void PostSheetProcess<TEntity>(ISheet sheet, SheetSetting sheetSetting, int rowsCount,
+            ExcelConfiguration<TEntity> excelConfiguration,
+            IDictionary<PropertyInfo, PropertyConfiguration> propertyColumnDictionary)
         {
             if (rowsCount > 0)
             {
@@ -373,15 +392,20 @@ namespace WeihanLi.Npoi
 
                 foreach (var freezeSetting in excelConfiguration.FreezeSettings)
                 {
-                    sheet.CreateFreezePane(freezeSetting.ColSplit, freezeSetting.RowSplit, freezeSetting.LeftMostColumn, freezeSetting.TopRow);
+                    sheet.CreateFreezePane(freezeSetting.ColSplit, freezeSetting.RowSplit, freezeSetting.LeftMostColumn,
+                        freezeSetting.TopRow);
                 }
 
                 if (excelConfiguration.FilterSetting != null)
                 {
                     var headerIndex = sheetSetting.HeaderRowIndex >= 0 ? sheetSetting.HeaderRowIndex : 0;
-                    sheet.SetAutoFilter(new CellRangeAddress(headerIndex, rowsCount + headerIndex, excelConfiguration.FilterSetting.FirstColumn, excelConfiguration.FilterSetting.LastColumn ?? propertyColumnDictionary.Values.Max(_ => _.ColumnIndex)));
+                    sheet.SetAutoFilter(new CellRangeAddress(headerIndex, rowsCount + headerIndex,
+                        excelConfiguration.FilterSetting.FirstColumn,
+                        excelConfiguration.FilterSetting.LastColumn ??
+                        propertyColumnDictionary.Values.Max(_ => _.ColumnIndex)));
                 }
             }
+
             sheetSetting.SheetAction?.Invoke(sheet);
         }
     }

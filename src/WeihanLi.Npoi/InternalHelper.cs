@@ -50,6 +50,7 @@ namespace WeihanLi.Npoi
                     excelConfiguration.SheetSettings[sheetAttribute.SheetIndex] = sheetAttribute.SheetSetting;
                 }
             }
+
             foreach (var freezeAttribute in type.GetCustomAttributes<FreezeAttribute>())
             {
                 excelConfiguration.FreezeSettings.Add(freezeAttribute.FreezeSetting);
@@ -70,19 +71,19 @@ namespace WeihanLi.Npoi
 
                 propertyConfigurationType.GetProperty(nameof(column.PropertyConfiguration.ColumnTitle))
                     ?.GetSetMethod()?
-                    .Invoke(propertyConfiguration, new object[] {column.PropertyConfiguration.ColumnTitle});
+                    .Invoke(propertyConfiguration, new object[] { column.PropertyConfiguration.ColumnTitle });
                 propertyConfigurationType.GetProperty(nameof(column.PropertyConfiguration.ColumnIndex))
                     ?.GetSetMethod()?
-                    .Invoke(propertyConfiguration, new object[] {column.PropertyConfiguration.ColumnIndex});
+                    .Invoke(propertyConfiguration, new object[] { column.PropertyConfiguration.ColumnIndex });
                 propertyConfigurationType.GetProperty(nameof(column.PropertyConfiguration.ColumnFormatter))
                     ?.GetSetMethod()?
-                    .Invoke(propertyConfiguration, new object?[] {column.PropertyConfiguration.ColumnFormatter});
+                    .Invoke(propertyConfiguration, new object?[] { column.PropertyConfiguration.ColumnFormatter });
                 propertyConfigurationType.GetProperty(nameof(column.PropertyConfiguration.IsIgnored))
                     ?.GetSetMethod()?
-                    .Invoke(propertyConfiguration, new object[] {column.PropertyConfiguration.IsIgnored});
+                    .Invoke(propertyConfiguration, new object[] { column.PropertyConfiguration.IsIgnored });
                 propertyConfigurationType.GetProperty(nameof(column.PropertyConfiguration.ColumnWidth))
                     ?.GetSetMethod()?
-                    .Invoke(propertyConfiguration, new object[] {column.PropertyConfiguration.ColumnWidth});
+                    .Invoke(propertyConfiguration, new object[] { column.PropertyConfiguration.ColumnWidth });
 
                 excelConfiguration.PropertyConfigurationDictionary.Add(propertyInfo,
                     (PropertyConfiguration)propertyConfiguration);
