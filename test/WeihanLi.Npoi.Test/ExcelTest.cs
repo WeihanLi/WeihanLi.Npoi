@@ -716,7 +716,7 @@ namespace WeihanLi.Npoi.Test
 
             Assert.Equal(4, importedData.Rows.Count);
 
-            AssertDataTable(importedData, dt);
+            importedData.AssertEquals(dt);
         }
 
         [Theory]
@@ -746,7 +746,7 @@ namespace WeihanLi.Npoi.Test
 
             Assert.Equal(1, importedData.Rows.Count);
 
-            AssertDataTable(importedData, dt);
+            importedData.AssertEquals(dt);
         }
 
         [Theory]
@@ -778,7 +778,7 @@ namespace WeihanLi.Npoi.Test
 
             Assert.Equal(4, importedData.Rows.Count);
 
-            AssertDataTable(importedData, dt);
+            importedData.AssertEquals(dt);
         }
 
         [Theory]
@@ -843,7 +843,7 @@ namespace WeihanLi.Npoi.Test
             Assert.NotNull(table.Rows[0][0]);
             Assert.Equal("test", table.Rows[0]["Description"]);
         }
-
+      
         [Theory]
         [ExcelFormatData]
         public void SheetNameTest_ToExcelFile(ExcelFormat excelFormat)
@@ -908,35 +908,51 @@ namespace WeihanLi.Npoi.Test
                     s.SheetName = "NoticeList";
                 });
             }
-            
-
         }
 
-        private static void AssertDataTable(DataTable actual, DataTable expected)
+        [Theory]
+        [ExcelFormatData]
+        public void DuplicateColumnTest(ExcelFormat excelFormat)
         {
-            // Check columns
-            for (var headerIndex = 0; headerIndex < expected.Columns.Count; headerIndex++)
-            {
-                var expectedValue = expected.Columns[headerIndex]?.ToString();
-                var excelValue = actual.Columns[headerIndex].ToString();
+            var workbook = ExcelHelper.PrepareWorkbook(excelFormat);
+            var sheet = workbook.CreateSheet();
+            var headerRow = sheet.CreateRow(0);
+            headerRow.CreateCell(0).SetCellValue("A");
+            headerRow.CreateCell(1).SetCellValue("B");
+            headerRow.CreateCell(2).SetCellValue("C");
+            headerRow.CreateCell(3).SetCellValue("A");
+            headerRow.CreateCell(4).SetCellValue("B");
+            headerRow.CreateCell(5).SetCellValue("C");
+            var dataRow = sheet.CreateRow(1);
+            dataRow.CreateCell(0).SetCellValue("1");
+            dataRow.CreateCell(1).SetCellValue("2");
+            dataRow.CreateCell(2).SetCellValue("3");
+            dataRow.CreateCell(3).SetCellValue("4");
+            dataRow.CreateCell(4).SetCellValue("5");
+            dataRow.CreateCell(5).SetCellValue("6");
+            var dataTable = sheet.ToDataTable();
+            Assert.Equal(headerRow.Cells.Count, dataTable.Columns.Count);
+            Assert.Equal(1, dataTable.Rows.Count);
 
-                // "TRUE" from header column is translated to "True".
-                // I don't know how to load display value of boolean, therefore I ignore letter casing.
-                Assert.Equal(expectedValue, excelValue, ignoreCase: true);
-            }
-
-            // Check rows
-            for (var rowIndex = 0; rowIndex < expected.Rows.Count; rowIndex++)
+            var newWorkbook = ExcelHelper.LoadExcel(dataTable.ToExcelBytes());
+            var newSheet = newWorkbook.GetSheetAt(0);
+            Assert.Equal(sheet.PhysicalNumberOfRows, newSheet.PhysicalNumberOfRows);
+            for (var i = 0; i < sheet.PhysicalNumberOfRows; i++)
             {
-                for (var colIndex = 0; colIndex < expected.Rows[rowIndex].ItemArray.Length; colIndex++)
+                Assert.Equal(sheet.GetRow(i).Cells.Count, newSheet.GetRow(i).Cells.Count);
+
+                for (var j = 0; j < headerRow.Cells.Count; j++)
                 {
-                    var expectedValue = expected.Rows[rowIndex].ItemArray[colIndex]?.ToString();
-                    var excelValue = actual.Rows[rowIndex][colIndex].ToString();
-                    Assert.Equal(expectedValue, excelValue);
+                    Assert.Equal(
+                        sheet.GetRow(i).GetCell(j).GetCellValue<string>(),
+                        newSheet.GetRow(i).GetCell(j).GetCellValue<string>()
+                        );
                 }
             }
+
         }
 
+        
         private class ImageTest
         {
             public int Id { get; set; }

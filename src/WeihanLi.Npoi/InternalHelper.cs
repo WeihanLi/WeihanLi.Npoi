@@ -174,5 +174,19 @@ namespace WeihanLi.Npoi
                 .Select(p => p.Key)
                 .ToArray();
         }
+
+        public static string GetEncodedColumnName(string columnName) =>
+            $"{columnName}{InternalConstants.DuplicateColumnMark}{Guid.NewGuid():N}";
+
+        public static string GetDecodeColumnName(string columnName)
+        {
+            var duplicateMarkIndex = columnName.IndexOf(InternalConstants.DuplicateColumnMark);
+            if (duplicateMarkIndex > 0)
+            {
+                return columnName.Substring(0, duplicateMarkIndex);
+            }
+
+            return columnName;
+        }
     }
 }
