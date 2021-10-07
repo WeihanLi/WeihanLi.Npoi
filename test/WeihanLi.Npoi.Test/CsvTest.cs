@@ -267,6 +267,23 @@ namespace WeihanLi.Npoi.Test
             Assert.True(arr.SequenceEqual(list));
         }
 
+        [Fact]
+        public void DuplicateColumnTest()
+        {
+            var csvText = $@"A,B,C,A,B,C{Environment.NewLine}1,2,3,4,5,6";
+            var dataTable = CsvHelper.ToDataTable(csvText.GetBytes());
+            Assert.Equal(6, dataTable.Columns.Count);
+            Assert.Equal(1, dataTable.Rows.Count);
+
+            var newCsvText = CsvHelper.GetCsvText(dataTable);
+            Assert.StartsWith("A,B,C,A,B,C", newCsvText);
+            var newDataTable = CsvHelper.ToDataTable(newCsvText.GetBytes());
+
+            Assert.Equal(dataTable.Columns.Count, newDataTable.Columns.Count);
+            Assert.Equal(dataTable.Rows.Count, newDataTable.Rows.Count);
+        }
+
+
         private static string TrimQuotes(string? str)
         {
             if (string.IsNullOrEmpty(str))

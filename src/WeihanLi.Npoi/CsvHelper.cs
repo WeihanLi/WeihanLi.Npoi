@@ -114,7 +114,13 @@ namespace WeihanLi.Npoi
                     {
                         for (var i = 0; i < dtColumns; i++)
                         {
-                            dt.Columns.Add(rowData[i]);
+                            var columnName = rowData[i];
+                            if (dt.Columns.Contains(columnName))
+                            {
+                                columnName = InternalHelper.GetEncodedColumnName(columnName);
+                            }
+
+                            dt.Columns.Add(columnName);
                         }
 
                         isFirst = false;
@@ -509,7 +515,7 @@ namespace WeihanLi.Npoi
         /// <summary>
         ///     Get csv text
         /// </summary>
-        public static string GetCsvText<TEntity>(this IEnumerable<TEntity> entities, bool includeHeader)
+        public static string GetCsvText<TEntity>(this IEnumerable<TEntity> entities, bool includeHeader = true)
         {
             if (entities is null)
             {
@@ -592,7 +598,7 @@ namespace WeihanLi.Npoi
         /// <summary>
         ///     Get csv text
         /// </summary>
-        public static string GetCsvText(this DataTable? dataTable, bool includeHeader)
+        public static string GetCsvText(this DataTable? dataTable, bool includeHeader = true)
         {
             if (dataTable is null || dataTable.Rows.Count == 0 || dataTable.Columns.Count == 0)
             {
@@ -610,7 +616,8 @@ namespace WeihanLi.Npoi
                         data.Append(CsvSeparatorCharacter);
                     }
 
-                    data.Append(dataTable.Columns[i].ColumnName);
+                    var columnName = InternalHelper.GetDecodeColumnName(dataTable.Columns[i].ColumnName);
+                    data.Append(columnName);
                 }
 
                 data.AppendLine();

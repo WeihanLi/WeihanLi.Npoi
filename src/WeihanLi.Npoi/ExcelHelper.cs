@@ -148,7 +148,7 @@ namespace WeihanLi.Npoi
                 throw new ArgumentException(msg);
             }
 
-            return PrepareWorkbook(!excelPath.EqualsIgnoreCase(".xls"), excelSetting);
+            return PrepareWorkbook(!Path.GetExtension(excelPath).EqualsIgnoreCase(".xls"), excelSetting);
         }
 
         /// <summary>

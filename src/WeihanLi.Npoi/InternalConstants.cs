@@ -18,6 +18,8 @@
         /// </summary>
         public const string ApplicationName = "WeihanLi.Npoi";
 
+        public const string DuplicateColumnMark = "__dup_mark__";
+
         #region TemplateParamFormat
 
         public const string TemplateGlobalParamFormat = "$(Global:{0})";

@@ -716,7 +716,7 @@ namespace WeihanLi.Npoi.Test
 
             Assert.Equal(4, importedData.Rows.Count);
 
-            AssertDataTable(importedData, dt);
+            importedData.AssertEquals(dt);
         }
 
         [Theory]
@@ -746,7 +746,7 @@ namespace WeihanLi.Npoi.Test
 
             Assert.Equal(1, importedData.Rows.Count);
 
-            AssertDataTable(importedData, dt);
+            importedData.AssertEquals(dt);
         }
 
         [Theory]
@@ -778,7 +778,7 @@ namespace WeihanLi.Npoi.Test
 
             Assert.Equal(4, importedData.Rows.Count);
 
-            AssertDataTable(importedData, dt);
+            importedData.AssertEquals(dt);
         }
 
         [Theory]
@@ -843,32 +843,116 @@ namespace WeihanLi.Npoi.Test
             Assert.NotNull(table.Rows[0][0]);
             Assert.Equal("test", table.Rows[0]["Description"]);
         }
-
-        private static void AssertDataTable(DataTable actual, DataTable expected)
+      
+        [Theory]
+        [ExcelFormatData]
+        public void SheetNameTest_ToExcelFile(ExcelFormat excelFormat)
         {
-            // Check columns
-            for (var headerIndex = 0; headerIndex < expected.Columns.Count; headerIndex++)
+            IReadOnlyList<Notice> list = Enumerable.Range(0, 10).Select(i => new Notice()
             {
-                var expectedValue = expected.Columns[headerIndex]?.ToString();
-                var excelValue = actual.Columns[headerIndex].ToString();
+                Id = i + 1,
+                Content = $"content_{i}",
+                Title = $"title_{i}",
+                PublishedAt = DateTime.UtcNow.AddDays(-i),
+                Publisher = $"publisher_{i}"
+            }).ToArray();
+            var settings = FluentSettings.For<Notice>();
+            lock (settings)
+            {
+                settings.HasSheetSetting(s =>
+                {
+                    s.SheetName = "Test";
+                });
 
-                // "TRUE" from header column is translated to "True".
-                // I don't know how to load display value of boolean, therefore I ignore letter casing.
-                Assert.Equal(expectedValue, excelValue, ignoreCase: true);
+                var filePath = $"{Path.GetTempFileName()}.{excelFormat.ToString().ToLower()}";
+                list.ToExcelFile(filePath);
+
+                var excel = ExcelHelper.LoadExcel(filePath);
+                Assert.Equal("Test", excel.GetSheetAt(0).SheetName);
+
+                settings.HasSheetSetting(s =>
+                {
+                    s.SheetName = "NoticeList";
+                });
             }
 
-            // Check rows
-            for (var rowIndex = 0; rowIndex < expected.Rows.Count; rowIndex++)
+
+        }
+
+        [Theory]
+        [ExcelFormatData]
+        public void SheetNameTest_ToExcelBytes(ExcelFormat excelFormat)
+        {
+            IReadOnlyList<Notice> list = Enumerable.Range(0, 10).Select(i => new Notice()
             {
-                for (var colIndex = 0; colIndex < expected.Rows[rowIndex].ItemArray.Length; colIndex++)
+                Id = i + 1,
+                Content = $"content_{i}",
+                Title = $"title_{i}",
+                PublishedAt = DateTime.UtcNow.AddDays(-i),
+                Publisher = $"publisher_{i}"
+            }).ToArray();
+            var settings = FluentSettings.For<Notice>();
+            lock (settings)
+            {
+                settings.HasSheetSetting(s =>
                 {
-                    var expectedValue = expected.Rows[rowIndex].ItemArray[colIndex]?.ToString();
-                    var excelValue = actual.Rows[rowIndex][colIndex].ToString();
-                    Assert.Equal(expectedValue, excelValue);
-                }
+                    s.SheetName = "Test";
+                });
+
+                var excelBytes = list.ToExcelBytes(excelFormat);
+                var excel = ExcelHelper.LoadExcel(excelBytes, excelFormat);
+                Assert.Equal("Test", excel.GetSheetAt(0).SheetName);
+
+                settings.HasSheetSetting(s =>
+                {
+                    s.SheetName = "NoticeList";
+                });
             }
         }
 
+        [Theory]
+        [ExcelFormatData]
+        public void DuplicateColumnTest(ExcelFormat excelFormat)
+        {
+            var workbook = ExcelHelper.PrepareWorkbook(excelFormat);
+            var sheet = workbook.CreateSheet();
+            var headerRow = sheet.CreateRow(0);
+            headerRow.CreateCell(0).SetCellValue("A");
+            headerRow.CreateCell(1).SetCellValue("B");
+            headerRow.CreateCell(2).SetCellValue("C");
+            headerRow.CreateCell(3).SetCellValue("A");
+            headerRow.CreateCell(4).SetCellValue("B");
+            headerRow.CreateCell(5).SetCellValue("C");
+            var dataRow = sheet.CreateRow(1);
+            dataRow.CreateCell(0).SetCellValue("1");
+            dataRow.CreateCell(1).SetCellValue("2");
+            dataRow.CreateCell(2).SetCellValue("3");
+            dataRow.CreateCell(3).SetCellValue("4");
+            dataRow.CreateCell(4).SetCellValue("5");
+            dataRow.CreateCell(5).SetCellValue("6");
+            var dataTable = sheet.ToDataTable();
+            Assert.Equal(headerRow.Cells.Count, dataTable.Columns.Count);
+            Assert.Equal(1, dataTable.Rows.Count);
+
+            var newWorkbook = ExcelHelper.LoadExcel(dataTable.ToExcelBytes());
+            var newSheet = newWorkbook.GetSheetAt(0);
+            Assert.Equal(sheet.PhysicalNumberOfRows, newSheet.PhysicalNumberOfRows);
+            for (var i = 0; i < sheet.PhysicalNumberOfRows; i++)
+            {
+                Assert.Equal(sheet.GetRow(i).Cells.Count, newSheet.GetRow(i).Cells.Count);
+
+                for (var j = 0; j < headerRow.Cells.Count; j++)
+                {
+                    Assert.Equal(
+                        sheet.GetRow(i).GetCell(j).GetCellValue<string>(),
+                        newSheet.GetRow(i).GetCell(j).GetCellValue<string>()
+                        );
+                }
+            }
+
+        }
+
+        
         private class ImageTest
         {
             public int Id { get; set; }

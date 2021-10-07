@@ -1,6 +1,7 @@
 ﻿using NPOI.SS.UserModel;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using WeihanLi.Common.Helpers;
 using WeihanLi.Common.Logging;
 using WeihanLi.Extensions;
@@ -16,6 +17,9 @@ namespace DotNetCoreSample
         public static void Main(string[] args)
         {
             LogHelper.ConfigureLogging(x => x.WithMinimumLevel(LogHelperLogLevel.Info).AddConsole());
+
+            SheetNameTest();
+
             FluentSettings.LoadMappingProfile<TestEntity, TestEntityExcelMappingProfile>();
             var tempDirPath = $@"{Environment.GetEnvironmentVariable("USERPROFILE")}\Desktop\temp\test";
 
@@ -154,6 +158,33 @@ namespace DotNetCoreSample
             Console.ReadLine();
         }
 
+
+        private static void SheetNameTest()
+        {
+            List<ExcelExportDTO> exprotDataList = new List<ExcelExportDTO>();
+            for (int i = 0; i < 10; i++)
+            {
+                var temp = new ExcelExportDTO
+                {
+                    Name = "张三" + i,
+                    Address = "北京海淀" + i,
+                    Birthday = DateTime.Now,
+                    Remark = "Remark" + i
+                };
+                exprotDataList.Add(temp);
+            }
+            var setting = FluentSettings.For<ExcelExportDTO>();
+            setting.HasSheetConfiguration(1, "我是一个Sheet_111", true);
+            setting.HasSheetSetting(s =>
+            {
+                s.SheetName = "Shee-0000";
+            });
+
+            var deskTopFullPath = System.Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            var exportFileName = Path.Combine(deskTopFullPath, "Test_for_weihanli.xlsx");
+            exprotDataList.ToExcelFile(exportFileName);
+        }
+
         private class TestEntityExcelMappingProfile: IMappingProfile<TestEntity>
         {
           public void Configure(IExcelConfiguration<TestEntity> setting)
@@ -269,5 +300,16 @@ namespace DotNetCoreSample
 
         [Column(Index = 3, Width = 20)]
         public string? Extra { get; set; } = "{}";
+    }
+
+    public class ExcelExportDTO
+    {
+        [Column("姓名")]
+        public string? Name { get; set; }
+        [Column("住址")]
+        public string? Address { get; set; }
+        [Column("出生日期")]
+        public DateTime Birthday { get; set; }
+        public string? Remark { get; set; }
     }
 }
