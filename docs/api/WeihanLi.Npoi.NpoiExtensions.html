@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Class NpoiExtensions
    ">
-    <meta name="generator" content="docfx 2.58.0.0">
+    <meta name="generator" content="docfx 2.58.4.0">
     
     <link rel="shortcut icon" href="../../favicon.ico">
     <link rel="stylesheet" href="../../styles/docfx.vendor.css">
@@ -166,7 +166,7 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static object GetCellValue(this ICell? cell, Type propertyType, IFormulaEvaluator? formulaEvaluator = default(IFormulaEvaluator? ))</code></pre>
+    <pre><code class="lang-csharp hljs">public static object GetCellValue(this ICell? cell, Type propertyType, IFormulaEvaluator? formulaEvaluator = null)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -223,7 +223,7 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static T GetCellValue&lt;T&gt;(this ICell? cell, IFormulaEvaluator? formulaEvaluator = default(IFormulaEvaluator? ))</code></pre>
+    <pre><code class="lang-csharp hljs">public static T GetCellValue&lt;T&gt;(this ICell? cell, IFormulaEvaluator? formulaEvaluator = null)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -422,7 +422,7 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static IWorkbook GetWorkbookWithAutoSplitSheet(this DataTable dataTable, ExcelFormat excelFormat, ExcelSetting? excelSetting = default(ExcelSetting? ))</code></pre>
+    <pre><code class="lang-csharp hljs">public static IWorkbook GetWorkbookWithAutoSplitSheet(this DataTable dataTable, ExcelFormat excelFormat, ExcelSetting? excelSetting = null)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1211,7 +1211,7 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static DataSet ToDataSet(this IWorkbook workbook, bool removeEmptyRows = false, int? maxColumns = default(int? ))</code></pre>
+    <pre><code class="lang-csharp hljs">public static DataSet ToDataSet(this IWorkbook workbook, bool removeEmptyRows = false, int? maxColumns = null)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1268,7 +1268,7 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static DataSet ToDataSet(this IWorkbook workbook, int headerRowIndex, bool removeEmptyRows = false, int? maxColumns = default(int? ))</code></pre>
+    <pre><code class="lang-csharp hljs">public static DataSet ToDataSet(this IWorkbook workbook, int headerRowIndex, bool removeEmptyRows = false, int? maxColumns = null)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1331,7 +1331,7 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static DataTable ToDataTable(this ISheet sheet, bool removeEmptyRows = false, int? maxColumns = default(int? ))</code></pre>
+    <pre><code class="lang-csharp hljs">public static DataTable ToDataTable(this ISheet sheet, bool removeEmptyRows = false, int? maxColumns = null)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1388,7 +1388,7 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static DataTable ToDataTable(this ISheet sheet, int headerRowIndex, bool removeEmptyRows = false, int? maxColumns = default(int? ))</code></pre>
+    <pre><code class="lang-csharp hljs">public static DataTable ToDataTable(this ISheet sheet, int headerRowIndex, bool removeEmptyRows = false, int? maxColumns = null)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1451,7 +1451,7 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static DataTable ToDataTable(this IWorkbook workbook, bool removeEmptyRows = false, int? maxColumns = default(int? ))</code></pre>
+    <pre><code class="lang-csharp hljs">public static DataTable ToDataTable(this IWorkbook workbook, bool removeEmptyRows = false, int? maxColumns = null)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1508,7 +1508,7 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static DataTable ToDataTable(this IWorkbook workbook, int sheetIndex, int headerRowIndex, bool removeEmptyRows = false, int? maxColumns = default(int? ))</code></pre>
+    <pre><code class="lang-csharp hljs">public static DataTable ToDataTable(this IWorkbook workbook, int sheetIndex, int headerRowIndex, bool removeEmptyRows = false, int? maxColumns = null)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
