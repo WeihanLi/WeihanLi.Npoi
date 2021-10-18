@@ -23,6 +23,19 @@ namespace DotNetCoreSample
             FluentSettings.LoadMappingProfile<TestEntity, TestEntityExcelMappingProfile>();
             var tempDirPath = $@"{Environment.GetEnvironmentVariable("USERPROFILE")}\Desktop\temp\test";
 
+            // custom CsvSeparatorCharacter sample
+            CsvHelper.CsvSeparatorCharacter = '\t';
+            var text = CsvHelper.GetCsvText(new[] 
+            { 
+                new
+                {
+                    Title = "123",
+                    Desc = "234"
+                } 
+            });
+            var dt1233 = CsvHelper.ToDataTable(text.GetBytes());
+            CsvHelper.CsvSeparatorCharacter = ',';
+
             // image export/import test
             //var imageExcelPath = @"C:\Users\Weiha\Desktop\temp\test\imageTest.xls";
             //var imgaeModelList = ExcelHelper.ToEntityList<ImportImageTestModel>(imageExcelPath);
