@@ -6,6 +6,7 @@ namespace WeihanLi.Npoi.Test
     {
         public void Configure()
         {
+            System.AppContext.SetSwitch("System.Drawing.EnableUnixSupport", true);
             // ---------- load excel mapping profiles ----------------
             FluentSettings.LoadMappingProfiles(typeof(NoticeProfile).Assembly);
         }
