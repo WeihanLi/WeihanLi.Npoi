@@ -687,8 +687,8 @@ namespace WeihanLi.Npoi.Test
         }
 
         [Theory]
-        [InlineData(@"TestData\EmptyColumns\emptyColumns.xls", ExcelFormat.Xls)]
-        [InlineData(@"TestData\EmptyColumns\emptyColumns.xlsx", ExcelFormat.Xlsx)]
+        [InlineData(@"TestData/EmptyColumns/emptyColumns.xls", ExcelFormat.Xls)]
+        [InlineData(@"TestData/EmptyColumns/emptyColumns.xlsx", ExcelFormat.Xlsx)]
         public void DataTableImportExportTestWithFirstColumnsEmpty(string file, ExcelFormat excelFormat)
         {
             // Arrange
@@ -720,8 +720,8 @@ namespace WeihanLi.Npoi.Test
         }
 
         [Theory]
-        [InlineData(@"TestData\NonStringColumns\nonStringColumns.xls", ExcelFormat.Xls)]
-        [InlineData(@"TestData\NonStringColumns\nonStringColumns.xlsx", ExcelFormat.Xlsx)]
+        [InlineData(@"TestData/NonStringColumns/nonStringColumns.xls", ExcelFormat.Xls)]
+        [InlineData(@"TestData/NonStringColumns/nonStringColumns.xlsx", ExcelFormat.Xlsx)]
         public void DataTableImportExportTestWithNonStringColumns(string file, ExcelFormat excelFormat)
         {
             // Arrange
@@ -750,8 +750,8 @@ namespace WeihanLi.Npoi.Test
         }
 
         [Theory]
-        [InlineData(@"TestData\EmptyRows\emptyRows.xls", ExcelFormat.Xls)]
-        [InlineData(@"TestData\EmptyRows\emptyRows.xlsx", ExcelFormat.Xlsx)]
+        [InlineData(@"TestData/EmptyRows/emptyRows.xls", ExcelFormat.Xls)]
+        [InlineData(@"TestData/EmptyRows/emptyRows.xlsx", ExcelFormat.Xlsx)]
         public void DataTableImportExportTestWithoutEmptyRowsAndAdditionalColumns(string file, ExcelFormat excelFormat)
         {
             // Arrange

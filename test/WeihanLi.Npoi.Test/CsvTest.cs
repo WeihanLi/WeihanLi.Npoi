@@ -173,7 +173,7 @@ namespace WeihanLi.Npoi.Test
         }
 
         [Theory]
-        [InlineData(@"TestData\NonStringColumns\nonStringColumns.csv")]
+        [InlineData(@"TestData/NonStringColumns/nonStringColumns.csv")]
         public void DataTableImportExportTestWithNonStringColumns(string testDataFilePath)
         {
             // Act
