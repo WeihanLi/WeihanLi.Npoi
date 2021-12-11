@@ -77,8 +77,9 @@ dotnet_naming_style.camel_case_underscore_style.required_prefix = _
 dotnet_naming_style.camel_case_underscore_style.capitalization = camel_case
 
 # Code style defaults
+csharp_style_namespace_declarations=file_scoped:suggestion
 csharp_using_directive_placement = outside_namespace:suggestion
-dotnet_sort_system_directives_first = true:suggestion
+dotnet_sort_system_directives_first = false:suggestion
 csharp_prefer_braces = true:refactoring
 csharp_preserve_single_line_blocks = true:none
 csharp_preserve_single_line_statements = false:none
