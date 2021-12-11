@@ -1,6 +1,6 @@
-﻿using BenchmarkDotNet.Attributes;
+﻿using System.Runtime.CompilerServices;
+using BenchmarkDotNet.Attributes;
 using OfficeOpenXml;
-using System.Runtime.CompilerServices;
 
 namespace WeihanLi.Npoi.Benchmark
 {

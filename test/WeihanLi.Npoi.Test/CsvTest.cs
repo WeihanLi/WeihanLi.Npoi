@@ -156,7 +156,7 @@ namespace WeihanLi.Npoi.Test
             row = dt.NewRow();
             row.ItemArray = new object[] { "1", "2", "3", "4" };
             dt.Rows.Add(row);
-            
+
             Assert.NotNull(importedData);
 
             Assert.Equal(4, importedData.Rows.Count);

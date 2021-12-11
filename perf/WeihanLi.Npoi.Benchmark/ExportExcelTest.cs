@@ -1,9 +1,9 @@
-﻿using BenchmarkDotNet.Attributes;
-using EPPlus.Core.Extensions;
-using EPPlus.Core.Extensions.Attributes;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using BenchmarkDotNet.Attributes;
+using EPPlus.Core.Extensions;
+using EPPlus.Core.Extensions.Attributes;
 
 namespace WeihanLi.Npoi.Benchmark
 {

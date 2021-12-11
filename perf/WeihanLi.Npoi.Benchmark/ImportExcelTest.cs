@@ -1,7 +1,7 @@
-﻿using BenchmarkDotNet.Attributes;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using BenchmarkDotNet.Attributes;
 
 namespace WeihanLi.Npoi.Benchmark
 {

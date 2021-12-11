@@ -1,7 +1,7 @@
-﻿using NPOI.SS.UserModel;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using NPOI.SS.UserModel;
 using WeihanLi.Common.Helpers;
 using WeihanLi.Common.Logging;
 using WeihanLi.Extensions;
@@ -25,13 +25,13 @@ namespace DotNetCoreSample
 
             // custom CsvSeparatorCharacter sample
             CsvHelper.CsvSeparatorCharacter = '\t';
-            var text = CsvHelper.GetCsvText(new[] 
-            { 
+            var text = CsvHelper.GetCsvText(new[]
+            {
                 new
                 {
                     Title = "123",
                     Desc = "234"
-                } 
+                }
             });
             var dt1233 = CsvHelper.ToDataTable(text.GetBytes());
             CsvHelper.CsvSeparatorCharacter = ',';
@@ -198,79 +198,79 @@ namespace DotNetCoreSample
             exprotDataList.ToExcelFile(exportFileName);
         }
 
-        private class TestEntityExcelMappingProfile: IMappingProfile<TestEntity>
+        private class TestEntityExcelMappingProfile : IMappingProfile<TestEntity>
         {
-          public void Configure(IExcelConfiguration<TestEntity> setting)
-          {
-            // ExcelSetting
-            setting.HasAuthor("WeihanLi")
-                .HasTitle("WeihanLi.Npoi test")
-                .HasDescription("WeihanLi.Npoi test")
-                .HasSubject("WeihanLi.Npoi test");
-
-            setting.HasSheetSetting(config =>
+            public void Configure(IExcelConfiguration<TestEntity> setting)
             {
-                config.StartRowIndex = 1;
-                config.SheetName = "SystemSettingsList";
-                config.AutoColumnWidthEnabled = true;
+                // ExcelSetting
+                setting.HasAuthor("WeihanLi")
+                    .HasTitle("WeihanLi.Npoi test")
+                    .HasDescription("WeihanLi.Npoi test")
+                    .HasSubject("WeihanLi.Npoi test");
 
-                config.RowAction = row =>
+                setting.HasSheetSetting(config =>
                 {
-                    if (row.RowNum == 0)
+                    config.StartRowIndex = 1;
+                    config.SheetName = "SystemSettingsList";
+                    config.AutoColumnWidthEnabled = true;
+
+                    config.RowAction = row =>
                     {
-                        var style = row.Sheet.Workbook.CreateCellStyle();
-                        style.Alignment = HorizontalAlignment.Center;
-                        var font = row.Sheet.Workbook.CreateFont();
-                        font.FontName = "JetBrains Mono";
-                        font.IsBold = true;
-                        font.FontHeight = 200;
-                        style.SetFont(font);
-                        row.Cells.ForEach(c => c.CellStyle = style);
-                    }
-                };
-            });
+                        if (row.RowNum == 0)
+                        {
+                            var style = row.Sheet.Workbook.CreateCellStyle();
+                            style.Alignment = HorizontalAlignment.Center;
+                            var font = row.Sheet.Workbook.CreateFont();
+                            font.FontName = "JetBrains Mono";
+                            font.IsBold = true;
+                            font.FontHeight = 200;
+                            style.SetFont(font);
+                            row.Cells.ForEach(c => c.CellStyle = style);
+                        }
+                    };
+                });
 
-            // setting.HasFilter(0, 1).HasFreezePane(0, 1, 2, 1);
+                // setting.HasFilter(0, 1).HasFreezePane(0, 1, 2, 1);
 
-            setting.Property(_ => _.SettingId)
-                .HasColumnIndex(0);
+                setting.Property(_ => _.SettingId)
+                    .HasColumnIndex(0);
 
-            setting.Property(_ => _.SettingName)
-                .HasColumnTitle("SettingName")
-                .HasColumnIndex(1);
+                setting.Property(_ => _.SettingName)
+                    .HasColumnTitle("SettingName")
+                    .HasColumnIndex(1);
 
-            setting.Property(_ => _.DisplayName)
-                .HasOutputFormatter((entity, displayName) => $"AAA_{entity?.SettingName}_{displayName}")
-                .HasInputFormatter((entity, originVal) => originVal?.Split(new[] { '_' })[2])
-                .HasColumnTitle("DisplayName")
-                .HasColumnIndex(2);
+                setting.Property(_ => _.DisplayName)
+                    .HasOutputFormatter((entity, displayName) => $"AAA_{entity?.SettingName}_{displayName}")
+                    .HasInputFormatter((entity, originVal) => originVal?.Split(new[] { '_' })[2])
+                    .HasColumnTitle("DisplayName")
+                    .HasColumnIndex(2);
 
-            setting.Property(_ => _.SettingValue)
-                .HasColumnTitle("SettingValue")
-                .HasColumnIndex(3);
+                setting.Property(_ => _.SettingValue)
+                    .HasColumnTitle("SettingValue")
+                    .HasColumnIndex(3);
 
-            setting.Property(_ => _.CreatedTime)
-                .HasColumnTitle("CreatedTime")
-                .HasColumnIndex(4)
-                .HasColumnWidth(10)
-                .HasColumnFormatter("yyyy-MM-dd HH:mm:ss");
+                setting.Property(_ => _.CreatedTime)
+                    .HasColumnTitle("CreatedTime")
+                    .HasColumnIndex(4)
+                    .HasColumnWidth(10)
+                    .HasColumnFormatter("yyyy-MM-dd HH:mm:ss");
 
-            setting.Property(_ => _.CreatedBy)
-                .HasColumnInputFormatter(x => x += "_test")
-                .HasColumnIndex(4)
-                .HasColumnTitle("CreatedBy");
+                setting.Property(_ => _.CreatedBy)
+                    .HasColumnInputFormatter(x => x += "_test")
+                    .HasColumnIndex(4)
+                    .HasColumnTitle("CreatedBy");
 
-            setting.Property(x => x.Enabled)
-                .HasColumnInputFormatter(val => "Enabled".EqualsIgnoreCase(val))
-                .HasColumnOutputFormatter(v => v ? "Enabled" : "Disabled");
+                setting.Property(x => x.Enabled)
+                    .HasColumnInputFormatter(val => "Enabled".EqualsIgnoreCase(val))
+                    .HasColumnOutputFormatter(v => v ? "Enabled" : "Disabled");
 
-            setting.Property("HiddenProp")
-                .HasOutputFormatter((entity, val) => $"HiddenProp_{entity?.PKID}");
+                setting.Property("HiddenProp")
+                    .HasOutputFormatter((entity, val) => $"HiddenProp_{entity?.PKID}");
 
-            setting.Property(_ => _.PKID).Ignored();
-            setting.Property(_ => _.UpdatedBy).Ignored();
-            setting.Property(_ => _.UpdatedTime).Ignored();
-          }
+                setting.Property(_ => _.PKID).Ignored();
+                setting.Property(_ => _.UpdatedBy).Ignored();
+                setting.Property(_ => _.UpdatedTime).Ignored();
+            }
         }
     }
 

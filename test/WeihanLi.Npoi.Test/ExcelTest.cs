@@ -1,4 +1,3 @@
-using NPOI.SS.UserModel;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -7,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
+using NPOI.SS.UserModel;
 using WeihanLi.Extensions;
 using WeihanLi.Npoi.Attributes;
 using WeihanLi.Npoi.Test.Models;
@@ -843,7 +843,7 @@ namespace WeihanLi.Npoi.Test
             Assert.NotNull(table.Rows[0][0]);
             Assert.Equal("test", table.Rows[0]["Description"]);
         }
-      
+
         [Theory]
         [ExcelFormatData]
         public void SheetNameTest_ToExcelFile(ExcelFormat excelFormat)
@@ -952,7 +952,7 @@ namespace WeihanLi.Npoi.Test
 
         }
 
-        
+
         private class ImageTest
         {
             public int Id { get; set; }
