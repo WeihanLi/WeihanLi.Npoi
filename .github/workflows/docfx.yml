@@ -15,7 +15,7 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v2
         with:
-          ref: dev
+          ref: ${ github.ref }
           path: source
       - name: Setup .NET SDK
         uses: actions/setup-dotnet@v1
