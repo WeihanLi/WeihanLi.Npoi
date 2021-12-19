@@ -16,6 +16,11 @@ jobs:
         with:
           ref: dev
           path: source
+      - name: Setup .NET SDK
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: '6.0.x'
+          include-prerelease: true
       - name: install DocFX
         run: "& choco install docfx -y"
       # Run a build
