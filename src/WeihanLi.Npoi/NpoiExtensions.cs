@@ -1,14 +1,14 @@
-﻿using System;
+﻿using NPOI.HSSF.UserModel;
+using NPOI.SS.UserModel;
+using NPOI.XSSF.Streaming;
+using NPOI.XSSF.UserModel;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using NPOI.HSSF.UserModel;
-using NPOI.SS.UserModel;
-using NPOI.XSSF.Streaming;
-using NPOI.XSSF.UserModel;
 using WeihanLi.Common.Helpers;
 using WeihanLi.Extensions;
 using WeihanLi.Npoi.Settings;
@@ -179,7 +179,10 @@ public static class NpoiExtensions
 
         foreach (var row in sheet.GetRowCollection())
         {
-            if (row is null || row.RowNum < headerRowIndex)
+            if (
+                // ReSharper disable once ConditionIsAlwaysTrueOrFalse
+                row is null
+                || row.RowNum < headerRowIndex)
             {
                 continue;
             }
@@ -205,7 +208,7 @@ public static class NpoiExtensions
                     continue;
                 }
 
-                var columnName = cell.GetCellValue(typeof(string), formulaEvaluator)!.ToString().Trim();
+                var columnName = cell.GetCellValue(typeof(string), formulaEvaluator)!.ToString()!.Trim();
                 if (dataTable.Columns.Contains(columnName))
                 {
                     columnName = InternalHelper.GetEncodedColumnName(columnName);
@@ -224,8 +227,8 @@ public static class NpoiExtensions
             int? maxColumns)
         {
             var dataRow = dataTable.NewRow();
-
-            for (var columnIndex = 0; columnIndex < dataTable.Columns.Count; columnIndex++)
+            var maxColumnIndex = Math.Min(maxColumns.GetValueOrDefault(dataTable.Columns.Count), dataTable.Columns.Count);
+            for (var columnIndex = 0; columnIndex < maxColumnIndex; columnIndex++)
             {
                 var cell = row.GetCell(columnIndex, MissingCellPolicy.CREATE_NULL_AS_BLANK);
                 dataRow[columnIndex] = cell.GetCellValue(typeof(string), formulaEvaluator);
@@ -234,7 +237,7 @@ public static class NpoiExtensions
             if (removeEmptyRows)
             {
                 var rowContainsData = dataRow.ItemArray.Any(value
-                    => value != DBNull.Value && !string.IsNullOrEmpty((string)value));
+                    => value != DBNull.Value && !string.IsNullOrEmpty((string?)value));
 
                 if (rowContainsData)
                 {
@@ -317,7 +320,6 @@ public static class NpoiExtensions
                 workbook.CreateSheet();
             }
         }
-
     }
 
     /// <summary>

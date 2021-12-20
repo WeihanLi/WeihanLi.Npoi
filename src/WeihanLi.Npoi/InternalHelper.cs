@@ -19,8 +19,8 @@ internal static class InternalHelper
         InternalCache.TypeExcelConfigurationDictionary.GetOrAdd(entityType, type =>
         {
             var excelConfiguration =
-                CreateExcelConfiguration(type, () => (ExcelConfiguration)Activator.CreateInstance(
-                    typeof(ExcelConfiguration<>).MakeGenericType(entityType)));
+                CreateExcelConfiguration(type, () => (ExcelConfiguration)Guard.NotNull(Activator.CreateInstance(
+                    typeof(ExcelConfiguration<>).MakeGenericType(entityType))));
             return excelConfiguration;
         });
 
@@ -67,7 +67,7 @@ internal static class InternalHelper
 
             var propertyConfigurationType =
                 typeof(PropertyConfiguration<,>).MakeGenericType(type, propertyInfo.PropertyType);
-            var propertyConfiguration = Activator.CreateInstance(propertyConfigurationType, propertyInfo);
+            var propertyConfiguration = Guard.NotNull(Activator.CreateInstance(propertyConfigurationType, propertyInfo));
 
             propertyConfigurationType.GetProperty(nameof(column.PropertyConfiguration.ColumnTitle))
                 ?.GetSetMethod()?
@@ -180,12 +180,11 @@ internal static class InternalHelper
 
     public static string GetDecodeColumnName(string columnName)
     {
-        var duplicateMarkIndex = columnName.IndexOf(InternalConstants.DuplicateColumnMark);
+        var duplicateMarkIndex = columnName.IndexOf(InternalConstants.DuplicateColumnMark, StringComparison.OrdinalIgnoreCase);
         if (duplicateMarkIndex > 0)
         {
             return columnName.Substring(0, duplicateMarkIndex);
         }
-
         return columnName;
     }
 }

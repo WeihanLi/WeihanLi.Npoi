@@ -45,7 +45,10 @@ public static class FluentSettings
         Guard.NotNull(types, nameof(types));
         foreach (var type in types.Where(x => x.IsAssignableTo<IMappingProfile>()))
         {
-            LoadMappingProfile((IMappingProfile)Activator.CreateInstance(type));
+            if (Activator.CreateInstance(type) is IMappingProfile profile)
+            {
+                LoadMappingProfile(profile);
+            }
         }
     }
 

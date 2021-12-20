@@ -4,11 +4,12 @@ using System.Reflection;
 using WeihanLi.Extensions;
 
 namespace WeihanLi.Npoi;
+#nullable disable
 
 internal sealed class FakePropertyInfo : PropertyInfo
 {
-    private readonly Func<object?> _getValueFunc;
-    private readonly object? _value;
+    private readonly Func<object> _getValueFunc;
+    private readonly object _value;
 
     public FakePropertyInfo(Type entityType, Type propertyType, string propertyName)
     {
@@ -33,7 +34,7 @@ internal sealed class FakePropertyInfo : PropertyInfo
 
     public override MethodInfo GetGetMethod(bool nonPublic) => _getValueFunc.Method;
 
-    public override MethodInfo? GetSetMethod(bool nonPublic) => null;
+    public override MethodInfo GetSetMethod(bool nonPublic) => null;
 
     public override string ToString() => $"{PropertyType.Name}, {Name}";
 
@@ -48,9 +49,11 @@ internal sealed class FakePropertyInfo : PropertyInfo
 
     public override ParameterInfo[] GetIndexParameters() => throw new NotSupportedException();
 
-    public override object? GetValue(object obj, BindingFlags invokeAttr, Binder binder, object[] index,
+    public override object GetValue(object obj, BindingFlags invokeAttr, Binder binder, object[] index,
         CultureInfo culture) => _value;
 
-    public override void SetValue(object obj, object? value, BindingFlags invokeAttr, Binder binder, object[] index,
+    public override void SetValue(object obj, object value, BindingFlags invokeAttr, Binder binder, object[] index,
         CultureInfo culture) => throw new NotSupportedException();
 }
+
+#nullable restore

@@ -14,16 +14,16 @@ internal abstract class ExcelConfiguration : IExcelConfiguration
     /// <summary>
     ///     PropertyConfigurationDictionary
     /// </summary>
-    public IDictionary<PropertyInfo, PropertyConfiguration> PropertyConfigurationDictionary { get; set; } =
+    public IDictionary<PropertyInfo, PropertyConfiguration> PropertyConfigurationDictionary { get; } =
         new Dictionary<PropertyInfo, PropertyConfiguration>();
 
-    public ExcelSetting ExcelSetting { get; set; } = ExcelHelper.DefaultExcelSetting;
+    public ExcelSetting ExcelSetting { get; } = ExcelHelper.DefaultExcelSetting;
 
-    public IList<FreezeSetting> FreezeSettings { get; set; } = new List<FreezeSetting>();
+    public IList<FreezeSetting> FreezeSettings { get; } = new List<FreezeSetting>();
 
     public FilterSetting? FilterSetting { get; set; }
 
-    public IDictionary<int, SheetSetting> SheetSettings { get; set; } =
+    public IDictionary<int, SheetSetting> SheetSettings { get; } =
         new Dictionary<int, SheetSetting> { { 0, new SheetSetting() } };
 
     #region ExcelSettings FluentAPI
@@ -39,7 +39,6 @@ internal abstract class ExcelConfiguration : IExcelConfiguration
 #nullable restore
 
     #endregion ExcelSettings FluentAPI
-
 
     #region Sheet
 
@@ -153,7 +152,7 @@ internal sealed class ExcelConfiguration<TEntity> : ExcelConfiguration, IExcelCo
         var propertyConfigurationType =
             typeof(PropertyConfiguration<,>).MakeGenericType(EntityType, propertyType);
         var propertyConfiguration =
-            (PropertyConfiguration)Activator.CreateInstance(propertyConfigurationType, property);
+            (PropertyConfiguration)Guard.NotNull(Activator.CreateInstance(propertyConfigurationType, property));
 
         PropertyConfigurationDictionary[property] = propertyConfiguration;
 

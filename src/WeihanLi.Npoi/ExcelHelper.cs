@@ -1,11 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.IO;
-using NPOI.HPSF;
+﻿using NPOI.HPSF;
 using NPOI.HSSF.UserModel;
 using NPOI.SS.UserModel;
 using NPOI.XSSF.UserModel;
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.IO;
+using WeihanLi.Common;
 using WeihanLi.Extensions;
 using WeihanLi.Npoi.Settings;
 
@@ -16,7 +17,7 @@ namespace WeihanLi.Npoi;
 /// </summary>
 public static class ExcelHelper
 {
-    private static readonly Version s_appVersion = typeof(ExcelHelper).Assembly.GetName().Version;
+    private static readonly Version s_appVersion = typeof(ExcelHelper).Assembly.GetName().Version!;
     private static ExcelSetting s_defaultExcelSetting = new();
 
     /// <summary>
@@ -25,7 +26,7 @@ public static class ExcelHelper
     public static ExcelSetting DefaultExcelSetting
     {
         get => s_defaultExcelSetting;
-        set => s_defaultExcelSetting = value ?? throw new ArgumentNullException(nameof(value));
+        set => s_defaultExcelSetting = Guard.NotNull(value);
     }
 
     /// <summary>

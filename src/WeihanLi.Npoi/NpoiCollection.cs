@@ -1,7 +1,7 @@
-﻿using System;
+﻿using NPOI.SS.UserModel;
 using System.Collections;
 using System.Collections.Generic;
-using NPOI.SS.UserModel;
+using WeihanLi.Common;
 
 namespace WeihanLi.Npoi;
 
@@ -12,7 +12,7 @@ public sealed class NpoiRowCollection : IReadOnlyCollection<IRow>
 {
     private readonly ISheet _sheet;
 
-    public NpoiRowCollection(ISheet sheet) => _sheet = sheet ?? throw new ArgumentNullException(nameof(sheet));
+    public NpoiRowCollection(ISheet sheet) => _sheet = Guard.NotNull(sheet);
 
     public int Count => _sheet.LastRowNum - _sheet.FirstRowNum + 1;
 
@@ -34,7 +34,7 @@ public sealed class NpoiCellCollection : IReadOnlyCollection<ICell>
 {
     private readonly IRow _row;
 
-    public NpoiCellCollection(IRow row) => _row = row;
+    public NpoiCellCollection(IRow row) => _row = Guard.NotNull(row);
 
     public int Count => _row.LastCellNum - _row.FirstCellNum;
 

@@ -382,13 +382,7 @@ public static class CsvHelper
         return ToEntityList<TEntity>(csvStream.ToByteArray());
     }
 
-#if DEBUG
-
-    public
-#else
-        private
-#endif
-            static IReadOnlyList<string> ParseLine(string line)
+    public static IReadOnlyList<string> ParseLine(string line)
     {
         if (string.IsNullOrEmpty(line))
         {
@@ -581,8 +575,8 @@ public static class CsvHelper
                     }
 
                     // https://stackoverflow.com/questions/4617935/is-there-a-way-to-include-commas-in-csv-columns-without-breaking-the-formatting
-                    var val = propertyValue?.ToString().Replace("\"", "\"\"");
-                    if (val is not null and { Length: > 0 })
+                    var val = propertyValue?.ToString()?.Replace("\"", "\"\"");
+                    if (val is { Length: > 0 })
                     {
                         data.Append(val.IndexOf(CsvSeparatorCharacter) > -1 ? $"\"{val}\"" : val);
                     }
@@ -633,8 +627,8 @@ public static class CsvHelper
                 }
 
                 // https://stackoverflow.com/questions/4617935/is-there-a-way-to-include-commas-in-csv-columns-without-breaking-the-formatting
-                var val = dataTable.Rows[i][j]?.ToString().Replace("\"", "\"\"");
-                if (val is not null and { Length: > 0 })
+                var val = dataTable.Rows[i][j]?.ToString()?.Replace("\"", "\"\"");
+                if (val is { Length: > 0 })
                 {
                     data.Append(val.IndexOf(CsvSeparatorCharacter) > -1 ? $"\"{val}\"" : val);
                 }
