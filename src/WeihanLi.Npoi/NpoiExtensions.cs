@@ -1,14 +1,4 @@
-﻿
-/* Unmerged change from project 'WeihanLi.Npoi(net6.0)'
-Before:
-using System;
-After:
-// Copyright (c) Weihan Li. All rights reserved.
-// Licensed under the MIT license.
-
-using System;
-*/
-// Copyright (c) Weihan Li. All rights reserved.
+﻿// Copyright (c) Weihan Li. All rights reserved.
 // Licensed under the MIT license.
 
 using NPOI.HSSF.UserModel;
