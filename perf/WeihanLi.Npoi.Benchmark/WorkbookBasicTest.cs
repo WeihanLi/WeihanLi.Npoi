@@ -1,6 +1,9 @@
-﻿using System.Runtime.CompilerServices;
+﻿// Copyright (c) Weihan Li. All rights reserved.
+// Licensed under the MIT license.
+
 using BenchmarkDotNet.Attributes;
 using OfficeOpenXml;
+using System.Runtime.CompilerServices;
 
 namespace WeihanLi.Npoi.Benchmark;
 

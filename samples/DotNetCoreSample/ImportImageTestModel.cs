@@ -1,4 +1,7 @@
-﻿namespace DotNetCoreSample;
+﻿// Copyright (c) Weihan Li. All rights reserved.
+// Licensed under the MIT license.
+
+namespace DotNetCoreSample;
 
 internal class ImportImageTestModel
 {

@@ -1,11 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.IO;
+﻿
+/* Unmerged change from project 'WeihanLi.Npoi(net6.0)'
+Before:
+using System;
+After:
+// Copyright (c) Weihan Li. All rights reserved.
+// Licensed under the MIT license.
+
+using System;
+*/
+// Copyright (c) Weihan Li. All rights reserved.
+// Licensed under the MIT license.
+
 using NPOI.HPSF;
 using NPOI.HSSF.UserModel;
 using NPOI.SS.UserModel;
 using NPOI.XSSF.UserModel;
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.IO;
 using WeihanLi.Common;
 using WeihanLi.Extensions;
 using WeihanLi.Npoi.Settings;

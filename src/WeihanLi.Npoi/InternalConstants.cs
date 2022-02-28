@@ -1,4 +1,7 @@
-﻿namespace WeihanLi.Npoi;
+﻿// Copyright (c) Weihan Li. All rights reserved.
+// Licensed under the MIT license.
+
+namespace WeihanLi.Npoi;
 
 internal static class InternalConstants
 {

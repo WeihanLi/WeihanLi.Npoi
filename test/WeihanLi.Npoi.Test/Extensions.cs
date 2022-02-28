@@ -1,4 +1,7 @@
-﻿using System.Data;
+﻿// Copyright (c) Weihan Li. All rights reserved.
+// Licensed under the MIT license.
+
+using System.Data;
 using Xunit;
 
 namespace WeihanLi.Npoi.Test;

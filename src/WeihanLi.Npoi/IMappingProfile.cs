@@ -1,4 +1,7 @@
-﻿using WeihanLi.Npoi.Configurations;
+﻿// Copyright (c) Weihan Li. All rights reserved.
+// Licensed under the MIT license.
+
+using WeihanLi.Npoi.Configurations;
 
 namespace WeihanLi.Npoi;
 

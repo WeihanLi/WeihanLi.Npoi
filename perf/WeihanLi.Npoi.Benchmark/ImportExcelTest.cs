@@ -1,7 +1,10 @@
-﻿using System;
+﻿// Copyright (c) Weihan Li. All rights reserved.
+// Licensed under the MIT license.
+
+using BenchmarkDotNet.Attributes;
+using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
-using BenchmarkDotNet.Attributes;
 
 namespace WeihanLi.Npoi.Benchmark;
 

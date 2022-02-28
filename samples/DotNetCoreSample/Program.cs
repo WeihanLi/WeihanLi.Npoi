@@ -1,7 +1,10 @@
-﻿using System;
+﻿// Copyright (c) Weihan Li. All rights reserved.
+// Licensed under the MIT license.
+
+using NPOI.SS.UserModel;
+using System;
 using System.Collections.Generic;
 using System.IO;
-using NPOI.SS.UserModel;
 using WeihanLi.Common.Helpers;
 using WeihanLi.Common.Logging;
 using WeihanLi.Extensions;

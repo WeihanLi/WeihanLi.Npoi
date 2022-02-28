@@ -1,4 +1,7 @@
-﻿using BenchmarkDotNet.Running;
+﻿// Copyright (c) Weihan Li. All rights reserved.
+// Licensed under the MIT license.
+
+using BenchmarkDotNet.Running;
 
 namespace WeihanLi.Npoi.Benchmark;
 

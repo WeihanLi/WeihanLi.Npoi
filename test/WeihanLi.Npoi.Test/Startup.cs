@@ -1,4 +1,7 @@
-﻿using WeihanLi.Npoi.Test.MappingProfiles;
+﻿// Copyright (c) Weihan Li. All rights reserved.
+// Licensed under the MIT license.
+
+using WeihanLi.Npoi.Test.MappingProfiles;
 
 namespace WeihanLi.Npoi.Test;
 

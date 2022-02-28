@@ -1,4 +1,7 @@
-﻿namespace WeihanLi.Npoi.Settings;
+﻿// Copyright (c) Weihan Li. All rights reserved.
+// Licensed under the MIT license.
+
+namespace WeihanLi.Npoi.Settings;
 
 /// <summary>
 ///     Excel Document Settings

@@ -1,4 +1,7 @@
-﻿using System;
+﻿// Copyright (c) Weihan Li. All rights reserved.
+// Licensed under the MIT license.
+
+using System;
 using System.Globalization;
 using System.Reflection;
 using WeihanLi.Extensions;
