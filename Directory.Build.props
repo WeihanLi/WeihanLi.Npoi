@@ -13,11 +13,11 @@
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
 
     <Authors>WeihanLi.Npoi Contributors</Authors>
-    <Copyright>Copyright 2017-2021 (c) WeihanLi</Copyright>
+    <Copyright>Copyright 2017-2022 (c) WeihanLi</Copyright>
     <NoWarn>$(NoWarn);NU5048;</NoWarn>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Condition="'$(OS)' == 'Windows_NT'" Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All"/>
+    <PackageReference Condition="'$(OS)' == 'Windows_NT'" Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All"/>
     <PackageReference Condition="'$(OS)' != 'Windows_NT'" Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.0" PrivateAssets="All"/>
   </ItemGroup>
 </Project>
