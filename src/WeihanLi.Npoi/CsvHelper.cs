@@ -8,11 +8,28 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
+using WeihanLi.Common;
 using WeihanLi.Common.Helpers;
 using WeihanLi.Extensions;
 using WeihanLi.Npoi.Configurations;
 
 namespace WeihanLi.Npoi;
+
+public sealed class CsvOptions
+{
+    public char SeparatorCharacter { get; set; }
+    public char QuoteCharacter { get; set; }
+    public bool IncludeHeader { get; set; }
+    public string PropertyNameForBasicType { get; set; }
+
+    public CsvOptions()
+    {
+        SeparatorCharacter = CsvHelper.CsvSeparatorCharacter;
+        QuoteCharacter = CsvHelper.CsvQuoteCharacter;
+        IncludeHeader = true;
+        PropertyNameForBasicType = InternalConstants.DefaultPropertyNameForBasicType;
+    }
+}
 
 /// <summary>
 ///     CsvHelper
@@ -39,23 +56,29 @@ public static class CsvHelper
     /// </summary>
     public static bool ToCsvFile(this DataTable dataTable, string filePath, bool includeHeader)
     {
+        return ToCsvFile(dataTable, filePath, new CsvOptions() { IncludeHeader = includeHeader });
+    }
+    
+    /// <summary>
+    ///     save to csv file
+    /// </summary>
+    public static bool ToCsvFile(this DataTable dataTable, string filePath, CsvOptions csvOptions)
+    {
         if (dataTable is null)
         {
             throw new ArgumentNullException(nameof(dataTable));
         }
 
         var dir = Path.GetDirectoryName(filePath);
-        if (dir is null)
+        if (dir is not null)
         {
-            throw new ArgumentException(Resource.InvalidFilePath, nameof(filePath));
+            if (!Directory.Exists(dir))
+            {
+                Directory.CreateDirectory(dir);
+            }
         }
 
-        if (!Directory.Exists(dir))
-        {
-            Directory.CreateDirectory(dir);
-        }
-
-        var csvText = GetCsvText(dataTable, includeHeader);
+        var csvText = GetCsvText(dataTable, csvOptions);
         if (csvText.IsNullOrWhiteSpace())
         {
             return false;
@@ -75,12 +98,21 @@ public static class CsvHelper
     /// </summary>
     public static byte[] ToCsvBytes(this DataTable dataTable, bool includeHeader) =>
         GetCsvText(dataTable, includeHeader).GetBytes();
+    
+    /// <summary>
+    ///     to csv bytes
+    /// </summary>
+    public static byte[] ToCsvBytes(this DataTable dataTable, CsvOptions csvOptions) =>
+        GetCsvText(dataTable, csvOptions).GetBytes();
 
     /// <summary>
     ///     convert csv file data to dataTable
     /// </summary>
     /// <param name="csvBytes">csv bytes</param>
     public static DataTable ToDataTable(byte[] csvBytes)
+        => ToDataTable(csvBytes, new CsvOptions());
+    
+    public static DataTable ToDataTable(byte[] csvBytes, CsvOptions csvOptions)
     {
         if (csvBytes is null)
         {
@@ -88,14 +120,16 @@ public static class CsvHelper
         }
 
         using var ms = new MemoryStream(csvBytes);
-        return ToDataTable(ms);
+        return ToDataTable(ms, csvOptions);
     }
 
     /// <summary>
     ///     convert csv stream data to dataTable
     /// </summary>
     /// <param name="stream">stream</param>
-    public static DataTable ToDataTable(Stream stream)
+    public static DataTable ToDataTable(Stream stream) => ToDataTable(stream, new CsvOptions());
+    
+    public static DataTable ToDataTable(Stream stream, CsvOptions csvOptions)
     {
         if (stream is null)
         {
@@ -111,7 +145,7 @@ public static class CsvHelper
             var isFirst = true;
             while ((strLine = sr.ReadLine()!).IsNotNullOrEmpty())
             {
-                var rowData = ParseLine(strLine);
+                var rowData = ParseLine(strLine, csvOptions);
                 var dtColumns = rowData.Count;
                 if (isFirst)
                 {
@@ -169,18 +203,16 @@ public static class CsvHelper
     /// </summary>
     /// <param name="filePath">csv file path</param>
     public static List<TEntity?> ToEntityList<TEntity>(string filePath)
+        => ToEntityList<TEntity>(filePath, new CsvOptions());
+    
+    public static List<TEntity?> ToEntityList<TEntity>(string filePath, CsvOptions csvOptions)
     {
-        if (filePath is null)
-        {
-            throw new ArgumentNullException(nameof(filePath));
-        }
-
+        Guard.NotNull(filePath);
         if (!File.Exists(filePath))
         {
             throw new ArgumentException(Resource.FileNotFound, nameof(filePath));
         }
-
-        return ToEntityList<TEntity?>(File.ReadAllBytes(filePath));
+        return ToEntityList<TEntity?>(File.ReadAllBytes(filePath), csvOptions);
     }
 
     /// <summary>
@@ -188,17 +220,31 @@ public static class CsvHelper
     /// </summary>
     /// <param name="csvBytes">csv bytes</param>
     public static List<TEntity?> ToEntityList<TEntity>(byte[] csvBytes)
+        => ToEntityList<TEntity>(csvBytes, new CsvOptions());
+    
+    public static List<TEntity?> ToEntityList<TEntity>(byte[] csvBytes, CsvOptions csvOptions)
     {
-        if (csvBytes is null)
-        {
-            throw new ArgumentNullException(nameof(csvBytes));
-        }
+        Guard.NotNull(csvBytes);
+        using var ms = new MemoryStream(csvBytes);
+        return ToEntityList<TEntity>(ms, csvOptions);
+    }
 
+    /// <summary>
+    ///     convert csv file data to entity list
+    /// </summary>
+    /// <param name="csvStream">csv Stream</param>
+    public static List<TEntity?> ToEntityList<TEntity>(Stream csvStream)
+        => ToEntityList<TEntity>(csvStream, new CsvOptions());
+    
+    public static List<TEntity?> ToEntityList<TEntity>(Stream csvStream, CsvOptions csvOptions)
+    {
+        Guard.NotNull(csvStream);
+        csvStream.Seek(0, SeekOrigin.Begin);
+        
         var entities = new List<TEntity?>();
         if (typeof(TEntity).IsBasicType())
         {
-            using var ms = new MemoryStream(csvBytes);
-            using var sr = new StreamReader(ms, Encoding.UTF8);
+            using var sr = new StreamReader(csvStream, Encoding.UTF8);
             string strLine;
             var isFirstLine = true;
             while ((strLine = sr.ReadLine()!).IsNotNullOrEmpty())
@@ -226,14 +272,13 @@ public static class CsvHelper
                     ColumnWidth = _.Value.ColumnWidth,
                     IsIgnored = _.Value.IsIgnored
                 });
-            using var ms = new MemoryStream(csvBytes);
-            using var sr = new StreamReader(ms, Encoding.UTF8);
+            using var sr = new StreamReader(csvStream, Encoding.UTF8);
             string strLine;
             var isFirstLine = true;
             while ((strLine = sr.ReadLine()!).IsNotNullOrEmpty())
             {
                 var entityType = typeof(TEntity);
-                var cols = ParseLine(strLine);
+                var cols = ParseLine(strLine, csvOptions);
                 if (isFirstLine)
                 {
                     for (var index = 0; index < cols.Count; index++)
@@ -371,21 +416,9 @@ public static class CsvHelper
         return entities;
     }
 
-    /// <summary>
-    ///     convert csv file data to entity list
-    /// </summary>
-    /// <param name="csvStream">csv Stream</param>
-    public static List<TEntity?> ToEntityList<TEntity>(Stream csvStream)
-    {
-        if (csvStream is null)
-        {
-            throw new ArgumentNullException(nameof(csvStream));
-        }
-
-        return ToEntityList<TEntity>(csvStream.ToByteArray());
-    }
-
-    public static IReadOnlyList<string> ParseLine(string line)
+    public static IReadOnlyList<string> ParseLine(string line) => ParseLine(line, new CsvOptions());
+    
+    public static IReadOnlyList<string> ParseLine(string line, CsvOptions csvOptions)
     {
         if (string.IsNullOrEmpty(line))
         {
@@ -409,7 +442,7 @@ public static class CsvHelper
                 // If the current character is a double quote then the column value is contained within
                 // double quotes, otherwise append the next character
                 inColumn = true;
-                if (character == CsvQuoteCharacter)
+                if (character == csvOptions.QuoteCharacter)
                 {
                     inQuotes = true;
                     continue;
@@ -424,22 +457,22 @@ public static class CsvHelper
                     break;
                 }
 
-                if (character == CsvQuoteCharacter && line[i + 1] == CsvSeparatorCharacter) // quotes end
+                if (character == csvOptions.QuoteCharacter && line[i + 1] == csvOptions.SeparatorCharacter) // quotes end
                 {
                     inQuotes = false;
                     inColumn = false;
                     i++; //skip next
                 }
-                else if (character == CsvQuoteCharacter && line[i + 1] == CsvQuoteCharacter) // quotes
+                else if (character == csvOptions.QuoteCharacter && line[i + 1] == csvOptions.QuoteCharacter) // quotes
                 {
                     i++; //skip next
                 }
-                else if (character == CsvQuoteCharacter)
+                else if (character == csvOptions.QuoteCharacter)
                 {
                     throw new ArgumentException($"unable to escape {line}");
                 }
             }
-            else if (character == CsvSeparatorCharacter)
+            else if (character == csvOptions.SeparatorCharacter)
             {
                 inColumn = false;
             }
@@ -472,23 +505,26 @@ public static class CsvHelper
     /// </summary>
     public static bool ToCsvFile<TEntity>(this IEnumerable<TEntity> entities, string filePath, bool includeHeader)
     {
+        return ToCsvFile(Guard.NotNull(entities), filePath, new CsvOptions() { IncludeHeader = includeHeader });
+    }
+    
+    public static bool ToCsvFile<TEntity>(this IEnumerable<TEntity> entities, string filePath, CsvOptions csvOptions)
+    {
         if (entities is null)
         {
             throw new ArgumentNullException(nameof(entities));
         }
 
         var dir = Path.GetDirectoryName(filePath);
-        if (dir is null)
+        if (dir is not null)
         {
-            throw new ArgumentException(Resource.InvalidFilePath);
+            if (!Directory.Exists(dir))
+            {
+                Directory.CreateDirectory(dir);
+            }
         }
-
-        if (!Directory.Exists(dir))
-        {
-            Directory.CreateDirectory(dir);
-        }
-
-        var csvTextData = GetCsvText(entities, includeHeader);
+        
+        var csvTextData = GetCsvText(entities, csvOptions);
         if (csvTextData.IsNullOrEmpty())
         {
             return false;
@@ -508,24 +544,42 @@ public static class CsvHelper
     /// </summary>
     public static byte[] ToCsvBytes<TEntity>(this IEnumerable<TEntity> entities, bool includeHeader) =>
         GetCsvText(entities, includeHeader).GetBytes();
+    
+    /// <summary>
+    ///     to csv bytes
+    /// </summary>
+    public static byte[] ToCsvBytes<TEntity>(this IEnumerable<TEntity> entities, CsvOptions csvOptions) =>
+        GetCsvText(entities, csvOptions).GetBytes();
 
     /// <summary>
     ///     Get csv text
     /// </summary>
     public static string GetCsvText<TEntity>(this IEnumerable<TEntity> entities, bool includeHeader = true)
     {
+        return GetCsvText(Guard.NotNull(entities), new CsvOptions()
+        {
+            IncludeHeader = includeHeader
+        });
+    }
+
+    /// <summary>
+    ///     Get csv text
+    /// </summary>
+    public static string GetCsvText<TEntity>(this IEnumerable<TEntity> entities, CsvOptions csvOptions)
+    {
         if (entities is null)
         {
             throw new ArgumentNullException(nameof(entities));
         }
+        Guard.NotNull(csvOptions);
 
         var data = new StringBuilder();
         var isBasicType = typeof(TEntity).IsBasicType();
         if (isBasicType)
         {
-            if (includeHeader)
+            if (csvOptions.IncludeHeader)
             {
-                data.AppendLine(InternalConstants.DefaultPropertyNameForBasicType);
+                data.AppendLine(csvOptions.PropertyNameForBasicType);
             }
 
             foreach (var entity in entities)
@@ -537,13 +591,13 @@ public static class CsvHelper
         {
             var dic = InternalHelper.GetPropertyColumnDictionary<TEntity>();
             var props = InternalHelper.GetPropertiesForCsvHelper<TEntity>();
-            if (includeHeader)
+            if (csvOptions.IncludeHeader)
             {
                 for (var i = 0; i < props.Count; i++)
                 {
                     if (i > 0)
                     {
-                        data.Append(CsvSeparatorCharacter);
+                        data.Append(csvOptions.SeparatorCharacter);
                     }
 
                     data.Append(dic[props[i]].ColumnTitle);
@@ -574,14 +628,14 @@ public static class CsvHelper
 
                     if (i > 0)
                     {
-                        data.Append(CsvSeparatorCharacter);
+                        data.Append(csvOptions.SeparatorCharacter);
                     }
 
                     // https://stackoverflow.com/questions/4617935/is-there-a-way-to-include-commas-in-csv-columns-without-breaking-the-formatting
                     var val = propertyValue?.ToString()?.Replace("\"", "\"\"");
                     if (val is { Length: > 0 })
                     {
-                        data.Append(val.IndexOf(CsvSeparatorCharacter) > -1 ? $"\"{val}\"" : val);
+                        data.Append(val.IndexOf(csvOptions.SeparatorCharacter) > -1 ? $"\"{val}\"" : val);
                     }
                 }
 
@@ -597,6 +651,15 @@ public static class CsvHelper
     /// </summary>
     public static string GetCsvText(this DataTable? dataTable, bool includeHeader = true)
     {
+        return GetCsvText(dataTable, new CsvOptions()
+        {
+            IncludeHeader = includeHeader
+        });
+    }
+    
+    public static string GetCsvText(this DataTable? dataTable, CsvOptions csvOptions)
+    {
+        Guard.NotNull(csvOptions);
         if (dataTable is null || dataTable.Rows.Count == 0 || dataTable.Columns.Count == 0)
         {
             return string.Empty;
@@ -604,13 +667,13 @@ public static class CsvHelper
 
         var data = new StringBuilder();
 
-        if (includeHeader)
+        if (csvOptions.IncludeHeader)
         {
             for (var i = 0; i < dataTable.Columns.Count; i++)
             {
                 if (i > 0)
                 {
-                    data.Append(CsvSeparatorCharacter);
+                    data.Append(csvOptions.SeparatorCharacter);
                 }
 
                 var columnName = InternalHelper.GetDecodeColumnName(dataTable.Columns[i].ColumnName);
@@ -626,14 +689,14 @@ public static class CsvHelper
             {
                 if (j > 0)
                 {
-                    data.Append(CsvSeparatorCharacter);
+                    data.Append(csvOptions.SeparatorCharacter);
                 }
 
                 // https://stackoverflow.com/questions/4617935/is-there-a-way-to-include-commas-in-csv-columns-without-breaking-the-formatting
                 var val = dataTable.Rows[i][j]?.ToString()?.Replace("\"", "\"\"");
                 if (val is { Length: > 0 })
                 {
-                    data.Append(val.IndexOf(CsvSeparatorCharacter) > -1 ? $"\"{val}\"" : val);
+                    data.Append(val.IndexOf(csvOptions.SeparatorCharacter) > -1 ? $"\"{val}\"" : val);
                 }
             }
 
