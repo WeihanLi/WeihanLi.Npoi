@@ -58,7 +58,7 @@ public static class CsvHelper
     {
         return ToCsvFile(dataTable, filePath, new CsvOptions() { IncludeHeader = includeHeader });
     }
-    
+
     /// <summary>
     ///     save to csv file
     /// </summary>
@@ -98,7 +98,7 @@ public static class CsvHelper
     /// </summary>
     public static byte[] ToCsvBytes(this DataTable dataTable, bool includeHeader) =>
         GetCsvText(dataTable, includeHeader).GetBytes();
-    
+
     /// <summary>
     ///     to csv bytes
     /// </summary>
@@ -111,7 +111,7 @@ public static class CsvHelper
     /// <param name="csvBytes">csv bytes</param>
     public static DataTable ToDataTable(byte[] csvBytes)
         => ToDataTable(csvBytes, new CsvOptions());
-    
+
     public static DataTable ToDataTable(byte[] csvBytes, CsvOptions csvOptions)
     {
         if (csvBytes is null)
@@ -128,7 +128,7 @@ public static class CsvHelper
     /// </summary>
     /// <param name="stream">stream</param>
     public static DataTable ToDataTable(Stream stream) => ToDataTable(stream, new CsvOptions());
-    
+
     public static DataTable ToDataTable(Stream stream, CsvOptions csvOptions)
     {
         if (stream is null)
@@ -204,7 +204,7 @@ public static class CsvHelper
     /// <param name="filePath">csv file path</param>
     public static List<TEntity?> ToEntityList<TEntity>(string filePath)
         => ToEntityList<TEntity>(filePath, new CsvOptions());
-    
+
     public static List<TEntity?> ToEntityList<TEntity>(string filePath, CsvOptions csvOptions)
     {
         Guard.NotNull(filePath);
@@ -221,7 +221,7 @@ public static class CsvHelper
     /// <param name="csvBytes">csv bytes</param>
     public static List<TEntity?> ToEntityList<TEntity>(byte[] csvBytes)
         => ToEntityList<TEntity>(csvBytes, new CsvOptions());
-    
+
     public static List<TEntity?> ToEntityList<TEntity>(byte[] csvBytes, CsvOptions csvOptions)
     {
         Guard.NotNull(csvBytes);
@@ -235,12 +235,12 @@ public static class CsvHelper
     /// <param name="csvStream">csv Stream</param>
     public static List<TEntity?> ToEntityList<TEntity>(Stream csvStream)
         => ToEntityList<TEntity>(csvStream, new CsvOptions());
-    
+
     public static List<TEntity?> ToEntityList<TEntity>(Stream csvStream, CsvOptions csvOptions)
     {
         Guard.NotNull(csvStream);
         csvStream.Seek(0, SeekOrigin.Begin);
-        
+
         var entities = new List<TEntity?>();
         if (typeof(TEntity).IsBasicType())
         {
@@ -417,7 +417,7 @@ public static class CsvHelper
     }
 
     public static IReadOnlyList<string> ParseLine(string line) => ParseLine(line, new CsvOptions());
-    
+
     public static IReadOnlyList<string> ParseLine(string line, CsvOptions csvOptions)
     {
         if (string.IsNullOrEmpty(line))
@@ -507,7 +507,7 @@ public static class CsvHelper
     {
         return ToCsvFile(Guard.NotNull(entities), filePath, new CsvOptions() { IncludeHeader = includeHeader });
     }
-    
+
     public static bool ToCsvFile<TEntity>(this IEnumerable<TEntity> entities, string filePath, CsvOptions csvOptions)
     {
         if (entities is null)
@@ -523,7 +523,7 @@ public static class CsvHelper
                 Directory.CreateDirectory(dir);
             }
         }
-        
+
         var csvTextData = GetCsvText(entities, csvOptions);
         if (csvTextData.IsNullOrEmpty())
         {
@@ -544,7 +544,7 @@ public static class CsvHelper
     /// </summary>
     public static byte[] ToCsvBytes<TEntity>(this IEnumerable<TEntity> entities, bool includeHeader) =>
         GetCsvText(entities, includeHeader).GetBytes();
-    
+
     /// <summary>
     ///     to csv bytes
     /// </summary>
@@ -656,7 +656,7 @@ public static class CsvHelper
             IncludeHeader = includeHeader
         });
     }
-    
+
     public static string GetCsvText(this DataTable? dataTable, CsvOptions csvOptions)
     {
         Guard.NotNull(csvOptions);
