@@ -11,7 +11,6 @@ using System.Linq;
 using System.Reflection;
 using WeihanLi.Common;
 using WeihanLi.Common.Helpers;
-using WeihanLi.Common.Models;
 using WeihanLi.Extensions;
 using WeihanLi.Npoi.Configurations;
 using WeihanLi.Npoi.Settings;
@@ -168,7 +167,7 @@ internal static class NpoiHelper
                     {
                         entities.Add(entity);
                     }
-                    
+
                     dataAction?.Invoke(entity, configuration, rowIndex);
                 }
             }

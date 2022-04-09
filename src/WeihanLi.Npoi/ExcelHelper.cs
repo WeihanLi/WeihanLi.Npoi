@@ -288,10 +288,10 @@ public static class ExcelHelper
     /// <param name="sheetIndex">sheetIndex</param>
     /// <param name="validator">validator</param>
     /// <returns>List and validationResult</returns>
-    public static (List<TEntity?> EntityList, Dictionary<int, ValidationResult> ValidationResults) 
+    public static (List<TEntity?> EntityList, Dictionary<int, ValidationResult> ValidationResults)
         ToEntityListWithValidationResult<TEntity>(
-            byte[] excelBytes, 
-            ExcelFormat excelFormat = ExcelFormat.Xls, 
+            byte[] excelBytes,
+            ExcelFormat excelFormat = ExcelFormat.Xls,
             int sheetIndex = 0,
             IValidator? validator = null)
         where TEntity : new()
@@ -356,7 +356,7 @@ public static class ExcelHelper
     /// <param name="validator">data validator</param>
     /// <returns>List</returns>
     public static (List<TEntity?> EntityList, Dictionary<int, ValidationResult> ValidationResults) ToEntityListWithValidationResult<TEntity>(
-            Stream excelStream, ExcelFormat excelFormat = ExcelFormat.Xls, 
+            Stream excelStream, ExcelFormat excelFormat = ExcelFormat.Xls,
             int sheetIndex = 0,
             IValidator? validator = null)
         where TEntity : new()
@@ -385,7 +385,7 @@ public static class ExcelHelper
         var workbook = LoadExcel(excelPath);
         return workbook.ToEntityList<TEntity>(sheetIndex);
     }
-    
+
     /// <summary>
     ///     read (sheetIndex) sheet of excel from excel file path to a list
     /// </summary>
