@@ -1,20 +1,22 @@
-﻿namespace WeihanLi.Npoi.Abstract
+﻿// Copyright (c) Weihan Li. All rights reserved.
+// Licensed under the Apache license.
+
+namespace WeihanLi.Npoi.Abstract;
+
+internal interface ICell
 {
-    internal interface ICell
-    {
-        CellType CellType { get; set; }
+    CellType CellType { get; set; }
 
-        object? Value { get; set; }
-    }
+    object? Value { get; set; }
+}
 
-    internal enum CellType
-    {
-        Unknown = -1, // 0xFFFFFFFF
-        String = 0,
-        Numeric = 1,
-        Formula = 2,
-        Blank = 3,
-        Boolean = 4,
-        Error = 5
-    }
+internal enum CellType
+{
+    Unknown = -1, // 0xFFFFFFFF
+    String = 0,
+    Numeric = 1,
+    Formula = 2,
+    Blank = 3,
+    Boolean = 4,
+    Error = 5
 }

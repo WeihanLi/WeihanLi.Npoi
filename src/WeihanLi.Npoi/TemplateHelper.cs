@@ -1,122 +1,124 @@
-﻿using System;
+﻿// Copyright (c) Weihan Li. All rights reserved.
+// Licensed under the Apache license.
+
+using System;
 using WeihanLi.Extensions;
 
-namespace WeihanLi.Npoi
+namespace WeihanLi.Npoi;
+
+public sealed class TemplateOptions
 {
-    public sealed class TemplateOptions
+    private string _templateDataBegin = InternalConstants.TemplateDataBegin;
+    private string _templateDataEnd = InternalConstants.TemplateDataEnd;
+    private string _templateDataParamFormat = InternalConstants.TemplateDataParamFormat;
+    private string _templateDataPrefix = InternalConstants.TemplateDataPrefix;
+    private string _templateGlobalParamFormat = InternalConstants.TemplateGlobalParamFormat;
+    private string _templateHeaderParamFormat = InternalConstants.TemplateHeaderParamFormat;
+
+    /// <summary>
+    ///     Global Param Format
+    /// </summary>
+    public string TemplateGlobalParamFormat
     {
-        private string _templateDataBegin = InternalConstants.TemplateDataBegin;
-        private string _templateDataEnd = InternalConstants.TemplateDataEnd;
-        private string _templateDataParamFormat = InternalConstants.TemplateDataParamFormat;
-        private string _templateDataPrefix = InternalConstants.TemplateDataPrefix;
-        private string _templateGlobalParamFormat = InternalConstants.TemplateGlobalParamFormat;
-        private string _templateHeaderParamFormat = InternalConstants.TemplateHeaderParamFormat;
-
-        /// <summary>
-        ///     Global Param Format
-        /// </summary>
-        public string TemplateGlobalParamFormat
+        get => _templateGlobalParamFormat;
+        set
         {
-            get => _templateGlobalParamFormat;
-            set
+            if (value.IsNotNullOrWhiteSpace())
             {
-                if (value.IsNotNullOrWhiteSpace())
-                {
-                    _templateGlobalParamFormat = value;
-                }
-            }
-        }
-
-        /// <summary>
-        ///     Header Param Format
-        /// </summary>
-        public string TemplateHeaderParamFormat
-        {
-            get => _templateHeaderParamFormat;
-            set
-            {
-                if (value.IsNotNullOrWhiteSpace())
-                {
-                    _templateHeaderParamFormat = value;
-                }
-            }
-        }
-
-        /// <summary>
-        ///     Data Param Format
-        /// </summary>
-        public string TemplateDataParamFormat
-        {
-            get => _templateDataParamFormat;
-            set
-            {
-                if (value.IsNotNullOrWhiteSpace())
-                {
-                    _templateDataParamFormat = value;
-                }
-            }
-        }
-
-        /// <summary>
-        ///     Data Param Prefix
-        /// </summary>
-        public string TemplateDataPrefix
-        {
-            get => _templateDataPrefix;
-            set
-            {
-                if (value.IsNotNullOrWhiteSpace())
-                {
-                    _templateDataPrefix = value;
-                }
-            }
-        }
-
-        /// <summary>
-        ///     Data Begin markup
-        /// </summary>
-        public string TemplateDataBegin
-        {
-            get => _templateDataBegin;
-            set
-            {
-                if (value.IsNotNullOrWhiteSpace())
-                {
-                    _templateDataBegin = value;
-                }
-            }
-        }
-
-        /// <summary>
-        ///     Data End markup
-        /// </summary>
-        public string TemplateDataEnd
-        {
-            get => _templateDataEnd;
-            set
-            {
-                if (value.IsNotNullOrWhiteSpace())
-                {
-                    _templateDataEnd = value;
-                }
+                _templateGlobalParamFormat = value;
             }
         }
     }
 
-    public static class TemplateHelper
+    /// <summary>
+    ///     Header Param Format
+    /// </summary>
+    public string TemplateHeaderParamFormat
     {
-        /// <summary>
-        ///     Configure TemplateOptions
-        /// </summary>
-        /// <param name="optionsAction">optionsAction</param>
-        public static void ConfigureTemplateOptions(Action<TemplateOptions> optionsAction)
+        get => _templateHeaderParamFormat;
+        set
         {
-            if (optionsAction is null)
+            if (value.IsNotNullOrWhiteSpace())
             {
-                throw new ArgumentNullException(nameof(optionsAction));
+                _templateHeaderParamFormat = value;
             }
-
-            optionsAction.Invoke(NpoiTemplateHelper.s_templateOptions);
         }
+    }
+
+    /// <summary>
+    ///     Data Param Format
+    /// </summary>
+    public string TemplateDataParamFormat
+    {
+        get => _templateDataParamFormat;
+        set
+        {
+            if (value.IsNotNullOrWhiteSpace())
+            {
+                _templateDataParamFormat = value;
+            }
+        }
+    }
+
+    /// <summary>
+    ///     Data Param Prefix
+    /// </summary>
+    public string TemplateDataPrefix
+    {
+        get => _templateDataPrefix;
+        set
+        {
+            if (value.IsNotNullOrWhiteSpace())
+            {
+                _templateDataPrefix = value;
+            }
+        }
+    }
+
+    /// <summary>
+    ///     Data Begin markup
+    /// </summary>
+    public string TemplateDataBegin
+    {
+        get => _templateDataBegin;
+        set
+        {
+            if (value.IsNotNullOrWhiteSpace())
+            {
+                _templateDataBegin = value;
+            }
+        }
+    }
+
+    /// <summary>
+    ///     Data End markup
+    /// </summary>
+    public string TemplateDataEnd
+    {
+        get => _templateDataEnd;
+        set
+        {
+            if (value.IsNotNullOrWhiteSpace())
+            {
+                _templateDataEnd = value;
+            }
+        }
+    }
+}
+
+public static class TemplateHelper
+{
+    /// <summary>
+    ///     Configure TemplateOptions
+    /// </summary>
+    /// <param name="optionsAction">optionsAction</param>
+    public static void ConfigureTemplateOptions(Action<TemplateOptions> optionsAction)
+    {
+        if (optionsAction is null)
+        {
+            throw new ArgumentNullException(nameof(optionsAction));
+        }
+
+        optionsAction.Invoke(NpoiTemplateHelper.s_templateOptions);
     }
 }

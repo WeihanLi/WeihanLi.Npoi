@@ -1,6 +1,11 @@
 # WeihanLi.Npoi Release Notes
 
-## [1.20.0](https://www.nuget.org/packages/WeihanLi.Npoi/1.19.2)
+## [1.21.0](https://www.nuget.org/packages/WeihanLi.Npoi/1.21.0)
+
+- Add support for duplicate column name for dataTable
+- Fix sheet name not applied bug #127
+
+## [1.20.0](https://www.nuget.org/packages/WeihanLi.Npoi/1.20.0)
 
 - The `ExcelHelper.ToDataTable` was extended with two arguments `bool removeEmptyRows = false, int? maxColumns = null`
 - Fix possible `IndexOutOfRangeException` when loading rows
