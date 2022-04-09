@@ -97,7 +97,7 @@ public static class NpoiExtensions
             {
                 validatorEffective = validator.GetCommonValidator();
             }
-            validatorEffective ??= DataAnnotationValidator.Instance;
+            validatorEffective ??= ExcelHelper.DefaultDataValidator;
             var validationResult = validatorEffective.Validate(entity);
             if (!validationResult.Valid)
             {

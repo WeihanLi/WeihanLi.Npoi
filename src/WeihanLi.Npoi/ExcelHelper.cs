@@ -24,6 +24,7 @@ public static class ExcelHelper
 {
     private static readonly Version s_appVersion = typeof(ExcelHelper).Assembly.GetName().Version!;
     private static ExcelSetting s_defaultExcelSetting = new();
+    private static IValidator _defaultDataValidator = DataAnnotationValidator.Instance;
 
     /// <summary>
     ///     Default excel setting for export excel files
@@ -32,6 +33,15 @@ public static class ExcelHelper
     {
         get => s_defaultExcelSetting;
         set => s_defaultExcelSetting = Guard.NotNull(value);
+    }
+
+    /// <summary>
+    /// Default Data Validator
+    /// </summary>
+    public static IValidator DefaultDataValidator
+    {
+        get => _defaultDataValidator;
+        set => _defaultDataValidator = Guard.NotNull(value);
     }
 
     /// <summary>
