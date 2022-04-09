@@ -2,6 +2,8 @@
 // Licensed under the Apache license.
 
 using System;
+using WeihanLi.Common.Models;
+using WeihanLi.Common.Services;
 using WeihanLi.Npoi.Configurations;
 
 namespace WeihanLi.Npoi;
@@ -121,6 +123,19 @@ public static class ConfigurationExtensions
     /// <returns>current excel configuration<see cref="IExcelConfiguration" /></returns>
     public static IExcelConfiguration HasCategory(this IExcelConfiguration configuration, string category) =>
         configuration.HasExcelSetting(setting => { setting.Category = category; });
+
+    /// <summary>
+    ///     excel data validator
+    /// </summary>
+    /// <param name="configuration">configuration</param>
+    /// <param name="validator">validator</param>
+    /// <typeparam name="TEntity">entity type</typeparam>
+    /// <returns>current configuration</returns>
+    public static IExcelConfiguration<TEntity> WithValidator<TEntity>(this IExcelConfiguration<TEntity> configuration,
+        IValidator<TEntity> validator)
+    {
+        return configuration.WithValidator(validator.GetCommonValidator());
+    }
 
     /// <summary>
     ///     property configuration

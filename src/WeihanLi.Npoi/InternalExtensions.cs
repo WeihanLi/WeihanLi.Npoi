@@ -8,6 +8,8 @@ using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using WeihanLi.Common;
+using WeihanLi.Common.Models;
+using WeihanLi.Common.Services;
 using WeihanLi.Extensions;
 using WeihanLi.Npoi.Configurations;
 using CellType = WeihanLi.Npoi.Abstract.CellType;
@@ -55,6 +57,18 @@ internal static class InternalExtensions
         }
 
         return paramDic;
+    }
+
+    public static IValidator GetCommonValidator<T>(this IValidator<T> validator)
+    {
+        return new DelegateValidator(o =>
+        {
+            if (o is T t)
+            {
+                return validator.Validate(t);
+            }
+            return ValidationResult.Failed("Invalid value");
+        });
     }
 
     /// <summary>

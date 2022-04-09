@@ -85,20 +85,26 @@ public static class NpoiExtensions
     /// <param name="validator">validator</param>
     /// <returns>entity list and validation results</returns>
     public static (List<TEntity?> EntityList, Dictionary<int, ValidationResult> ValidationResults) 
-        ToEntityListWithValidationResult<TEntity>(this ISheet sheet, int sheetIndex = 0, IValidator? validator = null)
+        ToEntityListWithValidationResult<TEntity>(this ISheet sheet, int sheetIndex = 0, IValidator<TEntity>? validator = null)
         where TEntity : new()
     {
         var validationResults = new Dictionary<int, ValidationResult>();
         
         var entities = NpoiHelper.SheetToEntityList<TEntity>(sheet, sheetIndex, (entity, configuration, rowIndex) =>
         {
-            validator ??= configuration.Validator;
-            var validationResult = validator.Validate(entity!);
+            var validatorEffective = configuration.Validator;
+            if (validator != null)
+            {
+                validatorEffective = validator.GetCommonValidator();
+            }
+            validatorEffective ??= DataAnnotationValidator.Instance;
+            var validationResult = validatorEffective.Validate(entity);
             if (!validationResult.Valid)
             {
                 validationResults[rowIndex] = validationResult;
             }
         });
+
         return (entities, validationResults);
     }
 

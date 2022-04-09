@@ -293,11 +293,11 @@ public static class ExcelHelper
             byte[] excelBytes, 
             ExcelFormat excelFormat = ExcelFormat.Xls, 
             int sheetIndex = 0,
-            IValidator? validator = null)
+            IValidator<TEntity>? validator = null)
         where TEntity : new()
     {
         var workbook = LoadExcel(excelBytes, excelFormat);
-        return workbook.GetSheetAt(sheetIndex).ToEntityListWithValidationResult<TEntity>(sheetIndex, validator);
+        return workbook.GetSheetAt(sheetIndex).ToEntityListWithValidationResult(sheetIndex, validator);
     }
 
     /// <summary>
@@ -358,11 +358,11 @@ public static class ExcelHelper
     public static (List<TEntity?> EntityList, Dictionary<int, ValidationResult> ValidationResults) ToEntityListWithValidationResult<TEntity>(
             Stream excelStream, ExcelFormat excelFormat = ExcelFormat.Xls, 
             int sheetIndex = 0,
-            IValidator? validator = null)
+            IValidator<TEntity>? validator = null)
         where TEntity : new()
     {
         var workbook = LoadExcel(excelStream, excelFormat);
-        return workbook.GetSheetAt(sheetIndex).ToEntityListWithValidationResult<TEntity>(sheetIndex, validator);
+        return workbook.GetSheetAt(sheetIndex).ToEntityListWithValidationResult(sheetIndex, validator);
     }
 
     /// <summary>
@@ -395,11 +395,11 @@ public static class ExcelHelper
     /// <param name="validator">validator</param>
     /// <returns>List and validationResult</returns>
     public static (List<TEntity?> EntityList, Dictionary<int, ValidationResult> ValidationResults) ToEntityListWithValidationResult<TEntity>(
-        string excelPath, int sheetIndex = 0, IValidator? validator = null
+        string excelPath, int sheetIndex = 0, IValidator<TEntity>? validator = null
     ) where TEntity : new()
     {
         var workbook = LoadExcel(excelPath);
-        return workbook.GetSheetAt(sheetIndex).ToEntityListWithValidationResult<TEntity>(sheetIndex, validator);
+        return workbook.GetSheetAt(sheetIndex).ToEntityListWithValidationResult(sheetIndex, validator);
     }
 
     /// <summary>

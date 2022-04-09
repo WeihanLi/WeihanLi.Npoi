@@ -108,19 +108,19 @@ internal sealed class ExcelConfiguration<TEntity> : ExcelConfiguration, IExcelCo
 
     internal Func<TEntity?, bool>? DataFilter { get; private set; }
 
-    internal IValidator Validator { get; private set; } = InternalCache.DefaultValidator;
+    internal IValidator? Validator { get; private set; }
 
     #region Property
 
-    public IExcelConfiguration<TEntity> WithValidator(IValidator validator)
+    public IExcelConfiguration<TEntity> WithValidator(IValidator? validator)
     {
         Validator = validator;
         return this;
     }
 
-    public IExcelConfiguration<TEntity> WithDataValidation(Func<TEntity?, bool>? dataValidator)
+    public IExcelConfiguration<TEntity> WithDataFilter(Func<TEntity?, bool>? dataFilter)
     {
-        DataFilter = dataValidator;
+        DataFilter = dataFilter;
         return this;
     }
 

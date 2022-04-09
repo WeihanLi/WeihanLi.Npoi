@@ -191,9 +191,9 @@ public class ExcelTest
             Assert.Equal(list.Count, importedList.Count);
             for (var i = 0; i < list.Count; i++)
             {
-                if (list[i] == null)
+                if (importedList[i] == null)
                 {
-                    Assert.Null(importedList[i]);
+                    Assert.Null(list[i]);
                 }
                 else
                 {
@@ -285,9 +285,9 @@ public class ExcelTest
             Assert.Equal(list.Count, importedList.Count);
             for (var i = 0; i < list.Count; i++)
             {
-                if (list[i] == null)
+                if (importedList[i] == null)
                 {
-                    Assert.Null(importedList[i]);
+                    Assert.Null(list[i]);
                 }
                 else
                 {
@@ -417,7 +417,7 @@ public class ExcelTest
         var settings = FluentSettings.For<Notice>();
         lock (settings)
         {
-            settings.WithDataValidation(x => x?.Id > 5);
+            settings.WithDataFilter(x => x?.Id > 5);
 
             var importedList = ExcelHelper.ToEntityList<Notice>(excelBytes, excelFormat);
             Assert.Equal(list.Count(x => x.Id > 5), importedList.Count);
@@ -447,7 +447,7 @@ public class ExcelTest
                 }
             }
 
-            settings.WithDataValidation(null);
+            settings.WithDataFilter(null);
         }
     }
 
@@ -992,7 +992,7 @@ public class ExcelTest
                 Name = "test"
             }
         };
-        var validator = new DelegateValidator(_ => new ValidationResult()
+        var validator = new DelegateValidator<Job>(_ => new ValidationResult()
         {
             Valid = false, 
             Errors = new Dictionary<string, string[]>() { { "", new[] { "Mock error" } } }

@@ -68,14 +68,14 @@ public interface IExcelConfiguration<TEntity> : IExcelConfiguration
     /// </summary>
     /// <param name="validator">validator</param>
     /// <returns>current excel configuration</returns>
-    IExcelConfiguration<TEntity> WithValidator(IValidator validator);
+    IExcelConfiguration<TEntity> WithValidator(IValidator? validator);
 
     /// <summary>
-    ///     register data validation func
+    ///     register data filter
     /// </summary>
-    /// <param name="dataValidator">data validate logic</param>
+    /// <param name="dataFilter">data filter logic</param>
     /// <returns>current excel configuration</returns>
-    IExcelConfiguration<TEntity> WithDataValidation(Func<TEntity?, bool>? dataValidator);
+    IExcelConfiguration<TEntity> WithDataFilter(Func<TEntity?, bool>? dataFilter);
 
     /// <summary>
     ///     property configuration
