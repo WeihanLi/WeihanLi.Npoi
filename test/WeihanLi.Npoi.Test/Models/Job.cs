@@ -8,7 +8,7 @@ namespace WeihanLi.Npoi.Test.Models;
 public sealed record Job
 {
     public int Id { get; set; }
-    
+
     [Required]
     public string Name { get; set; } = default!;
 }

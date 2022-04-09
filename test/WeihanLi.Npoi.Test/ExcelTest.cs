@@ -979,7 +979,7 @@ public class ExcelTest
         }
         Assert.Single(result.ValidationResults);
     }
-    
+
     [Theory]
     [ExcelFormatData]
     public void ValidatorTest_CustomValidator(ExcelFormat excelFormat)
@@ -994,7 +994,7 @@ public class ExcelTest
         };
         var validator = new DelegateValidator<Job>(_ => new ValidationResult()
         {
-            Valid = false, 
+            Valid = false,
             Errors = new Dictionary<string, string[]>() { { "", new[] { "Mock error" } } }
         });
         var bytes = list.ToExcelBytes(excelFormat);
