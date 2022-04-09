@@ -10,6 +10,8 @@ using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using WeihanLi.Common;
+using WeihanLi.Common.Models;
+using WeihanLi.Common.Services;
 using WeihanLi.Extensions;
 using WeihanLi.Npoi.Settings;
 
@@ -263,7 +265,7 @@ public static class ExcelHelper
         where TEntity : new() => ToEntityList<TEntity>(excelBytes, excelFormat, 0);
 
     /// <summary>
-    ///     read (sheetIndex) sheet of excel from excel bytes path to a list
+    ///     read (sheetIndex) sheet of excel from excel bytes to a list
     /// </summary>
     /// <typeparam name="TEntity">EntityType</typeparam>
     /// <param name="excelBytes">excelBytes</param>
@@ -278,7 +280,28 @@ public static class ExcelHelper
     }
 
     /// <summary>
-    ///     read first sheet of excel from excel file bytes to a list
+    ///     read (sheetIndex) sheet of excel from excel bytes to a list
+    /// </summary>
+    /// <typeparam name="TEntity">EntityType</typeparam>
+    /// <param name="excelBytes">excelBytes</param>
+    /// <param name="excelFormat">excelFormat</param>
+    /// <param name="sheetIndex">sheetIndex</param>
+    /// <param name="validator">validator</param>
+    /// <returns>List and validationResult</returns>
+    public static (List<TEntity?> EntityList, Dictionary<int, ValidationResult> ValidationResults) 
+        ToEntityListWithValidationResult<TEntity>(
+            byte[] excelBytes, 
+            ExcelFormat excelFormat = ExcelFormat.Xls, 
+            int sheetIndex = 0,
+            IValidator? validator = null)
+        where TEntity : new()
+    {
+        var workbook = LoadExcel(excelBytes, excelFormat);
+        return workbook.GetSheetAt(sheetIndex).ToEntityListWithValidationResult<TEntity>(sheetIndex, validator);
+    }
+
+    /// <summary>
+    ///     read first sheet of excel from excel stream to a list
     /// </summary>
     /// <typeparam name="TEntity">EntityType</typeparam>
     /// <param name="excelStream">excelStream</param>
@@ -324,6 +347,25 @@ public static class ExcelHelper
     }
 
     /// <summary>
+    ///     read (sheetIndex) sheet of excel from excel bytes path to a list
+    /// </summary>
+    /// <typeparam name="TEntity">EntityType</typeparam>
+    /// <param name="excelStream">excelStream</param>
+    /// <param name="excelFormat">excelFormat</param>
+    /// <param name="sheetIndex">sheetIndex</param>
+    /// <param name="validator">data validator</param>
+    /// <returns>List</returns>
+    public static (List<TEntity?> EntityList, Dictionary<int, ValidationResult> ValidationResults) ToEntityListWithValidationResult<TEntity>(
+            Stream excelStream, ExcelFormat excelFormat = ExcelFormat.Xls, 
+            int sheetIndex = 0,
+            IValidator? validator = null)
+        where TEntity : new()
+    {
+        var workbook = LoadExcel(excelStream, excelFormat);
+        return workbook.GetSheetAt(sheetIndex).ToEntityListWithValidationResult<TEntity>(sheetIndex, validator);
+    }
+
+    /// <summary>
     ///     read first sheet of excel from excel file path to a list
     /// </summary>
     /// <typeparam name="TEntity">EntityType</typeparam>
@@ -331,7 +373,6 @@ public static class ExcelHelper
     /// <returns>List</returns>
     public static List<TEntity?> ToEntityList<TEntity>(string excelPath) where TEntity : new() =>
         ToEntityList<TEntity>(excelPath, 0);
-
     /// <summary>
     ///     read (sheetIndex) sheet of excel from excel file path to a list
     /// </summary>
@@ -343,6 +384,22 @@ public static class ExcelHelper
     {
         var workbook = LoadExcel(excelPath);
         return workbook.ToEntityList<TEntity>(sheetIndex);
+    }
+    
+    /// <summary>
+    ///     read (sheetIndex) sheet of excel from excel file path to a list
+    /// </summary>
+    /// <typeparam name="TEntity">EntityType</typeparam>
+    /// <param name="excelPath">excelPath</param>
+    /// <param name="sheetIndex">sheetIndex</param>
+    /// <param name="validator">validator</param>
+    /// <returns>List and validationResult</returns>
+    public static (List<TEntity?> EntityList, Dictionary<int, ValidationResult> ValidationResults) ToEntityListWithValidationResult<TEntity>(
+        string excelPath, int sheetIndex = 0, IValidator? validator = null
+    ) where TEntity : new()
+    {
+        var workbook = LoadExcel(excelPath);
+        return workbook.GetSheetAt(sheetIndex).ToEntityListWithValidationResult<TEntity>(sheetIndex, validator);
     }
 
     /// <summary>

@@ -3,6 +3,7 @@
 
 using System;
 using System.Linq.Expressions;
+using WeihanLi.Common.Services;
 using WeihanLi.Npoi.Settings;
 
 namespace WeihanLi.Npoi.Configurations;
@@ -63,11 +64,18 @@ public interface IExcelConfiguration
 public interface IExcelConfiguration<TEntity> : IExcelConfiguration
 {
     /// <summary>
+    ///     register validator for excel import
+    /// </summary>
+    /// <param name="validator">validator</param>
+    /// <returns>current excel configuration</returns>
+    IExcelConfiguration<TEntity> WithValidator(IValidator validator);
+
+    /// <summary>
     ///     register data validation func
     /// </summary>
-    /// <param name="dataValidateFunc">data validate logic</param>
+    /// <param name="dataValidator">data validate logic</param>
     /// <returns>current excel configuration</returns>
-    IExcelConfiguration<TEntity> WithDataValidation(Func<TEntity?, bool>? dataValidateFunc);
+    IExcelConfiguration<TEntity> WithDataValidation(Func<TEntity?, bool>? dataValidator);
 
     /// <summary>
     ///     property configuration

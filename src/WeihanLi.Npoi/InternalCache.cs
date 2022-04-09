@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Concurrent;
 using System.Reflection;
+using WeihanLi.Common.Services;
 using WeihanLi.Npoi.Configurations;
 
 namespace WeihanLi.Npoi;
@@ -20,4 +21,6 @@ internal static class InternalCache
     public static readonly ConcurrentDictionary<PropertyInfo, Delegate?> InputFormatterFuncCache = new();
 
     public static readonly ConcurrentDictionary<PropertyInfo, Delegate?> ColumnInputFormatterFuncCache = new();
+
+    public static readonly IValidator DefaultValidator = new DataAnnotationValidator();
 }

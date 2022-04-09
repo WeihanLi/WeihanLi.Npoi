@@ -402,7 +402,7 @@ public static class CsvHelper
                         }
                     }
 
-                    if (configuration.DataValidationFunc != null && !configuration.DataValidationFunc(entity))
+                    if (configuration.DataFilter != null && !configuration.DataFilter(entity))
                     {
                         // data invalid
                         continue;

@@ -23,6 +23,6 @@
       https://github.com/WeihanLi/WeihanLi.Npoi/tree/dev/docs/ReleaseNotes.md
     </PackageReleaseNotes>
     <EnablePackageValidation>true</EnablePackageValidation>
-    <PackageValidationBaselineVersion>1.21.0</PackageValidationBaselineVersion>
+    <!-- <PackageValidationBaselineVersion>1.21.0</PackageValidationBaselineVersion> -->
   </PropertyGroup>
 </Project>

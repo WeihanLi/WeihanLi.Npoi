@@ -13,6 +13,8 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using WeihanLi.Common.Helpers;
+using WeihanLi.Common.Models;
+using WeihanLi.Common.Services;
 using WeihanLi.Extensions;
 using WeihanLi.Npoi.Settings;
 
@@ -72,6 +74,33 @@ public static class NpoiExtensions
     /// <returns>entity list</returns>
     public static List<TEntity?> ToEntityList<TEntity>(this ISheet sheet, int sheetIndex)
         where TEntity : new() => NpoiHelper.SheetToEntityList<TEntity>(sheet, sheetIndex);
+
+
+    /// <summary>
+    ///     Sheet2EntityList and validate
+    /// </summary>
+    /// <typeparam name="TEntity">EntityType</typeparam>
+    /// <param name="sheet">excel sheet</param>
+    /// <param name="sheetIndex">sheetIndex</param>
+    /// <param name="validator">validator</param>
+    /// <returns>entity list and validation results</returns>
+    public static (List<TEntity?> EntityList, Dictionary<int, ValidationResult> ValidationResults) 
+        ToEntityListWithValidationResult<TEntity>(this ISheet sheet, int sheetIndex = 0, IValidator? validator = null)
+        where TEntity : new()
+    {
+        var validationResults = new Dictionary<int, ValidationResult>();
+        
+        var entities = NpoiHelper.SheetToEntityList<TEntity>(sheet, sheetIndex, (entity, configuration, rowIndex) =>
+        {
+            validator ??= configuration.Validator;
+            var validationResult = validator.Validate(entity!);
+            if (!validationResult.Valid)
+            {
+                validationResults[rowIndex] = validationResult;
+            }
+        });
+        return (entities, validationResults);
+    }
 
     /// <summary>
     ///     Workbook2ToDataTable

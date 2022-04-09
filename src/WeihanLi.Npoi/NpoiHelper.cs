@@ -11,6 +11,7 @@ using System.Linq;
 using System.Reflection;
 using WeihanLi.Common;
 using WeihanLi.Common.Helpers;
+using WeihanLi.Common.Models;
 using WeihanLi.Extensions;
 using WeihanLi.Npoi.Configurations;
 using WeihanLi.Npoi.Settings;
@@ -30,8 +31,9 @@ internal static class NpoiHelper
     /// <typeparam name="TEntity">entity type</typeparam>
     /// <param name="sheet">excel sheet</param>
     /// <param name="sheetIndex">sheetIndex</param>
+    /// <param name="dataAction">data action</param>
     /// <returns>entity list</returns>
-    public static List<TEntity?> SheetToEntityList<TEntity>(ISheet? sheet, int sheetIndex) where TEntity : new()
+    public static List<TEntity?> SheetToEntityList<TEntity>(ISheet? sheet, int sheetIndex, Action<TEntity?, ExcelConfiguration<TEntity>, int>? dataAction = null) where TEntity : new()
     {
         if (sheet is null || sheet.PhysicalNumberOfRows <= 0)
         {
@@ -162,10 +164,12 @@ internal static class NpoiHelper
                         }
                     }
 
-                    if (configuration.DataValidationFunc?.Invoke(entity) != false)
+                    if (configuration.DataFilter?.Invoke(entity) != false)
                     {
                         entities.Add(entity);
                     }
+                    
+                    dataAction?.Invoke(entity, configuration, rowIndex);
                 }
             }
         }

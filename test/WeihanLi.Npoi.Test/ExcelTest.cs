@@ -10,6 +10,8 @@ using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
+using WeihanLi.Common.Models;
+using WeihanLi.Common.Services;
 using WeihanLi.Extensions;
 using WeihanLi.Npoi.Attributes;
 using WeihanLi.Npoi.Test.Models;
@@ -955,15 +957,65 @@ public class ExcelTest
 
     }
 
+    [Theory]
+    [ExcelFormatData]
+    public void ValidatorTest(ExcelFormat excelFormat)
+    {
+        var list = new List<Job>()
+        {
+            new()
+            {
+                Id = 1,
+                Name = "test"
+            },
+            new()
+        };
+        var bytes = list.ToExcelBytes(excelFormat);
+        var result = ExcelHelper.ToEntityListWithValidationResult<Job>(bytes, excelFormat);
+        Assert.Equal(list.Count, result.EntityList.Count);
+        for (var i = 0; i < list.Count; i++)
+        {
+            Assert.True(list[i] == result.EntityList[i]);
+        }
+        Assert.Single(result.ValidationResults);
+    }
+    
+    [Theory]
+    [ExcelFormatData]
+    public void ValidatorTest_CustomValidator(ExcelFormat excelFormat)
+    {
+        var list = new List<Job>()
+        {
+            new()
+            {
+                Id = 1,
+                Name = "test"
+            }
+        };
+        var validator = new DelegateValidator(_ => new ValidationResult()
+        {
+            Valid = false, 
+            Errors = new Dictionary<string, string[]>() { { "", new[] { "Mock error" } } }
+        });
+        var bytes = list.ToExcelBytes(excelFormat);
+        var result = ExcelHelper.ToEntityListWithValidationResult<Job>(bytes, excelFormat, validator: validator);
+        Assert.Equal(list.Count, result.EntityList.Count);
+        for (var i = 0; i < list.Count; i++)
+        {
+            Assert.True(list[i] == result.EntityList[i]);
+        }
+        Assert.Single(result.ValidationResults);
+    }
 
-    private class ImageTest
+
+    private sealed class ImageTest
     {
         public int Id { get; set; }
 
         public byte[] Image { get; set; } = null!;
     }
 
-    private class ImageTestPicData
+    private sealed class ImageTestPicData
     {
         public int Id { get; set; }
 

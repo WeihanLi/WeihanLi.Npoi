@@ -7,6 +7,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using WeihanLi.Common;
+using WeihanLi.Common.Services;
 using WeihanLi.Extensions;
 using WeihanLi.Npoi.Settings;
 
@@ -105,13 +106,21 @@ internal sealed class ExcelConfiguration<TEntity> : ExcelConfiguration, IExcelCo
     /// </summary>
     public Type EntityType => typeof(TEntity);
 
-    internal Func<TEntity?, bool>? DataValidationFunc { get; private set; }
+    internal Func<TEntity?, bool>? DataFilter { get; private set; }
+
+    internal IValidator Validator { get; private set; } = InternalCache.DefaultValidator;
 
     #region Property
 
-    public IExcelConfiguration<TEntity> WithDataValidation(Func<TEntity?, bool>? dataValidateFunc)
+    public IExcelConfiguration<TEntity> WithValidator(IValidator validator)
     {
-        DataValidationFunc = dataValidateFunc;
+        Validator = validator;
+        return this;
+    }
+
+    public IExcelConfiguration<TEntity> WithDataValidation(Func<TEntity?, bool>? dataValidator)
+    {
+        DataFilter = dataValidator;
         return this;
     }
 
