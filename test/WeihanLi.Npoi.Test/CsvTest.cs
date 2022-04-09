@@ -202,7 +202,7 @@ public class CsvTest
         // Check columns
         for (var headerIndex = 0; headerIndex < dt.Columns.Count; headerIndex++)
         {
-            var expectedValue = dt.Columns[headerIndex]?.ToString();
+            var expectedValue = dt.Columns[headerIndex].ToString();
             var excelValue = importedData.Columns[headerIndex].ToString();
             Assert.Equal(expectedValue, excelValue);
         }
@@ -277,12 +277,35 @@ public class CsvTest
         Assert.Equal(6, dataTable.Columns.Count);
         Assert.Equal(1, dataTable.Rows.Count);
 
-        var newCsvText = CsvHelper.GetCsvText(dataTable);
+        var newCsvText = dataTable.GetCsvText();
         Assert.StartsWith("A,B,C,A,B,C", newCsvText);
         var newDataTable = CsvHelper.ToDataTable(newCsvText.GetBytes());
 
         Assert.Equal(dataTable.Columns.Count, newDataTable.Columns.Count);
         Assert.Equal(dataTable.Rows.Count, newDataTable.Rows.Count);
+    }
+
+    [Fact]
+    public void CsvOptionTest_CustomSeparatorCharacter()
+    {
+        var list = new Notice[]
+        {
+            new()
+            {
+                Id = 1,
+                Content = "test",
+                Title = "test",
+                Publisher = "test",
+                PublishedAt = DateTime.Now
+            }
+        };
+        var text = list.GetCsvText();
+        var text2 = list.GetCsvText(new CsvOptions()
+        {
+            SeparatorCharacter = '\t'
+        });
+        Assert.NotEqual(text, text2);
+        Assert.Equal(text, text2.Replace('\t', ','));
     }
 
 
