@@ -204,6 +204,11 @@ public static class CsvHelper
     public static List<TEntity?> ToEntityList<TEntity>(string filePath)
         => ToEntityList<TEntity>(filePath, new CsvOptions());
 
+    /// <summary>
+    ///     convert csv file data to entity list
+    /// </summary>
+    /// <param name="filePath">csv file path</param>
+    /// <param name="csvOptions">csvOptions</param>
     public static List<TEntity?> ToEntityList<TEntity>(string filePath, CsvOptions csvOptions)
     {
         Guard.NotNull(filePath);
@@ -211,16 +216,21 @@ public static class CsvHelper
         {
             throw new ArgumentException(Resource.FileNotFound, nameof(filePath));
         }
-        return ToEntityList<TEntity?>(File.ReadAllBytes(filePath), csvOptions);
+        return GetEntityList<TEntity>(File.ReadAllLines(filePath), csvOptions);
     }
 
     /// <summary>
-    ///     convert csv file data to entity list
+    ///     convert csv byte data to entity list
     /// </summary>
     /// <param name="csvBytes">csv bytes</param>
     public static List<TEntity?> ToEntityList<TEntity>(byte[] csvBytes)
         => ToEntityList<TEntity>(csvBytes, new CsvOptions());
 
+    /// <summary>
+    ///     convert csv byte data to entity list
+    /// </summary>
+    /// <param name="csvBytes">csv bytes</param>
+    /// <param name="csvOptions">csvOptions</param>
     public static List<TEntity?> ToEntityList<TEntity>(byte[] csvBytes, CsvOptions csvOptions)
     {
         Guard.NotNull(csvBytes);
@@ -229,7 +239,7 @@ public static class CsvHelper
     }
 
     /// <summary>
-    ///     convert csv file data to entity list
+    ///     convert csv stream data to entity list
     /// </summary>
     /// <param name="csvStream">csv Stream</param>
     public static List<TEntity?> ToEntityList<TEntity>(Stream csvStream)
@@ -274,25 +284,30 @@ public static class CsvHelper
         return GetEntityList<TEntity>(lines, csvOptions);
     }
 
-    public static List<TEntity?> GetEntityList<TEntity>(IList<string> csvLines, CsvOptions? csvOptions = null)
+    public static List<TEntity?> GetEntityList<TEntity>(IEnumerable<string> csvLines, CsvOptions? csvOptions = null)
+        => GetEntities<TEntity>(csvLines, csvOptions).ToList();
+
+    public static IEnumerable<TEntity?> GetEntities<TEntity>(IEnumerable<string> csvLines, CsvOptions? csvOptions = null)
     {
-        Guard.NotNull(csvLines);
+        if (csvLines is null)
+        {
+            throw new ArgumentNullException(nameof(csvLines));
+        }
         csvOptions ??= new CsvOptions();
-        var entities = new List<TEntity?>();
         var entityType = typeof(TEntity);
         if (entityType.IsBasicType())
         {
             var lines = csvOptions.IncludeHeader ? csvLines.Skip(1) : csvLines;
             foreach (var strLine in lines)
             {
-                entities.Add(strLine.To<TEntity>());
+                yield return strLine.To<TEntity>();
             }
         }
         else
         {
             var configuration = InternalHelper.GetExcelConfigurationMapping<TEntity>();
             var propertyColumnDictionary = InternalHelper.GetPropertyColumnDictionary<TEntity>();
-            var propertyColumnDic = propertyColumnDictionary.ToDictionary(_ => _.Key,
+            var propertyColumnDic = csvOptions.IncludeHeader ? propertyColumnDictionary.ToDictionary(_ => _.Key,
                 _ => new PropertyConfiguration
                 {
                     ColumnIndex = -1,
@@ -300,11 +315,10 @@ public static class CsvHelper
                     ColumnTitle = _.Value.ColumnTitle,
                     ColumnWidth = _.Value.ColumnWidth,
                     IsIgnored = _.Value.IsIgnored
-                });
+                }) : propertyColumnDictionary;
             var isFirstLine = csvOptions.IncludeHeader;
-            for (var i = 0; i < csvLines.Count; i++)
+            foreach (var strLine in csvLines)
             {
-                var strLine = csvLines[i];
                 var cols = ParseLine(strLine, csvOptions);
                 if (isFirstLine)
                 {
@@ -339,7 +353,7 @@ public static class CsvHelper
                                 var columnValue = key.PropertyType.GetDefaultValue();
                                 var valueApplied = false;
                                 if (InternalCache.ColumnInputFormatterFuncCache.TryGetValue(key,
-                                    out var formatterFunc) && formatterFunc?.Method != null)
+                                        out var formatterFunc) && formatterFunc?.Method != null)
                                 {
                                     var cellValue = cols[colIndex];
                                     try
@@ -377,7 +391,7 @@ public static class CsvHelper
 
                                 var valueApplied = false;
                                 if (InternalCache.ColumnInputFormatterFuncCache.TryGetValue(key,
-                                    out var formatterFunc) && formatterFunc?.Method != null)
+                                        out var formatterFunc) && formatterFunc?.Method != null)
                                 {
                                     var cellValue = cols[colIndex];
                                     try
@@ -411,7 +425,7 @@ public static class CsvHelper
                             {
                                 var propertyValue = propertyInfo.GetValueGetter()?.Invoke(entity);
                                 if (InternalCache.InputFormatterFuncCache.TryGetValue(propertyInfo,
-                                    out var formatterFunc) && formatterFunc?.Method != null)
+                                        out var formatterFunc) && formatterFunc?.Method != null)
                                 {
                                     try
                                     {
@@ -430,15 +444,12 @@ public static class CsvHelper
                     }
                     if (configuration.DataFilter?.Invoke(entity) == false)
                     {
-                        // data invalid
                         continue;
                     }
-
-                    entities.Add(entity);
+                    yield return entity;
                 }
             }
         }
-        return entities;
     }
 
     public static IReadOnlyList<string> ParseLine(string line) => ParseLine(line, new CsvOptions());
