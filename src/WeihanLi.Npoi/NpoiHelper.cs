@@ -21,24 +21,15 @@ internal static class NpoiHelper
             ? sheetSettings[sheetIndex]
             : sheetSettings[0];
 
-    /// <summary>
-    ///     Import sheet data to entity list
-    /// </summary>
-    /// <typeparam name="TEntity">entity type</typeparam>
-    /// <param name="sheet">excel sheet</param>
-    /// <param name="sheetIndex">sheetIndex</param>
-    /// <param name="dataAction">data action</param>
-    /// <returns>entity list</returns>
-    public static List<TEntity?> SheetToEntityList<TEntity>(ISheet? sheet, int sheetIndex, Action<TEntity?, ExcelConfiguration<TEntity>, int>? dataAction = null) where TEntity : new()
+    public static IEnumerable<TEntity?> SheetToEntities<TEntity>(ISheet? sheet, int sheetIndex, Action<TEntity?, ExcelConfiguration<TEntity>, int>? dataAction = null) where TEntity : new()
     {
         if (sheet is null || sheet.PhysicalNumberOfRows <= 0)
         {
-            return new List<TEntity?>();
+            yield break;
         }
 
         var configuration = InternalHelper.GetExcelConfigurationMapping<TEntity>();
         var sheetSetting = GetSheetSetting(configuration.SheetSettings, sheetIndex);
-        var entities = new List<TEntity?>(sheet.LastRowNum - sheetSetting.HeaderRowIndex);
 
         var propertyColumnDictionary = InternalHelper.GetPropertyColumnDictionary(configuration);
         var propertyColumnDic = sheetSetting.HeaderRowIndex >= 0
@@ -101,7 +92,7 @@ internal static class NpoiHelper
 
                 if (row is null)
                 {
-                    entities.Add(default);
+                    yield return default;
                 }
                 else
                 {
@@ -160,17 +151,17 @@ internal static class NpoiHelper
                         }
                     }
 
-                    if (configuration.DataFilter?.Invoke(entity) != false)
+                    if (configuration.DataFilter?.Invoke(entity) == false)
                     {
-                        entities.Add(entity);
+                        continue;
                     }
 
                     dataAction?.Invoke(entity, configuration, rowIndex);
+
+                    yield return entity;
                 }
             }
         }
-
-        return entities;
     }
 
     private static void ProcessImport(object entity, IRow row, int rowIndex,
@@ -241,7 +232,7 @@ internal static class NpoiHelper
     /// <param name="entityList">entity list</param>
     /// <param name="sheetIndex">sheetIndex</param>
     /// <returns>sheet</returns>
-    public static ISheet EntityListToSheet<TEntity>(ISheet sheet, IEnumerable<TEntity>? entityList, int sheetIndex)
+    public static ISheet EntitiesToSheet<TEntity>(ISheet sheet, IEnumerable<TEntity>? entityList, int sheetIndex)
     {
         Guard.NotNull(sheet, nameof(sheet));
         if (entityList is null)
