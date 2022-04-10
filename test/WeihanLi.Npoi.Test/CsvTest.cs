@@ -1,11 +1,7 @@
 ﻿// Copyright (c) Weihan Li. All rights reserved.
 // Licensed under the Apache license.
 
-using System;
-using System.Collections.Generic;
 using System.Data;
-using System.IO;
-using System.Linq;
 using WeihanLi.Extensions;
 using WeihanLi.Npoi.Test.Models;
 using Xunit;
@@ -245,14 +241,76 @@ public class CsvTest
     }
 
     [Fact]
-    public void GetCsvTextTest()
+    public void GetCsvTextTest_BasicType()
     {
         var text = Enumerable.Range(1, 5)
             .GetCsvText(false);
 
         var expected = Enumerable.Range(1, 5)
-            .StringJoin(Environment.NewLine) + Environment.NewLine;
+            .StringJoin(Environment.NewLine);
         Assert.Equal(expected, text);
+    }
+
+    [Fact]
+    public void GetCsvLines_BasicType()
+    {
+        var list = new List<int>()
+        {
+            1,2,3
+        };
+        var lines = list.GetCsvText();
+        var importedList = CsvHelper.GetEntityList<int>(lines);
+        Assert.Equal(list.Count, importedList.Count);
+
+        for (var i = 0; i < list.Count; i++)
+        {
+            Assert.Equal(list[i], importedList[i]);
+        }
+    }
+
+    [Fact]
+    public void GetCsvLines_Entity()
+    {
+        var list = new List<Job>()
+        {
+            new()
+            {
+                Id = 1,
+                Name = "123"
+            },
+            new()
+            {
+                Id = 2,
+                Name = "234"
+            }
+        };
+        var lines = list.GetCsvText();
+        var importedList = CsvHelper.GetEntityList<Job>(lines);
+        Assert.Equal(list.Count, importedList.Count);
+        for (var i = 0; i < list.Count; i++)
+        {
+            Assert.Equal(list[i], importedList[i]);
+        }
+    }
+
+    [Fact]
+    public void GetCsvTextTest_Entity()
+    {
+        var list = Enumerable.Range(1, 5)
+            .Select(i => new Job()
+            {
+                Id = i + 1,
+                Name = "test"
+            }).ToArray();
+        var csvText = list.GetCsvText();
+        var bytes = csvText.GetBytes();
+
+        var importedList = CsvHelper.ToEntityList<Job>(bytes);
+        Assert.Equal(list.Length, importedList.Count);
+        for (var i = 0; i < list.Length; i++)
+        {
+            Assert.True(list[i] == importedList[i]);
+        }
     }
 
     [Fact]
@@ -307,7 +365,6 @@ public class CsvTest
         Assert.NotEqual(text, text2);
         Assert.Equal(text, text2.Replace('\t', ','));
     }
-
 
     private static string TrimQuotes(string? str)
     {

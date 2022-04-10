@@ -2,7 +2,6 @@
 // Licensed under the Apache license.
 
 using NPOI.SS.UserModel;
-using System;
 using WeihanLi.Extensions;
 
 namespace WeihanLi.Npoi.Settings;

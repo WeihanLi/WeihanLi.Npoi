@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Weihan Li. All rights reserved.
 // Licensed under the Apache license.
 
-using System;
 using WeihanLi.Npoi.Attributes;
 
 namespace DotNetCoreSample;
