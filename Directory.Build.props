@@ -3,6 +3,7 @@
   <PropertyGroup>
     <LangVersion>latest</LangVersion>
     <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
 
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/WeihanLi/WeihanLi.Npoi</RepositoryUrl>
