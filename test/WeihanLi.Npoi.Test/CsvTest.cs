@@ -254,7 +254,48 @@ public class CsvTest
             .StringJoin(Environment.NewLine);
         Assert.Equal(expected, text);
     }
+
+    [Fact]
+    public void GetCsvLines_BasicType()
+    {
+        var list = new List<int>()
+        {
+            1,2,3
+        };
+        var lines = list.GetCsvText();
+        var importedList = CsvHelper.GetEntityList<int>(lines);
+        Assert.Equal(list.Count, importedList.Count);
+
+        for (var i = 0; i < list.Count; i++)
+        {
+            Assert.Equal(list[i], importedList[i]);
+        }
+    }
     
+    [Fact]
+    public void GetCsvLines_Entity()
+    {
+        var list = new List<Job>()
+        {
+            new()
+            {
+                Id = 1,
+                Name = "123"
+            },
+            new()
+            {
+                Id = 2,
+                Name = "234"
+            }
+        };
+        var lines = list.GetCsvText();
+        var importedList = CsvHelper.GetEntityList<Job>(lines);
+        Assert.Equal(list.Count, importedList.Count);
+        for (var i = 0; i < list.Count; i++)
+        {
+            Assert.Equal(list[i], importedList[i]);
+        }
+    }
     
     [Fact]
     public void GetCsvTextTest_Entity()
