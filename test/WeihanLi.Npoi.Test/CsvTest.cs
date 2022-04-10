@@ -251,16 +251,19 @@ public class CsvTest
         Assert.Equal(expected, text);
     }
 
-    [Fact]
-    public void GetCsvLines_BasicType()
+    [Theory]
+    [InlineData(true)]
+    [InlineData(false)]
+    public void GetCsvLines_BasicType(bool includeHeader)
     {
+        var option = new CsvOptions() { IncludeHeader = includeHeader };
         var list = new List<int>()
         {
             1,2,3
         };
-        var lines = list.GetCsvLines().ToArray();
-        Assert.Equal(list.Count + 1, lines.Length);
-        var importedList = CsvHelper.GetEntityList<int>(lines);
+        var lines = list.GetCsvLines(option).ToArray();
+        Assert.Equal(includeHeader ? list.Count + 1 : list.Count, lines.Length);
+        var importedList = CsvHelper.GetEntityList<int>(lines, option);
         Assert.Equal(list.Count, importedList.Count);
 
         for (var i = 0; i < list.Count; i++)
@@ -269,9 +272,13 @@ public class CsvTest
         }
     }
 
-    [Fact]
-    public void GetCsvLines_Entity()
+    [Theory]
+    [InlineData(true)]
+    [InlineData(false)]
+    public void GetCsvLines_Entity(bool includeHeader)
     {
+        var option = new CsvOptions() { IncludeHeader = includeHeader };
+
         var list = new List<Job>()
         {
             new()
@@ -285,9 +292,9 @@ public class CsvTest
                 Name = "234"
             }
         };
-        var lines = list.GetCsvLines().ToArray();
-        Assert.Equal(list.Count + 1, lines.Length);
-        var importedList = CsvHelper.GetEntityList<Job>(lines);
+        var lines = list.GetCsvLines(option).ToArray();
+        Assert.Equal(includeHeader ? list.Count + 1 : list.Count, lines.Length);
+        var importedList = CsvHelper.GetEntityList<Job>(lines, option);
         Assert.Equal(list.Count, importedList.Count);
         for (var i = 0; i < list.Count; i++)
         {
