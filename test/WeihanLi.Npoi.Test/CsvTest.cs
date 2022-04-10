@@ -245,14 +245,35 @@ public class CsvTest
     }
 
     [Fact]
-    public void GetCsvTextTest()
+    public void GetCsvTextTest_BasicType()
     {
         var text = Enumerable.Range(1, 5)
             .GetCsvText(false);
 
         var expected = Enumerable.Range(1, 5)
-            .StringJoin(Environment.NewLine) + Environment.NewLine;
+            .StringJoin(Environment.NewLine);
         Assert.Equal(expected, text);
+    }
+    
+    
+    [Fact]
+    public void GetCsvTextTest_Entity()
+    {
+        var list = Enumerable.Range(1, 5)
+            .Select(i=> new Job()
+            {
+                Id = i + 1,
+                Name = "test"
+            }).ToArray();
+        var csvText = list.GetCsvText();
+        var bytes = csvText.GetBytes();
+
+        var importedList = CsvHelper.ToEntityList<Job>(bytes);
+        Assert.Equal(list.Length, importedList.Count);
+        for (var i = 0; i < list.Length; i++)
+        {
+            Assert.True(list[i] == importedList[i]);
+        }
     }
 
     [Fact]
@@ -307,7 +328,6 @@ public class CsvTest
         Assert.NotEqual(text, text2);
         Assert.Equal(text, text2.Replace('\t', ','));
     }
-
 
     private static string TrimQuotes(string? str)
     {
