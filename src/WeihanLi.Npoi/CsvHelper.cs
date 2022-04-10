@@ -19,6 +19,7 @@ public sealed class CsvOptions
     public char QuoteCharacter { get; set; }
     public bool IncludeHeader { get; set; }
     public string PropertyNameForBasicType { get; set; }
+    public Encoding Encoding { get; set; }
 
     public CsvOptions()
     {
@@ -26,6 +27,7 @@ public sealed class CsvOptions
         QuoteCharacter = CsvHelper.CsvQuoteCharacter;
         IncludeHeader = true;
         PropertyNameForBasicType = InternalConstants.DefaultPropertyNameForBasicType;
+        Encoding = Encoding.UTF8;
     }
 }
 
@@ -67,6 +69,7 @@ public static class CsvHelper
             throw new ArgumentNullException(nameof(dataTable));
         }
 
+        Guard.NotNull(csvOptions);
         var dir = Path.GetDirectoryName(filePath);
         if (dir is not null)
         {
@@ -82,7 +85,7 @@ public static class CsvHelper
             return false;
         }
 
-        File.WriteAllText(filePath, csvText, Encoding.UTF8);
+        File.WriteAllText(filePath, csvText, csvOptions.Encoding);
         return true;
     }
 
@@ -129,16 +132,14 @@ public static class CsvHelper
 
     public static DataTable ToDataTable(Stream stream, CsvOptions csvOptions)
     {
-        if (stream is null)
-        {
-            throw new ArgumentNullException(nameof(stream));
-        }
+        Guard.NotNull(stream);
+        Guard.NotNull(csvOptions);
 
         var dt = new DataTable();
 
         if (stream.CanRead)
         {
-            using var sr = new StreamReader(stream, Encoding.UTF8);
+            using var sr = new StreamReader(stream, csvOptions.Encoding);
             string strLine;
             var isFirst = true;
             while ((strLine = sr.ReadLine()!).IsNotNullOrEmpty())
@@ -538,6 +539,7 @@ public static class CsvHelper
         {
             throw new ArgumentNullException(nameof(entities));
         }
+        Guard.NotNull(csvOptions);
 
         var dir = Path.GetDirectoryName(filePath);
         if (dir is not null)
@@ -554,9 +556,10 @@ public static class CsvHelper
             return false;
         }
 
-        File.WriteAllText(filePath, csvTextData, Encoding.UTF8);
+        File.WriteAllText(filePath, csvTextData, csvOptions.Encoding);
         return true;
     }
+
 #if NET6_0
     public static async Task<bool> ToCsvFileAsync<TEntity>(this IEnumerable<TEntity> entities, string filePath, CsvOptions? csvOptions = null)
     {
@@ -574,13 +577,14 @@ public static class CsvHelper
             }
         }
 
-        var csvTextData = GetCsvText(entities, csvOptions ?? new CsvOptions());
+        csvOptions ??= new CsvOptions();
+        var csvTextData = GetCsvText(entities, csvOptions);
         if (csvTextData.IsNullOrEmpty())
         {
             return false;
         }
 
-        await File.WriteAllTextAsync(filePath, csvTextData, Encoding.UTF8);
+        await File.WriteAllTextAsync(filePath, csvTextData, csvOptions.Encoding);
         return true;
     }
 #endif
@@ -618,7 +622,6 @@ public static class CsvHelper
     /// </summary>
     public static string GetCsvText<TEntity>(this IEnumerable<TEntity> entities, CsvOptions csvOptions) =>
         GetCsvLines(entities, csvOptions).StringJoin(Environment.NewLine);
-
 
     /// <summary>
     ///     Get csv lines
