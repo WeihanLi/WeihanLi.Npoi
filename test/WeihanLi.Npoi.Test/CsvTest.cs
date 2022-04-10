@@ -271,7 +271,7 @@ public class CsvTest
             Assert.Equal(list[i], importedList[i]);
         }
     }
-    
+
     [Fact]
     public void GetCsvLines_Entity()
     {
@@ -296,12 +296,12 @@ public class CsvTest
             Assert.Equal(list[i], importedList[i]);
         }
     }
-    
+
     [Fact]
     public void GetCsvTextTest_Entity()
     {
         var list = Enumerable.Range(1, 5)
-            .Select(i=> new Job()
+            .Select(i => new Job()
             {
                 Id = i + 1,
                 Name = "test"

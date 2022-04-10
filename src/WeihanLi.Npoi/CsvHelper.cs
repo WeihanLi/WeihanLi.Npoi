@@ -252,13 +252,13 @@ public static class CsvHelper
             var strLine = reader.ReadLine();
             if (strLine.IsNullOrEmpty())
                 break;
-            
+
             lines.Add(strLine);
         }
 
         return GetEntityList<TEntity>(lines, csvOptions);
     }
-    
+
     public static List<TEntity?> GetEntityList<TEntity>(string csvText, CsvOptions? csvOptions = null)
     {
         Guard.NotNull(csvText);
@@ -271,7 +271,7 @@ public static class CsvHelper
             var strLine = reader.ReadLine();
             if (strLine.IsNullOrEmpty())
                 break;
-            
+
             lines.Add(strLine);
         }
 
@@ -589,7 +589,7 @@ public static class CsvHelper
         return true;
     }
 #endif
-    
+
     /// <summary>
     ///     to csv bytes
     /// </summary>
@@ -639,7 +639,7 @@ public static class CsvHelper
             throw new ArgumentNullException(nameof(entities));
         }
         Guard.NotNull(csvOptions);
-        
+
         var isBasicType = typeof(TEntity).IsBasicType();
         if (isBasicType)
         {
@@ -667,10 +667,10 @@ public static class CsvHelper
             {
                 var line = GetCsvLine().StringJoin(csvOptions.SeparatorString);
                 yield return line;
-                
+
                 IEnumerable<string> GetCsvLine()
                 {
-                    for (var i = 0; i < props.Count; i++) 
+                    for (var i = 0; i < props.Count; i++)
                     {
                         var propertyValue = props[i].GetValueGetter<TEntity>()?.Invoke(entity);
                         if (InternalCache.OutputFormatterFuncCache.TryGetValue(props[i], out var formatterFunc) &&
@@ -690,7 +690,7 @@ public static class CsvHelper
 
                         // https://stackoverflow.com/questions/4617935/is-there-a-way-to-include-commas-in-csv-columns-without-breaking-the-formatting
                         var val = propertyValue?.ToString()?.Replace(
-                            csvOptions.QuoteString, 
+                            csvOptions.QuoteString,
                             $"{csvOptions.QuoteString}{csvOptions.QuoteString}"
                         );
                         if (val is { Length: > 0 })
@@ -699,7 +699,7 @@ public static class CsvHelper
                         }
                         else
                         {
-                            yield return string.Empty;   
+                            yield return string.Empty;
                         }
                     }
                 }

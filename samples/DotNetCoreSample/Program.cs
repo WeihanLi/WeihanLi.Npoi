@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Weihan Li. All rights reserved.
 // Licensed under the Apache license.
 
-using DotNetCoreSample;
 using NPOI.SS.UserModel;
 using System;
 using System.Collections.Generic;
