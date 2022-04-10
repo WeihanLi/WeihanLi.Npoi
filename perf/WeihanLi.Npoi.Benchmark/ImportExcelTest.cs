@@ -2,8 +2,6 @@
 // Licensed under the Apache license.
 
 using BenchmarkDotNet.Attributes;
-using System;
-using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 
 namespace WeihanLi.Npoi.Benchmark;

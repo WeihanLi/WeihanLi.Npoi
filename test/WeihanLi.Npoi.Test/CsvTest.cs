@@ -1,11 +1,7 @@
 ﻿// Copyright (c) Weihan Li. All rights reserved.
 // Licensed under the Apache license.
 
-using System;
-using System.Collections.Generic;
 using System.Data;
-using System.IO;
-using System.Linq;
 using WeihanLi.Extensions;
 using WeihanLi.Npoi.Test.Models;
 using Xunit;
