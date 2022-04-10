@@ -258,7 +258,8 @@ public class CsvTest
         {
             1,2,3
         };
-        var lines = list.GetCsvText();
+        var lines = list.GetCsvLines().ToArray();
+        Assert.Equal(list.Count + 1, lines.Length);
         var importedList = CsvHelper.GetEntityList<int>(lines);
         Assert.Equal(list.Count, importedList.Count);
 
@@ -284,7 +285,8 @@ public class CsvTest
                 Name = "234"
             }
         };
-        var lines = list.GetCsvText();
+        var lines = list.GetCsvLines().ToArray();
+        Assert.Equal(list.Count + 1, lines.Length);
         var importedList = CsvHelper.GetEntityList<Job>(lines);
         Assert.Equal(list.Count, importedList.Count);
         for (var i = 0; i < list.Count; i++)

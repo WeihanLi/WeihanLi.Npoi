@@ -630,13 +630,13 @@ public static class CsvHelper
     /// <param name="csvOptions">csvOptions</param>
     /// <typeparam name="TEntity">entity type</typeparam>
     /// <returns>csv lines</returns>
-    public static IEnumerable<string> GetCsvLines<TEntity>(this IEnumerable<TEntity> entities, CsvOptions csvOptions)
+    public static IEnumerable<string> GetCsvLines<TEntity>(this IEnumerable<TEntity> entities, CsvOptions? csvOptions = null)
     {
         if (entities is null)
         {
             throw new ArgumentNullException(nameof(entities));
         }
-        Guard.NotNull(csvOptions);
+        csvOptions ??= new CsvOptions();
 
         var isBasicType = typeof(TEntity).IsBasicType();
         if (isBasicType)
