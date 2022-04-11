@@ -113,6 +113,11 @@ public static class CsvHelper
     /// <param name="stream">stream</param>
     public static DataTable ToDataTable(Stream stream) => ToDataTable(stream, CsvOptions.Default);
 
+    /// <summary>
+    ///     convert csv stream data to dataTable
+    /// </summary>
+    /// <param name="stream">stream</param>
+    /// <param name="csvOptions">csvOptions</param>
     public static DataTable ToDataTable(Stream stream, CsvOptions csvOptions)
     {
         Guard.NotNull(stream);
@@ -199,7 +204,23 @@ public static class CsvHelper
         {
             throw new ArgumentException(Resource.FileNotFound, nameof(filePath));
         }
+
         return GetEntityList<TEntity>(File.ReadAllLines(filePath), csvOptions);
+    }
+
+    /// <summary>
+    ///     convert csv file data to entities
+    /// </summary>
+    /// <param name="filePath">csv file path</param>
+    /// <param name="csvOptions">csvOptions</param>
+    public static IEnumerable<TEntity?> ToEntities<TEntity>(string filePath, CsvOptions? csvOptions = null)
+    {
+        Guard.NotNull(filePath);
+        if (!File.Exists(filePath))
+        {
+            throw new ArgumentException(Resource.FileNotFound, nameof(filePath));
+        }
+        return GetEntities<TEntity>(File.ReadAllLines(filePath), csvOptions);
     }
 
     /// <summary>
@@ -219,6 +240,13 @@ public static class CsvHelper
         Guard.NotNull(csvBytes);
         using var ms = new MemoryStream(csvBytes);
         return ToEntityList<TEntity>(ms, csvOptions);
+    }
+
+    public static IEnumerable<TEntity?> ToEntities<TEntity>(byte[] csvBytes, CsvOptions? csvOptions = null)
+    {
+        Guard.NotNull(csvBytes);
+        using var ms = new MemoryStream(csvBytes);
+        return ToEntities<TEntity>(ms, csvOptions);
     }
 
     /// <summary>
@@ -246,6 +274,28 @@ public static class CsvHelper
         }
 
         return GetEntityList<TEntity>(lines, csvOptions);
+    }
+
+    public static IEnumerable<TEntity?> ToEntities<TEntity>(Stream csvStream, CsvOptions? csvOptions = null)
+    {
+        Guard.NotNull(csvStream);
+
+        var lines = GetLines();
+        return GetEntityList<TEntity>(lines, csvOptions);
+
+        IEnumerable<string> GetLines()
+        {
+            csvStream.Seek(0, SeekOrigin.Begin);
+            using var reader = new StreamReader(csvStream);
+            while (true)
+            {
+                var strLine = reader.ReadLine();
+                if (strLine.IsNullOrEmpty())
+                    yield break;
+
+                yield return strLine;
+            }
+        }
     }
 
     public static List<TEntity?> GetEntityList<TEntity>(string csvText, CsvOptions? csvOptions = null)

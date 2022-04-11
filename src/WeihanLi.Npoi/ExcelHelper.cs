@@ -286,6 +286,13 @@ public static class ExcelHelper
         return workbook.ToEntityList<TEntity>(sheetIndex);
     }
 
+    public static IEnumerable<TEntity?> ToEntities<TEntity>(byte[] excelBytes, ExcelFormat excelFormat = ExcelFormat.Xls, int sheetIndex = 0)
+        where TEntity : new()
+    {
+        var workbook = LoadExcel(excelBytes, excelFormat);
+        return workbook.ToEntities<TEntity>(sheetIndex);
+    }
+
     /// <summary>
     ///     read (sheetIndex) sheet of excel from excel bytes to a list
     /// </summary>
@@ -353,6 +360,13 @@ public static class ExcelHelper
         return workbook.ToEntityList<TEntity>(sheetIndex);
     }
 
+    public static IEnumerable<TEntity?> ToEntities<TEntity>(Stream excelStream, ExcelFormat excelFormat = ExcelFormat.Xls, int sheetIndex = 0)
+        where TEntity : new()
+    {
+        var workbook = LoadExcel(excelStream, excelFormat);
+        return workbook.ToEntities<TEntity>(sheetIndex);
+    }
+
     /// <summary>
     ///     read (sheetIndex) sheet of excel from excel bytes path to a list
     /// </summary>
@@ -380,6 +394,7 @@ public static class ExcelHelper
     /// <returns>List</returns>
     public static List<TEntity?> ToEntityList<TEntity>(string excelPath) where TEntity : new() =>
         ToEntityList<TEntity>(excelPath, 0);
+
     /// <summary>
     ///     read (sheetIndex) sheet of excel from excel file path to a list
     /// </summary>
@@ -391,6 +406,12 @@ public static class ExcelHelper
     {
         var workbook = LoadExcel(excelPath);
         return workbook.ToEntityList<TEntity>(sheetIndex);
+    }
+
+    public static IEnumerable<TEntity?> ToEntities<TEntity>(string excelPath, int sheetIndex) where TEntity : new()
+    {
+        var workbook = LoadExcel(excelPath);
+        return workbook.ToEntities<TEntity>(sheetIndex);
     }
 
     /// <summary>

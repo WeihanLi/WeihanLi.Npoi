@@ -58,7 +58,7 @@ internal static class InternalExtensions
 
     public static IValidator GetCommonValidator<T>(this IValidator<T> validator)
     {
-        return new DelegateValidator(o =>
+        return new CustomValidator(o =>
         {
             if (o is T t)
             {
@@ -170,4 +170,19 @@ internal static class InternalExtensions
         this IDictionary<PropertyInfo, PropertyConfiguration> mappingDictionary, string columnTitle) =>
         mappingDictionary.Values.FirstOrDefault(k => k.ColumnTitle.EqualsIgnoreCase(columnTitle)) ??
         mappingDictionary.GetPropertySettingByPropertyName(columnTitle);
+
+    private sealed class CustomValidator : IValidator
+    {
+        private readonly Func<object?, ValidationResult> _func;
+
+        public CustomValidator(Func<object?, ValidationResult> func)
+        {
+            _func = Guard.NotNull(func);
+        }
+
+        public ValidationResult Validate(object? value)
+        {
+            return _func.Invoke(value);
+        }
+    }
 }
