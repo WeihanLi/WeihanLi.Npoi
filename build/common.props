@@ -1,8 +1,6 @@
 <Project>
-  <Import Project="document.props" />
-  <Import Project="sign.props" />
   <PropertyGroup>        
-    <TargetFramework>netstandard2.0</TargetFramework>  
+    <TargetFrameworks>netstandard2.0;net6.0</TargetFrameworks>  
     <Title>WeihanLi.Npoi</Title>
     <PackageId>WeihanLi.Npoi</PackageId>
     <Authors>WeihanLi</Authors>
@@ -22,5 +20,7 @@
     <PackageReleaseNotes>
       https://github.com/WeihanLi/WeihanLi.Npoi/tree/dev/docs/ReleaseNotes.md
     </PackageReleaseNotes>
+    <EnablePackageValidation>true</EnablePackageValidation>
+    <!-- <PackageValidationBaselineVersion>1.21.0</PackageValidationBaselineVersion> -->
   </PropertyGroup>
 </Project>

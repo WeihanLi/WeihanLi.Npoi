@@ -1,13 +1,15 @@
-﻿namespace WeihanLi.Npoi.Abstract
+﻿// Copyright (c) Weihan Li. All rights reserved.
+// Licensed under the Apache license.
+
+namespace WeihanLi.Npoi.Abstract;
+
+internal interface IWorkbook
 {
-    internal interface IWorkbook
-    {
-        int SheetCount { get; }
+    int SheetCount { get; }
 
-        ISheet? GetSheet(int sheetIndex);
+    ISheet? GetSheet(int sheetIndex);
 
-        ISheet CreateSheet(string sheetName);
+    ISheet CreateSheet(string sheetName);
 
-        byte[] ToBytes();
-    }
+    byte[] ToBytes();
 }

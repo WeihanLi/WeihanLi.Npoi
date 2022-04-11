@@ -2,7 +2,10 @@ name: docfx build
 on:
   push:
     branches:
-      - master
+      - "main"
+      # - "master"
+      # - "dev"
+
 jobs:
   build:
     name: Build
@@ -12,8 +15,12 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v2
         with:
-          ref: master
           path: source
+      - name: Setup .NET SDK
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: '6.0.x'
+          include-prerelease: true
       - name: install DocFX
         run: "& choco install docfx -y"
       # Run a build

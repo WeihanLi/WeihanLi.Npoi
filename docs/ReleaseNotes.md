@@ -1,6 +1,19 @@
 # WeihanLi.Npoi Release Notes
 
-## [1.20.0](https://www.nuget.org/packages/WeihanLi.Npoi/1.19.2)
+## [2.0.0](https://www.nuget.org/packages/WeihanLi.Npoi/2.0.0)
+
+- Add `net6.0` target support
+- Refactor `CsvHelper`
+- Add `CsvOptions` for `CsvHelper`
+- Add support for validation, fixes #102
+- Add support for `ToEntities`, fixes #113
+
+## [1.21.0](https://www.nuget.org/packages/WeihanLi.Npoi/1.21.0)
+
+- Add support for duplicate column name for dataTable
+- Fix sheet name not applied bug #127
+
+## [1.20.0](https://www.nuget.org/packages/WeihanLi.Npoi/1.20.0)
 
 - The `ExcelHelper.ToDataTable` was extended with two arguments `bool removeEmptyRows = false, int? maxColumns = null`
 - Fix possible `IndexOutOfRangeException` when loading rows

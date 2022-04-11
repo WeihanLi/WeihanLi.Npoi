@@ -3,21 +3,13 @@
   <PropertyGroup>
     <LangVersion>latest</LangVersion>
     <Nullable>enable</Nullable>
-
-    <RepositoryType>git</RepositoryType>
-    <RepositoryUrl>https://github.com/WeihanLi/WeihanLi.Npoi</RepositoryUrl>
-    <!-- Optional: Publish the repository URL in the built .nupkg (in the NuSpec <Repository> element) -->
-    <PublishRepositoryUrl>true</PublishRepositoryUrl>
-    <!-- Optional: Build symbol package (.snupkg) to distribute the PDB containing Source Link -->
-    <IncludeSymbols>true</IncludeSymbols>
-    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
-
+    <ImplicitUsings>enable</ImplicitUsings>
     <Authors>WeihanLi.Npoi Contributors</Authors>
-    <Copyright>Copyright 2017-2021 (c) WeihanLi</Copyright>
+    <Copyright>Copyright 2017-$([System.DateTime]::Now.Year) (c) WeihanLi</Copyright>
     <NoWarn>$(NoWarn);NU5048;</NoWarn>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Condition="'$(OS)' == 'Windows_NT'" Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All"/>
+    <PackageReference Condition="'$(OS)' == 'Windows_NT'" Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All"/>
     <PackageReference Condition="'$(OS)' != 'Windows_NT'" Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.0" PrivateAssets="All"/>
   </ItemGroup>
 </Project>
