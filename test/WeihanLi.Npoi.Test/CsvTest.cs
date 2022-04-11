@@ -3,6 +3,7 @@
 
 using System.Data;
 using WeihanLi.Extensions;
+using WeihanLi.Npoi.Configurations;
 using WeihanLi.Npoi.Test.Models;
 using Xunit;
 
