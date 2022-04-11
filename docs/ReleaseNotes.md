@@ -6,7 +6,7 @@
 - Refactor `CsvHelper`
 - Add `CsvOptions` for `CsvHelper`
 - Add support for validation, fixes #102
-- Add support for `ToEntities`, fixes 113
+- Add support for `ToEntities`, fixes #113
 
 ## [1.21.0](https://www.nuget.org/packages/WeihanLi.Npoi/1.21.0)
 
