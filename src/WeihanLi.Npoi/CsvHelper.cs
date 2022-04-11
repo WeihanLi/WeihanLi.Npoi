@@ -11,26 +11,6 @@ using WeihanLi.Npoi.Configurations;
 
 namespace WeihanLi.Npoi;
 
-public sealed class CsvOptions
-{
-    public string SeparatorString => new(SeparatorCharacter, 1);
-    public string QuoteString => new(QuoteCharacter, 1);
-    public char SeparatorCharacter { get; set; }
-    public char QuoteCharacter { get; set; }
-    public bool IncludeHeader { get; set; }
-    public string PropertyNameForBasicType { get; set; }
-    public Encoding Encoding { get; set; }
-
-    public CsvOptions()
-    {
-        SeparatorCharacter = CsvHelper.CsvSeparatorCharacter;
-        QuoteCharacter = CsvHelper.CsvQuoteCharacter;
-        IncludeHeader = true;
-        PropertyNameForBasicType = InternalConstants.DefaultPropertyNameForBasicType;
-        Encoding = Encoding.UTF8;
-    }
-}
-
 /// <summary>
 ///     CsvHelper
 /// </summary>
@@ -49,14 +29,17 @@ public static class CsvHelper
     /// <summary>
     ///     save to csv file
     /// </summary>
-    public static bool ToCsvFile(this DataTable dt, string filePath) => ToCsvFile(dt, filePath, true);
+    public static bool ToCsvFile(this DataTable dt, string filePath) => ToCsvFile(dt, filePath, CsvOptions.Default);
 
     /// <summary>
     ///     save to csv file
     /// </summary>
     public static bool ToCsvFile(this DataTable dataTable, string filePath, bool includeHeader)
     {
-        return ToCsvFile(dataTable, filePath, new CsvOptions() { IncludeHeader = includeHeader });
+        return ToCsvFile(dataTable, filePath, includeHeader ? CsvOptions.Default : new CsvOptions()
+        {
+            IncludeHeader = false
+        });
     }
 
     /// <summary>
@@ -111,7 +94,7 @@ public static class CsvHelper
     /// </summary>
     /// <param name="csvBytes">csv bytes</param>
     public static DataTable ToDataTable(byte[] csvBytes)
-        => ToDataTable(csvBytes, new CsvOptions());
+        => ToDataTable(csvBytes, CsvOptions.Default);
 
     public static DataTable ToDataTable(byte[] csvBytes, CsvOptions csvOptions)
     {
@@ -128,7 +111,7 @@ public static class CsvHelper
     ///     convert csv stream data to dataTable
     /// </summary>
     /// <param name="stream">stream</param>
-    public static DataTable ToDataTable(Stream stream) => ToDataTable(stream, new CsvOptions());
+    public static DataTable ToDataTable(Stream stream) => ToDataTable(stream, CsvOptions.Default);
 
     public static DataTable ToDataTable(Stream stream, CsvOptions csvOptions)
     {
@@ -202,7 +185,7 @@ public static class CsvHelper
     /// </summary>
     /// <param name="filePath">csv file path</param>
     public static List<TEntity?> ToEntityList<TEntity>(string filePath)
-        => ToEntityList<TEntity>(filePath, new CsvOptions());
+        => ToEntityList<TEntity>(filePath, CsvOptions.Default);
 
     /// <summary>
     ///     convert csv file data to entity list
@@ -224,7 +207,7 @@ public static class CsvHelper
     /// </summary>
     /// <param name="csvBytes">csv bytes</param>
     public static List<TEntity?> ToEntityList<TEntity>(byte[] csvBytes)
-        => ToEntityList<TEntity>(csvBytes, new CsvOptions());
+        => ToEntityList<TEntity>(csvBytes, CsvOptions.Default);
 
     /// <summary>
     ///     convert csv byte data to entity list
@@ -243,7 +226,7 @@ public static class CsvHelper
     /// </summary>
     /// <param name="csvStream">csv Stream</param>
     public static List<TEntity?> ToEntityList<TEntity>(Stream csvStream)
-        => ToEntityList<TEntity>(csvStream, new CsvOptions());
+        => ToEntityList<TEntity>(csvStream, CsvOptions.Default);
 
     public static List<TEntity?> ToEntityList<TEntity>(Stream csvStream, CsvOptions csvOptions)
     {
@@ -293,7 +276,7 @@ public static class CsvHelper
         {
             throw new ArgumentNullException(nameof(csvLines));
         }
-        csvOptions ??= new CsvOptions();
+        csvOptions ??= CsvOptions.Default;
         var entityType = typeof(TEntity);
         if (entityType.IsBasicType())
         {
@@ -452,7 +435,7 @@ public static class CsvHelper
         }
     }
 
-    public static IReadOnlyList<string> ParseLine(string line) => ParseLine(line, new CsvOptions());
+    public static IReadOnlyList<string> ParseLine(string line) => ParseLine(line, CsvOptions.Default);
 
     public static IReadOnlyList<string> ParseLine(string line, CsvOptions csvOptions)
     {
@@ -534,14 +517,17 @@ public static class CsvHelper
     ///     save to csv file
     /// </summary>
     public static bool ToCsvFile<TEntity>(this IEnumerable<TEntity> entities, string filePath) =>
-        ToCsvFile(entities, filePath, true);
+        ToCsvFile(entities, filePath, CsvOptions.Default);
 
     /// <summary>
     ///     save to csv file
     /// </summary>
     public static bool ToCsvFile<TEntity>(this IEnumerable<TEntity> entities, string filePath, bool includeHeader)
     {
-        return ToCsvFile(Guard.NotNull(entities), filePath, new CsvOptions() { IncludeHeader = includeHeader });
+        return ToCsvFile(Guard.NotNull(entities), filePath, includeHeader ? CsvOptions.Default : new CsvOptions()
+        {
+            IncludeHeader = false
+        });
     }
 
     public static bool ToCsvFile<TEntity>(this IEnumerable<TEntity> entities, string filePath, CsvOptions csvOptions)
@@ -588,7 +574,7 @@ public static class CsvHelper
             }
         }
 
-        csvOptions ??= new CsvOptions();
+        csvOptions ??= CsvOptions.Default;
         var csvTextData = GetCsvText(entities, csvOptions);
         if (csvTextData.IsNullOrEmpty())
         {
@@ -603,7 +589,7 @@ public static class CsvHelper
     /// <summary>
     ///     to csv bytes
     /// </summary>
-    public static byte[] ToCsvBytes<TEntity>(this IEnumerable<TEntity> entities) => ToCsvBytes(entities, true);
+    public static byte[] ToCsvBytes<TEntity>(this IEnumerable<TEntity> entities) => ToCsvBytes(entities, CsvOptions.Default);
 
     /// <summary>
     ///     to csv bytes
@@ -622,9 +608,9 @@ public static class CsvHelper
     /// </summary>
     public static string GetCsvText<TEntity>(this IEnumerable<TEntity> entities, bool includeHeader = true)
     {
-        return GetCsvText(Guard.NotNull(entities), new CsvOptions()
+        return GetCsvText(Guard.NotNull(entities), includeHeader ? CsvOptions.Default : new CsvOptions()
         {
-            IncludeHeader = includeHeader
+            IncludeHeader = false
         });
     }
 
@@ -647,7 +633,7 @@ public static class CsvHelper
         {
             throw new ArgumentNullException(nameof(entities));
         }
-        csvOptions ??= new CsvOptions();
+        csvOptions ??= CsvOptions.Default;
 
         var isBasicType = typeof(TEntity).IsBasicType();
         if (isBasicType)
@@ -721,9 +707,9 @@ public static class CsvHelper
     /// </summary>
     public static string GetCsvText(this DataTable? dataTable, bool includeHeader = true)
     {
-        return GetCsvText(dataTable, new CsvOptions()
+        return GetCsvText(dataTable, includeHeader ? CsvOptions.Default : new CsvOptions()
         {
-            IncludeHeader = includeHeader
+            IncludeHeader = false
         });
     }
 
