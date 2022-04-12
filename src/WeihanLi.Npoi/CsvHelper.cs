@@ -54,7 +54,7 @@ public static class CsvHelper
 
         Guard.NotNull(csvOptions);
         var dir = Path.GetDirectoryName(filePath);
-        if (dir is not null)
+        if (dir.IsNotNullOrEmpty())
         {
             if (!Directory.Exists(dir))
             {
@@ -589,7 +589,7 @@ public static class CsvHelper
         Guard.NotNull(csvOptions);
 
         var dir = Path.GetDirectoryName(filePath);
-        if (dir is not null)
+        if (dir.IsNotNullOrEmpty())
         {
             if (!Directory.Exists(dir))
             {
@@ -616,7 +616,7 @@ public static class CsvHelper
         }
 
         var dir = Path.GetDirectoryName(filePath);
-        if (dir is not null)
+        if (dir.IsNotNullOrEmpty())
         {
             if (!Directory.Exists(dir))
             {
