@@ -19,7 +19,7 @@ FluentSettings.LoadMappingProfile<TestEntity, TestEntityExcelMappingProfile>();
 var tempDirPath = $@"{Environment.GetEnvironmentVariable("USERPROFILE")}\Desktop\temp\test";
 
 // custom CsvSeparatorCharacter sample
-CsvHelper.CsvSeparatorCharacter = '\t';
+var csvOptions = new CsvOptions() { SeparatorCharacter = '\t' };
 var text = CsvHelper.GetCsvText(new[]
 {
         new
@@ -27,9 +27,8 @@ var text = CsvHelper.GetCsvText(new[]
             Title = "123",
             Desc = "234"
         }
-    });
-var dt1233 = CsvHelper.ToDataTable(text.GetBytes());
-CsvHelper.CsvSeparatorCharacter = ',';
+}, csvOptions);
+var dt1233 = CsvHelper.ToDataTable(text.GetBytes(), csvOptions);
 
 // image export/import test
 //var imageExcelPath = @"C:\Users\Weiha\Desktop\temp\test\imageTest.xls";
@@ -125,6 +124,8 @@ var entities = new List<TestEntity>()
             CreatedBy = "li\"_"
         },
     };
+await entities.ToCsvFileAsync("test.csv");
+
 var csvFilePath = $@"{tempDirPath}\test.csv";
 //entities.ToExcelFileByTemplate(
 //    Path.Combine(ApplicationHelper.AppRoot, "Templates", "testTemplate.xlsx"),
