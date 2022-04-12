@@ -52,7 +52,12 @@ public static class CsvHelper
             throw new ArgumentNullException(nameof(dataTable));
         }
 
-        Guard.NotNull(csvOptions);
+        var csvText = GetCsvText(dataTable, csvOptions);
+        if (csvText.IsNullOrWhiteSpace())
+        {
+            return false;
+        }
+
         var dir = Path.GetDirectoryName(filePath);
         if (dir.IsNotNullOrEmpty())
         {
@@ -60,12 +65,6 @@ public static class CsvHelper
             {
                 Directory.CreateDirectory(dir);
             }
-        }
-
-        var csvText = GetCsvText(dataTable, csvOptions);
-        if (csvText.IsNullOrWhiteSpace())
-        {
-            return false;
         }
 
         File.WriteAllText(filePath, csvText, csvOptions.Encoding);
@@ -588,6 +587,12 @@ public static class CsvHelper
         }
         Guard.NotNull(csvOptions);
 
+        var csvTextData = GetCsvText(entities, csvOptions);
+        if (csvTextData.IsNullOrEmpty())
+        {
+            return false;
+        }
+        
         var dir = Path.GetDirectoryName(filePath);
         if (dir.IsNotNullOrEmpty())
         {
@@ -595,12 +600,6 @@ public static class CsvHelper
             {
                 Directory.CreateDirectory(dir);
             }
-        }
-
-        var csvTextData = GetCsvText(entities, csvOptions);
-        if (csvTextData.IsNullOrEmpty())
-        {
-            return false;
         }
 
         File.WriteAllText(filePath, csvTextData, csvOptions.Encoding);
@@ -615,6 +614,13 @@ public static class CsvHelper
             throw new ArgumentNullException(nameof(entities));
         }
 
+        csvOptions ??= CsvOptions.Default;
+        var csvTextData = GetCsvText(entities, csvOptions);
+        if (csvTextData.IsNullOrEmpty())
+        {
+            return false;
+        }
+
         var dir = Path.GetDirectoryName(filePath);
         if (dir.IsNotNullOrEmpty())
         {
@@ -622,13 +628,6 @@ public static class CsvHelper
             {
                 Directory.CreateDirectory(dir);
             }
-        }
-
-        csvOptions ??= CsvOptions.Default;
-        var csvTextData = GetCsvText(entities, csvOptions);
-        if (csvTextData.IsNullOrEmpty())
-        {
-            return false;
         }
 
         await File.WriteAllTextAsync(filePath, csvTextData, csvOptions.Encoding);

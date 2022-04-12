@@ -274,6 +274,37 @@ public class CsvTest
     }
 
     [Theory]
+    [InlineData("test.csv")]
+    [InlineData("/tmp/test.csv")]
+    public void CsvFileTest(string csvPath)
+    {
+        var list = new List<Job>()
+        {
+            new Job()
+            {
+                Id = 1,
+                Name = "123"
+            },
+            new Job()
+            {
+                Id = 2,
+                Name = "234"
+            }
+        };
+        Assert.True(list.ToCsvFile(csvPath));
+#if NET6_0
+        list.ToCsvFileAsync(csvPath).Wait();
+#endif
+        var importedList = CsvHelper.ToEntityList<Job>(csvPath);
+        Assert.Equal(list.Count, importedList.Count);
+        for (var i = 0; i < list.Count; i++)
+        {
+            Assert.Equal(list[i], importedList[i]);
+        }
+        File.Delete(csvPath);
+    }
+
+    [Theory]
     [InlineData(true)]
     [InlineData(false)]
     public void GetCsvLines_Entity(bool includeHeader)
