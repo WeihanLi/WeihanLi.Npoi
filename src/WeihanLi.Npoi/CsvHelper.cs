@@ -53,7 +53,7 @@ public static class CsvHelper
         }
 
         var csvText = GetCsvText(dataTable, csvOptions);
-        if (csvText.IsNullOrWhiteSpace())
+        if (csvText.IsNullOrEmpty())
         {
             return false;
         }
