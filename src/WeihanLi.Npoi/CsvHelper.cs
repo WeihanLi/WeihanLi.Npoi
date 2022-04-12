@@ -592,7 +592,7 @@ public static class CsvHelper
         {
             return false;
         }
-        
+
         var dir = Path.GetDirectoryName(filePath);
         if (dir.IsNotNullOrEmpty())
         {
