@@ -13,6 +13,9 @@ using WeihanLi.Npoi.Configurations;
 
 LogHelper.ConfigureLogging(x => x.WithMinimumLevel(LogHelperLogLevel.Info).AddConsole());
 
+var testSurveyExcelPath = @"C:\Users\Weiha\Desktop\temp\QuizBulkUpload.xlsx";
+var surveyList = ExcelHelper.ToEntityList<SurveyImportDto>(testSurveyExcelPath);
+
 SheetNameTest();
 
 FluentSettings.LoadMappingProfile<TestEntity, TestEntityExcelMappingProfile>();
@@ -321,3 +324,35 @@ public class ExcelExportDTO
     public DateTime Birthday { get; set; }
     public string? Remark { get; set; }
 }
+
+#nullable disable
+internal sealed class SurveyImportDto
+{
+    [Column(IsIgnored = true)]
+    public string ExternalId { get; set; }
+
+    [Column(0)]
+    public string ContentSource { get; set; }
+    
+    [Column(1)]
+    public string ExternalKey { get; set; }
+
+    [Column(2)]
+    public string Title { get; set; }
+
+    [Column(3)]
+    public string OptionA { get; set; }
+
+    [Column(4)]
+    public string OptionB { get; set; }
+
+    [Column(5)]
+    public string OptionC { get; set; }
+
+    [Column(6)]
+    public string CorrectAnswer { get; set; }
+
+    [Column(7)]
+    public string Tips { get; set; }
+}
+#nullable restore
