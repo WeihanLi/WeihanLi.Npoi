@@ -216,7 +216,7 @@ internal static class NpoiHelper
                             {
                                 columnValue = cell.GetCellValue(key.PropertyType, formulaEvaluator);
                             }
-                            
+
                             valueSetter.Invoke(entity, columnValue);
                         }
                     }
