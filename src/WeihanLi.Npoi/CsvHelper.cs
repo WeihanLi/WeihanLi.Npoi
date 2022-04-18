@@ -363,7 +363,7 @@ public static class CsvHelper
                         }
                     }
 
-                    if (propertyColumnDic.Values.All(_ => _.ColumnIndex < 0))
+                    if (propertyColumnDic.Values.Any(_ => _.ColumnIndex < 0))
                     {
                         propertyColumnDic = propertyColumnDictionary;
                     }

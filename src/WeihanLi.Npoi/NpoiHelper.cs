@@ -69,7 +69,8 @@ internal static class NpoiHelper
                             continue;
                         }
 
-                        var col = propertyColumnDic.GetPropertySetting(row.GetCell(i).StringCellValue.Trim());
+                        var title = row.GetCell(i).StringCellValue.Trim();
+                        var col = propertyColumnDic.GetPropertySetting(title);
                         if (null != col)
                         {
                             col.ColumnIndex = i;
@@ -78,7 +79,7 @@ internal static class NpoiHelper
                 }
 
                 // use default column index if no headers
-                if (propertyColumnDic.Values.All(_ => _.ColumnIndex < 0))
+                if (propertyColumnDic.Values.Any(_ => _.ColumnIndex < 0))
                 {
                     propertyColumnDic = propertyColumnDictionary;
                 }
