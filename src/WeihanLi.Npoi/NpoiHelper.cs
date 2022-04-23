@@ -203,14 +203,14 @@ internal static class NpoiHelper
                             }
                             else
                             {
-                                cellValue = cell.GetCellValue<string>(formulaEvaluator); 
+                                cellValue = cell.GetCellValue<string>(formulaEvaluator);
                             }
 
                             if (key.PropertyType == typeof(string))
                             {
                                 valueApplied = true;
                             }
-                            
+
                             InternalCache.ColumnInputFormatterFuncCache.TryGetValue(key,
                                 out var formatterFunc);
                             if (formatterFunc?.Method != null)
