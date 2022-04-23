@@ -55,7 +55,7 @@ public interface IPropertyConfiguration<out TEntity, TProperty> : IPropertyConfi
     /// <param name="cellReader">custom cell value reader</param>
     /// <returns></returns>
     IPropertyConfiguration<TEntity, TProperty> HasCellReader(
-        Func<ICell, string>? cellReader);
+        Func<ICell, TProperty>? cellReader);
 
     /// <summary>
     ///     HasColumnInputFormatter

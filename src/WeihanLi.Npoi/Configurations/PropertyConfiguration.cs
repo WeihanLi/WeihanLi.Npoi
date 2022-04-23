@@ -86,7 +86,7 @@ internal sealed class PropertyConfiguration<TEntity, TProperty> : PropertyConfig
         return this;
     }
 
-    public IPropertyConfiguration<TEntity, TProperty> HasCellReader(Func<ICell, string>? cellReader)
+    public IPropertyConfiguration<TEntity, TProperty> HasCellReader(Func<ICell, TProperty>? cellReader)
     {
         InternalCache.CellReaderFuncCache.AddOrUpdate(_propertyInfo, cellReader);
         return this;
