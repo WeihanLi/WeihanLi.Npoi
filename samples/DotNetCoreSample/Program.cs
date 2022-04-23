@@ -13,13 +13,16 @@ using WeihanLi.Npoi.Configurations;
 
 LogHelper.ConfigureLogging(x => x.WithMinimumLevel(LogHelperLogLevel.Info).AddConsole());
 
+var testSurveyExcelPath = @"C:\Users\Weiha\Desktop\temp\QuizBulkUpload.xlsx";
+var surveyList = ExcelHelper.ToEntityList<SurveyImportDto>(testSurveyExcelPath);
+
 SheetNameTest();
 
 FluentSettings.LoadMappingProfile<TestEntity, TestEntityExcelMappingProfile>();
 var tempDirPath = $@"{Environment.GetEnvironmentVariable("USERPROFILE")}\Desktop\temp\test";
 
 // custom CsvSeparatorCharacter sample
-CsvHelper.CsvSeparatorCharacter = '\t';
+var csvOptions = new CsvOptions() { SeparatorCharacter = '\t' };
 var text = CsvHelper.GetCsvText(new[]
 {
         new
@@ -27,9 +30,8 @@ var text = CsvHelper.GetCsvText(new[]
             Title = "123",
             Desc = "234"
         }
-    });
-var dt1233 = CsvHelper.ToDataTable(text.GetBytes());
-CsvHelper.CsvSeparatorCharacter = ',';
+}, csvOptions);
+var dt1233 = CsvHelper.ToDataTable(text.GetBytes(), csvOptions);
 
 // image export/import test
 //var imageExcelPath = @"C:\Users\Weiha\Desktop\temp\test\imageTest.xls";
@@ -125,6 +127,8 @@ var entities = new List<TestEntity>()
             CreatedBy = "li\"_"
         },
     };
+await entities.ToCsvFileAsync("test.csv");
+
 var csvFilePath = $@"{tempDirPath}\test.csv";
 //entities.ToExcelFileByTemplate(
 //    Path.Combine(ApplicationHelper.AppRoot, "Templates", "testTemplate.xlsx"),
@@ -320,3 +324,35 @@ public class ExcelExportDTO
     public DateTime Birthday { get; set; }
     public string? Remark { get; set; }
 }
+
+#nullable disable
+internal sealed class SurveyImportDto
+{
+    [Column(IsIgnored = true)]
+    public string ExternalId { get; set; }
+
+    [Column(0)]
+    public string ContentSource { get; set; }
+
+    [Column(1)]
+    public string ExternalKey { get; set; }
+
+    [Column(2)]
+    public string Title { get; set; }
+
+    [Column(3)]
+    public string OptionA { get; set; }
+
+    [Column(4)]
+    public string OptionB { get; set; }
+
+    [Column(5)]
+    public string OptionC { get; set; }
+
+    [Column(6)]
+    public string CorrectAnswer { get; set; }
+
+    [Column(7)]
+    public string Tips { get; set; }
+}
+#nullable restore

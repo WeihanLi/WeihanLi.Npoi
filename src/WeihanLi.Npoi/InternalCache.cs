@@ -19,4 +19,6 @@ internal static class InternalCache
     public static readonly ConcurrentDictionary<PropertyInfo, Delegate?> InputFormatterFuncCache = new();
 
     public static readonly ConcurrentDictionary<PropertyInfo, Delegate?> ColumnInputFormatterFuncCache = new();
+
+    public static readonly ConcurrentDictionary<PropertyInfo, Delegate?> CellReaderFuncCache = new();
 }

@@ -3,6 +3,7 @@
 
 using System.Data;
 using WeihanLi.Extensions;
+using WeihanLi.Npoi.Configurations;
 using WeihanLi.Npoi.Test.Models;
 using Xunit;
 
@@ -251,15 +252,19 @@ public class CsvTest
         Assert.Equal(expected, text);
     }
 
-    [Fact]
-    public void GetCsvLines_BasicType()
+    [Theory]
+    [InlineData(true)]
+    [InlineData(false)]
+    public void GetCsvLines_BasicType(bool includeHeader)
     {
+        var option = new CsvOptions() { IncludeHeader = includeHeader };
         var list = new List<int>()
         {
             1,2,3
         };
-        var lines = list.GetCsvText();
-        var importedList = CsvHelper.GetEntityList<int>(lines);
+        var lines = list.GetCsvLines(option).ToArray();
+        Assert.Equal(includeHeader ? list.Count + 1 : list.Count, lines.Length);
+        var importedList = CsvHelper.GetEntityList<int>(lines, option);
         Assert.Equal(list.Count, importedList.Count);
 
         for (var i = 0; i < list.Count; i++)
@@ -268,9 +273,44 @@ public class CsvTest
         }
     }
 
-    [Fact]
-    public void GetCsvLines_Entity()
+    [Theory]
+    [InlineData("test.csv")]
+    [InlineData("/tmp/test.csv")]
+    public void CsvFileTest(string csvPath)
     {
+        var list = new List<Job>()
+        {
+            new Job()
+            {
+                Id = 1,
+                Name = "123"
+            },
+            new Job()
+            {
+                Id = 2,
+                Name = "234"
+            }
+        };
+        Assert.True(list.ToCsvFile(csvPath));
+#if NET6_0
+        list.ToCsvFileAsync(csvPath).Wait();
+#endif
+        var importedList = CsvHelper.ToEntityList<Job>(csvPath);
+        Assert.Equal(list.Count, importedList.Count);
+        for (var i = 0; i < list.Count; i++)
+        {
+            Assert.Equal(list[i], importedList[i]);
+        }
+        File.Delete(csvPath);
+    }
+
+    [Theory]
+    [InlineData(true)]
+    [InlineData(false)]
+    public void GetCsvLines_Entity(bool includeHeader)
+    {
+        var option = new CsvOptions() { IncludeHeader = includeHeader };
+
         var list = new List<Job>()
         {
             new()
@@ -284,8 +324,9 @@ public class CsvTest
                 Name = "234"
             }
         };
-        var lines = list.GetCsvText();
-        var importedList = CsvHelper.GetEntityList<Job>(lines);
+        var lines = list.GetCsvLines(option).ToArray();
+        Assert.Equal(includeHeader ? list.Count + 1 : list.Count, lines.Length);
+        var importedList = CsvHelper.GetEntityList<Job>(lines, option);
         Assert.Equal(list.Count, importedList.Count);
         for (var i = 0; i < list.Count; i++)
         {

@@ -1,5 +1,13 @@
 # WeihanLi.Npoi Release Notes
 
+## [2.0.0](https://www.nuget.org/packages/WeihanLi.Npoi/2.0.0)
+
+- Add `net6.0` target support
+- Refactor `CsvHelper`
+- Add `CsvOptions` for `CsvHelper`
+- Add support for validation, fixes #102
+- Add support for `ToEntities`, fixes #113
+
 ## [1.21.0](https://www.nuget.org/packages/WeihanLi.Npoi/1.21.0)
 
 - Add support for duplicate column name for dataTable

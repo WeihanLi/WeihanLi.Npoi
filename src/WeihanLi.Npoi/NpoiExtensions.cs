@@ -8,6 +8,7 @@ using NPOI.XSSF.UserModel;
 using System.Data;
 using System.Diagnostics;
 using System.Globalization;
+using WeihanLi.Common;
 using WeihanLi.Common.Helpers;
 using WeihanLi.Common.Models;
 using WeihanLi.Common.Services;
@@ -37,10 +38,13 @@ public static class NpoiExtensions
     public static List<TEntity?> ToEntityList<TEntity>(this IWorkbook workbook, int sheetIndex)
         where TEntity : new()
     {
-        if (workbook is null)
-        {
-            throw new ArgumentNullException(nameof(workbook));
-        }
+        return ToEntities<TEntity>(workbook, sheetIndex).ToList();
+    }
+
+    public static IEnumerable<TEntity?> ToEntities<TEntity>(this IWorkbook workbook, int sheetIndex)
+        where TEntity : new()
+    {
+        Guard.NotNull(workbook);
 
         if (workbook.NumberOfSheets <= sheetIndex)
         {
@@ -49,7 +53,7 @@ public static class NpoiExtensions
         }
 
         var sheet = workbook.GetSheetAt(sheetIndex);
-        return NpoiHelper.SheetToEntityList<TEntity>(sheet, sheetIndex);
+        return NpoiHelper.SheetToEntities<TEntity>(sheet, sheetIndex);
     }
 
     /// <summary>
@@ -69,8 +73,10 @@ public static class NpoiExtensions
     /// <param name="sheetIndex">sheetIndex</param>
     /// <returns>entity list</returns>
     public static List<TEntity?> ToEntityList<TEntity>(this ISheet sheet, int sheetIndex)
-        where TEntity : new() => NpoiHelper.SheetToEntityList<TEntity>(sheet, sheetIndex);
+        where TEntity : new() => NpoiHelper.SheetToEntities<TEntity>(sheet, sheetIndex).ToList();
 
+    public static IEnumerable<TEntity?> ToEntities<TEntity>(this ISheet sheet, int sheetIndex)
+        where TEntity : new() => NpoiHelper.SheetToEntities<TEntity>(sheet, sheetIndex);
 
     /// <summary>
     ///     Sheet2EntityList and validate
@@ -86,7 +92,7 @@ public static class NpoiExtensions
     {
         var validationResults = new Dictionary<int, ValidationResult>();
 
-        var entities = NpoiHelper.SheetToEntityList<TEntity>(sheet, sheetIndex, (entity, configuration, rowIndex) =>
+        var entities = NpoiHelper.SheetToEntities<TEntity>(sheet, sheetIndex, (entity, configuration, rowIndex) =>
         {
             var validatorEffective = configuration.Validator;
             if (validator != null)
@@ -99,7 +105,7 @@ public static class NpoiExtensions
             {
                 validationResults[rowIndex] = validationResult;
             }
-        });
+        }).ToList();
 
         return (entities, validationResults);
     }
@@ -330,7 +336,7 @@ public static class NpoiExtensions
         }
 
         workbook.CreateSheets<TEntity>(sheetIndex);
-        var sheet = NpoiHelper.EntityListToSheet(workbook.GetSheetAt(sheetIndex), list, sheetIndex);
+        var sheet = NpoiHelper.EntitiesToSheet(workbook.GetSheetAt(sheetIndex), list, sheetIndex);
         return sheet.LastRowNum;
     }
 
@@ -373,7 +379,7 @@ public static class NpoiExtensions
     /// <param name="list">entityList</param>
     /// <param name="sheetIndex">sheetIndex</param>
     public static ISheet ImportData<TEntity>(this ISheet sheet, IEnumerable<TEntity> list, int sheetIndex)
-        => NpoiHelper.EntityListToSheet(sheet, list, sheetIndex);
+        => NpoiHelper.EntitiesToSheet(sheet, list, sheetIndex);
 
     /// <summary>
     ///     import dataTable to workbook first sheet

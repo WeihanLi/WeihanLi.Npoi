@@ -16,7 +16,7 @@
 
 [NPOI](https://github.com/tonyqus/npoi) extensions based on target framework `netstandard2.0`.
 
-There' a lot of userful extensions for you, core fetures are as follows:
+There're a lot of useful extensions for you, core features are as follows:
 
 - mapping a excel file data to a `DataTable` or `List<TEntity>`
 - export `IEnumerable<TEntity>` or `DataTable` data to Excel file or Excel file bytes or even write excel file stream to your stream
@@ -259,7 +259,6 @@ more usage:
 ### Samples
 
 - [dotnetcore sample](https://github.com/WeihanLi/WeihanLi.Npoi/blob/dev/samples/DotNetCoreSample/Program.cs)
-- [dotnet sample](https://github.com/WeihanLi/WeihanLi.Npoi/blob/dev/samples/DotNetSample/Program.cs)
 
 ### Acknowledgements
 
@@ -268,4 +267,4 @@ more usage:
 
 ### Contact
 
-Contact me: weihanli@outlook.com
+Contact me: <weihanli@outlook.com>
