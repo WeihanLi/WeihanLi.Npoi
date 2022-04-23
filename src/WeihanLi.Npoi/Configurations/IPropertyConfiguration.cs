@@ -48,7 +48,7 @@ public interface IPropertyConfiguration<out TEntity, TProperty> : IPropertyConfi
     /// <returns></returns>
     IPropertyConfiguration<TEntity, TProperty> Ignored(bool ignored = true);
 
-    
+
     /// <summary>
     ///     HasCellReader
     /// </summary>
@@ -56,7 +56,7 @@ public interface IPropertyConfiguration<out TEntity, TProperty> : IPropertyConfi
     /// <returns></returns>
     IPropertyConfiguration<TEntity, TProperty> HasCellReader(
         Func<ICell, string>? cellReader);
-    
+
     /// <summary>
     ///     HasColumnInputFormatter
     /// </summary>
