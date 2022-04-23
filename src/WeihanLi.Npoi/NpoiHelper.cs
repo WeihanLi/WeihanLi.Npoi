@@ -195,10 +195,26 @@ internal static class NpoiHelper
                         else
                         {
                             var valueApplied = false;
-                            if (InternalCache.ColumnInputFormatterFuncCache.TryGetValue(key,
-                                out var formatterFunc) && formatterFunc?.Method != null)
+                            InternalCache.CellReaderFuncCache.TryGetValue(key, out var cellReaderDelegate);
+                            string cellValue;
+                            if (cellReaderDelegate is Func<ICell, string> cellReader)
                             {
-                                var cellValue = cell.GetCellValue<string>(formulaEvaluator);
+                                cellValue = cellReader.Invoke(cell);
+                            }
+                            else
+                            {
+                                cellValue = cell.GetCellValue<string>(formulaEvaluator); 
+                            }
+
+                            if (key.PropertyType == typeof(string))
+                            {
+                                valueApplied = true;
+                            }
+                            
+                            InternalCache.ColumnInputFormatterFuncCache.TryGetValue(key,
+                                out var formatterFunc);
+                            if (formatterFunc?.Method != null)
+                            {
                                 try
                                 {
                                     // apply custom formatterFunc

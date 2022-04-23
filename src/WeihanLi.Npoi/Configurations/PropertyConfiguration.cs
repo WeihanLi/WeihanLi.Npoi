@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Weihan Li. All rights reserved.
 // Licensed under the Apache license.
 
+using NPOI.SS.UserModel;
 using System.Reflection;
 using WeihanLi.Extensions;
 
@@ -82,6 +83,12 @@ internal sealed class PropertyConfiguration<TEntity, TProperty> : PropertyConfig
     public IPropertyConfiguration<TEntity, TProperty> Ignored(bool ignored = true)
     {
         IsIgnored = ignored;
+        return this;
+    }
+
+    public IPropertyConfiguration<TEntity, TProperty> HasCellReader(Func<ICell, string>? cellReader)
+    {
+        InternalCache.CellReaderFuncCache.AddOrUpdate(_propertyInfo, cellReader);
         return this;
     }
 
