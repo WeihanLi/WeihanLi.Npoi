@@ -24,7 +24,7 @@ public static class Extensions
         // Check columns
         for (var headerIndex = 0; headerIndex < expected.Columns.Count; headerIndex++)
         {
-            var expectedValue = expected.Columns[headerIndex]?.ToString();
+            var expectedValue = expected.Columns[headerIndex].ToString();
             var excelValue = actual.Columns[headerIndex].ToString();
 
             // "TRUE" from header column is translated to "True".

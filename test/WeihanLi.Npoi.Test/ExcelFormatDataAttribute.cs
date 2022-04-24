@@ -6,7 +6,7 @@ using Xunit.Sdk;
 
 namespace WeihanLi.Npoi.Test;
 
-public class ExcelFormatDataAttribute : DataAttribute
+public sealed class ExcelFormatDataAttribute : DataAttribute
 {
     public override IEnumerable<object[]> GetData(MethodInfo testMethod)
     {
