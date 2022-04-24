@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Weihan Li. All rights reserved.
 // Licensed under the Apache license.
 
+using NPOI.SS.UserModel;
+
 namespace WeihanLi.Npoi.Configurations;
 
 /// <summary>
@@ -45,6 +47,15 @@ public interface IPropertyConfiguration<out TEntity, TProperty> : IPropertyConfi
     /// </summary>
     /// <returns></returns>
     IPropertyConfiguration<TEntity, TProperty> Ignored(bool ignored = true);
+
+
+    /// <summary>
+    ///     HasCellReader(For excel only)
+    /// </summary>
+    /// <param name="cellReader">custom cell value reader</param>
+    /// <returns></returns>
+    IPropertyConfiguration<TEntity, TProperty> HasCellReader(
+        Func<ICell, TProperty>? cellReader);
 
     /// <summary>
     ///     HasColumnInputFormatter

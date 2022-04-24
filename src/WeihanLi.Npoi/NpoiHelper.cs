@@ -195,28 +195,36 @@ internal static class NpoiHelper
                         else
                         {
                             var valueApplied = false;
-                            if (InternalCache.ColumnInputFormatterFuncCache.TryGetValue(key,
-                                out var formatterFunc) && formatterFunc?.Method != null)
+                            InternalCache.CellReaderFuncCache.TryGetValue(key, out var cellReader);
+                            if (cellReader?.Method != null)
                             {
-                                var cellValue = cell.GetCellValue<string>(formulaEvaluator);
-                                try
+                                columnValue = cellReader.DynamicInvoke(cell);
+                                valueApplied = true;
+                            }
+                            else
+                            {
+                                InternalCache.ColumnInputFormatterFuncCache.TryGetValue(key,
+                                    out var formatterFunc);
+                                if (formatterFunc?.Method != null)
                                 {
-                                    // apply custom formatterFunc
-                                    columnValue = formatterFunc.DynamicInvoke(cellValue);
-                                    valueApplied = true;
-                                }
-                                catch (Exception e)
-                                {
-                                    Debug.WriteLine(e);
-                                    InvokeHelper.OnInvokeException?.Invoke(e);
+                                    var cellValue = cell.GetCellValue<string>(formulaEvaluator);
+                                    try
+                                    {
+                                        // apply custom formatterFunc
+                                        columnValue = formatterFunc.DynamicInvoke(cellValue);
+                                        valueApplied = true;
+                                    }
+                                    catch (Exception e)
+                                    {
+                                        Debug.WriteLine(e);
+                                        InvokeHelper.OnInvokeException?.Invoke(e);
+                                    }
                                 }
                             }
-
                             if (valueApplied == false)
                             {
                                 columnValue = cell.GetCellValue(key.PropertyType, formulaEvaluator);
                             }
-
                             valueSetter.Invoke(entity, columnValue);
                         }
                     }

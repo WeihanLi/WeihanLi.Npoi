@@ -14,15 +14,15 @@
 
 ## Intro
 
-[NPOI](https://github.com/tonyqus/npoi) extensions based on target framework `netstandard2.0`.
+[NPOI](https://github.com/tonyqus/npoi) extensions based on target framework `netstandard2.0`/`net6.0`.
 
 There're a lot of useful extensions for you, core features are as follows:
 
-- mapping a excel file data to a `DataTable` or `List<TEntity>`
+- mapping a excel file data to a `DataTable` or `List<TEntity>`/`IEnumerable<T>`
 - export `IEnumerable<TEntity>` or `DataTable` data to Excel file or Excel file bytes or even write excel file stream to your stream
 - export `IEnumerable<TEntity>` or `DataTable` data to csv file or bytes.
 - custom configuration/mappings by Attribute or FluentAPI(inspired by [FluentExcel](https://github.com/Arch/FluentExcel/))
-- great flexibility by fluent InputFormatter/OutputFormatter/ColumnInputFormatter/ColumnOutputFormatter
+- great flexibility by fluent InputFormatter/OutputFormatter/ColumnInputFormatter/ColumnOutputFormatter/CellReader
 
 ### GetStarted
 
@@ -36,12 +36,14 @@ There're a lot of useful extensions for you, core features are as follows:
     entities.ToCsvBytes();
     ```
 
-
 2. Read Excel/csv to List
 
     ``` csharp
-    // read excel first sheet content to a List<T>
+    // read excel first sheet content to List<T>
     var entityList = ExcelHelper.ToEntityList<T>(string excelPath);
+
+    // read excel first sheet content to IEnumerable<T>
+    var entityList = ExcelHelper.ToEntities<T>(string excelPath);
 
     // read excel sheetIndex sheet content to a List<T>
     // you can custom header row index via sheet attribute or fluent api HasSheet
@@ -120,9 +122,9 @@ More Api here: <https://weihanli.github.io/WeihanLi.Npoi/docs/api/WeihanLi.Npoi.
     }
     ```
 
-1. FluentApi (Recommend)
+1. FluentApi (Recommended)
 
-    You can use FluentApi also
+    You can use FluentApi for great flexibility
 
     for example:
 
@@ -185,80 +187,87 @@ see some articles here: <https://weihanli.github.io/WeihanLi.Npoi/docs/articles/
 
 more usage:
 
-1. Get a workbook
+<details>
+<summary>Get a workbook</summary>
 
-    ``` csharp
-    // load excel workbook from file
-    var workbook = LoadExcel(string excelPath);
+``` csharp
+// load excel workbook from file
+var workbook = LoadExcel(string excelPath);
 
-    // prepare a workbook accounting to excelPath
-    var workbook = PrepareWorkbook(string excelPath);
+// prepare a workbook accounting to excelPath
+var workbook = PrepareWorkbook(string excelPath);
 
-    // prepare a workbook accounting to excelPath and custom excel settings
-    var workbook = PrepareWorkbook(string excelPath, ExcelSetting excelSetting);
+// prepare a workbook accounting to excelPath and custom excel settings
+var workbook = PrepareWorkbook(string excelPath, ExcelSetting excelSetting);
 
-    // prepare a workbook whether *.xls file
-    var workbook = PrepareWorkbook(bool isXls);
+// prepare a workbook whether *.xls file
+var workbook = PrepareWorkbook(bool isXls);
 
-    // prepare a workbook whether *.xls file and custom excel setting
-    var workbook = PrepareWorkbook(bool isXlsx, ExcelSetting excelSetting);
-    ```
+// prepare a workbook whether *.xls file and custom excel setting
+var workbook = PrepareWorkbook(bool isXlsx, ExcelSetting excelSetting);
+```
 
-1. Rich extensions
+</details>
 
-    ``` csharp
+<details>
+<summary>Rich extensions</summary>
 
-    List<TEntity> ToEntityList<TEntity>([NotNull]this IWorkbook workbook)
+``` csharp
+List<TEntity> ToEntityList<TEntity>([NotNull]this IWorkbook workbook)
 
-    DataTable ToDataTable([NotNull]this IWorkbook workbook)
+DataTable ToDataTable([NotNull]this IWorkbook workbook)
 
-    ISheet ImportData<TEntity>([NotNull] this ISheet sheet, DataTable dataTable)
+ISheet ImportData<TEntity>([NotNull] this ISheet sheet, DataTable dataTable)
 
-    int ImportData<TEntity>([NotNull] this IWorkbook workbook, IEnumerable<TEntity> list,
-                int sheetIndex)
+int ImportData<TEntity>([NotNull] this IWorkbook workbook, IEnumerable<TEntity> list,
+            int sheetIndex)
 
-    int ImportData<TEntity>([NotNull] this ISheet sheet, IEnumerable<TEntity> list)
+int ImportData<TEntity>([NotNull] this ISheet sheet, IEnumerable<TEntity> list)
 
-    int ImportData<TEntity>([NotNull] this IWorkbook workbook, [NotNull] DataTable dataTable,
-                int sheetIndex)
+int ImportData<TEntity>([NotNull] this IWorkbook workbook, [NotNull] DataTable dataTable,
+            int sheetIndex)
 
-    ToExcelFile<TEntity>([NotNull] this IEnumerable<TEntity> entityList,
-                [NotNull] string excelPath)
+ToExcelFile<TEntity>([NotNull] this IEnumerable<TEntity> entityList,
+            [NotNull] string excelPath)
 
-    int ToExcelStream<TEntity>([NotNull] this IEnumerable<TEntity> entityList,
-                [NotNull] Stream stream)
+int ToExcelStream<TEntity>([NotNull] this IEnumerable<TEntity> entityList,
+            [NotNull] Stream stream)
 
-    byte[] ToExcelBytes<TEntity>([NotNull] this IEnumerable<TEntity> entityList)
+byte[] ToExcelBytes<TEntity>([NotNull] this IEnumerable<TEntity> entityList)
 
-    int ToExcelFile([NotNull] this DataTable dataTable, [NotNull] string excelPath)
+int ToExcelFile([NotNull] this DataTable dataTable, [NotNull] string excelPath)
 
-    int ToExcelStream([NotNull] this DataTable dataTable, [NotNull] Stream stream)
+int ToExcelStream([NotNull] this DataTable dataTable, [NotNull] Stream stream)
 
-    byte[] ToExcelBytes([NotNull] this DataTable dataTable)
+byte[] ToExcelBytes([NotNull] this DataTable dataTable)
 
-    byte[] ToExcelBytes([NotNull] this IWorkbook workbook)
+byte[] ToExcelBytes([NotNull] this IWorkbook workbook)
 
-    int WriteToFile([NotNull] this IWorkbook workbook, string filePath)
+int WriteToFile([NotNull] this IWorkbook workbook, string filePath)
 
-    object GetCellValue([NotNull] this ICell cell, Type propertyType)
+object GetCellValue([NotNull] this ICell cell, Type propertyType)
 
-    T GetCellValue<T>([NotNull] this ICell cell)
+T GetCellValue<T>([NotNull] this ICell cell)
 
-    void SetCellValue([NotNull] this ICell cell, object value)
+void SetCellValue([NotNull] this ICell cell, object value)
 
-    byte[] ToCsvBytes<TEntity>(this IEnumerable<TEntity> entities, bool includeHeader)
+byte[] ToCsvBytes<TEntity>(this IEnumerable<TEntity> entities, bool includeHeader)
 
-    ToCsvFile<TEntity>(this IEnumerable<TEntity> entities, string filePath, bool includeHeader)
+ToCsvFile<TEntity>(this IEnumerable<TEntity> entities, string filePath, bool includeHeader)
 
-    void ToCsvFile(this DataTable dt, string filePath, bool includeHeader)
+void ToCsvFile(this DataTable dt, string filePath, bool includeHeader)
 
-    byte[] ToCsvBytes(this DataTable dt, bool includeHeader)
+byte[] ToCsvBytes(this DataTable dt, bool includeHeader)
 
-    ```
+```
+
+</details>
 
 ### Samples
 
 - [dotnetcore sample](https://github.com/WeihanLi/WeihanLi.Npoi/blob/dev/samples/DotNetCoreSample/Program.cs)
+- [More samples in unit test](https://github.com/WeihanLi/WeihanLi.Npoi/blob/dev/test/WeihanLi.Npoi.Test/ExcelTest.cs)
+- [Guide posts](https://weihanli.github.io/WeihanLi.Npoi/docs/articles/intro.html)
 
 ### Acknowledgements
 

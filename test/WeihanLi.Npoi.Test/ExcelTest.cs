@@ -4,6 +4,7 @@
 using NPOI.SS.UserModel;
 using System.Data;
 using System.Globalization;
+using WeihanLi.Common;
 using WeihanLi.Common.Models;
 using WeihanLi.Common.Services;
 using WeihanLi.Extensions;
@@ -191,9 +192,10 @@ public class ExcelTest
                 }
                 else
                 {
-                    Assert.NotNull(importedList[i]);
-                    var sourceItem = list[i]!;
-                    var item = importedList[i]!;
+                    var item = importedList[i];
+                    Assert.NotNull(item);
+                    Guard.NotNull(item);
+                    var sourceItem = list[i];
                     Assert.Equal(sourceItem.Id, item.Id);
                     Assert.Equal(sourceItem.Title, item.Title);
                     Assert.Equal(sourceItem.Content, item.Content);
@@ -236,21 +238,15 @@ public class ExcelTest
             Assert.Equal(list.Count, importedList.Count);
             for (var i = 0; i < list.Count; i++)
             {
-                if (list[i] == null)
-                {
-                    Assert.Null(importedList[i]);
-                }
-                else
-                {
-                    Assert.NotNull(importedList[i]);
-                    var sourceItem = list[i]!;
-                    var item = importedList[i]!;
-                    Assert.Equal(sourceItem.Id, item.Id);
-                    Assert.Equal(sourceItem.Title, item.Title);
-                    Assert.Equal(sourceItem.Content, item.Content);
-                    Assert.Equal(sourceItem.Publisher, item.Publisher);
-                    Assert.Equal(sourceItem.PublishedAt.ToStandardTimeString(), item.PublishedAt.ToStandardTimeString());
-                }
+                var item = importedList[i];
+                Assert.NotNull(item);
+                Guard.NotNull(item);
+                var sourceItem = list[i];
+                Assert.Equal(sourceItem.Id, item.Id);
+                Assert.Equal(sourceItem.Title, item.Title);
+                Assert.Equal(sourceItem.Content, item.Content);
+                Assert.Equal(sourceItem.Publisher, item.Publisher);
+                Assert.Equal(sourceItem.PublishedAt.ToStandardTimeString(), item.PublishedAt.ToStandardTimeString());
             }
         }
     }
@@ -285,9 +281,10 @@ public class ExcelTest
                 }
                 else
                 {
-                    Assert.NotNull(importedList[i]);
-                    var sourceItem = list[i]!;
-                    var item = importedList[i]!;
+                    var item = importedList[i];
+                    Assert.NotNull(item);
+                    Guard.NotNull(item);
+                    var sourceItem = list[i];
                     //Assert.Equal(sourceItem.Id, item.Id);
                     Assert.Equal(sourceItem.Title, item.Title);
                     Assert.Equal(sourceItem.Content, item.Content);
@@ -326,20 +323,15 @@ public class ExcelTest
             Assert.Equal(list.Count, importedList.Count);
             for (var i = 0; i < list.Count; i++)
             {
-                if (list[i] == null)
-                {
-                    Assert.Null(importedList[i]);
-                }
-                else
-                {
-                    Assert.NotNull(importedList[i]);
-                    var item = importedList[i]!;
-                    Assert.Equal(list[i].Id, item.Id);
-                    Assert.Equal(list[i].Title + "_Test", item.Title);
-                    Assert.Equal(list[i].Content, item.Content);
-                    Assert.Equal(list[i].Publisher, item.Publisher);
-                    Assert.Equal(list[i].PublishedAt.ToStandardTimeString(), item.PublishedAt.ToStandardTimeString());
-                }
+                var item = importedList[i];
+                Assert.NotNull(item);
+                Guard.NotNull(item);
+
+                Assert.Equal(list[i].Id, item.Id);
+                Assert.Equal(list[i].Title + "_Test", item.Title);
+                Assert.Equal(list[i].Content, item.Content);
+                Assert.Equal(list[i].Publisher, item.Publisher);
+                Assert.Equal(list[i].PublishedAt.ToStandardTimeString(), item.PublishedAt.ToStandardTimeString());
             }
 
             settings.Property(_ => _.Title).HasColumnInputFormatter(null);
@@ -371,21 +363,15 @@ public class ExcelTest
             Assert.Equal(list.Count, importedList.Count);
             for (var i = 0; i < list.Count; i++)
             {
-                if (list[i] == null)
-                {
-                    Assert.Null(importedList[i]);
-                }
-                else
-                {
-                    Assert.NotNull(importedList[i]);
-                    var sourceItem = list[i]!;
-                    var item = importedList[i]!;
-                    Assert.Equal(sourceItem.Id, item.Id);
-                    Assert.Equal(sourceItem.Title, item.Title);
-                    Assert.Equal(sourceItem.Content, item.Content);
-                    Assert.Equal(sourceItem.Publisher, item.Publisher);
-                    Assert.Equal(sourceItem.PublishedAt.ToStandardTimeString(), item.PublishedAt.ToStandardTimeString());
-                }
+                var item = importedList[i];
+                Assert.NotNull(item);
+                Guard.NotNull(item);
+                var sourceItem = list[i];
+                Assert.Equal(sourceItem.Id, item.Id);
+                Assert.Equal(sourceItem.Title, item.Title);
+                Assert.Equal(sourceItem.Content, item.Content);
+                Assert.Equal(sourceItem.Publisher, item.Publisher);
+                Assert.Equal(sourceItem.PublishedAt.ToStandardTimeString(), item.PublishedAt.ToStandardTimeString());
             }
 
             settings.Property(x => x.Id)
@@ -424,21 +410,16 @@ public class ExcelTest
 
             for (; i < importedList.Count; i++, k++)
             {
-                if (list[k] == null)
-                {
-                    Assert.Null(importedList[i]);
-                }
-                else
-                {
-                    Assert.NotNull(importedList[i]);
-                    var sourceItem = list[k]!;
-                    var item = importedList[i]!;
-                    Assert.Equal(sourceItem.Id, item.Id);
-                    Assert.Equal(sourceItem.Title, item.Title);
-                    Assert.Equal(sourceItem.Content, item.Content);
-                    Assert.Equal(sourceItem.Publisher, item.Publisher);
-                    Assert.Equal(sourceItem.PublishedAt.ToStandardTimeString(), item.PublishedAt.ToStandardTimeString());
-                }
+                var item = importedList[i];
+                Assert.NotNull(item);
+                Guard.NotNull(item);
+                var sourceItem = list[k];
+                Assert.Equal(sourceItem.Id, item.Id);
+                Assert.Equal(sourceItem.Title, item.Title);
+                Assert.Equal(sourceItem.Content, item.Content);
+                Assert.Equal(sourceItem.Publisher, item.Publisher);
+                Assert.Equal(sourceItem.PublishedAt.ToStandardTimeString(), item.PublishedAt.ToStandardTimeString());
+
             }
 
             settings.WithDataFilter(null);
@@ -576,21 +557,15 @@ public class ExcelTest
             Assert.Equal(list.Count, importedList.Count);
             for (var i = 0; i < list.Count; i++)
             {
-                if (list[i] == null)
-                {
-                    Assert.Null(importedList[i]);
-                }
-                else
-                {
-                    Assert.NotNull(importedList[i]);
-                    var item = importedList[i]!;
+                var item = importedList[i];
+                Assert.NotNull(item);
+                Guard.NotNull(item);
 
-                    Assert.Equal(list[i].Id, item.Id);
-                    Assert.Null(item.Title);
-                    Assert.Null(item.Content);
-                    Assert.Null(item.Publisher);
-                    Assert.Equal(default(DateTime).ToStandardTimeString(), item.PublishedAt.ToStandardTimeString());
-                }
+                Assert.Equal(list[i].Id, item.Id);
+                Assert.Null(item.Title);
+                Assert.Null(item.Content);
+                Assert.Null(item.Publisher);
+                Assert.Equal(default(DateTime).ToStandardTimeString(), item.PublishedAt.ToStandardTimeString());
             }
 
             settings.HasSheetSetting(setting =>
@@ -992,7 +967,7 @@ public class ExcelTest
             Errors = new Dictionary<string, string[]>() { { "", new[] { "Mock error" } } }
         });
         var bytes = list.ToExcelBytes(excelFormat);
-        var result = ExcelHelper.ToEntityListWithValidationResult<Job>(bytes, excelFormat, validator: validator);
+        var result = ExcelHelper.ToEntityListWithValidationResult(bytes, excelFormat, validator: validator);
         Assert.Equal(list.Count, result.EntityList.Count);
         for (var i = 0; i < list.Count; i++)
         {
@@ -1001,6 +976,36 @@ public class ExcelTest
         Assert.Single(result.ValidationResults);
     }
 
+    [Theory]
+    [ExcelFormatData]
+    public void CellReaderTest(ExcelFormat excelFormat)
+    {
+        var jobs = new CellReaderTestModel[] { new() { Id = 1, Name = "test" }, new() { Id = 2 }, };
+        var bytes = jobs.ToExcelBytes(excelFormat);
+        var settings = FluentSettings.For<CellReaderTestModel>();
+        settings.Property(x => x.Name)
+            .HasCellReader(_ => "CellValue");
+
+        var list = ExcelHelper.ToEntityList<CellReaderTestModel>(bytes, excelFormat);
+        Assert.Equal(jobs.Length, list.Count);
+        for (var i = 0; i < jobs.Length; i++)
+        {
+            Assert.NotNull(list[i]);
+            var model = list[i];
+            Guard.NotNull(model);
+            Assert.Equal(jobs[i].Id, model.Id);
+            Assert.Equal("CellValue", model.Name);
+        }
+
+        settings.Property(x => x.Name)
+            .HasCellReader(null);
+    }
+
+    private sealed record CellReaderTestModel
+    {
+        public int Id { get; set; }
+        public string? Name { get; set; }
+    }
 
     private sealed class ImageTest
     {
