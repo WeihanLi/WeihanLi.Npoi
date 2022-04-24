@@ -4,6 +4,7 @@
 using NPOI.SS.UserModel;
 using System.Data;
 using System.Globalization;
+using WeihanLi.Common;
 using WeihanLi.Common.Models;
 using WeihanLi.Common.Services;
 using WeihanLi.Extensions;
@@ -999,6 +1000,34 @@ public class ExcelTest
             Assert.True(list[i] == result.EntityList[i]);
         }
         Assert.Single(result.ValidationResults);
+    }
+
+    [Theory]
+    [ExcelFormatData]
+    public void CellReaderTest(ExcelFormat excelFormat)
+    {
+        var jobs = new Job[] { new() { Id = 1, Name = "test" }, new() { Id = 2, Name = "test" }, };
+        var bytes = jobs.ToExcelBytes(excelFormat);
+        var settings = FluentSettings.For<Job>();
+        lock (settings)
+        {
+            settings.Property(x => x.Name)
+                .HasCellReader(cell => "CellValue");
+
+            var list = ExcelHelper.ToEntityList<Job>(bytes, excelFormat);
+            Assert.Equal(jobs.Length, list.Count);
+            for (var i = 0; i < jobs.Length; i++)
+            {
+                Assert.NotNull(list[i]);
+                var job = list[i];
+                Guard.NotNull(job);
+                Assert.Equal(jobs[i].Id, job.Id);
+                Assert.Equal("CellValue", job.Name);
+            }
+            
+            settings.Property(x => x.Name)
+                .HasCellReader(null);
+        }
     }
 
 
