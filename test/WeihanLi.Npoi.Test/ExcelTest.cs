@@ -1022,7 +1022,7 @@ public class ExcelTest
             Assert.Equal(jobs[i].Id, model.Id);
             Assert.Equal("CellValue", model.Name);
         }
-            
+
         settings.Property(x => x.Name)
             .HasCellReader(null);
     }
