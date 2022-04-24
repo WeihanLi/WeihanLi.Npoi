@@ -50,7 +50,7 @@ public interface IPropertyConfiguration<out TEntity, TProperty> : IPropertyConfi
 
 
     /// <summary>
-    ///     HasCellReader
+    ///     HasCellReader(For excel only)
     /// </summary>
     /// <param name="cellReader">custom cell value reader</param>
     /// <returns></returns>
