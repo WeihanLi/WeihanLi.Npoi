@@ -1,5 +1,9 @@
 # WeihanLi.Npoi Release Notes
 
+## [2.1.0](https://www.nuget.org/packages/WeihanLi.Npoi/2.1.0)
+
+- Add `HasCellReader` to support more read flexibility
+
 ## [2.0.0](https://www.nuget.org/packages/WeihanLi.Npoi/2.0.0)
 
 - Add `net6.0` target support
