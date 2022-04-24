@@ -326,7 +326,7 @@ public class ExcelTest
                 var item = importedList[i];
                 Assert.NotNull(item);
                 Guard.NotNull(item);
-                
+
                 Assert.Equal(list[i].Id, item.Id);
                 Assert.Equal(list[i].Title + "_Test", item.Title);
                 Assert.Equal(list[i].Content, item.Content);
@@ -419,7 +419,7 @@ public class ExcelTest
                 Assert.Equal(sourceItem.Content, item.Content);
                 Assert.Equal(sourceItem.Publisher, item.Publisher);
                 Assert.Equal(sourceItem.PublishedAt.ToStandardTimeString(), item.PublishedAt.ToStandardTimeString());
-            
+
             }
 
             settings.WithDataFilter(null);
