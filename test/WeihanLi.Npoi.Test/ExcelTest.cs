@@ -1006,30 +1006,32 @@ public class ExcelTest
     [ExcelFormatData]
     public void CellReaderTest(ExcelFormat excelFormat)
     {
-        var jobs = new Job[] { new() { Id = 1, Name = "test" }, new() { Id = 2, Name = "test" }, };
+        var jobs = new CellReaderTestModel[] { new() { Id = 1, Name = "test" }, new() { Id = 2 }, };
         var bytes = jobs.ToExcelBytes(excelFormat);
-        var settings = FluentSettings.For<Job>();
-        lock (settings)
-        {
-            settings.Property(x => x.Name)
-                .HasCellReader(cell => "CellValue");
+        var settings = FluentSettings.For<CellReaderTestModel>();
+        settings.Property(x => x.Name)
+            .HasCellReader(_ => "CellValue");
 
-            var list = ExcelHelper.ToEntityList<Job>(bytes, excelFormat);
-            Assert.Equal(jobs.Length, list.Count);
-            for (var i = 0; i < jobs.Length; i++)
-            {
-                Assert.NotNull(list[i]);
-                var job = list[i];
-                Guard.NotNull(job);
-                Assert.Equal(jobs[i].Id, job.Id);
-                Assert.Equal("CellValue", job.Name);
-            }
-            
-            settings.Property(x => x.Name)
-                .HasCellReader(null);
+        var list = ExcelHelper.ToEntityList<CellReaderTestModel>(bytes, excelFormat);
+        Assert.Equal(jobs.Length, list.Count);
+        for (var i = 0; i < jobs.Length; i++)
+        {
+            Assert.NotNull(list[i]);
+            var model = list[i];
+            Guard.NotNull(model);
+            Assert.Equal(jobs[i].Id, model.Id);
+            Assert.Equal("CellValue", model.Name);
         }
+            
+        settings.Property(x => x.Name)
+            .HasCellReader(null);
     }
 
+    private sealed record CellReaderTestModel
+    {
+        public int Id { get; set; }
+        public string? Name { get; set; }
+    }
 
     private sealed class ImageTest
     {
