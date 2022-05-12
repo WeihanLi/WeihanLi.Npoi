@@ -3,7 +3,6 @@
 
 using NPOI.HSSF.UserModel;
 using NPOI.SS.UserModel;
-using NPOI.XSSF.UserModel;
 using System.Data;
 using System.Globalization;
 using WeihanLi.Common;
@@ -1019,9 +1018,9 @@ public class ExcelTest
 
         var cell = dataRow.GetCell(1);
         cell.CellStyle.DataFormat = HSSFDataFormat.GetBuiltinFormat("0%");
-        Assert.Equal(CellType.Numeric,  cell.CellType);
-        Assert.Equal("24%",  new DataFormatter().FormatCellValue(cell));
-        
+        Assert.Equal(CellType.Numeric, cell.CellType);
+        Assert.Equal("24%", new DataFormatter().FormatCellValue(cell));
+
         var excelBytes = workbook.ToExcelBytes();
 
         var importedWorkbook = ExcelHelper.LoadExcel(excelBytes, excelFormat);
@@ -1029,11 +1028,11 @@ public class ExcelTest
         var row1 = importedSheet.GetRow(1);
         var cell1 = row1.GetCell(1);
         Assert.Equal(cell.CellStyle.DataFormat, cell1.CellStyle.DataFormat);
-        
+
         Assert.Equal(1, row1.GetCell(0).NumericCellValue.To<int>());
         Assert.Equal("24%", new DataFormatter().FormatCellValue(cell1));
     }
-    
+
     [Theory]
     [ExcelFormatData]
     public void HeaderCellTypeTest(ExcelFormat excelFormat)
@@ -1051,7 +1050,7 @@ public class ExcelTest
         dataRow.CreateCell(1).SetCellValue("1234");
 
         var excelBytes = workbook.ToExcelBytes();
-        
+
         var list = ExcelHelper.ToEntityList<CellFormatTestModel>(excelBytes, excelFormat);
         Assert.Single(list);
         Assert.NotNull(list[0]);
