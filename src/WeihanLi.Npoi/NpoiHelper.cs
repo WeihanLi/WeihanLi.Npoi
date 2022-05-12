@@ -68,7 +68,7 @@ internal static class NpoiHelper
                         {
                             continue;
                         }
-
+                        row.GetCell(i).SetCellType(CellType.String);
                         var title = row.GetCell(i).StringCellValue.Trim();
                         var col = propertyColumnDic.GetPropertySetting(title);
                         if (null != col)
