@@ -1187,7 +1187,7 @@ public static class NpoiExtensions
         }
 
         var dir = Path.GetDirectoryName(filePath);
-        if (string.IsNullOrWhiteSpace( dir))
+        if (string.IsNullOrWhiteSpace(dir))
         {
             filePath = ApplicationHelper.MapPath(filePath);
         }
