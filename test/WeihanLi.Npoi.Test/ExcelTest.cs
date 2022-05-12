@@ -1,7 +1,9 @@
 ﻿// Copyright (c) Weihan Li. All rights reserved.
 // Licensed under the Apache license.
 
+using NPOI.HSSF.UserModel;
 using NPOI.SS.UserModel;
+using NPOI.XSSF.UserModel;
 using System.Data;
 using System.Globalization;
 using WeihanLi.Common;
@@ -999,6 +1001,70 @@ public class ExcelTest
 
         settings.Property(x => x.Name)
             .HasCellReader(null);
+    }
+
+    [Theory]
+    [ExcelFormatData]
+    public void CellTypeTest(ExcelFormat excelFormat)
+    {
+        var workbook = ExcelHelper.PrepareWorkbook(excelFormat);
+        var sheet = workbook.CreateSheet();
+        var headerRow = sheet.CreateRow(0);
+        headerRow.CreateCell(0).SetCellValue("Id");
+        headerRow.CreateCell(1).SetCellValue("1234");
+
+        var dataRow = sheet.CreateRow(1);
+        dataRow.CreateCell(0).SetCellValue(1);
+        dataRow.CreateCell(1).SetCellValue(0.24);
+
+        var cell = dataRow.GetCell(1);
+        cell.CellStyle.DataFormat = HSSFDataFormat.GetBuiltinFormat("0%");
+        Assert.Equal(CellType.Numeric,  cell.CellType);
+        Assert.Equal("24%",  new DataFormatter().FormatCellValue(cell));
+        
+        var excelBytes = workbook.ToExcelBytes();
+
+        var importedWorkbook = ExcelHelper.LoadExcel(excelBytes, excelFormat);
+        var importedSheet = importedWorkbook.GetSheetAt(0);
+        var row1 = importedSheet.GetRow(1);
+        var cell1 = row1.GetCell(1);
+        Assert.Equal(cell.CellStyle.DataFormat, cell1.CellStyle.DataFormat);
+        
+        Assert.Equal(1, row1.GetCell(0).NumericCellValue.To<int>());
+        Assert.Equal("24%", new DataFormatter().FormatCellValue(cell1));
+    }
+    
+    [Theory]
+    [ExcelFormatData]
+    public void HeaderCellTypeTest(ExcelFormat excelFormat)
+    {
+        var workbook = ExcelHelper.PrepareWorkbook(excelFormat);
+        var sheet = workbook.CreateSheet();
+        var headerRow = sheet.CreateRow(0);
+        headerRow.CreateCell(0).SetCellValue("Id");
+        var cell = headerRow.CreateCell(1);
+        cell.SetCellValue(1234);
+        Assert.Equal(CellType.Numeric, cell.CellType);
+
+        var dataRow = sheet.CreateRow(1);
+        dataRow.CreateCell(0).SetCellValue(1);
+        dataRow.CreateCell(1).SetCellValue("1234");
+
+        var excelBytes = workbook.ToExcelBytes();
+        
+        var list = ExcelHelper.ToEntityList<CellFormatTestModel>(excelBytes, excelFormat);
+        Assert.Single(list);
+        Assert.NotNull(list[0]);
+        var entity = Guard.NotNull(list[0]);
+        Assert.Equal(1, entity.Id);
+        Assert.Equal("1234", entity.Name);
+    }
+
+    private sealed class CellFormatTestModel
+    {
+        public int Id { get; set; }
+        [Column("1234")]
+        public string? Name { get; set; }
     }
 
     private sealed record CellReaderTestModel
