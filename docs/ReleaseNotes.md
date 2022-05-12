@@ -1,5 +1,10 @@
 # WeihanLi.Npoi Release Notes
 
+## [2.2.0](https://www.nuget.org/packages/WeihanLi.Npoi/2.2.0)
+
+- Fix exception when read header that cell format is not string, <https://github.com/WeihanLi/WeihanLi.Npoi/pull/140>, great thanks for ensleep's help
+- Fix exception when export excel path without directory info, <https://github.com/WeihanLi/WeihanLi.Npoi/pull/140>, great thanks for ensleep's help
+
 ## [2.1.0](https://www.nuget.org/packages/WeihanLi.Npoi/2.1.0)
 
 - Add `HasCellReader` to support more read flexibility
