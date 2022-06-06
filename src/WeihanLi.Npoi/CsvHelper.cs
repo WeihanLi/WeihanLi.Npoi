@@ -57,7 +57,7 @@ public static class CsvHelper
         {
             return false;
         }
-
+        InternalHelper.EnsureFileIsNotReadOnly(filePath);
         var dir = Path.GetDirectoryName(filePath);
         if (dir.IsNotNullOrEmpty())
         {
@@ -621,6 +621,7 @@ public static class CsvHelper
             return false;
         }
 
+        InternalHelper.EnsureFileIsNotReadOnly(filePath);
         var dir = Path.GetDirectoryName(filePath);
         if (dir.IsNotNullOrEmpty())
         {

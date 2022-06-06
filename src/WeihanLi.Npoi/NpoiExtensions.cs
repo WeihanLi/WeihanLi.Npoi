@@ -1185,7 +1185,7 @@ public static class NpoiExtensions
         {
             throw new ArgumentNullException(nameof(workbook));
         }
-
+        InternalHelper.EnsureFileIsNotReadOnly(filePath);
         var dir = Path.GetDirectoryName(filePath);
         if (!string.IsNullOrWhiteSpace(dir))
         {
