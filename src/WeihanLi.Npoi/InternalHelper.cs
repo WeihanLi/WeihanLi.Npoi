@@ -21,7 +21,7 @@ internal static class InternalHelper
             }
         }
     }
-    
+
     /// <summary>
     ///     Get ExcelConfigurationMapping by type
     /// </summary>
