@@ -1179,7 +1179,7 @@ public static class NpoiExtensions
     /// <param name="workbook">workbook</param>
     /// <param name="filePath">file path</param>
     public static void WriteToFile(this IWorkbook workbook, string filePath) => WriteToFile(workbook, filePath, false);
-    
+
     /// <summary>
     ///     Write workbook to excel file
     /// </summary>
@@ -1206,7 +1206,7 @@ public static class NpoiExtensions
         }
         finally
         {
-            if (closeWorkbook) 
+            if (closeWorkbook)
                 workbook.Close();
         }
     }
@@ -1217,7 +1217,7 @@ public static class NpoiExtensions
     /// <param name="workbook">workbook</param>
     /// <returns>excel bytes</returns>
     public static byte[] ToExcelBytes(this IWorkbook workbook) => ToExcelBytes(workbook, false);
-    
+
     /// <summary>
     ///     ToExcelBytes
     /// </summary>
@@ -1235,7 +1235,7 @@ public static class NpoiExtensions
         }
         finally
         {
-            if(closeWorkbook)
+            if (closeWorkbook)
                 workbook.Close();
         }
     }
