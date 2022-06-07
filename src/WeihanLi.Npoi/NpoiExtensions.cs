@@ -468,7 +468,7 @@ public static class NpoiExtensions
                 excelPath.EndsWith(".xls", StringComparison.OrdinalIgnoreCase)
                     ? ExcelFormat.Xls
                     : ExcelFormat.Xlsx);
-        workbook.WriteToFile(excelPath);
+        workbook.WriteToFile(excelPath, true);
     }
 
     /// <summary>
@@ -499,8 +499,7 @@ public static class NpoiExtensions
 
         var workbook = ExcelHelper.PrepareWorkbook(excelPath, configuration.ExcelSetting);
         workbook.ImportData(entityList, sheetIndex);
-
-        workbook.WriteToFile(excelPath);
+        workbook.WriteToFile(excelPath, true);
     }
 
     /// <summary>
@@ -601,7 +600,7 @@ public static class NpoiExtensions
         var workbook = ExcelHelper.PrepareWorkbook(excelFormat, configuration.ExcelSetting);
         workbook.ImportData(entityList.ToArray(), sheetIndex);
 
-        return workbook.ToExcelBytes();
+        return workbook.ToExcelBytes(true);
     }
 
     /// <summary>
@@ -619,7 +618,7 @@ public static class NpoiExtensions
         }
 
         var workbook = entityList.GetWorkbookWithAutoSplitSheet(excelFormat);
-        return workbook.ToExcelBytes();
+        return workbook.ToExcelBytes(true);
     }
 
     /// <summary>
@@ -788,7 +787,7 @@ public static class NpoiExtensions
         var workbook = dataTable.GetWorkbookWithAutoSplitSheet(
             excelPath.EndsWith(".xls", StringComparison.OrdinalIgnoreCase) ? ExcelFormat.Xls : ExcelFormat.Xlsx,
             excelSetting);
-        workbook.WriteToFile(excelPath);
+        workbook.WriteToFile(excelPath, true);
     }
 
     /// <summary>
@@ -858,7 +857,7 @@ public static class NpoiExtensions
         }
 
         var workbook = dataTable.GetWorkbookWithAutoSplitSheet(excelFormat, excelSetting);
-        return workbook.ToExcelBytes();
+        return workbook.ToExcelBytes(true);
     }
 
     /// <summary>
@@ -1179,24 +1178,37 @@ public static class NpoiExtensions
     /// </summary>
     /// <param name="workbook">workbook</param>
     /// <param name="filePath">file path</param>
-    public static void WriteToFile(this IWorkbook workbook, string filePath)
+    public static void WriteToFile(this IWorkbook workbook, string filePath) => WriteToFile(workbook, filePath, false);
+
+    /// <summary>
+    ///     Write workbook to excel file
+    /// </summary>
+    /// <param name="workbook">workbook</param>
+    /// <param name="filePath">file path</param>
+    /// <param name="closeWorkbook">whether to close the workbook</param>
+    public static void WriteToFile(this IWorkbook workbook, string filePath, bool closeWorkbook)
     {
-        if (workbook is null)
+        Guard.NotNull(workbook);
+        try
         {
-            throw new ArgumentNullException(nameof(workbook));
-        }
-
-        var dir = Path.GetDirectoryName(filePath);
-        if (!string.IsNullOrWhiteSpace(dir))
-        {
-            if (!Directory.Exists(dir))
+            InternalHelper.EnsureFileIsNotReadOnly(filePath);
+            var dir = Path.GetDirectoryName(filePath);
+            if (!string.IsNullOrWhiteSpace(dir))
             {
-                Directory.CreateDirectory(dir);
+                if (!Directory.Exists(dir))
+                {
+                    Directory.CreateDirectory(dir);
+                }
             }
-        }
 
-        using var fileStream = File.Create(filePath);
-        workbook.Write(fileStream);
+            using var fileStream = File.Create(filePath);
+            workbook.Write(fileStream);
+        }
+        finally
+        {
+            if (closeWorkbook)
+                workbook.Close();
+        }
     }
 
     /// <summary>
@@ -1204,16 +1216,28 @@ public static class NpoiExtensions
     /// </summary>
     /// <param name="workbook">workbook</param>
     /// <returns>excel bytes</returns>
-    public static byte[] ToExcelBytes(this IWorkbook workbook)
-    {
-        if (workbook is null)
-        {
-            throw new ArgumentNullException(nameof(workbook));
-        }
+    public static byte[] ToExcelBytes(this IWorkbook workbook) => ToExcelBytes(workbook, false);
 
-        using var ms = new MemoryStream();
-        workbook.Write(ms);
-        return ms.ToArray();
+    /// <summary>
+    ///     ToExcelBytes
+    /// </summary>
+    /// <param name="workbook">workbook</param>
+    /// <returns>excel bytes</returns>
+    /// <param name="closeWorkbook">whether to close the workbook</param>
+    public static byte[] ToExcelBytes(this IWorkbook workbook, bool closeWorkbook)
+    {
+        Guard.NotNull(workbook);
+        try
+        {
+            using var ms = new MemoryStream();
+            workbook.Write(ms);
+            return ms.ToArray();
+        }
+        finally
+        {
+            if (closeWorkbook)
+                workbook.Close();
+        }
     }
 
     #region ExportByTemplate
