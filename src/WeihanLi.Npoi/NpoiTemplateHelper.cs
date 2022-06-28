@@ -182,7 +182,7 @@ internal static class NpoiTemplateHelper
                 }
             }
 
-            sheet.ShiftRows(dataStartRow + dataRowsCount, sheet.LastRowNum, -dataRowsCount);
+            sheet.ShiftRows(dataStartRow + dataRowsCount - 1, sheet.LastRowNum, -dataRowsCount);
         }
 
         return sheet;
