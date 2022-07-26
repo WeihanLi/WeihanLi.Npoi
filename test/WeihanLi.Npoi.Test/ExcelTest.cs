@@ -1143,6 +1143,10 @@ public static class DateTimeUtils
     /// <returns>转换成功返回 true</returns>
     public static bool TransStrToDateTime(string? str, out DateTime dt)
     {
+        dt = default;
+        if (str.IsNullOrEmpty())
+            return false;
+        
         //第一次转换
         if (DateTime.TryParse(str, out dt))
         {
@@ -1201,7 +1205,7 @@ public static class DateTimeUtils
     /// <returns>是日期格式字符串返回 true</returns>
     public static bool IsDateTime(string str)
     {
-        bool isDateTime = false;
+        bool isDateTime;
         // yyyy/MM/dd  - 年月日数字
         if (Regex.IsMatch(str, "^(?<year>\\d{2,4})/(?<month>\\d{1,2})/(?<day>\\d{1,2})$"))
             isDateTime = true;
@@ -1256,9 +1260,8 @@ public static class DateTimeUtils
     /// <returns>数字年份</returns>
     public static int GetYear(string str)
     {
-        int number = 0;
-        string strNumber = "";
-        foreach (char item in str)
+        var strNumber = "";
+        foreach (var item in str)
         {
             switch (item.ToString())
             {
@@ -1298,7 +1301,7 @@ public static class DateTimeUtils
                     break;
             }
         }
-        int.TryParse(strNumber, out number);
+        int.TryParse(strNumber, out var number);
         return number;
     }
     /// <summary>
@@ -1308,8 +1311,7 @@ public static class DateTimeUtils
     /// <returns>数字月份</returns>
     public static int GetMonth(string str)
     {
-        int number = 0;
-        string strNumber = "";
+        var strNumber = "";
         switch (str)
         {
             case "一":
@@ -1350,7 +1352,7 @@ public static class DateTimeUtils
                 strNumber += "12";
                 break;
         }
-        int.TryParse(strNumber, out number);
+        int.TryParse(strNumber, out var number);
         return number;
     }
     #endregion
@@ -1383,22 +1385,22 @@ public static class DateTimeUtils
                 pIntL = pIntM;
             //得到一组四位数
             var four = x.Substring(finger, pIntL);
-            var P_int_l = four.Length;
+            var pIntL1 = four.Length;
             //内层循环在该组中的每一位数上循环
-            for (int j = 0; j < P_int_l; j++)
+            for (var j = 0; j < pIntL1; j++)
             {
                 //处理组中的每一位数加上所在的位
-                int n = Convert.ToInt32(four.Substring(j, 1));
+                var n = Convert.ToInt32(four.Substring(j, 1));
                 if (n == 0)
                 {
-                    if (j < P_int_l - 1 && Convert.ToInt32(four.Substring(j + 1, 1)) > 0 && !pStrReturnValue.EndsWith(pArrayNum[n]))
+                    if (j < pIntL1 - 1 && Convert.ToInt32(four.Substring(j + 1, 1)) > 0 && !pStrReturnValue.EndsWith(pArrayNum[n]))
                         pStrReturnValue += pArrayNum[n];
                 }
                 else
                 {
-                    if (!(n == 1 && (pStrReturnValue.EndsWith(pArrayNum[0]) | pStrReturnValue.Length == 0) && j == P_int_l - 2))
+                    if (!(n == 1 && (pStrReturnValue.EndsWith(pArrayNum[0]) | pStrReturnValue.Length == 0) && j == pIntL1 - 2))
                         pStrReturnValue += pArrayNum[n];
-                    pStrReturnValue += pArrayDigit[P_int_l - j - 1];
+                    pStrReturnValue += pArrayDigit[pIntL1 - j - 1];
                 }
             }
             finger += pIntL;
