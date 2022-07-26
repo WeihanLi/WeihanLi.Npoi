@@ -1146,7 +1146,7 @@ public static class DateTimeUtils
         dt = default;
         if (str.IsNullOrEmpty())
             return false;
-        
+
         //第一次转换
         if (DateTime.TryParse(str, out dt))
         {
