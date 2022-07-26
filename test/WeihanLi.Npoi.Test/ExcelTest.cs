@@ -1068,7 +1068,7 @@ public class ExcelTest
             .Property(x => x.Date)
             .HasColumnInputFormatter(ChineseDateFormatter.FormatInput)
             .HasColumnOutputFormatter(ChineseDateFormatter.FormatOutput);
-        
+
         var model = new[]
         {
             new ChineseDateFormatter.ChineDateTestModel() { Date = DateTime.Parse("2022-01-01") }
@@ -1108,14 +1108,14 @@ public class ExcelTest
 
         public IPictureData Image { get; set; } = null!;
     }
-    
+
     private sealed class ChineseDateFormatter
     {
         public sealed class ChineDateTestModel
         {
             public DateTime Date { get; set; }
         }
-        
+
         public static DateTime FormatInput(string? input)
         {
             if (DateTimeUtils.TransStrToDateTime(input, out var dt))
@@ -1124,7 +1124,7 @@ public class ExcelTest
             }
             throw new ArgumentException("Invalid date input");
         }
-        
+
         public static string FormatOutput(DateTime input)
         {
             return "二〇二二年一月一日";
@@ -1153,13 +1153,13 @@ public static class DateTimeUtils
             return true;
         }
         //第二次转换
-        string[] format = new string[]   
-        {   
+        string[] format = new string[]
+        {
             "yyyyMMdd",
             "yyyyMdHHmmss",
-            "yyyyMMddHHmmss", 
+            "yyyyMMddHHmmss",
             "yyyy-M-d",
-            "yyyy-MM-dd", 
+            "yyyy-MM-dd",
             "yyyy-MM-dd HH:mm:ss",
             "yyyy/M/d",
             "yyyy/MM/dd",
