@@ -5,6 +5,7 @@ using NPOI.HSSF.UserModel;
 using NPOI.SS.UserModel;
 using System.Data;
 using System.Globalization;
+using System.Text.RegularExpressions;
 using WeihanLi.Common;
 using WeihanLi.Common.Models;
 using WeihanLi.Common.Services;
@@ -1059,6 +1060,28 @@ public class ExcelTest
         Assert.Equal("1234", entity.Name);
     }
 
+    [Theory]
+    [ExcelFormatData]
+    public void ChineseDateFormatterTest(ExcelFormat excelFormat)
+    {
+        FluentSettings.For<ChineseDateFormatter.ChineDateTestModel>()
+            .Property(x => x.Date)
+            .HasColumnInputFormatter(ChineseDateFormatter.FormatInput)
+            .HasColumnOutputFormatter(ChineseDateFormatter.FormatOutput);
+        
+        var model = new[]
+        {
+            new ChineseDateFormatter.ChineDateTestModel() { Date = DateTime.Parse("2022-01-01") }
+        };
+        var excelBytes = model.ToExcelBytes(excelFormat);
+        var list = ExcelHelper.ToEntityList<ChineseDateFormatter.ChineDateTestModel>(excelBytes, excelFormat);
+        Assert.Single(list);
+        var item = list[0];
+        Assert.NotNull(item);
+        Guard.NotNull(item);
+        Assert.Equal(DateTime.Parse("2022-01-01"), item.Date);
+    }
+
     private sealed class CellFormatTestModel
     {
         public int Id { get; set; }
@@ -1085,4 +1108,382 @@ public class ExcelTest
 
         public IPictureData Image { get; set; } = null!;
     }
+    
+    private sealed class ChineseDateFormatter
+    {
+        public sealed class ChineDateTestModel
+        {
+            public DateTime Date { get; set; }
+        }
+        
+        public static DateTime FormatInput(string? input)
+        {
+            if (DateTimeUtils.TransStrToDateTime(input, out var dt))
+            {
+                return dt;
+            }
+            throw new ArgumentException("Invalid date input");
+        }
+        
+        public static string FormatOutput(DateTime input)
+        {
+            return "二〇二二年一月一日";
+        }
+    }
+}
+
+// http://luoma.pro/Content/Detail/671?parentId=1
+public static class DateTimeUtils
+{
+    /// <summary>
+    /// 字符串日期转 DateTime  
+    /// </summary>
+    /// <param name="str">字符串日期</param>
+    /// <param name="dt">转换成功赋值</param>
+    /// <returns>转换成功返回 true</returns>
+    public static bool TransStrToDateTime(string? str, out DateTime dt)
+    {
+        //第一次转换
+        if (DateTime.TryParse(str, out dt))
+        {
+            return true;
+        }
+        //第二次转换
+        string[] format = new string[]   
+        {   
+            "yyyyMMdd",
+            "yyyyMdHHmmss",
+            "yyyyMMddHHmmss", 
+            "yyyy-M-d",
+            "yyyy-MM-dd", 
+            "yyyy-MM-dd HH:mm:ss",
+            "yyyy/M/d",
+            "yyyy/MM/dd",
+            "yyyy/MM/dd HH:mm:ss",
+            "yyyy.M.d",
+            "yyyy.MM.dd",
+            "yyyy.MM.dd HH:mm:ss",
+            "yyyy年M月d日",
+            "yyyy年MM月dd日",
+            "yyyy年MM月dd日HH:mm:ss",
+            "yyyy年MM月dd日 HH时mm分ss秒"
+        };
+        if (DateTime.TryParseExact(str, format, CultureInfo.InvariantCulture, DateTimeStyles.None, out dt))
+        {
+            return true;
+        }
+        //第三次转换
+        try
+        {
+            if (Regex.IsMatch(str, "^(零|〇|一|二|三|四|五|六|七|八|九|十){2,4}年((正|一|二|三|四|五|六|七|八|九|十|十一|十二)月((一|二|三|四|五|六|七|八|九|十){1,3}(日)?)?)?$"))
+            {
+                var match = Regex.Match(str, @"^(.+)年(.+)月(.+)日$");
+                if (match.Success)
+                {
+                    int year = GetYear(match.Groups[1].Value);
+                    int month = GetMonth(match.Groups[2].Value);
+                    long dayL = ParseCnToInt(match.Groups[3].Value);
+                    dt = new DateTime(year, month, int.Parse(dayL.ToString()));
+                    return true;
+                }
+            }
+        }
+        catch
+        {
+            return false;
+        }
+        return false;
+    }
+    /// <summary>
+    /// 使用正则表达式判断是否为日期
+    /// </summary>
+    /// <param name="str">日期格式字符串</param>
+    /// <returns>是日期格式字符串返回 true</returns>
+    public static bool IsDateTime(string str)
+    {
+        bool isDateTime = false;
+        // yyyy/MM/dd  - 年月日数字
+        if (Regex.IsMatch(str, "^(?<year>\\d{2,4})/(?<month>\\d{1,2})/(?<day>\\d{1,2})$"))
+            isDateTime = true;
+        // yyyy-MM-dd - 年月日数字  
+        else if (Regex.IsMatch(str, "^(?<year>\\d{2,4})-(?<month>\\d{1,2})-(?<day>\\d{1,2})$"))
+            isDateTime = true;
+        // yyyy.MM.dd - 年月日数字  
+        else if (Regex.IsMatch(str, "^(?<year>\\d{2,4})[.](?<month>\\d{1,2})[.](?<day>\\d{1,2})$"))
+            isDateTime = true;
+        // yyyy年MM月dd日 - 年月日数字  
+        else if (Regex.IsMatch(str, "^((?<year>\\d{2,4})年)?(?<month>\\d{1,2})月((?<day>\\d{1,2})日)?$"))
+            isDateTime = true;
+        // yyyy年MM月dd日  - 年月日中文 
+        else if (Regex.IsMatch(str, "^(零|〇|一|二|三|四|五|六|七|八|九|十){2,4}年((正|一|二|三|四|五|六|七|八|九|十|十一|十二)月((一|二|三|四|五|六|七|八|九|十){1,3}(日)?)?)?$"))
+            isDateTime = true;
+        // yyyy年MM月dd日  - 年(数字)，月(中文)，日(中文)
+        //else if (Regex.IsMatch(str, "^((?<year>\\d{2,4})年)?(正|一|二|三|四|五|六|七|八|九|十|十一|十二)月((一|二|三|四|五|六|七|八|九|十){1,3}日)?$"))
+        //    isDateTime = true;
+        // yyyy年  
+        //else if (Regex.IsMatch(str, "^(?<year>\\d{2,4})年$"))  
+        //    isDateTime = true;  
+        // 农历1  
+        //else if (Regex.IsMatch(str, "^(甲|乙|丙|丁|戊|己|庚|辛|壬|癸)(子|丑|寅|卯|辰|巳|午|未|申|酉|戌|亥)年((正|一|二|三|四|五|六|七|八|九|十|十一|十二)月((一|二|三|四|五|六|七|八|九|十){1,3}(日)?)?)?$"))
+        //    isDateTime = true;
+        //// 农历2  
+        //else if (Regex.IsMatch(str, "^((甲|乙|丙|丁|戊|己|庚|辛|壬|癸)(子|丑|寅|卯|辰|巳|午|未|申|酉|戌|亥)年)?(正|一|二|三|四|五|六|七|八|九|十|十一|十二)月初(一|二|三|四|五|六|七|八|九|十)$"))
+        //    isDateTime = true;
+        //// XX时XX分XX秒  
+        //else if (Regex.IsMatch(str, "^(?<hour>\\d{1,2})(时|点)(?<minute>\\d{1,2})分((?<second>\\d{1,2})秒)?$"))
+        //    isDateTime = true;
+        //// XX时XX分XX秒  
+        //else if (Regex.IsMatch(str, "^((零|一|二|三|四|五|六|七|八|九|十){1,3})(时|点)((零|一|二|三|四|五|六|七|八|九|十){1,3})分(((零|一|二|三|四|五|六|七|八|九|十){1,3})秒)?$"))
+        //    isDateTime = true;
+        //// XX分XX秒  
+        //else if (Regex.IsMatch(str, "^(?<minute>\\d{1,2})分(?<second>\\d{1,2})秒$"))
+        //    isDateTime = true;
+        //// XX分XX秒  
+        //else if (Regex.IsMatch(str, "^((零|一|二|三|四|五|六|七|八|九|十){1,3})分((零|一|二|三|四|五|六|七|八|九|十){1,3})秒$"))
+        //    isDateTime = true;
+        //// XX时  
+        //else if (Regex.IsMatch(str, "\\b(?<hour>\\d{1,2})(时|点钟)\\b"))
+        //    isDateTime = true;
+        else
+            isDateTime = false;
+        return isDateTime;
+    }
+    #region 年月获取
+    /// <summary>
+    /// 获取年份
+    /// </summary>
+    /// <param name="str">年份</param>
+    /// <returns>数字年份</returns>
+    public static int GetYear(string str)
+    {
+        int number = 0;
+        string strNumber = "";
+        foreach (char item in str)
+        {
+            switch (item.ToString())
+            {
+                case "零":
+                case "〇":
+                    strNumber += "0";
+                    break;
+                case "一":
+                    strNumber += "1";
+                    break;
+                case "二":
+                    strNumber += "2";
+                    break;
+                case "三":
+                    strNumber += "3";
+                    break;
+                case "四":
+                    strNumber += "4";
+                    break;
+                case "五":
+                    strNumber += "5";
+                    break;
+                case "六":
+                    strNumber += "6";
+                    break;
+                case "七":
+                    strNumber += "7";
+                    break;
+                case "八":
+                    strNumber += "8";
+                    break;
+                case "九":
+                    strNumber += "9";
+                    break;
+                case "十":
+                    strNumber += "10";
+                    break;
+            }
+        }
+        int.TryParse(strNumber, out number);
+        return number;
+    }
+    /// <summary>
+    ///获取月份
+    /// </summary>
+    /// <param name="str">月份</param>
+    /// <returns>数字月份</returns>
+    public static int GetMonth(string str)
+    {
+        int number = 0;
+        string strNumber = "";
+        switch (str)
+        {
+            case "一":
+            case "正":
+                strNumber += "1";
+                break;
+            case "二":
+                strNumber += "2";
+                break;
+            case "三":
+                strNumber += "3";
+                break;
+            case "四":
+                strNumber += "4";
+                break;
+            case "五":
+                strNumber += "5";
+                break;
+            case "六":
+                strNumber += "6";
+                break;
+            case "七":
+                strNumber += "7";
+                break;
+            case "八":
+                strNumber += "8";
+                break;
+            case "九":
+                strNumber += "9";
+                break;
+            case "十":
+                strNumber += "10";
+                break;
+            case "十一":
+                strNumber += "11";
+                break;
+            case "十二":
+                strNumber += "12";
+                break;
+        }
+        int.TryParse(strNumber, out number);
+        return number;
+    }
+    #endregion
+    #region 中文数字和阿拉伯数字转换
+    /// <summary>
+    /// 阿拉伯数字转换成中文数字
+    /// </summary>
+    /// <param name="x"></param>
+    /// <returns></returns>
+    public static string NumToChinese(string x)
+    {
+        string[] pArrayNum = { "零", "一", "二", "三", "四", "五", "六", "七", "八", "九" };
+        //为数字位数建立一个位数组
+        string[] pArrayDigit = { "", "十", "百", "千" };
+        //为数字单位建立一个单位数组
+        string[] pArrayUnits = { "", "万", "亿", "万亿" };
+        var pStrReturnValue = ""; //返回值
+        var finger = 0; //字符位置指针
+        var pIntM = x.Length % 4; //取模
+        int pIntK;
+        if (pIntM > 0)
+            pIntK = x.Length / 4 + 1;
+        else
+            pIntK = x.Length / 4;
+        //外层循环,四位一组,每组最后加上单位: ",万亿,",",亿,",",万,"
+        for (var i = pIntK; i > 0; i--)
+        {
+            var pIntL = 4;
+            if (i == pIntK && pIntM != 0)
+                pIntL = pIntM;
+            //得到一组四位数
+            var four = x.Substring(finger, pIntL);
+            var P_int_l = four.Length;
+            //内层循环在该组中的每一位数上循环
+            for (int j = 0; j < P_int_l; j++)
+            {
+                //处理组中的每一位数加上所在的位
+                int n = Convert.ToInt32(four.Substring(j, 1));
+                if (n == 0)
+                {
+                    if (j < P_int_l - 1 && Convert.ToInt32(four.Substring(j + 1, 1)) > 0 && !pStrReturnValue.EndsWith(pArrayNum[n]))
+                        pStrReturnValue += pArrayNum[n];
+                }
+                else
+                {
+                    if (!(n == 1 && (pStrReturnValue.EndsWith(pArrayNum[0]) | pStrReturnValue.Length == 0) && j == P_int_l - 2))
+                        pStrReturnValue += pArrayNum[n];
+                    pStrReturnValue += pArrayDigit[P_int_l - j - 1];
+                }
+            }
+            finger += pIntL;
+            //每组最后加上一个单位:",万,",",亿," 等
+            if (i < pIntK) //如果不是最高位的一组
+            {
+                if (Convert.ToInt32(four) != 0)
+                    //如果所有4位不全是0则加上单位",万,",",亿,"等
+                    pStrReturnValue += pArrayUnits[i - 1];
+            }
+            else
+            {
+                //处理最高位的一组,最后必须加上单位
+                pStrReturnValue += pArrayUnits[i - 1];
+            }
+        }
+        return pStrReturnValue;
+    }
+    /// <summary>
+    /// 转换数字
+    /// </summary>
+    public static long CharToNumber(char c)
+    {
+        switch (c)
+        {
+            case '一': return 1;
+            case '二': return 2;
+            case '三': return 3;
+            case '四': return 4;
+            case '五': return 5;
+            case '六': return 6;
+            case '七': return 7;
+            case '八': return 8;
+            case '九': return 9;
+            case '零': return 0;
+            default: return -1;
+        }
+    }
+    /// <summary>
+    /// 转换单位
+    /// </summary>
+    public static long CharToUnit(char c)
+    {
+        switch (c)
+        {
+            case '十': return 10;
+            case '百': return 100;
+            case '千': return 1000;
+            case '万': return 10000;
+            case '亿': return 100000000;
+            default: return 1;
+        }
+    }
+    /// <summary>
+    /// 将中文数字转换阿拉伯数字
+    /// </summary>
+    /// <param name="cnum">汉字数字</param>
+    /// <returns>长整型阿拉伯数字</returns>
+    public static long ParseCnToInt(string cnum)
+    {
+        cnum = Regex.Replace(cnum, "\\s+", "");
+        long firstUnit = 1;//一级单位
+        long secondUnit = 1;//二级单位
+        long result = 0;//结果
+        for (var i = cnum.Length - 1; i > -1; --i)//从低到高位依次处理
+        {
+            var tmpUnit = CharToUnit(cnum[i]);//临时单位变量
+            if (tmpUnit > firstUnit)//判断此位是数字还是单位
+            {
+                firstUnit = tmpUnit;//是的话就赋值,以备下次循环使用
+                secondUnit = 1;
+                if (i == 0)//处理如果是"十","十一"这样的开头的
+                {
+                    result += firstUnit * secondUnit;
+                }
+                continue;//结束本次循环
+            }
+            if (tmpUnit > secondUnit)
+            {
+                secondUnit = tmpUnit;
+                continue;
+            }
+            result += firstUnit * secondUnit * CharToNumber(cnum[i]);//如果是数字,则和单位想乘然后存到结果里
+        }
+        return result;
+    }
+    #endregion
 }
