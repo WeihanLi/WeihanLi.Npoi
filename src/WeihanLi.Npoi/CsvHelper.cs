@@ -57,7 +57,7 @@ public static class CsvHelper
         {
             return false;
         }
-
+        InternalHelper.EnsureFileIsNotReadOnly(filePath);
         var dir = Path.GetDirectoryName(filePath);
         if (dir.IsNotNullOrEmpty())
         {
@@ -260,7 +260,7 @@ public static class CsvHelper
         Guard.NotNull(csvStream);
         csvStream.Seek(0, SeekOrigin.Begin);
 
-        using var reader = new StreamReader(csvStream);
+        using var reader = new StreamReader(csvStream, csvOptions.Encoding);
         var lines = new List<string>();
 
         while (true)
@@ -285,7 +285,7 @@ public static class CsvHelper
         IEnumerable<string> GetLines()
         {
             csvStream.Seek(0, SeekOrigin.Begin);
-            using var reader = new StreamReader(csvStream);
+            using var reader = new StreamReader(csvStream, csvOptions?.Encoding ?? Encoding.UTF8);
             while (true)
             {
                 var strLine = reader.ReadLine();
@@ -621,6 +621,7 @@ public static class CsvHelper
             return false;
         }
 
+        InternalHelper.EnsureFileIsNotReadOnly(filePath);
         var dir = Path.GetDirectoryName(filePath);
         if (dir.IsNotNullOrEmpty())
         {
@@ -650,7 +651,7 @@ public static class CsvHelper
     ///     to csv bytes
     /// </summary>
     public static byte[] ToCsvBytes<TEntity>(this IEnumerable<TEntity> entities, CsvOptions csvOptions) =>
-        GetCsvText(entities, csvOptions).GetBytes();
+        GetCsvText(entities, csvOptions).GetBytes(csvOptions.Encoding);
 
     /// <summary>
     ///     Get csv text
@@ -804,7 +805,7 @@ public static class CsvHelper
                 }
 
                 // https://stackoverflow.com/questions/4617935/is-there-a-way-to-include-commas-in-csv-columns-without-breaking-the-formatting
-                var val = dataTable.Rows[i][j]?.ToString()?.Replace(csvOptions.QuoteString, $"{csvOptions.QuoteString}{csvOptions.QuoteString}");
+                var val = dataTable.Rows[i][j].ToString()?.Replace(csvOptions.QuoteString, $"{csvOptions.QuoteString}{csvOptions.QuoteString}");
                 if (val is { Length: > 0 })
                 {
                     data.Append(val.IndexOf(csvOptions.SeparatorCharacter) > -1 ? $"{csvOptions.QuoteString}{val}{csvOptions.QuoteString}" : val);

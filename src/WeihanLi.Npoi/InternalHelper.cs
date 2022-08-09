@@ -10,6 +10,18 @@ namespace WeihanLi.Npoi;
 
 internal static class InternalHelper
 {
+    public static void EnsureFileIsNotReadOnly(string filePath)
+    {
+        if (File.Exists(filePath))
+        {
+            var attributes = File.GetAttributes(filePath);
+            if ((attributes & FileAttributes.ReadOnly) != 0)
+            {
+                throw new InvalidOperationException($"The file({filePath}) is read-only");
+            }
+        }
+    }
+
     /// <summary>
     ///     Get ExcelConfigurationMapping by type
     /// </summary>
