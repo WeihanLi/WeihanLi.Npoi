@@ -2,7 +2,6 @@
 // Licensed under the Apache license.
 
 using System.Data;
-using System.Runtime.InteropServices;
 using System.Text;
 using WeihanLi.Extensions;
 using WeihanLi.Npoi.Configurations;
@@ -17,7 +16,7 @@ public class CsvTest
     {
         Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
     }
-    
+
     [Fact]
     public void BasicImportExportTest()
     {
@@ -417,8 +416,8 @@ public class CsvTest
     [Fact]
     public void CsvToListEncodingTest()
     {
-        var list = new List<TestModel>() 
-        { 
+        var list = new List<TestModel>()
+        {
             new()
             {
                 Age = 1,
@@ -437,12 +436,12 @@ public class CsvTest
             Assert.Equal(list[i], importedList[i]);
         }
     }
-    
+
     [Fact]
     public void CsvToDataTableEncodingTest()
     {
-        var list = new List<TestModel>() 
-        { 
+        var list = new List<TestModel>()
+        {
             new()
             {
                 Age = 1,
@@ -461,12 +460,12 @@ public class CsvTest
             Assert.Equal(list[i].Name, dataTable.Rows[i]["Name"]);
         }
     }
-    
+
     [Fact]
     public void CsvToListEncodingTest_NotTheSameEncoding()
     {
-        var list = new List<TestModel>() 
-        { 
+        var list = new List<TestModel>()
+        {
             new()
             {
                 Age = 1,
@@ -498,7 +497,7 @@ public class CsvTest
 
         return str;
     }
-    
+
     private sealed record TestModel
     {
         public string Name { get; set; } = string.Empty;
