@@ -2,6 +2,7 @@
 // Licensed under the Apache license.
 
 using System.Data;
+using System.Text;
 using WeihanLi.Extensions;
 using WeihanLi.Npoi.Configurations;
 using WeihanLi.Npoi.Test.Models;
@@ -11,6 +12,11 @@ namespace WeihanLi.Npoi.Test;
 
 public class CsvTest
 {
+    public CsvTest()
+    {
+        Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+    }
+
     [Fact]
     public void BasicImportExportTest()
     {
@@ -407,6 +413,75 @@ public class CsvTest
         Assert.Equal(text, text2.Replace('\t', ','));
     }
 
+    [Fact]
+    public void CsvToListEncodingTest()
+    {
+        var list = new List<TestModel>()
+        {
+            new()
+            {
+                Age = 1,
+                Name = "中华小当家"
+            }
+        };
+        var encoding = Encoding.GetEncoding("gb2312");
+        var bytes = list.ToCsvBytes(new CsvOptions() { Encoding = encoding });
+        var importedList = CsvHelper.ToEntityList<TestModel>(bytes, new CsvOptions()
+        {
+            Encoding = encoding
+        });
+        Assert.Equal(list.Count, importedList.Count);
+        for (var i = 0; i < list.Count; i++)
+        {
+            Assert.Equal(list[i], importedList[i]);
+        }
+    }
+
+    [Fact]
+    public void CsvToDataTableEncodingTest()
+    {
+        var list = new List<TestModel>()
+        {
+            new()
+            {
+                Age = 1,
+                Name = "中华小当家"
+            }
+        };
+        var encoding = Encoding.GetEncoding("gb2312");
+        var bytes = list.ToCsvBytes(new CsvOptions() { Encoding = encoding });
+        var dataTable = CsvHelper.ToDataTable(bytes, new CsvOptions()
+        {
+            Encoding = encoding
+        });
+        Assert.Equal(list.Count, dataTable.Rows.Count);
+        for (var i = 0; i < list.Count; i++)
+        {
+            Assert.Equal(list[i].Name, dataTable.Rows[i]["Name"]);
+        }
+    }
+
+    [Fact]
+    public void CsvToListEncodingTest_NotTheSameEncoding()
+    {
+        var list = new List<TestModel>()
+        {
+            new()
+            {
+                Age = 1,
+                Name = "中华小当家"
+            }
+        };
+        var encoding = Encoding.GetEncoding("gb2312");
+        var bytes = list.ToCsvBytes(new CsvOptions() { Encoding = encoding });
+        var importedList = CsvHelper.ToEntityList<TestModel>(bytes);
+        Assert.Equal(list.Count, importedList.Count);
+        for (var i = 0; i < list.Count; i++)
+        {
+            Assert.NotEqual(list[i], importedList[i]);
+        }
+    }
+
     private static string TrimQuotes(string? str)
     {
         if (string.IsNullOrEmpty(str))
@@ -421,5 +496,11 @@ public class CsvTest
         }
 
         return str;
+    }
+
+    private sealed record TestModel
+    {
+        public string Name { get; set; } = string.Empty;
+        public int Age { get; set; }
     }
 }

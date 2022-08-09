@@ -1,5 +1,9 @@
 # WeihanLi.Npoi Release Notes
 
+## [2.4.0](https://www.nuget.org/packages/WeihanLi.Npoi/2.4.0)
+
+- Fixes <https://github.com/WeihanLi/WeihanLi.Npoi/issues/146>, fix csv encoding handling issue, thanks @yesyeey for spotting the issue
+
 ## [2.3.0](https://www.nuget.org/packages/WeihanLi.Npoi/2.3.0)
 
 - Add check before `WriteToFile`
