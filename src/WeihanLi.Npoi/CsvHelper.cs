@@ -203,7 +203,8 @@ public static class CsvHelper
             throw new ArgumentException(Resource.FileNotFound, nameof(filePath));
         }
 
-        return GetEntityList<TEntity>(File.ReadAllLines(filePath), csvOptions);
+        using var fs = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+        return ToEntityList<TEntity>(fs, csvOptions);
     }
 
     /// <summary>
