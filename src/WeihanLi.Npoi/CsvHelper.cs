@@ -174,7 +174,6 @@ public static class CsvHelper
         {
             throw new ArgumentNullException(nameof(filePath));
         }
-
         if (!File.Exists(filePath))
         {
             throw new ArgumentException(Resource.FileNotFound, nameof(filePath));
@@ -204,7 +203,8 @@ public static class CsvHelper
             throw new ArgumentException(Resource.FileNotFound, nameof(filePath));
         }
 
-        return GetEntityList<TEntity>(File.ReadAllLines(filePath), csvOptions);
+        using var fs = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+        return ToEntityList<TEntity>(fs, csvOptions);
     }
 
     /// <summary>
@@ -219,7 +219,12 @@ public static class CsvHelper
         {
             throw new ArgumentException(Resource.FileNotFound, nameof(filePath));
         }
-        return GetEntities<TEntity>(File.ReadAllLines(filePath), csvOptions);
+        using var fs = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+        // https://stackoverflow.com/questions/1539114/yield-return-statement-inside-a-using-block-disposes-before-executing
+        foreach (var entity in ToEntities<TEntity>(fs, csvOptions))
+        {
+            yield return entity;
+        }
     }
 
     /// <summary>
@@ -245,7 +250,10 @@ public static class CsvHelper
     {
         Guard.NotNull(csvBytes);
         using var ms = new MemoryStream(csvBytes);
-        return ToEntities<TEntity>(ms, csvOptions);
+        foreach (var entity in ToEntities<TEntity>(ms, csvOptions))
+        {
+            yield return entity;
+        }
     }
 
     /// <summary>
@@ -258,21 +266,7 @@ public static class CsvHelper
     public static List<TEntity?> ToEntityList<TEntity>(Stream csvStream, CsvOptions csvOptions)
     {
         Guard.NotNull(csvStream);
-        csvStream.Seek(0, SeekOrigin.Begin);
-
-        using var reader = new StreamReader(csvStream, csvOptions.Encoding);
-        var lines = new List<string>();
-
-        while (true)
-        {
-            var strLine = reader.ReadLine();
-            if (strLine.IsNullOrEmpty())
-                break;
-
-            lines.Add(strLine);
-        }
-
-        return GetEntityList<TEntity>(lines, csvOptions);
+        return ToEntities<TEntity>(csvStream, csvOptions).ToList();
     }
 
     public static IEnumerable<TEntity?> ToEntities<TEntity>(Stream csvStream, CsvOptions? csvOptions = null)
@@ -280,7 +274,10 @@ public static class CsvHelper
         Guard.NotNull(csvStream);
 
         var lines = GetLines();
-        return GetEntityList<TEntity>(lines, csvOptions);
+        foreach (var entity in GetEntities<TEntity>(lines, csvOptions))
+        {
+            yield return entity;
+        }
 
         IEnumerable<string> GetLines()
         {
@@ -298,22 +295,29 @@ public static class CsvHelper
     }
 
     public static List<TEntity?> GetEntityList<TEntity>(string csvText, CsvOptions? csvOptions = null)
+        => GetEntities<TEntity>(csvText, csvOptions).ToList();
+
+    public static IEnumerable<TEntity?> GetEntities<TEntity>(string csvText, CsvOptions? csvOptions = null)
     {
         Guard.NotNull(csvText);
-
-        using var reader = new StringReader(csvText);
-        var lines = new List<string>();
-
-        while (true)
+        var lines = GetLines();
+        foreach (var entity in GetEntities<TEntity>(lines, csvOptions))
         {
-            var strLine = reader.ReadLine();
-            if (strLine.IsNullOrEmpty())
-                break;
-
-            lines.Add(strLine);
+            yield return entity;
         }
 
-        return GetEntityList<TEntity>(lines, csvOptions);
+        IEnumerable<string> GetLines()
+        {
+            using var reader = new StringReader(csvText);
+            while (true)
+            {
+                var strLine = reader.ReadLine();
+                if (strLine.IsNullOrEmpty())
+                    yield break;
+
+                yield return strLine;
+            }
+        }
     }
 
     public static List<TEntity?> GetEntityList<TEntity>(IEnumerable<string> csvLines, CsvOptions? csvOptions = null)
