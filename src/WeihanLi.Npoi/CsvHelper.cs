@@ -174,7 +174,6 @@ public static class CsvHelper
         {
             throw new ArgumentNullException(nameof(filePath));
         }
-
         if (!File.Exists(filePath))
         {
             throw new ArgumentException(Resource.FileNotFound, nameof(filePath));
@@ -219,7 +218,8 @@ public static class CsvHelper
         {
             throw new ArgumentException(Resource.FileNotFound, nameof(filePath));
         }
-        return GetEntities<TEntity>(File.ReadAllLines(filePath), csvOptions);
+        using var fs = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+        return ToEntities<TEntity>(fs, csvOptions);
     }
 
     /// <summary>
@@ -300,20 +300,21 @@ public static class CsvHelper
     public static List<TEntity?> GetEntityList<TEntity>(string csvText, CsvOptions? csvOptions = null)
     {
         Guard.NotNull(csvText);
-
-        using var reader = new StringReader(csvText);
-        var lines = new List<string>();
-
-        while (true)
-        {
-            var strLine = reader.ReadLine();
-            if (strLine.IsNullOrEmpty())
-                break;
-
-            lines.Add(strLine);
-        }
-
+        var lines = GetLines();
         return GetEntityList<TEntity>(lines, csvOptions);
+
+        IEnumerable<string> GetLines()
+        {
+            using var reader = new StringReader(csvText);
+            while (true)
+            {
+                var strLine = reader.ReadLine();
+                if (strLine.IsNullOrEmpty())
+                    yield break;
+
+                yield return strLine;
+            }
+        }
     }
 
     public static List<TEntity?> GetEntityList<TEntity>(IEnumerable<string> csvLines, CsvOptions? csvOptions = null)
