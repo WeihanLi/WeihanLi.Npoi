@@ -174,7 +174,6 @@ public static class CsvHelper
         {
             throw new ArgumentNullException(nameof(filePath));
         }
-
         if (!File.Exists(filePath))
         {
             throw new ArgumentException(Resource.FileNotFound, nameof(filePath));
@@ -204,7 +203,8 @@ public static class CsvHelper
             throw new ArgumentException(Resource.FileNotFound, nameof(filePath));
         }
 
-        return GetEntityList<TEntity>(File.ReadAllLines(filePath), csvOptions);
+        using var fs = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+        return ToEntityList<TEntity>(fs, csvOptions);
     }
 
     /// <summary>
@@ -219,7 +219,8 @@ public static class CsvHelper
         {
             throw new ArgumentException(Resource.FileNotFound, nameof(filePath));
         }
-        return GetEntities<TEntity>(File.ReadAllLines(filePath), csvOptions);
+        using var fs = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+        return ToEntities<TEntity>(fs, csvOptions);
     }
 
     /// <summary>
@@ -280,7 +281,7 @@ public static class CsvHelper
         Guard.NotNull(csvStream);
 
         var lines = GetLines();
-        return GetEntityList<TEntity>(lines, csvOptions);
+        return GetEntities<TEntity>(lines, csvOptions);
 
         IEnumerable<string> GetLines()
         {
@@ -298,22 +299,26 @@ public static class CsvHelper
     }
 
     public static List<TEntity?> GetEntityList<TEntity>(string csvText, CsvOptions? csvOptions = null)
+        => GetEntities<TEntity>(csvText, csvOptions).ToList();
+
+    public static IEnumerable<TEntity?> GetEntities<TEntity>(string csvText, CsvOptions? csvOptions = null)
     {
         Guard.NotNull(csvText);
+        var lines = GetLines();
+        return GetEntities<TEntity>(lines, csvOptions);
 
-        using var reader = new StringReader(csvText);
-        var lines = new List<string>();
-
-        while (true)
+        IEnumerable<string> GetLines()
         {
-            var strLine = reader.ReadLine();
-            if (strLine.IsNullOrEmpty())
-                break;
+            using var reader = new StringReader(csvText);
+            while (true)
+            {
+                var strLine = reader.ReadLine();
+                if (strLine.IsNullOrEmpty())
+                    yield break;
 
-            lines.Add(strLine);
+                yield return strLine;
+            }
         }
-
-        return GetEntityList<TEntity>(lines, csvOptions);
     }
 
     public static List<TEntity?> GetEntityList<TEntity>(IEnumerable<string> csvLines, CsvOptions? csvOptions = null)
