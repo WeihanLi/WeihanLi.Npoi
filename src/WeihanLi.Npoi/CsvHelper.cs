@@ -220,7 +220,11 @@ public static class CsvHelper
             throw new ArgumentException(Resource.FileNotFound, nameof(filePath));
         }
         using var fs = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
-        return ToEntities<TEntity>(fs, csvOptions);
+        // https://stackoverflow.com/questions/1539114/yield-return-statement-inside-a-using-block-disposes-before-executing
+        foreach (var entity in ToEntities<TEntity>(fs, csvOptions))
+        {
+            yield return entity;
+        }
     }
 
     /// <summary>
@@ -246,7 +250,10 @@ public static class CsvHelper
     {
         Guard.NotNull(csvBytes);
         using var ms = new MemoryStream(csvBytes);
-        return ToEntities<TEntity>(ms, csvOptions);
+        foreach (var entity in ToEntities<TEntity>(ms, csvOptions))
+        {
+            yield return entity;
+        }
     }
 
     /// <summary>
@@ -259,21 +266,7 @@ public static class CsvHelper
     public static List<TEntity?> ToEntityList<TEntity>(Stream csvStream, CsvOptions csvOptions)
     {
         Guard.NotNull(csvStream);
-        csvStream.Seek(0, SeekOrigin.Begin);
-
-        using var reader = new StreamReader(csvStream, csvOptions.Encoding);
-        var lines = new List<string>();
-
-        while (true)
-        {
-            var strLine = reader.ReadLine();
-            if (strLine.IsNullOrEmpty())
-                break;
-
-            lines.Add(strLine);
-        }
-
-        return GetEntityList<TEntity>(lines, csvOptions);
+        return ToEntities<TEntity>(csvStream, csvOptions).ToList();
     }
 
     public static IEnumerable<TEntity?> ToEntities<TEntity>(Stream csvStream, CsvOptions? csvOptions = null)
@@ -281,7 +274,10 @@ public static class CsvHelper
         Guard.NotNull(csvStream);
 
         var lines = GetLines();
-        return GetEntities<TEntity>(lines, csvOptions);
+        foreach (var entity in GetEntities<TEntity>(lines, csvOptions))
+        {
+            yield return entity;
+        }
 
         IEnumerable<string> GetLines()
         {
@@ -305,7 +301,10 @@ public static class CsvHelper
     {
         Guard.NotNull(csvText);
         var lines = GetLines();
-        return GetEntities<TEntity>(lines, csvOptions);
+        foreach (var entity in GetEntities<TEntity>(lines, csvOptions))
+        {
+            yield return entity;
+        }
 
         IEnumerable<string> GetLines()
         {
