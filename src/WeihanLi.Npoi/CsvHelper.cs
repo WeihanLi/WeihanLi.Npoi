@@ -281,7 +281,7 @@ public static class CsvHelper
         Guard.NotNull(csvStream);
 
         var lines = GetLines();
-        return GetEntityList<TEntity>(lines, csvOptions);
+        return GetEntities<TEntity>(lines, csvOptions);
 
         IEnumerable<string> GetLines()
         {
@@ -299,10 +299,13 @@ public static class CsvHelper
     }
 
     public static List<TEntity?> GetEntityList<TEntity>(string csvText, CsvOptions? csvOptions = null)
+        => GetEntities<TEntity>(csvText, csvOptions).ToList();
+
+    public static IEnumerable<TEntity?> GetEntities<TEntity>(string csvText, CsvOptions? csvOptions = null)
     {
         Guard.NotNull(csvText);
         var lines = GetLines();
-        return GetEntityList<TEntity>(lines, csvOptions);
+        return GetEntities<TEntity>(lines, csvOptions);
 
         IEnumerable<string> GetLines()
         {
