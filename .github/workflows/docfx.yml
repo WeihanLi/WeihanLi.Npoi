@@ -19,10 +19,9 @@ jobs:
       - name: Setup .NET SDK
         uses: actions/setup-dotnet@v1
         with:
-          dotnet-version: '6.0.x'
-          include-prerelease: true
+          dotnet-version: '8.0.x'
       - name: install DocFX
-        run: "& choco install docfx -y"
+        run: "dotnet tool install -g docfx"
       # Run a build
       - name: Build docs
         run: "& docfx ./docfx.json"
