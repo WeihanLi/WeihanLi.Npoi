@@ -32,6 +32,7 @@ public class CsvTest
                 Publisher = $"publisher_{i}"
             });
         }
+
         list.Add(new Notice()
         {
             Id = 11,
@@ -53,7 +54,7 @@ public class CsvTest
                 Assert.Equal(list[i].Title ?? "", item.Title);
                 Assert.Equal(list[i].Content ?? "", item.Content);
                 Assert.Equal(list[i].Publisher ?? "", item.Publisher);
-                Assert.Equal(list[i].PublishedAt.ToStandardTimeString(), item.PublishedAt.ToStandardTimeString());
+                Assert.Equal(list[i].PublishedAt.ToTimeString(), item.PublishedAt.ToTimeString());
             }
         }
     }
@@ -90,7 +91,7 @@ public class CsvTest
                 Assert.Equal(list[i].Title ?? "", item.Title);
                 Assert.Equal(list[i].Content ?? "", item.Content);
                 Assert.Equal(list[i].Publisher ?? "", item.Publisher);
-                Assert.Equal(list[i].PublishedAt.ToStandardTimeString(), item.PublishedAt.ToStandardTimeString());
+                Assert.Equal(list[i].PublishedAt.ToTimeString(), item.PublishedAt.ToTimeString());
             }
 
             noticeSetting.Property(_ => _.Publisher)
@@ -104,18 +105,14 @@ public class CsvTest
     public void DataTableImportExportTest()
     {
         var dt = new DataTable();
-        dt.Columns.AddRange(new[]
-        {
-                new DataColumn("Name"),
-                new DataColumn("Age"),
-                new DataColumn("Desc"),
-            });
+        dt.Columns.AddRange(new[] { new DataColumn("Name"), new DataColumn("Age"), new DataColumn("Desc"), });
         for (var i = 0; i < 10; i++)
         {
             var row = dt.NewRow();
             row.ItemArray = new object[] { $"Test_{i}", i + 10, $"Desc_{i}" };
             dt.Rows.Add(row);
         }
+
         //
         var csvBytes = dt.ToCsvBytes();
         var importedData = CsvHelper.ToDataTable(csvBytes);
@@ -140,11 +137,8 @@ public class CsvTest
         var dt = new DataTable();
         dt.Columns.AddRange(new[]
         {
-                new DataColumn("A"),
-                new DataColumn("B"),
-                new DataColumn("C"),
-                new DataColumn("D"),
-            });
+            new DataColumn("A"), new DataColumn("B"), new DataColumn("C"), new DataColumn("D"),
+        });
 
         var row = dt.NewRow();
         row.ItemArray = new object[] { "", "", "3", "4" };
@@ -188,11 +182,8 @@ public class CsvTest
         var dt = new DataTable();
         dt.Columns.AddRange(new[]
         {
-                new DataColumn("A"),
-                new DataColumn("1000"),
-                new DataColumn("TRUE"),
-                new DataColumn("15/08/2021")
-            });
+            new DataColumn("A"), new DataColumn("1000"), new DataColumn("TRUE"), new DataColumn("15/08/2021")
+        });
 
         var row = dt.NewRow();
         row.ItemArray = new object[] { "1", "2", "3", "4" };
@@ -264,10 +255,7 @@ public class CsvTest
     public void GetCsvLines_BasicType(bool includeHeader)
     {
         var option = new CsvOptions() { IncludeHeader = includeHeader };
-        var list = new List<int>()
-        {
-            1,2,3
-        };
+        var list = new List<int>() { 1, 2, 3 };
         var lines = list.GetCsvLines(option).ToArray();
         Assert.Equal(includeHeader ? list.Count + 1 : list.Count, lines.Length);
         var importedList = CsvHelper.GetEntityList<int>(lines, option);
@@ -282,24 +270,13 @@ public class CsvTest
     [Theory]
     [InlineData("test.csv")]
     [InlineData("/tmp/test.csv")]
-    public void CsvFileTest(string csvPath)
+    public async Task CsvFileTest(string csvPath)
     {
-        var list = new List<Job>()
-        {
-            new Job()
-            {
-                Id = 1,
-                Name = "123"
-            },
-            new Job()
-            {
-                Id = 2,
-                Name = "234"
-            }
-        };
+        var list = new List<Job>() { new Job() { Id = 1, Name = "123" }, new Job() { Id = 2, Name = "234" } };
         Assert.True(list.ToCsvFile(csvPath));
+
 #if NET6_0
-        list.ToCsvFileAsync(csvPath).Wait();
+        await list.ToCsvFileAsync(csvPath);
 #endif
         var importedList = CsvHelper.ToEntityList<Job>(csvPath);
         Assert.Equal(list.Count, importedList.Count);
@@ -307,7 +284,10 @@ public class CsvTest
         {
             Assert.Equal(list[i], importedList[i]);
         }
+
         File.Delete(csvPath);
+
+        await Task.CompletedTask;
     }
 
     [Theory]
@@ -317,19 +297,7 @@ public class CsvTest
     {
         var option = new CsvOptions() { IncludeHeader = includeHeader };
 
-        var list = new List<Job>()
-        {
-            new()
-            {
-                Id = 1,
-                Name = "123"
-            },
-            new()
-            {
-                Id = 2,
-                Name = "234"
-            }
-        };
+        var list = new List<Job>() { new() { Id = 1, Name = "123" }, new() { Id = 2, Name = "234" } };
         var lines = list.GetCsvLines(option).ToArray();
         Assert.Equal(includeHeader ? list.Count + 1 : list.Count, lines.Length);
         var importedList = CsvHelper.GetEntityList<Job>(lines, option);
@@ -344,11 +312,7 @@ public class CsvTest
     public void GetCsvTextTest_Entity()
     {
         var list = Enumerable.Range(1, 5)
-            .Select(i => new Job()
-            {
-                Id = i + 1,
-                Name = "test"
-            }).ToArray();
+            .Select(i => new Job() { Id = i + 1, Name = "test" }).ToArray();
         var csvText = list.GetCsvText();
         var bytes = csvText.GetBytes();
 
@@ -405,10 +369,7 @@ public class CsvTest
             }
         };
         var text = list.GetCsvText();
-        var text2 = list.GetCsvText(new CsvOptions()
-        {
-            SeparatorCharacter = '\t'
-        });
+        var text2 = list.GetCsvText(new CsvOptions() { SeparatorCharacter = '\t' });
         Assert.NotEqual(text, text2);
         Assert.Equal(text, text2.Replace('\t', ','));
     }
@@ -416,20 +377,10 @@ public class CsvTest
     [Fact]
     public void CsvToListEncodingTest()
     {
-        var list = new List<TestModel>()
-        {
-            new()
-            {
-                Age = 1,
-                Name = "中华小当家"
-            }
-        };
+        var list = new List<TestModel>() { new() { Age = 1, Name = "中华小当家" } };
         var encoding = Encoding.GetEncoding("gb2312");
         var bytes = list.ToCsvBytes(new CsvOptions() { Encoding = encoding });
-        var importedList = CsvHelper.ToEntityList<TestModel>(bytes, new CsvOptions()
-        {
-            Encoding = encoding
-        });
+        var importedList = CsvHelper.ToEntityList<TestModel>(bytes, new CsvOptions() { Encoding = encoding });
         Assert.Equal(list.Count, importedList.Count);
         for (var i = 0; i < list.Count; i++)
         {
@@ -440,20 +391,10 @@ public class CsvTest
     [Fact]
     public void CsvToDataTableEncodingTest()
     {
-        var list = new List<TestModel>()
-        {
-            new()
-            {
-                Age = 1,
-                Name = "中华小当家"
-            }
-        };
+        var list = new List<TestModel>() { new() { Age = 1, Name = "中华小当家" } };
         var encoding = Encoding.GetEncoding("gb2312");
         var bytes = list.ToCsvBytes(new CsvOptions() { Encoding = encoding });
-        var dataTable = CsvHelper.ToDataTable(bytes, new CsvOptions()
-        {
-            Encoding = encoding
-        });
+        var dataTable = CsvHelper.ToDataTable(bytes, new CsvOptions() { Encoding = encoding });
         Assert.Equal(list.Count, dataTable.Rows.Count);
         for (var i = 0; i < list.Count; i++)
         {
@@ -464,14 +405,7 @@ public class CsvTest
     [Fact]
     public void CsvToListEncodingTest_NotTheSameEncoding()
     {
-        var list = new List<TestModel>()
-        {
-            new()
-            {
-                Age = 1,
-                Name = "中华小当家"
-            }
-        };
+        var list = new List<TestModel>() { new() { Age = 1, Name = "中华小当家" } };
         var encoding = Encoding.GetEncoding("gb2312");
         var bytes = list.ToCsvBytes(new CsvOptions() { Encoding = encoding });
         var importedList = CsvHelper.ToEntityList<TestModel>(bytes);

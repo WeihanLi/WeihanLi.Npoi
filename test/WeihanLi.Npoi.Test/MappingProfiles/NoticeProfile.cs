@@ -30,6 +30,6 @@ public sealed class NoticeProfile : IMappingProfile<Notice>
             .HasColumnIndex(3);
         noticeSetting.Property(_ => _.PublishedAt)
             .HasColumnIndex(4)
-            .HasColumnOutputFormatter(x => x.ToStandardTimeString());
+            .HasColumnOutputFormatter(x => x.ToTimeString());
     }
 }

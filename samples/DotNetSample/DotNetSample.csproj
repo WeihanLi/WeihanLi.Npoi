@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <RootNamespace>DotNetSample</RootNamespace>
@@ -6,7 +6,7 @@
     <TargetFramework>net461</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="EPPlus.Core.Extensions" Version="2.3.2" />
+    <PackageReference Include="EPPlus.Core.Extensions" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\WeihanLi.Npoi\WeihanLi.Npoi.csproj">
