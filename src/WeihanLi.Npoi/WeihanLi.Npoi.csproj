@@ -1,9 +1,9 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <Import Project="../../build/common.props" />
 
   <ItemGroup>
-    <PackageReference Include="NPOI" Version="2.4.1" />
-    <PackageReference Include="WeihanLi.Common" Version="1.0.67" />
+    <PackageReference Include="NPOI" />
+    <PackageReference Include="WeihanLi.Common" />
   </ItemGroup>
   <ItemGroup>
     <Compile Update="Resource.Designer.cs">
