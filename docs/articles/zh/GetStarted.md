@@ -68,7 +68,7 @@ public void BasicImportExportTest(ExcelFormat excelFormat)
             Assert.Equal(list[i].Title, importedList[i].Title);
             Assert.Equal(list[i].Content, importedList[i].Content);
             Assert.Equal(list[i].Publisher, importedList[i].Publisher);
-            Assert.Equal(list[i].PublishedAt.ToStandardTimeString(), importedList[i].PublishedAt.ToStandardTimeString());
+            Assert.Equal(list[i].PublishedAt.ToTimeString(), importedList[i].PublishedAt.ToTimeString());
         }
     }
 }
@@ -139,7 +139,7 @@ public void BasicImportExportTest()
         Assert.Equal(list[i].Title ?? "", importedList[i].Title);
         Assert.Equal(list[i].Content ?? "", importedList[i].Content);
         Assert.Equal(list[i].Publisher ?? "", importedList[i].Publisher);
-        Assert.Equal(list[i].PublishedAt.ToStandardTimeString(), importedList[i].PublishedAt.ToStandardTimeString());
+        Assert.Equal(list[i].PublishedAt.ToTimeString(), importedList[i].PublishedAt.ToTimeString());
     }
 }
 // DataTable csv import/export

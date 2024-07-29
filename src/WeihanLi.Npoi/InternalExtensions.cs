@@ -23,36 +23,7 @@ internal static class InternalExtensions
     /// <returns></returns>
     public static IDictionary<string, object?> ParseParamInfo(this object? paramInfo)
     {
-        var paramDic = new Dictionary<string, object?>();
-        if (paramInfo is null)
-        {
-            return paramDic;
-        }
-
-        if (paramInfo.IsValueTuple()) // Tuple
-        {
-            var fields = paramInfo.GetFields();
-            foreach (var field in fields)
-            {
-                paramDic[field.Name] = field.GetValue(paramInfo);
-            }
-        }
-        else if (paramInfo is IDictionary<string, object?> paramDictionary)
-        {
-            return paramDictionary;
-        }
-        else // get properties
-        {
-            var properties = CacheUtil.GetTypeProperties(paramInfo.GetType());
-            foreach (var property in properties)
-            {
-                if (property.CanRead)
-                {
-                    paramDic[property.Name] = property.GetValueGetter()?.Invoke(paramInfo);
-                }
-            }
-        }
-
+        var paramDic = paramInfo.ParseParamDictionary();
         return paramDic;
     }
 
@@ -117,7 +88,7 @@ internal static class InternalExtensions
         if (value is DateTime time)
         {
             cell.Value = string.IsNullOrWhiteSpace(formatter)
-                ? time.Date == time ? time.ToStandardDateString() : time.ToStandardTimeString()
+                ? time.Date == time ? time.ToDateString() : time.ToTimeString()
                 : time.ToString(formatter);
             cell.CellType = CellType.String;
         }

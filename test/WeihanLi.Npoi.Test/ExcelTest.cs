@@ -58,7 +58,7 @@ public class ExcelTest
                     Assert.Equal(sourceItem.Title, item.Title);
                     Assert.Equal(sourceItem.Content, item.Content);
                     Assert.Equal(sourceItem.Publisher, item.Publisher);
-                    Assert.Equal(sourceItem.PublishedAt.ToStandardTimeString(), item.PublishedAt.ToStandardTimeString());
+                    Assert.Equal(sourceItem.PublishedAt.ToTimeString(), item.PublishedAt.ToTimeString());
                 }
             }
         }
@@ -104,7 +104,7 @@ public class ExcelTest
                     Assert.Equal(sourceItem.Title, item.Title);
                     Assert.Equal(sourceItem.Content, item.Content);
                     Assert.Equal(sourceItem.Publisher, item.Publisher);
-                    Assert.Equal(sourceItem.PublishedAt.ToStandardTimeString(), item.PublishedAt.ToStandardTimeString());
+                    Assert.Equal(sourceItem.PublishedAt.ToTimeString(), item.PublishedAt.ToTimeString());
                 }
             }
         }
@@ -153,7 +153,7 @@ public class ExcelTest
                     Assert.Equal(sourceItem.Title, item.Title);
                     Assert.Equal(sourceItem.Content, item.Content);
                     Assert.Equal(sourceItem.Publisher, item.Publisher);
-                    Assert.Equal(sourceItem.PublishedAt.ToStandardTimeString(), item.PublishedAt.ToStandardTimeString());
+                    Assert.Equal(sourceItem.PublishedAt.ToTimeString(), item.PublishedAt.ToTimeString());
                 }
             }
 
@@ -202,7 +202,7 @@ public class ExcelTest
                     Assert.Equal(sourceItem.Title, item.Title);
                     Assert.Equal(sourceItem.Content, item.Content);
                     Assert.Equal(sourceItem.Publisher, item.Publisher);
-                    Assert.Equal(sourceItem.PublishedAt.ToStandardTimeString(), item.PublishedAt.ToStandardTimeString());
+                    Assert.Equal(sourceItem.PublishedAt.ToTimeString(), item.PublishedAt.ToTimeString());
                 }
             }
 
@@ -248,7 +248,7 @@ public class ExcelTest
                 Assert.Equal(sourceItem.Title, item.Title);
                 Assert.Equal(sourceItem.Content, item.Content);
                 Assert.Equal(sourceItem.Publisher, item.Publisher);
-                Assert.Equal(sourceItem.PublishedAt.ToStandardTimeString(), item.PublishedAt.ToStandardTimeString());
+                Assert.Equal(sourceItem.PublishedAt.ToTimeString(), item.PublishedAt.ToTimeString());
             }
         }
     }
@@ -291,7 +291,7 @@ public class ExcelTest
                     Assert.Equal(sourceItem.Title, item.Title);
                     Assert.Equal(sourceItem.Content, item.Content);
                     Assert.Equal(sourceItem.Publisher, item.Publisher);
-                    Assert.Equal(sourceItem.PublishedAt.ToStandardTimeString(), item.PublishedAt.ToStandardTimeString());
+                    Assert.Equal(sourceItem.PublishedAt.ToTimeString(), item.PublishedAt.ToTimeString());
                 }
             }
 
@@ -333,7 +333,7 @@ public class ExcelTest
                 Assert.Equal(list[i].Title + "_Test", item.Title);
                 Assert.Equal(list[i].Content, item.Content);
                 Assert.Equal(list[i].Publisher, item.Publisher);
-                Assert.Equal(list[i].PublishedAt.ToStandardTimeString(), item.PublishedAt.ToStandardTimeString());
+                Assert.Equal(list[i].PublishedAt.ToTimeString(), item.PublishedAt.ToTimeString());
             }
 
             settings.Property(_ => _.Title).HasColumnInputFormatter(null);
@@ -373,7 +373,7 @@ public class ExcelTest
                 Assert.Equal(sourceItem.Title, item.Title);
                 Assert.Equal(sourceItem.Content, item.Content);
                 Assert.Equal(sourceItem.Publisher, item.Publisher);
-                Assert.Equal(sourceItem.PublishedAt.ToStandardTimeString(), item.PublishedAt.ToStandardTimeString());
+                Assert.Equal(sourceItem.PublishedAt.ToTimeString(), item.PublishedAt.ToTimeString());
             }
 
             settings.Property(x => x.Id)
@@ -420,7 +420,7 @@ public class ExcelTest
                 Assert.Equal(sourceItem.Title, item.Title);
                 Assert.Equal(sourceItem.Content, item.Content);
                 Assert.Equal(sourceItem.Publisher, item.Publisher);
-                Assert.Equal(sourceItem.PublishedAt.ToStandardTimeString(), item.PublishedAt.ToStandardTimeString());
+                Assert.Equal(sourceItem.PublishedAt.ToTimeString(), item.PublishedAt.ToTimeString());
 
             }
 
@@ -567,7 +567,7 @@ public class ExcelTest
                 Assert.Null(item.Title);
                 Assert.Null(item.Content);
                 Assert.Null(item.Publisher);
-                Assert.Equal(default(DateTime).ToStandardTimeString(), item.PublishedAt.ToStandardTimeString());
+                Assert.Equal(default(DateTime).ToTimeString(), item.PublishedAt.ToTimeString());
             }
 
             settings.HasSheetSetting(setting =>

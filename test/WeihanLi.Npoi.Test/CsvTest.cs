@@ -53,7 +53,7 @@ public class CsvTest
                 Assert.Equal(list[i].Title ?? "", item.Title);
                 Assert.Equal(list[i].Content ?? "", item.Content);
                 Assert.Equal(list[i].Publisher ?? "", item.Publisher);
-                Assert.Equal(list[i].PublishedAt.ToStandardTimeString(), item.PublishedAt.ToStandardTimeString());
+                Assert.Equal(list[i].PublishedAt.ToTimeString(), item.PublishedAt.ToTimeString());
             }
         }
     }
@@ -90,7 +90,7 @@ public class CsvTest
                 Assert.Equal(list[i].Title ?? "", item.Title);
                 Assert.Equal(list[i].Content ?? "", item.Content);
                 Assert.Equal(list[i].Publisher ?? "", item.Publisher);
-                Assert.Equal(list[i].PublishedAt.ToStandardTimeString(), item.PublishedAt.ToStandardTimeString());
+                Assert.Equal(list[i].PublishedAt.ToTimeString(), item.PublishedAt.ToTimeString());
             }
 
             noticeSetting.Property(_ => _.Publisher)

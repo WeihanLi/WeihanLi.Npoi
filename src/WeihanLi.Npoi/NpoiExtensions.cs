@@ -889,7 +889,7 @@ public static class NpoiExtensions
         if (value is DateTime time)
         {
             cell.SetCellValue(string.IsNullOrWhiteSpace(formatter)
-                ? time.Date == time ? time.ToStandardDateString() : time.ToStandardTimeString()
+                ? time.Date == time ? time.ToDateString() : time.ToTimeString()
                 : time.ToString(formatter));
             cell.SetCellType(CellType.String);
         }
