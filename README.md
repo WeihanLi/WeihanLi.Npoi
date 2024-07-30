@@ -8,9 +8,7 @@
 
 [![Azure Pipeline Build Status](https://weihanli.visualstudio.com/Pipelines/_apis/build/status/WeihanLi.WeihanLi.Npoi?branchName=dev)](https://weihanli.visualstudio.com/Pipelines/_build/latest?definitionId=13&branchName=dev)
 
-[![Github Build Status](https://github.com/WeihanLi/WeihanLi.Npoi/workflows/dotnetcore/badge.svg?branch=dev)](https://github.com/WeihanLi/WeihanLi.Npoi/actions?query=workflow%3Adotnetcore+branch%3Adev)
-
-[![Travis Build Status](https://travis-ci.org/WeihanLi/WeihanLi.Npoi.svg?branch=dev)](https://travis-ci.org/WeihanLi/WeihanLi.Npoi)
+[![Github Build Status](https://github.com/WeihanLi/WeihanLi.Npoi/actions/workflows/dotnetcore.yml/badge.svg)](https://github.com/WeihanLi/WeihanLi.Npoi/actions/workflows/dotnetcore.yml)
 
 ## Intro
 
