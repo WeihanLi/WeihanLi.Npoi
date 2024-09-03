@@ -1,7 +1,7 @@
-var target = CommandLineParser.Val("target", "Default", args);
-var apiKey = CommandLineParser.Val("apiKey", "", args);
-var stable = CommandLineParser.Val("stable", null, args).ToBoolean();
-var noPush = CommandLineParser.Val("noPush", null, args).ToBoolean();
+var target = CommandLineParser.Val("target", args, "Default");
+var apiKey = CommandLineParser.Val("apiKey", args);
+var stable = CommandLineParser.BooleanVal("stable");
+var noPush = CommandLineParser.BooleanVal("noPush");
 var branchName = EnvHelper.Val("BUILD_SOURCEBRANCHNAME", "local");
 
 var solutionPath = "./WeihanLi.Npoi.sln";
