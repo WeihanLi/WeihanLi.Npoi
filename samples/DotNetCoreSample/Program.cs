@@ -45,11 +45,8 @@ LogHelper.ConfigureLogging(x => x.WithMinimumLevel(LogHelperLogLevel.Info).AddCo
     };
     // prepare a workbook
     var workbook = ExcelHelper.PrepareWorkbook(ExcelFormat.Xlsx);
-    var sheet1 = workbook.CreateSheet("Sheet1");
-    sheet1.ImportData(collection1);
-    var sheet2 = workbook.CreateSheet("Sheet2");
-    sheet2.ImportData(collection2, 1);
-
+    workbook.ImportData(collection1);
+    workbook.ImportData(collection2, 1);
     workbook.WriteToFile("multi-sheets-sample.xlsx");
 
     // using var ms = new MemoryStream();
