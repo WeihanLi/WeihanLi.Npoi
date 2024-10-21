@@ -13,6 +13,54 @@ using WeihanLi.Npoi.Configurations;
 
 LogHelper.ConfigureLogging(x => x.WithMinimumLevel(LogHelperLogLevel.Info).AddConsole());
 
+
+// multi sheets sample
+{    
+    var collection1 = new List<TestEntity>()
+    {
+        new TestEntity()
+        {
+            PKID = 1,
+            SettingId = Guid.NewGuid(),
+            SettingName = "Setting1",
+            SettingValue = "Value1",
+            DisplayName = "dd"
+        },
+        new TestEntity()
+        {
+            PKID=2,
+            SettingId = Guid.NewGuid(),
+            SettingName = "Setting2",
+            SettingValue = "Value2",
+            Enabled = true
+        },
+    };
+    var collection2 = new[]
+    {
+        new TestEntity2()
+        {
+            Id = 999,
+            Title = "test"
+        }
+    };
+    // prepare a workbook
+    var workbook = ExcelHelper.PrepareWorkbook(ExcelFormat.Xlsx);
+    var sheet1 = workbook.CreateSheet("Sheet1");
+    sheet1.ImportData(collection1);
+    var sheet2 = workbook.CreateSheet("Sheet2");
+    sheet2.ImportData(collection2, 1);    
+    
+    workbook.WriteToFile("multi-sheets-sample.xlsx");
+
+    // using var ms = new MemoryStream();
+    // workbook.Write(ms);
+
+    Console.WriteLine("multi-sheets-sample excel generated.");
+    Console.ReadLine();
+}
+
+
+
 var testSurveyExcelPath = @"C:\Users\Weiha\Desktop\temp\QuizBulkUpload.xlsx";
 var surveyList = ExcelHelper.ToEntityList<SurveyImportDto>(testSurveyExcelPath);
 
