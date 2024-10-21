@@ -7,7 +7,7 @@ using System.Runtime.CompilerServices;
 
 namespace WeihanLi.Npoi.Benchmark;
 
-[SimpleJob(launchCount: 1, warmupCount: 1, targetCount: 5)]
+[SimpleJob(launchCount: 1, warmupCount: 1, iterationCount: 5)]
 [MemoryDiagnoser]
 [MinColumn, MaxColumn, MeanColumn, MedianColumn]
 public class WorkbookBasicTest
