@@ -3,55 +3,36 @@ on:
   push:
     branches:
       - "main"
-      # - "master"
-      # - "dev"
+      - "master"
+      - "dev"
 
 jobs:
   build:
     name: Build
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: windows-latest
     steps:
       # Check out the branch that triggered this workflow to the 'source' subdirectory
       - name: Checkout Code
-        uses: actions/checkout@v2
-        with:
-          path: source
+        uses: actions/checkout@v4
       - name: Setup .NET SDK
-        uses: actions/setup-dotnet@v1
+        uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '8.0.x'
-      - name: install DocFX
-        run: "dotnet tool install -g docfx"
+      - name: install dotnet tools
+        run: |
+          dotnet tool install -g dotnet-execute
+          dotnet tool install -g docfx
       # Run a build
       - name: Build docs
-        run: "& docfx ./docfx.json"
-        working-directory: ./source
-      # Check out gh-pages branch to the 'docs' subdirectory
-      - name: Checkout docs
-        uses: actions/checkout@v2
+        run: "docfx ./docfx.json"
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
         with:
-          ref: gh-pages
-          path: docs
-      # Sync the site
-      - name: Clear docs repo
-        run: Get-ChildItem -Force -Exclude .git | ForEach-Object { Remove-Item -Recurse -Verbose -Force $_ }
-        working-directory: ./docs
-      - name: Sync new content
-        run: Copy-Item -Recurse -Verbose -Force "$env:GITHUB_WORKSPACE/source/_site/*" "$env:GITHUB_WORKSPACE/docs"
-        working-directory: ./docs
-        # update docs
-      - name: Commit to gh-pages and push
-        run: |
-          $ErrorActionPreference = "Continue"
-          git add -A
-          git diff HEAD --exit-code
-          if ($LASTEXITCODE -eq 0) {
-            Write-Host "No changes to commit!"
-          } else {
-            git config --global user.name "github-actions-docfx[bot]"
-            git config --global user.email "weihanli@outlook.com"
-            git commit -m "Updated docs from commit $env:GITHUB_SHA on $env:GITHUB_REF"
-            git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
-            git push origin gh-pages
-          }
-        working-directory: ./docs
+          # Upload entire repository
+          path: '_site'
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
