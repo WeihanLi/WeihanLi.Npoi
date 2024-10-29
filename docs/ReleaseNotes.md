@@ -1,6 +1,6 @@
 # WeihanLi.Npoi Release Notes
 
-## [2..0](https://www.nuget.org/packages/WeihanLi.Npoi/2.5.0)
+## [2.5.0](https://www.nuget.org/packages/WeihanLi.Npoi/2.5.0)
 
 - Upgrade dependencies to fix upstream breaking changes
 - Enable central package version management
