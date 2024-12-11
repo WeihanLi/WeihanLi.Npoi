@@ -40,7 +40,7 @@ jobs:
       # Run a build
       - name: Build docs
         run: |
-          dotnet-exec --info
+          dotnet-exec info
           dotnet build
           docfx ./docs/docfx.json
       - name: Upload artifact
@@ -50,3 +50,10 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+      - name: cloudflare-pages
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          command: |
+            pages project list
+            pages deploy docs/_site --project-name=weihanli-npoi
