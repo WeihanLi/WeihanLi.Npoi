@@ -12,7 +12,7 @@
 
 ## Intro
 
-[NPOI](https://github.com/tonyqus/npoi) extensions based on target framework `netstandard2.0`/`net6.0`.
+[NPOI](https://github.com/tonyqus/npoi) extensions based on target framework `netstandard2.0`.
 
 There're a lot of useful extensions for you, core features are as follows:
 

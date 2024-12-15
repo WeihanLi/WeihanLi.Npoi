@@ -1,5 +1,9 @@
 # WeihanLi.Npoi Release Notes
 
+## [3.0.0](https://www.nuget.org/packages/WeihanLi.Npoi/3.0.0)
+
+- Update `net6.0` to `net8.0`
+
 ## [2.5.0](https://www.nuget.org/packages/WeihanLi.Npoi/2.5.0)
 
 - Upgrade dependencies to fix upstream breaking changes
