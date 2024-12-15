@@ -610,7 +610,7 @@ public static class CsvHelper
         return true;
     }
 
-#if NET6_0
+#if NET
     public static async Task<bool> ToCsvFileAsync<TEntity>(this IEnumerable<TEntity> entities, string filePath, CsvOptions? csvOptions = null)
     {
         if (entities is null)

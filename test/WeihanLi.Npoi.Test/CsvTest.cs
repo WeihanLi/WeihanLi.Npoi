@@ -275,7 +275,7 @@ public class CsvTest
         var list = new List<Job>() { new Job() { Id = 1, Name = "123" }, new Job() { Id = 2, Name = "234" } };
         Assert.True(list.ToCsvFile(csvPath));
 
-#if NET6_0
+#if NET
         await list.ToCsvFileAsync(csvPath);
 #endif
         var importedList = CsvHelper.ToEntityList<Job>(csvPath);
