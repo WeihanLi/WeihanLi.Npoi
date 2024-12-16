@@ -10,7 +10,7 @@ public class OrderTestModel1
     public int Id { get; set; }
 
     public string? Title { get; set; }
-    
+
     public string? Description { get; set; }
 }
 
@@ -21,14 +21,14 @@ public class OrderTestModel2
 
     [Column(Index = 0)]
     public string? Title { get; set; }
-    
+
     public string? Description { get; set; }
 }
 
 public class OrderTestModel3
 {
     public string? Description { get; set; }
-    
+
     [Column(Index = 0)]
     public int Id { get; set; }
 
@@ -41,6 +41,6 @@ public class OrderTestModel4
     public int Id { get; set; }
 
     public string? Title { get; set; }
-    
+
     public string? Description { get; set; }
 }

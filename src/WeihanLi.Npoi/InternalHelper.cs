@@ -130,8 +130,8 @@ internal static class InternalHelper
         {
             properties = properties.ThenBy(p => p.Key, excelConfiguration.PropertyComparer);
         }
-        
-        foreach (var item in properties.Select(p=> p.Value))
+
+        foreach (var item in properties.Select(p => p.Value))
         {
             while (colIndexList.Contains(item.ColumnIndex) || item.ColumnIndex < 0)
             {

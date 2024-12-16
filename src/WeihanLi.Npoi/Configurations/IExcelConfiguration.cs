@@ -76,7 +76,7 @@ public interface IExcelConfiguration<TEntity> : IExcelConfiguration
     /// <param name="dataFilter">data filter logic</param>
     /// <returns>current excel configuration</returns>
     IExcelConfiguration<TEntity> WithDataFilter(Func<TEntity?, bool>? dataFilter);
-    
+
     /// <summary>
     ///     register property comparer
     /// </summary>

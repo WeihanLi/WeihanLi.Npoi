@@ -1100,7 +1100,7 @@ public class ExcelTest
         {
             Assert.Fail("Invalid property Id");
         }
-        
+
         if (excelConfiguration.Property(x => x.Title) is PropertyConfiguration<OrderTestModel1, string?>
             titlePropertyConfiguration)
         {
@@ -1111,7 +1111,7 @@ public class ExcelTest
         {
             Assert.Fail("Invalid property Title");
         }
-        
+
         if (excelConfiguration.Property(x => x.Description) is PropertyConfiguration<OrderTestModel1, string?>
             descriptionPropertyConfiguration)
         {
@@ -1123,7 +1123,7 @@ public class ExcelTest
             Assert.Fail("Invalid property Description");
         }
     }
-    
+
     [Fact]
     public void PropertyOrderTest2()
     {
@@ -1140,7 +1140,7 @@ public class ExcelTest
         {
             Assert.Fail("Invalid property Id");
         }
-        
+
         if (excelConfiguration.Property(x => x.Title) is PropertyConfiguration<OrderTestModel2, string?>
             titlePropertyConfiguration)
         {
@@ -1151,7 +1151,7 @@ public class ExcelTest
         {
             Assert.Fail("Invalid property Title");
         }
-        
+
         if (excelConfiguration.Property(x => x.Description) is PropertyConfiguration<OrderTestModel2, string?>
             descriptionPropertyConfiguration)
         {
@@ -1163,7 +1163,7 @@ public class ExcelTest
             Assert.Fail("Invalid property Description");
         }
     }
-    
+
     [Fact]
     public void PropertyOrderTest3()
     {
@@ -1180,7 +1180,7 @@ public class ExcelTest
         {
             Assert.Fail("Invalid property Id");
         }
-        
+
         if (excelConfiguration.Property(x => x.Title) is PropertyConfiguration<OrderTestModel3, string?>
             titlePropertyConfiguration)
         {
@@ -1191,7 +1191,7 @@ public class ExcelTest
         {
             Assert.Fail("Invalid property Title");
         }
-        
+
         if (excelConfiguration.Property(x => x.Description) is PropertyConfiguration<OrderTestModel3, string?>
             descriptionPropertyConfiguration)
         {
@@ -1203,8 +1203,8 @@ public class ExcelTest
             Assert.Fail("Invalid property Description");
         }
     }
-    
-    
+
+
     [Fact]
     public void PropertyOrderTest4_CustomOrdering()
     {
@@ -1222,7 +1222,7 @@ public class ExcelTest
         {
             Assert.Fail("Invalid property Id");
         }
-        
+
         if (excelConfiguration.Property(x => x.Title) is PropertyConfiguration<OrderTestModel4, string?>
             titlePropertyConfiguration)
         {
@@ -1233,7 +1233,7 @@ public class ExcelTest
         {
             Assert.Fail("Invalid property Title");
         }
-        
+
         if (excelConfiguration.Property(x => x.Description) is PropertyConfiguration<OrderTestModel4, string?>
             descriptionPropertyConfiguration)
         {
