@@ -3,6 +3,7 @@
 ## [3.0.0](https://www.nuget.org/packages/WeihanLi.Npoi/3.0.0)
 
 - Remove `net6.0` target, and update build sdk and samples/tests to `net8.0`
+- Adjust column index enhancements, respect property index by default and support `WithPropertyComparer`
 
 ## [2.5.0](https://www.nuget.org/packages/WeihanLi.Npoi/2.5.0)
 
