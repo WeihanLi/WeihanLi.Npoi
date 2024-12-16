@@ -172,7 +172,7 @@ var entities = new List<TestEntity>()
             CreatedBy = "li\"_"
         },
     };
-await entities.ToCsvFileAsync("test.csv");
+entities.ToCsvFile("test.csv");
 
 var csvFilePath = $@"{tempDirPath}\test.csv";
 //entities.ToExcelFileByTemplate(
@@ -185,7 +185,7 @@ var csvFilePath = $@"{tempDirPath}\test.csv";
 //    }
 //);
 entities.ToExcelFile(csvFilePath.Replace(".csv", ".xlsx"));
-await entities.ToCsvFileAsync(csvFilePath);
+entities.ToCsvFile(csvFilePath);
 
 var entitiesT0 = ExcelHelper.ToEntityList<TestEntity>(csvFilePath.Replace(".csv", ".xlsx"));
 
