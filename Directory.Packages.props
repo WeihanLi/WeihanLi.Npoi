@@ -11,7 +11,6 @@
     <PackageVersion Include="EPPlus.Core.Extensions" Version="2.4.0" />
     <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.12.0" />
     <PackageVersion Include="NPOI" Version="2.4.1" />
-    <PackageVersion Include="System.Data.SqlClient" Version="4.9.0" />
     <PackageVersion Include="WeihanLi.Common" Version="1.0.73" />
     <PackageVersion Include="xunit" Version="2.9.2" />
     <PackageVersion Include="Xunit.DependencyInjection" Version="9.7.0" />
