@@ -70,7 +70,7 @@ There're a lot of useful extensions for you, core features are as follows:
     var dataTable1 = CsvHelper.ToDataTable(string csvFilePath);
     ```
 
-More Api here: <https://weihanli.github.io/WeihanLi.Npoi/docs/api/WeihanLi.Npoi.html>
+More Api here: <https://weihanli.github.io/WeihanLi.Npoi/api/WeihanLi.Npoi.html>
 
 ### Define Custom Mapping and settings
 
@@ -181,7 +181,7 @@ More Api here: <https://weihanli.github.io/WeihanLi.Npoi/docs/api/WeihanLi.Npoi.
 
 ### More
 
-see some articles here: <https://weihanli.github.io/WeihanLi.Npoi/docs/articles/intro.html> 
+see some articles here: <https://weihanli.github.io/WeihanLi.Npoi/articles/intro.html>
 
 more usage:
 
@@ -265,7 +265,7 @@ byte[] ToCsvBytes(this DataTable dt, bool includeHeader)
 
 - [dotnetcore sample](https://github.com/WeihanLi/WeihanLi.Npoi/blob/dev/samples/DotNetCoreSample/Program.cs)
 - [More samples in unit test](https://github.com/WeihanLi/WeihanLi.Npoi/blob/dev/test/WeihanLi.Npoi.Test/ExcelTest.cs)
-- [Guide posts](https://weihanli.github.io/WeihanLi.Npoi/docs/articles/intro.html)
+- [Guide posts](https://weihanli.github.io/WeihanLi.Npoi/articles/intro.html)
 
 ### Acknowledgements
 
