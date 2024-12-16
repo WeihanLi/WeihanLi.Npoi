@@ -70,7 +70,8 @@ public static class FluentSettings
     /// </summary>
     /// <param name="profile">profile</param>
     /// <typeparam name="TEntity">entity type</typeparam>
-    public static void LoadMappingProfile<TEntity>(IMappingProfile<TEntity> profile)
+    /// <typeparam name="TMappingProfile">mapping profile type</typeparam>
+    public static void LoadMappingProfile<TEntity, TMappingProfile>(TMappingProfile profile) where TMappingProfile : IMappingProfile<TEntity>
     {
         Guard.NotNull(profile, nameof(profile));
         profile.Configure(InternalHelper.GetExcelConfigurationMapping<TEntity>());
@@ -87,7 +88,7 @@ public static class FluentSettings
     ///     Load mapping profile for TEntity
     /// </summary>
     /// <param name="profile">profile</param>
-    private static void LoadMappingProfile(IMappingProfile profile)
+    private static void LoadMappingProfile<TMappingProfile>(TMappingProfile profile) where TMappingProfile : IMappingProfile
     {
         Guard.NotNull(profile, nameof(profile));
         var profileInterfaceType = profile.GetType()
@@ -101,7 +102,7 @@ public static class FluentSettings
         var entityType = profileInterfaceType.GetGenericArguments()[0];
         var configuration = InternalHelper.GetExcelConfigurationMapping(entityType);
         var method = profileInterfaceType.GetMethod(MappingProfileConfigureMethodName,
-            new[] { typeof(IExcelConfiguration<>).MakeGenericType(entityType) });
-        method?.Invoke(profile, new object[] { configuration });
+            [typeof(IExcelConfiguration<>).MakeGenericType(entityType)]);
+        method?.Invoke(profile, [configuration]);
     }
 }

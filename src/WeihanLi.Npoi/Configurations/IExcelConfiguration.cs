@@ -2,6 +2,7 @@
 // Licensed under the Apache license.
 
 using System.Linq.Expressions;
+using System.Reflection;
 using WeihanLi.Common.Services;
 using WeihanLi.Npoi.Settings;
 
@@ -75,6 +76,13 @@ public interface IExcelConfiguration<TEntity> : IExcelConfiguration
     /// <param name="dataFilter">data filter logic</param>
     /// <returns>current excel configuration</returns>
     IExcelConfiguration<TEntity> WithDataFilter(Func<TEntity?, bool>? dataFilter);
+    
+    /// <summary>
+    ///     register property comparer
+    /// </summary>
+    /// <param name="propertyComparer">propertyComparer</param>
+    /// <returns>current excel configuration</returns>
+    IExcelConfiguration<TEntity> WithPropertyComparer(IComparer<PropertyInfo>? propertyComparer);
 
     /// <summary>
     ///     property configuration

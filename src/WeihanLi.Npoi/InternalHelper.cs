@@ -123,11 +123,15 @@ internal static class InternalHelper
         }
 
         var colIndexList = new List<int>(validColumnIndex.Count);
-        foreach (var item in excelConfiguration.PropertyConfigurationDictionary
+        var properties = excelConfiguration.PropertyConfigurationDictionary
             .Where(p => !p.Value.IsIgnored)
-            .OrderBy(p => p.Value.ColumnIndex >= 0 ? p.Value.ColumnIndex : int.MaxValue)
-            .Select(p => p.Value)
-        )
+            .OrderBy(p => p.Value.ColumnIndex >= 0 ? p.Value.ColumnIndex : int.MaxValue);
+        if (excelConfiguration.PropertyComparer is not null)
+        {
+            properties = properties.ThenBy(p => p.Key, excelConfiguration.PropertyComparer);
+        }
+        
+        foreach (var item in properties.Select(p=> p.Value))
         {
             while (colIndexList.Contains(item.ColumnIndex) || item.ColumnIndex < 0)
             {

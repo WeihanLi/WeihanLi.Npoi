@@ -22,7 +22,7 @@ public static class CsvHelper
     public static char CsvSeparatorCharacter = ',';
 
     /// <summary>
-    ///     CsvQuoteCharacter, '"' by default
+    ///     CsvQuoteCharacter, <c>"</c> by default
     /// </summary>
     public static char CsvQuoteCharacter = '"';
 
