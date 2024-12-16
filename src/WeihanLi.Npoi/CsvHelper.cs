@@ -610,36 +610,6 @@ public static class CsvHelper
         return true;
     }
 
-#if NET
-    public static async Task<bool> ToCsvFileAsync<TEntity>(this IEnumerable<TEntity> entities, string filePath, CsvOptions? csvOptions = null)
-    {
-        if (entities is null)
-        {
-            throw new ArgumentNullException(nameof(entities));
-        }
-
-        csvOptions ??= CsvOptions.Default;
-        var csvTextData = GetCsvText(entities, csvOptions);
-        if (csvTextData.IsNullOrEmpty())
-        {
-            return false;
-        }
-
-        InternalHelper.EnsureFileIsNotReadOnly(filePath);
-        var dir = Path.GetDirectoryName(filePath);
-        if (dir.IsNotNullOrEmpty())
-        {
-            if (!Directory.Exists(dir))
-            {
-                Directory.CreateDirectory(dir);
-            }
-        }
-
-        await File.WriteAllTextAsync(filePath, csvTextData, csvOptions.Encoding);
-        return true;
-    }
-#endif
-
     /// <summary>
     ///     to csv bytes
     /// </summary>
