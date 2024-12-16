@@ -12,13 +12,12 @@ internal static class InternalHelper
 {
     public static void EnsureFileIsNotReadOnly(string filePath)
     {
-        if (File.Exists(filePath))
+        if (!File.Exists(filePath)) return;
+
+        var attributes = File.GetAttributes(filePath);
+        if ((attributes & FileAttributes.ReadOnly) != 0)
         {
-            var attributes = File.GetAttributes(filePath);
-            if ((attributes & FileAttributes.ReadOnly) != 0)
-            {
-                throw new InvalidOperationException($"The file({filePath}) is read-only");
-            }
+            throw new InvalidOperationException($"The file({filePath}) is read-only");
         }
     }
 
@@ -30,9 +29,9 @@ internal static class InternalHelper
     public static IExcelConfiguration GetExcelConfigurationMapping(Type entityType) =>
         InternalCache.TypeExcelConfigurationDictionary.GetOrAdd(entityType, type =>
         {
-            var excelConfiguration =
-                CreateExcelConfiguration(type, () => (ExcelConfiguration)Guard.NotNull(Activator.CreateInstance(
-                    typeof(ExcelConfiguration<>).MakeGenericType(entityType))));
+            var excelConfiguration = CreateExcelConfiguration(type, () => (ExcelConfiguration)
+                Guard.NotNull(Activator.CreateInstance(typeof(ExcelConfiguration<>).MakeGenericType(entityType)))
+                );
             return excelConfiguration;
         });
 
@@ -83,19 +82,19 @@ internal static class InternalHelper
 
             propertyConfigurationType.GetProperty(nameof(column.PropertyConfiguration.ColumnTitle))
                 ?.GetSetMethod()?
-                .Invoke(propertyConfiguration, new object[] { column.PropertyConfiguration.ColumnTitle });
+                .Invoke(propertyConfiguration, [column.PropertyConfiguration.ColumnTitle]);
             propertyConfigurationType.GetProperty(nameof(column.PropertyConfiguration.ColumnIndex))
                 ?.GetSetMethod()?
-                .Invoke(propertyConfiguration, new object[] { column.PropertyConfiguration.ColumnIndex });
+                .Invoke(propertyConfiguration, [column.PropertyConfiguration.ColumnIndex]);
             propertyConfigurationType.GetProperty(nameof(column.PropertyConfiguration.ColumnFormatter))
                 ?.GetSetMethod()?
-                .Invoke(propertyConfiguration, new object?[] { column.PropertyConfiguration.ColumnFormatter });
+                .Invoke(propertyConfiguration, [column.PropertyConfiguration.ColumnFormatter]);
             propertyConfigurationType.GetProperty(nameof(column.PropertyConfiguration.IsIgnored))
                 ?.GetSetMethod()?
-                .Invoke(propertyConfiguration, new object[] { column.PropertyConfiguration.IsIgnored });
+                .Invoke(propertyConfiguration, [column.PropertyConfiguration.IsIgnored]);
             propertyConfigurationType.GetProperty(nameof(column.PropertyConfiguration.ColumnWidth))
                 ?.GetSetMethod()?
-                .Invoke(propertyConfiguration, new object[] { column.PropertyConfiguration.ColumnWidth });
+                .Invoke(propertyConfiguration, [column.PropertyConfiguration.ColumnWidth]);
 
             excelConfiguration.PropertyConfigurationDictionary.Add(propertyInfo,
                 (PropertyConfiguration)propertyConfiguration);
@@ -116,18 +115,18 @@ internal static class InternalHelper
             .Select(x => x.ColumnIndex)
             .ToArray();
         // return if already adjusted
-        if (validColumnIndex.All(_ => _ >= 0) &&
-            validColumnIndex.Distinct().Count() == validColumnIndex.Count)
+        if (validColumnIndex.All(idx => idx >= 0) &&
+            validColumnIndex.Distinct().Count() == validColumnIndex.Count
+            )
         {
             return;
         }
 
         var colIndexList = new List<int>(validColumnIndex.Count);
         foreach (var item in excelConfiguration.PropertyConfigurationDictionary
-            .Where(_ => !_.Value.IsIgnored)
-            .OrderBy(_ => _.Value.ColumnIndex >= 0 ? _.Value.ColumnIndex : int.MaxValue)
-            .ThenBy(_ => _.Key.Name)
-            .Select(_ => _.Value)
+            .Where(p => !p.Value.IsIgnored)
+            .OrderBy(p => p.Value.ColumnIndex >= 0 ? p.Value.ColumnIndex : int.MaxValue)
+            .Select(p => p.Value)
         )
         {
             while (colIndexList.Contains(item.ColumnIndex) || item.ColumnIndex < 0)
@@ -163,10 +162,9 @@ internal static class InternalHelper
         ExcelConfiguration<TEntity> configuration)
     {
         AdjustColumnIndex(configuration);
-
         return configuration.PropertyConfigurationDictionary
             .Where(p => !p.Value.IsIgnored)
-            .ToDictionary(_ => _.Key, _ => _.Value);
+            .ToDictionary(p => p.Key, p => p.Value);
     }
 
     /// <summary>
@@ -177,9 +175,7 @@ internal static class InternalHelper
     public static IReadOnlyList<PropertyInfo> GetPropertiesForCsvHelper<TEntity>()
     {
         var configuration = GetExcelConfigurationMapping<TEntity>();
-
         AdjustColumnIndex(configuration);
-
         return configuration.PropertyConfigurationDictionary
             .Where(p => !p.Value.IsIgnored)
             .OrderBy(p => p.Value.ColumnIndex)
@@ -193,10 +189,6 @@ internal static class InternalHelper
     public static string GetDecodeColumnName(string columnName)
     {
         var duplicateMarkIndex = columnName.IndexOf(InternalConstants.DuplicateColumnMark, StringComparison.OrdinalIgnoreCase);
-        if (duplicateMarkIndex > 0)
-        {
-            return columnName.Substring(0, duplicateMarkIndex);
-        }
-        return columnName;
+        return duplicateMarkIndex > 0 ? columnName.Substring(0, duplicateMarkIndex) : columnName;
     }
 }
