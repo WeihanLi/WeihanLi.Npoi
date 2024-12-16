@@ -6,7 +6,7 @@
     <PackageReference Include="WeihanLi.Common" />
   </ItemGroup>
   <ItemGroup>
-    <InternalsVisibleTo Include="WeihanLi.Npoi.Test" />
+    <InternalsVisibleTo Condition="'$(Configuration)'=='Debug'" Include="WeihanLi.Npoi.Test" />
   </ItemGroup>
   <ItemGroup>
     <Compile Update="Resource.Designer.cs">
