@@ -104,7 +104,7 @@ internal sealed class ExcelConfiguration<TEntity> : ExcelConfiguration, IExcelCo
     public Type EntityType => typeof(TEntity);
 
     internal Func<TEntity?, bool>? DataFilter { get; private set; }
-    
+
     internal IComparer<PropertyInfo>? PropertyComparer { get; private set; }
 
     internal IValidator? Validator { get; private set; }
