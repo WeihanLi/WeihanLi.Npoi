@@ -6,12 +6,11 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v1
-    - name: Setup .NET 6
-      uses: actions/setup-dotnet@v1
+    - uses: actions/checkout@v4
+    - name: Setup .NET 8
+      uses: actions/setup-dotnet@v4
       with:
-        dotnet-version: '6.0.100'
-        include-prerelease: true
+        dotnet-version: '8.0.x'
     - name: build
       run: dotnet build
     - name: check format

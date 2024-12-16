@@ -5,12 +5,14 @@ using NPOI.HSSF.UserModel;
 using NPOI.SS.UserModel;
 using System.Data;
 using System.Globalization;
+using System.Reflection;
 using System.Text.RegularExpressions;
 using WeihanLi.Common;
 using WeihanLi.Common.Models;
 using WeihanLi.Common.Services;
 using WeihanLi.Extensions;
 using WeihanLi.Npoi.Attributes;
+using WeihanLi.Npoi.Configurations;
 using WeihanLi.Npoi.Test.Models;
 using Xunit;
 
@@ -58,7 +60,7 @@ public class ExcelTest
                     Assert.Equal(sourceItem.Title, item.Title);
                     Assert.Equal(sourceItem.Content, item.Content);
                     Assert.Equal(sourceItem.Publisher, item.Publisher);
-                    Assert.Equal(sourceItem.PublishedAt.ToStandardTimeString(), item.PublishedAt.ToStandardTimeString());
+                    Assert.Equal(sourceItem.PublishedAt.ToTimeString(), item.PublishedAt.ToTimeString());
                 }
             }
         }
@@ -104,7 +106,7 @@ public class ExcelTest
                     Assert.Equal(sourceItem.Title, item.Title);
                     Assert.Equal(sourceItem.Content, item.Content);
                     Assert.Equal(sourceItem.Publisher, item.Publisher);
-                    Assert.Equal(sourceItem.PublishedAt.ToStandardTimeString(), item.PublishedAt.ToStandardTimeString());
+                    Assert.Equal(sourceItem.PublishedAt.ToTimeString(), item.PublishedAt.ToTimeString());
                 }
             }
         }
@@ -153,7 +155,7 @@ public class ExcelTest
                     Assert.Equal(sourceItem.Title, item.Title);
                     Assert.Equal(sourceItem.Content, item.Content);
                     Assert.Equal(sourceItem.Publisher, item.Publisher);
-                    Assert.Equal(sourceItem.PublishedAt.ToStandardTimeString(), item.PublishedAt.ToStandardTimeString());
+                    Assert.Equal(sourceItem.PublishedAt.ToTimeString(), item.PublishedAt.ToTimeString());
                 }
             }
 
@@ -202,7 +204,7 @@ public class ExcelTest
                     Assert.Equal(sourceItem.Title, item.Title);
                     Assert.Equal(sourceItem.Content, item.Content);
                     Assert.Equal(sourceItem.Publisher, item.Publisher);
-                    Assert.Equal(sourceItem.PublishedAt.ToStandardTimeString(), item.PublishedAt.ToStandardTimeString());
+                    Assert.Equal(sourceItem.PublishedAt.ToTimeString(), item.PublishedAt.ToTimeString());
                 }
             }
 
@@ -248,7 +250,7 @@ public class ExcelTest
                 Assert.Equal(sourceItem.Title, item.Title);
                 Assert.Equal(sourceItem.Content, item.Content);
                 Assert.Equal(sourceItem.Publisher, item.Publisher);
-                Assert.Equal(sourceItem.PublishedAt.ToStandardTimeString(), item.PublishedAt.ToStandardTimeString());
+                Assert.Equal(sourceItem.PublishedAt.ToTimeString(), item.PublishedAt.ToTimeString());
             }
         }
     }
@@ -291,7 +293,7 @@ public class ExcelTest
                     Assert.Equal(sourceItem.Title, item.Title);
                     Assert.Equal(sourceItem.Content, item.Content);
                     Assert.Equal(sourceItem.Publisher, item.Publisher);
-                    Assert.Equal(sourceItem.PublishedAt.ToStandardTimeString(), item.PublishedAt.ToStandardTimeString());
+                    Assert.Equal(sourceItem.PublishedAt.ToTimeString(), item.PublishedAt.ToTimeString());
                 }
             }
 
@@ -333,7 +335,7 @@ public class ExcelTest
                 Assert.Equal(list[i].Title + "_Test", item.Title);
                 Assert.Equal(list[i].Content, item.Content);
                 Assert.Equal(list[i].Publisher, item.Publisher);
-                Assert.Equal(list[i].PublishedAt.ToStandardTimeString(), item.PublishedAt.ToStandardTimeString());
+                Assert.Equal(list[i].PublishedAt.ToTimeString(), item.PublishedAt.ToTimeString());
             }
 
             settings.Property(_ => _.Title).HasColumnInputFormatter(null);
@@ -373,7 +375,7 @@ public class ExcelTest
                 Assert.Equal(sourceItem.Title, item.Title);
                 Assert.Equal(sourceItem.Content, item.Content);
                 Assert.Equal(sourceItem.Publisher, item.Publisher);
-                Assert.Equal(sourceItem.PublishedAt.ToStandardTimeString(), item.PublishedAt.ToStandardTimeString());
+                Assert.Equal(sourceItem.PublishedAt.ToTimeString(), item.PublishedAt.ToTimeString());
             }
 
             settings.Property(x => x.Id)
@@ -420,7 +422,7 @@ public class ExcelTest
                 Assert.Equal(sourceItem.Title, item.Title);
                 Assert.Equal(sourceItem.Content, item.Content);
                 Assert.Equal(sourceItem.Publisher, item.Publisher);
-                Assert.Equal(sourceItem.PublishedAt.ToStandardTimeString(), item.PublishedAt.ToStandardTimeString());
+                Assert.Equal(sourceItem.PublishedAt.ToTimeString(), item.PublishedAt.ToTimeString());
 
             }
 
@@ -567,7 +569,7 @@ public class ExcelTest
                 Assert.Null(item.Title);
                 Assert.Null(item.Content);
                 Assert.Null(item.Publisher);
-                Assert.Equal(default(DateTime).ToStandardTimeString(), item.PublishedAt.ToStandardTimeString());
+                Assert.Equal(default(DateTime).ToTimeString(), item.PublishedAt.ToTimeString());
             }
 
             settings.HasSheetSetting(setting =>
@@ -966,7 +968,7 @@ public class ExcelTest
         var validator = new DelegateValidator<Job>(_ => new ValidationResult()
         {
             Valid = false,
-            Errors = new Dictionary<string, string[]>() { { "", new[] { "Mock error" } } }
+            Errors = new Dictionary<string, string[]> { { "", ["Mock error"] } }
         });
         var bytes = list.ToExcelBytes(excelFormat);
         var result = ExcelHelper.ToEntityListWithValidationResult(bytes, excelFormat, validator: validator);
@@ -1082,6 +1084,168 @@ public class ExcelTest
         Assert.Equal(DateTime.Parse("2022-01-01"), item.Date);
     }
 
+    [Fact]
+    public void PropertyOrderTest()
+    {
+        var excelConfiguration = InternalHelper.GetExcelConfigurationMapping<OrderTestModel1>();
+        var propertyColumnDictionary = InternalHelper.GetPropertyColumnDictionary(excelConfiguration);
+        Assert.NotNull(propertyColumnDictionary);
+        if (excelConfiguration.Property(x => x.Id) is PropertyConfiguration<OrderTestModel1, int>
+            idPropertyConfiguration)
+        {
+            Assert.NotNull(idPropertyConfiguration.ColumnTitle);
+            Assert.Equal(0, idPropertyConfiguration.ColumnIndex);
+        }
+        else
+        {
+            Assert.Fail("Invalid property Id");
+        }
+
+        if (excelConfiguration.Property(x => x.Title) is PropertyConfiguration<OrderTestModel1, string?>
+            titlePropertyConfiguration)
+        {
+            Assert.NotNull(titlePropertyConfiguration.ColumnTitle);
+            Assert.Equal(1, titlePropertyConfiguration.ColumnIndex);
+        }
+        else
+        {
+            Assert.Fail("Invalid property Title");
+        }
+
+        if (excelConfiguration.Property(x => x.Description) is PropertyConfiguration<OrderTestModel1, string?>
+            descriptionPropertyConfiguration)
+        {
+            Assert.NotNull(descriptionPropertyConfiguration.ColumnTitle);
+            Assert.Equal(2, descriptionPropertyConfiguration.ColumnIndex);
+        }
+        else
+        {
+            Assert.Fail("Invalid property Description");
+        }
+    }
+
+    [Fact]
+    public void PropertyOrderTest2()
+    {
+        var excelConfiguration = InternalHelper.GetExcelConfigurationMapping<OrderTestModel2>();
+        var propertyColumnDictionary = InternalHelper.GetPropertyColumnDictionary(excelConfiguration);
+        Assert.NotNull(propertyColumnDictionary);
+        if (excelConfiguration.Property(x => x.Id) is PropertyConfiguration<OrderTestModel2, int>
+            idPropertyConfiguration)
+        {
+            Assert.NotNull(idPropertyConfiguration.ColumnTitle);
+            Assert.Equal(1, idPropertyConfiguration.ColumnIndex);
+        }
+        else
+        {
+            Assert.Fail("Invalid property Id");
+        }
+
+        if (excelConfiguration.Property(x => x.Title) is PropertyConfiguration<OrderTestModel2, string?>
+            titlePropertyConfiguration)
+        {
+            Assert.NotNull(titlePropertyConfiguration.ColumnTitle);
+            Assert.Equal(0, titlePropertyConfiguration.ColumnIndex);
+        }
+        else
+        {
+            Assert.Fail("Invalid property Title");
+        }
+
+        if (excelConfiguration.Property(x => x.Description) is PropertyConfiguration<OrderTestModel2, string?>
+            descriptionPropertyConfiguration)
+        {
+            Assert.NotNull(descriptionPropertyConfiguration.ColumnTitle);
+            Assert.Equal(2, descriptionPropertyConfiguration.ColumnIndex);
+        }
+        else
+        {
+            Assert.Fail("Invalid property Description");
+        }
+    }
+
+    [Fact]
+    public void PropertyOrderTest3()
+    {
+        var excelConfiguration = InternalHelper.GetExcelConfigurationMapping<OrderTestModel3>();
+        var propertyColumnDictionary = InternalHelper.GetPropertyColumnDictionary(excelConfiguration);
+        Assert.NotNull(propertyColumnDictionary);
+        if (excelConfiguration.Property(x => x.Id) is PropertyConfiguration<OrderTestModel3, int>
+            idPropertyConfiguration)
+        {
+            Assert.NotNull(idPropertyConfiguration.ColumnTitle);
+            Assert.Equal(0, idPropertyConfiguration.ColumnIndex);
+        }
+        else
+        {
+            Assert.Fail("Invalid property Id");
+        }
+
+        if (excelConfiguration.Property(x => x.Title) is PropertyConfiguration<OrderTestModel3, string?>
+            titlePropertyConfiguration)
+        {
+            Assert.NotNull(titlePropertyConfiguration.ColumnTitle);
+            Assert.Equal(1, titlePropertyConfiguration.ColumnIndex);
+        }
+        else
+        {
+            Assert.Fail("Invalid property Title");
+        }
+
+        if (excelConfiguration.Property(x => x.Description) is PropertyConfiguration<OrderTestModel3, string?>
+            descriptionPropertyConfiguration)
+        {
+            Assert.NotNull(descriptionPropertyConfiguration.ColumnTitle);
+            Assert.Equal(2, descriptionPropertyConfiguration.ColumnIndex);
+        }
+        else
+        {
+            Assert.Fail("Invalid property Description");
+        }
+    }
+
+
+    [Fact]
+    public void PropertyOrderTest4_CustomOrdering()
+    {
+        var excelConfiguration = InternalHelper.GetExcelConfigurationMapping<OrderTestModel4>();
+        excelConfiguration.WithPropertyComparer(new PropertyNameBasedPropertyComparer());
+        var propertyColumnDictionary = InternalHelper.GetPropertyColumnDictionary(excelConfiguration);
+        Assert.NotNull(propertyColumnDictionary);
+        if (excelConfiguration.Property(x => x.Id) is PropertyConfiguration<OrderTestModel4, int>
+            idPropertyConfiguration)
+        {
+            Assert.NotNull(idPropertyConfiguration.ColumnTitle);
+            Assert.Equal(1, idPropertyConfiguration.ColumnIndex);
+        }
+        else
+        {
+            Assert.Fail("Invalid property Id");
+        }
+
+        if (excelConfiguration.Property(x => x.Title) is PropertyConfiguration<OrderTestModel4, string?>
+            titlePropertyConfiguration)
+        {
+            Assert.NotNull(titlePropertyConfiguration.ColumnTitle);
+            Assert.Equal(2, titlePropertyConfiguration.ColumnIndex);
+        }
+        else
+        {
+            Assert.Fail("Invalid property Title");
+        }
+
+        if (excelConfiguration.Property(x => x.Description) is PropertyConfiguration<OrderTestModel4, string?>
+            descriptionPropertyConfiguration)
+        {
+            Assert.NotNull(descriptionPropertyConfiguration.ColumnTitle);
+            Assert.Equal(0, descriptionPropertyConfiguration.ColumnIndex);
+        }
+        else
+        {
+            Assert.Fail("Invalid property Description");
+        }
+    }
+
     private sealed class CellFormatTestModel
     {
         public int Id { get; set; }
@@ -1108,32 +1272,46 @@ public class ExcelTest
 
         public IPictureData Image { get; set; } = null!;
     }
+}
 
-    private sealed class ChineseDateFormatter
+file sealed class PropertyNameBasedPropertyComparer : IComparer<PropertyInfo>
+{
+    public int Compare(PropertyInfo? x, PropertyInfo? y)
     {
-        public sealed class ChineDateTestModel
+        return (x, y) switch
         {
-            public DateTime Date { get; set; }
-        }
+            (null, null) => 0,
+            (null, _) => -1,
+            (_, null) => 1,
+            _ => string.CompareOrdinal(x.Name, y.Name)
+        };
+    }
+}
 
-        public static DateTime FormatInput(string? input)
-        {
-            if (DateTimeUtils.TransStrToDateTime(input, out var dt))
-            {
-                return dt;
-            }
-            throw new ArgumentException("Invalid date input");
-        }
+file sealed class ChineseDateFormatter
+{
+    public sealed class ChineDateTestModel
+    {
+        public DateTime Date { get; set; }
+    }
 
-        public static string FormatOutput(DateTime input)
+    public static DateTime FormatInput(string? input)
+    {
+        if (DateTimeUtils.TransStrToDateTime(input, out var dt))
         {
-            return "二〇二二年一月一日";
+            return dt;
         }
+        throw new ArgumentException("Invalid date input");
+    }
+
+    public static string FormatOutput(DateTime input)
+    {
+        return "二〇二二年一月一日";
     }
 }
 
 // http://luoma.pro/Content/Detail/671?parentId=1
-public static class DateTimeUtils
+file static class DateTimeUtils
 {
     /// <summary>
     /// 字符串日期转 DateTime  

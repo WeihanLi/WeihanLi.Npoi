@@ -13,6 +13,51 @@ using WeihanLi.Npoi.Configurations;
 
 LogHelper.ConfigureLogging(x => x.WithMinimumLevel(LogHelperLogLevel.Info).AddConsole());
 
+
+// multi sheets sample
+{
+    var collection1 = new List<TestEntity>()
+    {
+        new TestEntity()
+        {
+            PKID = 1,
+            SettingId = Guid.NewGuid(),
+            SettingName = "Setting1",
+            SettingValue = "Value1",
+            DisplayName = "dd"
+        },
+        new TestEntity()
+        {
+            PKID=2,
+            SettingId = Guid.NewGuid(),
+            SettingName = "Setting2",
+            SettingValue = "Value2",
+            Enabled = true
+        },
+    };
+    var collection2 = new[]
+    {
+        new TestEntity2()
+        {
+            Id = 999,
+            Title = "test"
+        }
+    };
+    // prepare a workbook
+    var workbook = ExcelHelper.PrepareWorkbook(ExcelFormat.Xlsx);
+    workbook.ImportData(collection1);
+    workbook.ImportData(collection2, 1);
+    workbook.WriteToFile("multi-sheets-sample.xlsx");
+
+    // using var ms = new MemoryStream();
+    // workbook.Write(ms);
+
+    Console.WriteLine("multi-sheets-sample excel generated.");
+    Console.ReadLine();
+}
+
+
+
 var testSurveyExcelPath = @"C:\Users\Weiha\Desktop\temp\QuizBulkUpload.xlsx";
 var surveyList = ExcelHelper.ToEntityList<SurveyImportDto>(testSurveyExcelPath);
 
@@ -51,12 +96,6 @@ var dt1233 = CsvHelper.ToDataTable(text.GetBytes(), csvOptions);
 //var tempExcelPath = Path.Combine(tempDirPath, "testdata.xlsx");
 //var t_list = ExcelHelper.ToEntityList<ppDto>(tempExcelPath);
 //var tempTable = ExcelHelper.ToDataTable(tempExcelPath);
-
-//using (var conn = new SqlConnection("server=.;uid=liweihan;pwd=Admin888;database=Reservation"))
-//{
-//    var list = conn.Select<TestEntity>(@"SELECT * FROM [Reservation].[dbo].[tabSystemSettings]").ToArray();
-//    list.ToExcelFile(ApplicationHelper.MapPath("test.xlsx"));
-//}
 
 //var entityList = ExcelHelper.ToEntityList<TestEntity>(ApplicationHelper.MapPath("test.xlsx"));
 
@@ -127,7 +166,7 @@ var entities = new List<TestEntity>()
             CreatedBy = "li\"_"
         },
     };
-await entities.ToCsvFileAsync("test.csv");
+entities.ToCsvFile("test.csv");
 
 var csvFilePath = $@"{tempDirPath}\test.csv";
 //entities.ToExcelFileByTemplate(
@@ -140,7 +179,7 @@ var csvFilePath = $@"{tempDirPath}\test.csv";
 //    }
 //);
 entities.ToExcelFile(csvFilePath.Replace(".csv", ".xlsx"));
-await entities.ToCsvFileAsync(csvFilePath);
+entities.ToCsvFile(csvFilePath);
 
 var entitiesT0 = ExcelHelper.ToEntityList<TestEntity>(csvFilePath.Replace(".csv", ".xlsx"));
 

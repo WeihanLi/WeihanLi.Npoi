@@ -1,6 +1,6 @@
 <Project>
   <PropertyGroup>        
-    <TargetFrameworks>netstandard2.0;net6.0</TargetFrameworks>  
+    <TargetFramework>netstandard2.0</TargetFramework>  
     <Title>WeihanLi.Npoi</Title>
     <PackageId>WeihanLi.Npoi</PackageId>
     <Authors>WeihanLi</Authors>

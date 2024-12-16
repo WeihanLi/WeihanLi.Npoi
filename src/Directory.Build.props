@@ -11,8 +11,7 @@
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
     <!-- Optional: Build symbol package (.snupkg) to distribute the PDB containing Source Link -->
     <IncludeSymbols>true</IncludeSymbols>
-    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
-
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>    
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <PackageReleaseNotes>
       https://github.com/WeihanLi/WeihanLi.Common/blob/dev/docs/ReleaseNotes.md
@@ -24,9 +23,6 @@
   </PropertyGroup>
   <ItemGroup>
     <None Include="$([MSBuild]::GetPathOfFileAbove('README.md', '$(MSBuildThisFileDirectory)../'))" Pack="true" PackagePath="\" />
-    <None Include="$([MSBuild]::GetPathOfFileAbove('icon.jpg', '$(MSBuildThisFileDirectory)../'))" Pack="true" Visible="false" PackagePath=""/>    
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All"/>
+    <None Include="$([MSBuild]::GetPathOfFileAbove('icon.jpg', '$(MSBuildThisFileDirectory)../'))" Pack="true" Visible="false" PackagePath="" />    
   </ItemGroup>
 </Project>

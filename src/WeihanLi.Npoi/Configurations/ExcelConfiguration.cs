@@ -29,15 +29,15 @@ internal abstract class ExcelConfiguration : IExcelConfiguration
 
     #region ExcelSettings FluentAPI
 
-#nullable disable
+
 
     public IExcelConfiguration HasExcelSetting(Action<ExcelSetting> configAction)
     {
+        // ReSharper disable once ConditionalAccessQualifierIsNonNullableAccordingToAPIContract
+        // allow nullable but we do not want a null
         configAction?.Invoke(ExcelSetting);
         return this;
     }
-
-#nullable restore
 
     #endregion ExcelSettings FluentAPI
 
@@ -105,6 +105,8 @@ internal sealed class ExcelConfiguration<TEntity> : ExcelConfiguration, IExcelCo
 
     internal Func<TEntity?, bool>? DataFilter { get; private set; }
 
+    internal IComparer<PropertyInfo>? PropertyComparer { get; private set; }
+
     internal IValidator? Validator { get; private set; }
 
     #region Property
@@ -121,6 +123,12 @@ internal sealed class ExcelConfiguration<TEntity> : ExcelConfiguration, IExcelCo
         return this;
     }
 
+    public IExcelConfiguration<TEntity> WithPropertyComparer(IComparer<PropertyInfo>? propertyComparer)
+    {
+        PropertyComparer = propertyComparer;
+        return this;
+    }
+
     /// <summary>
     ///     Gets the property configuration by the specified property expression for the specified
     ///     <typeparamref name="TEntity" /> and its <typeparamref name="TProperty" />.
@@ -132,17 +140,12 @@ internal sealed class ExcelConfiguration<TEntity> : ExcelConfiguration, IExcelCo
         Expression<Func<TEntity, TProperty>> propertyExpression)
     {
         var memberInfo = propertyExpression.GetMemberInfo();
-        var property = memberInfo as PropertyInfo;
-        if (property is null || !PropertyConfigurationDictionary.ContainsKey(property))
-        {
-            property = CacheUtil.GetTypeProperties(EntityType)
-                .FirstOrDefault(p => p.Name == memberInfo.Name);
-            if (null == property)
-            {
-                throw new InvalidOperationException($"the property [{memberInfo.Name}] does not exists");
-            }
-        }
+        if (memberInfo is PropertyInfo property &&
+            PropertyConfigurationDictionary.TryGetValue(property, out var propertyConfiguration))
+            return (IPropertyConfiguration<TEntity, TProperty>)propertyConfiguration;
 
+        property = CacheUtil.GetTypeProperties(EntityType).FirstOrDefault(p => p.Name == memberInfo.Name)
+                   ?? throw new InvalidOperationException($"the property [{memberInfo.Name}] does not exists");
         return (IPropertyConfiguration<TEntity, TProperty>)PropertyConfigurationDictionary[property];
     }
 

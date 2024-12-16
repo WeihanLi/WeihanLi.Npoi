@@ -1,9 +1,12 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <Import Project="../../build/common.props" />
 
   <ItemGroup>
-    <PackageReference Include="NPOI" Version="2.4.1" />
-    <PackageReference Include="WeihanLi.Common" Version="1.0.53" />
+    <PackageReference Include="NPOI" />
+    <PackageReference Include="WeihanLi.Common" />
+  </ItemGroup>
+  <ItemGroup>
+    <InternalsVisibleTo Condition="'$(Configuration)'=='Debug'" Include="WeihanLi.Npoi.Test" />
   </ItemGroup>
   <ItemGroup>
     <Compile Update="Resource.Designer.cs">
@@ -11,8 +14,6 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resource.resx</DependentUpon>
     </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Update="Resource.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resource.Designer.cs</LastGenOutput>

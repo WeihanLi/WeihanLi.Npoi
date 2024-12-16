@@ -7,11 +7,11 @@ jobs:
     name: Release
     runs-on: windows-latest
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v4
     - name: Setup .NET SDK
-      uses: actions/setup-dotnet@v1
+      uses: actions/setup-dotnet@v4
       with:
-        dotnet-version: 6.0.x
+        dotnet-version: 8.0.x
     - name: Build
       shell: pwsh
       run: .\build.ps1 --stable=true
