@@ -11,8 +11,7 @@
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
     <!-- Optional: Build symbol package (.snupkg) to distribute the PDB containing Source Link -->
     <IncludeSymbols>true</IncludeSymbols>
-    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
-
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>    
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <PackageReleaseNotes>
       https://github.com/WeihanLi/WeihanLi.Common/blob/dev/docs/ReleaseNotes.md

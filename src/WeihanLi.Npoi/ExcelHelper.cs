@@ -42,7 +42,7 @@ public static class ExcelHelper
     }
 
     /// <summary>
-    ///     Validate is a excel path valid
+    ///     Validate whether the Excel path valid
     /// </summary>
     /// <param name="excelPath">excel path</param>
     /// <param name="msg">error message</param>

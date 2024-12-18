@@ -22,7 +22,7 @@ public static class CsvHelper
     public static char CsvSeparatorCharacter = ',';
 
     /// <summary>
-    ///     CsvQuoteCharacter, '"' by default
+    ///     CsvQuoteCharacter, <c>"</c> by default
     /// </summary>
     public static char CsvQuoteCharacter = '"';
 
@@ -610,7 +610,6 @@ public static class CsvHelper
         return true;
     }
 
-#if NET6_0
     public static async Task<bool> ToCsvFileAsync<TEntity>(this IEnumerable<TEntity> entities, string filePath, CsvOptions? csvOptions = null)
     {
         if (entities is null)
@@ -619,11 +618,6 @@ public static class CsvHelper
         }
 
         csvOptions ??= CsvOptions.Default;
-        var csvTextData = GetCsvText(entities, csvOptions);
-        if (csvTextData.IsNullOrEmpty())
-        {
-            return false;
-        }
 
         InternalHelper.EnsureFileIsNotReadOnly(filePath);
         var dir = Path.GetDirectoryName(filePath);
@@ -635,10 +629,14 @@ public static class CsvHelper
             }
         }
 
-        await File.WriteAllTextAsync(filePath, csvTextData, csvOptions.Encoding);
+        var lines = GetCsvLines(entities, csvOptions);
+        using var file = File.CreateText(filePath);
+        foreach (var line in lines)
+        {
+            await file.WriteLineAsync(line).ConfigureAwait(false);
+        }
         return true;
     }
-#endif
 
     /// <summary>
     ///     to csv bytes

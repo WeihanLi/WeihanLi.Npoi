@@ -129,7 +129,7 @@ internal static class InternalExtensions
     /// <returns></returns>
     internal static PropertyConfiguration? GetPropertySettingByPropertyName(
         this IDictionary<PropertyInfo, PropertyConfiguration> mappingDictionary, string propertyName)
-        => mappingDictionary.Values.FirstOrDefault(_ => _.PropertyName.EqualsIgnoreCase(propertyName));
+        => mappingDictionary.Values.FirstOrDefault(c => c.PropertyName.EqualsIgnoreCase(propertyName));
 
     /// <summary>
     ///     GetPropertyConfigurationByColumnName

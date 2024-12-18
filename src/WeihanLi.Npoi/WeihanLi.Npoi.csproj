@@ -6,13 +6,14 @@
     <PackageReference Include="WeihanLi.Common" />
   </ItemGroup>
   <ItemGroup>
+    <InternalsVisibleTo Condition="'$(Configuration)'=='Debug'" Include="WeihanLi.Npoi.Test" />
+  </ItemGroup>
+  <ItemGroup>
     <Compile Update="Resource.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>Resource.resx</DependentUpon>
     </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Update="Resource.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resource.Designer.cs</LastGenOutput>
