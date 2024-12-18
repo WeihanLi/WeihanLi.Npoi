@@ -633,7 +633,7 @@ public static class CsvHelper
         using var file = File.CreateText(filePath);
         foreach (var line in lines)
         {
-            await file.WriteLineAsync(line);
+            await file.WriteLineAsync(line).ConfigureAwait(false);
         }
         return true;
     }
