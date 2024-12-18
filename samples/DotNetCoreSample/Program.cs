@@ -35,6 +35,7 @@ LogHelper.ConfigureLogging(x => x.WithMinimumLevel(LogHelperLogLevel.Info).AddCo
             Enabled = true
         },
     };
+    await collection1.ToCsvFileAsync($"{nameof(collection1)}.csv");
     var collection2 = new[]
     {
         new TestEntity2()
