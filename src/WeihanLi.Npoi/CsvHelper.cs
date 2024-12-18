@@ -618,7 +618,7 @@ public static class CsvHelper
         }
 
         csvOptions ??= CsvOptions.Default;
-        
+
         InternalHelper.EnsureFileIsNotReadOnly(filePath);
         var dir = Path.GetDirectoryName(filePath);
         if (dir.IsNotNullOrEmpty())
@@ -628,7 +628,7 @@ public static class CsvHelper
                 Directory.CreateDirectory(dir);
             }
         }
-        
+
         var lines = GetCsvLines(entities, csvOptions);
         using var file = File.CreateText(filePath);
         foreach (var line in lines)
