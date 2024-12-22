@@ -270,8 +270,4 @@ byte[] ToCsvBytes(this DataTable dt, bool includeHeader)
 ### Acknowledgements
 
 - Thanks for the contributors and users for this project
-- Thanks JetBrains for the open source ReSharper license
-
-### Contact
-
-Contact me: <weihanli@outlook.com>
+- Thanks JetBrains for the free Rider license
