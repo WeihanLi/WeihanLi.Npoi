@@ -44,7 +44,7 @@ await new BuildProcessBuilder()
             ;
     })
     .WithTask("pack", b => b.WithDescription("dotnet pack")
-        .WithDependency("build")
+        .WithDependency("test")
         .WithExecution(async () =>
         {
             if (stable || branchName == "master")
