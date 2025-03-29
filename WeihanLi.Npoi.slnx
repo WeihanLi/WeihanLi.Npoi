@@ -1,0 +1,21 @@
+<Solution>
+  <Folder Name="/perf/">
+    <Project Path="perf/WeihanLi.Npoi.Benchmark/WeihanLi.Npoi.Benchmark.csproj" />
+  </Folder>
+  <Folder Name="/samples/">
+    <Project Path="samples/DotNetCoreSample/DotNetCoreSample.csproj" />
+  </Folder>
+  <Folder Name="/Solution Items/">
+    <File Path=".editorconfig" />
+    <File Path="build/version.props" />
+    <File Path="Directory.Build.props" />
+    <File Path="docs/ReleaseNotes.md" />
+    <File Path="README.md" />
+  </Folder>
+  <Folder Name="/src/">
+    <Project Path="src/WeihanLi.Npoi/WeihanLi.Npoi.csproj" />
+  </Folder>
+  <Folder Name="/test/">
+    <Project Path="test/WeihanLi.Npoi.Test/WeihanLi.Npoi.Test.csproj" />
+  </Folder>
+</Solution>
