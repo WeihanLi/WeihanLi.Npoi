@@ -8,6 +8,7 @@ using System.Globalization;
 using System.Reflection;
 using System.Text.RegularExpressions;
 using WeihanLi.Common;
+using WeihanLi.Common.Helpers;
 using WeihanLi.Common.Models;
 using WeihanLi.Common.Services;
 using WeihanLi.Extensions;
@@ -21,7 +22,7 @@ namespace WeihanLi.Npoi.Test;
 public class ExcelTest
 {
     [Theory]
-    [ExcelFormatData]
+    [ClassData(typeof(ExcelFormatData))]
     public void BasicImportExportTest(ExcelFormat excelFormat)
     {
         var list = new List<Notice?>();
@@ -67,7 +68,7 @@ public class ExcelTest
     }
 
     [Theory]
-    [ExcelFormatData]
+    [ClassData(typeof(ExcelFormatData))]
     public void BasicImportExportTestWithEmptyValue(ExcelFormat excelFormat)
     {
         var list = new List<Notice?>();
@@ -113,7 +114,7 @@ public class ExcelTest
     }
 
     [Theory]
-    [ExcelFormatData]
+    [ClassData(typeof(ExcelFormatData))]
     public void BasicImportExportWithoutHeaderTest(ExcelFormat excelFormat)
     {
         var list = new List<Notice?>();
@@ -164,7 +165,7 @@ public class ExcelTest
     }
 
     [Theory]
-    [ExcelFormatData]
+    [ClassData(typeof(ExcelFormatData))]
     public void ImportWithNotSpecificColumnIndex(ExcelFormat excelFormat)
     {
         IReadOnlyList<Notice> list = Enumerable.Range(0, 10).Select(i => new Notice()
@@ -216,7 +217,7 @@ public class ExcelTest
     }
 
     [Theory]
-    [ExcelFormatData]
+    [ClassData(typeof(ExcelFormatData))]
     public void ShadowPropertyTest(ExcelFormat excelFormat)
     {
         IReadOnlyList<Notice> list = Enumerable.Range(0, 10).Select(i => new Notice()
@@ -256,7 +257,7 @@ public class ExcelTest
     }
 
     [Theory]
-    [ExcelFormatData]
+    [ClassData(typeof(ExcelFormatData))]
     public void IgnoreInheritPropertyTest(ExcelFormat excelFormat)
     {
         IReadOnlyList<Notice> list = Enumerable.Range(0, 10).Select(i => new Notice()
@@ -304,7 +305,7 @@ public class ExcelTest
     }
 
     [Theory]
-    [ExcelFormatData]
+    [ClassData(typeof(ExcelFormatData))]
     public void ColumnInputFormatterTest(ExcelFormat excelFormat)
     {
         IReadOnlyList<Notice> list = Enumerable.Range(0, 10).Select(i => new Notice()
@@ -343,7 +344,7 @@ public class ExcelTest
     }
 
     [Theory]
-    [ExcelFormatData]
+    [ClassData(typeof(ExcelFormatData))]
     public void InputOutputColumnFormatterTest(ExcelFormat excelFormat)
     {
         IReadOnlyList<Notice> list = Enumerable.Range(0, 10).Select(i => new Notice()
@@ -385,7 +386,7 @@ public class ExcelTest
     }
 
     [Theory]
-    [ExcelFormatData]
+    [ClassData(typeof(ExcelFormatData))]
     public void DataValidationTest(ExcelFormat excelFormat)
     {
         IReadOnlyList<Notice> list = Enumerable.Range(0, 10).Select(i => new Notice()
@@ -431,7 +432,7 @@ public class ExcelTest
     }
 
     [Theory]
-    [ExcelFormatData]
+    [ClassData(typeof(ExcelFormatData))]
     public void DataTableImportExportTest(ExcelFormat excelFormat)
     {
         var dt = new DataTable();
@@ -463,7 +464,7 @@ public class ExcelTest
     }
 
     [Theory]
-    [ExcelFormatData]
+    [ClassData(typeof(ExcelFormatData))]
     public void DataTableImportExportWithEmptyValueTest(ExcelFormat excelFormat)
     {
         var dt = new DataTable();
@@ -501,7 +502,7 @@ public class ExcelTest
     }
 
     [Theory]
-    [ExcelFormatData]
+    [ClassData(typeof(ExcelFormatData))]
     public void ExcelImportWithFormula(ExcelFormat excelFormat)
     {
         var setting = FluentSettings.For<ExcelFormulaTestModel>();
@@ -536,7 +537,7 @@ public class ExcelTest
     }
 
     [Theory]
-    [ExcelFormatData]
+    [ClassData(typeof(ExcelFormatData))]
     public void ExcelImportWithCellFilter(ExcelFormat excelFormat)
     {
         IReadOnlyList<Notice> list = Enumerable.Range(0, 10).Select(i => new Notice()
@@ -580,7 +581,7 @@ public class ExcelTest
     }
 
     [Theory]
-    [ExcelFormatData]
+    [ClassData(typeof(ExcelFormatData))]
     public void ExcelImportWithCellFilterAttributeTest(ExcelFormat excelFormat)
     {
         IReadOnlyList<CellFilterAttributeTest> list = Enumerable.Range(0, 10).Select(i => new CellFilterAttributeTest()
@@ -760,11 +761,12 @@ public class ExcelTest
     }
 
     [Theory]
-    [ExcelFormatData]
+    [ClassData(typeof(ExcelFormatData))]
     public async Task ImageImportExportTest(ExcelFormat excelFormat)
     {
-        using var httpClient = new HttpClient();
-        var imageBytes = await httpClient.GetByteArrayAsync("https://www.nuget.org/profiles/weihanli/avatar?imageSize=64");
+        var imageBytes = await HttpHelper.HttpClient.GetByteArrayAsync(
+            "https://www.nuget.org/profiles/weihanli/avatar?imageSize=64", TestContext.Current.CancellationToken
+            );
         var list = Enumerable.Range(1, 5)
             .Select(x => new ImageTest() { Id = x, Image = imageBytes })
             .ToList();
@@ -782,11 +784,12 @@ public class ExcelTest
     }
 
     [Theory]
-    [ExcelFormatData]
+    [ClassData(typeof(ExcelFormatData))]
     public async Task ImageImportExportPictureDataTest(ExcelFormat excelFormat)
     {
-        using var httpClient = new HttpClient();
-        var imageBytes = await httpClient.GetByteArrayAsync("https://www.nuget.org/profiles/weihanli/avatar?imageSize=64");
+        var imageBytes = await HttpHelper.HttpClient.GetByteArrayAsync(
+            "https://www.nuget.org/profiles/weihanli/avatar?imageSize=64", TestContext.Current.CancellationToken
+            );
         var list = Enumerable.Range(1, 5)
             .Select(x => new ImageTest() { Id = x, Image = imageBytes })
             .ToList();
@@ -823,7 +826,7 @@ public class ExcelTest
     }
 
     [Theory]
-    [ExcelFormatData]
+    [ClassData(typeof(ExcelFormatData))]
     public void SheetNameTest_ToExcelFile(ExcelFormat excelFormat)
     {
         IReadOnlyList<Notice> list = Enumerable.Range(0, 10).Select(i => new Notice()
@@ -858,7 +861,7 @@ public class ExcelTest
     }
 
     [Theory]
-    [ExcelFormatData]
+    [ClassData(typeof(ExcelFormatData))]
     public void SheetNameTest_ToExcelBytes(ExcelFormat excelFormat)
     {
         IReadOnlyList<Notice> list = Enumerable.Range(0, 10).Select(i => new Notice()
@@ -889,7 +892,7 @@ public class ExcelTest
     }
 
     [Theory]
-    [ExcelFormatData]
+    [ClassData(typeof(ExcelFormatData))]
     public void DuplicateColumnTest(ExcelFormat excelFormat)
     {
         var workbook = ExcelHelper.PrepareWorkbook(excelFormat);
@@ -931,7 +934,7 @@ public class ExcelTest
     }
 
     [Theory]
-    [ExcelFormatData]
+    [ClassData(typeof(ExcelFormatData))]
     public void ValidatorTest(ExcelFormat excelFormat)
     {
         var list = new List<Job>()
@@ -954,7 +957,7 @@ public class ExcelTest
     }
 
     [Theory]
-    [ExcelFormatData]
+    [ClassData(typeof(ExcelFormatData))]
     public void ValidatorTest_CustomValidator(ExcelFormat excelFormat)
     {
         var list = new List<Job>()
@@ -981,7 +984,7 @@ public class ExcelTest
     }
 
     [Theory]
-    [ExcelFormatData]
+    [ClassData(typeof(ExcelFormatData))]
     public void CellReaderTest(ExcelFormat excelFormat)
     {
         var jobs = new CellReaderTestModel[] { new() { Id = 1, Name = "test" }, new() { Id = 2 }, };
@@ -1006,7 +1009,7 @@ public class ExcelTest
     }
 
     [Theory]
-    [ExcelFormatData]
+    [ClassData(typeof(ExcelFormatData))]
     public void CellTypeTest(ExcelFormat excelFormat)
     {
         var workbook = ExcelHelper.PrepareWorkbook(excelFormat);
@@ -1037,7 +1040,7 @@ public class ExcelTest
     }
 
     [Theory]
-    [ExcelFormatData]
+    [ClassData(typeof(ExcelFormatData))]
     public void HeaderCellTypeTest(ExcelFormat excelFormat)
     {
         var workbook = ExcelHelper.PrepareWorkbook(excelFormat);
@@ -1063,7 +1066,7 @@ public class ExcelTest
     }
 
     [Theory]
-    [ExcelFormatData]
+    [ClassData(typeof(ExcelFormatData))]
     public void ChineseDateFormatterTest(ExcelFormat excelFormat)
     {
         FluentSettings.For<ChineseDateFormatter.ChineDateTestModel>()
