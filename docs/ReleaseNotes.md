@@ -1,5 +1,9 @@
 # WeihanLi.Npoi Release Notes
 
+## [3.1.0](https://www.nuget.org/packages/WeihanLi.Npoi/3.1.0)(To be released)
+
+- Upgrade NPOI package to fix merged region handling bug which causes export excel by template with merged region exception
+
 ## [3.0.0](https://www.nuget.org/packages/WeihanLi.Npoi/3.0.0)
 
 - Remove `net6.0` target, and update build sdk and samples/tests to `net8.0`
