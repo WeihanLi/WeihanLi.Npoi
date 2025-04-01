@@ -1320,7 +1320,7 @@ public static class NpoiExtensions
             throw new ArgumentNullException(nameof(templateWorkbook));
         }
 
-        if (sheetIndex <= 0)
+        if (sheetIndex < 0)
         {
             sheetIndex = 0;
         }
@@ -1416,7 +1416,7 @@ public static class NpoiExtensions
             throw new ArgumentNullException(nameof(templateWorkbook));
         }
 
-        if (sheetIndex <= 0)
+        if (sheetIndex < 0)
         {
             sheetIndex = 0;
         }
