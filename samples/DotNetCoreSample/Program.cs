@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Weihan Li. All rights reserved.
 // Licensed under the Apache license.
 
-using NPOI.HSSF.UserModel;
 using NPOI.SS.UserModel;
 using NPOI.SS.Util;
 using WeihanLi.Common.Helpers;
@@ -356,7 +355,7 @@ internal class TestEntity : BaseEntity
     public DateTime UpdatedTime { get; set; }
 
     public bool Enabled { get; set; }
-    
+
     public EntityType Type { get; set; }
 }
 
