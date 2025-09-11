@@ -6,13 +6,13 @@
     <NuGetAuditMode>direct</NuGetAuditMode>
   </PropertyGroup>
   <ItemGroup>
-    <PackageVersion Include="BenchmarkDotNet" Version="0.14.0" />
+    <PackageVersion Include="BenchmarkDotNet" Version="0.15.2" />
     <PackageVersion Include="coverlet.collector" Version="6.0.4" />
     <PackageVersion Include="EPPlus.Core.Extensions" Version="2.4.0" />
-    <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.13.0" />
+    <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.14.1" />
     <PackageVersion Include="NPOI" Version="2.7.3" />
-    <PackageVersion Include="WeihanLi.Common" Version="1.0.81" />
-    <PackageVersion Include="xunit.v3" Version="2.0.2" />
-    <PackageVersion Include="Xunit.DependencyInjection" Version="10.4.2" />
+    <PackageVersion Include="WeihanLi.Common" Version="1.0.82" />
+    <PackageVersion Include="xunit.v3" Version="3.0.1" />
+    <PackageVersion Include="Xunit.DependencyInjection" Version="10.7.0" />
   </ItemGroup>
 </Project>
