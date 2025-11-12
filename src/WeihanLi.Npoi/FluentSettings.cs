@@ -73,7 +73,7 @@ public static class FluentSettings
     /// <typeparam name="TMappingProfile">mapping profile type</typeparam>
     public static void LoadMappingProfile<TEntity, TMappingProfile>(TMappingProfile profile) where TMappingProfile : IMappingProfile<TEntity>
     {
-        Guard.NotNull(profile, nameof(profile));
+        Guard.NotNull(profile);
         profile.Configure(InternalHelper.GetExcelConfigurationMapping<TEntity>());
     }
 

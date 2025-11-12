@@ -319,7 +319,7 @@ internal static class NpoiHelper
     /// <returns>sheet</returns>
     public static ISheet DataTableToSheet<TEntity>(ISheet sheet, DataTable? dataTable, int sheetIndex)
     {
-        Guard.NotNull(sheet, nameof(sheet));
+        Guard.NotNull(sheet);
         if (dataTable is null || dataTable.Rows.Count == 0 || dataTable.Columns.Count == 0)
         {
             return sheet;
