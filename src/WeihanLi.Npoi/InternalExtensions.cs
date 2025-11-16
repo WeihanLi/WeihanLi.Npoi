@@ -142,14 +142,9 @@ internal static class InternalExtensions
         mappingDictionary.Values.FirstOrDefault(k => k.ColumnTitle.EqualsIgnoreCase(columnTitle)) ??
         mappingDictionary.GetPropertySettingByPropertyName(columnTitle);
 
-    private sealed class CustomValidator : IValidator
+    private sealed class CustomValidator(Func<object?, ValidationResult> func) : IValidator
     {
-        private readonly Func<object?, ValidationResult> _func;
-
-        public CustomValidator(Func<object?, ValidationResult> func)
-        {
-            _func = Guard.NotNull(func);
-        }
+        private readonly Func<object?, ValidationResult> _func = Guard.NotNull(func);
 
         public ValidationResult Validate(object? value)
         {

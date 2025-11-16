@@ -10,11 +10,9 @@ namespace WeihanLi.Npoi;
 /// <summary>
 ///     npoi sheet row collection
 /// </summary>
-public sealed class NpoiRowCollection : IReadOnlyCollection<IRow>
+public sealed class NpoiRowCollection(ISheet sheet) : IReadOnlyCollection<IRow>
 {
-    private readonly ISheet _sheet;
-
-    public NpoiRowCollection(ISheet sheet) => _sheet = Guard.NotNull(sheet);
+    private readonly ISheet _sheet = Guard.NotNull(sheet);
 
     public int Count => _sheet.LastRowNum - _sheet.FirstRowNum + 1;
 
@@ -32,11 +30,9 @@ public sealed class NpoiRowCollection : IReadOnlyCollection<IRow>
 /// <summary>
 ///     npoi row cell collection
 /// </summary>
-public sealed class NpoiCellCollection : IReadOnlyCollection<ICell>
+public sealed class NpoiCellCollection(IRow row) : IReadOnlyCollection<ICell>
 {
-    private readonly IRow _row;
-
-    public NpoiCellCollection(IRow row) => _row = Guard.NotNull(row);
+    private readonly IRow _row = Guard.NotNull(row);
 
     public int Count => _row.LastCellNum - _row.FirstCellNum;
 

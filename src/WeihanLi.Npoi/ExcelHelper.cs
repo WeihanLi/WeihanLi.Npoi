@@ -19,27 +19,25 @@ namespace WeihanLi.Npoi;
 /// </summary>
 public static class ExcelHelper
 {
-    private static readonly Version s_appVersion = typeof(ExcelHelper).Assembly.GetName().Version!;
-    private static ExcelSetting s_defaultExcelSetting = new();
-    private static IValidator _defaultDataValidator = DataAnnotationValidator.Instance;
+    private static readonly Version AppVersion = typeof(ExcelHelper).Assembly.GetName().Version!;
 
     /// <summary>
     ///     Default excel setting for export excel files
     /// </summary>
     public static ExcelSetting DefaultExcelSetting
     {
-        get => s_defaultExcelSetting;
-        set => s_defaultExcelSetting = Guard.NotNull(value);
-    }
+        get;
+        set => field = Guard.NotNull(value);
+    } = new();
 
     /// <summary>
     /// Default Data Validator
     /// </summary>
     public static IValidator DefaultDataValidator
     {
-        get => _defaultDataValidator;
-        set => _defaultDataValidator = Guard.NotNull(value);
-    }
+        get;
+        set => field = Guard.NotNull(value);
+    } = DataAnnotationValidator.Instance;
 
     /// <summary>
     ///     Validate whether the Excel path valid
@@ -47,7 +45,7 @@ public static class ExcelHelper
     /// <param name="excelPath">excel path</param>
     /// <param name="msg">error message</param>
     /// <param name="isExport">is export operation</param>
-    /// <returns>is valid excel path</returns>
+    /// <returns>is valid Excel path</returns>
     private static bool ValidateExcelFilePath(string excelPath, out string msg, bool isExport = false)
     {
         if (string.IsNullOrWhiteSpace(excelPath))
@@ -217,7 +215,7 @@ public static class ExcelHelper
             props.CoreProperties.Description = setting.Description;
             props.ExtendedProperties.GetUnderlyingProperties().Company = setting.Company;
             props.ExtendedProperties.GetUnderlyingProperties().Application = InternalConstants.ApplicationName;
-            props.ExtendedProperties.GetUnderlyingProperties().AppVersion = s_appVersion.ToString(3);
+            props.ExtendedProperties.GetUnderlyingProperties().AppVersion = AppVersion.ToString(3);
             return workbook;
         }
         else

@@ -12,39 +12,36 @@ namespace WeihanLi.Npoi.Settings;
 public sealed class SheetSetting
 {
     private Func<ICell, bool> _cellFilter = _ => true;
-    private Func<IRow, bool>? _rowFilter = _ => true;
-    private string _sheetName = "Sheet0";
-    private int _startRowIndex = 1;
 
     /// <summary>
     ///     SheetName
     /// </summary>
     public string SheetName
     {
-        get => _sheetName;
+        get;
         set
         {
             if (value.IsNotNullOrWhiteSpace())
             {
-                _sheetName = value;
+                field = value;
             }
         }
-    }
+    } = "Sheet0";
 
     /// <summary>
     ///     StartRowIndex
     /// </summary>
     public int StartRowIndex
     {
-        get => _startRowIndex;
+        get;
         set
         {
             if (value >= 0)
             {
-                _startRowIndex = value;
+                field = value;
             }
         }
-    }
+    } = 1;
 
     /// <summary>
     ///     HeaderRowIndex
@@ -75,9 +72,9 @@ public sealed class SheetSetting
     /// </summary>
     public Func<IRow, bool>? RowFilter
     {
-        get => _rowFilter;
-        set => _rowFilter = value ?? (_ => true);
-    }
+        get;
+        set => field = value ?? (_ => true);
+    } = _ => true;
 
     /// <summary>
     ///     Cell Action on export
