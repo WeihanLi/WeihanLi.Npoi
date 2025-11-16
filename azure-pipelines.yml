@@ -22,4 +22,5 @@ steps:
 - powershell: dotnet build.cs
   displayName: 'Powershell Script'
   env:
-    Nuget__ApiKey: $(nugetApiKey)
+    NuGet__ApiKey: $(nugetApiKey)
+    NuGet__Source: $(nugetSourceUrl)
