@@ -15,7 +15,7 @@ jobs:
             10.0.x
     - name: Build
       shell: pwsh
-      run: .\build.ps1 --stable=true
+      run: dotnet build.cs --stable=true
     - name: Get Release Version
       shell: pwsh
       run: .\build\getReleaseVersion.ps1
@@ -26,5 +26,3 @@ jobs:
         automatic_release_tag: ${{ env.ReleaseVersion }}
         title: ${{ env.ReleaseVersion }}
         prerelease: false
-        files: |
-          artifacts/packages/*
