@@ -2,7 +2,6 @@
 // Licensed under the Apache license.
 
 #:package WeihanLi.Common
-#:property PublishAot=false
 
 using WeihanLi.Common.Helpers;
 
