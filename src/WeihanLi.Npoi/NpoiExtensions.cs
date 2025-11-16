@@ -1203,6 +1203,7 @@ public static class NpoiExtensions
     {
         Guard.NotNull(entities);
         Guard.NotNull(templatePath);
+        Guard.NotNull(excelPath);
 
         var workbook = ExcelHelper.LoadExcel(templatePath);
         entities.ToExcelFileByTemplate(workbook, excelPath, sheetIndex, extraData);
