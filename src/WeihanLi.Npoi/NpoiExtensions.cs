@@ -142,10 +142,7 @@ public static class NpoiExtensions
     public static DataSet ToDataSet(this IWorkbook workbook, int headerRowIndex, bool removeEmptyRows = false,
         int? maxColumns = null)
     {
-        if (workbook is null)
-        {
-            throw new ArgumentNullException(nameof(workbook));
-        }
+        Guard.NotNull(workbook);
 
         var ds = new DataSet();
         for (var i = 0; i < workbook.NumberOfSheets; i++)
@@ -168,10 +165,7 @@ public static class NpoiExtensions
     public static DataTable ToDataTable(this IWorkbook workbook, int sheetIndex, int headerRowIndex,
         bool removeEmptyRows = false, int? maxColumns = null)
     {
-        if (workbook is null)
-        {
-            throw new ArgumentNullException(nameof(workbook));
-        }
+        Guard.NotNull(workbook);
 
         if (workbook.NumberOfSheets <= sheetIndex)
         {
@@ -203,10 +197,7 @@ public static class NpoiExtensions
     public static DataTable ToDataTable(this ISheet sheet, int headerRowIndex, bool removeEmptyRows = false,
         int? maxColumns = null)
     {
-        if (sheet is null)
-        {
-            throw new ArgumentNullException(nameof(sheet));
-        }
+        Guard.NotNull(sheet);
 
         if (sheet.LastRowNum <= headerRowIndex)
         {
@@ -311,10 +302,7 @@ public static class NpoiExtensions
     public static int ImportData<TEntity>(this IWorkbook workbook, IEnumerable<TEntity> list,
         int sheetIndex)
     {
-        if (workbook is null)
-        {
-            throw new ArgumentNullException(nameof(workbook));
-        }
+        Guard.NotNull(workbook);
 
         if (workbook is HSSFWorkbook)
         {
@@ -401,10 +389,7 @@ public static class NpoiExtensions
     public static int ImportData<TEntity>(this IWorkbook workbook, DataTable dataTable,
         int sheetIndex)
     {
-        if (workbook is null)
-        {
-            throw new ArgumentNullException(nameof(workbook));
-        }
+        Guard.NotNull(workbook);
 
         if (workbook is HSSFWorkbook)
         {
@@ -490,10 +475,7 @@ public static class NpoiExtensions
     public static void ToExcelFile<TEntity>(this IEnumerable<TEntity> entityList,
         string excelPath, int sheetIndex)
     {
-        if (entityList is null)
-        {
-            throw new ArgumentNullException(nameof(entityList));
-        }
+        Guard.NotNull(entityList);
 
         var configuration = InternalHelper.GetExcelConfigurationMapping<TEntity>();
 
@@ -522,10 +504,7 @@ public static class NpoiExtensions
     public static void ToExcelStream<TEntity>(this IEnumerable<TEntity> entityList,
         Stream stream, ExcelFormat excelFormat, int sheetIndex)
     {
-        if (entityList is null)
-        {
-            throw new ArgumentNullException(nameof(entityList));
-        }
+        Guard.NotNull(entityList);
 
         var configuration = InternalHelper.GetExcelConfigurationMapping<TEntity>();
 
@@ -554,10 +533,7 @@ public static class NpoiExtensions
     public static void ToExcelStream<TEntity>(this IList<TEntity> entityList,
         Stream stream, ExcelFormat excelFormat = ExcelFormat.Xls)
     {
-        if (entityList is null)
-        {
-            throw new ArgumentNullException(nameof(entityList));
-        }
+        Guard.NotNull(entityList);
 
         var workbook = entityList.GetWorkbookWithAutoSplitSheet(excelFormat);
         workbook.Write(stream);
@@ -631,10 +607,7 @@ public static class NpoiExtensions
     public static IWorkbook GetWorkbookWithAutoSplitSheet<TEntity>(this IList<TEntity> entityList,
         ExcelFormat excelFormat)
     {
-        if (entityList is null)
-        {
-            throw new ArgumentNullException(nameof(entityList));
-        }
+        Guard.NotNull(entityList);
 
         var configuration = InternalHelper.GetExcelConfigurationMapping<TEntity>();
 
@@ -673,10 +646,7 @@ public static class NpoiExtensions
     public static IWorkbook GetWorkbookWithAutoSplitSheet(this DataTable dataTable, ExcelFormat excelFormat,
         ExcelSetting? excelSetting = null)
     {
-        if (dataTable is null)
-        {
-            throw new ArgumentNullException(nameof(dataTable));
-        }
+        Guard.NotNull(dataTable);
 
         var workbook = ExcelHelper.PrepareWorkbook(excelFormat, excelSetting ?? ExcelHelper.DefaultExcelSetting);
         var maxRowCount = excelFormat == ExcelFormat.Xls
@@ -740,10 +710,7 @@ public static class NpoiExtensions
     /// <param name="dataTable">dataTable</param>
     public static void ImportData(this ISheet sheet, DataTable? dataTable)
     {
-        if (sheet is null)
-        {
-            throw new ArgumentNullException(nameof(sheet));
-        }
+        Guard.NotNull(sheet);
 
         if (dataTable is null)
         {
@@ -779,10 +746,7 @@ public static class NpoiExtensions
     /// <returns></returns>
     public static void ToExcelFile(this DataTable dataTable, string excelPath, ExcelSetting? excelSetting)
     {
-        if (dataTable is null)
-        {
-            throw new ArgumentNullException(nameof(dataTable));
-        }
+        Guard.NotNull(dataTable);
 
         var workbook = dataTable.GetWorkbookWithAutoSplitSheet(
             excelPath.EndsWith(".xls", StringComparison.OrdinalIgnoreCase) ? ExcelFormat.Xls : ExcelFormat.Xlsx,
@@ -820,10 +784,7 @@ public static class NpoiExtensions
     public static void ToExcelStream(this DataTable dataTable, Stream stream, ExcelFormat excelFormat,
         ExcelSetting? excelSetting)
     {
-        if (dataTable is null)
-        {
-            throw new ArgumentNullException(nameof(dataTable));
-        }
+        Guard.NotNull(dataTable);
 
         var workbook = dataTable.GetWorkbookWithAutoSplitSheet(excelFormat, excelSetting);
         workbook.Write(stream);
@@ -851,10 +812,7 @@ public static class NpoiExtensions
     /// <param name="excelSetting">excelSetting</param>
     public static byte[] ToExcelBytes(this DataTable dataTable, ExcelFormat excelFormat, ExcelSetting? excelSetting)
     {
-        if (dataTable is null)
-        {
-            throw new ArgumentNullException(nameof(dataTable));
-        }
+        Guard.NotNull(dataTable);
 
         var workbook = dataTable.GetWorkbookWithAutoSplitSheet(excelFormat, excelSetting);
         return workbook.ToExcelBytes(true);
@@ -875,10 +833,7 @@ public static class NpoiExtensions
     /// <param name="formatter">formatter</param>
     public static void SetCellValue(this ICell cell, object? value, string? formatter)
     {
-        if (cell is null)
-        {
-            throw new ArgumentNullException(nameof(cell));
-        }
+        Guard.NotNull(cell);
 
         if (value is null || DBNull.Value == value)
         {
@@ -1065,10 +1020,7 @@ public static class NpoiExtensions
     /// <returns></returns>
     public static IFormulaEvaluator GetFormulaEvaluator(this IWorkbook workbook)
     {
-        if (workbook is null)
-        {
-            throw new ArgumentNullException(nameof(workbook));
-        }
+        Guard.NotNull(workbook);
 
         return workbook switch
         {
@@ -1086,10 +1038,7 @@ public static class NpoiExtensions
     /// <returns></returns>
     public static Dictionary<CellPosition, IPictureData> GetPicturesAndPosition(this ISheet sheet)
     {
-        if (sheet is null)
-        {
-            throw new ArgumentNullException(nameof(sheet));
-        }
+        Guard.NotNull(sheet);
 
         var dictionary = new Dictionary<CellPosition, IPictureData>();
         if (sheet.DrawingPatriarch is null)
@@ -1146,10 +1095,7 @@ public static class NpoiExtensions
     public static bool TryAddPicture(this ISheet sheet, int row, int col, byte[] pictureBytes,
         PictureType pictureType = PictureType.PNG)
     {
-        if (sheet is null)
-        {
-            throw new ArgumentNullException(nameof(sheet));
-        }
+        Guard.NotNull(sheet);
 
         try
         {
@@ -1255,15 +1201,9 @@ public static class NpoiExtensions
     public static void ToExcelFileByTemplate<TEntity>(this IEnumerable<TEntity> entities, string templatePath,
         string excelPath, int sheetIndex = 0, object? extraData = null)
     {
-        if (templatePath is null)
-        {
-            throw new ArgumentNullException(nameof(templatePath));
-        }
-
-        if (excelPath is null)
-        {
-            throw new ArgumentNullException(nameof(excelPath));
-        }
+        Guard.NotNull(entities);
+        Guard.NotNull(templatePath);
+        Guard.NotNull(excelPath);
 
         var workbook = ExcelHelper.LoadExcel(templatePath);
         entities.ToExcelFileByTemplate(workbook, excelPath, sheetIndex, extraData);
@@ -1283,15 +1223,9 @@ public static class NpoiExtensions
     public static void ToExcelFileByTemplate<TEntity>(this IEnumerable<TEntity> entities, byte[] templateBytes,
         string excelPath, ExcelFormat excelFormat = ExcelFormat.Xls, int sheetIndex = 0, object? extraData = null)
     {
-        if (templateBytes is null)
-        {
-            throw new ArgumentNullException(nameof(templateBytes));
-        }
-
-        if (excelPath is null)
-        {
-            throw new ArgumentNullException(nameof(excelPath));
-        }
+        Guard.NotNull(entities);
+        Guard.NotNull(templateBytes);
+        Guard.NotNull(excelPath);
 
         var workbook = ExcelHelper.LoadExcel(templateBytes, excelFormat);
         entities.ToExcelFileByTemplate(workbook, excelPath, sheetIndex, extraData);
@@ -1310,15 +1244,8 @@ public static class NpoiExtensions
     public static void ToExcelFileByTemplate<TEntity>(this IEnumerable<TEntity> entities,
         IWorkbook templateWorkbook, string excelPath, int sheetIndex = 0, object? extraData = null)
     {
-        if (entities is null)
-        {
-            throw new ArgumentNullException(nameof(entities));
-        }
-
-        if (templateWorkbook is null)
-        {
-            throw new ArgumentNullException(nameof(templateWorkbook));
-        }
+        Guard.NotNull(entities);
+        Guard.NotNull(templateWorkbook);
 
         if (sheetIndex < 0)
         {
@@ -1358,15 +1285,8 @@ public static class NpoiExtensions
     public static byte[] ToExcelBytesByTemplate<TEntity>(this IEnumerable<TEntity> entities, byte[] templateBytes,
         ExcelFormat excelFormat = ExcelFormat.Xls, int sheetIndex = 0, object? extraData = null)
     {
-        if (entities is null)
-        {
-            throw new ArgumentNullException(nameof(entities));
-        }
-
-        if (templateBytes is null)
-        {
-            throw new ArgumentNullException(nameof(templateBytes));
-        }
+        Guard.NotNull(entities);
+        Guard.NotNull(templateBytes);
 
         var workbook = ExcelHelper.LoadExcel(templateBytes, excelFormat);
         return ToExcelBytesByTemplate(entities, workbook, sheetIndex, extraData);
@@ -1385,10 +1305,7 @@ public static class NpoiExtensions
     public static byte[] ToExcelBytesByTemplate<TEntity>(this IEnumerable<TEntity> entities, Stream templateStream,
         ExcelFormat excelFormat = ExcelFormat.Xls, int sheetIndex = 0, object? extraData = null)
     {
-        if (templateStream is null)
-        {
-            throw new ArgumentNullException(nameof(templateStream));
-        }
+        Guard.NotNull(templateStream);
 
         var workbook = ExcelHelper.LoadExcel(templateStream, excelFormat);
         return ToExcelBytesByTemplate(entities, workbook, sheetIndex, extraData);
@@ -1406,15 +1323,8 @@ public static class NpoiExtensions
     public static byte[] ToExcelBytesByTemplate<TEntity>(this IEnumerable<TEntity> entities,
         IWorkbook templateWorkbook, int sheetIndex = 0, object? extraData = null)
     {
-        if (entities is null)
-        {
-            throw new ArgumentNullException(nameof(entities));
-        }
-
-        if (templateWorkbook is null)
-        {
-            throw new ArgumentNullException(nameof(templateWorkbook));
-        }
+        Guard.NotNull(entities);
+        Guard.NotNull(templateWorkbook);
 
         if (sheetIndex < 0)
         {
@@ -1439,10 +1349,7 @@ public static class NpoiExtensions
     public static byte[] ToExcelBytesByTemplate<TEntity>(this IEnumerable<TEntity> entities, ISheet templateSheet,
         object? extraData = null)
     {
-        if (entities is null)
-        {
-            throw new ArgumentNullException(nameof(entities));
-        }
+        Guard.NotNull(entities);
 
         NpoiTemplateHelper.EntityListToSheetByTemplate(
             templateSheet, entities, extraData

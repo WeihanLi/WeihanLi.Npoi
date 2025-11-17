@@ -2,6 +2,7 @@
 // Licensed under the Apache license.
 
 using NPOI.SS.UserModel;
+using NPOI.SS.Util;
 using WeihanLi.Common.Helpers;
 using WeihanLi.Common.Logging;
 using WeihanLi.Extensions;
@@ -12,7 +13,6 @@ using WeihanLi.Npoi.Configurations;
 // ReSharper disable All
 
 LogHelper.ConfigureLogging(x => x.WithMinimumLevel(LogHelperLogLevel.Info).AddConsole());
-
 
 // multi sheets sample
 {
@@ -57,27 +57,28 @@ LogHelper.ConfigureLogging(x => x.WithMinimumLevel(LogHelperLogLevel.Info).AddCo
     Console.ReadLine();
 }
 
+//
+// var testSurveyExcelPath = @"C:\Users\Weiha\Desktop\temp\QuizBulkUpload.xlsx";
+// var surveyList = ExcelHelper.ToEntityList<SurveyImportDto>(testSurveyExcelPath);
 
-
-var testSurveyExcelPath = @"C:\Users\Weiha\Desktop\temp\QuizBulkUpload.xlsx";
-var surveyList = ExcelHelper.ToEntityList<SurveyImportDto>(testSurveyExcelPath);
-
-SheetNameTest();
+// SheetNameTest();
 
 FluentSettings.LoadMappingProfile<TestEntity, TestEntityExcelMappingProfile>();
 var tempDirPath = $@"{Environment.GetEnvironmentVariable("USERPROFILE")}\Desktop\temp\test";
 
-// custom CsvSeparatorCharacter sample
-var csvOptions = new CsvOptions() { SeparatorCharacter = '\t' };
-var text = CsvHelper.GetCsvText(new[]
 {
+    // custom CsvSeparatorCharacter sample
+    var csvOptions = new CsvOptions() { SeparatorCharacter = '\t' };
+    var text = CsvHelper.GetCsvText(new[]
+    {
         new
         {
             Title = "123",
             Desc = "234"
         }
-}, csvOptions);
-var dt1233 = CsvHelper.ToDataTable(text.GetBytes(), csvOptions);
+    }, csvOptions);
+    var dt1233 = CsvHelper.ToDataTable(text.GetBytes(), csvOptions);
+}
 
 // image export/import test
 //var imageExcelPath = @"C:\Users\Weiha\Desktop\temp\test\imageTest.xls";
@@ -245,7 +246,8 @@ class TestEntityExcelMappingProfile : IMappingProfile<TestEntity>
         setting.HasAuthor("WeihanLi")
             .HasTitle("WeihanLi.Npoi test")
             .HasDescription("WeihanLi.Npoi test")
-            .HasSubject("WeihanLi.Npoi test");
+            .HasSubject("WeihanLi.Npoi test")
+            ;
 
         setting.HasSheetSetting(config =>
         {
@@ -265,6 +267,19 @@ class TestEntityExcelMappingProfile : IMappingProfile<TestEntity>
                     font.FontHeight = 200;
                     style.SetFont(font);
                     row.Cells.ForEach(c => c.CellStyle = style);
+                }
+            };
+            config.CellAction = cell =>
+            {
+                if (cell.RowIndex == 0 && cell.StringCellValue == "EntityType")
+                {
+                    var enumNames = Enum.GetNames<EntityType>();
+                    var validationHelper = cell.Sheet.GetDataValidationHelper();
+                    var constraint = validationHelper.CreateExplicitListConstraint(enumNames);
+                    var addressList = new CellRangeAddressList(1, 3, cell.ColumnIndex, cell.ColumnIndex); // Col B
+                    var validation = validationHelper.CreateValidation(constraint, addressList);
+                    validation.ShowErrorBox = true;
+                    cell.Sheet.AddValidationData(validation);
                 }
             };
         });
@@ -306,6 +321,10 @@ class TestEntityExcelMappingProfile : IMappingProfile<TestEntity>
         setting.Property("HiddenProp")
             .HasOutputFormatter((entity, val) => $"HiddenProp_{entity?.PKID}");
 
+        setting.Property(x => x.Type)
+            .HasColumnTitle("EntityType")
+            .HasColumnIndex(8);
+
         setting.Property(_ => _.PKID).Ignored();
         setting.Property(_ => _.UpdatedBy).Ignored();
         setting.Property(_ => _.UpdatedTime).Ignored();
@@ -336,6 +355,14 @@ internal class TestEntity : BaseEntity
     public DateTime UpdatedTime { get; set; }
 
     public bool Enabled { get; set; }
+
+    public EntityType Type { get; set; }
+}
+
+public enum EntityType
+{
+    Default = 0,
+    Special = 1
 }
 
 [Sheet(SheetIndex = 0, SheetName = "TestSheet", AutoColumnWidthEnabled = true)]
@@ -395,4 +422,5 @@ internal sealed class SurveyImportDto
     [Column(7)]
     public string Tips { get; set; }
 }
+
 #nullable restore

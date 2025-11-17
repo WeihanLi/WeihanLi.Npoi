@@ -1,108 +1,102 @@
 ﻿// Copyright (c) Weihan Li. All rights reserved.
 // Licensed under the Apache license.
 
+using WeihanLi.Common;
 using WeihanLi.Extensions;
 
 namespace WeihanLi.Npoi;
 
 public sealed class TemplateOptions
 {
-    private string _templateDataBegin = InternalConstants.TemplateDataBegin;
-    private string _templateDataEnd = InternalConstants.TemplateDataEnd;
-    private string _templateDataParamFormat = InternalConstants.TemplateDataParamFormat;
-    private string _templateDataPrefix = InternalConstants.TemplateDataPrefix;
-    private string _templateGlobalParamFormat = InternalConstants.TemplateGlobalParamFormat;
-    private string _templateHeaderParamFormat = InternalConstants.TemplateHeaderParamFormat;
-
     /// <summary>
     ///     Global Param Format
     /// </summary>
     public string TemplateGlobalParamFormat
     {
-        get => _templateGlobalParamFormat;
+        get;
         set
         {
             if (value.IsNotNullOrWhiteSpace())
             {
-                _templateGlobalParamFormat = value;
+                field = value;
             }
         }
-    }
+    } = InternalConstants.TemplateGlobalParamFormat;
 
     /// <summary>
     ///     Header Param Format
     /// </summary>
     public string TemplateHeaderParamFormat
     {
-        get => _templateHeaderParamFormat;
+        get;
         set
         {
             if (value.IsNotNullOrWhiteSpace())
             {
-                _templateHeaderParamFormat = value;
+                field = value;
             }
         }
-    }
+    } = InternalConstants.TemplateHeaderParamFormat;
 
     /// <summary>
     ///     Data Param Format
     /// </summary>
     public string TemplateDataParamFormat
     {
-        get => _templateDataParamFormat;
+        get;
         set
         {
             if (value.IsNotNullOrWhiteSpace())
             {
-                _templateDataParamFormat = value;
+                field = value;
             }
         }
-    }
+    } = InternalConstants.TemplateDataParamFormat;
 
     /// <summary>
     ///     Data Param Prefix
     /// </summary>
     public string TemplateDataPrefix
     {
-        get => _templateDataPrefix;
+        get;
         set
         {
             if (value.IsNotNullOrWhiteSpace())
             {
-                _templateDataPrefix = value;
+                field = value;
             }
         }
-    }
+    } = InternalConstants.TemplateDataPrefix;
 
     /// <summary>
     ///     Data Begin markup
     /// </summary>
     public string TemplateDataBegin
     {
-        get => _templateDataBegin;
+        get;
         set
         {
             if (value.IsNotNullOrWhiteSpace())
             {
-                _templateDataBegin = value;
+                field = value;
             }
         }
-    }
+    } = InternalConstants.TemplateDataBegin;
 
     /// <summary>
     ///     Data End markup
     /// </summary>
     public string TemplateDataEnd
     {
-        get => _templateDataEnd;
+        get;
         set
         {
             if (value.IsNotNullOrWhiteSpace())
             {
-                _templateDataEnd = value;
+                field = value;
             }
         }
-    }
+    } = InternalConstants.TemplateDataEnd;
 }
 
 public static class TemplateHelper
@@ -113,10 +107,7 @@ public static class TemplateHelper
     /// <param name="optionsAction">optionsAction</param>
     public static void ConfigureTemplateOptions(Action<TemplateOptions> optionsAction)
     {
-        if (optionsAction is null)
-        {
-            throw new ArgumentNullException(nameof(optionsAction));
-        }
+        Guard.NotNull(optionsAction);
 
         optionsAction.Invoke(NpoiTemplateHelper.s_templateOptions);
     }

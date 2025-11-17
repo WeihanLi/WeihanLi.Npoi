@@ -6,32 +6,30 @@ jobs:
   mac-build:
     runs-on: macos-latest
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v5
     - name: Setup .NET SDK
-      uses: actions/setup-dotnet@v4
+      uses: actions/setup-dotnet@v5
       with:
         dotnet-version: |
-            8.0.x
-            9.0.x
+            10.0.x
     - name: dotnet info
       run: dotnet --info
     - name: build
-      run: bash build.sh --target=build
+      run: dotnet build.cs --target=build
   
   linux-build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v5
     - name: Setup .NET SDK
-      uses: actions/setup-dotnet@v4
+      uses: actions/setup-dotnet@v5
       with:
         dotnet-version: |
-            8.0.x
-            9.0.x
+            10.0.x
     - name: dotnet info
       run: dotnet --info
     - name: build
-      run: bash build.sh --target=build
+      run: dotnet build.cs --target=build
     - name: Run Infer#      
       uses: microsoft/infersharpaction@v1.0
       with:
@@ -42,15 +40,13 @@ jobs:
   windows-build:
     runs-on: windows-latest
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v5
     - name: Setup .NET SDK
-      uses: actions/setup-dotnet@v4
+      uses: actions/setup-dotnet@v5
       with:
         dotnet-version: |
-            8.0.x
-            9.0.x
+            10.0.x
     - name: dotnet info
       run: dotnet --info
     - name: build
-      shell: pwsh
-      run: .\build.ps1
+      run: dotnet build.cs

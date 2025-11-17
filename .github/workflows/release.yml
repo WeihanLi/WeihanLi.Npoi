@@ -7,16 +7,15 @@ jobs:
     name: Release
     runs-on: windows-latest
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v5
     - name: Setup .NET SDK
-      uses: actions/setup-dotnet@v4
+      uses: actions/setup-dotnet@v5
       with:
         dotnet-version: |
-            8.0.x
-            9.0.x
+            10.0.x
     - name: Build
       shell: pwsh
-      run: .\build.ps1 --stable=true
+      run: dotnet build.cs --stable=true
     - name: Get Release Version
       shell: pwsh
       run: .\build\getReleaseVersion.ps1
@@ -27,5 +26,3 @@ jobs:
         automatic_release_tag: ${{ env.ReleaseVersion }}
         title: ${{ env.ReleaseVersion }}
         prerelease: false
-        files: |
-          artifacts/packages/*
