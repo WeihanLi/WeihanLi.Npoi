@@ -12,7 +12,7 @@
     <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="18.0.1" />
     <PackageVersion Include="NPOI" Version="2.7.3" />
     <PackageVersion Include="WeihanLi.Common" Version="1.0.85" />
-    <PackageVersion Include="xunit.v3" Version="3.2.0" />
+    <PackageVersion Include="xunit.v3.mtp-v2" Version="3.2.0" />
     <PackageVersion Include="Xunit.DependencyInjection" Version="11.1.0" />
   </ItemGroup>
 </Project>

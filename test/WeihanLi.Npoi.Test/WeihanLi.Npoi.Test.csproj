@@ -9,7 +9,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
-    <PackageReference Include="xunit.v3" />
+    <PackageReference Include="xunit.v3.mtp-v2" />
     <PackageReference Include="Xunit.DependencyInjection" />
     <PackageReference Include="coverlet.collector">
       <PrivateAssets>all</PrivateAssets>
