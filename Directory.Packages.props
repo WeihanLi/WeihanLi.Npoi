@@ -12,7 +12,7 @@
     <PackageVersion Include="GitHubActionsTestLogger" Version="3.0.1" />
     <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="18.0.1" />
     <PackageVersion Include="NPOI" Version="2.7.3" />
-    <PackageVersion Include="WeihanLi.Common" Version="1.0.86-preview-20260121-160313" />
+    <PackageVersion Include="WeihanLi.Common" Version="1.0.86" />
     <PackageVersion Include="xunit.v3.mtp-v2" Version="3.2.2" />
     <PackageVersion Include="Xunit.DependencyInjection" Version="11.1.1" />
   </ItemGroup>
