@@ -1,4 +1,4 @@
-// Copyright (c) Weihan Li. All rights reserved.
+﻿// Copyright (c) Weihan Li. All rights reserved.
 // Licensed under the Apache license.
 
 #:package WeihanLi.Common
@@ -19,5 +19,16 @@ await DotNetPackageBuildProcess
         options.SolutionPath = solutionPath;
         options.SrcProjects = srcProjects;
         options.TestProjects = testProjects;
+        // options.AdditionalConfigure = c =>
+        // {
+        //     c.WithTask("test", (b) =>
+        //     {
+        //         b.WithExecution(async () =>
+        //         {
+        //             Console.WriteLine("Running custom test task...");
+        //             await Task.CompletedTask;
+        //         });
+        //     });
+        // };
     })
     .ExecuteAsync(args);
