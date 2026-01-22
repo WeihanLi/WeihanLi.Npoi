@@ -9,6 +9,7 @@
     <PackageVersion Include="BenchmarkDotNet" Version="0.15.8" />
     <PackageVersion Include="coverlet.collector" Version="6.0.4" />
     <PackageVersion Include="EPPlus.Core.Extensions" Version="2.4.0" />
+    <PackageVersion Include="GitHubActionsTestLogger" Version="3.0.1" />
     <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="18.0.1" />
     <PackageVersion Include="NPOI" Version="2.7.3" />
     <PackageVersion Include="WeihanLi.Common" Version="1.0.86-preview-20260121-160313" />
