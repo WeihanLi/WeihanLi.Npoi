@@ -18,12 +18,24 @@ internal abstract class ExcelConfiguration : IExcelConfiguration
     public IDictionary<PropertyInfo, PropertyConfiguration> PropertyConfigurationDictionary { get; } =
         new Dictionary<PropertyInfo, PropertyConfiguration>();
 
+    /// <summary>
+    ///     Gets the Excel-level document metadata.
+    /// </summary>
     public ExcelSetting ExcelSetting { get; } = ExcelHelper.DefaultExcelSetting;
 
+    /// <summary>
+    ///     Gets the configured freeze panes for the workbook.
+    /// </summary>
     public IList<FreezeSetting> FreezeSettings { get; } = new List<FreezeSetting>();
 
+    /// <summary>
+    ///     Gets or sets the filter configuration for the sheet.
+    /// </summary>
     public FilterSetting? FilterSetting { get; set; }
 
+    /// <summary>
+    ///     Gets the registered sheet settings keyed by sheet index.
+    /// </summary>
     public IDictionary<int, SheetSetting> SheetSettings { get; } =
         new Dictionary<int, SheetSetting> { { 0, new SheetSetting() } };
 
@@ -31,6 +43,11 @@ internal abstract class ExcelConfiguration : IExcelConfiguration
 
 
 
+    /// <summary>
+    ///     Updates the Excel document metadata in a fluent manner.
+    /// </summary>
+    /// <param name="configAction">Configuration delegate.</param>
+    /// <returns>The current configuration instance.</returns>
     public IExcelConfiguration HasExcelSetting(Action<ExcelSetting> configAction)
     {
         // ReSharper disable once ConditionalAccessQualifierIsNonNullableAccordingToAPIContract
@@ -43,6 +60,12 @@ internal abstract class ExcelConfiguration : IExcelConfiguration
 
     #region Sheet
 
+    /// <summary>
+    ///     Updates the sheet configuration for the specified index.
+    /// </summary>
+    /// <param name="configAction">Configuration delegate.</param>
+    /// <param name="sheetIndex">Target sheet index.</param>
+    /// <returns>The current configuration instance.</returns>
     public IExcelConfiguration HasSheetSetting(Action<SheetSetting> configAction, int sheetIndex = 0)
     {
         if (configAction is null)
@@ -69,12 +92,18 @@ internal abstract class ExcelConfiguration : IExcelConfiguration
 
     #region FreezePane
 
+    /// <summary>
+    ///     Adds a freeze pane using default anchor values.
+    /// </summary>
     public IExcelConfiguration HasFreezePane(int colSplit, int rowSplit)
     {
         FreezeSettings.Add(new FreezeSetting(colSplit, rowSplit));
         return this;
     }
 
+    /// <summary>
+    ///     Adds a freeze pane with the specified anchor.
+    /// </summary>
     public IExcelConfiguration HasFreezePane(int colSplit, int rowSplit, int leftmostColumn, int topRow)
     {
         FreezeSettings.Add(new FreezeSetting(colSplit, rowSplit, leftmostColumn, topRow));
@@ -85,8 +114,14 @@ internal abstract class ExcelConfiguration : IExcelConfiguration
 
     #region Filter
 
+    /// <summary>
+    ///     Adds an auto-filter that starts at the specified column.
+    /// </summary>
     public IExcelConfiguration HasFilter(int firstColumn) => HasFilter(firstColumn, null);
 
+    /// <summary>
+    ///     Adds an auto-filter covering the specified column range.
+    /// </summary>
     public IExcelConfiguration HasFilter(int firstColumn, int? lastColumn)
     {
         FilterSetting = new FilterSetting(firstColumn, lastColumn);
@@ -101,6 +136,9 @@ internal sealed class ExcelConfiguration<TEntity> : ExcelConfiguration, IExcelCo
     /// <summary>
     ///     EntityType
     /// </summary>
+    /// <summary>
+    ///     Gets the entity type represented by this configuration.
+    /// </summary>
     public Type EntityType => typeof(TEntity);
 
     internal Func<TEntity?, bool>? DataFilter { get; private set; }
@@ -111,18 +149,27 @@ internal sealed class ExcelConfiguration<TEntity> : ExcelConfiguration, IExcelCo
 
     #region Property
 
+    /// <summary>
+    ///     Assigns a custom validator.
+    /// </summary>
     public IExcelConfiguration<TEntity> WithValidator(IValidator? validator)
     {
         Validator = validator;
         return this;
     }
 
+    /// <summary>
+    ///     Applies a data filter that can skip entities during export.
+    /// </summary>
     public IExcelConfiguration<TEntity> WithDataFilter(Func<TEntity?, bool>? dataFilter)
     {
         DataFilter = dataFilter;
         return this;
     }
 
+    /// <summary>
+    ///     Controls the ordering of properties.
+    /// </summary>
     public IExcelConfiguration<TEntity> WithPropertyComparer(IComparer<PropertyInfo>? propertyComparer)
     {
         PropertyComparer = propertyComparer;
@@ -149,6 +196,12 @@ internal sealed class ExcelConfiguration<TEntity> : ExcelConfiguration, IExcelCo
         return (IPropertyConfiguration<TEntity, TProperty>)PropertyConfigurationDictionary[property];
     }
 
+    /// <summary>
+    ///     Retrieves (or builds) a configuration for the specified property name.
+    /// </summary>
+    /// <typeparam name="TProperty">Property type.</typeparam>
+    /// <param name="propertyName">Property name.</param>
+    /// <returns>Property configuration.</returns>
     public IPropertyConfiguration<TEntity, TProperty> Property<TProperty>(string propertyName)
     {
         var property = PropertyConfigurationDictionary.Keys.FirstOrDefault(p => p.Name == propertyName);

@@ -17,6 +17,9 @@ using WeihanLi.Npoi.Settings;
 
 namespace WeihanLi.Npoi;
 
+/// <summary>
+/// Extension methods that convert between NPOI primitives and the strongly-typed configuration layer.
+/// </summary>
 public static class NpoiExtensions
 {
     /// <summary>
@@ -41,6 +44,13 @@ public static class NpoiExtensions
         return ToEntities<TEntity>(workbook, sheetIndex).ToList();
     }
 
+    /// <summary>
+    ///     Lazily materializes entities from the specified sheet without building a list first.
+    /// </summary>
+    /// <typeparam name="TEntity">Entity type.</typeparam>
+    /// <param name="workbook">Excel workbook.</param>
+    /// <param name="sheetIndex">Zero-based sheet index.</param>
+    /// <returns>Sequence that yields entities row by row.</returns>
     public static IEnumerable<TEntity?> ToEntities<TEntity>(this IWorkbook workbook, int sheetIndex)
         where TEntity : new()
     {
@@ -75,6 +85,13 @@ public static class NpoiExtensions
     public static List<TEntity?> ToEntityList<TEntity>(this ISheet sheet, int sheetIndex)
         where TEntity : new() => NpoiHelper.SheetToEntities<TEntity>(sheet, sheetIndex).ToList();
 
+    /// <summary>
+    ///     Lazily materializes entities from the provided sheet.
+    /// </summary>
+    /// <typeparam name="TEntity">Entity type.</typeparam>
+    /// <param name="sheet">Excel sheet.</param>
+    /// <param name="sheetIndex">Zero-based sheet index.</param>
+    /// <returns>Sequence that yields entities row by row.</returns>
     public static IEnumerable<TEntity?> ToEntities<TEntity>(this ISheet sheet, int sheetIndex)
         where TEntity : new() => NpoiHelper.SheetToEntities<TEntity>(sheet, sheetIndex);
 

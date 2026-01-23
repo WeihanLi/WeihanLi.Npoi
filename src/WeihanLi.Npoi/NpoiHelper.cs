@@ -21,6 +21,14 @@ internal static class NpoiHelper
             ? sheetSettings[sheetIndex]
             : sheetSettings[0];
 
+    /// <summary>
+    ///     Converts a sheet to entities while honoring configuration, filters, and pictures.
+    /// </summary>
+    /// <typeparam name="TEntity">Entity type.</typeparam>
+    /// <param name="sheet">Sheet instance to parse.</param>
+    /// <param name="sheetIndex">Zero-based sheet index.</param>
+    /// <param name="dataAction">Optional callback per entity.</param>
+    /// <returns>Sequence of entities, possibly containing <c>null</c> entries.</returns>
     public static IEnumerable<TEntity?> SheetToEntities<TEntity>(ISheet? sheet, int sheetIndex, Action<TEntity?, ExcelConfiguration<TEntity>, int>? dataAction = null) where TEntity : new()
     {
         if (sheet is null || sheet.PhysicalNumberOfRows <= 0)

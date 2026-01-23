@@ -284,6 +284,14 @@ public static class ExcelHelper
         return workbook.ToEntityList<TEntity>(sheetIndex);
     }
 
+    /// <summary>
+    ///     Lazily converts the specified sheet within an in-memory Excel payload into entities.
+    /// </summary>
+    /// <typeparam name="TEntity">Entity type.</typeparam>
+    /// <param name="excelBytes">Excel file bytes.</param>
+    /// <param name="excelFormat">Workbook format.</param>
+    /// <param name="sheetIndex">Zero-based sheet index.</param>
+    /// <returns>Sequence that yields entities row by row.</returns>
     public static IEnumerable<TEntity?> ToEntities<TEntity>(byte[] excelBytes, ExcelFormat excelFormat = ExcelFormat.Xls, int sheetIndex = 0)
         where TEntity : new()
     {
@@ -358,6 +366,14 @@ public static class ExcelHelper
         return workbook.ToEntityList<TEntity>(sheetIndex);
     }
 
+    /// <summary>
+    ///     Lazily converts the specified sheet within an Excel stream into entities.
+    /// </summary>
+    /// <typeparam name="TEntity">Entity type.</typeparam>
+    /// <param name="excelStream">Excel stream.</param>
+    /// <param name="excelFormat">Workbook format.</param>
+    /// <param name="sheetIndex">Zero-based sheet index.</param>
+    /// <returns>Sequence that yields entities row by row.</returns>
     public static IEnumerable<TEntity?> ToEntities<TEntity>(Stream excelStream, ExcelFormat excelFormat = ExcelFormat.Xls, int sheetIndex = 0)
         where TEntity : new()
     {
@@ -406,6 +422,13 @@ public static class ExcelHelper
         return workbook.ToEntityList<TEntity>(sheetIndex);
     }
 
+    /// <summary>
+    ///     Lazily converts the specified sheet within an Excel file path into entities.
+    /// </summary>
+    /// <typeparam name="TEntity">Entity type.</typeparam>
+    /// <param name="excelPath">Excel file path.</param>
+    /// <param name="sheetIndex">Zero-based sheet index.</param>
+    /// <returns>Sequence that yields entities row by row.</returns>
     public static IEnumerable<TEntity?> ToEntities<TEntity>(string excelPath, int sheetIndex) where TEntity : new()
     {
         var workbook = LoadExcel(excelPath);

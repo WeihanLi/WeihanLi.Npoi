@@ -10,9 +10,19 @@ namespace WeihanLi.Npoi;
 
 internal static class NpoiTemplateHelper
 {
+    /// <summary>
+    ///     Shared template options used when parsing placeholders.
+    /// </summary>
     public static readonly TemplateOptions s_templateOptions = new();
 
-    // export via template
+    /// <summary>
+    ///     Fills a template-driven sheet with the provided entities.
+    /// </summary>
+    /// <typeparam name="TEntity">Entity type.</typeparam>
+    /// <param name="sheet">Destination sheet containing template markers.</param>
+    /// <param name="entityList">Data source.</param>
+    /// <param name="extraData">Additional global parameters for the template.</param>
+    /// <returns>The populated sheet.</returns>
     public static ISheet EntityListToSheetByTemplate<TEntity>(
         ISheet sheet,
         IEnumerable<TEntity>? entityList,

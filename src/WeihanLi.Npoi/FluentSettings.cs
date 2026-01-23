@@ -9,6 +9,9 @@ using WeihanLi.Npoi.Configurations;
 
 namespace WeihanLi.Npoi;
 
+/// <summary>
+/// Central entry point for configuring Excel mappings via a fluent API.
+/// </summary>
 public static class FluentSettings
 {
     private const string MappingProfileConfigureMethodName = "Configure";
