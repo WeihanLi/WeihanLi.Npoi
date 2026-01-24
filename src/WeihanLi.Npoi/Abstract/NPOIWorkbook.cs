@@ -9,7 +9,7 @@ namespace WeihanLi.Npoi.Abstract;
 /// <summary>
 /// Thin adapter that exposes the internal NPOI workbook via the abstraction interfaces.
 /// </summary>
-internal class NPOIWorkbook : IWorkbook
+internal sealed class NPOIWorkbook : IWorkbook
 {
     private readonly NModel.IWorkbook _workbook;
 
@@ -43,7 +43,7 @@ internal class NPOIWorkbook : IWorkbook
 /// <summary>
 /// Adapter for <see cref="NModel.ISheet" />.
 /// </summary>
-internal class NPOISheet : ISheet
+internal sealed class NPOISheet : ISheet
 {
     private readonly NModel.ISheet _sheet;
 
@@ -122,7 +122,7 @@ internal class NPOISheet : ISheet
 /// <summary>
 /// Adapter for <see cref="NModel.IRow" />.
 /// </summary>
-internal class NPOIRow : IRow
+internal sealed class NPOIRow : IRow
 {
     private readonly NModel.IRow _row;
 
@@ -174,7 +174,7 @@ internal class NPOIRow : IRow
 /// <summary>
 /// Adapter for <see cref="NModel.ICell" />.
 /// </summary>
-internal class NPOICell : ICell
+internal sealed class NPOICell : ICell
 {
     private readonly NModel.ICell _cell;
 
