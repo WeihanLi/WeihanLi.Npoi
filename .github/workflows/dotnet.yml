@@ -34,7 +34,7 @@ jobs:
         dotnet-exec info
     - name: font configure
       run: |
-         sudo apt update && sudo apt-get install -y ttf-mscorefonts-installer fontconfig fonts-lato libgdiplus libc6-dev && ln -s /usr/lib/libgdiplus.so /usr/lib/gdiplus.dll
+         sudo apt update && sudo apt-get install -y ttf-mscorefonts-installer fontconfig fonts-lato libgdiplus libc6-dev && sudo ln -s /usr/lib/libgdiplus.so /usr/lib/gdiplus.dll
     - name: build
       run: dotnet build.cs --target=test
     - name: Run Infer#      
