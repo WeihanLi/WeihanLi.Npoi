@@ -1264,7 +1264,6 @@ public class ExcelTest
         public int Id { get; set; }
         public string? Name { get; set; }
         public int RowIndex { get; set; }
-        public int CellIndex { get; set; }
     }
 
     private sealed class ImageTest

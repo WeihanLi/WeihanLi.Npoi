@@ -134,9 +134,6 @@ internal abstract class ExcelConfiguration : IExcelConfiguration
 internal sealed class ExcelConfiguration<TEntity> : ExcelConfiguration, IExcelConfiguration<TEntity>
 {
     /// <summary>
-    ///     EntityType
-    /// </summary>
-    /// <summary>
     ///     Gets the entity type represented by this configuration.
     /// </summary>
     public Type EntityType => typeof(TEntity);
