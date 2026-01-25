@@ -221,19 +221,23 @@ public static class ExcelHelper
         else
         {
             var workbook = new HSSFWorkbook();
-            ////create a entry of DocumentSummaryInformation
-            var dsi = PropertySetFactory.CreateDocumentSummaryInformation();
-            dsi.Company = setting.Company;
-            dsi.Category = setting.Category;
+            // create a entry of DocumentSummaryInformation
+            var dsi = new DocumentSummaryInformation
+            {
+                Company = setting.Company,
+                Category = setting.Category
+            };
             workbook.DocumentSummaryInformation = dsi;
-            ////create a entry of SummaryInformation
-            var si = PropertySetFactory.CreateSummaryInformation();
-            si.Title = setting.Title;
-            si.Subject = setting.Subject;
-            si.Author = setting.Author;
-            si.CreateDateTime = DateTime.Now;
-            si.Comments = setting.Description;
-            si.ApplicationName = InternalConstants.ApplicationName;
+            // create a entry of SummaryInformation
+            var si = new SummaryInformation
+            {
+                Title = setting.Title,
+                Subject = setting.Subject,
+                Author = setting.Author,
+                CreateDateTime = DateTime.Now,
+                Comments = setting.Description,
+                ApplicationName = InternalConstants.ApplicationName
+            };
             workbook.SummaryInformation = si;
             return workbook;
         }
@@ -280,7 +284,7 @@ public static class ExcelHelper
     public static List<TEntity?> ToEntityList<TEntity>(byte[] excelBytes, ExcelFormat excelFormat, int sheetIndex)
         where TEntity : new()
     {
-        var workbook = LoadExcel(excelBytes, excelFormat);
+        using var workbook = LoadExcel(excelBytes, excelFormat);
         return workbook.ToEntityList<TEntity>(sheetIndex);
     }
 
@@ -295,8 +299,11 @@ public static class ExcelHelper
     public static IEnumerable<TEntity?> ToEntities<TEntity>(byte[] excelBytes, ExcelFormat excelFormat = ExcelFormat.Xls, int sheetIndex = 0)
         where TEntity : new()
     {
-        var workbook = LoadExcel(excelBytes, excelFormat);
-        return workbook.ToEntities<TEntity>(sheetIndex);
+        using var workbook = LoadExcel(excelBytes, excelFormat);
+        foreach (var entity in workbook.ToEntities<TEntity>(sheetIndex))
+        {
+            yield return entity;
+        }
     }
 
     /// <summary>
@@ -316,7 +323,7 @@ public static class ExcelHelper
             IValidator<TEntity>? validator = null)
         where TEntity : new()
     {
-        var workbook = LoadExcel(excelBytes, excelFormat);
+        using var workbook = LoadExcel(excelBytes, excelFormat);
         return workbook.GetSheetAt(sheetIndex).ToEntityListWithValidationResult(sheetIndex, validator);
     }
 
@@ -362,7 +369,7 @@ public static class ExcelHelper
     public static List<TEntity?> ToEntityList<TEntity>(Stream excelStream, ExcelFormat excelFormat, int sheetIndex)
         where TEntity : new()
     {
-        var workbook = LoadExcel(excelStream, excelFormat);
+        using var workbook = LoadExcel(excelStream, excelFormat);
         return workbook.ToEntityList<TEntity>(sheetIndex);
     }
 
@@ -377,8 +384,11 @@ public static class ExcelHelper
     public static IEnumerable<TEntity?> ToEntities<TEntity>(Stream excelStream, ExcelFormat excelFormat = ExcelFormat.Xls, int sheetIndex = 0)
         where TEntity : new()
     {
-        var workbook = LoadExcel(excelStream, excelFormat);
-        return workbook.ToEntities<TEntity>(sheetIndex);
+        using var workbook = LoadExcel(excelStream, excelFormat);
+        foreach (var entity in workbook.ToEntities<TEntity>(sheetIndex))
+        {
+            yield return entity;
+        }
     }
 
     /// <summary>
@@ -396,7 +406,7 @@ public static class ExcelHelper
             IValidator<TEntity>? validator = null)
         where TEntity : new()
     {
-        var workbook = LoadExcel(excelStream, excelFormat);
+        using var workbook = LoadExcel(excelStream, excelFormat);
         return workbook.GetSheetAt(sheetIndex).ToEntityListWithValidationResult(sheetIndex, validator);
     }
 
@@ -418,7 +428,7 @@ public static class ExcelHelper
     /// <returns>List</returns>
     public static List<TEntity?> ToEntityList<TEntity>(string excelPath, int sheetIndex) where TEntity : new()
     {
-        var workbook = LoadExcel(excelPath);
+        using var workbook = LoadExcel(excelPath);
         return workbook.ToEntityList<TEntity>(sheetIndex);
     }
 
@@ -431,8 +441,11 @@ public static class ExcelHelper
     /// <returns>Sequence that yields entities row by row.</returns>
     public static IEnumerable<TEntity?> ToEntities<TEntity>(string excelPath, int sheetIndex) where TEntity : new()
     {
-        var workbook = LoadExcel(excelPath);
-        return workbook.ToEntities<TEntity>(sheetIndex);
+        using var workbook = LoadExcel(excelPath);
+        foreach (var entity in workbook.ToEntities<TEntity>(sheetIndex))
+        {
+            yield return entity;
+        }
     }
 
     /// <summary>
@@ -447,7 +460,7 @@ public static class ExcelHelper
         string excelPath, int sheetIndex = 0, IValidator<TEntity>? validator = null
     ) where TEntity : new()
     {
-        var workbook = LoadExcel(excelPath);
+        using var workbook = LoadExcel(excelPath);
         return workbook.GetSheetAt(sheetIndex).ToEntityListWithValidationResult(sheetIndex, validator);
     }
 
@@ -498,7 +511,7 @@ public static class ExcelHelper
     public static DataTable ToDataTable(string excelPath, int sheetIndex, int headerRowIndex,
         bool removeEmptyRows = false, int? maxColumns = null)
     {
-        var workbook = LoadExcel(excelPath);
+        using var workbook = LoadExcel(excelPath);
         if (workbook.NumberOfSheets <= sheetIndex)
         {
             throw new ArgumentOutOfRangeException(nameof(sheetIndex),
@@ -546,7 +559,7 @@ public static class ExcelHelper
     public static DataTable ToDataTable(byte[] excelBytes, ExcelFormat excelFormat, int sheetIndex,
         int headerRowIndex, bool removeEmptyRows = false, int? maxColumns = null)
     {
-        var workbook = LoadExcel(excelBytes, excelFormat);
+        using var workbook = LoadExcel(excelBytes, excelFormat);
         if (workbook.NumberOfSheets <= sheetIndex)
         {
             throw new ArgumentOutOfRangeException(nameof(sheetIndex),
@@ -569,6 +582,9 @@ public static class ExcelHelper
     /// <param name="excelPath">excelPath</param>
     /// <param name="headerRowIndex">headerRowIndex</param>
     /// <returns></returns>
-    public static DataSet ToDataSet(string excelPath, int headerRowIndex) =>
-        LoadExcel(excelPath).ToDataSet(headerRowIndex);
+    public static DataSet ToDataSet(string excelPath, int headerRowIndex)
+    {
+        using var workbook = LoadExcel(excelPath);
+        return workbook.ToDataSet(headerRowIndex);
+    }
 }
