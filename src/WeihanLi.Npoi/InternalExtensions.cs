@@ -27,6 +27,12 @@ internal static class InternalExtensions
         return paramDic;
     }
 
+    /// <summary>
+    ///     Wraps a strongly typed validator so it can be used without generics.
+    /// </summary>
+    /// <typeparam name="T">Entity type handled by the validator.</typeparam>
+    /// <param name="validator">Type-specific validator.</param>
+    /// <returns>Validator that operates on <see cref="object" /> instances.</returns>
     public static IValidator GetCommonValidator<T>(this IValidator<T> validator)
     {
         return new CustomValidator(o =>
@@ -146,6 +152,11 @@ internal static class InternalExtensions
     {
         private readonly Func<object?, ValidationResult> _func = Guard.NotNull(func);
 
+        /// <summary>
+        ///     Executes the wrapped validation delegate.
+        /// </summary>
+        /// <param name="value">Value to validate.</param>
+        /// <returns>Validation result.</returns>
         public ValidationResult Validate(object? value)
         {
             return _func.Invoke(value);

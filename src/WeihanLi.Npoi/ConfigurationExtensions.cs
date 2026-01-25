@@ -6,6 +6,9 @@ using WeihanLi.Npoi.Configurations;
 
 namespace WeihanLi.Npoi;
 
+/// <summary>
+/// Provides convenience extension methods for configuring Excel import/export metadata.
+/// </summary>
 public static class ConfigurationExtensions
 {
     /// <summary>

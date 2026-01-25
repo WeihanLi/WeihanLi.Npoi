@@ -12,6 +12,11 @@ public interface IPropertyConfiguration
 {
 }
 
+/// <summary>
+/// Describes the fluent property-level configuration API for an entity.
+/// </summary>
+/// <typeparam name="TEntity">Entity type.</typeparam>
+/// <typeparam name="TProperty">Property type.</typeparam>
 public interface IPropertyConfiguration<out TEntity, TProperty> : IPropertyConfiguration
 {
     /// <summary>

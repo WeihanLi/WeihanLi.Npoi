@@ -12,28 +12,38 @@ using WeihanLi.Npoi.Configurations;
 namespace WeihanLi.Npoi;
 
 /// <summary>
-///     CsvHelper
+///     CsvHelper provides utilities for reading and writing CSV files, 
+///     supporting conversion between CSV data and DataTables or strongly-typed entities.
 /// </summary>
 public static class CsvHelper
 {
     /// <summary>
-    ///     CsvSeparatorCharacter, ',' by default
+    ///     CSV separator character, ',' by default.
+    ///     Can be changed to support different CSV formats (e.g., ';' for European format).
     /// </summary>
     public static char CsvSeparatorCharacter = ',';
 
     /// <summary>
-    ///     CsvQuoteCharacter, <c>"</c> by default
+    ///     CSV quote character used to escape values containing special characters, <c>"</c> by default.
+    ///     Values containing the separator character will be wrapped with this quote character.
     /// </summary>
     public static char CsvQuoteCharacter = '"';
 
     /// <summary>
-    ///     save to csv file
+    ///     Saves a DataTable to a CSV file with default options (includes header).
     /// </summary>
+    /// <param name="dt">The DataTable to export</param>
+    /// <param name="filePath">The destination file path</param>
+    /// <returns>True if the file was successfully created; otherwise, false</returns>
     public static bool ToCsvFile(this DataTable dt, string filePath) => ToCsvFile(dt, filePath, CsvOptions.Default);
 
     /// <summary>
-    ///     save to csv file
+    ///     Saves a DataTable to a CSV file with optional header.
     /// </summary>
+    /// <param name="dataTable">The DataTable to export</param>
+    /// <param name="filePath">The destination file path</param>
+    /// <param name="includeHeader">Whether to include column headers in the output</param>
+    /// <returns>True if the file was successfully created; otherwise, false</returns>
     public static bool ToCsvFile(this DataTable dataTable, string filePath, bool includeHeader)
     {
         return ToCsvFile(dataTable, filePath, includeHeader ? CsvOptions.Default : new CsvOptions()
@@ -43,8 +53,12 @@ public static class CsvHelper
     }
 
     /// <summary>
-    ///     save to csv file
+    ///     Saves a DataTable to a CSV file with custom CSV options.
     /// </summary>
+    /// <param name="dataTable">The DataTable to export</param>
+    /// <param name="filePath">The destination file path</param>
+    /// <param name="csvOptions">Custom CSV formatting options (encoding, separator, quote character, etc.)</param>
+    /// <returns>True if the file was successfully created; otherwise, false</returns>
     public static bool ToCsvFile(this DataTable dataTable, string filePath, CsvOptions csvOptions)
     {
         if (dataTable is null)
@@ -72,29 +86,44 @@ public static class CsvHelper
     }
 
     /// <summary>
-    ///     to csv bytes
+    ///     Converts a DataTable to CSV formatted byte array with default encoding (includes header).
     /// </summary>
+    /// <param name="dt">The DataTable to convert</param>
+    /// <returns>CSV data as a byte array</returns>
     public static byte[] ToCsvBytes(this DataTable dt) => ToCsvBytes(dt, true);
 
     /// <summary>
-    ///     to csv bytes
+    ///     Converts a DataTable to CSV formatted byte array with optional header.
     /// </summary>
+    /// <param name="dataTable">The DataTable to convert</param>
+    /// <param name="includeHeader">Whether to include column headers in the output</param>
+    /// <returns>CSV data as a byte array</returns>
     public static byte[] ToCsvBytes(this DataTable dataTable, bool includeHeader) =>
         GetCsvText(dataTable, includeHeader).GetBytes();
 
     /// <summary>
-    ///     to csv bytes
+    ///     Converts a DataTable to CSV formatted byte array with custom options.
     /// </summary>
+    /// <param name="dataTable">The DataTable to convert</param>
+    /// <param name="csvOptions">Custom CSV formatting options</param>
+    /// <returns>CSV data as a byte array</returns>
     public static byte[] ToCsvBytes(this DataTable dataTable, CsvOptions csvOptions) =>
         GetCsvText(dataTable, csvOptions).GetBytes();
 
     /// <summary>
-    ///     convert csv file data to dataTable
+    ///     Converts CSV byte data to a DataTable with default options.
     /// </summary>
-    /// <param name="csvBytes">csv bytes</param>
+    /// <param name="csvBytes">CSV data as byte array</param>
+    /// <returns>A DataTable populated with CSV data</returns>
     public static DataTable ToDataTable(byte[] csvBytes)
         => ToDataTable(csvBytes, CsvOptions.Default);
 
+    /// <summary>
+    ///     Converts CSV byte data to a DataTable with custom CSV options.
+    /// </summary>
+    /// <param name="csvBytes">CSV data as byte array</param>
+    /// <param name="csvOptions">Custom CSV parsing options (encoding, separator, etc.)</param>
+    /// <returns>A DataTable populated with CSV data</returns>
     public static DataTable ToDataTable(byte[] csvBytes, CsvOptions csvOptions)
     {
         if (csvBytes is null)
@@ -107,16 +136,19 @@ public static class CsvHelper
     }
 
     /// <summary>
-    ///     convert csv stream data to dataTable
+    ///     Converts CSV stream data to a DataTable with default options.
     /// </summary>
-    /// <param name="stream">stream</param>
+    /// <param name="stream">Stream containing CSV data</param>
+    /// <returns>A DataTable populated with CSV data</returns>
     public static DataTable ToDataTable(Stream stream) => ToDataTable(stream, CsvOptions.Default);
 
     /// <summary>
-    ///     convert csv stream data to dataTable
+    ///     Converts CSV stream data to a DataTable with custom CSV options.
+    ///     The first row is treated as column headers.
     /// </summary>
-    /// <param name="stream">stream</param>
-    /// <param name="csvOptions">csvOptions</param>
+    /// <param name="stream">Stream containing CSV data</param>
+    /// <param name="csvOptions">Custom CSV parsing options</param>
+    /// <returns>A DataTable populated with CSV data</returns>
     public static DataTable ToDataTable(Stream stream, CsvOptions csvOptions)
     {
         Guard.NotNull(stream);
@@ -165,9 +197,12 @@ public static class CsvHelper
     }
 
     /// <summary>
-    ///     convert csv file data to dataTable
+    ///     Converts CSV file data to a DataTable with default options.
     /// </summary>
-    /// <param name="filePath">csv file path</param>
+    /// <param name="filePath">Path to the CSV file</param>
+    /// <returns>A DataTable populated with CSV data</returns>
+    /// <exception cref="ArgumentNullException">Thrown when filePath is null</exception>
+    /// <exception cref="ArgumentException">Thrown when the file does not exist</exception>
     public static DataTable ToDataTable(string filePath)
     {
         if (filePath is null)
@@ -184,17 +219,22 @@ public static class CsvHelper
     }
 
     /// <summary>
-    ///     convert csv file data to entity list
+    ///     Converts CSV file data to a strongly-typed entity list with default options.
     /// </summary>
-    /// <param name="filePath">csv file path</param>
+    /// <typeparam name="TEntity">The entity type to map CSV data to</typeparam>
+    /// <param name="filePath">Path to the CSV file</param>
+    /// <returns>A list of entities populated from CSV data</returns>
     public static List<TEntity?> ToEntityList<TEntity>(string filePath)
         => ToEntityList<TEntity>(filePath, CsvOptions.Default);
 
     /// <summary>
-    ///     convert csv file data to entity list
+    ///     Converts CSV file data to a strongly-typed entity list with custom options.
     /// </summary>
-    /// <param name="filePath">csv file path</param>
-    /// <param name="csvOptions">csvOptions</param>
+    /// <typeparam name="TEntity">The entity type to map CSV data to</typeparam>
+    /// <param name="filePath">Path to the CSV file</param>
+    /// <param name="csvOptions">Custom CSV parsing options</param>
+    /// <returns>A list of entities populated from CSV data</returns>
+    /// <exception cref="ArgumentException">Thrown when the file does not exist</exception>
     public static List<TEntity?> ToEntityList<TEntity>(string filePath, CsvOptions csvOptions)
     {
         Guard.NotNull(filePath);
@@ -208,10 +248,14 @@ public static class CsvHelper
     }
 
     /// <summary>
-    ///     convert csv file data to entities
+    ///     Converts CSV file data to a lazy-loaded sequence of strongly-typed entities.
+    ///     Use this method for large files to avoid loading all data into memory at once.
     /// </summary>
-    /// <param name="filePath">csv file path</param>
-    /// <param name="csvOptions">csvOptions</param>
+    /// <typeparam name="TEntity">The entity type to map CSV data to</typeparam>
+    /// <param name="filePath">Path to the CSV file</param>
+    /// <param name="csvOptions">Optional custom CSV parsing options</param>
+    /// <returns>A lazy-loaded enumerable of entities</returns>
+    /// <exception cref="ArgumentException">Thrown when the file does not exist</exception>
     public static IEnumerable<TEntity?> ToEntities<TEntity>(string filePath, CsvOptions? csvOptions = null)
     {
         Guard.NotNull(filePath);
@@ -228,17 +272,21 @@ public static class CsvHelper
     }
 
     /// <summary>
-    ///     convert csv byte data to entity list
+    ///     Converts CSV byte data to a strongly-typed entity list with default options.
     /// </summary>
-    /// <param name="csvBytes">csv bytes</param>
+    /// <typeparam name="TEntity">The entity type to map CSV data to</typeparam>
+    /// <param name="csvBytes">CSV data as byte array</param>
+    /// <returns>A list of entities populated from CSV data</returns>
     public static List<TEntity?> ToEntityList<TEntity>(byte[] csvBytes)
         => ToEntityList<TEntity>(csvBytes, CsvOptions.Default);
 
     /// <summary>
-    ///     convert csv byte data to entity list
+    ///     Converts CSV byte data to a strongly-typed entity list with custom options.
     /// </summary>
-    /// <param name="csvBytes">csv bytes</param>
-    /// <param name="csvOptions">csvOptions</param>
+    /// <typeparam name="TEntity">The entity type to map CSV data to</typeparam>
+    /// <param name="csvBytes">CSV data as byte array</param>
+    /// <param name="csvOptions">Custom CSV parsing options</param>
+    /// <returns>A list of entities populated from CSV data</returns>
     public static List<TEntity?> ToEntityList<TEntity>(byte[] csvBytes, CsvOptions csvOptions)
     {
         Guard.NotNull(csvBytes);
@@ -246,6 +294,13 @@ public static class CsvHelper
         return ToEntityList<TEntity>(ms, csvOptions);
     }
 
+    /// <summary>
+    ///     Converts CSV byte data to a lazy-loaded sequence of strongly-typed entities.
+    /// </summary>
+    /// <typeparam name="TEntity">The entity type to map CSV data to</typeparam>
+    /// <param name="csvBytes">CSV data as byte array</param>
+    /// <param name="csvOptions">Optional custom CSV parsing options</param>
+    /// <returns>A lazy-loaded enumerable of entities</returns>
     public static IEnumerable<TEntity?> ToEntities<TEntity>(byte[] csvBytes, CsvOptions? csvOptions = null)
     {
         Guard.NotNull(csvBytes);
@@ -257,18 +312,35 @@ public static class CsvHelper
     }
 
     /// <summary>
-    ///     convert csv stream data to entity list
+    ///     Converts CSV stream data to a strongly-typed entity list with default options.
     /// </summary>
-    /// <param name="csvStream">csv Stream</param>
+    /// <typeparam name="TEntity">The entity type to map CSV data to</typeparam>
+    /// <param name="csvStream">Stream containing CSV data</param>
+    /// <returns>A list of entities populated from CSV data</returns>
     public static List<TEntity?> ToEntityList<TEntity>(Stream csvStream)
         => ToEntityList<TEntity>(csvStream, CsvOptions.Default);
 
+    /// <summary>
+    ///     Converts CSV stream data to a strongly-typed entity list with custom options.
+    /// </summary>
+    /// <typeparam name="TEntity">The entity type to map CSV data to</typeparam>
+    /// <param name="csvStream">Stream containing CSV data</param>
+    /// <param name="csvOptions">Custom CSV parsing options</param>
+    /// <returns>A list of entities populated from CSV data</returns>
     public static List<TEntity?> ToEntityList<TEntity>(Stream csvStream, CsvOptions csvOptions)
     {
         Guard.NotNull(csvStream);
         return ToEntities<TEntity>(csvStream, csvOptions).ToList();
     }
 
+    /// <summary>
+    ///     Converts CSV stream data to a lazy-loaded sequence of strongly-typed entities.
+    ///     This method is memory-efficient for large CSV files.
+    /// </summary>
+    /// <typeparam name="TEntity">The entity type to map CSV data to</typeparam>
+    /// <param name="csvStream">Stream containing CSV data</param>
+    /// <param name="csvOptions">Optional custom CSV parsing options</param>
+    /// <returns>A lazy-loaded enumerable of entities</returns>
     public static IEnumerable<TEntity?> ToEntities<TEntity>(Stream csvStream, CsvOptions? csvOptions = null)
     {
         Guard.NotNull(csvStream);
@@ -294,9 +366,23 @@ public static class CsvHelper
         }
     }
 
+    /// <summary>
+    ///     Parses CSV text and converts it to a strongly-typed entity list.
+    /// </summary>
+    /// <typeparam name="TEntity">The entity type to map CSV data to</typeparam>
+    /// <param name="csvText">CSV data as a string</param>
+    /// <param name="csvOptions">Optional custom CSV parsing options</param>
+    /// <returns>A list of entities populated from CSV data</returns>
     public static List<TEntity?> GetEntityList<TEntity>(string csvText, CsvOptions? csvOptions = null)
         => GetEntities<TEntity>(csvText, csvOptions).ToList();
 
+    /// <summary>
+    ///     Parses CSV text and converts it to a lazy-loaded sequence of strongly-typed entities.
+    /// </summary>
+    /// <typeparam name="TEntity">The entity type to map CSV data to</typeparam>
+    /// <param name="csvText">CSV data as a string</param>
+    /// <param name="csvOptions">Optional custom CSV parsing options</param>
+    /// <returns>A lazy-loaded enumerable of entities</returns>
     public static IEnumerable<TEntity?> GetEntities<TEntity>(string csvText, CsvOptions? csvOptions = null)
     {
         Guard.NotNull(csvText);
@@ -320,9 +406,25 @@ public static class CsvHelper
         }
     }
 
+    /// <summary>
+    ///     Converts CSV lines to a strongly-typed entity list.
+    /// </summary>
+    /// <typeparam name="TEntity">The entity type to map CSV data to</typeparam>
+    /// <param name="csvLines">Enumerable collection of CSV lines</param>
+    /// <param name="csvOptions">Optional custom CSV parsing options</param>
+    /// <returns>A list of entities populated from CSV data</returns>
     public static List<TEntity?> GetEntityList<TEntity>(IEnumerable<string> csvLines, CsvOptions? csvOptions = null)
         => GetEntities<TEntity>(csvLines, csvOptions).ToList();
 
+    /// <summary>
+    ///     Converts CSV lines to a lazy-loaded sequence of strongly-typed entities.
+    ///     Supports both basic types and complex objects with property mapping.
+    ///     For complex types, column headers are matched to property names or configured column titles.
+    /// </summary>
+    /// <typeparam name="TEntity">The entity type to map CSV data to</typeparam>
+    /// <param name="csvLines">Enumerable collection of CSV lines</param>
+    /// <param name="csvOptions">Optional custom CSV parsing options</param>
+    /// <returns>A lazy-loaded enumerable of entities</returns>
     public static IEnumerable<TEntity?> GetEntities<TEntity>(IEnumerable<string> csvLines, CsvOptions? csvOptions = null)
     {
         if (csvLines is null)
@@ -488,8 +590,21 @@ public static class CsvHelper
         }
     }
 
+    /// <summary>
+    ///     Parses a single CSV line into individual field values using default options.
+    /// </summary>
+    /// <param name="line">The CSV line to parse</param>
+    /// <returns>A read-only list of field values</returns>
     public static IReadOnlyList<string> ParseLine(string line) => ParseLine(line, CsvOptions.Default);
 
+    /// <summary>
+    ///     Parses a single CSV line into individual field values with custom options.
+    ///     Handles quoted values, escaped quotes, and separator characters within quoted fields.
+    /// </summary>
+    /// <param name="line">The CSV line to parse</param>
+    /// <param name="csvOptions">Custom CSV parsing options (separator, quote character)</param>
+    /// <returns>A read-only list of field values</returns>
+    /// <exception cref="ArgumentException">Thrown when the line contains improperly escaped quotes</exception>
     public static IReadOnlyList<string> ParseLine(string line, CsvOptions csvOptions)
     {
         if (string.IsNullOrEmpty(line))
@@ -567,14 +682,23 @@ public static class CsvHelper
     }
 
     /// <summary>
-    ///     save to csv file
+    ///     Saves a collection of entities to a CSV file with default options (includes header).
     /// </summary>
+    /// <typeparam name="TEntity">The entity type to export</typeparam>
+    /// <param name="entities">The collection of entities to export</param>
+    /// <param name="filePath">The destination file path</param>
+    /// <returns>True if the file was successfully created; otherwise, false</returns>
     public static bool ToCsvFile<TEntity>(this IEnumerable<TEntity> entities, string filePath) =>
         ToCsvFile(entities, filePath, CsvOptions.Default);
 
     /// <summary>
-    ///     save to csv file
+    ///     Saves a collection of entities to a CSV file with optional header.
     /// </summary>
+    /// <typeparam name="TEntity">The entity type to export</typeparam>
+    /// <param name="entities">The collection of entities to export</param>
+    /// <param name="filePath">The destination file path</param>
+    /// <param name="includeHeader">Whether to include property names as column headers</param>
+    /// <returns>True if the file was successfully created; otherwise, false</returns>
     public static bool ToCsvFile<TEntity>(this IEnumerable<TEntity> entities, string filePath, bool includeHeader)
     {
         return ToCsvFile(Guard.NotNull(entities), filePath, includeHeader ? CsvOptions.Default : new CsvOptions()
@@ -583,6 +707,15 @@ public static class CsvHelper
         });
     }
 
+    /// <summary>
+    ///     Saves a collection of entities to a CSV file with custom CSV options.
+    ///     Property values are formatted according to configured output formatters.
+    /// </summary>
+    /// <typeparam name="TEntity">The entity type to export</typeparam>
+    /// <param name="entities">The collection of entities to export</param>
+    /// <param name="filePath">The destination file path</param>
+    /// <param name="csvOptions">Custom CSV formatting options</param>
+    /// <returns>True if the file was successfully created; otherwise, false</returns>
     public static bool ToCsvFile<TEntity>(this IEnumerable<TEntity> entities, string filePath, CsvOptions csvOptions)
     {
         if (entities is null)
@@ -610,6 +743,15 @@ public static class CsvHelper
         return true;
     }
 
+    /// <summary>
+    ///     Asynchronously saves a collection of entities to a CSV file.
+    ///     This method is more memory-efficient for large collections as it streams lines to the file.
+    /// </summary>
+    /// <typeparam name="TEntity">The entity type to export</typeparam>
+    /// <param name="entities">The collection of entities to export</param>
+    /// <param name="filePath">The destination file path</param>
+    /// <param name="csvOptions">Optional custom CSV formatting options</param>
+    /// <returns>A task that represents the asynchronous operation, containing true if successful</returns>
     public static async Task<bool> ToCsvFileAsync<TEntity>(this IEnumerable<TEntity> entities, string filePath, CsvOptions? csvOptions = null)
     {
         if (entities is null)
@@ -639,25 +781,40 @@ public static class CsvHelper
     }
 
     /// <summary>
-    ///     to csv bytes
+    ///     Converts a collection of entities to CSV formatted byte array with default encoding (includes header).
     /// </summary>
+    /// <typeparam name="TEntity">The entity type to convert</typeparam>
+    /// <param name="entities">The collection of entities to convert</param>
+    /// <returns>CSV data as a byte array</returns>
     public static byte[] ToCsvBytes<TEntity>(this IEnumerable<TEntity> entities) => ToCsvBytes(entities, CsvOptions.Default);
 
     /// <summary>
-    ///     to csv bytes
+    ///     Converts a collection of entities to CSV formatted byte array with optional header.
     /// </summary>
+    /// <typeparam name="TEntity">The entity type to convert</typeparam>
+    /// <param name="entities">The collection of entities to convert</param>
+    /// <param name="includeHeader">Whether to include property names as column headers</param>
+    /// <returns>CSV data as a byte array</returns>
     public static byte[] ToCsvBytes<TEntity>(this IEnumerable<TEntity> entities, bool includeHeader) =>
         GetCsvText(entities, includeHeader).GetBytes();
 
     /// <summary>
-    ///     to csv bytes
+    ///     Converts a collection of entities to CSV formatted byte array with custom options.
     /// </summary>
+    /// <typeparam name="TEntity">The entity type to convert</typeparam>
+    /// <param name="entities">The collection of entities to convert</param>
+    /// <param name="csvOptions">Custom CSV formatting options</param>
+    /// <returns>CSV data as a byte array</returns>
     public static byte[] ToCsvBytes<TEntity>(this IEnumerable<TEntity> entities, CsvOptions csvOptions) =>
         GetCsvText(entities, csvOptions).GetBytes(csvOptions.Encoding);
 
     /// <summary>
-    ///     Get csv text
+    ///     Converts a collection of entities to CSV formatted text with optional header (default includes header).
     /// </summary>
+    /// <typeparam name="TEntity">The entity type to convert</typeparam>
+    /// <param name="entities">The collection of entities to convert</param>
+    /// <param name="includeHeader">Whether to include property names as column headers</param>
+    /// <returns>CSV data as a string</returns>
     public static string GetCsvText<TEntity>(this IEnumerable<TEntity> entities, bool includeHeader = true)
     {
         return GetCsvText(Guard.NotNull(entities), includeHeader ? CsvOptions.Default : new CsvOptions()
@@ -667,18 +824,25 @@ public static class CsvHelper
     }
 
     /// <summary>
-    ///     Get csv text
+    ///     Converts a collection of entities to CSV formatted text with custom options.
     /// </summary>
+    /// <typeparam name="TEntity">The entity type to convert</typeparam>
+    /// <param name="entities">The collection of entities to convert</param>
+    /// <param name="csvOptions">Custom CSV formatting options</param>
+    /// <returns>CSV data as a string</returns>
     public static string GetCsvText<TEntity>(this IEnumerable<TEntity> entities, CsvOptions csvOptions) =>
         GetCsvLines(entities, csvOptions).StringJoin(Environment.NewLine);
 
     /// <summary>
-    ///     Get csv lines
+    ///     Converts a collection of entities to a sequence of CSV formatted lines.
+    ///     For basic types, each entity is converted to a single line.
+    ///     For complex types, properties are mapped to columns with proper CSV escaping.
+    ///     Values containing separator characters are automatically quoted.
     /// </summary>
-    /// <param name="entities">entities</param>
-    /// <param name="csvOptions">csvOptions</param>
-    /// <typeparam name="TEntity">entity type</typeparam>
-    /// <returns>csv lines</returns>
+    /// <param name="entities">The collection of entities to convert</param>
+    /// <param name="csvOptions">Optional custom CSV formatting options</param>
+    /// <typeparam name="TEntity">The entity type to convert</typeparam>
+    /// <returns>An enumerable of CSV formatted lines</returns>
     public static IEnumerable<string> GetCsvLines<TEntity>(this IEnumerable<TEntity> entities, CsvOptions? csvOptions = null)
     {
         if (entities is null)
@@ -755,8 +919,11 @@ public static class CsvHelper
     }
 
     /// <summary>
-    ///     Get csv text
+    ///     Converts a DataTable to CSV formatted text with optional header (default includes header).
     /// </summary>
+    /// <param name="dataTable">The DataTable to convert</param>
+    /// <param name="includeHeader">Whether to include column names as headers</param>
+    /// <returns>CSV data as a string</returns>
     public static string GetCsvText(this DataTable? dataTable, bool includeHeader = true)
     {
         return GetCsvText(dataTable, includeHeader ? CsvOptions.Default : new CsvOptions()
@@ -766,11 +933,13 @@ public static class CsvHelper
     }
 
     /// <summary>
-    /// GetCsvText
+    ///     Converts a DataTable to CSV formatted text with custom options.
+    ///     Column names are decoded if they were previously encoded to handle duplicates.
+    ///     Values containing separator characters are automatically quoted.
     /// </summary>
-    /// <param name="dataTable">dataTable</param>
-    /// <param name="csvOptions">csvOptions</param>
-    /// <returns>csv text</returns>
+    /// <param name="dataTable">The DataTable to convert</param>
+    /// <param name="csvOptions">Custom CSV formatting options</param>
+    /// <returns>CSV data as a string, or empty string if the DataTable is null or empty</returns>
     public static string GetCsvText(this DataTable? dataTable, CsvOptions csvOptions)
     {
         Guard.NotNull(csvOptions);

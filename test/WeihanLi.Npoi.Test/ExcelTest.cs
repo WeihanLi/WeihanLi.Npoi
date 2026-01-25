@@ -992,6 +992,8 @@ public class ExcelTest
         var settings = FluentSettings.For<CellReaderTestModel>();
         settings.Property(x => x.Name)
             .HasCellReader(_ => "CellValue");
+        settings.Property(x => x.RowIndex)
+            .HasCellReader(c => c.RowIndex);
 
         var list = ExcelHelper.ToEntityList<CellReaderTestModel>(bytes, excelFormat);
         Assert.Equal(jobs.Length, list.Count);
@@ -1002,6 +1004,7 @@ public class ExcelTest
             Guard.NotNull(model);
             Assert.Equal(jobs[i].Id, model.Id);
             Assert.Equal("CellValue", model.Name);
+            Assert.True(model.RowIndex > 0);
         }
 
         settings.Property(x => x.Name)
@@ -1260,6 +1263,7 @@ public class ExcelTest
     {
         public int Id { get; set; }
         public string? Name { get; set; }
+        public int RowIndex { get; set; }
     }
 
     private sealed class ImageTest

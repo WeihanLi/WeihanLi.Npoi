@@ -5,6 +5,11 @@ namespace WeihanLi.Npoi.Settings;
 
 internal sealed class FilterSetting
 {
+    /// <summary>
+    ///     Initializes a filter specification.
+    /// </summary>
+    /// <param name="firstColumn">First column index.</param>
+    /// <param name="lastColumn">Optional last column index.</param>
     public FilterSetting(int firstColumn, int? lastColumn)
     {
         FirstColumn = firstColumn;

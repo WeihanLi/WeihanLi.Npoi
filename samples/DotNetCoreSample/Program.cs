@@ -211,8 +211,9 @@ Console.WriteLine(numList.StringJoin(","));
 
 Console.ReadLine();
 
+SheetNameTest();
 
-void SheetNameTest()
+static void SheetNameTest()
 {
     List<ExcelExportDTO> exprotDataList = new List<ExcelExportDTO>();
     for (int i = 0; i < 10; i++)

@@ -6,47 +6,50 @@ jobs:
   mac-build:
     runs-on: macos-latest
     steps:
-    - uses: actions/checkout@v5
+    - uses: actions/checkout@v6
     - name: Setup .NET SDK
       uses: actions/setup-dotnet@v5
       with:
         dotnet-version: |
             10.0.x
     - name: dotnet info
-      run: dotnet --info
+      run: |
+        dotnet tool install -g dotnet-execute
+        dotnet-exec info
     - name: build
-      run: dotnet build.cs --target=build
-  
+      run: dotnet build.cs --target=test
+
   linux-build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v5
+    - uses: actions/checkout@v6
     - name: Setup .NET SDK
       uses: actions/setup-dotnet@v5
       with:
         dotnet-version: |
             10.0.x
     - name: dotnet info
-      run: dotnet --info
+      run: |
+        dotnet tool install -g dotnet-execute
+        dotnet-exec info
+    - name: font configure
+      run: |
+         sudo apt update && sudo apt-get install -y ttf-mscorefonts-installer fontconfig fonts-lato libgdiplus libc6-dev && sudo ln -s /usr/lib/libgdiplus.so /usr/lib/gdiplus.dll
     - name: build
       run: dotnet build.cs --target=build
-    - name: Run Infer#      
-      uses: microsoft/infersharpaction@v1.0
-      with:
-        binary-path: './src/WeihanLi.Npoi/bin/Release/netstandard2.0'
-    - name: Infer# analysis results
-      run: echo "${{ steps.runinfersharp.outputs.results }}"
       
   windows-build:
     runs-on: windows-latest
     steps:
-    - uses: actions/checkout@v5
+    - uses: actions/checkout@v6
     - name: Setup .NET SDK
       uses: actions/setup-dotnet@v5
       with:
         dotnet-version: |
             10.0.x
     - name: dotnet info
-      run: dotnet --info
+      run: |
+        dotnet tool install -g dotnet-execute
+        dotnet-exec info
     - name: build
       run: dotnet build.cs
