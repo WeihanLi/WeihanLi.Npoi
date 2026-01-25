@@ -32,6 +32,9 @@ jobs:
       run: |
         dotnet tool install -g dotnet-execute
         dotnet-exec info
+    - name: font configure
+      run: |
+         apt update && apt-get install -y fonts-lato
     - name: build
       run: dotnet build.cs
     - name: Run Infer#      
