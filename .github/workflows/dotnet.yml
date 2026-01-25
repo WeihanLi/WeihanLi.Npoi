@@ -17,8 +17,8 @@ jobs:
         dotnet tool install -g dotnet-execute
         dotnet-exec info
     - name: build
-      run: dotnet build.cs
-  
+      run: dotnet build.cs --target=test
+
   linux-build:
     runs-on: ubuntu-latest
     steps:
@@ -36,7 +36,7 @@ jobs:
       run: |
          sudo apt update && sudo apt-get install -y fonts-lato
     - name: build
-      run: dotnet build.cs
+      run: dotnet build.cs --target=test
     - name: Run Infer#      
       uses: microsoft/infersharpaction@v1.0
       with:
@@ -58,4 +58,4 @@ jobs:
         dotnet tool install -g dotnet-execute
         dotnet-exec info
     - name: build
-      run: dotnet build.cs
+      run: dotnet build.cs --target=test
