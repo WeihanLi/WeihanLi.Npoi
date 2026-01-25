@@ -6,7 +6,13 @@
 
 ## Recommend Articles
 
-english:
+English:
+
+- [Getting Started](./en/GetStarted.md)
+- [InputOutputFormatter Usage](./en/InputOutputFormatter.md)
+- [ShadowProperty Usage](./en/ShadowProperty.md)
+- [Template Export](./en/TemplateExport.md)
+- [Multi-Sheet Export](./en/MultiSheets.md)
 
 中文：
 

@@ -1,12 +1,26 @@
 - name: Introduction
   href: intro.md
-- name: GetStarted
-  href: zh/GetStarted.md
-- name: InputOutputFormatter
-  href: zh/InputOutputFormatter.md
-- name: ShadowProperty
-  href: zh/ShadowProperty.md
-- name: TemplateExport
-  href: zh/TemplateExport.md
-- name: MultiSheets
-  href: zh/MultiSheets.md
+- name: English Articles
+  items:
+    - name: Getting Started
+      href: en/GetStarted.md
+    - name: InputOutputFormatter
+      href: en/InputOutputFormatter.md
+    - name: ShadowProperty
+      href: en/ShadowProperty.md
+    - name: Template Export
+      href: en/TemplateExport.md
+    - name: Multi-Sheet Export
+      href: en/MultiSheets.md
+- name: 中文文章
+  items:
+    - name: GetStarted
+      href: zh/GetStarted.md
+    - name: InputOutputFormatter
+      href: zh/InputOutputFormatter.md
+    - name: ShadowProperty
+      href: zh/ShadowProperty.md
+    - name: TemplateExport
+      href: zh/TemplateExport.md
+    - name: MultiSheets
+      href: zh/MultiSheets.md
