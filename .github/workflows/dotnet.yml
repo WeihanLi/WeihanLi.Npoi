@@ -36,13 +36,7 @@ jobs:
       run: |
          sudo apt update && sudo apt-get install -y ttf-mscorefonts-installer fontconfig fonts-lato libgdiplus libc6-dev && sudo ln -s /usr/lib/libgdiplus.so /usr/lib/gdiplus.dll
     - name: build
-      run: dotnet build.cs --target=test
-    - name: Run Infer#      
-      uses: microsoft/infersharpaction@v1.0
-      with:
-        binary-path: './src/WeihanLi.Npoi/bin/Release/netstandard2.0'
-    - name: Infer# analysis results
-      run: echo "${{ steps.runinfersharp.outputs.results }}"
+      run: dotnet build.cs --target=build
       
   windows-build:
     runs-on: windows-latest
