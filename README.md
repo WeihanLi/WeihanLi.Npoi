@@ -59,16 +59,8 @@ WeihanLi.Npoi provides a powerful and easy-to-use toolkit for working with Excel
 
 #### Installation
 
-Install via NuGet Package Manager:
-
-```bash
+```sh
 dotnet add package WeihanLi.Npoi
-```
-
-Or via Package Manager Console:
-
-```powershell
-Install-Package WeihanLi.Npoi
 ```
 
 #### Quick Start
