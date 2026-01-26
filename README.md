@@ -407,6 +407,5 @@ This project is licensed under the Apache License 2.0 - see the [LICENSE](LICENS
 
 ### Contact & Support
 
-- 📧 Report issues: [GitHub Issues](https://github.com/WeihanLi/WeihanLi.Npoi/issues)
-- 💬 Discussions: [GitHub Discussions](https://github.com/WeihanLi/WeihanLi.Npoi/discussions)
+- 📧 Report Issues/Questions/Discussions: [GitHub Issues](https://github.com/WeihanLi/WeihanLi.Npoi/issues)
 - 📦 NuGet Package: [WeihanLi.Npoi](https://www.nuget.org/packages/WeihanLi.Npoi/)
