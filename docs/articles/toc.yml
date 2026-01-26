@@ -12,6 +12,8 @@
       href: en/TemplateExport.md
     - name: Multi-Sheet Export
       href: en/MultiSheets.md
+    - name: Customize Styles
+      href: en/CustomizeStyle.md
 - name: 中文文章
   items:
     - name: GetStarted
@@ -24,3 +26,5 @@
       href: zh/TemplateExport.md
     - name: MultiSheets
       href: zh/MultiSheets.md
+    - name: 自定义样式
+      href: zh/CustomizeStyle.md
