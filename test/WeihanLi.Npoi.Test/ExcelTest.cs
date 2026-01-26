@@ -1005,6 +1005,7 @@ public class ExcelTest
             Assert.Equal(jobs[i].Id, model.Id);
             Assert.Equal("CellValue", model.Name);
             Assert.True(model.RowIndex > 0);
+            Assert.Equal(i + 1, model.RowIndex);
         }
 
         settings.Property(x => x.Name)
