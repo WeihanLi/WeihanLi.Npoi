@@ -8,7 +8,7 @@ The original export method is suitable for relatively simple exports where each 
 
 ### Example Template
 
-![Template Example](./images/489462-20200128142956273-1478084552.png)
+![Template Example](../images/489462-20200128142956273-1478084552.png)
 
 The template can have three types of data:
 
@@ -112,7 +112,7 @@ entities.ToExcelFileByTemplate(
 
 ### Export Result
 
-![Export Result](./images/489462-20200128143038865-1452547986.png)
+![Export Result](../images/489462-20200128143038865-1452547986.png)
 
 
 ## More

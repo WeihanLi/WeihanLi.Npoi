@@ -116,11 +116,11 @@ var entitiesT0 = ExcelHelper.ToEntityList<TestEntity>(path);
 
 Export Result:
 
-![Export Result](./images/489462-20200104112133779-1180097402.png)
+![Export Result](../images/489462-20200104112133779-1180097402.png)
 
 
 Import Result:
 
-![Import Result 1](./images/489462-20200104112017420-1450911242.png)
+![Import Result 1](../images/489462-20200104112017420-1450911242.png)
 
-![Import Result 2](./images/489462-20200104112025927-873408781.png)
+![Import Result 2](../images/489462-20200104112025927-873408781.png)

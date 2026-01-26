@@ -65,9 +65,9 @@ settings.Property(x => x.Description)
 
 导出结果如下：
 
-![sheet0](./images/image-20241029231320957.png)
+![sheet0](../images/image-20241029231320957.png)
 
-![sheet1](./images/image-20241029231519274.png)
+![sheet1](../images/image-20241029231519274.png)
 
 ## References
 

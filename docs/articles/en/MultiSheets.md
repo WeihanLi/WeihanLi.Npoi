@@ -65,9 +65,9 @@ settings.Property(x => x.Description)
 
 Export results:
 
-![Sheet 0](./images/image-20241029231320957.png)
+![Sheet 0](../images/image-20241029231320957.png)
 
-![Sheet 1](./images/image-20241029231519274.png)
+![Sheet 1](../images/image-20241029231519274.png)
 
 ## References
 

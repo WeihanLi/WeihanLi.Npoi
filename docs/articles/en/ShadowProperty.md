@@ -90,6 +90,6 @@ namespace NpoiTest
 
 Export result:
 
-![Shadow Property Example](./images/489462-20191213084226066-1767559517.png)
+![Shadow Property Example](../images/489462-20191213084226066-1767559517.png)
 
 As you can see, we added two columns to the exported Excel that were not defined in the original Model. With this feature, we can more flexibly customize the content to be exported.
