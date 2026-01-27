@@ -12,9 +12,9 @@ public static partial class IssueSamples
             File.OpenRead(filePath),
             ExcelFormat.Xlsx
         );
-        var settings = FluentSettings.For<MaterielDetailDto>();
+        var settings = FluentSettings.For<Issue169Dto>();
         settings.WithPostImportAction((x, rowIndex) => x?.RowNum = rowIndex + 1);
-        var list = workbook.ToEntityList<MaterielDetailDto>();
+        var list = workbook.ToEntityList<Issue169Dto>();
         foreach (var item in list)
         {
             Console.WriteLine(item.ToJson());
@@ -23,7 +23,7 @@ public static partial class IssueSamples
 }
 
 [Sheet(SheetIndex = 0, StartRowIndex = 6, DisableColumnIndexAdjustment = true)]
-public class MaterielDetailDto
+public class Issue169Dto
 {
     [Column(IsIgnored = true)]
     public int RowNum { get; set; }
