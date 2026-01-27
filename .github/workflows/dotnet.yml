@@ -32,11 +32,18 @@ jobs:
       run: |
         dotnet tool install -g dotnet-execute
         dotnet-exec info
-    - name: font configure
-      run: |
-         sudo apt update && sudo apt-get install -y ttf-mscorefonts-installer fontconfig fonts-lato libgdiplus libc6-dev && sudo ln -s /usr/lib/libgdiplus.so /usr/lib/gdiplus.dll
+    # - name: font configure
+    #   run: |
+    #      sudo apt update && sudo apt-get install -y ttf-mscorefonts-installer fontconfig fonts-lato libgdiplus libc6-dev && sudo ln -s /usr/lib/libgdiplus.so /usr/lib/gdiplus.dll
     - name: build
       run: dotnet build.cs --target=build
+    - name: verify run-file-samples
+      run: |
+        # list the files in the run-file-samples directory and run dotnet build on each .cs file
+        for file in run-file-samples/*.cs; do
+          echo "Building $file"
+          dotnet build $file
+        done
       
   windows-build:
     runs-on: windows-latest
