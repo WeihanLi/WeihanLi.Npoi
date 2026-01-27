@@ -77,7 +77,7 @@ internal static class NpoiHelper
                         {
                             continue;
                         }
-                        
+
                         row.GetCell(i).SetCellType(CellType.String);
                         var title = row.GetCell(i).StringCellValue.Trim();
                         var col = propertyColumnDic.GetPropertySetting(title);
@@ -134,14 +134,14 @@ internal static class NpoiHelper
                         foreach (var propertyInfo in propertyColumnDic.Keys)
                         {
                             if (!propertyInfo.CanWrite) continue;
-                            
+
                             var propertyValue = propertyInfo.GetValueGetter()?.Invoke(entity);
                             if (!InternalCache.InputFormatterFuncCache.TryGetValue(propertyInfo,
                                     out var formatterFunc) || formatterFunc?.Method is null) continue;
-                                
+
                             var valueSetter = propertyInfo.GetValueSetter();
                             if (valueSetter is null) continue;
-                                    
+
                             try
                             {
                                 // apply custom formatterFunc
@@ -187,7 +187,7 @@ internal static class NpoiHelper
                 {
                     var valueSetter = key.GetValueSetter();
                     if (valueSetter is null) continue;
-                    
+
                     if (key.PropertyType == typeof(byte[])
                         || key.PropertyType == typeof(IPictureData))
                     {
@@ -226,12 +226,12 @@ internal static class NpoiHelper
                                 }
                             }
                         }
-                        
+
                         if (valueApplied == false)
                         {
                             columnValue = cell.GetCellValue(key.PropertyType, formulaEvaluator);
                         }
-                        
+
                         valueSetter.Invoke(entity, columnValue);
                     }
                 }

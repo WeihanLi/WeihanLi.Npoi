@@ -1,4 +1,7 @@
-﻿using WeihanLi.Extensions;
+﻿// Copyright (c) Weihan Li. All rights reserved.
+// Licensed under the Apache license.
+
+using WeihanLi.Extensions;
 
 public static partial class IssueSamples
 {
@@ -24,7 +27,7 @@ public class MaterielDetailDto
 {
     [Column(IsIgnored = true)]
     public int RowNum { get; set; }
-    
+
     /// <summary>
     /// 编号
     /// </summary>
