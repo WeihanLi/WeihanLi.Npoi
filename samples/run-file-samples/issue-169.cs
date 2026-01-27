@@ -4,7 +4,7 @@ var workbook = ExcelHelper.LoadExcel(
     ExcelFormat.Xlsx
 );
 var settings = FluentSettings.For<MaterielDetailDto>();
-settings.WithPostAction((x, rowIndex) => x?.RowNum = rowIndex + 1);
+settings.WithPostImportAction((x, rowIndex) => x?.RowNum = rowIndex + 1);
 var list = workbook.ToEntityList<MaterielDetailDto>();
 foreach (var item in list)
 {

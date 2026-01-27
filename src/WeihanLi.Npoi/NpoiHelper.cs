@@ -162,7 +162,7 @@ internal static class NpoiHelper
                     }
 
                     dataAction?.Invoke(entity, configuration, rowIndex);
-                    configuration.PostAction?.Invoke(entity, rowIndex);
+                    configuration.PostImportAction?.Invoke(entity, rowIndex);
 
                     yield return entity;
                 }

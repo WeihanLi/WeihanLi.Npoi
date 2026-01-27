@@ -140,7 +140,7 @@ internal sealed class ExcelConfiguration<TEntity> : ExcelConfiguration, IExcelCo
 
     internal Func<TEntity?, bool>? DataFilter { get; private set; }
     
-    internal Action<TEntity?, int>? PostAction { get; private set; }
+    internal Action<TEntity?, int>? PostImportAction { get; private set; }
 
     internal IComparer<PropertyInfo>? PropertyComparer { get; private set; }
 
@@ -168,7 +168,7 @@ internal sealed class ExcelConfiguration<TEntity> : ExcelConfiguration, IExcelCo
 
     public IExcelConfiguration<TEntity> WithPostImportAction(Action<TEntity?, int>? postAction)
     {
-        PostAction = postAction;
+        PostImportAction = postAction;
         return this;
     }
 
