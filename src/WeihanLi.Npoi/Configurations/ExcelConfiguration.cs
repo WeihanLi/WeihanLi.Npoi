@@ -210,7 +210,7 @@ internal sealed class ExcelConfiguration<TEntity> : ExcelConfiguration, IExcelCo
     public IPropertyConfiguration<TEntity, TProperty> Property<TProperty>(string propertyName)
     {
         var property = PropertyConfigurationDictionary.Keys.FirstOrDefault(p => p.Name == propertyName);
-        if (property != null)
+        if (property is not null)
         {
             return (IPropertyConfiguration<TEntity, TProperty>)PropertyConfigurationDictionary[property];
         }

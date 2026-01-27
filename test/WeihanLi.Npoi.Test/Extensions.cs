@@ -11,7 +11,7 @@ public static class Extensions
     public static DataRow AddNewRow(this DataTable datatable, object[]? rowData = null)
     {
         var row = datatable.NewRow();
-        if (rowData != null)
+        if (rowData is not null)
         {
             row.ItemArray = rowData;
         }

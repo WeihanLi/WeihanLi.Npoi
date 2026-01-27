@@ -56,7 +56,7 @@ internal static class NpoiTemplateHelper
         foreach (var key in propertyColumnDictionary.Keys)
         {
             if (InternalCache.OutputFormatterFuncCache.TryGetValue(key, out var formatterFunc) &&
-                formatterFunc?.Method != null)
+                formatterFunc?.Method is not null)
             {
                 dataFuncDictionary[s_templateOptions.TemplateDataParamFormat.FormatWith(key.Name)] = entity =>
                 {

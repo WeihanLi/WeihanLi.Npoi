@@ -48,7 +48,7 @@ public class ExcelTest
             Assert.Equal(list.Count, importedList.Count);
             for (var i = 0; i < list.Count; i++)
             {
-                if (list[i] == null)
+                if (list[i] is null)
                 {
                     Assert.Null(importedList[i]);
                 }
@@ -94,7 +94,7 @@ public class ExcelTest
             Assert.Equal(list.Count, importedList.Count);
             for (var i = 0; i < list.Count; i++)
             {
-                if (list[i] == null)
+                if (list[i] is null)
                 {
                     Assert.Null(importedList[i]);
                 }
@@ -143,7 +143,7 @@ public class ExcelTest
             Assert.Equal(list.Count, importedList.Count);
             for (var i = 0; i < list.Count; i++)
             {
-                if (list[i] == null)
+                if (list[i] is null)
                 {
                     Assert.Null(importedList[i]);
                 }
@@ -191,7 +191,7 @@ public class ExcelTest
             Assert.Equal(list.Count, importedList.Count);
             for (var i = 0; i < list.Count; i++)
             {
-                if (importedList[i] == null)
+                if (importedList[i] is null)
                 {
                     Assert.Null(list[i]);
                 }
@@ -280,7 +280,7 @@ public class ExcelTest
             Assert.Equal(list.Count, importedList.Count);
             for (var i = 0; i < list.Count; i++)
             {
-                if (importedList[i] == null)
+                if (importedList[i] is null)
                 {
                     Assert.Null(list[i]);
                 }

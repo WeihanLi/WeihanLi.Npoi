@@ -85,7 +85,7 @@ var tempDirPath = $@"{Environment.GetEnvironmentVariable("USERPROFILE")}\Desktop
 // image export/import test
 //var imageExcelPath = @"C:\Users\Weiha\Desktop\temp\test\imageTest.xls";
 //var imgaeModelList = ExcelHelper.ToEntityList<ImportImageTestModel>(imageExcelPath);
-//Console.WriteLine(imgaeModelList.Count(x => x?.Image != null));
+//Console.WriteLine(imgaeModelList.Count(x => x?.Image is not null));
 //imgaeModelList.ToExcelFile(imageExcelPath + ".1.xls");
 //var imgModeList2 = ExcelHelper.ToEntityList<ImportImageTestModel>(imageExcelPath + ".1.xls");
 //Console.WriteLine($"{imgaeModelList[0]?.Image?.Length},{imgModeList2[0]?.Image?.Length}");

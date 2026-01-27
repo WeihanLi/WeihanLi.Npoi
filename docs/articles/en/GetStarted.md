@@ -58,7 +58,7 @@ public void BasicImportExportTest(ExcelFormat excelFormat)
     Assert.Equal(list.Count, importedList.Count);
     for (var i = 0; i < list.Count; i++)
     {
-        if (list[i] == null)
+        if (list[i] is null)
         {
             Assert.Null(importedList[i]);
         }
