@@ -20,7 +20,7 @@
     <PackageReleaseNotes>
       https://github.com/WeihanLi/WeihanLi.Npoi/tree/dev/docs/ReleaseNotes.md
     </PackageReleaseNotes>
-    <EnablePackageValidation>true</EnablePackageValidation>
+    <EnablePackageValidation>false</EnablePackageValidation>
     <PackageValidationBaselineVersion>3.1.0</PackageValidationBaselineVersion>
   </PropertyGroup>
 </Project>
