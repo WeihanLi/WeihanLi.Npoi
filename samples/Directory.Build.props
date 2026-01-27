@@ -8,5 +8,6 @@
     <ProjectReference Include="..\..\src\WeihanLi.Npoi\WeihanLi.Npoi.csproj" />
     <Using Include="WeihanLi.Npoi" />
     <Using Include="WeihanLi.Npoi.Attributes" />
+    <Using Include="WeihanLi.Npoi.Configurations" />
   </ItemGroup>
 </Project>
