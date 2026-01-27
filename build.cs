@@ -21,21 +21,15 @@ await DotNetPackageBuildProcess
         options.SolutionPath = solutionPath;
         options.SrcProjects = srcProjects;
         options.TestProjects = testProjects;
-        options.AdditionalConfigure = c =>
+        options.WithTaskExecution("build", () =>
         {
-            c.WithTask("build", (b) =>
+            Console.WriteLine($"Building {solutionPath}...");
+            CommandExecutor.ExecuteCommandAndOutput($"dotnet build {solutionPath}").EnsureSuccessExitCode();
+            foreach (var file in Directory.GetFiles(runFileSamplesDir, "*.cs", SearchOption.AllDirectories))
             {
-                b.WithExecution(() =>
-                {
-                    Console.WriteLine($"Building {solutionPath}...");
-                    CommandExecutor.ExecuteCommandAndOutput($"dotnet build {solutionPath}").EnsureSuccessExitCode();
-                    foreach (var file in Directory.GetFiles(runFileSamplesDir, "*.cs", SearchOption.AllDirectories))
-                    {
-                        Console.WriteLine($"Building {file}...");
-                        CommandExecutor.ExecuteCommandAndOutput($"dotnet build {file}").EnsureSuccessExitCode();
-                    }
-                });
-            });
-        };
+                Console.WriteLine($"Building {file}...");
+                CommandExecutor.ExecuteCommandAndOutput($"dotnet build {file}").EnsureSuccessExitCode();
+            }
+        });
     })
     .ExecuteAsync(args);
