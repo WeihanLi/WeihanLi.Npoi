@@ -1,21 +1,30 @@
-﻿var filePath = @"C:\Users\Weiha\Downloads\test\2.xlsx";
-var workbook = ExcelHelper.LoadExcel(
-    File.OpenRead(filePath),
-    ExcelFormat.Xlsx
-);
-var settings = FluentSettings.For<MaterielDetailDto>();
-settings.WithPostAction((x, rowIndex) => x?.RowNum = rowIndex + 1);
-var list = workbook.ToEntityList<MaterielDetailDto>();
-foreach (var item in list)
+﻿using WeihanLi.Extensions;
+
+public static partial class IssueSamples
 {
-    Console.WriteLine($"#{item.RowNum+1} => {item.No}\t{item.Name}\t{item.Specification}\t{item.QuantityM}\t{item.Unit}");
+    public static void Issue169Sample()
+    {
+        var filePath = @"C:\Users\Weiha\Downloads\test\2.xlsx";
+        var workbook = ExcelHelper.LoadExcel(
+            File.OpenRead(filePath),
+            ExcelFormat.Xlsx
+        );
+        var settings = FluentSettings.For<MaterielDetailDto>();
+        settings.WithPostImportAction((x, rowIndex) => x?.RowNum = rowIndex + 1);
+        var list = workbook.ToEntityList<MaterielDetailDto>();
+        foreach (var item in list)
+        {
+            Console.WriteLine(item.ToJson());
+        }
+    }
 }
 
 [Sheet(SheetIndex = 0, StartRowIndex = 6, DisableColumnIndexAdjustment = true)]
 public class MaterielDetailDto
 {
+    [Column(IsIgnored = true)]
     public int RowNum { get; set; }
-
+    
     /// <summary>
     /// 编号
     /// </summary>

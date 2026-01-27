@@ -6,11 +6,15 @@ using NPOI.SS.Util;
 using WeihanLi.Common.Helpers;
 using WeihanLi.Common.Logging;
 using WeihanLi.Extensions;
-using WeihanLi.Npoi.Configurations;
 
 // ReSharper disable All
 
 LogHelper.ConfigureLogging(x => x.WithMinimumLevel(LogHelperLogLevel.Info).AddConsole());
+
+{
+    IssueSamples.Issue169Sample();
+    ConsoleHelper.ReadLineWithPrompt();
+}
 
 // multi sheets sample
 {

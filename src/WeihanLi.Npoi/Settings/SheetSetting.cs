@@ -59,6 +59,11 @@ public sealed class SheetSetting
     public bool AutoColumnWidthEnabled { get; set; }
 
     /// <summary>
+    ///    disable the column index adjustment when import, enabled by default, specify as <c>true</c> to disable
+    /// </summary>
+    public bool DisableColumnIndexAdjustment { get; set; }
+
+    /// <summary>
     ///     Cell Filter
     /// </summary>
     public Func<ICell, bool>? CellFilter

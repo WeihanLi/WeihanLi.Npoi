@@ -41,14 +41,14 @@ internal static class NpoiHelper
 
         var propertyColumnDictionary = InternalHelper.GetPropertyColumnDictionary(configuration);
         var propertyColumnDic = sheetSetting.HeaderRowIndex >= 0
-            ? propertyColumnDictionary.ToDictionary(_ => _.Key,
-                _ => new PropertyConfiguration
+            ? propertyColumnDictionary.ToDictionary(p => p.Key,
+                p => new PropertyConfiguration
                 {
                     ColumnIndex = -1,
-                    ColumnFormatter = _.Value.ColumnFormatter,
-                    ColumnTitle = _.Value.ColumnTitle,
-                    ColumnWidth = _.Value.ColumnWidth,
-                    IsIgnored = _.Value.IsIgnored
+                    ColumnFormatter = p.Value.ColumnFormatter,
+                    ColumnTitle = p.Value.ColumnTitle,
+                    ColumnWidth = p.Value.ColumnWidth,
+                    IsIgnored = p.Value.IsIgnored
                 })
             : propertyColumnDictionary;
         var formulaEvaluator = sheet.Workbook.GetFormulaEvaluator();
@@ -65,9 +65,10 @@ internal static class NpoiHelper
         {
             var row = sheet.GetRow(rowIndex);
 
-            if (rowIndex == sheetSetting.HeaderRowIndex) // readerHeader
+            // readerHeader and auto adjust the column index when columnIndex adjustment not disabled
+            if (rowIndex == sheetSetting.HeaderRowIndex && !sheetSetting.DisableColumnIndexAdjustment)
             {
-                if (row != null)
+                if (row is not null)
                 {
                     // adjust column index according to the imported data header
                     for (var i = row.FirstCellNum; i < row.LastCellNum; i++)
@@ -76,18 +77,16 @@ internal static class NpoiHelper
                         {
                             continue;
                         }
+                        
                         row.GetCell(i).SetCellType(CellType.String);
                         var title = row.GetCell(i).StringCellValue.Trim();
                         var col = propertyColumnDic.GetPropertySetting(title);
-                        if (null != col)
-                        {
-                            col.ColumnIndex = i;
-                        }
+                        col?.ColumnIndex = i;
                     }
                 }
 
                 // use default column index if no headers
-                if (propertyColumnDic.Values.Any(_ => _.ColumnIndex < 0))
+                if (propertyColumnDic.Values.Any(p => p.ColumnIndex < 0))
                 {
                     propertyColumnDic = propertyColumnDictionary;
                 }
@@ -134,28 +133,25 @@ internal static class NpoiHelper
                     {
                         foreach (var propertyInfo in propertyColumnDic.Keys)
                         {
-                            if (propertyInfo.CanWrite)
+                            if (!propertyInfo.CanWrite) continue;
+                            
+                            var propertyValue = propertyInfo.GetValueGetter()?.Invoke(entity);
+                            if (!InternalCache.InputFormatterFuncCache.TryGetValue(propertyInfo,
+                                    out var formatterFunc) || formatterFunc?.Method is null) continue;
+                                
+                            var valueSetter = propertyInfo.GetValueSetter();
+                            if (valueSetter is null) continue;
+                                    
+                            try
                             {
-                                var propertyValue = propertyInfo.GetValueGetter()?.Invoke(entity);
-                                if (InternalCache.InputFormatterFuncCache.TryGetValue(propertyInfo,
-                                    out var formatterFunc) && formatterFunc?.Method != null)
-                                {
-                                    var valueSetter = propertyInfo.GetValueSetter();
-                                    if (valueSetter != null)
-                                    {
-                                        try
-                                        {
-                                            // apply custom formatterFunc
-                                            var formattedValue = formatterFunc.DynamicInvoke(entity, propertyValue);
-                                            valueSetter.Invoke(entity, formattedValue);
-                                        }
-                                        catch (Exception e)
-                                        {
-                                            Debug.WriteLine(e);
-                                            InvokeHelper.OnInvokeException?.Invoke(e);
-                                        }
-                                    }
-                                }
+                                // apply custom formatterFunc
+                                var formattedValue = formatterFunc.DynamicInvoke(entity, propertyValue);
+                                valueSetter.Invoke(entity, formattedValue);
+                            }
+                            catch (Exception e)
+                            {
+                                Debug.WriteLine(e);
+                                InvokeHelper.OnInvokeException?.Invoke(e);
                             }
                         }
                     }
@@ -166,6 +162,7 @@ internal static class NpoiHelper
                     }
 
                     dataAction?.Invoke(entity, configuration, rowIndex);
+                    configuration.PostAction?.Invoke(entity, rowIndex);
 
                     yield return entity;
                 }
@@ -189,52 +186,53 @@ internal static class NpoiHelper
                 if (sheetSetting.CellFilter?.Invoke(cell) != false)
                 {
                     var valueSetter = key.GetValueSetter();
-                    if (valueSetter != null)
+                    if (valueSetter is null) continue;
+                    
+                    if (key.PropertyType == typeof(byte[])
+                        || key.PropertyType == typeof(IPictureData))
                     {
-                        if (key.PropertyType == typeof(byte[])
-                            || key.PropertyType == typeof(IPictureData))
+                        if (pictures.TryGetValue(new CellPosition(rowIndex, colIndex), out var pic))
                         {
-                            if (pictures.TryGetValue(new CellPosition(rowIndex, colIndex), out var pic))
-                            {
-                                valueSetter.Invoke(entity,
-                                    key.PropertyType == typeof(IPictureData) ? pic : pic.Data);
-                            }
+                            valueSetter.Invoke(entity,
+                                key.PropertyType == typeof(IPictureData) ? pic : pic.Data);
+                        }
+                    }
+                    else
+                    {
+                        var valueApplied = false;
+                        InternalCache.CellReaderFuncCache.TryGetValue(key, out var cellReader);
+                        if (cellReader?.Method is not null)
+                        {
+                            columnValue = cellReader.DynamicInvoke(cell);
+                            valueApplied = true;
                         }
                         else
                         {
-                            var valueApplied = false;
-                            InternalCache.CellReaderFuncCache.TryGetValue(key, out var cellReader);
-                            if (cellReader?.Method != null)
+                            InternalCache.ColumnInputFormatterFuncCache.TryGetValue(key,
+                                out var formatterFunc);
+                            if (formatterFunc?.Method is not null)
                             {
-                                columnValue = cellReader.DynamicInvoke(cell);
-                                valueApplied = true;
-                            }
-                            else
-                            {
-                                InternalCache.ColumnInputFormatterFuncCache.TryGetValue(key,
-                                    out var formatterFunc);
-                                if (formatterFunc?.Method != null)
+                                var cellValue = cell.GetCellValue<string>(formulaEvaluator);
+                                try
                                 {
-                                    var cellValue = cell.GetCellValue<string>(formulaEvaluator);
-                                    try
-                                    {
-                                        // apply custom formatterFunc
-                                        columnValue = formatterFunc.DynamicInvoke(cellValue);
-                                        valueApplied = true;
-                                    }
-                                    catch (Exception e)
-                                    {
-                                        Debug.WriteLine(e);
-                                        InvokeHelper.OnInvokeException?.Invoke(e);
-                                    }
+                                    // apply custom formatterFunc
+                                    columnValue = formatterFunc.DynamicInvoke(cellValue);
+                                    valueApplied = true;
+                                }
+                                catch (Exception e)
+                                {
+                                    Debug.WriteLine(e);
+                                    InvokeHelper.OnInvokeException?.Invoke(e);
                                 }
                             }
-                            if (valueApplied == false)
-                            {
-                                columnValue = cell.GetCellValue(key.PropertyType, formulaEvaluator);
-                            }
-                            valueSetter.Invoke(entity, columnValue);
                         }
+                        
+                        if (valueApplied == false)
+                        {
+                            columnValue = cell.GetCellValue(key.PropertyType, formulaEvaluator);
+                        }
+                        
+                        valueSetter.Invoke(entity, columnValue);
                     }
                 }
             }
@@ -282,13 +280,13 @@ internal static class NpoiHelper
         foreach (var entity in entityList)
         {
             var row = sheet.CreateRow(sheetSetting.StartRowIndex + rowIndex);
-            if (entity != null)
+            if (entity is not null)
             {
                 foreach (var key in propertyColumnDictionary.Keys)
                 {
                     var propertyValue = key.GetValueGetter<TEntity>()?.Invoke(entity);
                     if (InternalCache.OutputFormatterFuncCache.TryGetValue(key, out var formatterFunc) &&
-                        formatterFunc?.Method != null)
+                        formatterFunc?.Method is not null)
                     {
                         try
                         {
@@ -407,7 +405,7 @@ internal static class NpoiHelper
                     freezeSetting.TopRow);
             }
 
-            if (excelConfiguration.FilterSetting != null)
+            if (excelConfiguration.FilterSetting is not null)
             {
                 var headerIndex = sheetSetting.HeaderRowIndex >= 0 ? sheetSetting.HeaderRowIndex : 0;
                 sheet.SetAutoFilter(new CellRangeAddress(headerIndex, rowsCount + headerIndex,

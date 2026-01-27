@@ -9,5 +9,6 @@
     <Using Include="WeihanLi.Npoi" />
     <Using Include="WeihanLi.Npoi.Attributes" />
     <Using Include="WeihanLi.Npoi.Configurations" />
+    <Using Include="WeihanLi.Npoi.Attributes.ColumnAttribute" Alias="ColumnAttribute" />
   </ItemGroup>
 </Project>
