@@ -6,8 +6,6 @@ using NPOI.SS.Util;
 using WeihanLi.Common.Helpers;
 using WeihanLi.Common.Logging;
 using WeihanLi.Extensions;
-using WeihanLi.Npoi;
-using WeihanLi.Npoi.Attributes;
 using WeihanLi.Npoi.Configurations;
 
 // ReSharper disable All
