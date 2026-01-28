@@ -445,15 +445,15 @@ public static class CsvHelper
         {
             var configuration = InternalHelper.GetExcelConfigurationMapping<TEntity>();
             var propertyColumnDictionary = InternalHelper.GetPropertyColumnDictionary<TEntity>();
-            var propertyColumnDic = csvOptions.IncludeHeader 
+            var propertyColumnDic = csvOptions.IncludeHeader
                 ? propertyColumnDictionary.ToDictionary(p => p.Key, p => new PropertyConfiguration
-                    {
-                        ColumnIndex = -1,
-                        ColumnFormatter = p.Value.ColumnFormatter,
-                        ColumnTitle = p.Value.ColumnTitle,
-                        ColumnWidth = p.Value.ColumnWidth,
-                        IsIgnored = p.Value.IsIgnored
-                    }) 
+                {
+                    ColumnIndex = -1,
+                    ColumnFormatter = p.Value.ColumnFormatter,
+                    ColumnTitle = p.Value.ColumnTitle,
+                    ColumnWidth = p.Value.ColumnWidth,
+                    IsIgnored = p.Value.IsIgnored
+                })
                 : propertyColumnDictionary;
             var isFirstLine = csvOptions.IncludeHeader;
             foreach (var strLine in csvLines)
