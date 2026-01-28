@@ -8,9 +8,7 @@ namespace WeihanLi.Npoi.Configurations;
 /// <summary>
 ///     PropertyConfiguration
 /// </summary>
-public interface IPropertyConfiguration
-{
-}
+public interface IPropertyConfiguration;
 
 /// <summary>
 /// Describes the fluent property-level configuration API for an entity.

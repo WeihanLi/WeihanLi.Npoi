@@ -8,9 +8,7 @@ namespace WeihanLi.Npoi;
 /// <summary>
 /// Marker interface for describing fluent configuration profiles.
 /// </summary>
-public interface IMappingProfile
-{
-}
+public interface IMappingProfile;
 
 /// <summary>
 /// Strongly typed mapping profile contract.
@@ -22,5 +20,5 @@ public interface IMappingProfile<T> : IMappingProfile
     ///     Configures the Excel mapping metadata for the given entity type.
     /// </summary>
     /// <param name="configuration">Excel configuration builder.</param>
-    public void Configure(IExcelConfiguration<T> configuration);
+    void Configure(IExcelConfiguration<T> configuration);
 }
