@@ -46,7 +46,7 @@ public class Issue169Dto
     [Column("规格型号", Index = 2)]
     public string Specification { get; set; }
 
-    /// <summary>+
+    /// <summary>
     /// 特殊库存
     /// </summary>
     [Column("特殊库存", Index = 3)]
