@@ -116,10 +116,5 @@ public sealed class SheetAttribute : Attribute
         set => SheetSetting.AutoColumnWidthEnabled = value;
     }
 
-    /// <summary>
-    ///     Gets or sets whether to disable column index adjustment
-    /// </summary>
-    public bool DisableColumnIndexAdjustment { get; set; }
-
     internal SheetSetting SheetSetting { get; }
 }

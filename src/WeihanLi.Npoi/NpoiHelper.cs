@@ -17,8 +17,8 @@ namespace WeihanLi.Npoi;
 internal static class NpoiHelper
 {
     private static SheetSetting GetSheetSetting(IDictionary<int, SheetSetting> sheetSettings, int sheetIndex) =>
-        sheetIndex > 0 && sheetSettings.ContainsKey(sheetIndex)
-            ? sheetSettings[sheetIndex]
+        sheetIndex > 0 && sheetSettings.TryGetValue(sheetIndex, out var sheetSetting)
+            ? sheetSetting
             : sheetSettings[0];
 
     /// <summary>
@@ -66,7 +66,7 @@ internal static class NpoiHelper
             var row = sheet.GetRow(rowIndex);
 
             // readerHeader and auto adjust the column index when columnIndex adjustment not disabled
-            if (rowIndex == sheetSetting.HeaderRowIndex && !sheetSetting.DisableColumnIndexAdjustment)
+            if (rowIndex == sheetSetting.HeaderRowIndex && !sheetSetting.SkipHeaderRow)
             {
                 if (row is not null)
                 {
@@ -240,7 +240,7 @@ internal static class NpoiHelper
     }
 
     /// <summary>
-    ///     Export entity list to excel sheet
+    ///     Export entity list to Excel sheet
     /// </summary>
     /// <typeparam name="TEntity">entity type</typeparam>
     /// <param name="sheet">sheet</param>
@@ -249,7 +249,7 @@ internal static class NpoiHelper
     /// <returns>sheet</returns>
     public static ISheet EntitiesToSheet<TEntity>(ISheet sheet, IEnumerable<TEntity>? entityList, int sheetIndex)
     {
-        Guard.NotNull(sheet, nameof(sheet));
+        Guard.NotNull(sheet);
         if (entityList is null)
         {
             return sheet;
@@ -411,7 +411,7 @@ internal static class NpoiHelper
                 sheet.SetAutoFilter(new CellRangeAddress(headerIndex, rowsCount + headerIndex,
                     excelConfiguration.FilterSetting.FirstColumn,
                     excelConfiguration.FilterSetting.LastColumn ??
-                    propertyColumnDictionary.Values.Max(_ => _.ColumnIndex)));
+                    propertyColumnDictionary.Values.Max(c => c.ColumnIndex)));
             }
         }
 

@@ -22,7 +22,7 @@ public static partial class IssueSamples
     }
 }
 
-[Sheet(SheetIndex = 0, StartRowIndex = 6, DisableColumnIndexAdjustment = true)]
+[Sheet(SheetIndex = 0, StartRowIndex = 6)]
 public class Issue169Dto
 {
     [Column(IsIgnored = true)]

@@ -445,15 +445,16 @@ public static class CsvHelper
         {
             var configuration = InternalHelper.GetExcelConfigurationMapping<TEntity>();
             var propertyColumnDictionary = InternalHelper.GetPropertyColumnDictionary<TEntity>();
-            var propertyColumnDic = csvOptions.IncludeHeader ? propertyColumnDictionary.ToDictionary(_ => _.Key,
-                _ => new PropertyConfiguration
-                {
-                    ColumnIndex = -1,
-                    ColumnFormatter = _.Value.ColumnFormatter,
-                    ColumnTitle = _.Value.ColumnTitle,
-                    ColumnWidth = _.Value.ColumnWidth,
-                    IsIgnored = _.Value.IsIgnored
-                }) : propertyColumnDictionary;
+            var propertyColumnDic = csvOptions.IncludeHeader 
+                ? propertyColumnDictionary.ToDictionary(p => p.Key, p => new PropertyConfiguration
+                    {
+                        ColumnIndex = -1,
+                        ColumnFormatter = p.Value.ColumnFormatter,
+                        ColumnTitle = p.Value.ColumnTitle,
+                        ColumnWidth = p.Value.ColumnWidth,
+                        IsIgnored = p.Value.IsIgnored
+                    }) 
+                : propertyColumnDictionary;
             var isFirstLine = csvOptions.IncludeHeader;
             foreach (var strLine in csvLines)
             {
@@ -469,7 +470,7 @@ public static class CsvHelper
                         }
                     }
 
-                    if (propertyColumnDic.Values.Any(_ => _.ColumnIndex < 0))
+                    if (propertyColumnDic.Values.Any(p => p.ColumnIndex < 0))
                     {
                         propertyColumnDic = propertyColumnDictionary;
                     }
@@ -557,25 +558,22 @@ public static class CsvHelper
 
                     if (null != entity)
                     {
-                        foreach (var propertyInfo in propertyColumnDic.Keys)
+                        foreach (var propertyInfo in propertyColumnDic.Keys.Where(p => p.CanWrite))
                         {
-                            if (propertyInfo.CanWrite)
+                            var propertyValue = propertyInfo.GetValueGetter()?.Invoke(entity);
+                            if (InternalCache.InputFormatterFuncCache.TryGetValue(propertyInfo,
+                                    out var formatterFunc) && formatterFunc?.Method is not null)
                             {
-                                var propertyValue = propertyInfo.GetValueGetter()?.Invoke(entity);
-                                if (InternalCache.InputFormatterFuncCache.TryGetValue(propertyInfo,
-                                        out var formatterFunc) && formatterFunc?.Method is not null)
+                                try
                                 {
-                                    try
-                                    {
-                                        // apply custom formatterFunc
-                                        var formattedValue = formatterFunc.DynamicInvoke(entity, propertyValue);
-                                        propertyInfo.GetValueSetter()?.Invoke(entity, formattedValue);
-                                    }
-                                    catch (Exception e)
-                                    {
-                                        Debug.WriteLine(e);
-                                        InvokeHelper.OnInvokeException?.Invoke(e);
-                                    }
+                                    // apply custom formatterFunc
+                                    var formattedValue = formatterFunc.DynamicInvoke(entity, propertyValue);
+                                    propertyInfo.GetValueSetter()?.Invoke(entity, formattedValue);
+                                }
+                                catch (Exception e)
+                                {
+                                    Debug.WriteLine(e);
+                                    InvokeHelper.OnInvokeException?.Invoke(e);
                                 }
                             }
                         }
@@ -842,7 +840,7 @@ public static class CsvHelper
     /// <param name="entities">The collection of entities to convert</param>
     /// <param name="csvOptions">Optional custom CSV formatting options</param>
     /// <typeparam name="TEntity">The entity type to convert</typeparam>
-    /// <returns>An enumerable of CSV formatted lines</returns>
+    /// <returns>CSV formatted lines</returns>
     public static IEnumerable<string> GetCsvLines<TEntity>(this IEnumerable<TEntity> entities, CsvOptions? csvOptions = null)
     {
         if (entities is null)
@@ -860,7 +858,10 @@ public static class CsvHelper
             }
             foreach (var entity in entities)
             {
-                yield return Convert.ToString(entity) ?? string.Empty;
+                if (entity is IFormattable formattableEntity)
+                    yield return formattableEntity.ToString();
+                else
+                    yield return Convert.ToString(entity) ?? string.Empty;
             }
         }
         else

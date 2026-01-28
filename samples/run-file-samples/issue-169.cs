@@ -8,10 +8,10 @@ settings.WithPostImportAction((x, rowIndex) => x?.RowNum = rowIndex + 1);
 var list = workbook.ToEntityList<MaterielDetailDto>();
 foreach (var item in list)
 {
-    Console.WriteLine($"#{item.RowNum+1} => {item.No}\t{item.Name}\t{item.Specification}\t{item.QuantityM}\t{item.Unit}");
+    Console.WriteLine($"#{item.RowNum}\t => {item.No}\t{item.Name}\t{item.Specification}\t{item.QuantityM}\t{item.Unit}\t{item.TotalAmount4}\t{item.CategoryName}\t{item.IsStop}");
 }
 
-[Sheet(SheetIndex = 0, StartRowIndex = 6, DisableColumnIndexAdjustment = true)]
+[Sheet(SheetIndex = 0, StartRowIndex = 6)]
 public class MaterielDetailDto
 {
     public int RowNum { get; set; }
