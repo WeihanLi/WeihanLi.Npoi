@@ -463,7 +463,7 @@ public static class CsvHelper
                     for (var index = 0; index < cols.Count; index++)
                     {
                         var setting = propertyColumnDic.GetPropertySetting(cols[index]);
-                        if (setting != null)
+                        if (setting is not null)
                         {
                             setting.ColumnIndex = index;
                         }
@@ -491,7 +491,7 @@ public static class CsvHelper
                                 var columnValue = key.PropertyType.GetDefaultValue();
                                 var valueApplied = false;
                                 if (InternalCache.ColumnInputFormatterFuncCache.TryGetValue(key,
-                                        out var formatterFunc) && formatterFunc?.Method != null)
+                                        out var formatterFunc) && formatterFunc?.Method is not null)
                                 {
                                     var cellValue = cols[colIndex];
                                     try
@@ -529,7 +529,7 @@ public static class CsvHelper
 
                                 var valueApplied = false;
                                 if (InternalCache.ColumnInputFormatterFuncCache.TryGetValue(key,
-                                        out var formatterFunc) && formatterFunc?.Method != null)
+                                        out var formatterFunc) && formatterFunc?.Method is not null)
                                 {
                                     var cellValue = cols[colIndex];
                                     try
@@ -563,7 +563,7 @@ public static class CsvHelper
                             {
                                 var propertyValue = propertyInfo.GetValueGetter()?.Invoke(entity);
                                 if (InternalCache.InputFormatterFuncCache.TryGetValue(propertyInfo,
-                                        out var formatterFunc) && formatterFunc?.Method != null)
+                                        out var formatterFunc) && formatterFunc?.Method is not null)
                                 {
                                     try
                                     {
@@ -885,7 +885,7 @@ public static class CsvHelper
                     {
                         var propertyValue = props[i].GetValueGetter<TEntity>()?.Invoke(entity);
                         if (InternalCache.OutputFormatterFuncCache.TryGetValue(props[i], out var formatterFunc) &&
-                            formatterFunc?.Method != null)
+                            formatterFunc?.Method is not null)
                         {
                             try
                             {

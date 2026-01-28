@@ -140,6 +140,8 @@ internal sealed class ExcelConfiguration<TEntity> : ExcelConfiguration, IExcelCo
 
     internal Func<TEntity?, bool>? DataFilter { get; private set; }
 
+    internal Action<TEntity?, int>? PostImportAction { get; private set; }
+
     internal IComparer<PropertyInfo>? PropertyComparer { get; private set; }
 
     internal IValidator? Validator { get; private set; }
@@ -161,6 +163,12 @@ internal sealed class ExcelConfiguration<TEntity> : ExcelConfiguration, IExcelCo
     public IExcelConfiguration<TEntity> WithDataFilter(Func<TEntity?, bool>? dataFilter)
     {
         DataFilter = dataFilter;
+        return this;
+    }
+
+    public IExcelConfiguration<TEntity> WithPostImportAction(Action<TEntity?, int>? postAction)
+    {
+        PostImportAction = postAction;
         return this;
     }
 
@@ -202,7 +210,7 @@ internal sealed class ExcelConfiguration<TEntity> : ExcelConfiguration, IExcelCo
     public IPropertyConfiguration<TEntity, TProperty> Property<TProperty>(string propertyName)
     {
         var property = PropertyConfigurationDictionary.Keys.FirstOrDefault(p => p.Name == propertyName);
-        if (property != null)
+        if (property is not null)
         {
             return (IPropertyConfiguration<TEntity, TProperty>)PropertyConfigurationDictionary[property];
         }

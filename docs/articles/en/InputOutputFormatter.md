@@ -1,12 +1,12 @@
-# InputOutputFormatter 介绍
+# InputOutputFormatter Introduction
 
-## Intro
+## Introduction
 
-WeihanLi.Npoi 引入了 `OutputFormatter`/`InputFormatter`/`ColumnInputFormatter`/`ColumnOutputFormatter`，极大程度上增强了导入导出的灵活性，只支持通过 FluentAPI 配置，来看下面的示例
+WeihanLi.Npoi introduces `OutputFormatter`/`InputFormatter`/`ColumnInputFormatter`/`ColumnOutputFormatter`, greatly enhancing the flexibility of import and export operations. These are only supported through FluentAPI configuration. Let's look at the following example.
 
 ## InputFormatter/OutputFormatter
 
-示例 Model:
+Example Model:
 
 ``` csharp
 internal abstract class BaseEntity
@@ -35,7 +35,7 @@ internal class TestEntity : BaseEntity
 }
 ```
 
-示例配置：
+Example Configuration:
 
 ``` csharp
 var setting = FluentSettings.For<TestEntity>();
@@ -76,8 +76,8 @@ setting.Property(_ => _.CreatedBy)
     .HasColumnTitle("CreatedBy");
 
 setting.Property(x => x.Enabled)
-    .HasColumnInputFormatter(val => "启用".Equals(val))
-    .HasColumnOutputFormatter(v => v ? "启用" : "禁用");
+    .HasColumnInputFormatter(val => "Enabled".Equals(val))
+    .HasColumnOutputFormatter(v => v ? "Enabled" : "Disabled");
 
 setting.Property("HiddenProp")
     .HasOutputFormatter((entity, val) => $"HiddenProp_{entity.PKID}");
@@ -87,7 +87,7 @@ setting.Property(_ => _.UpdatedBy).Ignored();
 setting.Property(_ => _.UpdatedTime).Ignored();
 ```
 
-测试代码：
+Test Code:
 
 ``` csharp
 var entities = new List<TestEntity>()
@@ -114,13 +114,13 @@ entities.ToExcelFile(path);
 var entitiesT0 = ExcelHelper.ToEntityList<TestEntity>(path);
 ```
 
-导出结果：
+Export Result:
 
-![](../images/489462-20200104112133779-1180097402.png)
+![Export Result](../images/489462-20200104112133779-1180097402.png)
 
 
-导入结果：
+Import Result:
 
-![](../images/489462-20200104112017420-1450911242.png)
+![Import Result 1](../images/489462-20200104112017420-1450911242.png)
 
-![](../images/489462-20200104112025927-873408781.png)
+![Import Result 2](../images/489462-20200104112025927-873408781.png)

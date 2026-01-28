@@ -85,6 +85,13 @@ public interface IExcelConfiguration<TEntity> : IExcelConfiguration
     IExcelConfiguration<TEntity> WithDataFilter(Func<TEntity?, bool>? dataFilter);
 
     /// <summary>
+    ///     register post action for T and rowIndex based func
+    /// </summary>
+    /// <param name="postAction">postAction</param>
+    /// <returns></returns>
+    IExcelConfiguration<TEntity> WithPostImportAction(Action<TEntity?, int>? postAction);
+
+    /// <summary>
     ///     register property comparer
     /// </summary>
     /// <param name="propertyComparer">propertyComparer</param>

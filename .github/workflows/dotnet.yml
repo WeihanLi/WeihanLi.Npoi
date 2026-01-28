@@ -32,9 +32,9 @@ jobs:
       run: |
         dotnet tool install -g dotnet-execute
         dotnet-exec info
-    - name: font configure
-      run: |
-         sudo apt update && sudo apt-get install -y ttf-mscorefonts-installer fontconfig fonts-lato libgdiplus libc6-dev && sudo ln -s /usr/lib/libgdiplus.so /usr/lib/gdiplus.dll
+    # - name: font configure
+    #   run: |
+    #      sudo apt update && sudo apt-get install -y ttf-mscorefonts-installer fontconfig fonts-lato libgdiplus libc6-dev && sudo ln -s /usr/lib/libgdiplus.so /usr/lib/gdiplus.dll
     - name: build
       run: dotnet build.cs --target=build
       

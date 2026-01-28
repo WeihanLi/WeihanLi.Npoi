@@ -1,8 +1,6 @@
 ﻿// Copyright (c) Weihan Li. All rights reserved.
 // Licensed under the Apache license.
 
-using WeihanLi.Npoi.Attributes;
-
 namespace DotNetCoreSample;
 
 [Sheet(SheetIndex = 0, SheetName = "Abc", StartRowIndex = 1, EndRowIndex = 10, StartColumnIndex = 1, EndColumnIndex = 19)]

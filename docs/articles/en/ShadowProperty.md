@@ -1,16 +1,16 @@
-# WeihanLi.Npoi 支持 `ShadowProperty` 了
+# WeihanLi.Npoi Now Supports `ShadowProperty`
 
-## Intro
+## Introduction
 
-在 EF 里有个 `ShadowProperty` (阴影属性/影子属性)的概念，你可以通过 FluentAPI 的方式来定义一个不在 .NET model 里定义的属性，只能通过 EF 里的 `Change Tracker` 来操作这种属性。
+In Entity Framework, there's a concept called `ShadowProperty` (Shadow Property). You can define a property through FluentAPI that is not defined in the .NET model, and this property can only be operated through EF's `Change Tracker`.
 
-在导出 Excel 的时候，可能希望导出的列并不是都定义好在我们的 model 中的，有的可能只是想增加一列导出某个属性中的嵌套属性之中的某一个属性值，或者我就是单纯的想多定义一列，而这个时候可能 model 是别的地方写死的，不方便改。
+When exporting to Excel, you might want some exported columns not to be defined in your model. Some columns might just be added to export a nested property value, or you simply want to define an additional column while the model is defined elsewhere and is inconvenient to modify.
 
-于是 `WeihanLi.Npoi` 从 1.6.0 版本开始支持 `ShadowProperty` ，将  EF 里的 `ShadowProperty` 引入到 excel 导出里，目前来说 `ShadowProperty` 是不可写的，读取的话也只是返回一个类型的默认值，不支持 `ChangeTracker`，不支持改。
+Therefore, starting from version 1.6.0, `WeihanLi.Npoi` supports `ShadowProperty`, bringing the concept from EF into Excel export. Currently, `ShadowProperty` is read-only - reading returns the default value of the type, and it doesn't support `ChangeTracker` or modifications.
 
-## 使用示例
+## Usage Example
 
-来看一个简单使用示例：(示例来源于网友提出的这个issue： <https://github.com/WeihanLi/WeihanLi.Npoi/issues/51>)
+Here's a simple usage example (from a user-submitted issue: <https://github.com/WeihanLi/WeihanLi.Npoi/issues/51>)
 
 ``` csharp
 using System;
@@ -29,13 +29,13 @@ namespace NpoiTest
                 .HasColumnIndex(0);
             // settings.Property(x => x.UserFields)
             //     .HasOutputFormatter((entity, value) => $"{value[0].Value},{value[2].Value}")
-            //     .HasColumnTitle("姓名,工号")
+            //     .HasColumnTitle("Name,Employee ID")
             //     .HasColumnIndex(1);
             settings.Property(x=>x.UserFields).Ignored();
-            settings.Property("工号")
+            settings.Property("Employee ID")
                 .HasOutputFormatter((entity,val)=> $"{entity.UserFields[2].Value}")
                  ;
-            settings.Property("部门")
+            settings.Property("Department")
                 .HasOutputFormatter((entity,val)=> $"{entity.UserFields[1].Value}")
                  ;
 
@@ -49,17 +49,17 @@ namespace NpoiTest
                     {
                         new UserField()
                         {
-                            Name = "姓名",
+                            Name = "Name",
                             Value = "xaioming",
                         },
                         new UserField()
                         {
-                            Name = "部门",
+                            Name = "Department",
                             Value = "1212"
                         },
                         new UserField()
                         {
-                            Name = "工号",
+                            Name = "Employee ID",
                             Value = "121213131"
                         },
                     }
@@ -88,8 +88,8 @@ namespace NpoiTest
 }
 ```
 
-导出效果如下：
+Export result:
 
-![](../images/489462-20191213084226066-1767559517.png)
+![Shadow Property Example](../images/489462-20191213084226066-1767559517.png)
 
-可以看到，我们为导出的 Excel 增加在原本的 Model 里没有定义的两列，借助于此，我们可以更灵活的定制要导出的内容
+As you can see, we added two columns to the exported Excel that were not defined in the original Model. With this feature, we can more flexibly customize the content to be exported.

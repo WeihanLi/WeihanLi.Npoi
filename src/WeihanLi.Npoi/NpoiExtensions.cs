@@ -112,7 +112,7 @@ public static class NpoiExtensions
         var entities = NpoiHelper.SheetToEntities<TEntity>(sheet, sheetIndex, (entity, configuration, rowIndex) =>
         {
             var validatorEffective = configuration.Validator;
-            if (validator != null)
+            if (validator is not null)
             {
                 validatorEffective = validator.GetCommonValidator();
             }
@@ -264,7 +264,7 @@ public static class NpoiExtensions
 
                 dataTable.Columns.Add(columnName);
 
-                if (maxColumns != null && cell.ColumnIndex + 1 == maxColumns)
+                if (maxColumns is not null && cell.ColumnIndex + 1 == maxColumns)
                 {
                     break;
                 }
@@ -948,7 +948,7 @@ public static class NpoiExtensions
                 try
                 {
                     var evaluatedCellValue = formulaEvaluator?.Evaluate(cell);
-                    if (evaluatedCellValue != null)
+                    if (evaluatedCellValue is not null)
                     {
                         if (evaluatedCellValue.CellType == CellType.Blank
                             || evaluatedCellValue.CellType == CellType.Error)
