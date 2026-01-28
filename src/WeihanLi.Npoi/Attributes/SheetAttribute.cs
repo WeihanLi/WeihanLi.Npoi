@@ -5,6 +5,9 @@ using WeihanLi.Npoi.Settings;
 
 namespace WeihanLi.Npoi.Attributes;
 
+/// <summary>
+/// Declares per-sheet metadata for an entity mapping.
+/// </summary>
 [AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
 public sealed class SheetAttribute : Attribute
 {
@@ -12,23 +15,42 @@ public sealed class SheetAttribute : Attribute
 
     private int _startColumnIndex;
 
+    /// <summary>
+    ///     Initializes an attribute backed by a fresh <see cref="SheetSetting" />.
+    /// </summary>
     public SheetAttribute() => SheetSetting = new SheetSetting();
+
+    /// <summary>
+    ///     Target sheet index (zero-based).
+    /// </summary>
     public int SheetIndex { get; set; }
 
+    /// <summary>
+    ///     Gets or sets the sheet name override.
+    /// </summary>
     public string SheetName
     {
         get => SheetSetting.SheetName;
         set => SheetSetting.SheetName = value ?? throw new ArgumentNullException(nameof(value));
     }
 
+    /// <summary>
+    ///     Gets or sets the first row to start reading/writing (zero-based).
+    /// </summary>
     public int StartRowIndex
     {
         get => SheetSetting.StartRowIndex;
         set => SheetSetting.StartRowIndex = value;
     }
 
+    /// <summary>
+    ///     Gets the header row index.
+    /// </summary>
     public int HeaderRowIndex => SheetSetting.HeaderRowIndex;
 
+    /// <summary>
+    ///     Gets or sets the last row (inclusive) participating in the mapping.
+    /// </summary>
     public int EndRowIndex
     {
         get => SheetSetting.EndRowIndex ?? -1;
@@ -85,6 +107,9 @@ public sealed class SheetAttribute : Attribute
         }
     }
 
+    /// <summary>
+    ///     Gets or sets whether column widths should be auto-sized.
+    /// </summary>
     public bool AutoColumnWidthEnabled
     {
         get => SheetSetting.AutoColumnWidthEnabled;

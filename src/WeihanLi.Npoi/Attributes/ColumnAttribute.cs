@@ -5,13 +5,27 @@ using WeihanLi.Npoi.Configurations;
 
 namespace WeihanLi.Npoi.Attributes;
 
+/// <summary>
+/// Describes column-level metadata for a property.
+/// </summary>
 [AttributeUsage(AttributeTargets.Property)]
 public sealed class ColumnAttribute : Attribute
 {
+    /// <summary>
+    ///     Initializes a column attribute with default configuration.
+    /// </summary>
     public ColumnAttribute() => PropertyConfiguration = new PropertyConfiguration();
 
+    /// <summary>
+    ///     Initializes a column attribute targeting the specified index.
+    /// </summary>
+    /// <param name="index">Target column index.</param>
     public ColumnAttribute(int index) => PropertyConfiguration = new PropertyConfiguration { ColumnIndex = index };
 
+    /// <summary>
+    ///     Initializes a column attribute with the provided title.
+    /// </summary>
+    /// <param name="title">Column header title.</param>
     public ColumnAttribute(string title) => PropertyConfiguration = new PropertyConfiguration
     {
         ColumnTitle = title ?? throw new ArgumentNullException(nameof(title))

@@ -14,11 +14,23 @@ internal static class InternalCache
     /// </summary>
     public static readonly ConcurrentDictionary<Type, IExcelConfiguration> TypeExcelConfigurationDictionary = new();
 
+    /// <summary>
+    ///     Cacheable delegates that format cell values when exporting.
+    /// </summary>
     public static readonly ConcurrentDictionary<PropertyInfo, Delegate?> OutputFormatterFuncCache = new();
 
+    /// <summary>
+    ///     Cacheable delegates that post-process property values after import.
+    /// </summary>
     public static readonly ConcurrentDictionary<PropertyInfo, Delegate?> InputFormatterFuncCache = new();
 
+    /// <summary>
+    ///     Cacheable delegates that pre-process property values before the column formatter runs.
+    /// </summary>
     public static readonly ConcurrentDictionary<PropertyInfo, Delegate?> ColumnInputFormatterFuncCache = new();
 
+    /// <summary>
+    ///     Cacheable delegates that read a cell value into the desired property type.
+    /// </summary>
     public static readonly ConcurrentDictionary<PropertyInfo, Delegate?> CellReaderFuncCache = new();
 }

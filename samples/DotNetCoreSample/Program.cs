@@ -6,13 +6,15 @@ using NPOI.SS.Util;
 using WeihanLi.Common.Helpers;
 using WeihanLi.Common.Logging;
 using WeihanLi.Extensions;
-using WeihanLi.Npoi;
-using WeihanLi.Npoi.Attributes;
-using WeihanLi.Npoi.Configurations;
 
 // ReSharper disable All
 
 LogHelper.ConfigureLogging(x => x.WithMinimumLevel(LogHelperLogLevel.Info).AddConsole());
+
+{
+    IssueSamples.Issue169Sample();
+    ConsoleHelper.ReadLineWithPrompt();
+}
 
 // multi sheets sample
 {
@@ -83,7 +85,7 @@ var tempDirPath = $@"{Environment.GetEnvironmentVariable("USERPROFILE")}\Desktop
 // image export/import test
 //var imageExcelPath = @"C:\Users\Weiha\Desktop\temp\test\imageTest.xls";
 //var imgaeModelList = ExcelHelper.ToEntityList<ImportImageTestModel>(imageExcelPath);
-//Console.WriteLine(imgaeModelList.Count(x => x?.Image != null));
+//Console.WriteLine(imgaeModelList.Count(x => x?.Image is not null));
 //imgaeModelList.ToExcelFile(imageExcelPath + ".1.xls");
 //var imgModeList2 = ExcelHelper.ToEntityList<ImportImageTestModel>(imageExcelPath + ".1.xls");
 //Console.WriteLine($"{imgaeModelList[0]?.Image?.Length},{imgModeList2[0]?.Image?.Length}");
@@ -211,8 +213,9 @@ Console.WriteLine(numList.StringJoin(","));
 
 Console.ReadLine();
 
+SheetNameTest();
 
-void SheetNameTest()
+static void SheetNameTest()
 {
     List<ExcelExportDTO> exprotDataList = new List<ExcelExportDTO>();
     for (int i = 0; i < 10; i++)

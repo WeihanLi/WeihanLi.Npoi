@@ -54,9 +54,16 @@ public sealed class SheetSetting
     public int? EndRowIndex { get; set; }
 
     /// <summary>
-    ///     enable auto column width
+    ///    Gets or set whether to enable auto column width, disabled by default.
     /// </summary>
     public bool AutoColumnWidthEnabled { get; set; }
+
+    /// <summary>
+    ///    Gets or sets whether to skip column index adjustment based on header row during import.
+    ///    When false (default), column indices are automatically adjusted based on header row.
+    ///    When true, column indices are used as-is.
+    /// </summary>
+    public bool SkipHeaderRow { get; set; }
 
     /// <summary>
     ///     Cell Filter

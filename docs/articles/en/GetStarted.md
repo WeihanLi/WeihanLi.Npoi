@@ -1,15 +1,15 @@
-# `WeihanLi.Npoi` 基础示例
+# `WeihanLi.Npoi` Getting Started
 
-## Intro
+## Introduction
 
-`WeihanLi.Npoi` 是基于 NPOI 扩展的 Excel 导入导出库，并提供了很多实用的扩展方法，也支持 CSV 的导入导出，
+`WeihanLi.Npoi` is an Excel import/export library based on NPOI that provides many useful extension methods and also supports CSV import/export.
 
-- 将 excel/csv 数据导入到 `DataTable` 或 `List<TEntity>`
-- `IEnumerable<TEntity>` 或 `DataTable` 导出到 Excel，可以导出成 excel 文件或字节数组或者一个流
-- `IEnumerable<TEntity>` 或 `DataTable` 导出到 csv 文件或者 csv 字节数组
-- 通过 `Attribute` 或者 `FluentAPI`(借鉴了 [FluentExcel](https://github.com/Arch/FluentExcel/) 项目)
+- Import excel/csv data into `DataTable` or `List<TEntity>`
+- Export `IEnumerable<TEntity>` or `DataTable` to Excel files, byte arrays, or streams
+- Export `IEnumerable<TEntity>` or `DataTable` to CSV files or byte arrays
+- Configuration through `Attributes` or `FluentAPI` (inspired by [FluentExcel](https://github.com/Arch/FluentExcel/))
 
-## BasicSample
+## Basic Examples
 
 ``` csharp
 internal class BaseModel
@@ -29,7 +29,7 @@ internal class Notice : BaseModel
 }
 ```
 
-基本的导入导出：
+Basic import and export:
 
 ``` csharp
 // entities excel import/export
@@ -175,48 +175,48 @@ public void DataTableImportExportTest()
 }
 ```
 
-## 自定义映射关系，配置
+## Custom Mapping and Configuration
 
-使用 Attribute 配置：
+Using Attributes:
 
 ``` csharp
 internal class Model
 {
-    [Column("酒店编号", Index = 0)]
+    [Column("Hotel ID", Index = 0)]
     public string HotelId { get; set; }
 
-    [Column("订单号", Index = 1)]
+    [Column("Order No", Index = 1)]
     public string OrderNo { get; set; }
 
-    [Column("酒店名称", Index = 2)]
+    [Column("Hotel Name", Index = 2)]
     public string HotelName { get; set; }
 
-    [Column("客户名称", Index = 3)]
+    [Column("Customer Name", Index = 3)]
     public string CustomerName { get; set; }
 
-    [Column(nameof(房型名称), Index = 4)]
-    public string 房型名称 { get; set; }
+    [Column(nameof(RoomType), Index = 4)]
+    public string RoomType { get; set; }
 
-    [Column(nameof(入住日期), Index = 5, Formatter = "yyyy/M/d")]
-    public DateTime 入住日期 { get; set; }
+    [Column(nameof(CheckInDate), Index = 5, Formatter = "yyyy/M/d")]
+    public DateTime CheckInDate { get; set; }
 
-    [Column(nameof(离店日期), Index = 6, Formatter = "yyyy/M/d")]
-    public DateTime 离店日期 { get; set; }
+    [Column(nameof(CheckOutDate), Index = 6, Formatter = "yyyy/M/d")]
+    public DateTime CheckOutDate { get; set; }
 
-    [Column(nameof(间夜), Index = 7)]
-    public int 间夜 { get; set; }
+    [Column(nameof(RoomNights), Index = 7)]
+    public int RoomNights { get; set; }
 
-    [Column(nameof(支付类型), Index = 8)]
-    public string 支付类型 { get; set; }
+    [Column(nameof(PaymentType), Index = 8)]
+    public string PaymentType { get; set; }
 
-    [Column(nameof(订单金额), Index = 9)]
-    public decimal 订单金额 { get; set; }
+    [Column(nameof(OrderAmount), Index = 9)]
+    public decimal OrderAmount { get; set; }
 
-    [Column(nameof(佣金率), Index = 10)]
-    public decimal 佣金率 { get; set; }
+    [Column(nameof(CommissionRate), Index = 10)]
+    public decimal CommissionRate { get; set; }
 
-    [Column(nameof(服务费), Index = 11)]
-    public decimal 服务费 { get; set; }
+    [Column(nameof(ServiceFee), Index = 11)]
+    public decimal ServiceFee { get; set; }
 }
 
 [Sheet(SheetIndex = 0, SheetName = "TestSheet", AutoColumnWidthEnabled = true)]
@@ -236,7 +236,7 @@ internal class TestEntity2
 }
 ```
 
-使用 FluentAPI 配置（推荐，更灵活）
+Using FluentAPI (Recommended for greater flexibility):
 
 ``` csharp
 var setting = FluentSettings.For<TestEntity>();
@@ -246,11 +246,11 @@ setting.HasAuthor("WeihanLi")
     .HasDescription("WeihanLi.Npoi test")
     .HasSubject("WeihanLi.Npoi test");
 
-setting.HasSheetConfiguration(0, "SystemSettingsList", 1, true); // sheet 配置
+setting.HasSheetConfiguration(0, "SystemSettingsList", 1, true); // sheet configuration
 
 // setting
-//     .HasFilter(0, 1) //在列上设置筛选
-//     .HasFreezePane(0, 1, 2, 1); // 设置冻结区域
+//     .HasFilter(0, 1) // Set filter on columns
+//     .HasFreezePane(0, 1, 2, 1); // Set freeze pane
 
 setting.Property(_ => _.SettingId)
     .HasColumnIndex(0);
@@ -272,7 +272,7 @@ setting.Property(_ => _.SettingValue)
 setting.Property(_ => _.CreatedTime)
     .HasColumnTitle("CreatedTime")
     .HasColumnIndex(4)
-    .HasColumnWidth(10) // 设置列宽
+    .HasColumnWidth(10) // Set column width
     .HasColumnFormatter("yyyy-MM-dd HH:mm:ss");
 
 setting.Property(_ => _.CreatedBy)
@@ -281,8 +281,8 @@ setting.Property(_ => _.CreatedBy)
     .HasColumnTitle("CreatedBy");
 
 setting.Property(x => x.Enabled)
-    .HasColumnInputFormatter(val => "启用".Equals(val))
-    .HasColumnOutputFormatter(v => v ? "启用" : "禁用");
+    .HasColumnInputFormatter(val => "Enabled".Equals(val))
+    .HasColumnOutputFormatter(v => v ? "Enabled" : "Disabled");
 
 setting.Property("ShadowProperty")
     .HasOutputFormatter((entity, val) => $"HiddenProp_{entity.PKID}");

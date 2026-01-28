@@ -8,6 +8,9 @@ using WeihanLi.Npoi.Settings;
 
 namespace WeihanLi.Npoi.Configurations;
 
+/// <summary>
+/// Abstraction describing the fluent configuration surface exposed to consumers.
+/// </summary>
 public interface IExcelConfiguration
 {
     /// <summary>
@@ -61,6 +64,10 @@ public interface IExcelConfiguration
     IExcelConfiguration HasFilter(int firstColumn, int? lastColumn);
 }
 
+/// <summary>
+/// Strongly typed configuration contract for a specific entity.
+/// </summary>
+/// <typeparam name="TEntity">Entity type.</typeparam>
 public interface IExcelConfiguration<TEntity> : IExcelConfiguration
 {
     /// <summary>
@@ -76,6 +83,13 @@ public interface IExcelConfiguration<TEntity> : IExcelConfiguration
     /// <param name="dataFilter">data filter logic</param>
     /// <returns>current excel configuration</returns>
     IExcelConfiguration<TEntity> WithDataFilter(Func<TEntity?, bool>? dataFilter);
+
+    /// <summary>
+    ///     register post action for T and rowIndex based func
+    /// </summary>
+    /// <param name="postAction">postAction</param>
+    /// <returns></returns>
+    IExcelConfiguration<TEntity> WithPostImportAction(Action<TEntity?, int>? postAction);
 
     /// <summary>
     ///     register property comparer

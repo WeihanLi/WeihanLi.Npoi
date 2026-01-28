@@ -6,6 +6,9 @@ using WeihanLi.Extensions;
 
 namespace WeihanLi.Npoi;
 
+/// <summary>
+/// Represents the configurable placeholders used by the templated export pipeline.
+/// </summary>
 public sealed class TemplateOptions
 {
     /// <summary>
@@ -99,6 +102,9 @@ public sealed class TemplateOptions
     } = InternalConstants.TemplateDataEnd;
 }
 
+/// <summary>
+/// Provides helper APIs for configuring template-driven exports.
+/// </summary>
 public static class TemplateHelper
 {
     /// <summary>

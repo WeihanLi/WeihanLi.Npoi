@@ -5,10 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\WeihanLi.Npoi\WeihanLi.Npoi.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Update="Templates\testTemplate.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

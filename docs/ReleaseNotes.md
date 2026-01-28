@@ -1,5 +1,11 @@
 # WeihanLi.Npoi Release Notes
 
+## [3.3.0](https://www.nuget.org/packages/WeihanLi.Npoi/3.3.0)
+
+- Support `HasPostImportAction` to support post handler when import entity
+- Code Refactoring to keep clean code
+- Modernize dependenncies and integrate GithubActionsTestLogger and improve build script
+
 ## [3.2.0](https://www.nuget.org/packages/WeihanLi.Npoi/3.2.0)
 
 - Upgrade dependencies

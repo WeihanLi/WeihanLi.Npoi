@@ -17,6 +17,9 @@ using WeihanLi.Npoi.Settings;
 
 namespace WeihanLi.Npoi;
 
+/// <summary>
+/// Extension methods that convert between NPOI primitives and the strongly-typed configuration layer.
+/// </summary>
 public static class NpoiExtensions
 {
     /// <summary>
@@ -41,6 +44,13 @@ public static class NpoiExtensions
         return ToEntities<TEntity>(workbook, sheetIndex).ToList();
     }
 
+    /// <summary>
+    ///     Lazily materializes entities from the specified sheet without building a list first.
+    /// </summary>
+    /// <typeparam name="TEntity">Entity type.</typeparam>
+    /// <param name="workbook">Excel workbook.</param>
+    /// <param name="sheetIndex">Zero-based sheet index.</param>
+    /// <returns>Sequence that yields entities row by row.</returns>
     public static IEnumerable<TEntity?> ToEntities<TEntity>(this IWorkbook workbook, int sheetIndex)
         where TEntity : new()
     {
@@ -75,6 +85,13 @@ public static class NpoiExtensions
     public static List<TEntity?> ToEntityList<TEntity>(this ISheet sheet, int sheetIndex)
         where TEntity : new() => NpoiHelper.SheetToEntities<TEntity>(sheet, sheetIndex).ToList();
 
+    /// <summary>
+    ///     Lazily materializes entities from the provided sheet.
+    /// </summary>
+    /// <typeparam name="TEntity">Entity type.</typeparam>
+    /// <param name="sheet">Excel sheet.</param>
+    /// <param name="sheetIndex">Zero-based sheet index.</param>
+    /// <returns>Sequence that yields entities row by row.</returns>
     public static IEnumerable<TEntity?> ToEntities<TEntity>(this ISheet sheet, int sheetIndex)
         where TEntity : new() => NpoiHelper.SheetToEntities<TEntity>(sheet, sheetIndex);
 
@@ -95,7 +112,7 @@ public static class NpoiExtensions
         var entities = NpoiHelper.SheetToEntities<TEntity>(sheet, sheetIndex, (entity, configuration, rowIndex) =>
         {
             var validatorEffective = configuration.Validator;
-            if (validator != null)
+            if (validator is not null)
             {
                 validatorEffective = validator.GetCommonValidator();
             }
@@ -247,7 +264,7 @@ public static class NpoiExtensions
 
                 dataTable.Columns.Add(columnName);
 
-                if (maxColumns != null && cell.ColumnIndex + 1 == maxColumns)
+                if (maxColumns is not null && cell.ColumnIndex + 1 == maxColumns)
                 {
                     break;
                 }
@@ -931,7 +948,7 @@ public static class NpoiExtensions
                 try
                 {
                     var evaluatedCellValue = formulaEvaluator?.Evaluate(cell);
-                    if (evaluatedCellValue != null)
+                    if (evaluatedCellValue is not null)
                     {
                         if (evaluatedCellValue.CellType == CellType.Blank
                             || evaluatedCellValue.CellType == CellType.Error)
