@@ -456,9 +456,11 @@ public static class CsvHelper
                 })
                 : propertyColumnDictionary;
             var isFirstLine = csvOptions.IncludeHeader;
+            var lineIndex = -1;
             foreach (var strLine in csvLines)
             {
                 var cols = ParseLine(strLine, csvOptions);
+                lineIndex++;
                 if (isFirstLine)
                 {
                     for (var index = 0; index < cols.Count; index++)
@@ -556,7 +558,7 @@ public static class CsvHelper
                         }
                     }
 
-                    if (null != entity)
+                    if (entity is not null)
                     {
                         foreach (var propertyInfo in propertyColumnDic.Keys.Where(p => p.CanWrite))
                         {
@@ -578,10 +580,14 @@ public static class CsvHelper
                             }
                         }
                     }
+                    
                     if (configuration.DataFilter?.Invoke(entity) == false)
                     {
                         continue;
                     }
+                    
+                    configuration.PostImportAction?.Invoke(entity, lineIndex);
+                    
                     yield return entity;
                 }
             }
