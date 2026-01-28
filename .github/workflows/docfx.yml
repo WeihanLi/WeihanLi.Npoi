@@ -43,6 +43,7 @@ jobs:
         run: |
           dotnet-exec info
           dotnet build
+          cp ./README.md ./docs/index.md
           docfx ./docs/docfx.json
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

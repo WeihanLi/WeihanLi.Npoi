@@ -8,9 +8,9 @@
 
 ## Introduction
 
-[NPOI](https://github.com/tonyqus/npoi) extensions based on target framework `netstandard2.0`.
+[NPOI](https://www.nuget.org/packages/NPOI/) extensions based on target framework `netstandard2.0`.
 
-WeihanLi.Npoi provides a powerful and easy-to-use toolkit for working with Excel and CSV files in .NET applications. It offers:
+`WeihanLi.Npoi` provides a powerful and easy-to-use toolkit for working with Excel and CSV files in .NET applications. It offers:
 
 - **Simple API**: Intuitive extension methods for common import/export operations
 - **Flexible Configuration**: Support for both Attribute-based and FluentAPI configuration
