@@ -117,7 +117,7 @@ public sealed class SheetAttribute : Attribute
     }
 
     /// <summary>
-    ///     Gets or sets whether to disable to column index adjustment
+    ///     Gets or sets whether to disable column index adjustment
     /// </summary>
     public bool DisableColumnIndexAdjustment { get; set; }
 
