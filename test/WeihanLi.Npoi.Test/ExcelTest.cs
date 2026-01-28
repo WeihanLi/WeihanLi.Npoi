@@ -1007,8 +1007,8 @@ public class ExcelTest
         settings.Property(x => x.Name)
             .HasCellReader(null);
     }
-    
-    
+
+
     [Theory]
     [ClassData(typeof(ExcelFormatData))]
     public void PostImportActionTest(ExcelFormat excelFormat)

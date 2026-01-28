@@ -580,14 +580,14 @@ public static class CsvHelper
                             }
                         }
                     }
-                    
+
                     if (configuration.DataFilter?.Invoke(entity) == false)
                     {
                         continue;
                     }
-                    
+
                     configuration.PostImportAction?.Invoke(entity, lineIndex);
-                    
+
                     yield return entity;
                 }
             }
