@@ -992,8 +992,6 @@ public class ExcelTest
         var settings = FluentSettings.For<CellReaderTestModel>();
         settings.Property(x => x.Name)
             .HasCellReader(_ => "CellValue");
-        settings.Property(x => x.RowIndex)
-            .HasCellReader(c => c.RowIndex);
 
         var list = ExcelHelper.ToEntityList<CellReaderTestModel>(bytes, excelFormat);
         Assert.Equal(jobs.Length, list.Count);
@@ -1004,8 +1002,31 @@ public class ExcelTest
             Guard.NotNull(model);
             Assert.Equal(jobs[i].Id, model.Id);
             Assert.Equal("CellValue", model.Name);
-            Assert.True(model.RowIndex > 0);
-            Assert.Equal(i + 1, model.RowIndex);
+        }
+
+        settings.Property(x => x.Name)
+            .HasCellReader(null);
+    }
+    
+    
+    [Theory]
+    [ClassData(typeof(ExcelFormatData))]
+    public void PostImportActionTest(ExcelFormat excelFormat)
+    {
+        var jobs = new PostImportActionTestModel[] { new() { Id = 1, Name = "test" }, new() { Id = 2 }, };
+        var bytes = jobs.ToExcelBytes(excelFormat);
+        var settings = FluentSettings.For<PostImportActionTestModel>();
+        settings.WithPostImportAction((entity, rowIndex) => entity?.RowNumber = rowIndex + 1);
+
+        var list = ExcelHelper.ToEntityList<PostImportActionTestModel>(bytes, excelFormat);
+        Assert.Equal(jobs.Length, list.Count);
+        for (var i = 0; i < jobs.Length; i++)
+        {
+            Assert.NotNull(list[i]);
+            var model = list[i];
+            Guard.NotNull(model);
+            Assert.Equal(jobs[i].Id, model.Id);
+            Assert.Equal(i + 2, model.RowNumber);
         }
 
         settings.Property(x => x.Name)
@@ -1264,7 +1285,14 @@ public class ExcelTest
     {
         public int Id { get; set; }
         public string? Name { get; set; }
-        public int RowIndex { get; set; }
+    }
+
+    private sealed record PostImportActionTestModel
+    {
+        public int Id { get; set; }
+        public string? Name { get; set; }
+        [Column(IsIgnored = true)]
+        public int RowNumber { get; set; }
     }
 
     private sealed class ImageTest
