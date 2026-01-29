@@ -1,6 +1,9 @@
 # WeihanLi.Npoi
 
-[![WeihanLi.Npoi](https://img.shields.io/nuget/v/WeihanLi.Npoi)](https://www.nuget.org/packages/WeihanLi.Npoi/) [![WeihanLi.Npoi Latest](https://img.shields.io/nuget/vpre/WeihanLi.Npoi)](https://www.nuget.org/packages/WeihanLi.Npoi/absoluteLatest) [![NuGet Downloads](https://img.shields.io/nuget/dt/WeihanLi.Npoi)](https://www.nuget.org/packages/WeihanLi.Npoi/)
+[![WeihanLi.Npoi](https://img.shields.io/nuget/v/WeihanLi.Npoi)](https://www.nuget.org/packages/WeihanLi.Npoi/)
+[![WeihanLi.Npoi Latest](https://img.shields.io/nuget/vpre/WeihanLi.Npoi)](https://www.nuget.org/packages/WeihanLi.Npoi/absoluteLatest)
+[![NuGet Downloads](https://img.shields.io/nuget/dt/WeihanLi.Npoi)](https://www.nuget.org/packages/WeihanLi.Npoi/) 
+[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/WeihanLi/WeihanLi.Npoi)
 
 ## Build Status
 
