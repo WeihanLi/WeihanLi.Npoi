@@ -5,8 +5,6 @@
 [![NuGet Downloads](https://img.shields.io/nuget/dt/WeihanLi.Npoi)](https://www.nuget.org/packages/WeihanLi.Npoi/) 
 [![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/WeihanLi/WeihanLi.Npoi)
 
-## Build Status
-
 [![Azure Pipeline Build Status](https://weihanli.visualstudio.com/Pipelines/_apis/build/status/WeihanLi.WeihanLi.Npoi?branchName=dev)](https://weihanli.visualstudio.com/Pipelines/_build/latest?definitionId=13&branchName=dev) [![Github Build Status](https://github.com/WeihanLi/WeihanLi.Npoi/actions/workflows/dotnet.yml/badge.svg)](https://github.com/WeihanLi/WeihanLi.Npoi/actions/workflows/dotnet.yml)
 
 ## Introduction
