@@ -11,8 +11,8 @@
     <PackageVersion Include="EPPlus.Core.Extensions" Version="2.4.0" />
     <PackageVersion Include="GitHubActionsTestLogger" Version="3.0.1" />
     <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="18.0.1" />
-    <PackageVersion Include="NPOI" Version="2.7.5" />
-    <PackageVersion Include="WeihanLi.Common" Version="1.0.86" />
+    <PackageVersion Include="NPOI" Version="2.7.6" />
+    <PackageVersion Include="WeihanLi.Common" Version="1.0.87" />
     <PackageVersion Include="xunit.v3.mtp-v2" Version="3.2.2" />
     <PackageVersion Include="Xunit.DependencyInjection" Version="11.1.1" />
   </ItemGroup>
