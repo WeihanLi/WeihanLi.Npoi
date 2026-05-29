@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Weihan Li. All rights reserved.
 // Licensed under the Apache license.
 
-#:package WeihanLi.Common
+#:package WeihanLi.Core
 
 using WeihanLi.Common.Helpers;
 
