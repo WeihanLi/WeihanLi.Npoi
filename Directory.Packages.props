@@ -9,8 +9,8 @@
     <PackageVersion Include="GitHubActionsTestLogger" Version="3.0.5" />
     <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="18.9.0" />
     <PackageVersion Include="NPOI" Version="2.7.6" />
-    <PackageVersion Include="WeihanLi.Common" Version="1.0.92" />
-    <PackageVersion Include="WeihanLi.Core" Version="1.0.92" />
+    <PackageVersion Include="WeihanLi.Common" Version="1.0.93" />
+    <PackageVersion Include="WeihanLi.Core" Version="1.0.93" />
     <PackageVersion Include="xunit.v3.mtp-v2" Version="4.0.0" />
     <PackageVersion Include="Xunit.DependencyInjection" Version="12.0.0" />
   </ItemGroup>
