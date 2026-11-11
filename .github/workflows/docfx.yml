@@ -28,7 +28,7 @@ jobs:
     steps:
       # Check out the branch that triggered this workflow to the 'source' subdirectory
       - name: Checkout Code
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
       - name: Setup .NET SDK
         uses: WeihanLi/dotnet-install@v0.3.0
         with:

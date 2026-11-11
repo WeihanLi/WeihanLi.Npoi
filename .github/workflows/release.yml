@@ -7,7 +7,7 @@ jobs:
     name: Release
     runs-on: windows-latest
     steps:
-    - uses: actions/checkout@v6
+    - uses: actions/checkout@v7
     - name: Setup .NET SDK
       uses: WeihanLi/dotnet-install@v0.3.0
       with:
